@@ -1,8 +1,8 @@
 ---
-title:  MCTS
+title:  MCTS-GO
 ---
 
-# MCTS
+# MCTS_Lee
 
 ## apply:
 
@@ -17,7 +17,7 @@ title:  MCTS
 
 [参考资料-GeeksforGeeks ](https://www.geeksforgeeks.org/ml-monte-carlo-tree-search-mcts/)
 
-![](MCTS_GO/mcts_own.png)
+![](Go/mcts_own.png)
 
 
 
@@ -60,7 +60,7 @@ title:  MCTS
 ## UCB 
 
 $$
-UCB1=\bar{X}_j+\sqrt{\frac{2lnn}{n_j}}
+UCB1=\bar{X}_j+\sqrt{\frac{2\ln n}{n_j}}
 $$
 
 
@@ -129,7 +129,7 @@ $$
 
 asynchronous policy and value MCTS algorithm (APV-MCTS) 
 
-![](MCTS_GO/search_algo2.png)
+![](Go/search_algo2.png)
 
 Each node s in the search tree contains edges (s, a) for all legal actions a∈A( ) s .
 Each edge stores a set of statistics,
@@ -138,15 +138,15 @@ $$
 $$
 P(s,a)是局面s下走a的先验概率。
 
-Wv(s,a)是simulation时value network的打分，
+$Wv(s,a)$是simulation时value network的打分，
 
-Wr(s,a)是simulation时rollout的打分。
+$Wr(s,a)$是simulation时rollout的打分。
 
-Nv(s,a)和Nr(s,a): 
+$Nv(s,a)$和$Nr(s,a)$ :black_nib:number 
 
-Wv(s, a) and Wr(s, a) are Monte Carlo estimates of total action value, accumulated over Nv(s, a) and Nr(s, a) leaf evaluations and rollout rewards,  
+$Wv(s, a)$ and $Wr(s, a)$ are Monte Carlo estimates of total action value, accumulated over $Nv(s, a)$ and $Nr(s, a) $leaf evaluations and rollout rewards,  
 
-Q(s,a)是最终融合了value network打分和rollout打分的最终得分。
+$Q(s,a)$是最终融合了value network打分和rollout打分的最终得分。
 
 
 
@@ -254,4 +254,110 @@ todo
 ## Reference
 
 http://fancyerii.github.io/books/alphago/
+
+# MCTS_GO_Zero
+
+## UCT*
+
+expand & evalue:
+
+- nural network using mini-batch size of 8
+
+$$
+a_t = argmax(Q(s_t,a) + U(s_t, a))
+$$
+
+
+$$
+U(s, a) = c_{puct}P(s,a) \frac{\sum_b N(s, a)}{1 + N(s, a)}
+$$
+backup
+$$
+W(s_t, a_t) = W(s_t, a_t) + v\\
+Q(s_t, a_t) = \frac{W(s_t, a_t)}{N(s_t, a_t)}
+$$
+play
+$$
+π(a| s ) = \frac{N(s_0, a)^{1/\tau}}{\sum_b N(s_0, b)^(1/\tau)} 
+$$
+τ is a temperature parameter that controls the level of exploration 
+
+
+
+### KEY:
+
+Train Time:
+
+0.4s per move(一局游戏？) ；1600次simulate；
+
+409W game 【143,360W/409W=350 每局】【0.4s * 409W = 454 Hour】
+
+70W mini-batches (2048样本/32=64GPU?) 【70W*2048= 143,360W】
+
+36Hour 超越Lee（lee defeat Lee Sedol）
+
+单个机器，4TPU(4块TPU2芯片和4块V100GPU是速度相同)
+
+
+
+MSE:
+
+The MSE is between the actual outcome z ∈ {-1, +1} and the neural network value v, scaled by
+a factor of 1/4 to the range of 0–1.  
+
+
+
+### Train Pipeline
+
+C: 三场游戏的前80step，不同训练阶段的play，using 1,600 simulations (around 0.4 s) per search 
+
+训练到第3小时，游戏的重点是贪婪地捕获石头，很像一个人类初学者。
+
+在19小时，游戏展示了生死攸关、影响力和疆域的基本要素
+
+在70小时，游戏是非常平衡的，涉及多场战斗和复杂的KO战斗，最终分解为半点胜利的白色。
+
+
+
+### 最终性能：
+
+40 block 40 day 训练
+
+29 million games of self­play were generated. parameters were updated from 3.1 million mini­batches of 2,048 positions each.
+
+制作了2900万个自我游戏。参数从310万个小批次更新，每批2048个职位。
+
+
+
+### Go Zero 5185
+
+5,185  NN + MCTS 训练40Days, 40 block
+
+3,055  NN (比第一版Alpha Fan 3144 弱)
+
+-- 对比网络版本
+
+3400 NN + MCTS(5s) 72Hour（3day）
+
+
+
+### GO master 4858
+
+AlphaGo Master—a program based on the algorithm and architecture presented in this paper but using human data and features (see Methods) 
+
+human data + handcrafted features
+
+基于本文提出的算法和体系结构，但使用人工数据和特征的程序(见方法)
+
+在一台机器上播放，有4个tpus。
+
+
+
+### AlphaGo Fan 3144
+
+176 GPUs 
+
+### AlphaGo Lee  3739
+
+48 TPUs,  
 

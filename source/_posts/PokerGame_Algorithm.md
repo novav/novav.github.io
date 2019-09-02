@@ -1,6 +1,12 @@
 ---
 title: Poker Algorithm developer history
-
+data: 2019.8.16
+categories:
+- CFR
+- MCTS
+- Game
+- Poker
+- NashEquilibriun
 ---
 
 
@@ -9,15 +15,11 @@ title: Poker Algorithm developer history
 
 ### Definition 2.1 normal-form game
 
-Definition 2.1. A finite normal-form game G is a tuple <N, A, u> containing the following components:
-
-- A finite set N = {1, 2, ..., n} of players.
-- A set of action profiles A = A1×A2×· · ·×An, with Ai being a finite set of actions available to player i.
-- For each i 2 N, a utility function ui : A ! R that denotes the payoff for player i under each possible action profile 
+![1565942465956](PokerGame_Algorithm/1565942465956.png)
 
 ### Definition 2.2 Extensive-form game
 
-![1565840537365](PokerGame_Algorithm/1565840537365.png)
+![1565840537365](./PokerGame_Algorithm/1565840537365.png)
 
 ### Definition 2.3 perfect reall & imperfect recall
 
@@ -47,7 +49,29 @@ Nash Equilibrium 两个推广
 
 
 
-Definition 2.6
+### Definition 2.6 abstraction for player
+
+![1565920524462](PokerGame_Algorithm/1565920524462.png)
+
+![1565920690554](PokerGame_Algorithm/1565920690554.png)
+
+![1565920542091](PokerGame_Algorithm/1565920542091.png)
+
+### Definition2.7 Grafting partition for player i
+
+![1565924553479](PokerGame_Algorithm/1565924553479.png)
+
+
+
+### Definition2.8 grafted strategy for player i
+
+![1565924826273](PokerGame_Algorithm/1565924826273.png)
+
+
+
+
+
+
 
 ## Theorem
 
@@ -156,21 +180,80 @@ samples a single action at every history, walking just a single trajectory throu
 
 
 
-
+### CS-MCTS
 
 ### ES-MCTS Pesudocode
+
+![1565878309846](PokerGame_Algorithm/1565878309846.png)
+
+### 
 
 #### WalkTree (recursive function)
 
 four case:
 
-​	-1 reached teminal node
+​	-1 reached teminal node : 返回效用值；(line 6)
 
-​	-2 at a chance node 
+​	-2 at a chance node : 根据策略采样一个动作，并续递归；(line 7)
 
-​	-3 at opponent’s node 
+​	-3 at opponent’s chance node : 采样个动作，并继续递归.(line 9-14)
 
-​	-4 update the cumulative profile (in two player game; or when more than two player , use func UpdateCumulativeProfile ) 
+​	-4 update the cumulative profile (in two player game;)
+
+ES:递归方法WakeTree
+
+#### UpdateCumulativeProfile 
+
+after walkTree
+
+### 
+
+### Probing + MCCFR
+
+#### Pesudocode
+
+![1565936945792](PokerGame_Algorithm/1565936945792.png)
+
+对比ES算法，多了一个action set sampling distribution Q(I),  对于已经
+
+0：walk tree(h, i, q):
+
+1、h是terminal节点，返回u
+
+2、P(h)是chanceNode，sample action $a \sim \sigma_c(h,·)$, goto_0(ha)
+
+3、P(h)是 opponent’s Node,
+
+3.1、对所有的$a \in A(I)$更新$s(I,a) = s(I, a) + (\sigma(I, a)/q)$
+
+3.2、sample action $a \sim \sigma(I, ·)$， goto_0(ha)
+
+采样信息集$Q(I) \sim Q(I)$
+
+**4、遍历玩家i在当前信息集I上的所有可能action**
+
+- 如果 a 属于Q(I): 更新q’并且goto_0(ha)
+- 否则：Probe(ba)
+
+5、便利i的信息I下所有可能action，更新R(I, a)
+
+6、返回信息集上累计采样虚拟效用值$\sum_{a \in A(I)} \sigma(I, a) \widetilde{u}(a)$
+
+### AS-MCTS(Average Strategy Sampling)
+
+AS can be seen as a sampling scheme between OS and ES  (可看作OS, ES之间的折中方案)
+
+![AS_MCCFR](PokerGame_Algorithm/1565940219092.png)
+
+AS_select:
+
+​	AS对每个信息集上玩家的action子集采样。而不像OS采样一个action，也不像ES采样所有action
+
+cumulative profile $s^T_i(I, ·) $on iteration T , an exploration parameter $\epsilon \in (0, 1]$,a threshold parameter $τ \in  [1, 1)$, and a bonus parameter $β \in [0, 1)$,  each of player i’s actions $a \in A(I)$ are sampled independently with probability :
+$$
+ρ(I; a) = max \{\epsilon,   \frac{β + \tau s_i^T(I, a)} {\beta + \sum_{b \in A(I)} s^T_i(I, b)} \}
+$$
+
 
 [GO](#Regret Matching)
 

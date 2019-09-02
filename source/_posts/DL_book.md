@@ -1,5 +1,6 @@
 ---
-title: DL_books
+title: DL_Books
+tags:
 ---
 
 Deep Learning Book online
