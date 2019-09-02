@@ -76,9 +76,11 @@ Definition 2.6
 ### Regret Matching
 
 accumulated regret: 衡量玩家i有多少次，宁愿选择a，而不跟随σ
+
 $$
 R_i^T (a) = \sum_{t=1}^{T} (u_i(a, σ_{-i}^t) - u_i(σ_i^t, σ_{-i}^t)
 $$
+
 Successive strategies：
 $$
 \sigma_i^{T+1}(a) = \frac{R_i^{T,+}(a)}{\sum_{b \in A_i}R_i^{T, +}(b)}
