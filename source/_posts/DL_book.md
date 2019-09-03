@@ -1,6 +1,8 @@
 ---
-title: DL_Books
-tags:
+title: DL_books
+date: 2019-08-03 11:49:03
+categories:
+- [book]
 ---
 
 Deep Learning Book online
