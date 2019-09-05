@@ -13,7 +13,7 @@ tags:
 
 - run interence in INT8 mode
 
-
+<!-- more -->
 
 ### Tourist
 

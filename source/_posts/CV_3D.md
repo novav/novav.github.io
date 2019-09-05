@@ -14,7 +14,7 @@ tags:
 | LSTM composite model |      |          |
 | C3D                  |      |          |
 
-
+<!-- more -->
 
 
 

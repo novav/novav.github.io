@@ -38,6 +38,8 @@ Atrous Self Attention、Local Self Attention、Sparse Self Attention都算是稀
 
 从注意力域（attention domain）的角度来分析几种注意力的实现方法。其中主要是三种注意力域，**空间域(spatial domain)**，**通道域(channel domain)**，**混合域(mixed domain)。**
 
+<!-- more -->
+
 ### （1） 空间域
 
 设计思路**：**

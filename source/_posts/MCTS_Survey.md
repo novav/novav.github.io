@@ -23,7 +23,7 @@ Section7 key applications(which MCTS has been applied)
 
 Section8 Summaries
 
-
+<!-- more -->
 
 ## Section 1 Introduce
 

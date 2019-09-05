@@ -23,7 +23,7 @@ polynomial_decay
 
   
 
-
+<!-- more -->
 
 ### **exponential_decay**
 

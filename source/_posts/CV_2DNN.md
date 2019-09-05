@@ -28,6 +28,8 @@ tags:
 | AmoebaNet                         | 83.9              | 96.6              | arXiv2018                                                    |
 | SENet                             | -                 | 97.749            | CVPR2018                                                     |
 
+<!-- more -->
+
 ## ResNet
 
 **Deep Residual Learning for Image Recognition**

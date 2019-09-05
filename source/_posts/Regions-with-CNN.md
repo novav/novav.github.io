@@ -8,6 +8,8 @@ tags:
 
 ![img](Regions-with-CNN/20180502184712966)
 
+<!-- more -->
+
 ## RCNN
 
 RCNN（Regions with CNN features）是将CNN方法应用到目标检测问题上的一个里程碑

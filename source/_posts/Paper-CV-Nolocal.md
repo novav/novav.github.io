@@ -9,3 +9,5 @@ tags:
 [github_fb](https://github.com/facebookresearch/video-nonlocal-net?utm_source=mybridge&utm_medium=blog&utm_campaign=read_more)
 
 本质就是输出的每个位置值都是其他所有位置的加权平均值，通过softmax操作可以进一步突出共性。
+
+<!-- more -->
