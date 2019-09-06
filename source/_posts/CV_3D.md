@@ -54,7 +54,9 @@ tags:
 
 [NVIDIA]https://research.nvidia.com/sites/default/files/publications/NVIDIA_R3DCNN_cvpr2016.pdf
 
-[] https://github.com/kilsenp/R3DCNN-tensorflow
+[tensorflow ]https://github.com/breadbread1984/R3DCNN
+
+[tensorflow ] https://github.com/kilsenp/R3DCNN-tensorflow
 
 C3D + RNN
 
