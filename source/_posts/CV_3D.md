@@ -20,6 +20,8 @@ tags:
 
 ### 2.3.1 C3D
 
+[ github tensorflow ]https://github.com/hx173149/C3D-tensorflow
+
 3x3x3 卷积核
 
 ![img](CV_3D/v2-e51c8770654a1eb92f984e8cc2cf0cd8_hd.jpg)
@@ -47,6 +49,14 @@ tags:
 ![img](CV_3D/v2-e2dd2daf56bfc15d1b24fd0456258c3a_hd.jpg)
 
 ![img](CV_3D/v2-e0c6cb5e2b7022930f736d4d63a272a7_hd.jpg)
+
+### R3DCNN
+
+[NVIDIA]https://research.nvidia.com/sites/default/files/publications/NVIDIA_R3DCNN_cvpr2016.pdf
+
+[] https://github.com/kilsenp/R3DCNN-tensorflow
+
+C3D + RNN
 
 ### Inception3D
 
