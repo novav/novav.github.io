@@ -1,6 +1,8 @@
 ---
 title: RL
 tags:
+- Reinforcement Learning
+
 ---
 
 

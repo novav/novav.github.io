@@ -2,6 +2,7 @@
 title: TF_TRAIN_LR
 date: 2019-08-30 14:44:12
 tags:
+- Learning rate
 ---
 
 cosine_decay

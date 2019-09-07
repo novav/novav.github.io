@@ -2,7 +2,10 @@
 
 title: 3D-CNN
 date: 2019-08-26 09:44:22
-tags:
+tags: 
+- CNN 
+- CNN3D
+- DNN
 ---
 
 ##  3D-CNN 方法

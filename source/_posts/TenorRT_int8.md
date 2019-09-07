@@ -1,6 +1,7 @@
 ---
 title: TensorRT int8
-tags:
+tags: 
+- Tensor RT
 ---
 
 ### Int8 calibration in Python[mnist_demo](https://docs.nvidia.com/deeplearning/sdk/tensorrt-sample-support-guide/index.html#int8_caffe_mnist)

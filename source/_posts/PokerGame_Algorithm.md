@@ -1,7 +1,7 @@
 ---
 title: Poker Algorithm developer history
 date: 2019-08-16 08:39:31
-categories:
+tag:
 - [CFR]
 - [MCTS]
 - [Game]

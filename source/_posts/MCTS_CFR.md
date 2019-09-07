@@ -1,7 +1,7 @@
 ---
 title: MCTS-CFR
 date: 2019-08-15 08:39:31
-categories:
+tag:
 - [CFR]
 - [MCTS]
 - [Game]

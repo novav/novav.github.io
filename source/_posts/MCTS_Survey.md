@@ -1,7 +1,7 @@
 ---
 title: A survey of Monte Carlo Tree Search Methods
 date: 2019-08-19 08:39:31
-categories:
+tag:
 - [MCTS]
 - [UCT]
 - [CFR]

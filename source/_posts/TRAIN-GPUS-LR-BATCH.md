@@ -2,6 +2,7 @@
 title: TRAIN_GPUS_LR_BATCH
 date: 2019-08-29 15:47:57
 tags:
+- Deep Train
 ---
 
 Facebook，Google和Berkeley多个组都发表了论文对这一问题进行了理论和实验的讨论，首先我们对这些论文的结果做一个简要的总结。三篇论文研究类似，但是每一篇相对于前一篇都有改进。

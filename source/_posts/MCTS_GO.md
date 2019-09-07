@@ -1,7 +1,7 @@
 ---
 title:  MCTS GO
 date: 2019-08-15 08:39:31
-categories:
+tag:
 - [MCTS]
 - [Game]
 - [Go]

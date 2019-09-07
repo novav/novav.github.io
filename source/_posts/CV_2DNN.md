@@ -1,7 +1,10 @@
 ---
 title: Awesome - Image Classification
 date: 2019-08-27 09:44:22
-tags:
+tags: 
+- CNN 
+- Image Classification
+- DNN
 ---
 
 # Awesome - Image Classification

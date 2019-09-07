@@ -2,6 +2,8 @@
 title: Paper_CV_Nolocal
 date: 2019-08-29 11:49:51
 tags:
+- CV
+- attention
 ---
 
 ![1567051217525](Paper-CV-Nolocal/1567051217525.png)
