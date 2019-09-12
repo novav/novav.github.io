@@ -103,6 +103,8 @@ architecture:	ResNet + 3DConv
 
 [ github PyTorch] https://github.com/leftthomas/R2Plus1D-C3D
 
+[ github pytorch] https://github.com/jfzhang95/pytorch-video-recognition
+
 ![Figure 2](CV_3D/closer_fig2-1567133357920.png)
 
 ### R3DCNN
@@ -189,7 +191,7 @@ model_blocktype = {
 
 ### reference
 
-https://zhuanlan.zhihu.com/p/41659502
+论文笔记——基于的视频行为识别/动作识别算法笔记(三) https://zhuanlan.zhihu.com/p/41659502
 
 
 

@@ -2,9 +2,11 @@
 title: TF_TRAIN_LR
 date: 2019-08-30 14:44:12
 tags:
+- tensorflow
 - Learning rate
 ---
-
+tf-API:
+```
 cosine_decay
 cosine_decay_restarts
 exponential_decay
@@ -14,7 +16,7 @@ natural_exp_decay
 noisy_linear_cosine_decay
 piecewise_constant
 polynomial_decay
-
+```
 ### 学习率的变化，设计思路：
 
 - 固定学习率
