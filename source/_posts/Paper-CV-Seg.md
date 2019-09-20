@@ -3,23 +3,39 @@ title: Paper-CV-Seg
 date: 2019-09-02 21:40:19
 
 tags:
+
 ---
 
+### Segmentation
 
-# 图像识别中，目标分割、目标识别、目标检测和目标跟踪这几个方面区别是什么？
-
-目标分割，应该是Target Segmentation，
-
-目标识别，应该是Target Recognition。
-
-目标检测，应该是Target Detection
-
-目标追踪，应该是Target Tracking
-
-https://www.zhihu.com/question/36500536
+- semantic segmentation
+- Instance segmentation
 
 
 
-计算机视觉旨在识别和理解图像/视频中的内容，包含四大基本任务：分类(图a)、定位、检测(图b)、语义分割(图c)、和实例分割(图d)。
+## 语义分割
 
-![img](Paper-CV-Seg/v2-7f0825fdb0520467752f34c1b404a2ba_hd.jpg)
+### SegNet 
+
+[SegNet Paper](https://arxiv.org/abs/1511.00561)
+
+[复现详解](http://mi.eng.cam.ac.uk/projects/segnet/tutorial.html)
+
+[github caffe](https://github.com/alexgkendall/caffe-segnet)
+
+[gitub TensorFlow](https://github.com/tkuanlun350/Tensorflow-SegNet)
+
+![1568949570796](Paper-CV-Seg/1568949570796.png)
+
+### Bayesian SegNet
+
+
+
+## 实例分割
+
+### Mark R-CNN
+
+[arxiv mark r-cnn](https://arxiv.org/pdf/1703.06870.pdf)
+
+[github official](https://github.com/facebookresearch/Detectron)
+
