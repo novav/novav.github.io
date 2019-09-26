@@ -324,7 +324,9 @@ Box(G, H, σ)：	Game + History -> a set of possible states S, a strategy profil
 
 #### 6.3 Inference in PIMC Search
 
+6.3.2 Considerations in inference Design
 
+PIMC search would exhaustively examine all worlds, and weigh the result of each world’s analysis by the world’s probability. When the state space is still large, this approach is not feasible if the analysis of each world is time-consuming, as is the case when using alpha-beta search on perfect information worlds.  
 
 ​	
 
