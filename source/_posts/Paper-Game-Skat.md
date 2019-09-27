@@ -12,15 +12,14 @@ tags:
 
 JTAKQ987 x 4 = 32
 
-## Skat:
+## Skat: 《Doctor》
 
 《2011 [Skat] Policy Based Inference in Trick-Taking Card Games 》 【博士论文】Jeffrey Richard Long 
 ```
 三个贡献
 
 【4】专家级计算机SKAT-AI (组合游戏树搜索、状态评估和隐藏信息推理三个核心方面的组合来实现这一性能)
-《M. Buro, J. Long, T. Furtak, and N. R. Sturtevant. Improving state evaluation, inference, and
-search in trick-based card games. In Proceedings of the 21st International Joint Conference on Artificial Intelligence (IJCAI2009), 2009. 》
+《M. Buro, J. Long, T. Furtak, and N. R. Sturtevant. Improving state evaluation, inference, and search in trick-based card games. In Proceedings of the 21st International Joint Conference on Artificial Intelligence (IJCAI2009), 2009. 》
 
 【26】次优解决方案方法的框架
 《 J. Long, N. R. Sturtevant, M. Buro, and T. Furtak. Understanding the success of perfect information monte carlo sampling in game tree search. In Proceedings of the 24th AAAI Conference on Artificial Intelligence (AAAI2010), 2010.》
@@ -330,6 +329,26 @@ PIMC search would exhaustively examine all worlds, and weigh the result of each 
 
 ​	
 
+### 7：
+
+对抗环境的越复杂，其随机性，不确定性
+
+考虑不同的对手模型变得更加重要，原因有两个：
+
+第一个原因是这些环境中的最佳策略常常是过度防御的
+
+第二个原因是在不完善的信息环境中，根据其他代理的动作推断隐藏状态变量通常是有帮助的。对于某些类型的推理（尤其是我们在第6章中讨论的不正确的推断），这需要一个准确的模型，说明Agent在环境中的行为方式。因此，合适的对手模型允许代理明确地利用对手弱点，并且通过对隐藏信息的优良推断来改进其自己的决策。
+
+### 8
+
+在我们建立一个强大的电脑滑板运动员和了解围绕这一目标的问题的过程中，我们调查了一些未能达到我们最初对它们的期望的技术。对于这些想法中的一些，也许是因为它们完全没有价值。对其他人来说，滑雪板可能根本不是正确的领域，或者他们缺少一些关键的完善。在这一章中，我们将记录我们认为最有趣的技术。
+
+8.2 
+
+与其预测玩家将在每个世界中进行最优的完美信息移动，我们还会预测他们将进行PIMC搜索在他们的位置上所建议的移动。
+
+
+
 ### 引用
 
 - 【9】对不完美信息博弈的完美信息蒙特卡罗搜索(或称为重复最小化)方法的广泛批评。
@@ -348,7 +367,7 @@ PIMC search would exhaustively examine all worlds, and weigh the result of each 
 
 ---
 
-《2009 Improving State Evaluation, Inference, and Search in Trick-Based Card Games》
+《2009.3 Improving State Evaluation, Inference, and Search in Trick-Based Card Games》
 
 https://www.cs.du.edu/~sturtevant/papers/skat.pdf
 
@@ -368,27 +387,49 @@ https://www.cs.du.edu/~sturtevant/papers/skat.pdf
 
 ---
 
-
-
-《2019 Policy Based Inference in Trick-Taking Card Games》
-
-http://ieee-cog.org/papers/paper_123.pdf
-
-- 真实状态采样比率
-- 对手模型
-- 信息集状态分布评估
-
-
-
-《2019 Improving Search with Supervised Learning in Trick-Based Card Games》
+### 《2019.3 Improving Search with Supervised Learning in Trick-Based Card Games》
 
 https://arxiv.org/pdf/1903.09604.pdf
 
-- 
+- trick-taking card game，**状态采样和评价**的两步过程被广泛用于拟合移动值
+
+- 最近在扑克牌游戏ai中的工作主要集中在改进**评估算法**上。
+
+  本文，重点研究了**采样**对玩家力量的影响，并提出了一种新的方法来采样给定移动历史的更真实的状态。
+
+- 采用DNN预测卡片的位置
+
+  
+
+![1569488822453](Paper-Game-Skat/1569488822453.png)
+
+![1569488988224](Paper-Game-Skat/1569488988224.png)
+
+图1：推理网络体系结构。所示的是一种特定于滑板的架构，用于预测所有32张卡的卡前位置。每一张牌可以在四个可能的位置之一(每个玩家的手和Skat)。输出目标在每个玩家手中有10张卡片，剩下的2张在滑板中。
+
+四个可能的位置：玩家1，玩家2，玩家3，landlord
+
+NN输入特征：
+
+Lead Cards：First cards played
+
+Sloughed cards: 掉牌是指当一名玩家不能效仿，但也不做一张王牌时使用的牌。
+
+Void suits：游戏规则，是无suit规则
+
+Bid， 分type和Magnitude
+
+![1569491049415](Paper-Game-Skat/1569491049415.png)
+
+TSSR 推理性能评估
 
 
 
-《2019 Learning policies form human data for skat》
+---
+
+
+
+### 《2019.5 Learning policies form human data for skat》
 
 https://arxiv.org/pdf/1905.10907.pdf
 
@@ -396,7 +437,155 @@ https://arxiv.org/pdf/1905.10907.pdf
 
 - NN 训练pre-cardplay 和cardplay
 
+摘要大型不完全信息博弈中的决策是很困难的。由于最近在扑克方面的成功，反事实的遗憾最小化(CFR)方法在这些游戏中一直处于研究的前沿。然而，大多数大型游戏的成功都是通过使用前向模型和强大的状态抽象来实现的。在桥牌或滑雪板之类的纸牌游戏中，大量的信息集和无法在不完全确定状态的情况下推进模拟的能力使前向搜索成为问题。此外，由于每个参与者的精确持有量直接影响移动值，因此状态抽象可能特别难以构建。
+
+  abs：
+
+Trick-taking类游戏的挑战：
+
+- Large info set
+
+- 没有确定性的状态下，无法前向搜索
+
+- 状态抽象壁垒-- 参与者的精确手牌，影响大
+
   
+
+**本文实现**：
+
+使用DNN实现了一个SOTA 系统（model-free），对bidding和game declaration（叫分，游戏类型等）
+
+CardPlay 比最佳的Search-Base算法要弱
+
+还尝试了RL，但是应该进展不大。
+
+#### Pre-CardPlay Train
+
+policy + value
+
+每种GameType训练一个单独的NN（Null and Null Ouvert 除外）
+
+NN- Input/Output。数据集大小
+
+总共10个model，10个数据集。每个模型的输入特征都是Table III的特征组合而成。
+
+例如：Bid/answer 模型的输入特征2个：是 Player Hand + Player Position。
+
+![1569552772685](Paper-Game-Skat/1569552772685.png)
+
+2 additional Network
+
+​	Hand/Pick UP phase
+
+​	Declare phase
+
+​	： 用于近似于行动的价值。
+
+
+
+**DNN架构**
+
+![1569551486523](Paper-Game-Skat/1569551486523.png)
+
+
+
+人类数据训练的MLV方法提供了新的SOTA bot for Skat pre-cardplay
+
+
+
+#### CardPlay Train
+
+same network architecture  used for pre-cardplay NN
+
+训练总计6个神经网络。
+
+defender and soloist versions of Grand, Suit, and Null. 
+
+**NN输入特征**
+
+![1569550543360](Paper-Game-Skat/1569550543360.png)
+
+**数据集大小**
+
+6个模型的数据集，对应的是2个位置的三中游戏规则
+
+- Grand
+- suit
+- Null
+
+![1569550564693](Paper-Game-Skat/1569550564693.png)
+
+**性能对比**
+
+![1569549751076](Paper-Game-Skat/1569549751076.png)
+
+--**Conclusion**
+
+在这篇论文中，我们已经证明了玩纸牌前策略可以从人类游戏数据中学习，并且它的表现要比以前的最先进的’Kermit‘播放要好得多。
+
+bidding policy (采用DI-M) 比 Kermit差1.35TP/G; (DI-S更是相差4.14TP/G)
+
+The best overall full network based player was MLV.925+C, 
+
+
+
+--**Future** Work
+
+
+
+----
+
+
+
+### 《2019 Policy Based Inference in Trick-Taking Card Games》
+
+http://ieee-cog.org/papers/paper_123.pdf
+
+- 真实状态采样比率
+- 对手模型
+- 信息集状态分布评估
+
+卡牌游戏的特点是大量的私人信息，慢慢地被揭示通过一长串的行动。这使得历史记录在动作序列长度中呈指数增长，并创建了非常大的信息集。因此，这些游戏变得太大，无法解决。为了处理这些问题，许多算法采用推理，估计信息集中的状态概率。在本文中，我们演示了一种**基于策略的推理（Pi）算法**，该算法使用玩家建模来推断我们处于给定状态的概率。我们在德国特技拍摄游戏SKAT中进行实验，其中我们表明，与以前的工作相比，**该方法极大地改进了推理**，并且当它被应用到其确定的搜索算法中时，增加了现有技术的SKAT AI系统Kermit的性能。
+
+KI: 	使用一种基于表格的技术，根据对手的出价和声明，对状态采样进行偏置。这种方法只解释了有限数量的可用状态信息，而忽略了当对手玩特定卡片时发生的重要推理机会。这一推断将称为Kermit推断（Ki）。
+
+Solinas等人[14]通过使用神经网络对个别卡的位置进行预测来扩展这一过程。通过假设这些预测之间的独立性，通过乘以配置中卡片位置对应的概率来计算给定配置的概率。尽管示出该方法是有效的，但是独立假设与对于给定配置的事实不一致，给定卡存在的概率高度依赖于其它卡的存在。
+
+例如，他们的方法无法捕获玩家的动作表明他们的手可能包含梅花J或黑桃J，但不能同时包含两者。
+
+本文提出的策略推理方法通过 根据精确卡片配置来估计状态的概率。
+
+**Policy Inference**：
+
+
+
+ISSUE-1: 无法知道其他玩家的策略（或成本太贵）
+
+这使得对手/伙伴模型成为必要的，在这种模型中，我们假定其他玩家的模型计算成本不高，并使用它们来估计状态的到达概率。
+
+ISSUE-2: 信息集的状态数据相当大
+
+为了解决这个问题，我们可以对世界进行采样，并对状态子集上的分布进行规范化。因为在滑雪板中，玩家在玩纸牌之前的信息集大小可以包含多达28亿个状态，我们采用了抽样的方法。
+
+
+
+Algorithm 1 ： 估计状态分布-- 信息集，OppModel, 
+
+![1569502485229](Paper-Game-Skat/1569502485229.png)
+
+sampling card configurations will be treated as the default approach for PI.
+
+采样卡配置将被视为PI的默认方法。
+
+
+
+CLI(Cards Location Inference)
+
+----
+
+
+
+### 《Challenging Human Supremacy in Skat – Guided and Complete And-Or Belief-Space Tree Search for Solving the Nullspiel 》
 
 
 
