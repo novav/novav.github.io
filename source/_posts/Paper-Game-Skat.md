@@ -387,7 +387,7 @@ https://www.cs.du.edu/~sturtevant/papers/skat.pdf
 
 ---
 
-### 《2019.3 Improving Search with Supervised Learning in Trick-Based Card Games》
+### 14《2019.3 Improving Search with Supervised Learning in Trick-Based Card Games》
 
 https://arxiv.org/pdf/1903.09604.pdf
 
@@ -397,7 +397,7 @@ https://arxiv.org/pdf/1903.09604.pdf
 
   本文，重点研究了**采样**对玩家力量的影响，并提出了一种新的方法来采样给定移动历史的更真实的状态。
 
-- 采用DNN预测卡片的位置
+- 采用DNN预测卡片的位置 (Card Location Inference  = CLI)
 
   
 
@@ -429,7 +429,7 @@ TSSR 推理性能评估
 
 
 
-### 《2019.5 Learning policies form human data for skat》
+### 18《2019.5 Learning policies form human data for skat》
 
 https://arxiv.org/pdf/1905.10907.pdf
 
@@ -537,15 +537,33 @@ The best overall full network based player was MLV.925+C,
 
 
 
-### 《2019 Policy Based Inference in Trick-Taking Card Games》
+### 00《2019 Policy Based Inference in Trick-Taking Card Games》
 
 http://ieee-cog.org/papers/paper_123.pdf
 
-- 真实状态采样比率
-- 对手模型
-- 信息集状态分布评估
+- 评估信息集的状态概率
 
-卡牌游戏的特点是大量的私人信息，慢慢地被揭示通过一长串的行动。这使得历史记录在动作序列长度中呈指数增长，并创建了非常大的信息集。因此，这些游戏变得太大，无法解决。为了处理这些问题，许多算法采用推理，估计信息集中的状态概率。在本文中，我们演示了一种**基于策略的推理（Pi）算法**，该算法使用玩家建模来推断我们处于给定状态的概率。我们在德国特技拍摄游戏SKAT中进行实验，其中我们表明，与以前的工作相比，**该方法极大地改进了推理**，并且当它被应用到其确定的搜索算法中时，增加了现有技术的SKAT AI系统Kermit的性能。
+- 使用玩家模型，推理状态概率
+
+  
+
+卡牌游戏的特点是大量的私人信息，慢慢地被揭示通过一长串的行动。这使得历史记录在动作序列长度中呈指数增长，并创建了非常大的信息集。因此，这些游戏变得太大，无法解决。为了处理这些问题，许多算法采用推理，估计信息集中的状态概率。在本文中，我们演示了一种**基于策略的推理（Pi）算法**，该算法使用玩家建模来推断我们处于给定状态的概率。我们在德国特技拍摄游戏SKAT中进行实验，其中我们表明，与以前的工作相比，**该方法极大地改进了推理**，并且当它被**应用到其确定的搜索算法**中时，增加了现有技术的SKAT AI系统Kermit的性能。
+
+’冷扑大师‘ CFR的超越人类玩家的Ai，他们没有证明对trick-based 游戏是有用的。
+
+这是因为信息集的非常大的大小、大量的竞价和很长的Cardplay序列，创建表达抽象的困难。
+
+虽然这些长序列使游戏变得太大以至于无法解决，但是它们也慢慢地揭示其他玩家的私人信息，从而推断期望的方法。
+
+**本文：** 利用对手模型的推理。
+
+特别是，我们培训关于受监督的人类数据的政策，并利用它们来根据对手和合作伙伴以前的每一次行动推断他们的私人信息。
+
+Outline：1-Skat rule， 2.Opponent Model trained in human data, 3. conclude, idea for future research。
+
+
+
+**背景**
 
 KI: 	使用一种基于表格的技术，根据对手的出价和声明，对状态采样进行偏置。这种方法只解释了有限数量的可用状态信息，而忽略了当对手玩特定卡片时发生的重要推理机会。这一推断将称为Kermit推断（Ki）。
 
@@ -553,7 +571,27 @@ Solinas等人[14]通过使用神经网络对个别卡的位置进行预测来扩
 
 例如，他们的方法无法捕获玩家的动作表明他们的手可能包含梅花J或黑桃J，但不能同时包含两者。
 
-本文提出的策略推理方法通过 根据精确卡片配置来估计状态的概率。
+本文提出的策略推理方法通过 **根据精确卡片配置来估计状态的概率。**
+
+
+
+Card Location Inference (CLI):
+
+
+
+**III.INFERENCE**
+
+**给定信息集上的一个状态，得到确定性的概率。也就是计算到达概率 η。** 如果我们能够完美地确定导致这种状态的每个动作的概率，我们就可以将所有的概率相乘，得到η。
+
+
+$$
+\eta(s|I) = \sum_{h \cdot a \sqsubseteq s} \pi(h, a)
+$$
+
+
+如果我们对信息集中的所有状态重复这个过程，我们就可以计算出状态之间的概率分布。如果我们能够完美地评估所有状态-动作对的值，我们就可以选择使这个期望值最大化的动作，从而提供一个最优的解决方案。
+
+
 
 **Policy Inference**：
 
@@ -573,13 +611,25 @@ Algorithm 1 ： 估计状态分布-- 信息集，OppModel,
 
 ![1569502485229](Paper-Game-Skat/1569502485229.png)
 
-sampling card configurations will be treated as the default approach for PI.
-
-采样卡配置将被视为PI的默认方法。
+算法1，评估状态的相对到达概率，当我们不是使用采样时。这将成为对状态的真实到达概率的估计。
 
 
 
-CLI(Cards Location Inference)
+CLI(Cards Location Inference)--18论文
+
+
+
+两种推理
+
+1- samples card configurations 
+
+如果相同的卡片配置有多个状态，但特征不同(输入到网络)，则决策点不进行推理
+
+2-samples states directly 
+
+（method1）采样卡配置将被视为PI的默认方法。当对状态进行采样时，推断将被标记为PIF(Policy Inference Full)
+
+
 
 ----
 
