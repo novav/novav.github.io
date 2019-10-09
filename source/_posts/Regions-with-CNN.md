@@ -6,7 +6,7 @@ tags:
 
 ---
 
-![img](Regions-with-CNN/20180502184712966)
+![img](Regions-with-CNN/20180502184712966.png)
 
 <!-- more -->
 

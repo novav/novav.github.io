@@ -12,6 +12,20 @@ tags:
 
 JTAKQ987 x 4 = 32
 
+**Rule**:
+
+​	Grand（J王牌）
+
+​	Null （无王牌）
+
+​	Suit（J王牌，Suit王牌）
+
+​	https://www.pagat.com/schafkopf/skat.html
+
+J A 10 K Q 9 8 7
+
+2 11 10 4 3 0 0 0 
+
 ## Skat: 《Doctor》
 
 《2011 [Skat] Policy Based Inference in Trick-Taking Card Games 》 【博士论文】Jeffrey Richard Long 
@@ -387,7 +401,7 @@ https://www.cs.du.edu/~sturtevant/papers/skat.pdf
 
 ---
 
-### 14《2019.3 Improving Search with Supervised Learning in Trick-Based Card Games》
+# 14《2019.3 Improving Search with Supervised Learning in Trick-Based Card Games》
 
 https://arxiv.org/pdf/1903.09604.pdf
 
@@ -429,7 +443,7 @@ TSSR 推理性能评估
 
 
 
-### 18《2019.5 Learning policies form human data for skat》
+# 18《2019.5 Learning policies form human data for skat》
 
 https://arxiv.org/pdf/1905.10907.pdf
 
@@ -537,17 +551,25 @@ The best overall full network based player was MLV.925+C,
 
 
 
-### 00《2019 Policy Based Inference in Trick-Taking Card Games》
+# 00《2019 Policy Based Inference in Trick-Taking Card Games》
 
 http://ieee-cog.org/papers/paper_123.pdf
+
+https://arxiv.org/pdf/1905.10911.pdf
 
 - 评估信息集的状态概率
 
 - 使用玩家模型，推理状态概率
 
-  
+**Abstract**
 
-卡牌游戏的特点是大量的私人信息，慢慢地被揭示通过一长串的行动。这使得历史记录在动作序列长度中呈指数增长，并创建了非常大的信息集。因此，这些游戏变得太大，无法解决。为了处理这些问题，许多算法采用推理，估计信息集中的状态概率。在本文中，我们演示了一种**基于策略的推理（Pi）算法**，该算法使用玩家建模来推断我们处于给定状态的概率。我们在德国特技拍摄游戏SKAT中进行实验，其中我们表明，与以前的工作相比，**该方法极大地改进了推理**，并且当它被**应用到其确定的搜索算法**中时，增加了现有技术的SKAT AI系统Kermit的性能。
+卡牌游戏的特点是大量的私人信息，慢慢地被揭示通过一长串的行动。这使得历史记录在动作序列长度中呈指数增长，并创建了非常大的信息集。因此，这些游戏变得太大，无法解决。为了处理这些问题，许多算法采用推理，**估计信息集中的状态概率**。在本文中，我们演示了一种**基于策略的推理（Pi）算法**，该算法使用玩家建模来推断我们处于给定状态的概率。我们在德国特技拍摄游戏SKAT中进行实验，其中我们表明，与以前的工作相比，**该方法极大地改进了推理**，并且当它被**应用到其确定的搜索算法**中时，增加了现有技术的SKAT AI系统Kermit的性能。
+
+**1-Introduce**
+
+Determinized search algorithm，
+
+推理是非完备信息的中心概念。
 
 ’冷扑大师‘ CFR的超越人类玩家的Ai，他们没有证明对trick-based 游戏是有用的。
 
@@ -563,7 +585,7 @@ Outline：1-Skat rule， 2.Opponent Model trained in human data, 3. conclude, id
 
 
 
-**背景**
+**2- 背景**
 
 KI: 	使用一种基于表格的技术，根据对手的出价和声明，对状态采样进行偏置。这种方法只解释了有限数量的可用状态信息，而忽略了当对手玩特定卡片时发生的重要推理机会。这一推断将称为Kermit推断（Ki）。
 
@@ -635,11 +657,11 @@ CLI(Cards Location Inference)--18论文
 
 
 
-### 《Challenging Human Supremacy in Skat – Guided and Complete And-Or Belief-Space Tree Search for Solving the Nullspiel 》
+# 《Challenging Human Supremacy in Skat – Guided and Complete And-Or Belief-Space Tree Search for Solving the Nullspiel 》
 
 
 
-## Scope
+# Scope
 
 四人游戏（意大利游戏）
 
