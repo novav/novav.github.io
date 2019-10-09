@@ -1,8 +1,12 @@
 ---
 title: ML_mutil-lable
 date: 2019-10-09 16:41:00
-tags: - Multilabel learning, - ranking, - classification, - machine learning, - data
-mining
+tags: 
+- Multilabel learning
+- ranking
+- classification
+- machine learning
+- data mining
 ---
 
 《A Tutorial on Multilabel Learning 》 [download pdf](http://dx.doi.org/10.1145/2716262 )
@@ -65,3 +69,48 @@ The article also includes an Appendix with resources
 ## 2.MML
 
 MLL includes two main tasks: 
+
+​	Multilabel Classification (MLC) 
+
+​	Label Ranking (LR). 
+
+​	Multilabel Ranking  
+
+### 3. EVALUATION OF MULTILABEL MODELS 
+
+3.1 evaluation metrics
+
+​	3.1.1 metrics to evalute bipartitions
+
+​		two approches:
+
+​			lebel-based (macro, micro)
+
+​			example-based (*0/1 subset accuracy*=*classifification accuracy* or *exact match ratio* )
+$$
+B_{macro}=1/q \sum_{i=1}^{q}B(tp_i, fp_i, tn_i, fn_i)
+$$
+
+$$
+B_{micro} = B(\sum_{i=1}^{q}tp_i, \sum_{i=1}^{q}fp_i, \sum_{i=1}^{q}tn_i, \sum_{i=1}^{q}fn_i)
+$$
+
+$$
+0/1 -subset- accuracy = 1/t \sum_{i=1}^{t}[Z_i= Y_i]
+$$
+
+$$
+Hamming loss = 1/t \sum^{t}_{i=1} 1/q|Z_i /\Y_i|.
+$$
+
+
+
+​	3.1.2 metrics to evalute rankings
+
+​		One-error
+
+how to prepare the dataset,
+
+ statistical tests, 
+
+complexity 

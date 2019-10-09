@@ -1,4 +1,5 @@
 ```
+title: 3D CNN
 date: 2019-08-26 09:44:22
 tags: 
 - CNN 
