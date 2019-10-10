@@ -12,6 +12,32 @@ tags:
 
 
 
+发展历史：
+
+R-CNN
+
+Fast R-CNN
+
+Faster R-CNN
+
+Mask R-CNN
+
+SSD (Single Shot MultiBox Defender)
+
+YOLO (You Only Look Once)
+
+YOLO_V2
+
+YOLO_V3
+
+DSSD
+
+IoU-Net(旷视科技)
+
+![img](Paper-CV-object-detector/history_dev.jpg)
+
+
+
 《Speed/accuracy trade-offs for modern convolutional object detectors》2017
 翻译：http://blog.gwyve.com/blog/2017/04/10/reading-note-Speed-Accuracy.html
 
@@ -42,4 +68,10 @@ tags:
 - [ github ](https://github.com/daijifeng001/R-FCN)
 
 
+
+
+
+## Refernce
+
+https://zhuanlan.zhihu.com/p/59398728
 
