@@ -1,5 +1,5 @@
 ---
-title: ML_mutil-lable
+title: ML_mutil-lable 问题综述
 date: 2019-10-09 16:41:00
 tags: 
 - Multilabel learning
@@ -185,11 +185,22 @@ q classes,
 $$
 entropyML(S)=\sum^{q}_{i=1}P(\lambda_i)log(P(\lambda_i)) + (1-P(\lambda_i))log(1-P(\lambda_i))
 $$
-4.2.2 SVM
+4.2.2 SVM (Rank-SVM)
+
+A set of q linear classifiers,  $ \{h_j(X) = <w_j, X> + b_j = w^T_j · X + b_j | 1 \leq j \leq q \}$ 
+
+
 $$
 \frac{min}{(x_i, Y_i) \in S} \frac{min}{(y_i, y_k)\in Y_i \times \overline{Y_i}}   \frac{<w_j - w_k, X_i> + b_j-b_k}{||w_j - w_k||}
 $$
 4.2.3 Instance Based
+$$
+y_j = \begin{cases}
+1 & \text{if} & P(c_j|y_j = 1)P(y_j = 1) \geq P(c_j|y_j = 0)P(y_j = 0) \\
+0
+\end{cases}
+$$
+
 
 4.2.4 Neural Network
 $$
@@ -223,6 +234,8 @@ SVM在大量特征，较小数据集上表现更好。而基于树的方法在�
 Chekina et al. 2011  研究了11个算法，12个数据集，18种评估方法。HOMER, BR, ECC, and EPS obtained the best predictive performance results.  
 
 这些研究的结果说明了在开发新算法时应该选择哪种算法或必须考虑哪些算法。最终的决策将取决于所面临的问题和必须满足的要求：效率、灵活性、预测性能、模型的可解释性等。
+
+
 
 ## 6.APPLICATIONS OF MLL （应用）
 
