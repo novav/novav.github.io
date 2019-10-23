@@ -6,7 +6,7 @@ tags:
 - Self Play
 ---
 
-Papers:
+# Papers:
 
 2015 [SFP](http://proceedings.mlr.press/v37/heinrich15.pdf)《Fictitious self-play in extensive-form games》 Heinrich et al. (2015)   UCL&&DeepMind
 
@@ -14,7 +14,7 @@ Papers:
 
 2019 [MC-NFSP]《Monte Carlo Neural Fictitious Self-Play: Approach to Approximate Nash Equilibrium of Imperfect-Information Games? 》 ZJU: Li Zhang 
 
-Background：
+## Background：
 
 Extensive-form Game:
 
@@ -30,7 +30,33 @@ Normal-form Game
 
 
 
-XFP： **通过Theorem7更新Behavioural Strategy，可以收敛到纳什均衡。**
+FP (Fictitious play )
+
+![1571629669702](RL-NFSP/1571629669702.png)
+
+​	双玩家零和和潜在游戏
+
+## RL-分类
+
+**on-policy**: An agent is learning on-policy if it gathers these transition tuples by following its own policy.（从自己的策略中学习）
+
+**off-policy**: In the off-policy setting an agent is learning from experience of another agent or another policy. (从其它agent的经验中学习)
+
+​	eg: Q-learning
+
+### 3. Extensive-Form Fictitious Play 
+
+In this section, we derive a process in behavioural strategies that is realization equivalent to normal-form fictitious play （我们推导出行为策略的一个过程，即实现等同于正常形式的虚拟游戏）
+
+下面的引理(Theorem6)显示了如何通过一个加权组合的实现等价的行为策略来实现标准形式策略的混合。
+
+
+
+## RL-算法pseudo-code
+
+### XFP 
+
+( full-width extensive-form fictitious play) ： **通过Theorem7更新Behavioural Strategy，可以收敛到纳什均衡。**
 
 1、计算best Respose
 
@@ -40,16 +66,16 @@ repeat
 
 ![1571128998813](RL-NFSP/1571128998813.png)
 
-FSP(Fictitious Self-Play):
+### FSP(Fictitious Self-Play):
 
 - 使用强化学习计算BestResponse
 - 使用监督学习更新策略
 
 ![1571129034224](RL-NFSP/1571129034224.png)
 
-NFSP:
+### NFSP:
 
-- 引入Neural Network 替代传统算法：强化学习和监督学习都使用神经网络拟合。
+- 引入Neural Network近似； 替代传统算法：强化学习和监督学习都使用神经网络拟合。
 - Policy Network Π
 - Action-Value Network Q
 
@@ -57,11 +83,12 @@ NFSP:
 
 
 
-MC-NFSP:
+### MC-NFSP:
 
-- Policy Network Π
-- Policy -Value Network B
-- 采用MCTS，使用B，选择策略
+训练时，采用 $\eta$-greed 的概率进行policy的选择
+
+- 1-$\eta$  时，Policy Network $\Pi$ 
+- $\eta$ 时，Policy-Value Network B 结合MCTS，选择最佳策略
 
 ![1571126325514](RL-NFSP/1571126325514.png)
 
@@ -69,7 +96,7 @@ MC-NFSP:
 
 
 
-引申：
+## 引申：
 
 [腾讯云-解读](https://cloud.tencent.com/developer/article/1150412)
 
