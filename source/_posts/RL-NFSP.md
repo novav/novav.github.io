@@ -98,6 +98,7 @@ repeat
 
 ## 引申：
 
-[腾讯云-解读](https://cloud.tencent.com/developer/article/1150412)
+[Neural Fictitious Self Play——从博弈论到深度强化学习 腾讯云](https://cloud.tencent.com/developer/article/1150412)
 
 [从Fictitious Play 到 NFSP](https://gyh75520.github.io/2017/07/27/从Fictitious Play 到 NFSP/)
+
