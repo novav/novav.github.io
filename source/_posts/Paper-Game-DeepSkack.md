@@ -43,7 +43,11 @@ DeepStack的深度有限的连续重算是可靠的。如果DeepStack的直觉�
 
 
 
-#### Sparse lookahead trees 前瞻树
+#### Sparse lookahead trees 稀疏前瞻树
+
+reduction in the number of actions.
+
+
 
 #### Relationship to heuristic search in prefect information games
 
@@ -75,7 +79,7 @@ Turn Network: 10 million randomly generated poker turn games.
 
 ## Evaluating DeepStack 
 
-
+![1571992324228](Paper-Game-DeepSkack/1571992324228.png)
 
 ## Online
 
@@ -97,7 +101,11 @@ DeepStack 会在游戏的每一个节点重新计算一小段可能性的树，�
 
 
 
+reference
 
+[重磅 | Science论文详解击败德扑职业玩家的DeepStack，Nature探讨其与Libratus的优劣](http://www.sohu.com/a/127773829_465975)
+
+[*Pluribus* Science论文解读：打牌一时爽，一直打牌一直爽](http://www.sohu.com/a/345097139_500659)
 
 
 
