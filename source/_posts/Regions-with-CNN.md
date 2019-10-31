@@ -18,6 +18,14 @@ RCNN（Regions with CNN features）是将CNN方法应用到目标检测问题上
 
 ## SPP-Net
 
+[Paper](https://www.semanticscholar.org/paper/Spatial-Pyramid-Pooling-in-Deep-Convolutional-for-He-Zhang/cbb19236820a96038d000dc629225d36e0b6294a)
+
+[keras-spp](https://github.com/yhenon/keras-spp)
+
+[tf-spp](https://github.com/chengjunwen/spp_net)
+
+[pytorch_spp](http://www.erogol.com/spp-network-pytorch/)
+
 SPP-Net在RCNN的基础上做了实质性的改进：
 
 > 1）取消了crop/warp图像归一化过程，解决图像变形导致的信息丢失以及存储问题；
@@ -40,6 +48,8 @@ SPP-Net在RCNN的基础上做了实质性的改进：
 
 # Reference
 
-https://blog.csdn.net/xyfengbo/article/details/70227173
+[RCNN介绍](https://blog.csdn.net/xyfengbo/article/details/70227173)
 
-https://blog.csdn.net/v_july_v/article/details/80170182
+[一文读懂目标检测：R-CNN、Fast R-CNN、Faster R-CNN、YOLO、SSD](https://blog.csdn.net/v_july_v/article/details/80170182)
+
+[空间金字塔池化阅读笔记Spatial Pyramid Pooling in Deep Convolutional Networks for Visual Recognition](https://blog.csdn.net/liyaohhh/article/details/50614380)
