@@ -54,6 +54,8 @@ DeepFashion [38] only have the pairs of the same person in different poses but d
 
 ## MG_VTON
 
+Picture  + clothes + pose -> 穿新衣的人物Pose照片
+
 MG-VTON 四个组成部分：
 
 1- a pose-clothes-guided human parsing network is designed to guide the image synthesis;  设计了一种基于服装姿态引导的人工解析网络来指导图像合成;
@@ -63,6 +65,55 @@ MG-VTON 四个组成部分：
 3- a refinement network learns to recover the texture details 
 
 4- a mask-based geometric matching network is presented to warp clothes that enhances the visual quality of the generated image 提出了一种基于掩模的几何匹配网络，通过对衣服的变形来提高图像的视觉质量。
+
+
+
+我们采用了一个“粗-精”策略，将这个任务分成三个子任务，three subtasks ：
+
+- [ ] conditional parsing learning,(条件解析学习)
+
+- [ ] the Warp-GAN, 
+
+- [ ] the refinement render.  （细化纹理）
+
+![OverView MG-VTON](Paper-CV+MG-VTON/1573111435377.png)
+
+姿态编码：使用pose estimator [4]  ，我们将姿态编码为18个热图，其中填充一个半径为4像素的圆，其他地方为0。
+
+使用人解析器[6]来预测由20个标签组成的人类分割地图，从中提取面部、头发和身体形状的二进制掩码
+
+根据VITON[8]，我们将身体形状的采样降低到一个较低的分辨率(16×12)，并直接将其调整到原始分辨率(256×192)，这减轻了由于身体形状的变化所造成的人为影响
+
+![1573117982297](Paper-CV+MG-VTON/1573117982297.png)
+
+Architecture 
+
+### 3.1. Conditional Parsing Learning 
+
+L1-loss 产生更平滑的结果
+
+softmax_loss 合成高质量的人工Parsing Map
+
+### 3.2. Warp-GAN 
+
+### 3.3. Refinement render 
+
+### 3.4. Geometric matching learning 
+
+
+
+## Implementation Detail:
+
+**Setting.** We train the conditional parsing network, WarpGAN, refinement render, and geometric matching network for 200, 15, 5, 35 epochs, respectively, using ADAM optimizer [13], with the batch size of 40, learning rate of 0.0002, β1 = 0:5, β2 = 0:999. We use two NVIDIA Titan XP GPUs and Pytorch platform on Ubuntu 14.04. 
+
+**Architecture.** 
+
+each **generator** of MG-VTON is a ResNet-like network, which consists of three  downsample layers, three upsample layers, and nine residual blocks, each block has three convolutional layers with 3x3 filter kernels followed by the bath-norm layer and Relu activation function.  
+
+64, 128, 256, 512, 512, 512, 512, 512, 512, 512, 512, 512, 256, 128, 64. 
+
+**discriminator**  we apply the same architecture as **pix2pixHD** [30], which can handle the feature map
+in different scale with different layers. Each discriminator contains four downsample layers which include 4x4 kernels, InstanceNorm, and LeakyReLU activation function. 
 
 
 
@@ -94,13 +145,29 @@ The reason behind that is they ignore to consider the interplay between the huma
 
 
 
+### Virtual try-on. 
+
+**fiexd pose**:
+
+VITON[8]  computed the transformation mapping by the shape context TPS warps [2]  
+
+CP-VTON[29] 估计变换参数的学习方法。
+
+FanshionGAN[37] 学会了在输入图像的基础上生成新衣服，这个人以描述不同衣服的句子为条件
+
+ClothNet[15]提出了一种基于图像的生成模型，根据颜色生成新衣服。
+
+CAGAN[10]提出了一个条件类比网络来合成以衣服配对为条件的人的图像，这限制了实际的虚拟试穿场景。
+
+ClothCap[20]利用3D扫描仪自动捕捉衣服和身体的形状
+
+[26]提出了一种需要三维人体形态的虚拟试衣系统，对注释的采集十分繁琐。
 
 
 
+----learning to synthesize image with the new outfit on the person through adversarial learning , which can manipulate the pose simultaneously. 
 
-
-
-
+----使用对抗学习用新衣服合成图像, 同时控制姿势
 
 
 
