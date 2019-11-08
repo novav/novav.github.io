@@ -40,15 +40,51 @@ Other exiting works [14, 20, 35] usually leverage 3D measurements  to solve thos
 
 ## Dataset:
 
-the internet, named MPV ;
+**人体解析数据集****-human parsing**
 
-contains 35,687 person images and 13,524 clothes images.  
+|                 | 开源   |                                                              |
+| --------------- | ------ | ------------------------------------------------------------ |
+| **LIP**         | [open] | Single Person http://hcp.sysu.edu.cn/lip                     |
+| **CIHP**        | [open] | http://sysu-hcp.net/lip/overview.php                         |
+| **ATR**         | [open] |                                                              |
+| **VIP**         | [open] | Video Multi-Person Human Parsing                             |
+| **MHP**         | [open] | https://lv-mhp.github.io/dataset                             |
+| **Person-Part** | [open] | http://www.stat.ucla.edu/~xianjie.chen/pascal_part_dataset/pascal_part.html |
+| Fashionista     |        |                                                              |
+| **DeepFashion** |        |                                                              |
+| **MPV**         |        | 已经闭源                                                     |
 
-The image is in the resolution of 256 × 192. We extract the 62,780 three-tuples of the same person in the same clothes but with diverse poses .
+[refer](https://blog.csdn.net/wxf19940618/article/details/83661891) 
 
-图片大小265x192，提取了62780组图片，每组含同一人的不同姿势的三张图片。
 
-DeepFashion [38] only have the pairs of the same person in different poses but do not have the image of clothes. 
+
+Chictopia10k 
+
+​	human parsing  ["Human parsing with contextualized convolutional neural network." ICCV'15](http://www.cv-foundation.org/openaccess/content_iccv_2015/html/Liang_Human_Parsing_With_ICCV_2015_paper.html),
+
+
+
+
+
+
+
+
+
+
+
+**MPV:**
+
+​	collect from the internet, named MPV ;
+
+​	contains 35,687 person images and 13,524 clothes images.  
+
+​	The image is in the resolution of 256 × 192. We extract the 62,780 three-tuples of the same person in the same clothes but with diverse poses .
+
+​	图片大小265x192，提取了62780组图片，每组含同一人的不同姿势的三张图片。
+
+**DeepFashion:**[HomePage -Download](http://mmlab.ie.cuhk.edu.hk/projects/DeepFashion.html)
+
+​	DeepFashion [38] only have the pairs of the same person in different poses but do not have the image of clothes. 
 
 
 
@@ -88,19 +124,41 @@ MG-VTON 四个组成部分：
 
 Architecture 
 
-### 3.1. Conditional Parsing Learning 
+### 3.1. Conditional Parsing Learning 【~人体解析/语义分割】
+
+![1573203694348](Paper-CV+MG-VTON/1573203694348.png)
 
 L1-loss 产生更平滑的结果
 
 softmax_loss 合成高质量的人工Parsing Map
 
-### 3.2. Warp-GAN 
+IN: (ImageOfClothes, postHeatMap, body shape, mask Hair, mask Face)
 
-### 3.3. Refinement render 
+p(St’|(Mh, Mf, Mb, C, P))
 
-### 3.4. Geometric matching learning 
+G: 该阶段基于条件生成对抗网络(CGAN)
+
+D: We adopt the discriminator D directly from the pix2pixHD  
+
+OUT: Parsing
 
 
+
+### 3.2. Warp-GAN 【~Fake】
+
+![1573203679896](Paper-CV+MG-VTON/1573203679896.png)
+
+[geometric matching](《Convolutional neural network architecture for geometric matching》) module to warp clothes image[3.4](###3.4) 
+
+
+
+### 3.3. Refinement render 【~高像素修复】
+
+![1573203710267](Paper-CV+MG-VTON/1573203710267.png)
+
+### 3.4. Geometric matching learning 【~】
+
+![1573203724114](Paper-CV+MG-VTON/1573203724114.png)
 
 ## Implementation Detail:
 
