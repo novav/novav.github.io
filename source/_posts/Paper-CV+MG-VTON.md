@@ -40,36 +40,6 @@ Other exiting works [14, 20, 35] usually leverage 3D measurements  to solve thos
 
 ## Dataset:
 
-**人体解析数据集****-human parsing**
-
-|                 | 开源   |                                                              |
-| --------------- | ------ | ------------------------------------------------------------ |
-| **LIP**         | [open] | Single Person http://hcp.sysu.edu.cn/lip                     |
-| **CIHP**        | [open] | http://sysu-hcp.net/lip/overview.php                         |
-| **ATR**         | [open] |                                                              |
-| **VIP**         | [open] | Video Multi-Person Human Parsing                             |
-| **MHP**         | [open] | https://lv-mhp.github.io/dataset                             |
-| **Person-Part** | [open] | http://www.stat.ucla.edu/~xianjie.chen/pascal_part_dataset/pascal_part.html |
-| Fashionista     |        |                                                              |
-| **DeepFashion** |        |                                                              |
-| **MPV**         |        | 已经闭源                                                     |
-
-[refer](https://blog.csdn.net/wxf19940618/article/details/83661891) 
-
-
-
-Chictopia10k 
-
-​	human parsing  ["Human parsing with contextualized convolutional neural network." ICCV'15](http://www.cv-foundation.org/openaccess/content_iccv_2015/html/Liang_Human_Parsing_With_ICCV_2015_paper.html),
-
-
-
-
-
-
-
-
-
 
 
 **MPV:**
@@ -82,9 +52,7 @@ Chictopia10k
 
 ​	图片大小265x192，提取了62780组图片，每组含同一人的不同姿势的三张图片。
 
-**DeepFashion:**[HomePage -Download](http://mmlab.ie.cuhk.edu.hk/projects/DeepFashion.html)
 
-​	DeepFashion [38] only have the pairs of the same person in different poses but do not have the image of clothes. 
 
 
 

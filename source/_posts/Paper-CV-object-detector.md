@@ -20,7 +20,7 @@ Fast R-CNN
 
 Faster R-CNN
 
-Mask R-CNN
+Mask R-CNN （目标检测 + 像素分割）
 
 SSD (Single Shot MultiBox Defender)
 
