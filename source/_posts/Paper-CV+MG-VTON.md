@@ -2,6 +2,8 @@
 title: Paper_CV+ MG-VTON
 date: 2019-11-06 20:10:57
 tags:
+- MG-VTON
+
 ---
 
 ## MG-VTON  《Towards Multi-pose Guided Virtual Try-on Network 》

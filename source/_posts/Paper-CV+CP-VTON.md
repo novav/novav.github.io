@@ -3,7 +3,7 @@ title: Paper-CV+CP-VTON
 date: 2019-11-11 15:40:47
 tags:
 - VTON
-
+- CP-VTON
 ---
 
 ## CP-VTON
@@ -97,11 +97,15 @@ image
 
 image_parse
 
+warped_img 【处理image_parse数据二次处理后得到】
+
+Pose【通过OpenPose对refer image处理得到 keypoint文件，二次处理】
+
 Cloth
 
 Cloth-Mask
 
-Pose
+
 
 ![1573784884416](Paper-CV+CP-VTON/1573784884416.png)
 
@@ -172,7 +176,8 @@ function image_parse()
         s_name = strrep(imname,'.jpg','.mat');
         segment = importdata([source_root_dir '/' 'segment/' s_name]);
 		segment = segment';
-	
+		
+		# 图片裁剪
 	    if h > w
 	        segment = segment(:,1:int32(641.0*w/h));
 	    else
