@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Ubuntu,VNC,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Simon Shi的小站" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="[toc] Tools-Ubuntu-Desktop install1、Ubuntu Desktop 官网：https://www.ubuntugeek.com/install-gui-in-ubuntu-server.html We have already discussed how to install ubuntu 9.04 LAMP server .If you are a new us">
+<meta name="keywords" content="Ubuntu,VNC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tools-Ubuntu-Desktop-install">
+<meta property="og:url" content="http://yoursite.com/2020/02/29/Tools-Ubuntu-Desktop install/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="[toc] Tools-Ubuntu-Desktop install1、Ubuntu Desktop 官网：https://www.ubuntugeek.com/install-gui-in-ubuntu-server.html We have already discussed how to install ubuntu 9.04 LAMP server .If you are a new us">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2020/02/29/Tools-Ubuntu-Desktop%20install/853751-20191028141654118-1420680837.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/29/Tools-Ubuntu-Desktop%20install/853751-20191028141813379-1485558996.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/29/Tools-Ubuntu-Desktop%20install/853751-20191028141934569-968731671.png">
+<meta property="og:updated_time" content="2021-02-20T12:34:52.170Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tools-Ubuntu-Desktop-install">
+<meta name="twitter:description" content="[toc] Tools-Ubuntu-Desktop install1、Ubuntu Desktop 官网：https://www.ubuntugeek.com/install-gui-in-ubuntu-server.html We have already discussed how to install ubuntu 9.04 LAMP server .If you are a new us">
+<meta name="twitter:image" content="http://yoursite.com/2020/02/29/Tools-Ubuntu-Desktop%20install/853751-20191028141654118-1420680837.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/02/29/Tools-Ubuntu-Desktop install/">
+
+
+
+
+
+  <title>Tools-Ubuntu-Desktop-install | Simon Shi的小站</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simon Shi的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人工智能，机器学习 学习记录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/29/Tools-Ubuntu-Desktop install/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Tools-Ubuntu-Desktop-install</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-02-29T15:47:57+00:00">
+                2020-02-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Ubuntu/" itemprop="url" rel="index">
+                    <span itemprop="name">Ubuntu</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/02/29/Tools-Ubuntu-Desktop install/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2020/02/29/Tools-Ubuntu-Desktop install/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[toc]</p>
+<h1 id="Tools-Ubuntu-Desktop-install"><a href="#Tools-Ubuntu-Desktop-install" class="headerlink" title="Tools-Ubuntu-Desktop install"></a>Tools-Ubuntu-Desktop install</h1><h3 id="1、Ubuntu-Desktop-官网："><a href="#1、Ubuntu-Desktop-官网：" class="headerlink" title="1、Ubuntu Desktop 官网："></a>1、Ubuntu Desktop 官网：</h3><p><a href="https://www.ubuntugeek.com/install-gui-in-ubuntu-server.html" target="_blank" rel="noopener">https://www.ubuntugeek.com/install-gui-in-ubuntu-server.html</a></p>
+<p>We have already discussed how to <a href="https://www.ubuntugeek.com/step-by-step-ubuntu-904-jaunty-lamp-server-setup.html" target="_blank" rel="noopener">install ubuntu 9.04 LAMP server</a> .If you are a new user and not familiar with command prompt you can install GUI for your ubuntu LAMP server using the 2 options</p>
+<p>1) Install desktop Environment</p>
+<p>2) Install Webmin</p>
+<p><strong>1) Install desktop Environment</strong></p>
+<p>First you nee to make sure you have enabled Universe and multiverse repositories in /etc/apt/sources.list file once you have enable you need to use the following command to install GUI</p>
+<blockquote>
+<p>sudo apt-get update</p>
+</blockquote>
+<blockquote>
+<p>sudo apt-get install ubuntu-desktop</p>
+</blockquote>
+<p>The above command will install GNOME desktop</p>
+<p>If you wan to install a graphical desktop manager without some of the desktop addons like Evolution and OpenOffice, but continue to use the server flavor kernel use the following command</p>
+<blockquote>
+<p>sudo aptitude install –without-recommends ubuntu-desktop</p>
+</blockquote>
+<p>If you want to install light weight desktop install xfce using the following command</p>
+<blockquote>
+<p>sudo apt-get install xubuntu-desktop</p>
+</blockquote>
+<p>If you want to install KDE desktop use the following command</p>
+<blockquote>
+<p>sudo apt-get install kubuntu-desktop</p>
+</blockquote>
+<p><strong>2) Install Webmin in Ubuntu</strong></p>
+<ul>
+<li>略</li>
+</ul>
+<h3 id="2、xinit"><a href="#2、xinit" class="headerlink" title="2、xinit"></a>2、xinit</h3><p>apt install -y xinit</p>
+<h3 id="3、VNC-server-client"><a href="#3、VNC-server-client" class="headerlink" title="3、VNC server/client"></a>3、VNC server/client</h3><p>安装Gnome桌面环境：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install gnome-session-flashback</span><br></pre></td></tr></table></figure>
+
+<p>安装VNC服务：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install vnc4server -y</span><br><span class="line">sudo apt install ubuntu-desktop gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal -y</span><br></pre></td></tr></table></figure>
+
+<p>首次配置VNC服务：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vncserver</span><br></pre></td></tr></table></figure>
+
+<p>输入VNC连接密码。</p>
+<p>结束 vncserver：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vncserver -kill :1</span><br></pre></td></tr></table></figure>
+
+<p>修改<code>~/.vnc/xstartup</code>，在 <code>x-window-manager &amp;</code>的后面新增下面这些行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">gnome-panel &amp;</span><br><span class="line">gnome-settings-daemon &amp;</span><br><span class="line">metacity &amp;</span><br><span class="line">nautilus &amp;</span><br><span class="line"><span class="meta">#</span><span class="bash"> Fix to make GNOME work</span></span><br><span class="line">export XKL_XMODMAP_DISABLE=1</span><br><span class="line">/etc/X11/Xsession</span><br></pre></td></tr></table></figure>
+
+<p>重新启动VNC服务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vncserver</span><br></pre></td></tr></table></figure>
+
+<p>作者：赵星云<br>链接：<a href="https://www.jianshu.com/p/70b522d006d8" target="_blank" rel="noopener">https://www.jianshu.com/p/70b522d006d8</a><br>来源：简书<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<h3 id="4、xrdp"><a href="#4、xrdp" class="headerlink" title="4、xrdp"></a>4、xrdp</h3><p>一.在操作系统中用管理员权限安装以下软件</p>
+<p>   \1. 安装xrdp：</p>
+<p>​     sudo apt-get install xrdp</p>
+<p>   \2. 安装vnc4server：</p>
+<p>​     sudo apt-get install vnc4server</p>
+<p>   \3. 安装xubuntu-desktop：</p>
+<p>​      sudo apt-get install xubuntu-desktop</p>
+<p>​    \4. xsession中写入xfce4-session,需要远程的用户都要单独执行这条命令：</p>
+<p>​      echo “xfce4-session” &gt;~/.xsession</p>
+<p>​    \5. 重启xrdp服务：</p>
+<p>​       /etc/init.d/xrdp restart</p>
+<p>二. Windows端操作</p>
+<p>   1.执行MSTSC开启远程登陆终端</p>
+<p>​     <img src="/2020/02/29/Tools-Ubuntu-Desktop install/853751-20191028141654118-1420680837.png" alt="img"></p>
+<p>   \2. 输入密码：</p>
+<p>​     <img src="/2020/02/29/Tools-Ubuntu-Desktop install/853751-20191028141813379-1485558996.png" alt="img"></p>
+<p>   \3. 连接的界面</p>
+<p>​     <img src="/2020/02/29/Tools-Ubuntu-Desktop install/853751-20191028141934569-968731671.png" alt="img"></p>
+<p>#########################################################</p>
+<p>三. ubuntu vsftpd.conf配置</p>
+<p>listen=YES</p>
+<p>listen_port=2112</p>
+<p>anonymous_enable=NO</p>
+<p>local_enable=YES</p>
+<p>write_enable=YES</p>
+<p>chroot_local_user=NO</p>
+<p>chroot_list_file=/etc/vsftpd.chroot_list</p>
+<p>pam_service_name=ftp</p>
+<h3 id="5、Question"><a href="#5、Question" class="headerlink" title="5、Question"></a>5、Question</h3><p>安装xserver的时候不要安装有关nvidia的软件，然后编译安装就好了。</p>
+<h3 id="6、Install-X-window"><a href="#6、Install-X-window" class="headerlink" title="6、Install X window"></a>6、Install X window</h3><p><a href="https://stackoverflow.com/questions/40195740/how-to-run-openai-gym-render-over-a-server" target="_blank" rel="noopener">https://stackoverflow.com/questions/40195740/how-to-run-openai-gym-render-over-a-server</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Install and configure X window with virtual screen</span></span><br><span class="line">sudo apt-get install xserver-xorg libglu1-mesa-dev freeglut3-dev mesa-common-dev libxmu-dev libxi-dev</span><br><span class="line"><span class="meta">#</span><span class="bash"> Configure the nvidia-x</span></span><br><span class="line">sudo nvidia-xconfig -a --use-display-device=None --virtual=1280x1024</span><br><span class="line"><span class="meta">#</span><span class="bash"> Run the virtual screen <span class="keyword">in</span> the background (:0)</span></span><br><span class="line">sudo /usr/bin/X :0 &amp;</span><br><span class="line"><span class="meta">#</span><span class="bash"> We only need to setup the virtual screen once</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Run the program with vitural screen</span></span><br><span class="line">DISPLAY=:0 &lt;program&gt;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> If you dont want to <span class="built_in">type</span> `DISPLAY=:0` everytime</span></span><br><span class="line">export DISPLAY=:0</span><br></pre></td></tr></table></figure>
+
+<p>sudo nvidia-xconfig -a –use-display-device=Device0 –virtual=1280x1024</p>
+<p>sudo nvidia-xconfig -a  –virtual=1280x1024</p>
+<h3 id="7、VNC-配置ALL（-自启动选项）"><a href="#7、VNC-配置ALL（-自启动选项）" class="headerlink" title="7、VNC 配置ALL（+ 自启动选项）"></a>7、VNC 配置ALL（+ 自启动选项）</h3>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Ubuntu/" rel="tag"># Ubuntu</a>
+          
+            <a href="/tags/VNC/" rel="tag"># VNC</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/02/10/CV-3D-Face-Model/" rel="next" title="CV-3D-Face-Model">
+                <i class="fa fa-chevron-left"></i> CV-3D-Face-Model
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/11/AI-Research/" rel="prev" title="AI_Research institute">
+                AI_Research institute <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Simon Shi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">100</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">136</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Tools-Ubuntu-Desktop-install"><span class="nav-number">1.</span> <span class="nav-text">Tools-Ubuntu-Desktop install</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、Ubuntu-Desktop-官网："><span class="nav-number">1.0.1.</span> <span class="nav-text">1、Ubuntu Desktop 官网：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、xinit"><span class="nav-number">1.0.2.</span> <span class="nav-text">2、xinit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、VNC-server-client"><span class="nav-number">1.0.3.</span> <span class="nav-text">3、VNC server/client</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、xrdp"><span class="nav-number">1.0.4.</span> <span class="nav-text">4、xrdp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、Question"><span class="nav-number">1.0.5.</span> <span class="nav-text">5、Question</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、Install-X-window"><span class="nav-number">1.0.6.</span> <span class="nav-text">6、Install X window</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7、VNC-配置ALL（-自启动选项）"><span class="nav-number">1.0.7.</span> <span class="nav-text">7、VNC 配置ALL（+ 自启动选项）</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+<div>
+<!-- 填写你的友盟代码 -->
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1277989586'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s9.cnzz.com/z_stat.php%3Fid%3D1277989586%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+<!-- 你的友盟代码 end -->
+</div>
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'novav',
+            repo: 'blog_comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'ea8aae03b5381e13ab9cdedd0282b60d8ec412cb',
+            
+                client_id: 'c3934b23eb001aa3243d'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
