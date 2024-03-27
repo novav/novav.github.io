@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="LLM,LangChain,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Simon Shi的小站" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="1、LangChain介绍LangChain 就是一个 LLM 编程框架，你想开发一个基于 LLM 应用，需要什么组件它都有，直接使用就行；甚至针对常规的应用流程，它利用链(LangChain中Chain的由来)这个概念已经内置标准化方案了。下面我们从新兴的大语言模型（LLM）技术栈的角度来看看为何它的理念这么受欢迎。 借助 Langchain，可以创建聊天机器人、问答系统和其他人工智能代理。 其">
+<meta name="keywords" content="LLM,LangChain">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LLM 编程框架-LangChain">
+<meta property="og:url" content="http://yoursite.com/2024/01/30/NLP/LLM/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="1、LangChain介绍LangChain 就是一个 LLM 编程框架，你想开发一个基于 LLM 应用，需要什么组件它都有，直接使用就行；甚至针对常规的应用流程，它利用链(LangChain中Chain的由来)这个概念已经内置标准化方案了。下面我们从新兴的大语言模型（LLM）技术栈的角度来看看为何它的理念这么受欢迎。 借助 Langchain，可以创建聊天机器人、问答系统和其他人工智能代理。 其">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2024/01/30/NLP/LLM/2024-01-30-16-58-12-image.png">
+<meta property="og:image" content="http://yoursite.com/2024/01/30/NLP/LLM/2024-01-30-16-58-26-image.png">
+<meta property="og:image" content="http://yoursite.com/2024/01/30/NLP/LLM/2024-01-30-17-00-00-image.png">
+<meta property="og:image" content="http://yoursite.com/2024/01/30/NLP/LLM/2024-01-30-17-00-26-image.png">
+<meta property="og:updated_time" content="2024-03-27T04:10:14.288Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LLM 编程框架-LangChain">
+<meta name="twitter:description" content="1、LangChain介绍LangChain 就是一个 LLM 编程框架，你想开发一个基于 LLM 应用，需要什么组件它都有，直接使用就行；甚至针对常规的应用流程，它利用链(LangChain中Chain的由来)这个概念已经内置标准化方案了。下面我们从新兴的大语言模型（LLM）技术栈的角度来看看为何它的理念这么受欢迎。 借助 Langchain，可以创建聊天机器人、问答系统和其他人工智能代理。 其">
+<meta name="twitter:image" content="http://yoursite.com/2024/01/30/NLP/LLM/2024-01-30-16-58-12-image.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2024/01/30/NLP/LLM/">
+
+
+
+
+
+  <title>LLM 编程框架-LangChain | Simon Shi的小站</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simon Shi的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人工智能，机器学习 学习记录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2024/01/30/NLP/LLM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">LLM 编程框架-LangChain</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2024-01-30T12:00:00+00:00">
+                2024-01-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2024/01/30/NLP/LLM/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2024/01/30/NLP/LLM/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1、LangChain介绍"><a href="#1、LangChain介绍" class="headerlink" title="1、LangChain介绍"></a>1、LangChain介绍</h2><p>LangChain 就是一个 LLM 编程框架，你想开发一个基于 LLM 应用，需要什么组件它都有，直接使用就行；甚至针对常规的应用流程，它利用链(LangChain中Chain的由来)这个概念已经内置标准化方案了。下面我们从新兴的大语言模型（LLM）技术栈的角度来看看为何它的理念这么受欢迎。</p>
+<p>借助 Langchain，可以创建聊天机器人、问答系统和其他人工智能代理。</p>
+<p>其官方的定义</p>
+<blockquote>
+<p>LangChain是一个基于语言模型开发应用程序的框架。它可以实现以下应用程序：</p>
+</blockquote>
+<ul>
+<li>数据感知：将语言模型连接到其他数据源</li>
+<li>自主性：允许语言模型与其环境进行交互</li>
+</ul>
+<p>LangChain的主要价值在于：</p>
+<ul>
+<li>组件化：为使用语言模型提供抽象层，以及每个抽象层的一组实现。组件是模块化且易于使用的，无论您是否使用LangChain框架的其余部分。</li>
+<li>现成的链：结构化的组件集合，用于完成特定的高级任务</li>
+</ul>
+<p>现成的链使得入门变得容易。对于更复杂的应用程序和微妙的用例，组件化使得定制现有链或构建新链变得更容易。</p>
+<img title src="/2024/01/30/NLP/LLM/2024-01-30-16-58-12-image.png" alt width="629">
+
+<h3 id="新兴-LLM-技术栈"><a href="#新兴-LLM-技术栈" class="headerlink" title="新兴 LLM 技术栈"></a><strong>新兴 <mark>LLM 技术栈</mark></strong></h3><p>大语言模型技术栈由四个主要部分组成：</p>
+<ul>
+<li>数据预处理流程（data preprocessing pipeline）</li>
+<li>嵌入端点（embeddings endpoint ）+向量存储（vector store）</li>
+<li>LLM 终端（LLM endpoints）</li>
+<li>LLM 编程框架（LLM programming framework）</li>
+</ul>
+<p><img src="/2024/01/30/NLP/LLM/2024-01-30-16-58-26-image.png" alt></p>
+<h3 id="数据预处理流程"><a href="#数据预处理流程" class="headerlink" title="数据预处理流程"></a><strong>数据预处理流程</strong></h3><p>该步骤包括与数据源连接的连接器（例如S3存储桶或CRM）、数据转换层以及下游连接器（例如向矢量数据库）。通常，输入到LLM中的最有价值的信息也是最难处理的（如PDF、PPTX、HTML等），但同时，易于访问文本的文档（例如.DOCX）中也包含用户不希望发送到推理终端的信息（例如广告、法律条款等）。</p>
+<p>因为涉及的数据源繁杂（数千个PDF、PPTX、聊天记录、抓取的HTML等），这步也存在大量的 dirty work，使用OCR模型、Python脚本和正则表达式等方式来自动提取、清理和转换关键文档元素（例如标题、正文、页眉/页脚、列表等），最终向外部以API的方式提供JSON数据，以便嵌入终端和存储在向量数据库中。</p>
+<h3 id="嵌入端点和向量存储"><a href="#嵌入端点和向量存储" class="headerlink" title="嵌入端点和向量存储"></a><strong>嵌入端点和向量存储</strong></h3><p>使用嵌入端点（用于生成和返回诸如词向量、文档向量等嵌入向量的 API 端点）和向量存储（用于存储和检索向量的数据库或数据存储系统）代表了数据存储和访问方式的重大演变。以前，嵌入主要用于诸如文档聚类之类的特定任务，在新的架构中，将文档及其嵌入存储在向量数据库中，可以通过LLM端点实现关键的交互模式。直接存储原始嵌入，意味着数据可以以其自然格式存储，从而实现更快的处理时间和更高效的数据检索。此外，这种方法可以更容易地处理大型数据集，因为它可以减少训练和推理过程中需要处理的数据量。</p>
+<h3 id="LLM终端"><a href="#LLM终端" class="headerlink" title="LLM终端"></a><strong>LLM终端</strong></h3><p>LLM终端是接收输入数据并生成LLM输出的终端。LLM终端负责管理模型的资源，包括内存和计算资源，并提供可扩展和容错的接口，用于向下游应用程序提供LLM输出。</p>
+<h3 id="LLM编程框架"><a href="#LLM编程框架" class="headerlink" title="LLM编程框架"></a><strong>LLM编程框架</strong></h3><p>LLM编程框架提供了一套工具和抽象，用于使用语言模型构建应用程序。在现代技术栈中出现了各种类型的组件，包括：LLM提供商、嵌入模型、向量存储、文档加载器、其他外部工具（谷歌搜索等），这些框架的一个重要功能是协调各种组件。</p>
+<h3 id="关键组件解释"><a href="#关键组件解释" class="headerlink" title="关键组件解释"></a><strong>关键组件解释</strong></h3><p><strong>Prompts</strong></p>
+<p>Prompts用来管理 LLM 输入的工具，在从 LLM 获得所需的输出之前需要对提示进行相当多的调整，最终的Promps可以是单个句子或多个句子的组合，它们可以包含变量和条件语句。</p>
+<p><strong>Chains</strong></p>
+<p>是一种将LLM和其他多个组件连接在一起的工具，以实现复杂的任务。</p>
+<p><strong>Agents</strong></p>
+<p>是一种使用LLM做出决策的工具，它们可以执行特定的任务并生成文本输出。Agents通常由三个部分组成：Action、Observation和Decision。Action是代理执行的操作，Observation是代理接收到的信息，Decision是代理基于Action和Observation做出的决策。</p>
+<p><strong>Memory</strong></p>
+<p>是一种用于存储数据的工具，由于LLM 没有任何长期记忆，它有助于在多次调用之间保持状态。</p>
+<h3 id="典型应用场景"><a href="#典型应用场景" class="headerlink" title="典型应用场景"></a><strong>典型应用场景</strong></h3><ul>
+<li><a href="https://link.zhihu.com/?target=https%3A//python.langchain.com/docs/use_cases/question_answering.html" target="_blank" rel="noopener">特定文档的问答</a>：从Notion数据库中提取信息并回答用户的问题。</li>
+<li><a href="https://link.zhihu.com/?target=https%3A//python.langchain.com/docs/use_cases/chatbots/" target="_blank" rel="noopener">聊天机器人</a>：使用Chat-LangChain模块创建一个与用户交流的机器人。</li>
+<li><a href="https://link.zhihu.com/?target=https%3A//python.langchain.com/docs/use_cases/agents/" target="_blank" rel="noopener">代理</a>：使用GPT和WolframAlpha结合，创建一个能够执行数学计算和其他任务的代理。</li>
+<li><a href="https://link.zhihu.com/?target=https%3A//python.langchain.com/docs/use_cases/summarization" target="_blank" rel="noopener">文本摘要</a>：使用外部数据源来生成特定文档的摘要。</li>
+</ul>
+<h3 id="Langchain-竞品"><a href="#Langchain-竞品" class="headerlink" title="Langchain 竞品"></a><strong>Langchain 竞品</strong></h3><p>（个人认为）在商业化上，基于大模型业务分为三个层次：</p>
+<ul>
+<li>基础设施层：通用的大模型底座</li>
+<li>垂直领域层：基于大模型底座+领域场景数据微调形成更强垂直能力</li>
+<li>应用层：基于前两者，瘦前端的方式提供多样化应用体验</li>
+</ul>
+<p>类似 LangChain 这种工具框架可以做到整合各个层能力，具备加速应用开发和落地验证的优势，因此也出现了很多竞争者。</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>语言</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>LangChain</td>
+<td>Python/JS</td>
+<td>优点：提供了标准的内存接口和内存实现，支持自定义大模型的封装。<br>缺点：评估生成模型的性能比较困难。</td>
+</tr>
+<tr>
+<td>Dust.tt</td>
+<td>Rust/TS</td>
+<td>优点：提供了简单易用的API，可以让开发者快速构建自己的LLM应用程序。<br>缺点：文档不够完善。</td>
+</tr>
+<tr>
+<td>Semantic-kernel</td>
+<td>TypeScript</td>
+<td>优点：轻量级SDK，可将AI大型语言模型（LLMs）与传统编程语言集成在一起。<br>缺点：文档不够完善。</td>
+</tr>
+<tr>
+<td>Fixie.ai</td>
+<td>Python</td>
+<td>优点：开放、免费、简单，多模态（images, audio, video…）<br>缺点：PaaS平台，需要在平台部署</td>
+</tr>
+<tr>
+<td>Brancher AI</td>
+<td>Python/JS</td>
+<td>优点：链接所有大模型，无代码快速生成应用, Langchain产品）<br>缺点：-</td>
+</tr>
+</tbody></table>
+<hr>
+<p>LangChain 主体分为 6 个模块，分别是对（大语言）模型输入输出的管理、外部数据接入、链的概念、（上下文记忆）存储管理、智能代理以及回调系统，通过文档的组织结构，你可以清晰了解到 LangChain的侧重点，以及在大语言模型开发生态中对自己的定位。</p>
+<h2 id="2、LLM输入输出管理"><a href="#2、LLM输入输出管理" class="headerlink" title="2、LLM输入输出管理"></a>2、LLM输入输出管理</h2><p><img src="/2024/01/30/NLP/LLM/2024-01-30-17-00-00-image.png" alt></p>
+<h2 id="3、数据接入层"><a href="#3、数据接入层" class="headerlink" title="3、数据接入层"></a>3、数据接入层</h2><p><img src="/2024/01/30/NLP/LLM/2024-01-30-17-00-26-image.png" alt></p>
+<h2 id="4、Embedding专题"><a href="#4、Embedding专题" class="headerlink" title="4、Embedding专题"></a>4、Embedding专题</h2><p>在机器学习中，向量通常用于表示数据的特征。</p>
+<p>而文本嵌入是一种将文本这种离散数据映射到连续向量空间的方法，嵌入技术可以将高维的离散数据降维到低维的连续空间中，并保留数据之间的语义关系，从而方便进行机器学习和深度学习的任务。</p>
+<h3 id="文本嵌入算法"><a href="#文本嵌入算法" class="headerlink" title="文本嵌入算法"></a><strong>文本嵌入算法</strong></h3><p>文本嵌入算法是指将文本数据转化为向量表示的具体算法，通常包括以下几个步骤：</p>
+<ul>
+<li>分词：将文本划分成一个个单词或短语。</li>
+<li>构建词汇表：将分词后的单词或短语建立词汇表，并为每个单词或短语赋予一个唯一的编号。</li>
+<li>计算词嵌入：使用预训练的模型或自行训练的模型，将每个单词或短语映射到向量空间中。</li>
+<li>计算文本嵌入：将文本中每个单词或短语的向量表示取平均或加权平均，得到整个文本的向量表示。</li>
+</ul>
+<p>常见的文本嵌入算法包括 Word2Vec、GloVe、FastText 等。这些算法通过预训练或自行训练的方式，将单词或短语映射到低维向量空间中，从而能够在计算机中方便地处理文本数据。</p>
+<h3 id="文本嵌入用途"><a href="#文本嵌入用途" class="headerlink" title="文本嵌入用途"></a><strong>文本嵌入用途</strong></h3><p>文本嵌入用于测量文本字符串的相关性，通常用于：</p>
+<ul>
+<li>搜索（结果按与查询字符串的相关性排序）</li>
+<li>聚类（其中文本字符串按相似性分组）</li>
+<li>推荐（推荐具有相关文本字符串的项目）</li>
+<li>异常检测（识别出相关性很小的异常值）</li>
+<li>多样性测量（分析相似性分布）</li>
+<li>分类（其中文本字符串按其最相似的标签分类）</li>
+</ul>
+<h3 id="使用文本嵌入模型"><a href="#使用文本嵌入模型" class="headerlink" title="使用文本嵌入模型"></a><strong>使用文本嵌入模型</strong></h3><ul>
+<li><p>可以使用 HuggingFace上能够处理文本嵌入的开源模型，例如：<a href="https://link.zhihu.com/?target=https%3A//huggingface.co/uer/sbert-base-chinese-nli" target="_blank" rel="noopener">uer/sbert-base-chinese-nli</a></p>
+</li>
+<li><p>使用之前介绍的 <a href="https://link.zhihu.com/?target=https%3A//aitutor.liduos.com/01-llm/01-3.html%23embeddings" target="_blank" rel="noopener">OpenAI 文本嵌入API</a> 可以将文本转换为向量，OpenAI API提供了多个文本嵌入模型，<a href="https://link.zhihu.com/?target=https%3A//openai.com/blog/new-and-improved-embedding-mode" target="_blank" rel="noopener">这篇博客</a>对它们的性能进行了比较，这里是性能最好的<code>text-embedding-ada-002</code>说明：  </p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>模型名称</th>
+<th>价格</th>
+<th>分词器</th>
+<th>最大输入 token</th>
+<th>输出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>text-embedding-ada-002</td>
+<td>$0.000/1k tokens</td>
+<td>cl100k_base</td>
+<td>8191</td>
+<td>1536</td>
+</tr>
+</tbody></table>
+<h3 id="支持文本嵌入的其他模型"><a href="#支持文本嵌入的其他模型" class="headerlink" title="支持文本嵌入的其他模型"></a>支持文本嵌入的其他模型</h3><ul>
+<li><a href="https://link.zhihu.com/?target=https%3A//huggingface.co/nghuyong/ernie-3.0-nano-zh" target="_blank" rel="noopener">nghuyong/ernie-3.0-nano-zh</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//huggingface.co/shibing624/text2vec-base-chinese" target="_blank" rel="noopener">shibing624/text2vec-base-chinese</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//huggingface.co/GanymedeNil/text2vec-large-chinese" target="_blank" rel="noopener">GanymedeNil/text2vec-large-chinese</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//huggingface.co/moka-ai/m3e-base" target="_blank" rel="noopener">moka-ai/m3e-base</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//github.com/UKPLab/sentence-transformers" target="_blank" rel="noopener">用于句子、文本和图像嵌入的Python库</a></li>
+</ul>
+<h3 id="矢量数据库"><a href="#矢量数据库" class="headerlink" title="矢量数据库"></a><strong>矢量数据库</strong></h3><ul>
+<li><p>为了快速搜索多个矢量，建议使用矢量数据库，下面是一些可选的矢量数据库：</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https%3A//github.com/openai/openai-cookbook/tree/main/examples/vector_databases/pinecone" target="_blank" rel="noopener">Pinecone</a>，一个完全托管的矢量数据库</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https%3A//github.com/openai/openai-cookbook/tree/main/examples/vector_databases/weaviate" target="_blank" rel="noopener">Weaviate</a>，一个开源的矢量搜索引擎</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https%3A//github.com/openai/openai-cookbook/tree/main/examples/vector_databases/redis" target="_blank" rel="noopener">Redis</a>作为矢量数据库</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https%3A//github.com/openai/openai-cookbook/tree/main/examples/vector_databases/qdrant" target="_blank" rel="noopener">Qdrant</a>，一个矢量搜索引擎（开源免费）</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https%3A//github.com/openai/openai-cookbook/blob/main/examples/vector_databases/Using_vector_databases_for_embeddings_search.ipynb" target="_blank" rel="noopener">Milvus</a>，一个为可扩展的相似性搜索而构建的矢量数据库</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https%3A//github.com/chroma-core/chroma" target="_blank" rel="noopener">Chroma</a>，一个开源嵌入式商店</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https%3A//typesense.org/docs/0.24.0/api/vector-search.html" target="_blank" rel="noopener">Typesense</a>，快速的开源矢量搜索引擎</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https%3A//github.com/openai/openai-cookbook/tree/main/examples/vector_databases/zilliz" target="_blank" rel="noopener">Zilliz</a>，数据基础设施，由Milvus提供技术支持</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https%3A//github.com/facebookresearch/faiss" target="_blank" rel="noopener">FAISS</a> 是Meta开源的用于高效搜索大规模矢量数据集的库</p>
+</li>
+</ul>
+<h2 id="5、Chain模块"><a href="#5、Chain模块" class="headerlink" title="5、Chain模块"></a>5、Chain模块</h2><p>链定义为对组件的一系列调用</p>
+<h2 id="6、代理模块"><a href="#6、代理模块" class="headerlink" title="6、代理模块"></a>6、代理模块</h2><p>某些应用程序需要基于用户输入的对LLM和其他工具的灵活调用链。Agents为此类应用程序提供了灵活性。代理可以访问单一工具，并根据用户输入确定要使用的工具。代理可以使用多个工具，并使用一个工具的输出作为下一个工具的输入。</p>
+<h2 id="7、Callback模块"><a href="#7、Callback模块" class="headerlink" title="7、Callback模块"></a>7、Callback模块</h2><p>回调模块允许接到LLM应用程序的各个阶段，鉴于LLM的幻觉问题，这对于日志记录、监视、流式处理和其他任务非常有用，现在也有专用的工具Helicone，Arize AI等产品可用，下面我们开始看代码：</p>
+<h2 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h2><p><a href="https://www.zhihu.com/tardis/bd/art/656646499?source_id=1001" target="_blank" rel="noopener">小白入门大模型：LangChain</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/LLM/" rel="tag"># LLM</a>
+          
+            <a href="/tags/LangChain/" rel="tag"># LangChain</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2024/01/10/AI/RL/RL_DRL/" rel="next" title="DRL">
+                <i class="fa fa-chevron-left"></i> DRL
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2024/01/30/CV/activation_function/" rel="prev" title="CNN 激活函数">
+                CNN 激活函数 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Simon Shi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">258</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">120</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">218</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、LangChain介绍"><span class="nav-number">1.</span> <span class="nav-text">1、LangChain介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#新兴-LLM-技术栈"><span class="nav-number">1.1.</span> <span class="nav-text">新兴 LLM 技术栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据预处理流程"><span class="nav-number">1.2.</span> <span class="nav-text">数据预处理流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#嵌入端点和向量存储"><span class="nav-number">1.3.</span> <span class="nav-text">嵌入端点和向量存储</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LLM终端"><span class="nav-number">1.4.</span> <span class="nav-text">LLM终端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LLM编程框架"><span class="nav-number">1.5.</span> <span class="nav-text">LLM编程框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关键组件解释"><span class="nav-number">1.6.</span> <span class="nav-text">关键组件解释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#典型应用场景"><span class="nav-number">1.7.</span> <span class="nav-text">典型应用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Langchain-竞品"><span class="nav-number">1.8.</span> <span class="nav-text">Langchain 竞品</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、LLM输入输出管理"><span class="nav-number">2.</span> <span class="nav-text">2、LLM输入输出管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、数据接入层"><span class="nav-number">3.</span> <span class="nav-text">3、数据接入层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、Embedding专题"><span class="nav-number">4.</span> <span class="nav-text">4、Embedding专题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#文本嵌入算法"><span class="nav-number">4.1.</span> <span class="nav-text">文本嵌入算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文本嵌入用途"><span class="nav-number">4.2.</span> <span class="nav-text">文本嵌入用途</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用文本嵌入模型"><span class="nav-number">4.3.</span> <span class="nav-text">使用文本嵌入模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#支持文本嵌入的其他模型"><span class="nav-number">4.4.</span> <span class="nav-text">支持文本嵌入的其他模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#矢量数据库"><span class="nav-number">4.5.</span> <span class="nav-text">矢量数据库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5、Chain模块"><span class="nav-number">5.</span> <span class="nav-text">5、Chain模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6、代理模块"><span class="nav-number">6.</span> <span class="nav-text">6、代理模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7、Callback模块"><span class="nav-number">7.</span> <span class="nav-text">7、Callback模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料："><span class="nav-number">8.</span> <span class="nav-text">参考资料：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+<div>
+<!-- 填写你的友盟代码 -->
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1277989586'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s9.cnzz.com/z_stat.php%3Fid%3D1277989586%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+<!-- 你的友盟代码 end -->
+</div>
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'novav',
+            repo: 'blog_comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'ea8aae03b5381e13ab9cdedd0282b60d8ec412cb',
+            
+                client_id: 'c3934b23eb001aa3243d'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

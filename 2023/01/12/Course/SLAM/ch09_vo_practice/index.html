@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="SLAM,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Simon Shi的小站" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="第九 实践章 设计前端 目标:  设计一个视觉里程计的前端  理解SLAM软件框架是如何搭建  理解在前端设计中容易出现问题的地方，以及修补方式。   1、搭建VO框架单目视觉相对复杂，RGBD最简单，没有初始化，也没有尺度问题 12345678-bin    可执行文件-include/myslam    头文件.h-src    源代码cpp-test   测试用文件cpp-lib-confi">
+<meta name="keywords" content="SLAM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="视觉SLAM十四讲 第九 实践章 设计前端">
+<meta property="og:url" content="http://yoursite.com/2023/01/12/Course/SLAM/ch09_vo_practice/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="第九 实践章 设计前端 目标:  设计一个视觉里程计的前端  理解SLAM软件框架是如何搭建  理解在前端设计中容易出现问题的地方，以及修补方式。   1、搭建VO框架单目视觉相对复杂，RGBD最简单，没有初始化，也没有尺度问题 12345678-bin    可执行文件-include/myslam    头文件.h-src    源代码cpp-test   测试用文件cpp-lib-confi">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2024-03-27T04:10:14.252Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="视觉SLAM十四讲 第九 实践章 设计前端">
+<meta name="twitter:description" content="第九 实践章 设计前端 目标:  设计一个视觉里程计的前端  理解SLAM软件框架是如何搭建  理解在前端设计中容易出现问题的地方，以及修补方式。   1、搭建VO框架单目视觉相对复杂，RGBD最简单，没有初始化，也没有尺度问题 12345678-bin    可执行文件-include/myslam    头文件.h-src    源代码cpp-test   测试用文件cpp-lib-confi">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2023/01/12/Course/SLAM/ch09_vo_practice/">
+
+
+
+
+
+  <title>视觉SLAM十四讲 第九 实践章 设计前端 | Simon Shi的小站</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simon Shi的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人工智能，机器学习 学习记录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2023/01/12/Course/SLAM/ch09_vo_practice/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">视觉SLAM十四讲 第九 实践章 设计前端</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2023-01-12T20:09:09+00:00">
+                2023-01-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SLAM/" itemprop="url" rel="index">
+                    <span itemprop="name">SLAM</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2023/01/12/Course/SLAM/ch09_vo_practice/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2023/01/12/Course/SLAM/ch09_vo_practice/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>第九 实践章 设计前端</p>
+<p>目标:</p>
+<ul>
+<li><p>设计一个视觉里程计的前端</p>
+</li>
+<li><p>理解SLAM软件框架是如何搭建</p>
+</li>
+<li><p>理解在前端设计中容易出现问题的地方，以及修补方式。</p>
+</li>
+</ul>
+<h2 id="1、搭建VO框架"><a href="#1、搭建VO框架" class="headerlink" title="1、搭建VO框架"></a>1、搭建VO框架</h2><p>单目视觉相对复杂，RGBD最简单，没有初始化，也没有尺度问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">-bin    可执行文件</span><br><span class="line">-include/myslam    头文件.h</span><br><span class="line">-src    源代码cpp</span><br><span class="line">-test   测试用文件cpp</span><br><span class="line">-lib</span><br><span class="line">-config</span><br><span class="line">-cmake_modules 三方库的cmake文件</span><br><span class="line">-CmakeList.txt</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-1、数据结构："><a href="#1-1、数据结构：" class="headerlink" title="1.1、数据结构："></a>1.1、数据结构：</h3><p>帧</p>
+<p>路标</p>
+<p>配置文件</p>
+<p>坐标转换</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">stateDiagram</span><br><span class="line"></span><br><span class="line">Frame --&gt; Camera</span><br><span class="line">Frame --&gt; MapPoint : has many</span><br><span class="line">Map --&gt; MapPoint: has many</span><br><span class="line">Config</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2、Camera类"><a href="#1-2、Camera类" class="headerlink" title="1.2、Camera类"></a>1.2、Camera类</h3><ul>
+<li><p>存储相机内参和外参</p>
+</li>
+<li><p>相机坐标系，像素坐标系，世界坐标系的转换</p>
+</li>
+<li><p>世界坐标系（需要一个相机的内参）</p>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"myslam/common_include.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> myslam</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Pinhole RGBD camera model</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Camera</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">typedef</span> <span class="built_in">std</span>::<span class="built_in">shared_ptr</span>&lt;Camera&gt; Ptr;</span><br><span class="line">    <span class="keyword">float</span>   fx_, fy_, cx_, cy_, depth_scale_;  <span class="comment">// Camera intrinsics </span></span><br><span class="line"></span><br><span class="line">    Camera();</span><br><span class="line">    Camera ( <span class="keyword">float</span> fx, <span class="keyword">float</span> fy, <span class="keyword">float</span> cx, <span class="keyword">float</span> cy, <span class="keyword">float</span> depth_scale=<span class="number">0</span> ) :</span><br><span class="line">        fx_ ( fx ), fy_ ( fy ), cx_ ( cx ), cy_ ( cy ), depth_scale_ ( depth_scale )</span><br><span class="line">    &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// coordinate transform: world, camera, pixel</span></span><br><span class="line">    <span class="function">Vector3d <span class="title">world2camera</span><span class="params">( <span class="keyword">const</span> Vector3d&amp; p_w, <span class="keyword">const</span> SE3&amp; T_c_w )</span></span>;</span><br><span class="line">    <span class="function">Vector3d <span class="title">camera2world</span><span class="params">( <span class="keyword">const</span> Vector3d&amp; p_c, <span class="keyword">const</span> SE3&amp; T_c_w )</span></span>;</span><br><span class="line">    <span class="function">Vector2d <span class="title">camera2pixel</span><span class="params">( <span class="keyword">const</span> Vector3d&amp; p_c )</span></span>;</span><br><span class="line">    <span class="function">Vector3d <span class="title">pixel2camera</span><span class="params">( <span class="keyword">const</span> Vector2d&amp; p_p, <span class="keyword">double</span> depth=<span class="number">1</span> )</span></span>; </span><br><span class="line">    <span class="function">Vector3d <span class="title">pixel2world</span> <span class="params">( <span class="keyword">const</span> Vector2d&amp; p_p, <span class="keyword">const</span> SE3&amp; T_c_w, <span class="keyword">double</span> depth=<span class="number">1</span> )</span></span>;</span><br><span class="line">    <span class="function">Vector2d <span class="title">world2pixel</span> <span class="params">( <span class="keyword">const</span> Vector3d&amp; p_w, <span class="keyword">const</span> SE3&amp; T_c_w )</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">// CAMERA_H</span></span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>智能指针，Camera指针类型，传递参数时候，只需用Camera::Ptr类型即可</p>
+</li>
+<li><p>SE3表达相机的位姿</p>
+</li>
+</ul>
+<p>camera.cpp</p>
+<ul>
+<li>相关的原理与第五章讲解的内容一致，坐标转换。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"myslam/camera.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> myslam</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">Camera::Camera()</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Vector3d Camera::world2camera ( <span class="keyword">const</span> Vector3d&amp; p_w, <span class="keyword">const</span> SE3&amp; T_c_w )</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> T_c_w*p_w;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Vector3d Camera::camera2world ( <span class="keyword">const</span> Vector3d&amp; p_c, <span class="keyword">const</span> SE3&amp; T_c_w )</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> T_c_w.inverse() *p_c;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Vector2d Camera::camera2pixel ( <span class="keyword">const</span> Vector3d&amp; p_c )</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> Vector2d (</span><br><span class="line">        fx_ * p_c ( <span class="number">0</span>,<span class="number">0</span> ) / p_c ( <span class="number">2</span>,<span class="number">0</span> ) + cx_,</span><br><span class="line">        fy_ * p_c ( <span class="number">1</span>,<span class="number">0</span> ) / p_c ( <span class="number">2</span>,<span class="number">0</span> ) + cy_</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Vector3d Camera::pixel2camera ( <span class="keyword">const</span> Vector2d&amp; p_p, <span class="keyword">double</span> depth )</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> Vector3d (</span><br><span class="line">        ( p_p ( <span class="number">0</span>,<span class="number">0</span> )-cx_ ) *depth/fx_,</span><br><span class="line">        ( p_p ( <span class="number">1</span>,<span class="number">0</span> )-cy_ ) *depth/fy_,</span><br><span class="line">        depth</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Vector2d Camera::world2pixel ( <span class="keyword">const</span> Vector3d&amp; p_w, <span class="keyword">const</span> SE3&amp; T_c_w )</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> camera2pixel ( world2camera ( p_w, T_c_w ) );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Vector3d Camera::pixel2world ( <span class="keyword">const</span> Vector2d&amp; p_p, <span class="keyword">const</span> SE3&amp; T_c_w, <span class="keyword">double</span> depth )</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> camera2world ( pixel2camera ( p_p, depth ), T_c_w );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3、Frame类"><a href="#1-3、Frame类" class="headerlink" title="1.3、Frame类"></a>1.3、Frame类</h3><h3 id="1-4-MapPoint类"><a href="#1-4-MapPoint类" class="headerlink" title="1.4 MapPoint类"></a>1.4 MapPoint类</h3><h3 id="1-5-Map类"><a href="#1-5-Map类" class="headerlink" title="1.5 Map类"></a>1.5 Map类</h3><h3 id="1-6-Config类"><a href="#1-6-Config类" class="headerlink" title="1.6 Config类"></a>1.6 Config类</h3><h2 id="2、基本VO操作，特征提取，匹配"><a href="#2、基本VO操作，特征提取，匹配" class="headerlink" title="2、基本VO操作，特征提取，匹配"></a>2、基本VO操作，特征提取，匹配</h2><h2 id="3、改进：优化PNP的结果"><a href="#3、改进：优化PNP的结果" class="headerlink" title="3、改进：优化PNP的结果"></a>3、改进：优化PNP的结果</h2><h2 id="4、改进：局部地图"><a href="#4、改进：局部地图" class="headerlink" title="4、改进：局部地图"></a>4、改进：局部地图</h2><h2 id="5、小结"><a href="#5、小结" class="headerlink" title="5、小结"></a>5、小结</h2>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/SLAM/" rel="tag"># SLAM</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2023/01/12/Course/SLAM/ch10_optimization1/" rel="next" title="视觉SLAM十四讲 第十 后端1">
+                <i class="fa fa-chevron-left"></i> 视觉SLAM十四讲 第十 后端1
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2023/01/15/Course/SLAM/ch03_Eigen/" rel="prev" title="SLAM 三维刚体运动">
+                SLAM 三维刚体运动 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Simon Shi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">258</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">120</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">218</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、搭建VO框架"><span class="nav-number">1.</span> <span class="nav-text">1、搭建VO框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1、数据结构："><span class="nav-number">1.1.</span> <span class="nav-text">1.1、数据结构：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2、Camera类"><span class="nav-number">1.2.</span> <span class="nav-text">1.2、Camera类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3、Frame类"><span class="nav-number">1.3.</span> <span class="nav-text">1.3、Frame类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-MapPoint类"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 MapPoint类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-Map类"><span class="nav-number">1.5.</span> <span class="nav-text">1.5 Map类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-Config类"><span class="nav-number">1.6.</span> <span class="nav-text">1.6 Config类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、基本VO操作，特征提取，匹配"><span class="nav-number">2.</span> <span class="nav-text">2、基本VO操作，特征提取，匹配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、改进：优化PNP的结果"><span class="nav-number">3.</span> <span class="nav-text">3、改进：优化PNP的结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、改进：局部地图"><span class="nav-number">4.</span> <span class="nav-text">4、改进：局部地图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5、小结"><span class="nav-number">5.</span> <span class="nav-text">5、小结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+<div>
+<!-- 填写你的友盟代码 -->
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1277989586'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s9.cnzz.com/z_stat.php%3Fid%3D1277989586%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+<!-- 你的友盟代码 end -->
+</div>
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'novav',
+            repo: 'blog_comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'ea8aae03b5381e13ab9cdedd0282b60d8ec412cb',
+            
+                client_id: 'c3934b23eb001aa3243d'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Autopilot,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Simon Shi的小站" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="什么是规划  规划的本质 如何解决一个规划问题   传统的规划方法  机器人学基础 经典算法   无人车规划  Routing Planning Lattice Palnner   Apollo 如何求解规划问题  EM Planner DP， QP求解    [toc] What is motion planning? planning  本质是什么  $$argmin_xf(x)$$  搜索">
+<meta name="keywords" content="Autopilot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="无人驾驶（10）路径规划">
+<meta property="og:url" content="http://yoursite.com/2022/04/25/Course/AutomaticDrive/AutoDriver_10/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="什么是规划  规划的本质 如何解决一个规划问题   传统的规划方法  机器人学基础 经典算法   无人车规划  Routing Planning Lattice Palnner   Apollo 如何求解规划问题  EM Planner DP， QP求解    [toc] What is motion planning? planning  本质是什么  $$argmin_xf(x)$$  搜索">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2022/04/25/Course/AutomaticDrive/AutoDriver_10/image-20220501021506769.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/25/Course/AutomaticDrive/AutoDriver_10/image-20220501021446166.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/25/Course/AutomaticDrive/AutoDriver_10/image-20220501021924135.png">
+<meta property="og:updated_time" content="2024-03-27T04:10:14.224Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="无人驾驶（10）路径规划">
+<meta name="twitter:description" content="什么是规划  规划的本质 如何解决一个规划问题   传统的规划方法  机器人学基础 经典算法   无人车规划  Routing Planning Lattice Palnner   Apollo 如何求解规划问题  EM Planner DP， QP求解    [toc] What is motion planning? planning  本质是什么  $$argmin_xf(x)$$  搜索">
+<meta name="twitter:image" content="http://yoursite.com/2022/04/25/Course/AutomaticDrive/AutoDriver_10/image-20220501021506769.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2022/04/25/Course/AutomaticDrive/AutoDriver_10/">
+
+
+
+
+
+  <title>无人驾驶（10）路径规划 | Simon Shi的小站</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simon Shi的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人工智能，机器学习 学习记录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/04/25/Course/AutomaticDrive/AutoDriver_10/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">无人驾驶（10）路径规划</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-04-25T12:10:20+00:00">
+                2022-04-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Autopilot/" itemprop="url" rel="index">
+                    <span itemprop="name">Autopilot</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Autopilot/入门提高/" itemprop="url" rel="index">
+                    <span itemprop="name">入门提高</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2022/04/25/Course/AutomaticDrive/AutoDriver_10/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2022/04/25/Course/AutomaticDrive/AutoDriver_10/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li><p>什么是规划</p>
+<ul>
+<li>规划的本质</li>
+<li>如何解决一个规划问题</li>
+</ul>
+</li>
+<li><p>传统的规划方法</p>
+<ul>
+<li>机器人学基础</li>
+<li>经典算法</li>
+</ul>
+</li>
+<li><p>无人车规划</p>
+<ul>
+<li>Routing</li>
+<li>Planning</li>
+<li>Lattice Palnner</li>
+</ul>
+</li>
+<li><p>Apollo 如何求解规划问题</p>
+<ul>
+<li>EM Planner</li>
+<li>DP， QP求解</li>
+</ul>
+</li>
+</ul>
+<p>[toc]</p>
+<h3 id="What-is-motion-planning"><a href="#What-is-motion-planning" class="headerlink" title="What is motion planning?"></a>What is motion planning?</h3><ul>
+<li>planning </li>
+<li>本质是什么</li>
+</ul>
+<p>$$<br>argmin_xf(x)<br>$$</p>
+<ul>
+<li>搜索问题<ul>
+<li>Google: Quary词，返回给最优结果。</li>
+<li>无人车：当前环境和当前状态，当前库路径上最优选择。</li>
+<li>什么是好规划？</li>
+</ul>
+</li>
+<li>“好”其实就是个目标函数：f(x)<ul>
+<li>f(x)的最优解</li>
+</ul>
+</li>
+</ul>
+<h3 id="Motion-Planning-的三个领域"><a href="#Motion-Planning-的三个领域" class="headerlink" title="Motion Planning 的三个领域"></a>Motion Planning 的三个领域</h3><ul>
+<li>Robotics Fileds:(机器人领域)<ul>
+<li>生成轨迹实现目标</li>
+<li>常用方法： RRT，A*, D*, D*lite</li>
+</ul>
+</li>
+<li>Control Theory:(控制领域)<ul>
+<li>方式：动态系统理论实现目标状态</li>
+<li>方法：MPC , LQR</li>
+</ul>
+</li>
+<li>AI：生成状态和Action的映射<ul>
+<li>Reinforcement learning， imitation learning<ul>
+<li>Cited by motion planning by Steve Lavelle : <a href="http://palnning.cs.uiuc.edu/par1.pdf" target="_blank" rel="noopener">http://palnning.cs.uiuc.edu/par1.pdf</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="如何解决一个Motion-Panning-问题？"><a href="#如何解决一个Motion-Panning-问题？" class="headerlink" title="如何解决一个Motion Panning 问题？"></a>如何解决一个Motion Panning 问题？</h3><ul>
+<li>找一个简单的突破口<ul>
+<li>将问题转换成一个简单的问题：Path Finding Problem<ul>
+<li>不关心速度，不关心走</li>
+<li>周围固定</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>简言之就是，路径选择问题<ul>
+<li>A sample shortest path example<ul>
+<li><a href="http://qiao.github.io/PathFinding.js/visual/" target="_blank" rel="noopener">http://qiao.github.io/PathFinding.js/visual/</a></li>
+</ul>
+</li>
+<li>什么样的path是最好的？这是重点<ul>
+<li>路径最短<ul>
+<li>BFS，DFS</li>
+<li>Dijkstra</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>刚刚看到的Search属于non-information search 效率较低</li>
+<li><strong>A* search</strong>: 基于Dijkstra的改进算法【<strong>基础算法，很重要</strong>】<ul>
+<li>大概知道了终点位置</li>
+<li>Heuristic func（启发式）<ul>
+<li><a href="http://www.redblobgames.com/pathfinding/a-star/introduction.html" target="_blank" rel="noopener">http://www.redblobgames.com/pathfinding/a-star/introduction.html</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>无人机中的规划和A* search相差多远？<ul>
+<li>部分感知</li>
+<li>动态障碍物</li>
+<li>复杂环境: 交通规则，碰瓷</li>
+<li>A*本身是一个Global Algorithm<ul>
+<li>Global Routing</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Partial-Observed-situation"><a href="#Partial-Observed-situation" class="headerlink" title="Partial Observed situation"></a>Partial Observed situation</h3><ul>
+<li><p><strong>贪心算法</strong></p>
+<ul>
+<li>incremental search增量搜索：目前状态求解道最优</li>
+</ul>
+</li>
+<li><p>p* star</p>
+<ul>
+<li>部分环境信息的一个Search</li>
+<li>Apollo登月小车</li>
+<li>改进版：D* lite</li>
+</ul>
+</li>
+<li><p>可以求解全局最优？</p>
+<ul>
+<li><p>有难度</p>
+</li>
+<li><p>一定必要全局最优吗？</p>
+<ul>
+<li><blockquote>
+<p>Stentz Anthony，“Optimal and Efficient Path Planing for Partially-Known Enviroments”, 1994</p>
+</blockquote>
+<ul>
+<li>（统计学教授）通过部分最优，可以逼近全局最优</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>Informative &amp; Non-informative Search</p>
+<ul>
+<li>Global &amp; Partial observed</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>至此，我们已经有了如下几个方法：</p>
+<ul>
+<li>目标函数并且结合了平滑性和目标Cost</li>
+<li>使用通用的Search方法来最小化Cost从而找到一个最优解</li>
+<li>通过Partial observed information来做局部planning</li>
+</ul>
+</li>
+<li><p>我们还缺什么？</p>
+<ul>
+<li>处理动态障碍物，动态环境</li>
+<li>处理交通规则</li>
+<li>实时计算 <ul>
+<li>（100ms-150ms）</li>
+<li>人一般反应时间300-500ms</li>
+<li>有效时间内找到最优解</li>
+<li>c++</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>给无人车motion planning下一个定义：</p>
+<ul>
+<li><p>Safely</p>
+</li>
+<li><p>Smoothly</p>
+</li>
+<li><p>Achieve to destination</p>
+</li>
+<li><p>X, Y, Time: 3D trajectory optimization problem</p>
+</li>
+<li><p>无人车硬件系统</p>
+<ul>
+<li>定位</li>
+<li>感知</li>
+</ul>
+</li>
+<li><p>无人车软件信息</p>
+<ul>
+<li>动态信息</li>
+<li>静态信息<ul>
+<li>HD Map<ul>
+<li>实时性保证</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>如何设计出一个合理轨迹？</p>
+<ul>
+<li>路径Path</li>
+<li>速度Speed</li>
+</ul>
+</li>
+<li></li>
+</ul>
+</li>
+</ul>
+<h3 id="经典参考书籍"><a href="#经典参考书籍" class="headerlink" title="经典参考书籍"></a>经典参考书籍</h3><ul>
+<li><blockquote>
+<p>Steve Lavelle, Motion Planning Algorithms</p>
+</blockquote>
+</li>
+<li><blockquote>
+<p>Principles of Robot Motion: Theory, Algorithms and implementations</p>
+</blockquote>
+</li>
+</ul>
+<p>经典文献</p>
+<ul>
+<li><blockquote>
+<p>A Review of Motion Planning for automated Vehivles</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="基本Planning方法"><a href="#基本Planning方法" class="headerlink" title="基本Planning方法"></a>基本Planning方法</h2><ul>
+<li><p>经典基于环境建模的方法</p>
+<ul>
+<li>RRT</li>
+<li>Lattice</li>
+</ul>
+</li>
+<li><p>现代无人车Planning方法</p>
+<ul>
+<li><p>Darpa</p>
+</li>
+<li><p>Lattice in Frenet Frame</p>
+</li>
+<li><p>Spiral polymial</p>
+<blockquote>
+<p>A Review of Motion Planning Techniques for Automated Vehicles</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>质点模型</p>
+<ul>
+<li>物体看车一个质点</li>
+<li>点与点不相碰</li>
+</ul>
+</li>
+<li><p>刚体问题</p>
+<ul>
+<li>BycicleModel</li>
+<li>XY Heading</li>
+<li>Collision</li>
+</ul>
+</li>
+<li><p>Planning限制条件</p>
+<ul>
+<li>避免膨胀</li>
+<li>边界阈值（跟车距离等）</li>
+</ul>
+</li>
+<li><p>连续空间问题怎么解？</p>
+<ul>
+<li>离散化</li>
+<li>网格化</li>
+</ul>
+</li>
+</ul>
+<h2 id="传统机器人基础"><a href="#传统机器人基础" class="headerlink" title="传统机器人基础"></a>传统机器人基础</h2><ul>
+<li><p>PRM （Probabilistic Roadmap Planning）</p>
+<ul>
+<li>非常常用三维一个方法</li>
+<li>连续空间离散化<ul>
+<li>随机撒点</li>
+<li>Obstacle上的点删除</li>
+</ul>
+</li>
+<li>连续可行点，形成可行空间</li>
+<li>A*</li>
+</ul>
+</li>
+<li><p>RRT（Incremental version of PRM）PRM的增量式的版本</p>
+<ul>
+<li>使用增加搜索的方式来进行</li>
+<li><ul>
+<li>找附近可行点的最优点</li>
+<li>F(x) 最小，Cost最小</li>
+<li>走过车中也不能碰到障碍物</li>
+<li>撒点距离不能太远<ul>
+<li>一步一步的移动</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Lattice 方法</p>
+<ul>
+<li>改进了RRT的折线问题</li>
+<li>给出Path的平滑曲线</li>
+<li>网格化<ul>
+<li>每个采样格中都是用曲线连接</li>
+</ul>
+</li>
+<li>指数级别的一个搜索算法（NP-Hard)</li>
+</ul>
+</li>
+<li><p>DP（动态规划）</p>
+<ul>
+<li>减少搜索空间<ul>
+<li>服用已有结果</li>
+</ul>
+</li>
+<li>Lattice DP的平滑度够吗？<ul>
+<li>曲率连续</li>
+<li>曲率导数不一定连续【此是大问题，–方向盘突然就打大的角度变化】</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>QP（二次规划）</p>
+<ul>
+<li><p>凸优化问题最优化求解</p>
+</li>
+<li><p>公式表达<br>$$<br>minimize \frac{1}{2} X^T QX+c^TX \<br>subject: Ex = d , Fx \leqslant m<br>$$</p>
+</li>
+<li><p>性质：再凸优化中的图空间问题，用QP有最优解</p>
+</li>
+<li><p>QP如何找到平滑曲线</p>
+<ul>
+<li>$ min|f’|^2$</li>
+<li>$ min|f’’|^2$</li>
+<li>$ min|f’’’|^2$</li>
+</ul>
+</li>
+<li><p>其它的平滑曲线方法还有贝塞尔曲线，样条插值方法</p>
+</li>
+</ul>
+</li>
+<li><p>刚体模型</p>
+</li>
+<li><p><img src="/2022/04/25/Course/AutomaticDrive/AutoDriver_10/image-20220501021506769.png" alt="image-20220501021506769"></p>
+<ul>
+<li><p>前轮转向和Heading的关系</p>
+<ul>
+<li>前轮是沿着切线的方向行驶</li>
+<li>前后轮是同一个旋转中心</li>
+<li>左右轮的结构相同</li>
+</ul>
+</li>
+<li><p>Bicycle Model</p>
+</li>
+<li><p><img src="/2022/04/25/Course/AutomaticDrive/AutoDriver_10/image-20220501021446166.png" alt="image-20220501021446166"></p>
+<ul>
+<li>曲率公式<br>$$<br>\frac{1}{R} = kappa = (tan(\omega)) / L<br>$$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="无人车Planning"><a href="#无人车Planning" class="headerlink" title="无人车Planning"></a>无人车Planning</h2><ul>
+<li><p>定义</p>
+<p>从A点到B点，构建一个车辆运动归结，结合HD Map Localization 和Prediction</p>
+<ul>
+<li>输入</li>
+<li>输出：可行是归家，有一系列点组成</li>
+<li>两个层面，导航界面，运动轨迹层面</li>
+</ul>
+</li>
+<li><p>Routing</p>
+<ul>
+<li>导航一条A到B的全局路径</li>
+<li>输入：地图（路网信息，交通状态），当前位置，目的地（乘客定）</li>
+<li>输出：可行驶道路的连接线</li>
+<li>搜索：地图数据转化成图网络<ul>
+<li>节点表示道路</li>
+<li>边代表道路连接</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2022/04/25/Course/AutomaticDrive/AutoDriver_10/image-20220501021924135.png" alt="image-20220501021924135"></p>
+</li>
+<li><p>A*经典算法</p>
+<ul>
+<li>最经典的路径查找算法</li>
+<li>F(n) = G(n) + H(n)</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Autopilot/" rel="tag"># Autopilot</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/04/25/Course/AutomaticDrive/AutoDriver_11/" rel="next" title="无人驾驶（11）控制理论">
+                <i class="fa fa-chevron-left"></i> 无人驾驶（11）控制理论
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/04/25/Course/AutomaticDrive/AutoDriver_09/" rel="prev" title="无人驾驶（9）预测系统">
+                无人驾驶（9）预测系统 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Simon Shi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">258</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">120</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">218</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#What-is-motion-planning"><span class="nav-number">1.</span> <span class="nav-text">What is motion planning?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Motion-Planning-的三个领域"><span class="nav-number">2.</span> <span class="nav-text">Motion Planning 的三个领域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何解决一个Motion-Panning-问题？"><span class="nav-number">3.</span> <span class="nav-text">如何解决一个Motion Panning 问题？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Partial-Observed-situation"><span class="nav-number">4.</span> <span class="nav-text">Partial Observed situation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#经典参考书籍"><span class="nav-number">5.</span> <span class="nav-text">经典参考书籍</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#基本Planning方法"><span class="nav-number"></span> <span class="nav-text">基本Planning方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#传统机器人基础"><span class="nav-number"></span> <span class="nav-text">传统机器人基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#无人车Planning"><span class="nav-number"></span> <span class="nav-text">无人车Planning</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+<div>
+<!-- 填写你的友盟代码 -->
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1277989586'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s9.cnzz.com/z_stat.php%3Fid%3D1277989586%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+<!-- 你的友盟代码 end -->
+</div>
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'novav',
+            repo: 'blog_comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'ea8aae03b5381e13ab9cdedd0282b60d8ec412cb',
+            
+                client_id: 'c3934b23eb001aa3243d'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

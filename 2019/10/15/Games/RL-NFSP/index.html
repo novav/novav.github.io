@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Reinforcement Learning,RL,Self Play,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Simon Shi的小站" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="[toc] Papers:2015 SFP《Fictitious self-play in extensive-form games》 Heinrich et al. (2015)   UCL&amp;amp;&amp;amp;DeepMind 2016 [NFSP]《Deep Reinforcement Learning from Self-Play in Imperfect-Information Games">
+<meta name="keywords" content="Reinforcement Learning,RL,Self Play">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RL_NFSP">
+<meta property="og:url" content="http://yoursite.com/2019/10/15/Games/RL-NFSP/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="[toc] Papers:2015 SFP《Fictitious self-play in extensive-form games》 Heinrich et al. (2015)   UCL&amp;amp;&amp;amp;DeepMind 2016 [NFSP]《Deep Reinforcement Learning from Self-Play in Imperfect-Information Games">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2019/10/15/Games/RL-NFSP/1571629669702.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/15/Games/RL-NFSP/1571128998813.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/15/Games/RL-NFSP/1571129034224.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/15/Games/RL-NFSP/1571126251481.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/15/Games/RL-NFSP/1571126325514.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/15/Games/RL-NFSP/1571126340205.png">
+<meta property="og:updated_time" content="2024-03-27T04:10:14.280Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RL_NFSP">
+<meta name="twitter:description" content="[toc] Papers:2015 SFP《Fictitious self-play in extensive-form games》 Heinrich et al. (2015)   UCL&amp;amp;&amp;amp;DeepMind 2016 [NFSP]《Deep Reinforcement Learning from Self-Play in Imperfect-Information Games">
+<meta name="twitter:image" content="http://yoursite.com/2019/10/15/Games/RL-NFSP/1571629669702.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/10/15/Games/RL-NFSP/">
+
+
+
+
+
+  <title>RL_NFSP | Simon Shi的小站</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simon Shi的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人工智能，机器学习 学习记录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/15/Games/RL-NFSP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">RL_NFSP</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-10-15T15:56:06+00:00">
+                2019-10-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index">
+                    <span itemprop="name">AI</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/RL/" itemprop="url" rel="index">
+                    <span itemprop="name">RL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/10/15/Games/RL-NFSP/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/10/15/Games/RL-NFSP/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[toc]</p>
+<h1 id="Papers"><a href="#Papers" class="headerlink" title="Papers:"></a>Papers:</h1><p>2015 <a href="http://proceedings.mlr.press/v37/heinrich15.pdf" target="_blank" rel="noopener">SFP</a>《Fictitious self-play in extensive-form games》 Heinrich et al. (2015)   UCL&amp;&amp;DeepMind</p>
+<p>2016 [NFSP]《Deep Reinforcement Learning from Self-Play in Imperfect-Information Games 》 UCL: Johannes Heinrich </p>
+<p>2019 [MC-NFSP]《Monte Carlo Neural Fictitious Self-Play: Approach to Approximate Nash Equilibrium of Imperfect-Information Games? 》 ZJU: Li Zhang </p>
+<h2 id="Background："><a href="#Background：" class="headerlink" title="Background："></a>Background：</h2><p>Extensive-form Game:</p>
+<p>​    扩展形式游戏是一种涉及多个代理的顺序交互模型</p>
+<p><a href="https://zh.wikipedia.org/wiki/博弈论" target="_blank" rel="noopener">博弈论</a>中，与<a href="https://zh.wikipedia.org/wiki/正則形式的博弈" target="_blank" rel="noopener">正则形式</a>相应，<strong>扩展形式</strong>（英语：Extensive-form game）通过<a href="https://zh.wikipedia.org/wiki/树_(图论)" target="_blank" rel="noopener">树</a>来描述博弈。每个<a href="https://zh.wikipedia.org/wiki/顶点_(图论)" target="_blank" rel="noopener">节点</a>（称作<strong>决策节点</strong>）表示博弈进行中的每一个可能的状态。博弈从唯一的<strong>初始节点</strong>开始，通过由参与者决定的路径到达<strong>终端节点</strong>，此时<a href="https://zh.wikipedia.org/w/index.php?title=结果_(博弈论)&action=edit&redlink=1" target="_blank" rel="noopener">博弈结束</a>，参与者得到相应的收益。每个非终端节点只属于一个参与者；参与者在该节点选择其可能的行动，每个可能的行动通过<a href="https://zh.wikipedia.org/wiki/边_(图论)" target="_blank" rel="noopener">边</a>从该节点到达另一个节点。<a href="https://zh.wikipedia.org/wiki/扩展形式的博弈" target="_blank" rel="noopener">wiki</a></p>
+<p>Normal-form Game</p>
+<p>在<a href="https://zh.wikipedia.org/wiki/博弈论" target="_blank" rel="noopener">博弈论</a>中，<strong>正则形式</strong>（Normal-form game）是描述博弈的一种方式。与<a href="https://zh.wikipedia.org/wiki/扩展形式的博弈" target="_blank" rel="noopener">延展形式</a>不同，正则形式不用图形来描述博弈，而是用<a href="https://zh.wikipedia.org/wiki/矩阵" target="_blank" rel="noopener">矩阵</a>来陈述博弈。与延展形式的表述方式相比，这种方式在识别出<a href="https://zh.wikipedia.org/w/index.php?title=严格优势策略&action=edit&redlink=1" target="_blank" rel="noopener">严格优势策略</a>和<a href="https://zh.wikipedia.org/wiki/纳什均衡" target="_blank" rel="noopener">纳什均衡</a>上更有用，但会丢失某些信息。博弈的正则形式的表述方式包括如下部分：每个参与者所有显然的和可能的<a href="https://zh.wikipedia.org/w/index.php?title=策略(博弈论)&action=edit&redlink=1" target="_blank" rel="noopener">策略</a>，以及和与其相对应的收益。</p>
+<p>FP (Fictitious play )</p>
+<p><img src="/2019/10/15/Games/RL-NFSP/1571629669702.png" alt="1571629669702"></p>
+<p>​    双玩家零和和潜在游戏</p>
+<h2 id="RL-分类"><a href="#RL-分类" class="headerlink" title="RL-分类"></a>RL-分类</h2><p><strong>on-policy</strong>: An agent is learning on-policy if it gathers these transition tuples by following its own policy.（从自己的策略中学习）</p>
+<p><strong>off-policy</strong>: In the off-policy setting an agent is learning from experience of another agent or another policy. (从其它agent的经验中学习)</p>
+<p>​    eg: Q-learning</p>
+<h3 id="3-Extensive-Form-Fictitious-Play"><a href="#3-Extensive-Form-Fictitious-Play" class="headerlink" title="3. Extensive-Form Fictitious Play"></a>3. Extensive-Form Fictitious Play</h3><p>In this section, we derive a process in behavioural strategies that is realization equivalent to normal-form fictitious play （我们推导出行为策略的一个过程，即实现等同于正常形式的虚拟游戏）</p>
+<p>下面的引理(Theorem6)显示了如何通过一个加权组合的实现等价的行为策略来实现标准形式策略的混合。</p>
+<h2 id="RL-算法pseudo-code"><a href="#RL-算法pseudo-code" class="headerlink" title="RL-算法pseudo-code"></a>RL-算法pseudo-code</h2><h3 id="XFP"><a href="#XFP" class="headerlink" title="XFP"></a>XFP</h3><p>( full-width extensive-form fictitious play) ： <strong>通过Theorem7更新Behavioural Strategy，可以收敛到纳什均衡。</strong></p>
+<p>1、计算best Respose</p>
+<p>2、更新策略，使用<a href="http://proceedings.mlr.press/v37/heinrich15.pdf" target="_blank" rel="noopener">theorem 7</a></p>
+<p>repeat</p>
+<p><img src="/2019/10/15/Games/RL-NFSP/1571128998813.png" alt="1571128998813"></p>
+<h3 id="FSP-Fictitious-Self-Play"><a href="#FSP-Fictitious-Self-Play" class="headerlink" title="FSP(Fictitious Self-Play):"></a>FSP(Fictitious Self-Play):</h3><ul>
+<li>使用强化学习计算BestResponse</li>
+<li>使用监督学习更新策略</li>
+</ul>
+<p><img src="/2019/10/15/Games/RL-NFSP/1571129034224.png" alt="1571129034224"></p>
+<h3 id="NFSP"><a href="#NFSP" class="headerlink" title="NFSP:"></a>NFSP:</h3><ul>
+<li>引入Neural Network近似； 替代传统算法：强化学习和监督学习都使用神经网络拟合。</li>
+<li>Policy Network Π</li>
+<li>Action-Value Network Q</li>
+</ul>
+<p><img src="/2019/10/15/Games/RL-NFSP/1571126251481.png" alt="1571126251481"></p>
+<h3 id="MC-NFSP"><a href="#MC-NFSP" class="headerlink" title="MC-NFSP:"></a>MC-NFSP:</h3><p>训练时，采用 $\eta$-greed 的概率进行policy的选择</p>
+<ul>
+<li>1-$\eta$  时，Policy Network $\Pi$ </li>
+<li>$\eta$ 时，Policy-Value Network B 结合MCTS，选择最佳策略</li>
+</ul>
+<p><img src="/2019/10/15/Games/RL-NFSP/1571126325514.png" alt="1571126325514"></p>
+<p><img src="/2019/10/15/Games/RL-NFSP/1571126340205.png" alt="1571126340205"></p>
+<h2 id="引申："><a href="#引申：" class="headerlink" title="引申："></a>引申：</h2><p><a href="https://cloud.tencent.com/developer/article/1150412" target="_blank" rel="noopener">Neural Fictitious Self Play——从博弈论到深度强化学习 腾讯云</a></p>
+<p>[从Fictitious Play 到 NFSP](<a href="https://gyh75520.github.io/2017/07/27/从Fictitious" target="_blank" rel="noopener">https://gyh75520.github.io/2017/07/27/从Fictitious</a> Play 到 NFSP/)</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Reinforcement-Learning/" rel="tag"># Reinforcement Learning</a>
+          
+            <a href="/tags/RL/" rel="tag"># RL</a>
+          
+            <a href="/tags/Self-Play/" rel="tag"># Self Play</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/12/AI/ML/ML-loss-func/" rel="next" title="Summary of loss function in Machine Learning">
+                <i class="fa fa-chevron-left"></i> Summary of loss function in Machine Learning
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/24/Games/Paper-Game-DeepSkack/" rel="prev" title="DeepStack to Texas Hold'em">
+                DeepStack to Texas Hold'em <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Simon Shi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">258</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">120</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">218</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Papers"><span class="nav-number">1.</span> <span class="nav-text">Papers:</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Background："><span class="nav-number">1.1.</span> <span class="nav-text">Background：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RL-分类"><span class="nav-number">1.2.</span> <span class="nav-text">RL-分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Extensive-Form-Fictitious-Play"><span class="nav-number">1.2.1.</span> <span class="nav-text">3. Extensive-Form Fictitious Play</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RL-算法pseudo-code"><span class="nav-number">1.3.</span> <span class="nav-text">RL-算法pseudo-code</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#XFP"><span class="nav-number">1.3.1.</span> <span class="nav-text">XFP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FSP-Fictitious-Self-Play"><span class="nav-number">1.3.2.</span> <span class="nav-text">FSP(Fictitious Self-Play):</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NFSP"><span class="nav-number">1.3.3.</span> <span class="nav-text">NFSP:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MC-NFSP"><span class="nav-number">1.3.4.</span> <span class="nav-text">MC-NFSP:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引申："><span class="nav-number">1.4.</span> <span class="nav-text">引申：</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+<div>
+<!-- 填写你的友盟代码 -->
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1277989586'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s9.cnzz.com/z_stat.php%3Fid%3D1277989586%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+<!-- 你的友盟代码 end -->
+</div>
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'novav',
+            repo: 'blog_comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'ea8aae03b5381e13ab9cdedd0282b60d8ec412cb',
+            
+                client_id: 'c3934b23eb001aa3243d'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
