@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Eigen,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Simon Shi的小站" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="矩阵 [TOC] 官方文档 Offical Eigen Doc 安装https://gitlab.com/libeigen/eigen/-/releases 12345# Ubuntu 系统默认版本安装sudo apt-get install libeigen3-dev安装路径    /usr/include/eigen3  123456789mkdir buildcd buildcmake..s">
+<meta name="keywords" content="Eigen">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ Eigen矩阵库">
+<meta property="og:url" content="http://yoursite.com/2022/05/04/Sub_Language/CPlus/CPlus_Eigne/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="矩阵 [TOC] 官方文档 Offical Eigen Doc 安装https://gitlab.com/libeigen/eigen/-/releases 12345# Ubuntu 系统默认版本安装sudo apt-get install libeigen3-dev安装路径    /usr/include/eigen3  123456789mkdir buildcd buildcmake..s">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2024-06-28T09:57:59.086Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++ Eigen矩阵库">
+<meta name="twitter:description" content="矩阵 [TOC] 官方文档 Offical Eigen Doc 安装https://gitlab.com/libeigen/eigen/-/releases 12345# Ubuntu 系统默认版本安装sudo apt-get install libeigen3-dev安装路径    /usr/include/eigen3  123456789mkdir buildcd buildcmake..s">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2022/05/04/Sub_Language/CPlus/CPlus_Eigne/">
+
+
+
+
+
+  <title>C++ Eigen矩阵库 | Simon Shi的小站</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simon Shi的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人工智能，机器学习 学习记录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/05/04/Sub_Language/CPlus/CPlus_Eigne/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">C++ Eigen矩阵库</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-05-04T12:00:00+00:00">
+                2022-05-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/" itemprop="url" rel="index">
+                    <span itemprop="name">dev</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/c/" itemprop="url" rel="index">
+                    <span itemprop="name">c++</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2022/05/04/Sub_Language/CPlus/CPlus_Eigne/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2022/05/04/Sub_Language/CPlus/CPlus_Eigne/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>矩阵</p>
+<p>[TOC]</p>
+<p>官方文档</p>
+<p><a href="https://eigen.tuxfamily.org/dox/group__TutorialMatrixArithmetic.html" target="_blank" rel="noopener">Offical Eigen Doc</a></p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p><a href="https://gitlab.com/libeigen/eigen/-/releases" target="_blank" rel="noopener">https://gitlab.com/libeigen/eigen/-/releases</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Ubuntu 系统默认版本安装</span></span><br><span class="line">sudo apt-get install libeigen3-dev</span><br><span class="line"></span><br><span class="line">安装路径</span><br><span class="line">    /usr/include/eigen3</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mkdir build</span><br><span class="line"><span class="built_in">cd</span> build</span><br><span class="line">cmake..</span><br><span class="line">sudo make install</span><br><span class="line"></span><br><span class="line">安装路径</span><br><span class="line">    /usr/<span class="built_in">local</span>/include/eigen3 </span><br><span class="line"><span class="comment"># </span></span><br><span class="line">make uninstall</span><br></pre></td></tr></table></figure>
+
+<h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><h3 id="Map的定义："><a href="#Map的定义：" class="headerlink" title="Map的定义："></a>Map的定义：</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Map&lt; Matrix&lt;<span class="keyword">typename</span> Scalar, <span class="keyword">int</span> RowsAtCompileTime, <span class="keyword">int</span> ColsAtCompileTime&gt; &gt;</span><br></pre></td></tr></table></figure>
+
+<p>在这种默认的定义中，Map只需要一个模板参数-Matrix。<br>为了构造Map变量，需要另两个信息：一个指针，该指针指向用于定义数组元素的内存区域；另一个是希望得到的matrix或vector的形状。</p>
+<p>比如：定义一个float类型、动态尺寸大小的matrix：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;MatrixXf&gt; mf(pf,rows,columns);</span><br></pre></td></tr></table></figure>
+
+<p>其中pf是一个float *类型的指向数组内存的指针。</p>
+<p>定义一个固定大小的、整形的、只读vector:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;<span class="keyword">const</span> Vector4i&gt; mi(pi);</span><br></pre></td></tr></table></figure>
+
+<p>其中，pi是一个int *类型的指针。在这个例子中不需要传递尺寸大小给构造函数，因为尺寸大小已经由Matrix/Array类型确定了。</p>
+<p>注意:Map没有默认的构造函数，你需要传递一个指针来初始化对象。</p>
+<p>Map能够足够灵活地去容纳多种不同的数据表示，其他的两个模板参数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;<span class="keyword">typename</span> MatrixType,</span><br><span class="line">    <span class="keyword">int</span> MapOptions,</span><br><span class="line">    <span class="keyword">typename</span> StrideType&gt;</span><br></pre></td></tr></table></figure>
+
+<p>MapOptions标识指针是否是对齐的（Aligned or Unaligned），默认是Unaligned。<br>StrideType表示内存数组的组织方式：行列的步长。</p>
+<h3 id="Map矩阵赋值-数组转mxtrix"><a href="#Map矩阵赋值-数组转mxtrix" class="headerlink" title="Map矩阵赋值(数组转mxtrix)"></a>Map矩阵赋值(数组转mxtrix)</h3><p><a href="https://blog.csdn.net/whereismatrix/article/details/104468247" target="_blank" rel="noopener">blog: Map class:连接Eigen与C++的数据</a></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//matrix_map1.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;Eigen/Dense&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> Eigen;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">array</span>[<span class="number">9</span>];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">9</span>; ++i) <span class="built_in">array</span>[i] = i;</span><br><span class="line"></span><br><span class="line">    Map&lt;VectorXi&gt;  vi(<span class="built_in">array</span>,<span class="number">9</span>);</span><br><span class="line">    Map&lt;<span class="keyword">const</span> Vector4i&gt; fixed_v(<span class="built_in">array</span>);    <span class="comment">// unknown type name 'Vector5i' -- 这种模式size不能大于4</span></span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt; <span class="string">"vector vi: "</span>&lt;&lt; <span class="built_in">endl</span> &lt;&lt; vi &lt;&lt; <span class="built_in">endl</span>&lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt; <span class="string">"fixed-vector : "</span>&lt;&lt; <span class="built_in">endl</span> &lt;&lt; fixed_v &lt;&lt; <span class="built_in">endl</span>&lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Column-major:\n"</span> &lt;&lt; Map&lt;Matrix&lt;<span class="keyword">int</span>,<span class="number">2</span>,<span class="number">4</span>&gt; &gt;(<span class="built_in">array</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Row-major:\n"</span> &lt;&lt; Map&lt;Matrix&lt;<span class="keyword">int</span>,<span class="number">2</span>,<span class="number">4</span>,RowMajor&gt; &gt;(<span class="built_in">array</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Row-major using stride:\n"</span> &lt;&lt;</span><br><span class="line">        Map&lt;Matrix&lt;<span class="keyword">int</span>,<span class="number">2</span>,<span class="number">4</span>&gt;, Unaligned, Stride&lt;<span class="number">1</span>,<span class="number">4</span>&gt; &gt;(<span class="built_in">array</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Matrix-to-c-数组"><a href="#Matrix-to-c-数组" class="headerlink" title="Matrix to c++数组"></a>Matrix to c++数组</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Matrix3d eigMat;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 法1</span></span><br><span class="line"><span class="keyword">double</span>* eigMatptr = eigMat.data();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 法2</span></span><br><span class="line"><span class="keyword">double</span>* eigMatptrnew = <span class="keyword">new</span> <span class="keyword">double</span>[eigMat.size()];</span><br><span class="line">Map&lt;MatrixXd&gt;(eigMatptrnew, eigMat.rows(), eigMat.cols()) = eigMat;</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用Map变量"><a href="#使用Map变量" class="headerlink" title="使用Map变量"></a>使用Map变量</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> Matrix&lt;<span class="keyword">float</span>,<span class="number">1</span>,Dynamic&gt; MatrixType;</span><br><span class="line"><span class="keyword">typedef</span> Map&lt;MatrixType&gt; MapType;</span><br><span class="line"><span class="keyword">typedef</span> Map&lt;<span class="keyword">const</span> MatrixType&gt; MapTypeConst;   <span class="comment">// a read-only map</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> n_dims = <span class="number">5</span>;</span><br><span class="line"></span><br><span class="line">MatrixType m1(n_dims), m2(n_dims);</span><br><span class="line">m1.setRandom();</span><br><span class="line">m2.setRandom();</span><br><span class="line"><span class="keyword">float</span> *p = &amp;m2(<span class="number">0</span>);  <span class="comment">// get the address storing the data for m2</span></span><br><span class="line"><span class="function">MapType <span class="title">m2map</span><span class="params">(p,m2.size())</span></span>;   <span class="comment">// m2map shares data with m2</span></span><br><span class="line"><span class="function">MapTypeConst <span class="title">m2mapconst</span><span class="params">(p,m2.size())</span></span>;  <span class="comment">// a read-only accessor for m2</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"m1: "</span> &lt;&lt; m1 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"m2: "</span> &lt;&lt; m2 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"Squared euclidean distance: "</span> &lt;&lt; (m1-m2).squaredNorm() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"Squared euclidean distance, using map: "</span> &lt;&lt;  (m1-m2map).squaredNorm() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">m2map(<span class="number">3</span>) = <span class="number">7</span>;   <span class="comment">// this will change m2, since they share the same array</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"Updated m2: "</span> &lt;&lt; m2 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"m2 coefficient 2, constant accessor: "</span> &lt;&lt; m2mapconst(<span class="number">2</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="comment">/* m2mapconst(2) = 5; */</span>   <span class="comment">// this yields a compile-time error</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="修改Map数组"><a href="#修改Map数组" class="headerlink" title="修改Map数组"></a>修改Map数组</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//matrix_map3.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;Eigen/Dense&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> Eigen;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> data[] = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>&#125;;</span><br><span class="line">    Map&lt;RowVectorXi&gt; ov(data,<span class="number">9</span>);</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Origin data: "</span> &lt;&lt; ov &lt;&lt; <span class="built_in">endl</span>; </span><br><span class="line"></span><br><span class="line">    Map&lt;RowVectorXi&gt; v(data,<span class="number">4</span>);</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"The mapped vector v is: "</span> &lt;&lt; v &lt;&lt; <span class="string">"\n"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// placement new </span></span><br><span class="line">    <span class="keyword">new</span> (&amp;v) Map&lt;RowVectorXi&gt;(data+<span class="number">4</span>,<span class="number">5</span>);</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Changed, Now v is: "</span> &lt;&lt; v &lt;&lt; <span class="string">"\n"</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Again origin data: "</span> &lt;&lt; ov &lt;&lt; <span class="built_in">endl</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="矩阵拼接"><a href="#矩阵拼接" class="headerlink" title="矩阵拼接"></a>矩阵拼接</h3><p>1.<strong>cv::Mat</strong>矩阵拼接（注意在拼接方向上的维度应该相同）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cv::vconcat(C, A, B); <span class="comment">//垂直拼接</span></span><br><span class="line">cv::hconcat(C, A, B); <span class="comment">//水平拼接</span></span><br></pre></td></tr></table></figure>
+
+<p>2.<strong>Eigen</strong>矩阵拼接（注意矩阵拼接之前必须要确定大小! 否则会报错）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">MatrixXd A;</span><br><span class="line">MatrixXd B;</span><br><span class="line">MatrixXd C;</span><br><span class="line">A.resize(<span class="number">3</span>, <span class="number">3</span>);   <span class="comment">//注意矩阵拼接之前必须要确定大小，否则会报错</span></span><br><span class="line">B.resize(<span class="number">3</span>, <span class="number">9</span>);   <span class="comment">//注意矩阵拼接之前必须要确定大小，否则会报错</span></span><br><span class="line">C.resize(<span class="number">9</span>, <span class="number">3</span>);   <span class="comment">//注意矩阵拼接之前必须要确定大小，否则会报错</span></span><br><span class="line">    A &lt;&lt; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>,</span><br><span class="line">         <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>,</span><br><span class="line">         <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"A:"</span>&lt;&lt;A&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    B &lt;&lt; A,A,A; <span class="comment">//水平拼接</span></span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"B:"</span>&lt;&lt;B&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">  <span class="comment">//垂直拼接</span></span><br><span class="line">    C &lt;&lt; A,</span><br><span class="line">         A,</span><br><span class="line">         A;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"C:"</span>&lt;&lt;C&lt;&lt;<span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="模块介绍"><a href="#模块介绍" class="headerlink" title="模块介绍"></a>模块介绍</h2><h3 id="向量运算（-T-Sum-Trace-Inverse…）"><a href="#向量运算（-T-Sum-Trace-Inverse…）" class="headerlink" title="向量运算（.T,Sum,Trace,Inverse…）"></a>向量运算（.T,Sum,Trace,Inverse…）</h3><p>Eigen库的矩阵(包括向量)运算时，需要声明头文件&lt;Eigen/Core&gt;，矩阵执行常见的运算指令：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">matrix_33 = Matrix3d::Random();                           <span class="comment">//生成一个3*3的随机矩阵</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"random matrix: \n"</span>&lt;&lt; matrix_33 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"transpose : \n"</span>&lt;&lt; matrix_33.transpose() &lt;&lt; <span class="built_in">endl</span>;  <span class="comment">//转置</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"sum :"</span> &lt;&lt; matrix_33.sum() &lt;&lt; <span class="built_in">endl</span>;                <span class="comment">//求和</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"trace : "</span>&lt;&lt; matrix_33.trace() &lt;&lt; <span class="built_in">endl</span>;            <span class="comment">//求迹</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"time 10: \n"</span>&lt;&lt; <span class="number">10</span> * matrix_33 &lt;&lt; <span class="built_in">endl</span>;            <span class="comment">//数乘</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"inverse : \n"</span>&lt;&lt; matrix_33.inverse() &lt;&lt; <span class="built_in">endl</span>;      <span class="comment">//求逆</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"det : \n"</span>&lt;&lt; matrix_33.determinant() &lt;&lt; <span class="built_in">endl</span>;      <span class="comment">//求行列式</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="几何模块（四元数，欧拉角，旋转等）"><a href="#几何模块（四元数，欧拉角，旋转等）" class="headerlink" title="几何模块（四元数，欧拉角，旋转等）"></a>几何模块（四元数，欧拉角，旋转等）</h3><p>使用Eigen库的几何模块时，需要声明头文件&lt;Eigen/Geometry&gt;，此模块支持进行四元数、欧拉角和旋转矩阵的运算。各种常见形式的表达方式如下所示：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Eigen::Matrix3d      <span class="comment">//旋转矩阵（3*3）</span></span><br><span class="line">Eigen::AngleAxisd    <span class="comment">//旋转向量（3*1）</span></span><br><span class="line">Eigen::Vector3d      <span class="comment">//欧拉角（3*1）</span></span><br><span class="line">Eigen::Quaterniond   <span class="comment">//四元数（4*1）</span></span><br><span class="line">Eigen::Isometry3d    <span class="comment">//欧式变换矩阵（4*4）</span></span><br><span class="line">Eigen::Affine3d      <span class="comment">//放射变换矩阵（4*4）</span></span><br><span class="line">Eigen::Projective3d  <span class="comment">//射影变换矩阵（4*4）</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="eigenGeometry-Demo"><a href="#eigenGeometry-Demo" class="headerlink" title="eigenGeometry Demo"></a>eigenGeometry Demo</h3><ul>
+<li>旋转</li>
+<li>四元数</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;Eigen/Core&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;Eigen/Geometry&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Eigen/Geometry 模块提供了各种旋转和平移的表示</span></span><br><span class="line">    <span class="comment">// 3D 旋转矩阵直接使用 Matrix3d 或 Matrix3f</span></span><br><span class="line">    <span class="comment">//Identity() -&gt; 单位矩阵</span></span><br><span class="line">    Eigen::Matrix3f rotation_matrix = Eigen::Matrix3f::Identity();</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"rotation matrix: \n"</span> &lt;&lt; rotation_matrix &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 旋转向量使用 AngleAxis, 它底层不直接是Matrix，但运算可以当作矩阵（因为重载了运算符）</span></span><br><span class="line">    <span class="comment">//沿 Z 轴旋转 45 度</span></span><br><span class="line">    Eigen::<span class="function">AngleAxisf <span class="title">rotation_vector</span><span class="params">(M_PI/<span class="number">4</span>,Eigen::Vector3f(<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>))</span></span>;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>.precision(<span class="number">3</span>);</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"rotation matrix: \n"</span> &lt;&lt; rotation_vector.matrix() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    rotation_matrix = rotation_vector.toRotationMatrix();</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"rotation matrix: \n"</span> &lt;&lt; rotation_matrix &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 用 AngleAxis 可以进行坐标变换</span></span><br><span class="line">    Eigen::<span class="function">Vector3f <span class="title">v</span><span class="params">(<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>)</span></span>;</span><br><span class="line">    Eigen::Vector3f v_rotated = rotation_vector * v;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"(1,0,0) after rotation (by angle axis) =   "</span> &lt;&lt; v_rotated.transpose() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 用旋转矩阵</span></span><br><span class="line">    v_rotated = rotation_matrix * v;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"(1,0,0) after rotation (by matrix)     =   "</span> &lt;&lt; v_rotated.transpose() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//欧拉角: 可以将旋转矩阵直接转换成欧拉角</span></span><br><span class="line">    <span class="comment">// ZYX顺序，即yaw-pitch-roll顺序</span></span><br><span class="line">    Eigen::Vector3f euler_angles = rotation_matrix.eulerAngles(<span class="number">2</span>,<span class="number">1</span>,<span class="number">0</span>);</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"yaw-pitch-roll = "</span> &lt;&lt; euler_angles.transpose() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 欧氏变换矩阵使用 Eigen::Isometry</span></span><br><span class="line">    <span class="comment">// 虽然称为3d，实质上是4＊4的矩阵</span></span><br><span class="line">    Eigen::Isometry3f T = Eigen::Isometry3f::Identity();</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Transform matrix = \n"</span> &lt;&lt; T.matrix() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    T.rotate(rotation_vector);                                    <span class="comment">// 按照rotation_vector进行旋转</span></span><br><span class="line">    T.pretranslate(Eigen::Vector3f(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>));         <span class="comment">// 把平移向量设成(1,3,4)</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Transform matrix = \n"</span> &lt;&lt; T.matrix() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 用变换矩阵进行坐标变换</span></span><br><span class="line">    Eigen::Vector3f v_transformed = T * v;                       <span class="comment">// 相当于R*v+t</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"v tranformed = "</span> &lt;&lt; v_transformed.transpose() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 对于仿射和射影变换，使用 Eigen::Affine3d 和 Eigen::Projective3d 即可，略</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 四元数</span></span><br><span class="line">    <span class="comment">// 可以直接把AngleAxis赋值给四元数，反之亦然</span></span><br><span class="line">    Eigen::Quaternionf q = Eigen::Quaternionf(rotation_vector);</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"quaternion from rotation vector = "</span> &lt;&lt; q.coeffs().transpose()</span><br><span class="line">         &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;   <span class="comment">// 请注意coeffs的顺序是(x,y,z,w),w为实部，前三者为虚部</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 也可以把旋转矩阵赋给它</span></span><br><span class="line">    q = Eigen::Quaternionf(rotation_matrix);</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"quaternion from rotation matrix = "</span> &lt;&lt; q.coeffs().transpose()</span><br><span class="line">    &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//    // 使用四元数旋转一个向量，使用重载的乘法即可</span></span><br><span class="line">    Eigen::Vector3f v_rotated1 =  q * v ;<span class="comment">// 注意数学上是qvq^&#123;-1&#125;</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"(1,0,0) after rotation (by Quaternion) =    "</span> &lt;&lt; v_rotated1.transpose() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 用常规向量乘法表示，则应该如下计算</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"should be equal to     = "</span> &lt;&lt; (q * Eigen::Quaternionf(<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>) * q.inverse()).coeffs().transpose()</span><br><span class="line">    &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考资料链接："><a href="#参考资料链接：" class="headerlink" title="参考资料链接："></a>参考资料链接：</h2><ul>
+<li><a href="https://eigen.tuxfamily.org/dox/group__TutorialMatrixArithmetic.html" target="_blank" rel="noopener">Offical Eigen Doc–Matrix and vector arithmetic</a></li>
+<li><a href="https://eigen.tuxfamily.org/dox/classEigen_1_1Map.html" target="_blank" rel="noopener">Offical Eigen Map Doc</a></li>
+<li><a href="https://blog.csdn.net/weixin_38009585/article/details/105709250" target="_blank" rel="noopener">Eigen矩阵和CV::Mat的拼接方法</a></li>
+<li><a href="https://blog.csdn.net/weixin_40378209/article/details/122082604" target="_blank" rel="noopener">c++ Eigen（二）eigenGeometry </a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/111727894" target="_blank" rel="noopener">C++学习笔记——6. Eigen入门（矩阵运算及几何模块）</a></li>
+<li><a href="https://www.cxybb.com/article/hust_sheng/79647675" target="_blank" rel="noopener">eigen稀疏矩阵拼接（基于块操作的二维拼接）的思考_hust_sheng的专栏-程序员宝宝</a></li>
+<li><a href="https://blog.csdn.net/weixin_43455581/article/details/116382073" target="_blank" rel="noopener">Eigen3矩阵与数组的互相转换</a></li>
+<li><a href="http://t.zoukankan.com/VVingerfly-p-8037490.html" target="_blank" rel="noopener">Eigen::Matrix与array数据转换</a></li>
+<li><a href="https://www.csdn.net/tags/MtjaYg1sMTU5MzUtYmxvZwO0O0OO0O0O.html" target="_blank" rel="noopener">c++计算eigen随笔(5)-求转置</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/486294589" target="_blank" rel="noopener">Eigen教程：一站式指南</a></li>
+<li><a href="https://www.cnblogs.com/yabin/p/6473654.html" target="_blank" rel="noopener">Eigen子矩阵操作</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Eigen/" rel="tag"># Eigen</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/04/26/Tools/Tools_Ressource/" rel="next" title="资源搜集">
+                <i class="fa fa-chevron-left"></i> 资源搜集
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/05/06/Sub_Language/CPlus/CPlus_Vector/" rel="prev" title="C++ 容器">
+                C++ 容器 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Simon Shi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">267</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">233</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Map"><span class="nav-number">2.</span> <span class="nav-text">Map</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Map的定义："><span class="nav-number">2.1.</span> <span class="nav-text">Map的定义：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Map矩阵赋值-数组转mxtrix"><span class="nav-number">2.2.</span> <span class="nav-text">Map矩阵赋值(数组转mxtrix)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Matrix-to-c-数组"><span class="nav-number">2.3.</span> <span class="nav-text">Matrix to c++数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Map变量"><span class="nav-number">2.4.</span> <span class="nav-text">使用Map变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改Map数组"><span class="nav-number">2.5.</span> <span class="nav-text">修改Map数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#矩阵拼接"><span class="nav-number">2.6.</span> <span class="nav-text">矩阵拼接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模块介绍"><span class="nav-number">3.</span> <span class="nav-text">模块介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#向量运算（-T-Sum-Trace-Inverse…）"><span class="nav-number">3.1.</span> <span class="nav-text">向量运算（.T,Sum,Trace,Inverse…）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#几何模块（四元数，欧拉角，旋转等）"><span class="nav-number">3.2.</span> <span class="nav-text">几何模块（四元数，欧拉角，旋转等）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#eigenGeometry-Demo"><span class="nav-number">3.3.</span> <span class="nav-text">eigenGeometry Demo</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料链接："><span class="nav-number">4.</span> <span class="nav-text">参考资料链接：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+    
+
+        
+
+
+
+
+
+
+<div>
+<!-- 填写你的友盟代码 -->
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1277989586'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s9.cnzz.com/z_stat.php%3Fid%3D1277989586%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+<!-- 你的友盟代码 end -->
+</div>
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'novav',
+            repo: 'blog_comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'ea8aae03b5381e13ab9cdedd0282b60d8ec412cb',
+            
+                client_id: 'c3934b23eb001aa3243d'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

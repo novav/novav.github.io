@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="python,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Simon Shi的小站" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="python 备忘录 [TOC] 简单APIFUN: 重命名目录下文件 filter lambda  123456def format_filename(dir):    fs = os.listdir(dir)    for f in fs:        new_n = &apos;&apos;.join(filter(lambda ch: ch not in &apos;# ()&amp;#123;&amp;#125;#&apos;, f))">
+<meta name="keywords" content="python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python APIs">
+<meta property="og:url" content="http://yoursite.com/2020/09/23/Sub_Language/PythonDoc/Language-py/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="python 备忘录 [TOC] 简单APIFUN: 重命名目录下文件 filter lambda  123456def format_filename(dir):    fs = os.listdir(dir)    for f in fs:        new_n = &apos;&apos;.join(filter(lambda ch: ch not in &apos;# ()&amp;#123;&amp;#125;#&apos;, f))">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2024-06-28T09:57:59.098Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python APIs">
+<meta name="twitter:description" content="python 备忘录 [TOC] 简单APIFUN: 重命名目录下文件 filter lambda  123456def format_filename(dir):    fs = os.listdir(dir)    for f in fs:        new_n = &apos;&apos;.join(filter(lambda ch: ch not in &apos;# ()&amp;#123;&amp;#125;#&apos;, f))">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/09/23/Sub_Language/PythonDoc/Language-py/">
+
+
+
+
+
+  <title>python APIs | Simon Shi的小站</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simon Shi的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人工智能，机器学习 学习记录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/23/Sub_Language/PythonDoc/Language-py/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">python APIs</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-09-23T17:53:59+00:00">
+                2020-09-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/" itemprop="url" rel="index">
+                    <span itemprop="name">dev</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/09/23/Sub_Language/PythonDoc/Language-py/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2020/09/23/Sub_Language/PythonDoc/Language-py/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>python 备忘录</p>
+<p>[TOC]</p>
+<h2 id="简单API"><a href="#简单API" class="headerlink" title="简单API"></a>简单API</h2><h3 id="FUN-重命名目录下文件"><a href="#FUN-重命名目录下文件" class="headerlink" title="FUN: 重命名目录下文件"></a>FUN: 重命名目录下文件</h3><ul>
+<li>filter</li>
+<li>lambda</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">format_filename</span><span class="params">(dir)</span>:</span></span><br><span class="line">    fs = os.listdir(dir)</span><br><span class="line">    <span class="keyword">for</span> f <span class="keyword">in</span> fs:</span><br><span class="line">        new_n = <span class="string">''</span>.join(filter(<span class="keyword">lambda</span> ch: ch <span class="keyword">not</span> <span class="keyword">in</span> <span class="string">'# ()&#123;&#125;#'</span>, f))</span><br><span class="line">        print(f, <span class="string">' ----&gt; '</span>, new_n)</span><br><span class="line">        os.rename(dir+f, dir+new_n)</span><br></pre></td></tr></table></figure>
+
+<h3 id="traceback"><a href="#traceback" class="headerlink" title="traceback"></a>traceback</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">log_error</span><span class="params">(e)</span>:</span></span><br><span class="line">    print(<span class="string">'err:'</span>, e)</span><br><span class="line">    print(<span class="string">'err:'</span>, request.form)</span><br><span class="line">    print(<span class="string">'err file:'</span>, e.__traceback__.tb_frame.f_globals[<span class="string">"__file__"</span>])  <span class="comment"># 发生异常所在的文件</span></span><br><span class="line">    print(<span class="string">'err file line:'</span>, e.__traceback__.tb_lineno)  <span class="comment"># 发生异常所在的行数</span></span><br><span class="line">    print(<span class="string">'err '</span>, traceback.print_exc())</span><br></pre></td></tr></table></figure>
+
+<h3 id="Time"><a href="#Time" class="headerlink" title="Time"></a>Time</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>time.ctime()</span><br><span class="line"><span class="string">'Thu May 5 14:58:09 2011'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>time.ctime(time.time())</span><br><span class="line"><span class="string">'Thu May 5 14:58:39 2011'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>time.ctime(<span class="number">1304579615</span>)</span><br><span class="line"><span class="string">'Thu May 5 15:13:35 2011'</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="os"><a href="#os" class="headerlink" title="os"></a>os</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">os.mkdir()</span><br></pre></td></tr></table></figure>
+
+<h3 id="os-path"><a href="#os-path" class="headerlink" title="os.path"></a>os.path</h3><p>os.path.basename()</p>
+<p>os.path.dirname()</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">path = <span class="string">'/home/User/Documents'</span></span><br><span class="line">dirname = os.path.dirname(path)</span><br><span class="line">print(dirname)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">path = <span class="string">'/home/User/Documents/file.txt'</span></span><br><span class="line">dirname = os.path.dirname(path)</span><br><span class="line">print(dirname)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">path = <span class="string">'file.txt'</span></span><br><span class="line">dirname = os.path.dirname(path)</span><br><span class="line">print(dirname)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 三个的结果：</span></span><br><span class="line">&gt;&gt;&gt;/home/User</span><br><span class="line">&gt;&gt;&gt;/home/User/Documents</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="expanduser"><a href="#expanduser" class="headerlink" title="expanduser"></a>expanduser</h4><p>python的os.path 模块提供了一个expanduser函数，它可以将参数中开头部分的 ~ 或 ~user 替换为当前用户的home目录并返回，仅看定义难以理解，我在linux系统和winodws系统下分别实验它的功能。</p>
+<p>在linux系统下，我的账号是kwsy，这个用户的home目录是/home/kwsy，下面的代码演示如何使用expanduser函数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Python <span class="number">3.7</span><span class="number">.0</span> (default, Jun <span class="number">28</span> <span class="number">2018</span>, <span class="number">13</span>:<span class="number">15</span>:<span class="number">42</span>)</span><br><span class="line">[GCC <span class="number">7.2</span><span class="number">.0</span>] :: Anaconda, Inc. on linux</span><br><span class="line">Type <span class="string">"help"</span>, <span class="string">"copyright"</span>, <span class="string">"credits"</span> <span class="keyword">or</span> <span class="string">"license"</span> <span class="keyword">for</span> more information.</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> os</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>os.path.expanduser(<span class="string">'~/.config/'</span>)</span><br><span class="line"><span class="string">'/home/kwsy/.config/'</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="expandvars"><a href="#expandvars" class="headerlink" title="expandvars"></a>expandvars</h4><p>Python中的方法用于扩展给定路径中的环境变量。它将给定路径中形式为<code>$name$</code> 或<code>${name}$</code>的子字符串替换为环境变量name的值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">todo</span><br></pre></td></tr></table></figure>
+
+<h3 id="random"><a href="#random" class="headerlink" title="random"></a>random</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">random.randint(0, N) -&gt; one of [0,1, ...,N]</span><br></pre></td></tr></table></figure>
+
+<h3 id="dict-2-obj"><a href="#dict-2-obj" class="headerlink" title="dict_2_obj"></a>dict_2_obj</h3><h4 id="自定义"><a href="#自定义" class="headerlink" title="自定义"></a>自定义</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">obj</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, d)</span>:</span></span><br><span class="line">        <span class="keyword">for</span> a, b <span class="keyword">in</span> d.items():</span><br><span class="line">            <span class="keyword">if</span> isinstance(b, (list, tuple)):</span><br><span class="line">               setattr(self, a, [obj(x) <span class="keyword">if</span> isinstance(x, dict) <span class="keyword">else</span> x <span class="keyword">for</span> x <span class="keyword">in</span> b])</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">               setattr(self, a, obj(b) <span class="keyword">if</span> isinstance(b, dict) <span class="keyword">else</span> b)</span><br><span class="line">d = &#123;<span class="string">'a'</span>: <span class="number">1</span>, <span class="string">'b'</span>: &#123;<span class="string">'c'</span>: <span class="number">2</span>&#125;, <span class="string">'d'</span>: [<span class="string">"hi"</span>, &#123;<span class="string">'foo'</span>: <span class="string">"cjavapy"</span>&#125;]&#125;</span><br><span class="line">o = obj(d)</span><br><span class="line">print(o)</span><br><span class="line">print(o.a)</span><br><span class="line">print(o.b)</span><br><span class="line">print(o.d)</span><br><span class="line">print(o.d[<span class="number">1</span>].foo)</span><br></pre></td></tr></table></figure>
+
+<h4 id="json"><a href="#json" class="headerlink" title="json"></a>json</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">obj</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, dict_)</span>:</span></span><br><span class="line">        self.__dict__.update(dict_)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dict2obj</span><span class="params">(d)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> json.loads(json.dumps(d), object_hook=obj)</span><br><span class="line">d = &#123;<span class="string">'a'</span>: <span class="number">1</span>, <span class="string">'b'</span>: &#123;<span class="string">'c'</span>: <span class="number">2</span>&#125;, <span class="string">'d'</span>: [<span class="string">'hi'</span>, &#123;<span class="string">'foo'</span>: <span class="string">'cjavapy'</span>&#125;]&#125;</span><br><span class="line">o = dict2obj(d)</span><br><span class="line">print(o)</span><br><span class="line">print(o.a)</span><br><span class="line">print(o.b)</span><br><span class="line">print(o.d)</span><br><span class="line">print(o.d[<span class="number">1</span>].foo)</span><br></pre></td></tr></table></figure>
+
+<h4 id="namedtuple"><a href="#namedtuple" class="headerlink" title="namedtuple"></a>namedtuple</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> namedtuple</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">struct</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__new__</span><span class="params">(cls, data)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> isinstance(data, dict):</span><br><span class="line">            <span class="keyword">return</span> namedtuple(</span><br><span class="line">                <span class="string">'struct'</span>, data.keys()</span><br><span class="line">            )(</span><br><span class="line">                *(struct(val) <span class="keyword">for</span> val <span class="keyword">in</span> data.values())</span><br><span class="line">            )</span><br><span class="line">        <span class="keyword">elif</span> isinstance(data, (tuple, list, set, frozenset)):</span><br><span class="line">            <span class="keyword">return</span> type(data)(struct(_) <span class="keyword">for</span> _ <span class="keyword">in</span> data)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> data</span><br><span class="line">d = &#123;<span class="string">'a'</span>: <span class="number">1</span>, <span class="string">'b'</span>: &#123;<span class="string">'c'</span>: <span class="number">2</span>&#125;, <span class="string">'d'</span>: [<span class="string">'hi'</span>, &#123;<span class="string">'foo'</span>: <span class="string">'cjavapy'</span>&#125;]&#125;</span><br><span class="line">o = struct(d)</span><br><span class="line">print(o)</span><br><span class="line">print(o.a)</span><br><span class="line">print(o.b)</span><br><span class="line">print(o.d)</span><br><span class="line">print(o.d[<span class="number">1</span>].foo)</span><br></pre></td></tr></table></figure>
+
+<h4 id="json-1"><a href="#json-1" class="headerlink" title="json"></a>json</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">json.dumps()</span><br><span class="line">json.loads()</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line"><span class="comment"># json.dumps()函数的使用，将字典转化为字符串</span></span><br><span class="line">dict1 = &#123;<span class="string">"age"</span>: <span class="string">"12"</span>&#125;</span><br><span class="line">json_info = json.dumps(dict1)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Writing JSON data</span></span><br><span class="line"><span class="keyword">with</span> open(<span class="string">'data.json'</span>, <span class="string">'w'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    json.dump(data, f)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Reading data back</span></span><br><span class="line"><span class="keyword">with</span> open(<span class="string">'data.json'</span>, <span class="string">'r'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    data = json.load(f)</span><br></pre></td></tr></table></figure>
+
+<h4 id="np"><a href="#np" class="headerlink" title="np"></a>np</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">a=np.array(a)</span><br><span class="line">np.save(‘a.npy’,a)   <span class="comment"># 保存为.npy格式</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a=np.load(‘a.npy’)</span><br><span class="line">a=a.tolist()</span><br></pre></td></tr></table></figure>
+
+<h4 id="csv"><a href="#csv" class="headerlink" title="csv"></a>csv</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">readme = pd.read_csv(‘读我.txt’,sep=’:’,encoding=“utf<span class="number">-8</span>”, engine=‘python’,header=<span class="literal">None</span>)</span><br><span class="line">readme = np.array(readme)</span><br></pre></td></tr></table></figure>
+
+<h2 id="高级API"><a href="#高级API" class="headerlink" title="高级API"></a>高级API</h2><h3 id="组合函数-itertools-combinations-元素不可重复"><a href="#组合函数-itertools-combinations-元素不可重复" class="headerlink" title="组合函数 itertools.combinations()元素不可重复"></a>组合函数 itertools.combinations()元素不可重复</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">itertools.combinations(iters,n)元组输出迭代器，需List显示，全组合直接append分三个元组。</span><br><span class="line">combinations('ABCD', 2) --&gt; AB AC AD BC BD CD</span><br><span class="line">combinations(range(<span class="number">4</span>), <span class="number">3</span>) --&gt; <span class="number">012</span> <span class="number">013</span> <span class="number">023</span> <span class="number">123</span></span><br></pre></td></tr></table></figure>
+
+<p>ref:<a href="https://blog.csdn.net/liuyi761117/article/details/119800028" target="_blank" rel="noopener">组合blog</a></p>
+<h3 id="combinations"><a href="#combinations" class="headerlink" title="combinations"></a>combinations</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> itertools </span><br><span class="line">combinations2 = itertools.combinations(iterable, r)</span><br><span class="line"><span class="keyword">for</span> combo <span class="keyword">in</span> combinations2: </span><br><span class="line">    print(combo)</span><br><span class="line">(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">(<span class="number">1</span>, <span class="number">3</span>)</span><br><span class="line">(<span class="number">2</span>, <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="combinations-with-replacement-元素可重复的组合"><a href="#combinations-with-replacement-元素可重复的组合" class="headerlink" title="combinations_with_replacement() 元素可重复的组合"></a>combinations_with_replacement() 元素可重复的组合</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> itertools  </span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义一个可迭代对象  </span></span><br><span class="line">iterable = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]  </span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置组合长度为2  </span></span><br><span class="line">r = <span class="number">2</span>  </span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成可重复组合的迭代器  </span></span><br><span class="line">combinations = itertools.combinations_with_replacement(iterable, r)  </span><br><span class="line"></span><br><span class="line"><span class="comment"># 打印每个组合  </span></span><br><span class="line"><span class="keyword">for</span> combo <span class="keyword">in</span> combinations:  </span><br><span class="line">    print(combo)</span><br></pre></td></tr></table></figure>
+
+<p>out</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(1, 1)  </span><br><span class="line">(1, 2)  </span><br><span class="line">(1, 3)  </span><br><span class="line">(2, 2)  </span><br><span class="line">(2, 3)  </span><br><span class="line">(3, 3)</span><br></pre></td></tr></table></figure>
+
+<h3 id="property的理解和使用"><a href="#property的理解和使用" class="headerlink" title="@property的理解和使用"></a>@property的理解和使用</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@property</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">password</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="keyword">raise</span> AttributeError(<span class="string">'password is not a readable attribute'</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">@password.setter</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">password</span><span class="params">(self, password)</span>:</span></span><br><span class="line">    self.password_hash = generate_password_hash(password)</span><br></pre></td></tr></table></figure>
+
+<h5 id="通常赋值函数"><a href="#通常赋值函数" class="headerlink" title="通常赋值函数"></a>通常赋值函数</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_score</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self._score</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">set_score</span><span class="params">(self, value)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> isinstance(value, int):</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">'score must be an integer!'</span>)</span><br><span class="line">        <span class="keyword">if</span> value &lt; <span class="number">0</span> <span class="keyword">or</span> value &gt; <span class="number">100</span>:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">'score must between 0 ~ 100!'</span>)</span><br><span class="line">        self._score = value</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>s = Student()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>s.set_score(<span class="number">60</span>) <span class="comment"># ok!</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>s.get_score()</span><br><span class="line"><span class="number">60</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>s.set_score(<span class="number">9999</span>)</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  ...</span><br><span class="line">ValueError: score must between <span class="number">0</span> ~ <span class="number">100</span>!</span><br></pre></td></tr></table></figure>
+
+<h5 id="property"><a href="#property" class="headerlink" title="@property"></a>@property</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">但是为了方便,节省时间,我们不想写s.set_score(<span class="number">9999</span>)啊,直接写s.score = <span class="number">9999</span>不是更快么,加了方法做限制不能让调用的时候变麻烦啊,@property快来帮忙….</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">score</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self._score</span><br><span class="line"></span><br><span class="line"><span class="meta">    @score.setter</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">score</span><span class="params">(self,value)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> isinstance(value, int):</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">'分数必须是整数才行呐'</span>)</span><br><span class="line">        <span class="keyword">if</span> value &lt; <span class="number">0</span> <span class="keyword">or</span> value &gt; <span class="number">100</span>:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">'分数必须0-100之间'</span>)</span><br><span class="line">        self._score = value</span><br><span class="line"></span><br><span class="line">看上面代码可知,把get方法变为属性只需要加上@property装饰器即可,此时@property本身又会创建另外一个装饰器@score.setter,负责把set方法变成给属性赋值,这么做完后,我们调用起来既可控又方便</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>s = Student()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>s.score = <span class="number">60</span> <span class="comment"># OK，实际转化为s.set_score(60)</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>s.score <span class="comment"># OK，实际转化为s.get_score()</span></span><br><span class="line"><span class="number">60</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>s.score = <span class="number">9999</span></span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  ...</span><br><span class="line">ValueError: score must between <span class="number">0</span> ~ <span class="number">100</span>!</span><br></pre></td></tr></table></figure>
+
+<h2 id="MP"><a href="#MP" class="headerlink" title="MP"></a>MP</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">对于一般进程间共享数据来说，使用</span><br><span class="line">multiprocessing.Manager().Value</span><br><span class="line">和multiprocessing.Manager().list()</span><br><span class="line">和multiprocessing.Manager().dict()即可。</span><br><span class="line">Or:</span><br><span class="line">Queue()</span><br></pre></td></tr></table></figure>
+
+<h2 id="pyLint"><a href="#pyLint" class="headerlink" title="pyLint"></a>pyLint</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Install</span></span><br><span class="line">pip install pylint</span><br><span class="line">pylint --version</span><br><span class="line"></span><br><span class="line"><span class="comment">#使用,生成默认配置文件：</span></span><br><span class="line">pylint --persistent=n --generate-rcfile &gt; .pylintrc</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查单个文件：</span></span><br><span class="line">pylint [options] m1.py</span><br><span class="line"></span><br><span class="line"><span class="comment"># 整个项目</span></span><br><span class="line">pylint [options] project_path</span><br></pre></td></tr></table></figure>
+
+<h2 id="re"><a href="#re" class="headerlink" title="re"></a>re</h2><p>去除中文标点符号</p>
+<p><code>s = re.sub(r&#39;[.,&quot;\&#39;-?:!;]&#39;, &#39;&#39;, s)</code></p>
+<p>去除中文</p>
+<p><code>temp = re.sub(&#39;[\u4e00-\u9fa5]&#39;,&#39;&#39;,text)</code></p>
+<p>去除英文</p>
+<p><code>temp = re.sub(&#39;[a-zA-Z]&#39;,&#39;&#39;,text)</code></p>
+<p>del数字</p>
+<p><code>temp = re.sub(&#39;[\d]&#39;,&#39;&#39;,text) # [0-9]</code></p>
+<p>del 空格</p>
+<p><code>temp = re.sub(&#39;[\s]&#39;,&#39;&#39;,text) #temp = text.strip()</code></p>
+<h3 id="RUN"><a href="#RUN" class="headerlink" title="RUN"></a>RUN</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1 normal run</span></span><br><span class="line">python -u main.py</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2 subdir run</span></span><br><span class="line">python demo/main.py</span><br><span class="line">--修改main文件</span><br><span class="line"><span class="keyword">import</span> os, sys</span><br><span class="line">sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3 -m 运行</span></span><br><span class="line">python -m model.main</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/09/03/Paper/Paper-CV-ImageInpainting/" rel="next" title="Paper-CV-Image Inpainting">
+                <i class="fa fa-chevron-left"></i> Paper-CV-Image Inpainting
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/09/28/Tools/Tools-Anbox/" rel="prev" title="Tools Android emulator -- Anbox">
+                Tools Android emulator -- Anbox <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Simon Shi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">267</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">233</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简单API"><span class="nav-number">1.</span> <span class="nav-text">简单API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FUN-重命名目录下文件"><span class="nav-number">1.1.</span> <span class="nav-text">FUN: 重命名目录下文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#traceback"><span class="nav-number">1.2.</span> <span class="nav-text">traceback</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Time"><span class="nav-number">1.3.</span> <span class="nav-text">Time</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#os"><span class="nav-number">1.4.</span> <span class="nav-text">os</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#os-path"><span class="nav-number">1.5.</span> <span class="nav-text">os.path</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#expanduser"><span class="nav-number">1.5.1.</span> <span class="nav-text">expanduser</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#expandvars"><span class="nav-number">1.5.2.</span> <span class="nav-text">expandvars</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#random"><span class="nav-number">1.6.</span> <span class="nav-text">random</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dict-2-obj"><span class="nav-number">1.7.</span> <span class="nav-text">dict_2_obj</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义"><span class="nav-number">1.7.1.</span> <span class="nav-text">自定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#json"><span class="nav-number">1.7.2.</span> <span class="nav-text">json</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#namedtuple"><span class="nav-number">1.7.3.</span> <span class="nav-text">namedtuple</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#json-1"><span class="nav-number">1.7.4.</span> <span class="nav-text">json</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#np"><span class="nav-number">1.7.5.</span> <span class="nav-text">np</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#csv"><span class="nav-number">1.7.6.</span> <span class="nav-text">csv</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高级API"><span class="nav-number">2.</span> <span class="nav-text">高级API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#组合函数-itertools-combinations-元素不可重复"><span class="nav-number">2.1.</span> <span class="nav-text">组合函数 itertools.combinations()元素不可重复</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#combinations"><span class="nav-number">2.2.</span> <span class="nav-text">combinations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#combinations-with-replacement-元素可重复的组合"><span class="nav-number">2.3.</span> <span class="nav-text">combinations_with_replacement() 元素可重复的组合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#property的理解和使用"><span class="nav-number">2.4.</span> <span class="nav-text">@property的理解和使用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#通常赋值函数"><span class="nav-number">2.4.0.1.</span> <span class="nav-text">通常赋值函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#property"><span class="nav-number">2.4.0.2.</span> <span class="nav-text">@property</span></a></li></ol></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#MP"><span class="nav-number">3.</span> <span class="nav-text">MP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pyLint"><span class="nav-number">4.</span> <span class="nav-text">pyLint</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#re"><span class="nav-number">5.</span> <span class="nav-text">re</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RUN"><span class="nav-number">5.1.</span> <span class="nav-text">RUN</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+    
+
+        
+
+
+
+
+
+
+<div>
+<!-- 填写你的友盟代码 -->
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1277989586'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s9.cnzz.com/z_stat.php%3Fid%3D1277989586%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+<!-- 你的友盟代码 end -->
+</div>
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'novav',
+            repo: 'blog_comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'ea8aae03b5381e13ab9cdedd0282b60d8ec412cb',
+            
+                client_id: 'c3934b23eb001aa3243d'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

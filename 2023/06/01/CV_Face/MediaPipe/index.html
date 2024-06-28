@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Simon Shi的小站" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="MediaPipe基础（2）人脸网格摘要：机器学习流水线我们的管道由两个协同工作的实时深度神经网络模型组成一个对完整图像进行操作并计算人脸位置的检测器，以及一个对这些位置进行操作并通过回归预测近似表面几何形状的人脸地标模型。 1.摘要MediaPipe Face Mesh 是一种面部几何解决方案，即使在移动设备上也能实时估计 468 个 3D 面部标志。它采用机器学习 (ML) 来推断 3D 表面">
+<meta name="keywords" content="AI,Machine Learning, Deep Learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI-MediaPipe">
+<meta property="og:url" content="http://yoursite.com/2023/06/01/CV_Face/MediaPipe/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="MediaPipe基础（2）人脸网格摘要：机器学习流水线我们的管道由两个协同工作的实时深度神经网络模型组成一个对完整图像进行操作并计算人脸位置的检测器，以及一个对这些位置进行操作并通过回归预测近似表面几何形状的人脸地标模型。 1.摘要MediaPipe Face Mesh 是一种面部几何解决方案，即使在移动设备上也能实时估计 468 个 3D 面部标志。它采用机器学习 (ML) 来推断 3D 表面">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2024-06-28T09:57:58.550Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AI-MediaPipe">
+<meta name="twitter:description" content="MediaPipe基础（2）人脸网格摘要：机器学习流水线我们的管道由两个协同工作的实时深度神经网络模型组成一个对完整图像进行操作并计算人脸位置的检测器，以及一个对这些位置进行操作并通过回归预测近似表面几何形状的人脸地标模型。 1.摘要MediaPipe Face Mesh 是一种面部几何解决方案，即使在移动设备上也能实时估计 468 个 3D 面部标志。它采用机器学习 (ML) 来推断 3D 表面">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2023/06/01/CV_Face/MediaPipe/">
+
+
+
+
+
+  <title>AI-MediaPipe | Simon Shi的小站</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simon Shi的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人工智能，机器学习 学习记录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2023/06/01/CV_Face/MediaPipe/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">AI-MediaPipe</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2023-06-01T12:00:00+00:00">
+                2023-06-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2023/06/01/CV_Face/MediaPipe/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2023/06/01/CV_Face/MediaPipe/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="MediaPipe基础（2）人脸网格"><a href="#MediaPipe基础（2）人脸网格" class="headerlink" title="MediaPipe基础（2）人脸网格"></a>MediaPipe基础（2）人脸网格</h1><p>摘要：机器学习流水线我们的管道由两个协同工作的实时深度神经网络模型组成一个对完整图像进行操作并计算人脸位置的检测器，以及一个对这些位置进行操作并通过回归预测近似表面几何形状的人脸地标模型。</p>
+<h2 id="1-摘要"><a href="#1-摘要" class="headerlink" title="1.摘要"></a>1.摘要</h2><p>MediaPipe Face Mesh 是一种面部几何解决方案，即使在移动设备上也能实时估计 468 个 3D 面部标志。它采用机器学习 (ML) 来推断 3D 表面几何形状，只需要一个摄像头输入，无需专用深度传感器。该解决方案在整个管道中利用轻量级模型架构和 GPU 加速，提供对实时体验至关重要的实时性能。</p>
+<p>此外，该解决方案与人脸几何模块捆绑在一起，弥合了人脸地标估计和有用的实时增强现实 (AR) 应用程序之间的差距。它建立了一个可度量的3D空间，并使用面部地标屏幕位置来估计该空间内的面部几何形状。人脸几何数据由常见的三维几何基元组成，包括人脸姿态变换矩阵和三角化人脸网格。在幕后，使用一种被称为普鲁克分析的轻量级的统计分析方法，用来驱动一个健壮的、性能好的、可移植的逻辑。该分析在CPU上运行，并且在ML模型推理的基础上具有最小的速度/内存占用。</p>
+<h2 id="2-机器学习流水线"><a href="#2-机器学习流水线" class="headerlink" title="2.机器学习流水线"></a>2.机器学习流水线</h2><p>我们的 ML 管道由两个协同工作的实时深度神经网络模型组成：一个对完整图像进行操作并计算人脸位置的检测器，以及一个对这些位置进行操作并通过回归预测近似表面几何形状的 3D 人脸地标模型。准确裁剪人脸大大减少了对常见数据增强的需求，例如由旋转、平移和缩放组成的仿射变换。相反，它允许网络将其大部分资源用于坐标预测精度。此外，在我们的管道中，还可以根据前一帧中识别出的人脸地标生成裁剪图，并且只有当地标模型无法再识别人脸时，才会调用人脸检测器来重新定位人脸。此策略类似于我们的 MediaPipe Hands 解决方案中采用的策略，后者使用手掌检测器和手部标志模型。</p>
+<h2 id="3-模型"><a href="#3-模型" class="headerlink" title="3.模型"></a>3.模型</h2><ul>
+<li>人脸检测模型<br>该人脸检测器与MediaPipe人脸检测中使用的BlazeFace模型相同。</li>
+<li>人脸地标模型<br>对于 3D 人脸地标，我们采用迁移学习训练了一个具有多个目标的网络：网络同时预测合成渲染数据上的 3D 地标坐标和带注释的真实世界数据上的 2D 语义轮廓。由此产生的网络为我们提供了合理的 3D 地标预测，不仅针对合成数据，还针对真实世界数据。</li>
+</ul>
+<p>3D地标网络接收剪裁好的视频帧作为输入，不需要额外的深度输入。该模型输出3D点的位置，以及人脸在输入中存在和合理对齐的概率。一种常见的替代方法是预测每个地标的2D热图，但它不适合深度预测，而且对这么多点有很高的计算成本。我们通过迭代引导和改进预测进一步提高模型的准确性和鲁棒性。这样我们就可以将数据集扩展到越来越具有挑战性的情况，例如鬼脸、斜角和遮挡。</p>
+<h2 id="4-人脸几何模块"><a href="#4-人脸几何模块" class="headerlink" title="4.人脸几何模块"></a>4.人脸几何模块</h2><p>Face Landmark Model在屏幕坐标空间中进行单摄像头人脸地标检测:X、Y坐标为归一化屏幕坐标，而Z坐标为相对坐标，在弱透视投影摄像机模型下缩放为X坐标。这种格式非常适合一些应用程序，但它不能直接实现增强现实(AR)的全部功能，如将虚拟3D对象与检测到的人脸对齐。</p>
+<p>人脸几何模块从屏幕坐标空间移向可度量的3D空间，并提供必要的基元来将检测到的人脸作为常规3D对象处理。通过设计，您将能够使用透视相机将最终的3D场景投影回屏幕坐标空间，并保证面部地标位置没有改变。<br><strong>关键概念</strong></p>
+<h3 id="4-1METRIC-3D-SPACE"><a href="#4-1METRIC-3D-SPACE" class="headerlink" title="4.1METRIC 3D SPACE"></a>4.1METRIC 3D SPACE</h3><p>Face Geometry 模块中建立的 Metric 3D 空间是右手正交的 metric 3D 坐标空间。在空间内，有一个位于空间原点并指向Z轴负方向的虚拟透视相机。在当前的流程中，假设输入的相机帧正是由这个虚拟相机观察到的，因此它的参数稍后用于将屏幕地标坐标转换回Metric 3D空间。虚拟相机参数可以自由设置，但为了获得更好的效果，建议尽可能接近真实的物理相机参数。  </p>
+<h3 id="4-2规范化的人脸模型"><a href="#4-2规范化的人脸模型" class="headerlink" title="4.2规范化的人脸模型"></a>4.2规范化的人脸模型</h3><p>规范化的人脸模型（Canonical Face Model ）是人脸的静态 3D 模型，它遵循 Face Landmark Model 的 468 个 3D 人脸地标拓扑。该模型具有两个重要功能：</p>
+<ul>
+<li>定义了公制单位：规范化的人脸模型的比例定义了Metric 3D 空间的公制单位。默认规范化的人脸模型使用的公制单位是厘米；</li>
+<li>静态空间和运行时空间之间的桥梁：人脸姿态变换矩阵实际上是从规范化的人脸模型到在每一帧上估计的运行时人脸地标集的线性映射。通过这种方式，围绕规范化的人脸模型建模的虚拟 3D 资产可以通过对它们应用人脸姿势变换矩阵来与跟踪的人脸对齐。</li>
+</ul>
+<h2 id="5-组件"><a href="#5-组件" class="headerlink" title="5.组件"></a>5.组件</h2><h3 id="5-1几何管道"><a href="#5-1几何管道" class="headerlink" title="5.1几何管道"></a>5.1几何管道</h3><p>几何管道是一个关键组件，它负责在Metric 3D空间内估计人脸几何对象。在每一帧中，按照给定的顺序执行以下步骤:</p>
+<ul>
+<li>人脸地标屏幕坐标转换为三维空间坐标;</li>
+<li>人脸姿态变换矩阵被估计为从规范化的人脸landmark 集到运行时人脸landmark 集的刚性线性映射，以最小化两者之间的差异;</li>
+<li>使用运行时的人脸landmark作为顶点位置(XYZ)创建了一个人脸网格，而顶点纹理坐标(UV)和三角形拓扑都继承自规范化的人脸模型。</li>
+</ul>
+<p>几何管道被实现为MediaPipe计算器。为了方便起见，人脸几何管道计算器与相应的元数据捆绑在一起，形成统一的MediaPipe子图。人脸几何格式被定义为协议缓冲区消息。</p>
+<h3 id="5-2效果渲染器"><a href="#5-2效果渲染器" class="headerlink" title="5.2效果渲染器"></a>5.2效果渲染器</h3><p>效果渲染器是一个组件，它作为一个面部效果渲染器的工作示例。它以OpenGL ES 2.0 API为目标，在移动设备上启用实时性能，并支持以下渲染模式:</p>
+<ul>
+<li>3D物体渲染模式：虚拟对象与检测到的人脸对齐，以模拟附着在人脸上的对象(例如:眼镜);</li>
+<li>人脸网格渲染模式：在面部网格表面上拉伸纹理以模拟面部绘画技术。</li>
+</ul>
+<p>在这两种渲染模式中，面部网格首先被渲染为直接进入深度缓冲区的遮挡物。此步骤有助于通过隐藏面部表面后面的不可见元素来创建更可信的效果。  </p>
+<h2 id="6-解决方案的API"><a href="#6-解决方案的API" class="headerlink" title="6.解决方案的API"></a>6.解决方案的API</h2><h3 id="6-1参数配置"><a href="#6-1参数配置" class="headerlink" title="6.1参数配置"></a>6.1参数配置</h3><ul>
+<li><code>STATIC_IMAGE_MODE</code>:如果设置为 false，该解决方案会将输入图像视为视频流。它将尝试在第一张输入图像中检测人脸，并在成功检测后进一步定位人脸地标。在随后的图像中，一旦检测到所有 max_num_faces 人脸并定位了相应的人脸地标，它就会简单地跟踪这些地标，而不会调用另一个检测，直到它失去对任何人脸的跟踪。这减少了延迟，非常适合处理视频帧。如果设置为 true，人脸检测会在每个输入图像上运行，非常适合处理一批静态的、可能不相关的图像。默认为false。</li>
+<li><code>MAX_NUM_FACES</code>:要检测的最大人脸数。默认为 1。</li>
+<li><code>MIN_DETECTION_CONFIDENCE</code>:来自人脸检测模型的最小置信值 ([0.0, 1.0])，以便将检测视为成功。默认为 0.5。</li>
+<li><code>MIN_TRACKING_CONFIDENCE</code>:来自地标跟踪模型的最小置信值 ([0.0, 1.0])，用于将被视为成功跟踪的人脸地标，否则将在下一个输入图像上自动调用人脸检测。将其设置为更高的值可以提高解决方案的稳健性，但代价是更高的延迟。如果 static_image_mode 为真，则忽略这个参数，人脸检测将在每个图像上运行。默认为 0.5。</li>
+</ul>
+<h3 id="6-2输出"><a href="#6-2输出" class="headerlink" title="6.2输出"></a>6.2输出</h3><ul>
+<li><code>MULTI_FACE_LANDMARKS</code>:检测/跟踪人脸的集合，其中每个人脸表示为 468 个人脸地标的列表，每个地标由 x、y 和 z 组成。 x 和 y 分别通过图像宽度和高度归一化为 [0.0, 1.0]。 z 表示地标深度，以头部中心的深度为原点，值越小，地标离相机越近。 z 的大小使用与 x 大致相同的比例。</li>
+</ul>
+<h3 id="7-Python-API解决方案"><a href="#7-Python-API解决方案" class="headerlink" title="7.Python API解决方案"></a>7.Python API解决方案</h3><p>支持配置选项:</p>
+<ul>
+<li>static_image_mode</li>
+<li>max_num_faces</li>
+<li>min_detection_confidence</li>
+<li>min_tracking_confidence<br>（1）基础版本</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 图像</span></span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> mediapipe <span class="keyword">as</span> mp</span><br><span class="line">mp_drawing = mp.solutions.drawing_utils</span><br><span class="line">mp_drawing_styles = mp.solutions.drawing_utils.DrawingSpec </span><br><span class="line">mp_face_mesh = mp.solutions.face_mesh</span><br><span class="line"><span class="comment"># 静态图片:</span></span><br><span class="line">IMAGE_FILES = [<span class="string">"trump.jpg"</span>]</span><br><span class="line">drawing_spec = mp_drawing.DrawingSpec(thickness=<span class="number">1</span>, circle_radius=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> mp_face_mesh.FaceMesh(static_image_mode=<span class="literal">True</span>,max_num_faces=<span class="number">1</span>,min_detection_confidence=<span class="number">0.5</span>) <span class="keyword">as</span> face_mesh:  </span><br><span class="line">    <span class="keyword">for</span> idx, file <span class="keyword">in</span> enumerate(IMAGE_FILES):    </span><br><span class="line">        image = cv2.imread(file)    </span><br><span class="line">        <span class="comment"># Convert the BGR image to RGB before processing.    </span></span><br><span class="line">        results = face_mesh.process(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))    </span><br><span class="line"></span><br><span class="line">        <span class="comment"># Print and draw face mesh landmarks on the image.    </span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> results.multi_face_landmarks:      </span><br><span class="line">            <span class="keyword">continue</span>    </span><br><span class="line">        annotated_image = image.copy()   </span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> face_landmarks <span class="keyword">in</span> results.multi_face_landmarks:      </span><br><span class="line">            print(<span class="string">"face_landmarks:"</span>, face_landmarks)      </span><br><span class="line"></span><br><span class="line">            mp_drawing.draw_landmarks( image=annotated_image, landmark_list=face_landmarks, connections=mp_face_mesh.FACE_CONNECTIONS,)      </span><br><span class="line">            mp_drawing.draw_landmarks( image=annotated_image, landmark_list=face_landmarks, connections=mp_face_mesh.FACE_CONNECTIONS,)</span><br><span class="line"></span><br><span class="line">       cv2.imwrite(<span class="string">"annotated_image"</span> + str(idx) + <span class="string">".png"</span>, annotated_image)</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://www.ucloud.cn/yun/121649.html" target="_blank" rel="noopener">MediaPipe基础（2）人脸网格 - UCloud云社区</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2023/06/01/NLP/NLP_AIs/" rel="next" title="AI-GPT">
+                <i class="fa fa-chevron-left"></i> AI-GPT
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2023/06/06/Sub_Language/DL_Train/Tensorflow/TF_Env/" rel="prev" title="TF Conda Env Init">
+                TF Conda Env Init <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Simon Shi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">267</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">233</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MediaPipe基础（2）人脸网格"><span class="nav-number">1.</span> <span class="nav-text">MediaPipe基础（2）人脸网格</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-摘要"><span class="nav-number">1.1.</span> <span class="nav-text">1.摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-机器学习流水线"><span class="nav-number">1.2.</span> <span class="nav-text">2.机器学习流水线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-模型"><span class="nav-number">1.3.</span> <span class="nav-text">3.模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-人脸几何模块"><span class="nav-number">1.4.</span> <span class="nav-text">4.人脸几何模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1METRIC-3D-SPACE"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1METRIC 3D SPACE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2规范化的人脸模型"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2规范化的人脸模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-组件"><span class="nav-number">1.5.</span> <span class="nav-text">5.组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1几何管道"><span class="nav-number">1.5.1.</span> <span class="nav-text">5.1几何管道</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2效果渲染器"><span class="nav-number">1.5.2.</span> <span class="nav-text">5.2效果渲染器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-解决方案的API"><span class="nav-number">1.6.</span> <span class="nav-text">6.解决方案的API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1参数配置"><span class="nav-number">1.6.1.</span> <span class="nav-text">6.1参数配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2输出"><span class="nav-number">1.6.2.</span> <span class="nav-text">6.2输出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-Python-API解决方案"><span class="nav-number">1.6.3.</span> <span class="nav-text">7.Python API解决方案</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+    
+
+        
+
+
+
+
+
+
+<div>
+<!-- 填写你的友盟代码 -->
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1277989586'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s9.cnzz.com/z_stat.php%3Fid%3D1277989586%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+<!-- 你的友盟代码 end -->
+</div>
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'novav',
+            repo: 'blog_comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'ea8aae03b5381e13ab9cdedd0282b60d8ec412cb',
+            
+                client_id: 'c3934b23eb001aa3243d'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

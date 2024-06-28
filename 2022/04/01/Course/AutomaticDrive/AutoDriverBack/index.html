@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Autopilot,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Simon Shi的小站" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="[TOC] 1.1 行业概述      1.2 技术路径  L2级别无人驾驶 L3级别无人驾驶 L4级别无人驾驶  V2X   1.3 技术概述    硬件概述  软件概述  操作系统OS HD MAP 软件概述 定位 感知 决策 控制  定位  感知  决策 控制">
+<meta name="keywords" content="Autopilot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="无人驾驶（1）概览--背景介绍">
+<meta property="og:url" content="http://yoursite.com/2022/04/01/Course/AutomaticDrive/AutoDriverBack/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="[TOC] 1.1 行业概述      1.2 技术路径  L2级别无人驾驶 L3级别无人驾驶 L4级别无人驾驶  V2X   1.3 技术概述    硬件概述  软件概述  操作系统OS HD MAP 软件概述 定位 感知 决策 控制  定位  感知  决策 控制">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-8e80921c913a7ab6b6f689803a3ad7da_1440w.jpg">
+<meta property="og:image" content="http://yoursite.com/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-abd8a521f6d0392a75a70ef39fa512d0_1440w.jpg">
+<meta property="og:image" content="http://yoursite.com/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-210125e2c634497452881d5987365f6d_r.jpg">
+<meta property="og:image" content="http://yoursite.com/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-ced414588934cc652b7ca0470016aa75_r.jpg">
+<meta property="og:image" content="http://yoursite.com/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-4b33411e367cee100554a3740ce8def8_r.jpg">
+<meta property="og:image" content="http://yoursite.com/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-b5b708b0c7bb80ecc43b88a876035adc_r.jpg">
+<meta property="og:image" content="http://yoursite.com/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-cc4e3385e92b62ac440cc74dff42b94a_r.jpg">
+<meta property="og:image" content="http://yoursite.com/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-ce55b177ef5cf16368cf0c7d5e9d9cd3_r.jpg">
+<meta property="og:image" content="http://yoursite.com/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-ddbee9f43a63fede67c72a6f792a6fa1_r.jpg">
+<meta property="og:image" content="http://yoursite.com/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-4bf38cf043dbbb03e609da048b89f384_r.jpg">
+<meta property="og:image" content="http://yoursite.com/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-4bf38cf043dbbb03e609da048b89f384_r_l4.jpg">
+<meta property="og:image" content="http://yoursite.com/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-35bf0644a19e570d32061a7dd4589214_r.jpg">
+<meta property="og:image" content="http://yoursite.com/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-9bf145bde7b53dc3367bcdac5c1f4606_1440w.jpg">
+<meta property="og:image" content="http://yoursite.com/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-b08d6bc56eb0ca2a9aabd3b5bcddccd8_r.jpg">
+<meta property="og:image" content="http://yoursite.com/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-2c864917c5ba04330db1172536703a57_r.jpg">
+<meta property="og:image" content="http://yoursite.com/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-8d93153c6eddf30a6837beb4cd5f7a05_1440w.jpg">
+<meta property="og:image" content="http://yoursite.com/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-aaa2191d4863097dab01741d0f9f037e_1440w.jpg">
+<meta property="og:image" content="http://yoursite.com/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-e6b6e7460619ed8174483f305b5f280c_1440w.jpg">
+<meta property="og:image" content="http://yoursite.com/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-61f7c00a512c9cd89546ccfac20a4779_1440w.jpg">
+<meta property="og:image" content="http://yoursite.com/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-1e39f268b58e3824e0b10dd51ade791a_1440w.jpg">
+<meta property="og:image" content="http://yoursite.com/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-0c4e65c81695b0eeb2d54e33aefab7ca_1440w.jpg">
+<meta property="og:image" content="http://yoursite.com/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-75db665275faaee7ceb4c4cc24b5b742_1440w.jpg">
+<meta property="og:image" content="http://yoursite.com/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-aff7ce5fd098b5ecdf3d8ed810a90a1a_1440w.jpg">
+<meta property="og:image" content="http://yoursite.com/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-aff7ce5fd098b5ecdf3d8ed810a90a1a_1440w_OS.jpg">
+<meta property="og:image" content="http://yoursite.com/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-ecd55467475e50edfc5fd67e0755fb94_1440w.jpg">
+<meta property="og:image" content="http://yoursite.com/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-792a14c1c9d213249481bbc0415697e4_1440w.jpg">
+<meta property="og:image" content="http://yoursite.com/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-791e404295f891fc10b866e7c42163c6_1440w.jpg">
+<meta property="og:image" content="http://yoursite.com/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-9d4804f58284e17f06831554f6cf9d18_1440w.jpg">
+<meta property="og:image" content="http://yoursite.com/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-17d7fbbdee4ff6800798e169af45ee50_1440w.jpg">
+<meta property="og:image" content="http://yoursite.com/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-86a0fe88677e6714ec14172660431872_1440w.jpg">
+<meta property="og:image" content="http://yoursite.com/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-d7303ecf4196a1606b226f2394456873_1440w.jpg">
+<meta property="og:updated_time" content="2024-06-28T09:57:58.566Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="无人驾驶（1）概览--背景介绍">
+<meta name="twitter:description" content="[TOC] 1.1 行业概述      1.2 技术路径  L2级别无人驾驶 L3级别无人驾驶 L4级别无人驾驶  V2X   1.3 技术概述    硬件概述  软件概述  操作系统OS HD MAP 软件概述 定位 感知 决策 控制  定位  感知  决策 控制">
+<meta name="twitter:image" content="http://yoursite.com/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-8e80921c913a7ab6b6f689803a3ad7da_1440w.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2022/04/01/Course/AutomaticDrive/AutoDriverBack/">
+
+
+
+
+
+  <title>无人驾驶（1）概览--背景介绍 | Simon Shi的小站</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simon Shi的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人工智能，机器学习 学习记录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/04/01/Course/AutomaticDrive/AutoDriverBack/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">无人驾驶（1）概览--背景介绍</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-04-01T22:00:00+00:00">
+                2022-04-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Autopilot/" itemprop="url" rel="index">
+                    <span itemprop="name">Autopilot</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2022/04/01/Course/AutomaticDrive/AutoDriverBack/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2022/04/01/Course/AutomaticDrive/AutoDriverBack/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[TOC]</p>
+<h3 id="1-1-行业概述"><a href="#1-1-行业概述" class="headerlink" title="1.1 行业概述"></a>1.1 行业概述</h3><p><img src="/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-8e80921c913a7ab6b6f689803a3ad7da_1440w.jpg" alt="img"></p>
+<p><img src="/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-abd8a521f6d0392a75a70ef39fa512d0_1440w.jpg" alt="img"></p>
+<p><img src="/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-210125e2c634497452881d5987365f6d_r.jpg" alt="preview"></p>
+<p><img src="/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-ced414588934cc652b7ca0470016aa75_r.jpg" alt="preview"></p>
+<p><img src="/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-4b33411e367cee100554a3740ce8def8_r.jpg" alt="preview"></p>
+<p><img src="/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-b5b708b0c7bb80ecc43b88a876035adc_r.jpg" alt="preview"></p>
+<h3 id="1-2-技术路径"><a href="#1-2-技术路径" class="headerlink" title="1.2 技术路径"></a>1.2 技术路径</h3><p><img src="/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-cc4e3385e92b62ac440cc74dff42b94a_r.jpg" alt="preview"></p>
+<p><img src="/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-ce55b177ef5cf16368cf0c7d5e9d9cd3_r.jpg" alt="preview"></p>
+<h4 id="L2级别无人驾驶"><a href="#L2级别无人驾驶" class="headerlink" title="L2级别无人驾驶"></a>L2级别无人驾驶</h4><p><img src="/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-ddbee9f43a63fede67c72a6f792a6fa1_r.jpg" alt="preview"></p>
+<h4 id="L3级别无人驾驶"><a href="#L3级别无人驾驶" class="headerlink" title="L3级别无人驾驶"></a>L3级别无人驾驶</h4><p><img src="/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-4bf38cf043dbbb03e609da048b89f384_r.jpg" alt="preview"></p>
+<h4 id="L4级别无人驾驶"><a href="#L4级别无人驾驶" class="headerlink" title="L4级别无人驾驶"></a>L4级别无人驾驶</h4><p><img src="/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-4bf38cf043dbbb03e609da048b89f384_r_l4.jpg" alt="preview"></p>
+<p><img src="/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-35bf0644a19e570d32061a7dd4589214_r.jpg" alt="preview"></p>
+<h4 id="V2X"><a href="#V2X" class="headerlink" title="V2X"></a>V2X</h4><p><img src="/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-9bf145bde7b53dc3367bcdac5c1f4606_1440w.jpg" alt="img"></p>
+<p><img src="/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-b08d6bc56eb0ca2a9aabd3b5bcddccd8_r.jpg" alt="preview"></p>
+<p><img src="/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-2c864917c5ba04330db1172536703a57_r.jpg" alt="preview"></p>
+<h3 id="1-3-技术概述"><a href="#1-3-技术概述" class="headerlink" title="1.3 技术概述"></a>1.3 技术概述</h3><p><img src="/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-8d93153c6eddf30a6837beb4cd5f7a05_1440w.jpg" alt="img"></p>
+<p><img src="/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-aaa2191d4863097dab01741d0f9f037e_1440w.jpg" alt="img"></p>
+<p><img src="/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-e6b6e7460619ed8174483f305b5f280c_1440w.jpg" alt="img"></p>
+<p><img src="/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-61f7c00a512c9cd89546ccfac20a4779_1440w.jpg" alt="img"></p>
+<h4 id="硬件概述"><a href="#硬件概述" class="headerlink" title="硬件概述"></a>硬件概述</h4><p><img src="/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-1e39f268b58e3824e0b10dd51ade791a_1440w.jpg" alt="img"></p>
+<p><img src="/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-0c4e65c81695b0eeb2d54e33aefab7ca_1440w.jpg" alt="img"></p>
+<h4 id="软件概述"><a href="#软件概述" class="headerlink" title="软件概述"></a>软件概述</h4><p><img src="/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-75db665275faaee7ceb4c4cc24b5b742_1440w.jpg" alt="img"></p>
+<p><img src="/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-aff7ce5fd098b5ecdf3d8ed810a90a1a_1440w.jpg" alt="img"></p>
+<h5 id="操作系统OS"><a href="#操作系统OS" class="headerlink" title="操作系统OS"></a>操作系统OS</h5><p><img src="/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-aff7ce5fd098b5ecdf3d8ed810a90a1a_1440w_OS.jpg" alt="img"></p>
+<h5 id="HD-MAP"><a href="#HD-MAP" class="headerlink" title="HD MAP"></a>HD MAP</h5><p><img src="/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-ecd55467475e50edfc5fd67e0755fb94_1440w.jpg" alt="img"></p>
+<h4 id="软件概述-1"><a href="#软件概述-1" class="headerlink" title="软件概述"></a>软件概述</h4><ul>
+<li>定位</li>
+<li>感知</li>
+<li>决策</li>
+<li>控制</li>
+</ul>
+<h5 id="定位"><a href="#定位" class="headerlink" title="定位"></a>定位</h5><p><img src="/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-792a14c1c9d213249481bbc0415697e4_1440w.jpg" alt="img"></p>
+<p><img src="/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-791e404295f891fc10b866e7c42163c6_1440w.jpg" alt="img"></p>
+<h5 id="感知"><a href="#感知" class="headerlink" title="感知"></a>感知</h5><p><img src="/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-9d4804f58284e17f06831554f6cf9d18_1440w.jpg" alt="img"></p>
+<p><img src="/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-17d7fbbdee4ff6800798e169af45ee50_1440w.jpg" alt="img"></p>
+<h5 id="决策"><a href="#决策" class="headerlink" title="决策"></a>决策</h5><p><img src="/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-86a0fe88677e6714ec14172660431872_1440w.jpg" alt="img"></p>
+<h5 id="控制"><a href="#控制" class="headerlink" title="控制"></a>控制</h5><p><img src="/2022/04/01/Course/AutomaticDrive/AutoDriverBack/v2-d7303ecf4196a1606b226f2394456873_1440w.jpg" alt="img"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Autopilot/" rel="tag"># Autopilot</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/04/01/Paper/Paper-CV-5-Object-Tracking/" rel="next" title="Paper_CV_5 目标跟踪">
+                <i class="fa fa-chevron-left"></i> Paper_CV_5 目标跟踪
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/04/04/Course/AutomaticDrive/AutoDriver_03/" rel="prev" title="无人驾驶（3）感知基础">
+                无人驾驶（3）感知基础 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Simon Shi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">267</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">233</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-行业概述"><span class="nav-number">1.</span> <span class="nav-text">1.1 行业概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-技术路径"><span class="nav-number">2.</span> <span class="nav-text">1.2 技术路径</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#L2级别无人驾驶"><span class="nav-number">2.1.</span> <span class="nav-text">L2级别无人驾驶</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#L3级别无人驾驶"><span class="nav-number">2.2.</span> <span class="nav-text">L3级别无人驾驶</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#L4级别无人驾驶"><span class="nav-number">2.3.</span> <span class="nav-text">L4级别无人驾驶</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#V2X"><span class="nav-number">2.4.</span> <span class="nav-text">V2X</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-技术概述"><span class="nav-number">3.</span> <span class="nav-text">1.3 技术概述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#硬件概述"><span class="nav-number">3.1.</span> <span class="nav-text">硬件概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#软件概述"><span class="nav-number">3.2.</span> <span class="nav-text">软件概述</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#操作系统OS"><span class="nav-number">3.2.1.</span> <span class="nav-text">操作系统OS</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#HD-MAP"><span class="nav-number">3.2.2.</span> <span class="nav-text">HD MAP</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#软件概述-1"><span class="nav-number">3.3.</span> <span class="nav-text">软件概述</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#定位"><span class="nav-number">3.3.1.</span> <span class="nav-text">定位</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#感知"><span class="nav-number">3.3.2.</span> <span class="nav-text">感知</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#决策"><span class="nav-number">3.3.3.</span> <span class="nav-text">决策</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#控制"><span class="nav-number">3.3.4.</span> <span class="nav-text">控制</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+    
+
+        
+
+
+
+
+
+
+<div>
+<!-- 填写你的友盟代码 -->
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1277989586'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s9.cnzz.com/z_stat.php%3Fid%3D1277989586%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+<!-- 你的友盟代码 end -->
+</div>
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'novav',
+            repo: 'blog_comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'ea8aae03b5381e13ab9cdedd0282b60d8ec412cb',
+            
+                client_id: 'c3934b23eb001aa3243d'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

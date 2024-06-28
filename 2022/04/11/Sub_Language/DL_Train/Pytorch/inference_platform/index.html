@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="PyTorch,libTorch,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Simon Shi的小站" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="[TOC] C++模型调用模型转换思路通常为:  Pytorch -&amp;gt; ONNX -&amp;gt; TensorRT Pytorch -&amp;gt; ONNX -&amp;gt; TVM Pytorch -&amp;gt; 转换工具 -&amp;gt; caffe Pytorch -&amp;gt; torchscript(C++版本Torch) [此方式] pytorch-&amp;gt; JIT -&amp;gt; TensorRT  http">
+<meta name="keywords" content="PyTorch,libTorch">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pytorch Model c++ inference in platform">
+<meta property="og:url" content="http://yoursite.com/2022/04/11/Sub_Language/DL_Train/Pytorch/inference_platform/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="[TOC] C++模型调用模型转换思路通常为:  Pytorch -&amp;gt; ONNX -&amp;gt; TensorRT Pytorch -&amp;gt; ONNX -&amp;gt; TVM Pytorch -&amp;gt; 转换工具 -&amp;gt; caffe Pytorch -&amp;gt; torchscript(C++版本Torch) [此方式] pytorch-&amp;gt; JIT -&amp;gt; TensorRT  http">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2022/04/11/Sub_Language/DL_Train/Pytorch/inference_platform/IRexd6gaAzskvGZ.png">
+<meta property="og:updated_time" content="2024-06-28T09:57:59.094Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="pytorch Model c++ inference in platform">
+<meta name="twitter:description" content="[TOC] C++模型调用模型转换思路通常为:  Pytorch -&amp;gt; ONNX -&amp;gt; TensorRT Pytorch -&amp;gt; ONNX -&amp;gt; TVM Pytorch -&amp;gt; 转换工具 -&amp;gt; caffe Pytorch -&amp;gt; torchscript(C++版本Torch) [此方式] pytorch-&amp;gt; JIT -&amp;gt; TensorRT  http">
+<meta name="twitter:image" content="http://yoursite.com/2022/04/11/Sub_Language/DL_Train/Pytorch/inference_platform/IRexd6gaAzskvGZ.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2022/04/11/Sub_Language/DL_Train/Pytorch/inference_platform/">
+
+
+
+
+
+  <title>pytorch Model c++ inference in platform | Simon Shi的小站</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simon Shi的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人工智能，机器学习 学习记录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/04/11/Sub_Language/DL_Train/Pytorch/inference_platform/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">pytorch Model c++ inference in platform</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-04-11T12:00:00+00:00">
+                2022-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DNN-platform/" itemprop="url" rel="index">
+                    <span itemprop="name">DNN_platform</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DNN-platform/pytorch/" itemprop="url" rel="index">
+                    <span itemprop="name">pytorch</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DNN-platform/pytorch/c/" itemprop="url" rel="index">
+                    <span itemprop="name">c++</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2022/04/11/Sub_Language/DL_Train/Pytorch/inference_platform/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2022/04/11/Sub_Language/DL_Train/Pytorch/inference_platform/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[TOC]</p>
+<h2 id="C-模型调用"><a href="#C-模型调用" class="headerlink" title="C++模型调用"></a>C++模型调用</h2><p><a href="https://oldpan.me/archives/talk-about-onnx" target="_blank" rel="noopener">模型转换思路</a>通常为:</p>
+<ul>
+<li>Pytorch -&gt; ONNX -&gt; TensorRT</li>
+<li>Pytorch -&gt; ONNX -&gt; TVM</li>
+<li>Pytorch -&gt; <a href="https://github.com/longcw/pytorch2caffe" target="_blank" rel="noopener">转换工具</a> -&gt; caffe</li>
+<li>Pytorch -&gt; torchscript(C++版本Torch) [<strong>此方式</strong>]</li>
+<li>pytorch-&gt; JIT -&gt; TensorRT</li>
+</ul>
+<p><a href="https://pytorch.org/cppdocs/api/library_root.html" target="_blank" rel="noopener">https://pytorch.org/cppdocs/api/library_root.html</a></p>
+<p><a href="https://pytorch.org/tutorials/advanced/cpp_frontend.html" target="_blank" rel="noopener">https://pytorch.org/tutorials/advanced/cpp_frontend.html</a></p>
+<p>最近所里有一个 GUI 项目需要调用 PyTorch 的模型，虽然之前做过一些，但是大部分用的是 Python 接口，这次对实效性有要求，因此做一个 C++的接口，现在把一些配置事项做个记录。</p>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><h3 id="下载安装支持库"><a href="#下载安装支持库" class="headerlink" title="下载安装支持库"></a>下载安装支持库</h3><p>首先，需要下载安装<a href="https://pytorch.org/get-started/locally/" target="_blank" rel="noopener"><code>LibTorch</code>支持库</a>，推荐使用<a href="https://i.loli.net/2020/10/17/IRexd6gaAzskvGZ.png" target="_blank" rel="noopener"><img src="/2022/04/11/Sub_Language/DL_Train/Pytorch/inference_platform/IRexd6gaAzskvGZ.png" alt="LibPyTorch"></a>LibPyTorch</p>
+<p>下载后直接解压</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://download.pytorch.org/libtorch/nightly/cpu/libtorch-shared-with-deps-latest.zip</span><br><span class="line">unzip libtorch-shared-with-deps-latest.zip</span><br></pre></td></tr></table></figure>
+
+<h2 id="基于已训练的-Torch-模型"><a href="#基于已训练的-Torch-模型" class="headerlink" title="基于已训练的 Torch 模型"></a>基于已训练的 Torch 模型</h2><h3 id="追踪原始模型"><a href="#追踪原始模型" class="headerlink" title="追踪原始模型"></a>追踪原始模型</h3><p>需要注意的是，如果希望加载 PyTorch 库到 C++中，首先需要基于 JIT 库的 <a href="https://pytorch.org/docs/master/jit.html#creating-torchscript-code" target="_blank" rel="noopener">TorchScript</a> 对模型进行转化，这里以简单<code>resnet18</code>模型来作为示例，可以简单的使用<code>torchvision</code>中的模型库进行生成，接着我们生成一个简单的假数据，利用<code>torch.jit.trace</code>让 TorchScript 能够遍历一遍模型，便可完成追踪。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torchvision</span><br><span class="line"><span class="comment"># 实例模型</span></span><br><span class="line">model = torchvision.models.resnet18()</span><br><span class="line"><span class="comment"># 假数据</span></span><br><span class="line">example = torch.rand(<span class="number">1</span>, <span class="number">3</span>, <span class="number">224</span>, <span class="number">224</span>)</span><br><span class="line"><span class="comment"># 使用JIT遍历模型，从而获得记录</span></span><br><span class="line">traced_script_module = torch.jit.trace(model, example)</span><br></pre></td></tr></table></figure>
+
+<p>对于可能存在依赖于数据输入条件的情况，如以下模型：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyModule</span><span class="params">(torch.nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, N, M)</span>:</span></span><br><span class="line">        super(MyModule, self).__init__()</span><br><span class="line">        self.weight = torch.nn.Parameter(torch.rand(N, M))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, input)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> input.sum() &gt; <span class="number">0</span>:</span><br><span class="line">          output = self.weight.mv(input)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">          output = self.weight + input</span><br><span class="line">        <span class="keyword">return</span> output</span><br></pre></td></tr></table></figure>
+
+<p>数据的前向传播有赖于输入的值，那么可以调用<code>torch.jit.script</code>直接进行转换：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">my_module = MyModule(10,20)</span><br><span class="line">traced_script_module2 = torch.jit.script(my_module)</span><br></pre></td></tr></table></figure>
+
+<p>区别在于第二种方式实现时可以直接将正在训练的模型调用加载。 在获得上述的<code>traced_script_module</code>后，实际上这是一个序列化的 torch 张量字典，可以直接调用<code>save</code>方法完成保存:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 保存使用TorchScript遍历的模型</span></span><br><span class="line">traced_script_module.save(<span class="string">"traced_resnet_model.pt"</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="加载-Torch-模型"><a href="#加载-Torch-模型" class="headerlink" title="加载 Torch 模型"></a>加载 Torch 模型</h3><p>有了保存后的 pt 模型后，在 C++中的调用，即为和 LibTorch 库的交互，这里以官方的例子作说明</p>
+<p>新建 C++项目, CMakeList 配置可以参考以下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">cmake_minimum_required(VERSION <span class="number">3.16</span>)</span><br><span class="line">project(torchcpp)</span><br><span class="line">set(Torch_DIR ./libtorch/share/cmake/Torch) <span class="comment">#设置Torch的执行位置</span></span><br><span class="line"></span><br><span class="line">find_package(Torch REQUIRED) <span class="comment"># 查找支持库</span></span><br><span class="line">add_executable(torchcpp main.cpp) <span class="comment"># 项目主入口</span></span><br><span class="line">target_link_libraries(torchcpp <span class="string">"$&#123;TORCH_LIBRARIES&#125;"</span>) <span class="comment"># 指出动态连接库</span></span><br><span class="line">set(CMAKE_CXX_STANDARD <span class="number">14</span>) <span class="comment"># C++标准</span></span><br></pre></td></tr></table></figure>
+
+<p>对应简单加载 C++代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;torch/script.h&gt; // One-stop header.</span></span><br><span class="line"><span class="comment">#include &lt;iostream&gt;</span></span><br><span class="line"><span class="comment">#include &lt;memory&gt;</span></span><br><span class="line"></span><br><span class="line">at::Tensor baseModel(std::vector&lt;torch::jit::IValue&gt; inputs, torch::jit::script::Module module) &#123;</span><br><span class="line">    at::Tensor output = module.forward(inputs).toTensor();</span><br><span class="line">    <span class="keyword">return</span> output;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(int argc, const char *argv[]) &#123;</span><br><span class="line">    <span class="keyword">if</span> (argc != <span class="number">2</span>) &#123;</span><br><span class="line">        std::cerr &lt;&lt; <span class="string">"usage: example-app &lt;path-to-exported-script-module&gt;\n"</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    torch::jit::script::Module module;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        // 使用 torch::jit::load() 反序列化原有模型.</span><br><span class="line">        module = torch::jit::load(argv[<span class="number">1</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">    catch (const c10::Error &amp;e) &#123;</span><br><span class="line">        std::cerr &lt;&lt; <span class="string">"error loading the model\n"</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">"model loads ok\n"</span>;</span><br><span class="line">    //  生成假数据以测试</span><br><span class="line">    std::vector&lt;torch::jit::IValue&gt; inputs;</span><br><span class="line">    inputs.push_back(torch::ones(&#123;<span class="number">1</span>, <span class="number">3</span>, <span class="number">224</span>, <span class="number">224</span>&#125;));</span><br><span class="line">    at::Tensor output = baseModel(inputs, module);</span><br><span class="line">    std::cout &lt;&lt; output.slice(<span class="number">1</span>, <span class="number">0</span>, <span class="number">5</span>) &lt;&lt; <span class="string">"\n"</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同时我们新建一个 build 文件夹以保存编译时文件</p>
+<p>至此项目大致结构如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">├── build</span><br><span class="line">├── CMakeLists.txt</span><br><span class="line">└── main.cpp</span><br></pre></td></tr></table></figure>
+
+<p>进入 build 文件夹执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(base) ➜  cd build</span><br><span class="line">(base) ➜  cmake ..</span><br><span class="line">(base) ➜  cmake --build . --config Release</span><br></pre></td></tr></table></figure>
+
+<p>可以获得类似输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">(base) ➜  build cmake ..</span><br><span class="line">-- The C compiler identification is GNU 9.3.0</span><br><span class="line">-- The CXX compiler identification is GNU 9.3.0</span><br><span class="line">-- Check for working C compiler: /usr/bin/cc</span><br><span class="line">-- Check for working C compiler: /usr/bin/cc -- works</span><br><span class="line">-- Detecting C compiler ABI info</span><br><span class="line">-- Detecting C compiler ABI info - done</span><br><span class="line">-- Detecting C compile features</span><br><span class="line">-- Detecting C compile features - done</span><br><span class="line">-- Check for working CXX compiler: /usr/bin/c++</span><br><span class="line">-- Check for working CXX compiler: /usr/bin/c++ -- works</span><br><span class="line">-- Detecting CXX compiler ABI info</span><br><span class="line">-- Detecting CXX compiler ABI info - done</span><br><span class="line">-- Detecting CXX compile features</span><br><span class="line">-- Detecting CXX compile features - done</span><br><span class="line">-- Looking for pthread.h</span><br><span class="line">-- Looking for pthread.h - found</span><br><span class="line">-- Performing Test CMAKE_HAVE_LIBC_PTHREAD</span><br><span class="line">-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed</span><br><span class="line">-- Looking for pthread_create in pthreads</span><br><span class="line">-- Looking for pthread_create in pthreads - not found</span><br><span class="line">-- Looking for pthread_create in pthread</span><br><span class="line">-- Looking for pthread_create in pthread - found</span><br><span class="line">-- Found Threads: TRUE</span><br><span class="line">-- Found CUDA: /usr/local/cuda (found version &quot;10.2&quot;)</span><br><span class="line">-- Caffe2: CUDA detected: 10.2</span><br><span class="line">-- Caffe2: CUDA nvcc is: /usr/local/cuda/bin/nvcc</span><br><span class="line">-- Caffe2: CUDA toolkit directory: /usr/local/cuda</span><br><span class="line">-- Caffe2: Header version is: 10.2</span><br><span class="line">-- Found CUDNN: /usr/local/cuda/lib64/libcudnn.so</span><br><span class="line">-- Found cuDNN: v8.0.4  (include: /usr/local/cuda/include, library: /usr/local/cuda/lib64/libcudnn.so)</span><br><span class="line">-- Autodetected CUDA architecture(s):  7.5</span><br><span class="line">-- Added CUDA NVCC flags for: -gencode;arch=compute_75,code=sm_75</span><br><span class="line">-- Found Torch: /media/hao/Data/Code/DL/torchcppsample/libtorch/lib/libtorch.so</span><br><span class="line">-- Configuring done</span><br><span class="line">-- Generating done</span><br><span class="line">-- Build files have been written to: /media/hao/Data/Code/DL/torchcppsample/build</span><br><span class="line">(base) ➜  build cmake --build . --config Release</span><br><span class="line">Scanning dependencies of target torchcpp</span><br><span class="line">[ 50%] Building CXX object CMakeFiles/torchcpp.dir/main.cpp.o</span><br><span class="line">[100%] Linking CXX executable torchcpp</span><br><span class="line">[100%] Built target torchcpp</span><br></pre></td></tr></table></figure>
+
+<p>接着前往上级文件夹，执行编译得到的主程序：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(base) ➜  cd ..</span><br><span class="line">(base) ➜  torchcppsample build/torchcpp Python/traced_resnet_model.pt</span><br><span class="line">model loads ok</span><br><span class="line"> 0.1439 -0.8914 -0.0475  0.2474  0.3108</span><br><span class="line">[ CPUFloatType&#123;1,5&#125; ]</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>使用CLion等IDE可以更简单的编译管理，而不需要自行build。</p>
+</blockquote>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p>注意加载模型时，两者必须在同一设备(Device)中。</p>
+<h2 id="基于-C-前端训练模型"><a href="#基于-C-前端训练模型" class="headerlink" title="基于 C++ 前端训练模型"></a>基于 C++ 前端训练模型</h2><p>实际上 C++前端提供了训练模型的接口，但是实施难度不低，相比 Python 训练完成后转 TypeScript 调用，这个方式稍显复杂。 官方提供的教程如下：<a href="https://pytorch.org/tutorials/advanced/cpp_frontend.html" target="_blank" rel="noopener">使用 PyTorch 的 C++前端</a>，后续再更新吧。</p>
+<h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><p><a href="https://pytorch.org/tutorials/advanced/cpp_export.html" target="_blank" rel="noopener">Offical Doc  Pytorch cpp_export</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/66707105" target="_blank" rel="noopener">zhuhu_C++ 如何调用Pytorch模型</a></p>
+<p><a href="https://www.cnblogs.com/carsonzhu/p/11197048.html" target="_blank" rel="noopener">2019-07 Cnblog 使用C++调用并部署pytorch模型</a></p>
+<p><a href="https://blog.csdn.net/qq_36481821/article/details/107504333" target="_blank" rel="noopener">2020-07 CSDN Ubuntu下C++调用pytorch训练好模型–利用libtorch</a></p>
+<p><a href="https://www.cnblogs.com/geoffreyone/p/10827010.html" target="_blank" rel="noopener">⭐2019-05 Cnblog 使用C++调用pytorch模型(Linux)</a></p>
+<p><a href="https://blog.waynehfut.com/2020/10/17/pytorchcpp/" target="_blank" rel="noopener">⭐2020-10 使用 C++ 调用 PyTorch 模型</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PyTorch/" rel="tag"># PyTorch</a>
+          
+            <a href="/tags/libTorch/" rel="tag"># libTorch</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/04/10/Course/AutomaticDrive/AutoDriver_04/" rel="next" title="无人驾驶（4）动态环境感知与2D检测">
+                <i class="fa fa-chevron-left"></i> 无人驾驶（4）动态环境感知与2D检测
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/04/11/Sub_Language/DL_Platform/ONNX/OnnxRuntime/" rel="prev" title="ONNX Infrence">
+                ONNX Infrence <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Simon Shi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">267</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">233</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#C-模型调用"><span class="nav-number">1.</span> <span class="nav-text">C++模型调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#准备工作"><span class="nav-number">2.</span> <span class="nav-text">准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载安装支持库"><span class="nav-number">2.1.</span> <span class="nav-text">下载安装支持库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于已训练的-Torch-模型"><span class="nav-number">3.</span> <span class="nav-text">基于已训练的 Torch 模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#追踪原始模型"><span class="nav-number">3.1.</span> <span class="nav-text">追踪原始模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加载-Torch-模型"><span class="nav-number">3.2.</span> <span class="nav-text">加载 Torch 模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意事项"><span class="nav-number">3.3.</span> <span class="nav-text">注意事项</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于-C-前端训练模型"><span class="nav-number">4.</span> <span class="nav-text">基于 C++ 前端训练模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考："><span class="nav-number">5.</span> <span class="nav-text">参考：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+    
+
+        
+
+
+
+
+
+
+<div>
+<!-- 填写你的友盟代码 -->
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1277989586'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s9.cnzz.com/z_stat.php%3Fid%3D1277989586%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+<!-- 你的友盟代码 end -->
+</div>
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'novav',
+            repo: 'blog_comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'ea8aae03b5381e13ab9cdedd0282b60d8ec412cb',
+            
+                client_id: 'c3934b23eb001aa3243d'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

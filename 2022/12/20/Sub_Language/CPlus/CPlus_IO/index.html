@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="C++,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Simon Shi的小站" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="Outline:Base ifstream {Read}12345678string readFile(string file)&amp;#123;    ifstream tmp(file.c_str());    string fileContents((istreambuf_iterator&amp;lt;char&amp;gt;(tmp)), istreambuf_iterator&amp;lt;char&amp;gt;());">
+<meta name="keywords" content="C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C ++ IO File">
+<meta property="og:url" content="http://yoursite.com/2022/12/20/Sub_Language/CPlus/CPlus_IO/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="Outline:Base ifstream {Read}12345678string readFile(string file)&amp;#123;    ifstream tmp(file.c_str());    string fileContents((istreambuf_iterator&amp;lt;char&amp;gt;(tmp)), istreambuf_iterator&amp;lt;char&amp;gt;());">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2022/12/20/Sub_Language/CPlus/CPlus_IO/iostream.gif">
+<meta property="og:updated_time" content="2024-06-28T09:57:59.086Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C ++ IO File">
+<meta name="twitter:description" content="Outline:Base ifstream {Read}12345678string readFile(string file)&amp;#123;    ifstream tmp(file.c_str());    string fileContents((istreambuf_iterator&amp;lt;char&amp;gt;(tmp)), istreambuf_iterator&amp;lt;char&amp;gt;());">
+<meta name="twitter:image" content="http://yoursite.com/2022/12/20/Sub_Language/CPlus/CPlus_IO/iostream.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2022/12/20/Sub_Language/CPlus/CPlus_IO/">
+
+
+
+
+
+  <title>C ++ IO File | Simon Shi的小站</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simon Shi的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人工智能，机器学习 学习记录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/12/20/Sub_Language/CPlus/CPlus_IO/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">C ++ IO File</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-12-20T09:00:00+00:00">
+                2022-12-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/" itemprop="url" rel="index">
+                    <span itemprop="name">dev</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/c/" itemprop="url" rel="index">
+                    <span itemprop="name">c++</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2022/12/20/Sub_Language/CPlus/CPlus_IO/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2022/12/20/Sub_Language/CPlus/CPlus_IO/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Outline"><a href="#Outline" class="headerlink" title="Outline:"></a>Outline:</h2><h2 id="Base"><a href="#Base" class="headerlink" title="Base"></a>Base</h2><p><img src="/2022/12/20/Sub_Language/CPlus/CPlus_IO/iostream.gif" alt="img"></p>
+<h3 id="ifstream-Read"><a href="#ifstream-Read" class="headerlink" title="ifstream {Read}"></a>ifstream {Read}</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">readFile</span><span class="params">(<span class="built_in">string</span> file)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">ifstream <span class="title">tmp</span><span class="params">(file.c_str())</span></span>;</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">fileContents</span><span class="params">((istreambuf_iterator&lt;<span class="keyword">char</span>&gt;(tmp)), istreambuf_iterator&lt;<span class="keyword">char</span>&gt;())</span></span>;</span><br><span class="line"></span><br><span class="line">    tmp.close();</span><br><span class="line">    <span class="keyword">return</span> fileContents;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="ofstream-Write"><a href="#ofstream-Write" class="headerlink" title="ofstream {Write}"></a>ofstream {Write}</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">writeFile</span><span class="params">(<span class="built_in">string</span> bodyStr)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">ofstream <span class="title">os</span><span class="params">(<span class="string">"dst.csv"</span>, ostream::app)</span></span>;</span><br><span class="line">    os &lt;&lt; bodyStr;</span><br><span class="line">    os.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="STL–ostream-iterator："><a href="#STL–ostream-iterator：" class="headerlink" title="STL–ostream_iterator："></a>STL–ostream_iterator：</h2><p>ostream_iterator属于I/O流STL适配器，用于获取一个元素，同时保存在缓冲器中，可以供Cout输出。如果把cout看做成一个对 象，那么在Cout对象当中存在一片用于数据存储的区域。ostream_iterator在STL中一般配合copy函数一起使用，如下代码；</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># demo 1</span></span><br><span class="line"><span class="function">ostream_iterator <span class="title">output</span><span class="params">(<span class="built_in">cout</span>, <span class="string">" "</span>)</span></span>; <span class="comment">//关联cout，设置分隔符</span></span><br><span class="line">copy(ivec.begin(), ivec.end(), output); <span class="comment">//元素拷贝到ostream_iterator所指向的对象cout</span></span><br><span class="line"><span class="built_in">cout</span>; <span class="comment">//显示cout的值 </span></span><br><span class="line"></span><br><span class="line"><span class="meta"># demo 2</span></span><br><span class="line">copy(pre.begin(), pre.end(), ostream_iterator&lt;ElemType&gt;(<span class="built_in">cout</span>));</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; elements[i];</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="REf"><a href="#REf" class="headerlink" title="REf:"></a>REf:</h2><p><a href="https://blog.csdn.net/zx3517288/article/details/48392231" target="_blank" rel="noopener">C++监听文件夹下的添加、修改、删除文件事件_走过_冬天的博客-CSDN博客_c++ 监控文件删除</a></p>
+<h2 id="CSV"><a href="#CSV" class="headerlink" title="CSV"></a>CSV</h2><h3 id="1、读csv文件"><a href="#1、读csv文件" class="headerlink" title="1、读csv文件"></a>1、读csv文件</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> fname = <span class="string">"test.csv"</span>;</span><br><span class="line"><span class="comment">//以读入方式打开文件</span></span><br><span class="line"><span class="function">ifstream <span class="title">csv_data</span><span class="params">(fname, ios::in)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!csv_data.is_open())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Error: opening file fail"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">string</span> line;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; words; <span class="comment">//声明一个字符串向量</span></span><br><span class="line">    <span class="built_in">string</span> word;</span><br><span class="line">    <span class="comment">// ------------读取数据-----------------</span></span><br><span class="line">    <span class="comment">// 读取标题行</span></span><br><span class="line">    getline(csv_data, line);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="built_in">istringstream</span> <span class="built_in">sin</span>;</span><br><span class="line">    <span class="comment">// 按行读取数据</span></span><br><span class="line">    <span class="keyword">while</span> (getline(csv_data, line))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 清空vector及字符串流,只存当前行的数据</span></span><br><span class="line">        words.clear();</span><br><span class="line">        <span class="built_in">sin</span>.clear();</span><br><span class="line"></span><br><span class="line">        <span class="built_in">sin</span>.str(line);</span><br><span class="line">        <span class="comment">//将字符串流sin中的字符读到字符串数组words中，以逗号为分隔符</span></span><br><span class="line">        <span class="keyword">while</span> (getline(<span class="built_in">sin</span>, word, <span class="string">','</span>))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; word &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">            words.push_back(word); <span class="comment">//将每一格中的数据逐个push</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    csv_data.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2、写入csv文件"><a href="#2、写入csv文件" class="headerlink" title="2、写入csv文件"></a>2、写入csv文件</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> fname = <span class="string">"test.csv"</span>;</span><br><span class="line"></span><br><span class="line"><span class="function">ofstream <span class="title">outFile</span><span class="params">(fname, ios::out)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 写入标题行</span></span><br><span class="line">outFile &lt;&lt; <span class="string">"name"</span> &lt;&lt; <span class="string">','</span></span><br><span class="line">&lt;&lt; <span class="string">"income"</span> &lt;&lt; <span class="string">','</span></span><br><span class="line">&lt;&lt; <span class="string">"expenditure"</span> &lt;&lt; <span class="string">','</span></span><br><span class="line">&lt;&lt; <span class="string">"addr"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ********写入两行数据*********</span></span><br><span class="line"></span><br><span class="line">outFile &lt;&lt; <span class="string">"zhangsan"</span> &lt;&lt; <span class="string">','</span></span><br><span class="line">&lt;&lt; <span class="string">"3000"</span> &lt;&lt; <span class="string">','</span></span><br><span class="line">&lt;&lt; <span class="string">"1200"</span> &lt;&lt; <span class="string">','</span></span><br><span class="line">&lt;&lt; <span class="string">"陕西省"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">outFile &lt;&lt; <span class="string">"lisi"</span> &lt;&lt; <span class="string">','</span></span><br><span class="line">&lt;&lt; to_string(<span class="number">2032.1</span>) &lt;&lt; <span class="string">','</span></span><br><span class="line">&lt;&lt; to_string(<span class="number">789.2</span>) &lt;&lt; <span class="string">','</span></span><br><span class="line">&lt;&lt; <span class="string">"北京市"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//数字需转为字符串进行写入,csv文件结束一行写入需要"\n"或者endl进行换行</span></span><br><span class="line"></span><br><span class="line">outFile.close();</span><br></pre></td></tr></table></figure>
+
+<h3 id="3、向csv文件中追加内容"><a href="#3、向csv文件中追加内容" class="headerlink" title="3、向csv文件中追加内容"></a>3、向csv文件中追加内容</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ofstream <span class="title">outFile</span><span class="params">(fname, ios::app)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ********写入两行数据*********</span></span><br><span class="line"></span><br><span class="line">outFile &lt;&lt; <span class="string">"wangwu"</span> &lt;&lt; <span class="string">','</span></span><br><span class="line">    &lt;&lt; <span class="string">"1234"</span> &lt;&lt; <span class="string">','</span></span><br><span class="line">    &lt;&lt; to_string(<span class="number">12.32</span>) &lt;&lt; <span class="string">','</span></span><br><span class="line">    &lt;&lt; <span class="string">"河南省"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">outFile &lt;&lt; <span class="string">"lisi"</span> &lt;&lt; <span class="string">','</span></span><br><span class="line">    &lt;&lt; to_string(<span class="number">2032.1</span>) &lt;&lt; <span class="string">','</span></span><br><span class="line">    &lt;&lt; to_string(<span class="number">789.2</span>) &lt;&lt; <span class="string">','</span></span><br><span class="line">    &lt;&lt; <span class="string">"北京市"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//数字需转为字符串进行写入,csv文件结束一行写入需要"\n"或者endl进行换行</span></span><br><span class="line"></span><br><span class="line">outFile.close();</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"># C++</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/12/02/Course/SLAMs/ORB_SLAM2/" rel="next" title="ORB_SLAM2开源代码">
+                <i class="fa fa-chevron-left"></i> ORB_SLAM2开源代码
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/12/23/Improve/2023-Plan/" rel="prev" title="Plan 2023">
+                Plan 2023 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Simon Shi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">267</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">233</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Outline"><span class="nav-number">1.</span> <span class="nav-text">Outline:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Base"><span class="nav-number">2.</span> <span class="nav-text">Base</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ifstream-Read"><span class="nav-number">2.1.</span> <span class="nav-text">ifstream {Read}</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ofstream-Write"><span class="nav-number">2.2.</span> <span class="nav-text">ofstream {Write}</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#STL–ostream-iterator："><span class="nav-number">3.</span> <span class="nav-text">STL–ostream_iterator：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#REf"><span class="nav-number">4.</span> <span class="nav-text">REf:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSV"><span class="nav-number">5.</span> <span class="nav-text">CSV</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、读csv文件"><span class="nav-number">5.1.</span> <span class="nav-text">1、读csv文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、写入csv文件"><span class="nav-number">5.2.</span> <span class="nav-text">2、写入csv文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、向csv文件中追加内容"><span class="nav-number">5.3.</span> <span class="nav-text">3、向csv文件中追加内容</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+    
+
+        
+
+
+
+
+
+
+<div>
+<!-- 填写你的友盟代码 -->
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1277989586'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s9.cnzz.com/z_stat.php%3Fid%3D1277989586%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+<!-- 你的友盟代码 end -->
+</div>
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'novav',
+            repo: 'blog_comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'ea8aae03b5381e13ab9cdedd0282b60d8ec412cb',
+            
+                client_id: 'c3934b23eb001aa3243d'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
