@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="3D Body,SMPL,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Simon Shi的小站" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="[TOC] 人体3D建模: 均是蒙皮模型，没有纹理  SMPL 2015《A Skinned Multi-Person Linear Model》 Loper, Matthew and Mahmood, Naureen and Romero, Javier and Pons-Moll, Gerard and Black, Michael J.  参数人体建模  Officialhttps://sm">
+<meta name="keywords" content="3D Body,SMPL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CV_3D_BuildModel_SMPL">
+<meta property="og:url" content="http://yoursite.com/2020/01/03/CV_3D/CV-3D-BuildModel-CMPL/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="[TOC] 人体3D建模: 均是蒙皮模型，没有纹理  SMPL 2015《A Skinned Multi-Person Linear Model》 Loper, Matthew and Mahmood, Naureen and Romero, Javier and Pons-Moll, Gerard and Black, Michael J.  参数人体建模  Officialhttps://sm">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2020/01/03/CV_3D/CV-3D-BuildModel-CMPL/5e0697acaa6695d3b54f35923fe644df.png">
+<meta property="og:updated_time" content="2024-07-12T16:02:12.008Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CV_3D_BuildModel_SMPL">
+<meta name="twitter:description" content="[TOC] 人体3D建模: 均是蒙皮模型，没有纹理  SMPL 2015《A Skinned Multi-Person Linear Model》 Loper, Matthew and Mahmood, Naureen and Romero, Javier and Pons-Moll, Gerard and Black, Michael J.  参数人体建模  Officialhttps://sm">
+<meta name="twitter:image" content="http://yoursite.com/2020/01/03/CV_3D/CV-3D-BuildModel-CMPL/5e0697acaa6695d3b54f35923fe644df.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/01/03/CV_3D/CV-3D-BuildModel-CMPL/">
+
+
+
+
+
+  <title>CV_3D_BuildModel_SMPL | Simon Shi的小站</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simon Shi的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人工智能，机器学习 学习记录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/03/CV_3D/CV-3D-BuildModel-CMPL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">CV_3D_BuildModel_SMPL</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-03T17:32:43+00:00">
+                2020-01-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV-3D/" itemprop="url" rel="index">
+                    <span itemprop="name">CV_3D</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV-3D/3D-Body/" itemprop="url" rel="index">
+                    <span itemprop="name">3D Body</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/01/03/CV_3D/CV-3D-BuildModel-CMPL/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2020/01/03/CV_3D/CV-3D-BuildModel-CMPL/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[TOC]</p>
+<h2 id="人体3D建模"><a href="#人体3D建模" class="headerlink" title="人体3D建模:"></a>人体3D建模:</h2><ul>
+<li>均是蒙皮模型，没有纹理</li>
+</ul>
+<h3 id="SMPL-2015"><a href="#SMPL-2015" class="headerlink" title="SMPL 2015"></a>SMPL 2015</h3><p>《A Skinned Multi-Person Linear Model》</p>
+<p>Loper, Matthew and Mahmood, Naureen and Romero, Javier and Pons-Moll, Gerard and Black, Michael J.</p>
+<ul>
+<li>参数人体建模</li>
+</ul>
+<h4 id="Official"><a href="#Official" class="headerlink" title="Official"></a>Official</h4><p><a href="https://smpl.is.tue.mpg.de/" target="_blank" rel="noopener">https://smpl.is.tue.mpg.de/</a></p>
+<h4 id="SMPL"><a href="#SMPL" class="headerlink" title="SMPL"></a>SMPL</h4><p><a href="https://github.com/CalciferZh/SMPL" target="_blank" rel="noopener">https://github.com/CalciferZh/SMPL</a></p>
+<ul>
+<li>Numpy, TF and PyTorch implementation of human body SMPL model and infant body SMIL model.</li>
+</ul>
+<p>参数化的人体3D模型生成工具</p>
+<h3 id="SMPLify-2016"><a href="#SMPLify-2016" class="headerlink" title="SMPLify 2016"></a>SMPLify 2016</h3><p>论文：《Keep it SMPL: Automatic Estimation of 3D Human Pose and Shape from a Single Image》</p>
+<p>官网：<a href="http://smplify.is.tue.mpg.de/" target="_blank" rel="noopener">http://smplify.is.tue.mpg.de/</a></p>
+<p>github: <a href="https://github.com/vchoutas/smplify-x" target="_blank" rel="noopener">https://github.com/vchoutas/smplify-x</a></p>
+<p>论文解读: <a href="https://eros-l.github.io/weekly/2018/11/28/weekly5/" target="_blank" rel="noopener">https://eros-l.github.io/weekly/2018/11/28/weekly5/</a></p>
+<ul>
+<li>根据单张照片生成3D模型</li>
+</ul>
+<h4 id="项目实践："><a href="#项目实践：" class="headerlink" title="项目实践："></a>项目实践：</h4><p>官网数据：</p>
+<p>smplify_code_v2.zip</p>
+<p>lsp_results.tar.gz</p>
+<p>human_eva_results.tar.gz</p>
+<p>h36M_results_wtout_plytar.gz</p>
+<p>常见问题：</p>
+<p>—–自定义自己的数据集</p>
+<ul>
+<li>使用经过LSP训练过的关节检测器CPM/DeepCut</li>
+<li>fit_3d.py 的<code>run_sigle_fit</code></li>
+</ul>
+<p>Ubuntu下python3环境：</p>
+<ol>
+<li>下载lsp数据集。</li>
+<li>DeepCut 提取lsp数据集2D Pose特征点 （DeepCut 提取的 lsp dataset 的二维特征点）</li>
+<li>SMPLify fit_3d.py 转换人体3D Pose的模型截图jpg和pkl格式。</li>
+<li>pkl 文件来生成对应的 obj 文件或者其他格式的 mesh（未完成）</li>
+</ol>
+<p>参考文档：</p>
+<p>​    1.<a href="https://eros-l.github.io/weekly/2018/11/28/weekly5/" target="_blank" rel="noopener">学习报告(week 5)</a></p>
+<p>​    2.<a href="https://blog.csdn.net/weixin_36595565/article/details/88929575" target="_blank" rel="noopener">（week 2）【经验教训】如何将CPM和SMPL的输入替换成任意图片并得到人体三维模型</a></p>
+<h3 id="SMPL-H（mano）-2017"><a href="#SMPL-H（mano）-2017" class="headerlink" title="SMPL-H（mano） 2017"></a>SMPL-H（mano） 2017</h3><p>官网：<a href="https://mano.is.tue.mpg.de/" target="_blank" rel="noopener">https://mano.is.tue.mpg.de/</a></p>
+<p>论文：《Embodied Hands: Modeling and Capturing Hands and Bodies Together》 2017</p>
+<p>Javier Romero<em>, Dimitrios Tzionas</em> and Michael J Black</p>
+<p><em>SIGGRAPH ASIA 2017, BANGKOK, THAILAND</em></p>
+<ul>
+<li>增加了对手的部分的细节的还原</li>
+</ul>
+<h3 id="SMPLX-2019"><a href="#SMPLX-2019" class="headerlink" title="SMPLX 2019"></a>SMPLX 2019</h3><p>官网：<a href="https://smpl-x.is.tue.mpg.de/" target="_blank" rel="noopener">https://smpl-x.is.tue.mpg.de/</a></p>
+<p>github: <a href="https://github.com/vchoutas/smplx" target="_blank" rel="noopener">https://github.com/vchoutas/smplx</a></p>
+<p>《Expressive Body Capture: 3D Hands, Face, and Body from a Single Image》</p>
+<p><a href="https://ps.is.tuebingen.mpg.de/person/gpavlakos" target="_blank" rel="noopener">G. Pavlakos*</a>, <a href="https://ps.is.tuebingen.mpg.de/person/vchoutas" target="_blank" rel="noopener">V. Choutas*</a>, <a href="https://ps.is.tuebingen.mpg.de/person/nghorbani" target="_blank" rel="noopener">N. Ghorbani</a>, <a href="https://ps.is.tuebingen.mpg.de/person/tbolkart" target="_blank" rel="noopener">T. Bolkart</a>, <a href="https://ps.is.tuebingen.mpg.de/person/aosman" target="_blank" rel="noopener">A. A. A. Osman</a>, <a href="https://ps.is.tuebingen.mpg.de/person/dtzionas" target="_blank" rel="noopener">D. Tzionas</a> and <a href="https://ps.is.tuebingen.mpg.de/person/black" target="_blank" rel="noopener">M. J. Black</a></p>
+<p>CVPR 2019</p>
+<ul>
+<li><p>增加了对手，脸部，身体的细节的完善</p>
+</li>
+<li><p>pytorch实现，摈弃了chumpy</p>
+</li>
+</ul>
+<h4 id="SMPLify-X"><a href="#SMPLify-X" class="headerlink" title="SMPLify-X"></a>SMPLify-X</h4><p><a href="https://github.com/vchoutas/smplify-x" target="_blank" rel="noopener">https://github.com/vchoutas/smplify-x</a></p>
+<p>从单张图片的3D人体复原</p>
+<h3 id="AMASS-dataset"><a href="#AMASS-dataset" class="headerlink" title="AMASS dataset"></a>AMASS dataset</h3><p><a href="https://amass.is.tuebingen.mpg.de/" target="_blank" rel="noopener">https://amass.is.tuebingen.mpg.de/</a></p>
+<p>AMASS is a large database of human motion unifying different optical marker-based motion capture datasets by representing them within a common framework and parameterization. AMASS is readily useful for animation, visualization, and generating training data for deep learning.</p>
+<p>AMASS是一个大型的人类运动数据库，通过在共同的框架和参数化中表示不同的基于光学标记的运动捕获数据集来统一这些数据。AMASS对于动画，可视化以及生成用于深度学习的训练数据非常有用。</p>
+<h2 id="SMPL模型源码-项目介绍"><a href="#SMPL模型源码-项目介绍" class="headerlink" title="SMPL模型源码/项目介绍"></a><a href="https://52zju.cn/?p=471" target="_blank" rel="noopener">SMPL模型源码/项目介绍</a></h2><p>SMPL源码下载：<a href="http://smpl.is.tue.mpg.de/downloads" target="_blank" rel="noopener">http://smpl.is.tue.mpg.de/downloads</a>   需要注册</p>
+<p>本文主要讨论SMPL源码核心代码。需要储备的知识还有：三维重建基础知识，以及<a href="http://52zju.cn/2018/11/13/三维重建2-渲染工具opendr论文和源码部分阅读-2/" target="_blank" rel="noopener"> chumpy阅读</a>以及<a href="http://52zju.cn/2018/11/13/三维重建2-渲染工具opendr论文和源码部分阅读-2/" target="_blank" rel="noopener">opendr阅读</a>，<a href="https://52zju.cn/?p=474" target="_blank" rel="noopener">LBS DQS</a>等</p>
+<p>SMPL文件主要包括 vert.py serialization.py lbs.py。下面将逐一说说明。</p>
+<p>0、关节位置</p>
+<p>SMPL模型关节点名称</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">self.j_names = &#123;</span><br><span class="line">0: ‘Pelvis’,</span><br><span class="line">1: ‘L_Hip’,</span><br><span class="line">2: ‘R_Hip’,</span><br><span class="line">3:  ‘Spine1’,</span><br><span class="line">4: ‘L_Knee’,</span><br><span class="line">5:  ‘R_Knee’,</span><br><span class="line">6:  ‘Spine2’,</span><br><span class="line">7:  ‘L_Ankle’,</span><br><span class="line">8:  ‘R_Ankle’,</span><br><span class="line">9:  ‘Spine3’,</span><br><span class="line">10: ‘L_Foot’,</span><br><span class="line">11: ‘R_Foot’,</span><br><span class="line">12: ‘Neck’,</span><br><span class="line">13: ‘L_Collar’,</span><br><span class="line">14: ‘R_Collar’,</span><br><span class="line">15: ‘Head’,</span><br><span class="line">16: ‘L_Shoulder’,</span><br><span class="line">17: ‘R_Shoulder’,</span><br><span class="line">18: ‘L_Elbow’,</span><br><span class="line">19: ‘R_Elbow’,</span><br><span class="line">20: ‘L_Wrist’,</span><br><span class="line">21: ‘R_Wrist’,</span><br><span class="line">22: ‘L_Hand’,</span><br><span class="line">23: ‘R_Hand’, &#125;</span><br></pre></td></tr></table></figure>
+
+<p>关节树图形：</p>
+<p><img src="/2020/01/03/CV_3D/CV-3D-BuildModel-CMPL/5e0697acaa6695d3b54f35923fe644df.png" alt="img"></p>
+<h3 id="1、posemapper-py"><a href="#1、posemapper-py" class="headerlink" title="1、posemapper.py"></a>1、posemapper.py</h3><p>主要是实现关节角度到姿势混合形状的映射。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> chumpy <span class="keyword">as</span> ch</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Rodrigues</span><span class="params">(ch.Ch)</span>:</span>  <span class="comment">#创建函数类</span></span><br><span class="line">    dterms = <span class="string">'rt'</span>  <span class="comment">#可微变量旋度</span></span><br><span class="line">     </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">compute_r</span><span class="params">(self)</span>:</span>  <span class="comment">#计算旋转矩阵</span></span><br><span class="line">        <span class="keyword">return</span> cv2.Rodrigues(self.rt.r)[<span class="number">0</span>] </span><br><span class="line">     </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">compute_dr_wrt</span><span class="params">(self, wrt)</span>:</span> <span class="comment"># 计算旋度</span></span><br><span class="line">        <span class="keyword">if</span> wrt <span class="keyword">is</span> self.rt:</span><br><span class="line">            <span class="keyword">return</span> cv2.Rodrigues(self.rt.r)[<span class="number">1</span>].T <span class="comment">#返回旋度的转置</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">lrotmin</span><span class="params">(p)</span>:</span> </span><br><span class="line">    <span class="keyword">if</span> isinstance(p, np.ndarray): <span class="comment"># 判断p的类型是不是np，基本上都不是，跳过</span></span><br><span class="line">        p = p.ravel()[<span class="number">3</span>:] <span class="comment"># 转化成3*n矩阵</span></span><br><span class="line">        <span class="keyword">return</span> np.concatenate([(cv2.Rodrigues(np.array(pp))[<span class="number">0</span>]-np.eye(<span class="number">3</span>)).ravel() <span class="keyword">for</span> pp <span class="keyword">in</span> p.reshape((<span class="number">-1</span>,<span class="number">3</span>))]).ravel()        </span><br><span class="line">    <span class="keyword">if</span> p.ndim != <span class="number">2</span> <span class="keyword">or</span> p.shape[<span class="number">1</span>] != <span class="number">3</span>: <span class="comment"># 判断姿势的维度，如果不是2维或第二维shape不为3</span></span><br><span class="line">        p = p.reshape((<span class="number">-1</span>,<span class="number">3</span>)) <span class="comment"># 将pose转换成（24,3）的形式</span></span><br><span class="line">    p = p[<span class="number">1</span>:]  <span class="comment"># 去掉root出，提取23个关节处</span></span><br><span class="line">    <span class="keyword">return</span> ch.concatenate([(Rodrigues(pp)-ch.eye(<span class="number">3</span>)).ravel() <span class="keyword">for</span> pp <span class="keyword">in</span> p]).ravel()  <span class="comment"># 将旋转向量转化成旋转矩阵，并拼接在一起</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">posemap</span><span class="params">(s)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> s == <span class="string">'lrotmin'</span>:</span><br><span class="line">        <span class="keyword">return</span> lrotmin</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">raise</span> Exception(<span class="string">'Unknown posemapping: %s'</span> % (str(s),))</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2、LBS-py"><a href="#2、LBS-py" class="headerlink" title="2、LBS.py"></a>2、LBS.py</h3><p>就是实现LBS</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> posemapper <span class="keyword">import</span> posemap</span><br><span class="line"><span class="keyword">import</span> chumpy</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"> </span><br><span class="line"><span class="comment">#计算模型的全局刚体变换，包括旋度和平移量。实现论文里的公式4</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">global_rigid_transformation</span><span class="params">(pose, J, kintree_table, xp)</span>:</span></span><br><span class="line">    results = &#123;&#125;</span><br><span class="line">    <span class="comment"># 看了后面parents 终于知道这个kintree_table是干啥的了：关节树，可以理解为各个关节相互依赖的关系。</span></span><br><span class="line">    pose = pose.reshape((<span class="number">-1</span>,<span class="number">3</span>)) <span class="comment">#静止的姿势参数：shape=(24,3) 可能都是0向量</span></span><br><span class="line">    <span class="comment"># 下面两行主要是变换列表，并剔除[0,0]坐标的异常值（可以认为是root的方向异常）。kintree_table的shape=（2,24）</span></span><br><span class="line">    id_to_col = &#123;kintree_table[<span class="number">1</span>,i] : i <span class="keyword">for</span> i <span class="keyword">in</span> range(kintree_table.shape[<span class="number">1</span>])&#125;</span><br><span class="line">    parent = &#123;i : id_to_col[kintree_table[<span class="number">0</span>,i]] <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, kintree_table.shape[<span class="number">1</span>])&#125;</span><br><span class="line">    <span class="comment">#如果xp是chumpy类型</span></span><br><span class="line">    <span class="keyword">if</span> xp == chumpy:</span><br><span class="line">        <span class="keyword">from</span> posemapper <span class="keyword">import</span> Rodrigues <span class="comment"># 则引入posemapper的函数 </span></span><br><span class="line">        rodrigues = <span class="keyword">lambda</span> x : Rodrigues(x) <span class="comment"># 创建匿名类，ch对象</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">import</span> cv2</span><br><span class="line">        rodrigues = <span class="keyword">lambda</span> x : cv2.Rodrigues(x)[<span class="number">0</span>]  <span class="comment">#否则的话使用opencv的函数</span></span><br><span class="line">    <span class="comment"># stack纵向拼接，改变的是行数，类似于concat。xp在这里就相当于chumpy类</span></span><br><span class="line">    with_zeros = <span class="keyword">lambda</span> x : xp.vstack((x, xp.array([[<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>]]))) </span><br><span class="line">    <span class="comment"># 先确定根关节的结果：目前还不知道这个result有什么用。</span></span><br><span class="line">    <span class="comment"># hstack横向拼接，改变的是列数。输入的是pose的root节点和关节的root节点，最后输出是主对角线为1的4*4矩阵 </span></span><br><span class="line">    <span class="comment"># pose[0] 表示静止姿势的根关节位置</span></span><br><span class="line">    results[<span class="number">0</span>] = with_zeros(xp.hstack((rodrigues(pose[<span class="number">0</span>,:]), J[<span class="number">0</span>,:].reshape((<span class="number">3</span>,<span class="number">1</span>))))) </span><br><span class="line">    <span class="comment"># 利用关节的依赖关系求得其他关节的result    </span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, kintree_table.shape[<span class="number">1</span>]): <span class="comment"># i从1到23，代表每个关节的编号</span></span><br><span class="line">        results[i] = results[parent[i]].dot(with_zeros(xp.hstack((  <span class="comment"># 父关节的轴角乘以关节相对旋度等于当前关节的轴角</span></span><br><span class="line">            rodrigues(pose[i,:]),</span><br><span class="line">            ((J[i,:] - J[parent[i],:]).reshape((<span class="number">3</span>,<span class="number">1</span>)))  <span class="comment"># 计算关节的相对位置</span></span><br><span class="line">            ))))</span><br><span class="line">     </span><br><span class="line">    pack = <span class="keyword">lambda</span> x : xp.hstack([np.zeros((<span class="number">4</span>, <span class="number">3</span>)), x.reshape((<span class="number">4</span>,<span class="number">1</span>))])</span><br><span class="line">     </span><br><span class="line">    results = [results[i] <span class="keyword">for</span> i <span class="keyword">in</span> sorted(results.keys())]</span><br><span class="line">    results_global = results</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> <span class="literal">True</span>:</span><br><span class="line">        results2 = [results[i] - (pack(</span><br><span class="line">            results[i].dot(xp.concatenate( ( (J[i,:]), <span class="number">0</span> ) )))</span><br><span class="line">            ) <span class="keyword">for</span> i <span class="keyword">in</span> range(len(results))]</span><br><span class="line">        results = results2</span><br><span class="line">    result = xp.dstack(results)</span><br><span class="line">    <span class="keyword">return</span> result, results_global</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 计算每个顶点的关节影响度的混合 </span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">verts_core</span><span class="params">(pose, v, J, weights, kintree_table, want_Jtr=False, xp=chumpy)</span>:</span></span><br><span class="line">    A, A_global = global_rigid_transformation(pose, J, kintree_table, xp) <span class="comment">#调用函数，生成全局和局部的旋转矩阵。A.shape=[4,4,24] A_global.shape=[24,4,4]</span></span><br><span class="line">    T = A.dot(weights.T)  <span class="comment"># weight.shape=[6890,24],生成结果的shape=[4,4,6890]</span></span><br><span class="line">     </span><br><span class="line">    rest_shape_h = xp.vstack((v.T, np.ones((<span class="number">1</span>, v.shape[<span class="number">0</span>]))))  <span class="comment"># 静止姿势的shape</span></span><br><span class="line">         </span><br><span class="line">    v =(T[:,<span class="number">0</span>,:] * rest_shape_h[<span class="number">0</span>, :].reshape((<span class="number">1</span>, <span class="number">-1</span>)) +</span><br><span class="line">        T[:,<span class="number">1</span>,:] * rest_shape_h[<span class="number">1</span>, :].reshape((<span class="number">1</span>, <span class="number">-1</span>)) +</span><br><span class="line">        T[:,<span class="number">2</span>,:] * rest_shape_h[<span class="number">2</span>, :].reshape((<span class="number">1</span>, <span class="number">-1</span>)) +</span><br><span class="line">        T[:,<span class="number">3</span>,:] * rest_shape_h[<span class="number">3</span>, :].reshape((<span class="number">1</span>, <span class="number">-1</span>))).T <span class="comment"># 应用公式2</span></span><br><span class="line"> </span><br><span class="line">    v = v[:,:<span class="number">3</span>] </span><br><span class="line">     </span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> want_Jtr:</span><br><span class="line">        <span class="keyword">return</span> v</span><br><span class="line">    Jtr = xp.vstack([g[:<span class="number">3</span>,<span class="number">3</span>] <span class="keyword">for</span> g <span class="keyword">in</span> A_global])</span><br><span class="line">    <span class="keyword">return</span> (v, Jtr)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3、vert-py"><a href="#3、vert-py" class="headerlink" title="3、vert.py"></a>3、vert.py</h3><p>verts_decorated函数没有被用到就不过多注释了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> chumpy</span><br><span class="line"><span class="keyword">import</span> lbs</span><br><span class="line"><span class="keyword">from</span> posemapper <span class="keyword">import</span> posemap</span><br><span class="line"><span class="keyword">import</span> scipy.sparse <span class="keyword">as</span> sp</span><br><span class="line"><span class="keyword">from</span> chumpy.ch <span class="keyword">import</span> MatVecMult</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ischumpy</span><span class="params">(x)</span>:</span> <span class="keyword">return</span> hasattr(x, <span class="string">'dterms'</span>) <span class="comment">#如果没有dterm属性就返回chumpy</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># verts_decorated函数：从另一个SMPL模型中参数来创建新的SMPL模型实例</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">verts_decorated</span><span class="params">(trans, pose,</span></span></span><br><span class="line"><span class="function"><span class="params">    v_template, J, weights, kintree_table, bs_style, f,</span></span></span><br><span class="line"><span class="function"><span class="params">    bs_type=None, posedirs=None, betas=None, shapedirs=None, want_Jtr=False)</span>:</span></span><br><span class="line">    <span class="comment">#各个参数的含义 </span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">for</span> which <span class="keyword">in</span> [trans, pose, v_template, weights, posedirs, betas, shapedirs]:</span><br><span class="line">        <span class="keyword">if</span> which <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">           <span class="keyword">assert</span> ischumpy(which)  <span class="comment">#判断是否是chumpy类型，如果不是则报错</span></span><br><span class="line"> </span><br><span class="line">    v = v_template</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> shapedirs <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">       <span class="keyword">if</span> betas <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">          betas = chumpy.zeros(shapedirs.shape[<span class="number">-1</span>])</span><br><span class="line">       v_shaped = v + shapedirs.dot(betas)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">       v_shaped = v</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> posedirs <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">       v_posed = v_shaped + posedirs.dot(posemap(bs_type)(pose))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">       v_posed = v_shaped</span><br><span class="line"> </span><br><span class="line">    v = v_posed</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> sp.issparse(J):</span><br><span class="line">       regressor = J</span><br><span class="line">       J_tmpx = MatVecMult(regressor, v_shaped[:,<span class="number">0</span>])</span><br><span class="line">       J_tmpy = MatVecMult(regressor, v_shaped[:,<span class="number">1</span>])</span><br><span class="line">       J_tmpz = MatVecMult(regressor, v_shaped[:,<span class="number">2</span>])</span><br><span class="line">       J = chumpy.vstack((J_tmpx, J_tmpy, J_tmpz)).T</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">       <span class="keyword">assert</span>(ischumpy(J))</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">assert</span>(bs_style==<span class="string">'lbs'</span>)</span><br><span class="line">    result, Jtr = lbs.verts_core(pose, v, J, weights, kintree_table, want_Jtr=<span class="literal">True</span>, xp=chumpy)</span><br><span class="line"> </span><br><span class="line">    tr = trans.reshape((<span class="number">1</span>,<span class="number">3</span>))</span><br><span class="line">    result = result + tr</span><br><span class="line">    Jtr = Jtr + tr</span><br><span class="line"> </span><br><span class="line">    result.trans = trans</span><br><span class="line">    result.f = f</span><br><span class="line">    result.pose = pose</span><br><span class="line">    result.v_template = v_template</span><br><span class="line">    result.J = J</span><br><span class="line">    result.weights = weights</span><br><span class="line">    result.kintree_table = kintree_table</span><br><span class="line">    result.bs_style = bs_style</span><br><span class="line">    result.bs_type =bs_type</span><br><span class="line">    <span class="keyword">if</span> posedirs <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">       result.posedirs = posedirs</span><br><span class="line">       result.v_posed = v_posed</span><br><span class="line">    <span class="keyword">if</span> shapedirs <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">       result.shapedirs = shapedirs</span><br><span class="line">       result.betas = betas</span><br><span class="line">       result.v_shaped = v_shaped</span><br><span class="line">    <span class="keyword">if</span> want_Jtr:</span><br><span class="line">       result.J_transformed = Jtr</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line"> </span><br><span class="line"><span class="comment"># verts_core ：overloaded function inherited by lbs.verts_core</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">verts_core</span><span class="params">(pose, v, J, weights, kintree_table, bs_style, want_Jtr=False, xp=chumpy)</span>:</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> xp == chumpy:</span><br><span class="line">       <span class="keyword">assert</span>(hasattr(pose, <span class="string">'dterms'</span>))</span><br><span class="line">       <span class="keyword">assert</span>(hasattr(v, <span class="string">'dterms'</span>))</span><br><span class="line">       <span class="keyword">assert</span>(hasattr(J, <span class="string">'dterms'</span>))</span><br><span class="line">       <span class="keyword">assert</span>(hasattr(weights, <span class="string">'dterms'</span>))</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">assert</span>(bs_style==<span class="string">'lbs'</span>)</span><br><span class="line">    result = lbs.verts_core(pose, v, J, weights, kintree_table, want_Jtr, xp)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
+
+<h3 id="4、serialization-py"><a href="#4、serialization-py" class="headerlink" title="4、serialization.py"></a>4、serialization.py</h3><p>SMPL模型的序列化函数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">save_model</span><span class="params">(model, fname)</span>:</span> <span class="comment"># 保存模型model到文件名fname中</span></span><br><span class="line">    m0 = model</span><br><span class="line">    <span class="comment"># 将模型参数存入字典。各个模型参数的含义：</span></span><br><span class="line">    <span class="comment"># v_template：顶点模板 J：关节坐标，weight：关节权重，kintree_table：关节树，f:相机参数，bs_type：蒙皮方法LBS还是DQBS</span></span><br><span class="line">    trainer_dict = &#123;<span class="string">'v_template'</span>: np.asarray(m0.v_template),<span class="string">'J'</span>: np.asarray(m0.J),<span class="string">'weights'</span>: np.asarray(m0.weights),<span class="string">'kintree_table'</span>: m0.kintree_table,<span class="string">'f'</span>: m0.f, <span class="string">'bs_type'</span>: m0.bs_type, <span class="string">'posedirs'</span>: np.asarray(m0.posedirs)&#125;    </span><br><span class="line">    <span class="keyword">if</span> hasattr(model, <span class="string">'J_regressor'</span>):</span><br><span class="line">        trainer_dict[<span class="string">'J_regressor'</span>] = m0.J_regressor</span><br><span class="line">    <span class="keyword">if</span> hasattr(model, <span class="string">'J_regressor_prior'</span>):</span><br><span class="line">        trainer_dict[<span class="string">'J_regressor_prior'</span>] = m0.J_regressor_prior</span><br><span class="line">    <span class="keyword">if</span> hasattr(model, <span class="string">'weights_prior'</span>):</span><br><span class="line">        trainer_dict[<span class="string">'weights_prior'</span>] = m0.weights_prior</span><br><span class="line">    <span class="keyword">if</span> hasattr(model, <span class="string">'shapedirs'</span>):</span><br><span class="line">        trainer_dict[<span class="string">'shapedirs'</span>] = m0.shapedirs</span><br><span class="line">    <span class="keyword">if</span> hasattr(model, <span class="string">'vert_sym_idxs'</span>):</span><br><span class="line">        trainer_dict[<span class="string">'vert_sym_idxs'</span>] = m0.vert_sym_idxs</span><br><span class="line">    <span class="keyword">if</span> hasattr(model, <span class="string">'bs_style'</span>):</span><br><span class="line">        trainer_dict[<span class="string">'bs_style'</span>] = model.bs_style</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        trainer_dict[<span class="string">'bs_style'</span>] = <span class="string">'lbs'</span></span><br><span class="line">    pickle.dump(trainer_dict, open(fname, <span class="string">'w'</span>), <span class="number">-1</span>) <span class="comment">#写入文件</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 加载model时更改参数名称</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">backwards_compatibility_replacements</span><span class="params">(dd)</span>:</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment"># replacements</span></span><br><span class="line">    <span class="keyword">if</span> <span class="string">'default_v'</span> <span class="keyword">in</span> dd:</span><br><span class="line">        dd[<span class="string">'v_template'</span>] = dd[<span class="string">'default_v'</span>]</span><br><span class="line">        <span class="keyword">del</span> dd[<span class="string">'default_v'</span>]</span><br><span class="line">    <span class="keyword">if</span> <span class="string">'template_v'</span> <span class="keyword">in</span> dd:</span><br><span class="line">        dd[<span class="string">'v_template'</span>] = dd[<span class="string">'template_v'</span>]</span><br><span class="line">        <span class="keyword">del</span> dd[<span class="string">'template_v'</span>]</span><br><span class="line">    <span class="keyword">if</span> <span class="string">'joint_regressor'</span> <span class="keyword">in</span> dd:</span><br><span class="line">        dd[<span class="string">'J_regressor'</span>] = dd[<span class="string">'joint_regressor'</span>]</span><br><span class="line">        <span class="keyword">del</span> dd[<span class="string">'joint_regressor'</span>]</span><br><span class="line">    <span class="keyword">if</span> <span class="string">'blendshapes'</span> <span class="keyword">in</span> dd:</span><br><span class="line">        dd[<span class="string">'posedirs'</span>] = dd[<span class="string">'blendshapes'</span>]</span><br><span class="line">        <span class="keyword">del</span> dd[<span class="string">'blendshapes'</span>]</span><br><span class="line">    <span class="keyword">if</span> <span class="string">'J'</span> <span class="keyword">not</span> <span class="keyword">in</span> dd:</span><br><span class="line">        dd[<span class="string">'J'</span>] = dd[<span class="string">'joints'</span>]</span><br><span class="line">        <span class="keyword">del</span> dd[<span class="string">'joints'</span>]</span><br><span class="line"> </span><br><span class="line">    <span class="comment"># defaults</span></span><br><span class="line">    <span class="keyword">if</span> <span class="string">'bs_style'</span> <span class="keyword">not</span> <span class="keyword">in</span> dd:</span><br><span class="line">        dd[<span class="string">'bs_style'</span>] = <span class="string">'lbs'</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 准备参数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ready_arguments</span><span class="params">(fname_or_dict)</span>:</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> isinstance(fname_or_dict, dict):</span><br><span class="line">        dd = pickle.load(open(fname_or_dict))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        dd = fname_or_dict</span><br><span class="line">         </span><br><span class="line">    backwards_compatibility_replacements(dd)</span><br><span class="line">         </span><br><span class="line">    want_shapemodel = <span class="string">'shapedirs'</span> <span class="keyword">in</span> dd</span><br><span class="line">    nposeparms = dd[<span class="string">'kintree_table'</span>].shape[<span class="number">1</span>]*<span class="number">3</span> <span class="comment"># 这些不是pose的变量，是关节树</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> <span class="string">'trans'</span> <span class="keyword">not</span> <span class="keyword">in</span> dd:</span><br><span class="line">        dd[<span class="string">'trans'</span>] = np.zeros(<span class="number">3</span>) <span class="comment"># 定义平移量为0 </span></span><br><span class="line">    <span class="keyword">if</span> <span class="string">'pose'</span> <span class="keyword">not</span> <span class="keyword">in</span> dd:</span><br><span class="line">        dd[<span class="string">'pose'</span>] = np.zeros(nposeparms) <span class="comment"># 定义姿势为 0</span></span><br><span class="line">    <span class="keyword">if</span> <span class="string">'shapedirs'</span> <span class="keyword">in</span> dd <span class="keyword">and</span> <span class="string">'betas'</span> <span class="keyword">not</span> <span class="keyword">in</span> dd:</span><br><span class="line">        dd[<span class="string">'betas'</span>] = np.zeros(dd[<span class="string">'shapedirs'</span>].shape[<span class="number">-1</span>])</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">for</span> s <span class="keyword">in</span> [<span class="string">'v_template'</span>, <span class="string">'weights'</span>, <span class="string">'posedirs'</span>, <span class="string">'pose'</span>, <span class="string">'trans'</span>, <span class="string">'shapedirs'</span>, <span class="string">'betas'</span>, <span class="string">'J'</span>]:</span><br><span class="line">        <span class="keyword">if</span> (s <span class="keyword">in</span> dd) <span class="keyword">and</span> <span class="keyword">not</span> hasattr(dd[s], <span class="string">'dterms'</span>):</span><br><span class="line">            dd[s] = ch.array(dd[s])</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> want_shapemodel: <span class="comment"># 需要形状模型</span></span><br><span class="line">        dd[<span class="string">'v_shaped'</span>] = dd[<span class="string">'shapedirs'</span>].dot(dd[<span class="string">'betas'</span>])+dd[<span class="string">'v_template'</span>]</span><br><span class="line">        v_shaped = dd[<span class="string">'v_shaped'</span>]</span><br><span class="line">        J_tmpx = MatVecMult(dd[<span class="string">'J_regressor'</span>], v_shaped[:,<span class="number">0</span>])        </span><br><span class="line">        J_tmpy = MatVecMult(dd[<span class="string">'J_regressor'</span>], v_shaped[:,<span class="number">1</span>])        </span><br><span class="line">        J_tmpz = MatVecMult(dd[<span class="string">'J_regressor'</span>], v_shaped[:,<span class="number">2</span>])        </span><br><span class="line">        dd[<span class="string">'J'</span>] = ch.vstack((J_tmpx, J_tmpy, J_tmpz)).T    </span><br><span class="line">        dd[<span class="string">'v_posed'</span>] = v_shaped + dd[<span class="string">'posedirs'</span>].dot(posemap(dd[<span class="string">'bs_type'</span>])(dd[<span class="string">'pose'</span>]))</span><br><span class="line">    <span class="keyword">else</span>:    </span><br><span class="line">        dd[<span class="string">'v_posed'</span>] = dd[<span class="string">'v_template'</span>] + dd[<span class="string">'posedirs'</span>].dot(posemap(dd[<span class="string">'bs_type'</span>])(dd[<span class="string">'pose'</span>]))</span><br><span class="line">             </span><br><span class="line">    <span class="keyword">return</span> dd</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_model</span><span class="params">(fname_or_dict)</span>:</span></span><br><span class="line">    dd = ready_arguments(fname_or_dict)</span><br><span class="line">     </span><br><span class="line">    args = &#123;</span><br><span class="line">        <span class="string">'pose'</span>: dd[<span class="string">'pose'</span>],</span><br><span class="line">        <span class="string">'v'</span>: dd[<span class="string">'v_posed'</span>],</span><br><span class="line">        <span class="string">'J'</span>: dd[<span class="string">'J'</span>],</span><br><span class="line">        <span class="string">'weights'</span>: dd[<span class="string">'weights'</span>],</span><br><span class="line">        <span class="string">'kintree_table'</span>: dd[<span class="string">'kintree_table'</span>],</span><br><span class="line">        <span class="string">'xp'</span>: ch,</span><br><span class="line">        <span class="string">'want_Jtr'</span>: <span class="literal">True</span>,</span><br><span class="line">        <span class="string">'bs_style'</span>: dd[<span class="string">'bs_style'</span>]</span><br><span class="line">    &#125;</span><br><span class="line">     </span><br><span class="line">    result, Jtr = verts_core(**args)</span><br><span class="line">    result = result + dd[<span class="string">'trans'</span>].reshape((<span class="number">1</span>,<span class="number">3</span>))</span><br><span class="line">    result.J_transformed = Jtr + dd[<span class="string">'trans'</span>].reshape((<span class="number">1</span>,<span class="number">3</span>))</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">for</span> k, v <span class="keyword">in</span> dd.items():</span><br><span class="line">        setattr(result, k, v)</span><br><span class="line">         </span><br><span class="line">    <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="环境配置-SMPL"><a href="#环境配置-SMPL" class="headerlink" title="环境配置(SMPL)"></a>环境配置(SMPL)</h2><p><strong>chumpy安装</strong></p>
+<p>pip install chumpy (0.86的chumpy已经支持python3 不需要特别修改代码安装)</p>
+<p><strong>python2和python3一些库的名字不同：</strong></p>
+<p>例如：no module named cPickle</p>
+<p>pickle模块，在ython3中为import pickle，python2中为import cPickle as pickle</p>
+<p><strong>opendr 安装</strong></p>
+<p><a href="https://codeload.github.com/polmorenoc/opendr/zip/master" target="_blank" rel="noopener">https://codeload.github.com/polmorenoc/opendr/zip/master</a></p>
+<ul>
+<li>1 python setup.py build</li>
+<li>2 python setup.py install</li>
+</ul>
+<p><strong>OPENGL-python 安装</strong></p>
+<p><a href="https://files.pythonhosted.org/packages/d7/8a/5db9096aa6506e405309c400bd0feb41997689cbba30683479c30dba6355/PyOpenGL-3.1.4.tar.gz" target="_blank" rel="noopener">https://files.pythonhosted.org/packages/d7/8a/5db9096aa6506e405309c400bd0feb41997689cbba30683479c30dba6355/PyOpenGL-3.1.4.tar.gz</a></p>
+<ul>
+<li>1- 解压</li>
+<li>2- python setup.py build</li>
+<li>3- python setup.py install</li>
+</ul>
+<h2 id="环境配置Ubuntu（SMPL）"><a href="#环境配置Ubuntu（SMPL）" class="headerlink" title="环境配置Ubuntu（SMPL）"></a>环境配置Ubuntu（SMPL）</h2><p><strong>opendr</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install opendr</span><br></pre></td></tr></table></figure>
+
+<p><strong>Mesa 3D Graphics Library</strong></p>
+<p><a href="https://www.mesa3d.org/osmesa.html" target="_blank" rel="noopener">https://www.mesa3d.org/osmesa.html</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libosmesa6-dev</span><br><span class="line">pip3 install opendr</span><br></pre></td></tr></table></figure>
+
+<p>PyOpenGL </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install  PyOpenGL PyOpenGL_accelerate</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install Bottleneck</span><br></pre></td></tr></table></figure>
+
+<h2 id="c参考资料："><a href="#c参考资料：" class="headerlink" title="c参考资料："></a>c参考资料：</h2><p><a href="https://blog.csdn.net/qq_28660035/article/details/81319055" target="_blank" rel="noopener">SMPL模型改用python3+numpy计算</a></p>
+<p><a href="https://www.jianshu.com/p/6305f1da8f2d" target="_blank" rel="noopener">SMPL: A Skinned Multi-Person Linear Model</a></p>
+<p><a href="https://mp.weixin.qq.com/s/RdxmOi75glQBKMhKD-APNg" target="_blank" rel="noopener">人体模型介绍 - SMPL</a></p>
+<h2 id="3D相关学术人员及Blog"><a href="#3D相关学术人员及Blog" class="headerlink" title="3D相关学术人员及Blog"></a>3D相关学术人员及Blog</h2><p>浙大博士 <a href="https://52zju.cn/?paged=2" target="_blank" rel="noopener">https://52zju.cn/?paged=2</a> 三维重建</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/3D-Body/" rel="tag"># 3D Body</a>
+          
+            <a href="/tags/SMPL/" rel="tag"># SMPL</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/01/03/CV/CV-Algorithm-SIFT/" rel="next" title="CV_Algorithm_SIFT">
+                <i class="fa fa-chevron-left"></i> CV_Algorithm_SIFT
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/01/07/Paper/Paper-CV-GAN/" rel="prev" title="Paper-CV-GAN">
+                Paper-CV-GAN <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Simon Shi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">269</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">234</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#人体3D建模"><span class="nav-number">1.</span> <span class="nav-text">人体3D建模:</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SMPL-2015"><span class="nav-number">1.1.</span> <span class="nav-text">SMPL 2015</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Official"><span class="nav-number">1.1.1.</span> <span class="nav-text">Official</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SMPL"><span class="nav-number">1.1.2.</span> <span class="nav-text">SMPL</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SMPLify-2016"><span class="nav-number">1.2.</span> <span class="nav-text">SMPLify 2016</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#项目实践："><span class="nav-number">1.2.1.</span> <span class="nav-text">项目实践：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SMPL-H（mano）-2017"><span class="nav-number">1.3.</span> <span class="nav-text">SMPL-H（mano） 2017</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SMPLX-2019"><span class="nav-number">1.4.</span> <span class="nav-text">SMPLX 2019</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SMPLify-X"><span class="nav-number">1.4.1.</span> <span class="nav-text">SMPLify-X</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AMASS-dataset"><span class="nav-number">1.5.</span> <span class="nav-text">AMASS dataset</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SMPL模型源码-项目介绍"><span class="nav-number">2.</span> <span class="nav-text">SMPL模型源码/项目介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、posemapper-py"><span class="nav-number">2.1.</span> <span class="nav-text">1、posemapper.py</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、LBS-py"><span class="nav-number">2.2.</span> <span class="nav-text">2、LBS.py</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、vert-py"><span class="nav-number">2.3.</span> <span class="nav-text">3、vert.py</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、serialization-py"><span class="nav-number">2.4.</span> <span class="nav-text">4、serialization.py</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环境配置-SMPL"><span class="nav-number">3.</span> <span class="nav-text">环境配置(SMPL)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环境配置Ubuntu（SMPL）"><span class="nav-number">4.</span> <span class="nav-text">环境配置Ubuntu（SMPL）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#c参考资料："><span class="nav-number">5.</span> <span class="nav-text">c参考资料：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3D相关学术人员及Blog"><span class="nav-number">6.</span> <span class="nav-text">3D相关学术人员及Blog</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+    
+
+        
+
+
+
+
+
+
+<div>
+<!-- 填写你的友盟代码 -->
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1277989586'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s9.cnzz.com/z_stat.php%3Fid%3D1277989586%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+<!-- 你的友盟代码 end -->
+</div>
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'novav',
+            repo: 'blog_comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'ea8aae03b5381e13ab9cdedd0282b60d8ec412cb',
+            
+                client_id: 'c3934b23eb001aa3243d'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

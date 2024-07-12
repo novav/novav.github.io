@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Robot,Gazebo,ROS,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Simon Shi的小站" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="学习计划在一小时内基本掌握Gazebo可能是很具挑战的，但可以通过以下步骤尽快上手，尤其是以项目实践为目的： 环境搭建和安装  下载并安装Gazebo 设置基本的环境变量和配置  基本概念和界面熟悉  快速浏览Gazebo的基本概念，如模型、世界、插件等 熟悉Gazebo的用户界面和基本功能  载入和探索现有模型  从Gazebo的模型库中载入一些基本模型 熟悉模型的基本操作和属性设置  创建简单">
+<meta name="keywords" content="Robot,Gazebo,ROS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Gazebo 上手 wsl">
+<meta property="og:url" content="http://yoursite.com/2024/06/22/AI_ROBOT/Gazebo/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="学习计划在一小时内基本掌握Gazebo可能是很具挑战的，但可以通过以下步骤尽快上手，尤其是以项目实践为目的： 环境搭建和安装  下载并安装Gazebo 设置基本的环境变量和配置  基本概念和界面熟悉  快速浏览Gazebo的基本概念，如模型、世界、插件等 熟悉Gazebo的用户界面和基本功能  载入和探索现有模型  从Gazebo的模型库中载入一些基本模型 熟悉模型的基本操作和属性设置  创建简单">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2024/06/22/AI_ROBOT/Gazebo/2024-06-24-12-03-52-image.png">
+<meta property="og:image" content="http://yoursite.com/2024/06/22/AI_ROBOT/Gazebo/2024-06-24-12-05-54-image.png">
+<meta property="og:updated_time" content="2024-07-12T16:02:11.932Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Gazebo 上手 wsl">
+<meta name="twitter:description" content="学习计划在一小时内基本掌握Gazebo可能是很具挑战的，但可以通过以下步骤尽快上手，尤其是以项目实践为目的： 环境搭建和安装  下载并安装Gazebo 设置基本的环境变量和配置  基本概念和界面熟悉  快速浏览Gazebo的基本概念，如模型、世界、插件等 熟悉Gazebo的用户界面和基本功能  载入和探索现有模型  从Gazebo的模型库中载入一些基本模型 熟悉模型的基本操作和属性设置  创建简单">
+<meta name="twitter:image" content="http://yoursite.com/2024/06/22/AI_ROBOT/Gazebo/2024-06-24-12-03-52-image.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2024/06/22/AI_ROBOT/Gazebo/">
+
+
+
+
+
+  <title>Gazebo 上手 wsl | Simon Shi的小站</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simon Shi的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人工智能，机器学习 学习记录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2024/06/22/AI_ROBOT/Gazebo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Gazebo 上手 wsl</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2024-06-22T12:00:00+00:00">
+                2024-06-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Robot/" itemprop="url" rel="index">
+                    <span itemprop="name">Robot</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Robot/Gazebo/" itemprop="url" rel="index">
+                    <span itemprop="name">Gazebo</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2024/06/22/AI_ROBOT/Gazebo/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2024/06/22/AI_ROBOT/Gazebo/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="学习计划"><a href="#学习计划" class="headerlink" title="学习计划"></a>学习计划</h3><p>在一小时内基本掌握Gazebo可能是很具挑战的，但可以通过以下步骤尽快上手，尤其是以项目实践为目的：</p>
+<p><strong>环境搭建和安装</strong></p>
+<ul>
+<li>下载并安装Gazebo</li>
+<li>设置基本的环境变量和配置</li>
+</ul>
+<p><strong>基本概念和界面熟悉</strong></p>
+<ul>
+<li>快速浏览Gazebo的基本概念，如模型、世界、插件等</li>
+<li>熟悉Gazebo的用户界面和基本功能</li>
+</ul>
+<p><strong>载入和探索现有模型</strong></p>
+<ul>
+<li>从Gazebo的模型库中载入一些基本模型</li>
+<li>熟悉模型的基本操作和属性设置</li>
+</ul>
+<p><strong>创建简单的场景</strong></p>
+<ul>
+<li>创建一个简单的Gazebo世界，包括地面、一些障碍物和一个机器人模型</li>
+<li>保存和载入你创建的场景</li>
+</ul>
+<p><strong>运行基本的仿真</strong></p>
+<ul>
+<li>启动仿真，观察场景中的物理交互</li>
+<li>使用基本的控制命令，如移动机器人等</li>
+</ul>
+<p>以上步骤可能需要适当的预先知识和快速的学习能力。为了确保在短时间内获得最好的学习效果，建议选择具有明确目标和范围的项目实践。在实践过程中，你可能会遇到一些问题，记得利用网络资源如社区论坛和Stack Overflow来寻找解决方案。通过快速实践和解决问题，你将能够在较短的时间内掌握Gazebo的基本应用。</p>
+<h3 id="环境搭建-安装"><a href="#环境搭建-安装" class="headerlink" title="环境搭建 安装"></a>环境搭建 安装</h3><h4 id="docker安装"><a href="#docker安装" class="headerlink" title="docker安装"></a>docker安装</h4><ul>
+<li>此处省略</li>
+</ul>
+<h4 id="创建Dockerfile"><a href="#创建Dockerfile" class="headerlink" title="创建Dockerfile"></a>创建Dockerfile</h4><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用官方的ROS镜像作为基础镜像</span></span><br><span class="line"><span class="keyword">FROM</span> ros:noetic-ros-base</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加ROS源</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> <span class="built_in">echo</span> <span class="string">"deb http://packages.ros.org/ros/ubuntu focal main"</span> &gt; /etc/apt/sources.list.d/ros1-latest.list</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入ROS的公钥</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apt-key adv --keyserver <span class="string">'hkp://keyserver.ubuntu.com:80'</span> --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新apt包列表</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apt-get update</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 RViz 和其他 ROS 工具</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apt-get install -y \</span></span><br><span class="line"><span class="bash">    ros-noetic-rviz \</span></span><br><span class="line"><span class="bash">    ros-noetic-xacro \</span></span><br><span class="line"><span class="bash">    ros-noetic-joint-state-publisher-gui \</span></span><br><span class="line"><span class="bash">    ros-noetic-robot-state-publisher</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 Gazebo 11 和相关的开发包</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apt-get install -y \</span></span><br><span class="line"><span class="bash">    gazebo11 \</span></span><br><span class="line"><span class="bash">    libgazebo11-dev</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 Gazebo ROS 包</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apt-get install -y \</span></span><br><span class="line"><span class="bash">    ros-noetic-gazebo-ros-pkgs \</span></span><br><span class="line"><span class="bash">    ros-noetic-gazebo-ros-control</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置容器的主命令为bash终端</span></span><br><span class="line"><span class="keyword">CMD</span><span class="bash"> [<span class="string">"/bin/bash"</span>]</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="创建并运行-Docker-容器"><a href="#创建并运行-Docker-容器" class="headerlink" title="创建并运行 Docker 容器:"></a>创建并运行 Docker 容器:</h4><p>在 <code>Dockerfile</code> 的同一目录中打开终端，运行以下命令以构建 Docker 映像:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t gazebo11:latest .</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/06/22/AI_ROBOT/Gazebo/2024-06-24-12-03-52-image.png" alt></p>
+<h4 id="配置-X11-服务器"><a href="#配置-X11-服务器" class="headerlink" title="配置 X11 服务器:"></a>配置 X11 服务器:</h4><p>我使用 VcXsrv 来作为可视化服务器。</p>
+<p>启动 X11 服务器，并允许来自所有网络的连接。</p>
+<ol>
+<li><strong>安装 VcXsrv</strong>：首先需要下载并安装 <a href="https://link.zhihu.com/?target=https%3A//sourceforge.net/projects/vcxsrv/" target="_blank" rel="noopener">VcXsrv</a>。安装过程中可能需要选择完整安装，并指定目标文件夹​<a href="https://link.zhihu.com/?target=https%3A//scicomp.aalto.fi/triton/quickstart/installxonwindows.html%23%3A~%3Atext%3DWe%2520will%2520use%2520the%2520VcXsrv%252C%2CMultiple%2520Windows%2520and%2520click%2520Next" target="_blank" rel="noopener">1</a>​。</li>
+<li><strong>运行 XLaunch</strong>：通过运行 VcXsrv 中的 XLaunch 程序来启动 X 服务器。在显示设置中，选择“多窗口”选项，并点击下一步。在客户端启动中，检查“不启动客户端”选项，并点击下一步。在额外设置中，确保启用“禁用访问控制”，并点击下一步​<a href="https://link.zhihu.com/?target=https%3A//dev-container.readthedocs.io/en/latest/faq/docker/setup_vcxsrv_x11_server_windows.html%23%3A~%3Atext%3DRun%2520Xlaunch%2520which%2520gets%2520installed%2Cis%2520enabled%252C%2520and%2520click%2520Next" target="_blank" rel="noopener">3</a>​，直到完成。</li>
+</ol>
+<h4 id="启动容器"><a href="#启动容器" class="headerlink" title="启动容器:"></a>启动容器:</h4><p>一旦映像构建完成，运行以下命令以启动 Docker 容器，并连接到 X server:</p>
+<p>我这里挂载了 <code>F:\DockerFile\gazebo</code> 目录，进行数据的保存和读取。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -v F:\DockerFile\gazebo:/data -it --name gazebo11-container -e DISPLAY=host.docker.internal:0 gazebo11:latest</span><br></pre></td></tr></table></figure>
+
+<p>这时容器应该运行了。</p>
+<p><strong>其他终端：</strong></p>
+<p>现在，你可以通过 Docker desktop 中的 Exec 界面来执行其他命令。</p>
+<p>或者通过 Docker 的 <code>exec</code> 命令附加一个新的终端到正在运行的容器：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it gazebo11-container /bin/bash</span><br></pre></td></tr></table></figure>
+
+<p>这条命令会打开一个新的 Bash 终端，你可以在这个终端中执行任何你想要的命令，就像在一个常规的 Linux 系统中那样。</p>
+<h4 id="启动gazebo："><a href="#启动gazebo：" class="headerlink" title="启动gazebo："></a>启动gazebo：</h4><p>执行 <code>gazebo &amp;</code></p>
+<p>一旦你的 X11 服务器配置完成，你应该能够看到 Gazebo 的图形界面从 Docker 容器中显示出来。</p>
+<p><img src="/2024/06/22/AI_ROBOT/Gazebo/2024-06-24-12-05-54-image.png" alt></p>
+<p>这种方法应该能够让你在 Docker 容器中运行 Gazebo，同时在主机系统上显示其图形界面。请注意，可能还需要进行一些额外的配置和调整以确保所有功能都能正确运行，特别是如果你的网络环境比较复杂或有特殊的安全配置。</p>
+<h3 id="基本概念和界面熟悉"><a href="#基本概念和界面熟悉" class="headerlink" title="基本概念和界面熟悉"></a>基本概念和界面熟悉</h3><h4 id="Gazebo的基本概念，如模型，世界，插件等"><a href="#Gazebo的基本概念，如模型，世界，插件等" class="headerlink" title="Gazebo的基本概念，如模型，世界，插件等"></a>Gazebo的基本概念，如模型，世界，插件等</h4><ul>
+<li><p>模型</p>
+</li>
+<li><p>世界</p>
+</li>
+<li><p>插件</p>
+</li>
+<li><p>传感器：模拟真实世界传感器的虚拟设备，例如相机，雷达，激光雷达，它们可以感知仿真世界种的其它模型和环境</p>
+</li>
+<li><p>视觉和物理属性</p>
+</li>
+<li><p>通信接口</p>
+</li>
+</ul>
+<h4 id="熟悉Gazebo的用户解码和基本功能"><a href="#熟悉Gazebo的用户解码和基本功能" class="headerlink" title="熟悉Gazebo的用户解码和基本功能"></a>熟悉Gazebo的用户解码和基本功能</h4><ul>
+<li><p>主界面</p>
+</li>
+<li><p>工具栏</p>
+</li>
+<li><p>模型库</p>
+</li>
+<li><p>插件和控件</p>
+</li>
+<li><p>属性面板</p>
+</li>
+<li><p>主题和布局</p>
+</li>
+<li><p>日志和错误输出</p>
+</li>
+</ul>
+<h3 id="模型载入"><a href="#模型载入" class="headerlink" title="模型载入"></a>模型载入</h3><ul>
+<li><p>打开模型库</p>
+</li>
+<li><p>加载模型</p>
+</li>
+<li><p>保存世界</p>
+</li>
+</ul>
+<h4 id="模型操作和属性设置"><a href="#模型操作和属性设置" class="headerlink" title="模型操作和属性设置"></a>模型操作和属性设置</h4><ul>
+<li><p>选择模型</p>
+</li>
+<li><p>移动，旋转，缩放</p>
+</li>
+<li><p>打开属性面板</p>
+</li>
+<li><p>添加/删除链接和关节</p>
+</li>
+<li><p>保存模型</p>
+</li>
+</ul>
+<h3 id="创建场景"><a href="#创建场景" class="headerlink" title="创建场景"></a>创建场景</h3><p>simple_world.world</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" ?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">sdf</span> <span class="attr">version</span>=<span class="string">"1.6"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">world</span> <span class="attr">name</span>=<span class="string">"simple_world"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- Ground plane --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">include</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">uri</span>&gt;</span>model://ground_plane<span class="tag">&lt;/<span class="name">uri</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- Obstacles --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">model</span> <span class="attr">name</span>=<span class="string">"obstacle1"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">pose</span>&gt;</span>2 0 0.5 0 0 0<span class="tag">&lt;/<span class="name">pose</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">static</span>&gt;</span>true<span class="tag">&lt;/<span class="name">static</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">link</span> <span class="attr">name</span>=<span class="string">"link"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">collision</span> <span class="attr">name</span>=<span class="string">"collision"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">box</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">size</span>&gt;</span>1 1 1<span class="tag">&lt;/<span class="name">size</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">box</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">collision</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">visual</span> <span class="attr">name</span>=<span class="string">"visual"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">box</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">size</span>&gt;</span>1 1 1<span class="tag">&lt;/<span class="name">size</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">box</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">visual</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">link</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">model</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">model</span> <span class="attr">name</span>=<span class="string">"obstacle2"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">pose</span>&gt;</span>-2 0 0.5 0 0 0<span class="tag">&lt;/<span class="name">pose</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">static</span>&gt;</span>true<span class="tag">&lt;/<span class="name">static</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">link</span> <span class="attr">name</span>=<span class="string">"link"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">collision</span> <span class="attr">name</span>=<span class="string">"collision"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">box</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">size</span>&gt;</span>1 1 1<span class="tag">&lt;/<span class="name">size</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">box</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">collision</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">visual</span> <span class="attr">name</span>=<span class="string">"visual"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">box</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">size</span>&gt;</span>1 1 1<span class="tag">&lt;/<span class="name">size</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">box</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">visual</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">link</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">model</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- Simple Robot --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">model</span> <span class="attr">name</span>=<span class="string">"simple_robot"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">pose</span>&gt;</span>0 0 0.1 1.57079632679 0 0<span class="tag">&lt;/<span class="name">pose</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">name</span>=<span class="string">"base_link"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">collision</span> <span class="attr">name</span>=<span class="string">"collision"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">cylinder</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">radius</span>&gt;</span>0.2<span class="tag">&lt;/<span class="name">radius</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">length</span>&gt;</span>0.1<span class="tag">&lt;/<span class="name">length</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">cylinder</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">collision</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">visual</span> <span class="attr">name</span>=<span class="string">"visual"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">cylinder</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">radius</span>&gt;</span>0.2<span class="tag">&lt;/<span class="name">radius</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">length</span>&gt;</span>0.1<span class="tag">&lt;/<span class="name">length</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">cylinder</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">visual</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">inertial</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">mass</span>&gt;</span>10<span class="tag">&lt;/<span class="name">mass</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">inertia</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ixx</span>&gt;</span>0.0175<span class="tag">&lt;/<span class="name">ixx</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">iyy</span>&gt;</span>0.0175<span class="tag">&lt;/<span class="name">iyy</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">izz</span>&gt;</span>0.0175<span class="tag">&lt;/<span class="name">izz</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">inertia</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">inertial</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">link</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">plugin</span> <span class="attr">name</span>=<span class="string">"force_controller"</span> <span class="attr">filename</span>=<span class="string">"libgazebo_ros_force.so"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">updateRate</span>&gt;</span>100.0<span class="tag">&lt;/<span class="name">updateRate</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">robotNamespace</span>&gt;</span>/my_robot<span class="tag">&lt;/<span class="name">robotNamespace</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bodyName</span>&gt;</span>base_link<span class="tag">&lt;/<span class="name">bodyName</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">topicName</span>&gt;</span>/force<span class="tag">&lt;/<span class="name">topicName</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">model</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;/<span class="name">world</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">sdf</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在这个 <code>simple_world.world</code> 文件中，我们创建了以下元素：</p>
+<ol>
+<li><strong>地面平面</strong> (<code>ground_plane</code>): 使用 <code>&lt;include&gt;</code> 标签从模型库中包含了一个基本的地面平面模型。</li>
+<li><strong>障碍物</strong> (<code>obstacle1</code> 和 <code>obstacle2</code>): 创建了两个静态的箱形障碍物，并通过 <code>&lt;pose&gt;</code> 标签设置了它们的位置。</li>
+<li><strong>简单的机器人</strong> (<code>simple_robot</code>): 创建了一个简单的机器人模型，该模型包含一个基本的圆柱形体。</li>
+</ol>
+<p>你可以通过将这个文件保存到你的系统中，然后使用 Gazebo 命令行工具打开它来查看和交互这个简单的世界：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gazebo /data/worlds/simple_world.world</span><br></pre></td></tr></table></figure>
+
+<h3 id="运行基本的仿真"><a href="#运行基本的仿真" class="headerlink" title="运行基本的仿真"></a>运行基本的仿真</h3><h3 id="启动仿真，观察场景中的物理交互"><a href="#启动仿真，观察场景中的物理交互" class="headerlink" title="启动仿真，观察场景中的物理交互"></a>启动仿真，观察场景中的物理交互</h3><p>在 Gazebo 中启动仿真并观察场景中的物理交互是一个很直观的过程。你可以看到模型如何在受到物理规则（如重力、摩擦和碰撞）影响下运动和互动。以下是如何执行此操作的步骤：</p>
+<ol>
+<li><strong>启动 Gazebo</strong>: 首先，你需要启动 Gazebo 并加载你创建的世界。你可以通过命令行使用以下命令来做到这一点：<code>gazebo /path/to/your/my_scene.world</code> 其中 <code>/path/to/your/</code> 是你保存 <code>my_scene.world</code> 文件的路径。</li>
+<li><strong>启动仿真</strong>: 在 Gazebo 的用户界面顶部，你会看到一个“播放”按钮（Play），点击它来启动仿真。现在，你应该能看到你的场景中的模型开始按照物理规则运动。例如，如果你的场景中有一个未固定的箱子，它应该会因为重力而掉到地上。</li>
+<li><strong>观察物理交互</strong>: 观察你的场景中的模型如何相互交互以及如何与环境交互。例如，你可以看到碰撞效果，如模型之间的碰撞或模型与地面的碰撞。你也可以尝试移动模型，看看它们如何响应你的交互以及它们如何在物理环境中运动。</li>
+<li><strong>调整仿真速度</strong> (可选): 如果需要，你可以调整仿真速度以更仔细地观察物理交互。在 Gazebo 用户界面的顶部，你会看到一个滑块，可以用它来调整仿真速度。</li>
+<li><strong>暂停和重置仿真</strong> (可选): 你也可以暂停仿真或重置仿真以返回到初始状态。在 Gazebo 用户界面的顶部，你会找到“暂停”（Pause）和“重置”（Reset）按钮。</li>
+</ol>
+<p>通过上述步骤，你可以启动 Gazebo 仿真，观察并理解你的场景中的物理交互。这可以帮助你理解如何配置和调整你的模型以获得所需的仿真结果。</p>
+<h3 id="※使用基本的控制命令，如移动机器人等"><a href="#※使用基本的控制命令，如移动机器人等" class="headerlink" title="※使用基本的控制命令，如移动机器人等"></a>※使用基本的控制命令，如移动机器人等</h3><p>在 Gazebo 中控制机器人通常需要编写和运行一些控制代码。一个常见的做法是使用 ROS (Robot Operating System) 与 Gazebo 协同工作，以发送控制命令并接收机器人的传感器数据。在这个例子中，我们将通过 ROS 使用简单的控制命令来移动机器人。</p>
+<p>首先，确保你已经安装了 ROS 和 Gazebo，并且你的机器人模型已经配置为接受 ROS 控制命令。</p>
+<p><strong>创建ROS工作空间:</strong> 在ROS容器中，你需要创建一个新的工作空间来存放你的ROS项目。首先，创建一个新的目录来作为你的工作空间：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p ~/catkin_ws/src</span><br><span class="line">cd ~/catkin_ws/src</span><br><span class="line">catkin_init_workspace</span><br></pre></td></tr></table></figure>
+
+<p>然后构建你的工作空间：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~/catkin_ws</span><br><span class="line">catkin_make</span><br></pre></td></tr></table></figure>
+
+<p>设置环境变量:</p>
+<p>我将这个文件放到了之前加载的 <code>F:\DockerFile\gazebo</code> 中，然后在容器中在 <code>/data</code> 中可以找到该文件。</p>
+<p>文件名：<code>ros_environment.sh</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Source ROS setup script</span></span><br><span class="line">source /opt/ros/noetic/setup.bash</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Source workspace setup script</span></span><br><span class="line">source ~/catkin_ws/devel/setup.bash</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Set ROS Master URI</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Replace <span class="string">'localhost'</span> with your ROS Master<span class="string">'s IP if it'</span>s on a different machine</span></span><br><span class="line">export ROS_MASTER_URI=http://localhost:11311</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Set ROS Hostname</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Replace <span class="string">'localhost'</span> with this machine<span class="string">'s IP if this machine is not the ROS Master</span></span></span><br><span class="line">export ROS_HOSTNAME=localhost</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Set ROS IP</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Replace <span class="string">'localhost'</span> with this machine<span class="string">'s IP</span></span></span><br><span class="line">export ROS_IP=localhost</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Set Gazebo Plugin Path</span></span><br><span class="line">export GAZEBO_PLUGIN_PATH=/opt/ros/noetic/lib:$GAZEBO_PLUGIN_PATH</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>保存上述脚本到 <code>ros_environment.sh</code>文件。</li>
+<li>通过以下命令使环境变量设置生效：<code>source /data/ros_environment.sh</code></li>
+</ul>
+<h4 id="创建-ROS-Package"><a href="#创建-ROS-Package" class="headerlink" title="创建 ROS Package:"></a><strong>创建 ROS Package</strong>:</h4><p>创建一个新的 ROS package 用于存放你的控制代码。在你的 catkin workspace 中，运行以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~/catkin_ws/src</span><br><span class="line">catkin_create_pkg my_robot_controller rospy gazebo_ros gazebo_plugins std_msgs geometry_msgs</span><br></pre></td></tr></table></figure>
+
+<h4 id="创建控制节点"><a href="#创建控制节点" class="headerlink" title="创建控制节点:"></a><strong>创建控制节点</strong>:</h4><p>在你的 <code>my_robot_controller</code> package 中创建一个新的 Python 文件，命名为 <code>robot_controller.py</code>。</p>
+<p>文件名: <code>robot_controller.py</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/usr/bin/env python3</span></span><br><span class="line"></span><br><span class="line">import rospy</span><br><span class="line">from geometry_msgs.msg import Wrench</span><br><span class="line"></span><br><span class="line">def apply_force():</span><br><span class="line">    # Initialize the node</span><br><span class="line">    rospy.init_node('force_applier', anonymous=True)</span><br><span class="line"></span><br><span class="line">    # Create a publisher to send force commands</span><br><span class="line">    pub = rospy.Publisher('/force', Wrench, queue_size=10)</span><br><span class="line"></span><br><span class="line">    # Create a Wrench message to send force and torque commands</span><br><span class="line">    cmd = Wrench()</span><br><span class="line">    cmd.force.x = 0.0</span><br><span class="line">    cmd.force.y = 0.0</span><br><span class="line">    cmd.force.z = 0.0</span><br><span class="line">    cmd.torque.x = 0.0</span><br><span class="line">    cmd.torque.y = 0.0</span><br><span class="line">    cmd.torque.z = 0.6  # Apply a torque of 0.6 N*m about the z-axis</span><br><span class="line"></span><br><span class="line">    rate = rospy.Rate(10)  # 10 Hz</span><br><span class="line">    while not rospy.is_shutdown():</span><br><span class="line">        # Publish the command</span><br><span class="line">        pub.publish(cmd)</span><br><span class="line">        rate.sleep()</span><br><span class="line"></span><br><span class="line">if __name__ == '__main__':</span><br><span class="line">    try:</span><br><span class="line">        apply_force()</span><br><span class="line">    except rospy.ROSInterruptException:</span><br><span class="line">        pass</span><br></pre></td></tr></table></figure>
+
+<h4 id="运行控制节点"><a href="#运行控制节点" class="headerlink" title="运行控制节点:"></a><strong>运行控制节点</strong>:</h4><p>在终端中，导航到你的 catkin workspace，并构建你的 package：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd ~/catkin_ws</span><br><span class="line">catkin_make</span><br><span class="line">source /data/ros_environment.sh</span><br></pre></td></tr></table></figure>
+
+<p>现在运行你的控制节点来移动机器人：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rosrun my_robot_controller robot_controller.py</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，<code>robot_controller.py</code> 脚本创建了一个 ROS 节点，该节点发布速度命令来移动机器人。<code>/my_robot/cmd_vel</code> 是你的机器人模型应该监听的话题，以接收速度命令。确保将此话题名称更改为与你的机器人模型匹配的话题名称。</p>
+<p>然后打开一个新的终端，运行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rosrun my_robot_controller robot_controller.py</span><br></pre></td></tr></table></figure>
+
+<p>然后就可以看到机器人转起来了：</p>
+<h3 id="REF"><a href="#REF" class="headerlink" title="REF"></a>REF</h3><p><a href="https://zhuanlan.zhihu.com/p/590825660" target="_blank" rel="noopener">win11+WSL2配置gazebo - 知乎 (zhihu.com)</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Robot/" rel="tag"># Robot</a>
+          
+            <a href="/tags/Gazebo/" rel="tag"># Gazebo</a>
+          
+            <a href="/tags/ROS/" rel="tag"># ROS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2024/06/20/AI_ROBOT/Tools_simulation/" rel="next" title="Summary of AI+ROBOT">
+                <i class="fa fa-chevron-left"></i> Summary of AI+ROBOT
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2024/06/25/AI_ROBOT/Gazebo_ROS/" rel="prev" title="ROS通信，控制Gazebo-11机器人">
+                ROS通信，控制Gazebo-11机器人 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Simon Shi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">269</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">234</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#学习计划"><span class="nav-number">1.</span> <span class="nav-text">学习计划</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#环境搭建-安装"><span class="nav-number">2.</span> <span class="nav-text">环境搭建 安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#docker安装"><span class="nav-number">2.1.</span> <span class="nav-text">docker安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建Dockerfile"><span class="nav-number">2.2.</span> <span class="nav-text">创建Dockerfile</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建并运行-Docker-容器"><span class="nav-number">2.3.</span> <span class="nav-text">创建并运行 Docker 容器:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置-X11-服务器"><span class="nav-number">2.4.</span> <span class="nav-text">配置 X11 服务器:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动容器"><span class="nav-number">2.5.</span> <span class="nav-text">启动容器:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动gazebo："><span class="nav-number">2.6.</span> <span class="nav-text">启动gazebo：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本概念和界面熟悉"><span class="nav-number">3.</span> <span class="nav-text">基本概念和界面熟悉</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Gazebo的基本概念，如模型，世界，插件等"><span class="nav-number">3.1.</span> <span class="nav-text">Gazebo的基本概念，如模型，世界，插件等</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#熟悉Gazebo的用户解码和基本功能"><span class="nav-number">3.2.</span> <span class="nav-text">熟悉Gazebo的用户解码和基本功能</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模型载入"><span class="nav-number">4.</span> <span class="nav-text">模型载入</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#模型操作和属性设置"><span class="nav-number">4.1.</span> <span class="nav-text">模型操作和属性设置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建场景"><span class="nav-number">5.</span> <span class="nav-text">创建场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行基本的仿真"><span class="nav-number">6.</span> <span class="nav-text">运行基本的仿真</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动仿真，观察场景中的物理交互"><span class="nav-number">7.</span> <span class="nav-text">启动仿真，观察场景中的物理交互</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#※使用基本的控制命令，如移动机器人等"><span class="nav-number">8.</span> <span class="nav-text">※使用基本的控制命令，如移动机器人等</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建-ROS-Package"><span class="nav-number">8.1.</span> <span class="nav-text">创建 ROS Package:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建控制节点"><span class="nav-number">8.2.</span> <span class="nav-text">创建控制节点:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#运行控制节点"><span class="nav-number">8.3.</span> <span class="nav-text">运行控制节点:</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#REF"><span class="nav-number">9.</span> <span class="nav-text">REF</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+    
+
+        
+
+
+
+
+
+
+<div>
+<!-- 填写你的友盟代码 -->
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1277989586'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s9.cnzz.com/z_stat.php%3Fid%3D1277989586%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+<!-- 你的友盟代码 end -->
+</div>
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'novav',
+            repo: 'blog_comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'ea8aae03b5381e13ab9cdedd0282b60d8ec412cb',
+            
+                client_id: 'c3934b23eb001aa3243d'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

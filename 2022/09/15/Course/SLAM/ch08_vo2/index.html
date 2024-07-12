@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="SLAM,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Simon Shi的小站" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="目标：  理解光流法跟踪特征点的原理  理解直接法是如何估计相机位姿的  使用g2o进行直接法的计算。   1、直接法引出特征点法的缺点：    缺点 解决思路     关键点的提取与描述子的计算非常耗时。 1、保留特征点，只计算关键点，不计算描述子，使用光流跟踪特征点运动（仍使用特征点，匹配描述子换成光流跟踪，估计相机运动仍使用对极几何，Pnp或ICP算法）    关注与特征点，忽略了特征点之外">
+<meta name="keywords" content="SLAM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="直接法视觉里程计(LK,DM,)">
+<meta property="og:url" content="http://yoursite.com/2022/09/15/Course/SLAM/ch08_vo2/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="目标：  理解光流法跟踪特征点的原理  理解直接法是如何估计相机位姿的  使用g2o进行直接法的计算。   1、直接法引出特征点法的缺点：    缺点 解决思路     关键点的提取与描述子的计算非常耗时。 1、保留特征点，只计算关键点，不计算描述子，使用光流跟踪特征点运动（仍使用特征点，匹配描述子换成光流跟踪，估计相机运动仍使用对极几何，Pnp或ICP算法）    关注与特征点，忽略了特征点之外">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2024-07-12T16:02:12.596Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="直接法视觉里程计(LK,DM,)">
+<meta name="twitter:description" content="目标：  理解光流法跟踪特征点的原理  理解直接法是如何估计相机位姿的  使用g2o进行直接法的计算。   1、直接法引出特征点法的缺点：    缺点 解决思路     关键点的提取与描述子的计算非常耗时。 1、保留特征点，只计算关键点，不计算描述子，使用光流跟踪特征点运动（仍使用特征点，匹配描述子换成光流跟踪，估计相机运动仍使用对极几何，Pnp或ICP算法）    关注与特征点，忽略了特征点之外">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2022/09/15/Course/SLAM/ch08_vo2/">
+
+
+
+
+
+  <title>直接法视觉里程计(LK,DM,) | Simon Shi的小站</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simon Shi的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人工智能，机器学习 学习记录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/09/15/Course/SLAM/ch08_vo2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">直接法视觉里程计(LK,DM,)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-09-15T12:00:00+00:00">
+                2022-09-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SLAM/" itemprop="url" rel="index">
+                    <span itemprop="name">SLAM</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2022/09/15/Course/SLAM/ch08_vo2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2022/09/15/Course/SLAM/ch08_vo2/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>目标：</p>
+<ul>
+<li><p>理解<mark>光流法</mark>跟踪特征点的原理</p>
+</li>
+<li><p>理解<mark>直接法</mark>是如何估计相机位姿的</p>
+</li>
+<li><p>使用g2o进行直接法的计算。</p>
+</li>
+</ul>
+<h2 id="1、直接法引出"><a href="#1、直接法引出" class="headerlink" title="1、直接法引出"></a>1、直接法引出</h2><h3 id="特征点法的缺点："><a href="#特征点法的缺点：" class="headerlink" title="特征点法的缺点："></a>特征点法的缺点：</h3><table>
+<thead>
+<tr>
+<th></th>
+<th>缺点</th>
+<th>解决思路</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td>关键点的提取与描述子的计算非常耗时。</td>
+<td>1、保留特征点，只计算关键点，不计算描述子，使用<mark>光流</mark>跟踪特征点运动（仍使用特征点，匹配描述子换成光流跟踪，估计相机运动仍使用对极几何，Pnp或ICP算法）</td>
+</tr>
+<tr>
+<td></td>
+<td>关注与特征点，忽略了特征点之外的所有信息。</td>
+<td>法2、只计算关键点，不计算描述子，使用直接法，计算特征点在下一时刻图像的位置。</td>
+</tr>
+<tr>
+<td></td>
+<td>特征缺失（白墙，空荡荡的走廊）</td>
+<td>法3、既不计算关键点，也不计算描述子，根据像素灰度差异，直接计算相机运动。</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>法1还是特征点法；法2，法3，则是直接法；</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>特征点法</th>
+<th>直接法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>优化相机运动</td>
+<td>特征点在相机中的投影，最小化投影误差</td>
+<td>在直接法中，我们并不需要知道点与点之间之间的对应关系，而是</td>
+</tr>
+<tr>
+<td>通过最小化光度误差（Photometric error）来求得它们<br>最小化光度误差</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>SVO，LSD_SLAM</td>
+</tr>
+<tr>
+<td></td>
+<td>重构稀疏特征点（稀疏地图）</td>
+<td>直接法分为稀疏、稠密和</td>
+</tr>
+<tr>
+<td>半稠密三种。</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>直接法根据</td>
+</tr>
+<tr>
+<td><br>像素的亮度信息，估计相机的运动</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>区别：</p>
+<ul>
+<li><p>需要配对点，通过其它法得到</p>
+</li>
+<li><p>不需要配对点，直接得到关系</p>
+</li>
+</ul>
+<p>不提特征计算VO的思路：</p>
+<ul>
+<li><p>通过其它方式寻找配对点–光流</p>
+</li>
+<li><p>无配对点–直接法</p>
+</li>
+</ul>
+<h2 id="2、光流（特征点法）"><a href="#2、光流（特征点法）" class="headerlink" title="2、光流（特征点法）"></a>2、光流（特征点法）</h2><p>一般分为稀疏光流和稠密光流</p>
+<ul>
+<li><p>稀疏以Lucas-Kanade（LK）光流为代表</p>
+</li>
+<li><p>稠密以Horn-Schunck（HS）光流为代表（计算所有像素）</p>
+<pre><code>本质上是估计像素再不同的时刻图像中的运动。</code></pre></li>
+</ul>
+<h3 id="2-1-Lucas-Kanade光流"><a href="#2-1-Lucas-Kanade光流" class="headerlink" title="2.1 Lucas-Kanade光流"></a>2.1 Lucas-Kanade光流</h3><ul>
+<li>灰度不变假设</li>
+</ul>
+<p>$$<br>\left[<br>\begin{array}{}<br>    u \<br>    v<br>\end{array}<br>\right]<br>^*<br>= -(A^T A)^{-1} A^T b<br>$$</p>
+<p>$$</p>
+<h2 id="3、实践：LK光流"><a href="#3、实践：LK光流" class="headerlink" title="3、实践：LK光流"></a>3、实践：LK光流</h2><h3 id="3-1-TMU数据集"><a href="#3-1-TMU数据集" class="headerlink" title="3.1 TMU数据集"></a>3.1 TMU数据集</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1、 rgb.txt, depth.txt 记录了文件的采集时间和对应的文件名</span><br><span class="line">2、 rgb/ depth/ 目录存放采集到的png格式图像，彩图为八位三通道，深度图16位单通道，文件名即采集时间。</span><br><span class="line">3、groundtruth.txt为外部运动捕捉系统采集到的相机位姿（time,tx,ty,tz,qx,qy,qz,qw)</span><br><span class="line"></span><br><span class="line">slambook/tooks/associate.py可以进行数据对齐（彩色图，和深度图匹配）</span><br><span class="line">python associate.py rgb.txt depth.txt &gt; associate.txt</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-LK光流"><a href="#3-2-LK光流" class="headerlink" title="3.2 LK光流"></a>3.2 LK光流</h3><p>OpenCV进行LK光流处理。跟踪特征点。</p>
+<p>对第一张图像提取Fast角点。然后LK光流进行跟踪它们；绘画在图中。</p>
+<p>ch8/useLK/useLk.cpp</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;list&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;chrono&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv4/opencv2/core/core.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv4/opencv2/highgui/highgui.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv4/opencv2/features2d/features2d.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv4/opencv2/video/tracking.hpp&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (argc != <span class="number">2</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"usage: useLK path_to_dataset "</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">string</span> path_to_dataset = argv[<span class="number">1</span>];</span><br><span class="line">    <span class="built_in">string</span> associate_file = path_to_dataset + <span class="string">"/associate.txt"</span>;</span><br><span class="line">    <span class="function">ifstream <span class="title">fin</span><span class="params">( associate_file )</span></span>;</span><br><span class="line">    <span class="keyword">if</span> ( !fin ) </span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cerr</span>&lt;&lt;<span class="string">"I cann't find associate.txt!"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">string</span> rgb_file, depth_file, time_rgb, time_depth;</span><br><span class="line">    <span class="built_in">list</span>&lt; cv::Point2f &gt; key_points;      <span class="comment">// 因为要删除跟踪失败的点，使用list</span></span><br><span class="line">    cv::Mat color, depth, last_color;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> index=<span class="number">0</span>; index&lt;<span class="number">100</span>; index++)</span><br><span class="line">    &#123;</span><br><span class="line">        fin &gt;&gt; time_rgb &gt;&gt; rgb_file &gt;&gt; time_depth &gt;&gt; depth_file;</span><br><span class="line">        color = cv::imread( path_to_dataset + <span class="string">"/"</span> + rgb_file);</span><br><span class="line">        depth = cv::imread( path_to_dataset + <span class="string">"/"</span> + depth_file, <span class="number">-1</span>);</span><br><span class="line">        <span class="keyword">if</span> (index == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 提取第一帧FAST特征点</span></span><br><span class="line">            <span class="built_in">vector</span>&lt;cv::KeyPoint&gt; kps;</span><br><span class="line">            cv::Ptr&lt;cv::FastFeatureDetector&gt; detector = cv::FastFeatureDetector::create();</span><br><span class="line">            detector-&gt;detect(color, kps);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> ( <span class="keyword">auto</span> kp: kps)</span><br><span class="line">            &#123;</span><br><span class="line">                key_points.push_back(kp.pt);</span><br><span class="line">            &#125;</span><br><span class="line">            last_color = color;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> ( color.data==<span class="literal">nullptr</span> || depth.data==<span class="literal">nullptr</span> )</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 对其他帧用LK跟踪特征点</span></span><br><span class="line">        <span class="built_in">vector</span>&lt;cv::Point2f&gt; next_keypoints; </span><br><span class="line">        <span class="built_in">vector</span>&lt;cv::Point2f&gt; prev_keypoints;</span><br><span class="line">        <span class="keyword">for</span> ( <span class="keyword">auto</span> kp:key_points )</span><br><span class="line">            prev_keypoints.push_back(kp);</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">unsigned</span> <span class="keyword">char</span>&gt; status;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">float</span>&gt; error; </span><br><span class="line">        chrono::steady_clock::time_point t1 = chrono::steady_clock::now();</span><br><span class="line">        cv::calcOpticalFlowPyrLK( last_color, color, prev_keypoints, next_keypoints, status, error );</span><br><span class="line">        chrono::steady_clock::time_point t2 = chrono::steady_clock::now();</span><br><span class="line">        chrono::duration&lt;<span class="keyword">double</span>&gt; time_used = chrono::duration_cast&lt;chrono::duration&lt;<span class="keyword">double</span>&gt;&gt;( t2-t1 );</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"LK Flow use time："</span>&lt;&lt;time_used.count()&lt;&lt;<span class="string">" seconds."</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">        <span class="comment">// 把跟丢的点删掉</span></span><br><span class="line">        <span class="keyword">int</span> i=<span class="number">0</span>; </span><br><span class="line">        <span class="keyword">for</span> ( <span class="keyword">auto</span> iter=key_points.begin(); iter!=key_points.end(); i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> ( status[i] == <span class="number">0</span> )</span><br><span class="line">            &#123;</span><br><span class="line">                iter = key_points.erase(iter);</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            *iter = next_keypoints[i];</span><br><span class="line">            iter++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"tracked keypoints: "</span>&lt;&lt;key_points.size()&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">if</span> (key_points.size() == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">cout</span>&lt;&lt;<span class="string">"all key_points are lost."</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">            <span class="keyword">break</span>; </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 画出 key_points</span></span><br><span class="line">        cv::Mat img_show = color.clone();</span><br><span class="line">        <span class="keyword">for</span> ( <span class="keyword">auto</span> kp:key_points )</span><br><span class="line">            cv::circle(img_show, kp, <span class="number">10</span>, cv::Scalar(<span class="number">0</span>, <span class="number">240</span>, <span class="number">0</span>), <span class="number">1</span>);</span><br><span class="line">        cv::imshow(<span class="string">"corners"</span>, img_show);</span><br><span class="line">        cv::waitKey(<span class="number">0</span>);</span><br><span class="line">        last_color = color;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>运行</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./build/useLK ../data</span><br></pre></td></tr></table></figure>
+
+<p>最后，我们可以通过<strong>光流跟踪</strong>的特征点，用 PnP、 ICP 或对极几何来估计相机运动，<br>这些方法在上一章中都讲过，我们不再讨论。总而言之，光流法可以加速基于特征点的视<br>觉里程计算法，避免计算和匹配描述子的过程，但要求相机运动较慢（或采集频率较高）。  </p>
+<h2 id="4、直接法"><a href="#4、直接法" class="headerlink" title="4、直接法"></a>4、直接法</h2><p>实践：RGB-D的直接法</p>
+<p>直接法估计相机运动</p>
+<h3 id="4-1-推导："><a href="#4-1-推导：" class="headerlink" title="4.1 推导："></a>4.1 推导：</h3><h3 id="4-2-讨论"><a href="#4-2-讨论" class="headerlink" title="4.2 讨论"></a>4.2 讨论</h3><h2 id="5-实践-RGB-D的直接法"><a href="#5-实践-RGB-D的直接法" class="headerlink" title="5 实践 RGB-D的直接法"></a>5 实践 RGB-D的直接法</h2><h3 id="5-1-稀疏直接法"><a href="#5-1-稀疏直接法" class="headerlink" title="5.1 稀疏直接法"></a>5.1 稀疏直接法</h3><p>slambook/ch8/directMethod/direct_sparse.cpp</p>
+<h3 id="5-2-定义直接法的边"><a href="#5-2-定义直接法的边" class="headerlink" title="5,2 定义直接法的边"></a>5,2 定义直接法的边</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/********************************************</span></span><br><span class="line"><span class="comment"> * 本节演示了RGBD上的稀疏直接法 </span></span><br><span class="line"><span class="comment"> ********************************************/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 一次测量的值，包括一个世界坐标系下三维点与一个灰度值</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Measurement</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    Measurement ( Eigen::Vector3d p, <span class="keyword">float</span> g ) : pos_world ( p ), grayscale ( g ) &#123;&#125;</span><br><span class="line">    Eigen::Vector3d pos_world;</span><br><span class="line">    <span class="keyword">float</span> grayscale;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">inline</span> Eigen::<span class="function">Vector3d <span class="title">project2Dto3D</span> <span class="params">( <span class="keyword">int</span> x, <span class="keyword">int</span> y, <span class="keyword">int</span> d, <span class="keyword">float</span> fx, <span class="keyword">float</span> fy, <span class="keyword">float</span> cx, <span class="keyword">float</span> cy, <span class="keyword">float</span> scale )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">float</span> zz = <span class="keyword">float</span> ( d ) /scale;</span><br><span class="line">    <span class="keyword">float</span> xx = zz* ( x-cx ) /fx;</span><br><span class="line">    <span class="keyword">float</span> yy = zz* ( y-cy ) /fy;</span><br><span class="line">    <span class="keyword">return</span> Eigen::Vector3d ( xx, yy, zz );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">inline</span> Eigen::<span class="function">Vector2d <span class="title">project3Dto2D</span> <span class="params">( <span class="keyword">float</span> x, <span class="keyword">float</span> y, <span class="keyword">float</span> z, <span class="keyword">float</span> fx, <span class="keyword">float</span> fy, <span class="keyword">float</span> cx, <span class="keyword">float</span> cy )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">float</span> u = fx*x/z+cx;</span><br><span class="line">    <span class="keyword">float</span> v = fy*y/z+cy;</span><br><span class="line">    <span class="keyword">return</span> Eigen::Vector2d ( u,v );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 直接法估计位姿</span></span><br><span class="line"><span class="comment">// 输入：测量值（空间点的灰度），新的灰度图，相机内参； 输出：相机位姿</span></span><br><span class="line"><span class="comment">// 返回：true为成功，false失败</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">poseEstimationDirect</span> <span class="params">( <span class="keyword">const</span> <span class="built_in">vector</span>&lt;Measurement&gt;&amp; measurements, cv::Mat* gray, Eigen::Matrix3f&amp; intrinsics, Eigen::Isometry3d&amp; Tcw )</span></span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// project a 3d point into an image plane, the error is photometric error</span></span><br><span class="line"><span class="comment">// an unary edge with one vertex SE3Expmap (the pose of camera)</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">EdgeSE3ProjectDirect</span>:</span> <span class="keyword">public</span> BaseUnaryEdge&lt; <span class="number">1</span>, <span class="keyword">double</span>, VertexSE3Expmap&gt;</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    EIGEN_MAKE_ALIGNED_OPERATOR_NEW</span><br><span class="line"></span><br><span class="line">    EdgeSE3ProjectDirect() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    EdgeSE3ProjectDirect ( Eigen::Vector3d point, <span class="keyword">float</span> fx, <span class="keyword">float</span> fy, <span class="keyword">float</span> cx, <span class="keyword">float</span> cy, cv::Mat* image )</span><br><span class="line">        : x_world_ ( point ), fx_ ( fx ), fy_ ( fy ), cx_ ( cx ), cy_ ( cy ), image_ ( image )</span><br><span class="line">    &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">computeError</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">const</span> VertexSE3Expmap* v  =<span class="keyword">static_cast</span>&lt;<span class="keyword">const</span> VertexSE3Expmap*&gt; ( _vertices[<span class="number">0</span>] );</span><br><span class="line">        Eigen::Vector3d x_local = v-&gt;estimate().<span class="built_in">map</span> ( x_world_ );</span><br><span class="line">        <span class="keyword">float</span> x = x_local[<span class="number">0</span>]*fx_/x_local[<span class="number">2</span>] + cx_;</span><br><span class="line">        <span class="keyword">float</span> y = x_local[<span class="number">1</span>]*fy_/x_local[<span class="number">2</span>] + cy_;</span><br><span class="line">        <span class="comment">// check x,y is in the image</span></span><br><span class="line">        <span class="keyword">if</span> ( x<span class="number">-4</span>&lt;<span class="number">0</span> || ( x+<span class="number">4</span> ) &gt;image_-&gt;cols || ( y<span class="number">-4</span> ) &lt;<span class="number">0</span> || ( y+<span class="number">4</span> ) &gt;image_-&gt;rows )</span><br><span class="line">        &#123;</span><br><span class="line">            _error ( <span class="number">0</span>,<span class="number">0</span> ) = <span class="number">0.0</span>;</span><br><span class="line">            <span class="keyword">this</span>-&gt;setLevel ( <span class="number">1</span> );</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            _error ( <span class="number">0</span>,<span class="number">0</span> ) = getPixelValue ( x,y ) - _measurement;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// plus in manifold</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">linearizeOplus</span><span class="params">( )</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> ( level() == <span class="number">1</span> )</span><br><span class="line">        &#123;</span><br><span class="line">            _jacobianOplusXi = Eigen::Matrix&lt;<span class="keyword">double</span>, <span class="number">1</span>, <span class="number">6</span>&gt;::Zero();</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        VertexSE3Expmap* vtx = <span class="keyword">static_cast</span>&lt;VertexSE3Expmap*&gt; ( _vertices[<span class="number">0</span>] );</span><br><span class="line">        Eigen::Vector3d xyz_trans = vtx-&gt;estimate().<span class="built_in">map</span> ( x_world_ );   <span class="comment">// q in book</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">double</span> x = xyz_trans[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">double</span> y = xyz_trans[<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">double</span> invz = <span class="number">1.0</span>/xyz_trans[<span class="number">2</span>];</span><br><span class="line">        <span class="keyword">double</span> invz_2 = invz*invz;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">float</span> u = x*fx_*invz + cx_;</span><br><span class="line">        <span class="keyword">float</span> v = y*fy_*invz + cy_;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// jacobian from se3 to u,v</span></span><br><span class="line">        <span class="comment">// NOTE that in g2o the Lie algebra is (\omega, \epsilon), where \omega is so(3) and \epsilon the translation</span></span><br><span class="line">        Eigen::Matrix&lt;<span class="keyword">double</span>, <span class="number">2</span>, <span class="number">6</span>&gt; jacobian_uv_ksai;</span><br><span class="line"></span><br><span class="line">        jacobian_uv_ksai ( <span class="number">0</span>,<span class="number">0</span> ) = - x*y*invz_2 *fx_;</span><br><span class="line">        jacobian_uv_ksai ( <span class="number">0</span>,<span class="number">1</span> ) = ( <span class="number">1</span>+ ( x*x*invz_2 ) ) *fx_;</span><br><span class="line">        jacobian_uv_ksai ( <span class="number">0</span>,<span class="number">2</span> ) = - y*invz *fx_;</span><br><span class="line">        jacobian_uv_ksai ( <span class="number">0</span>,<span class="number">3</span> ) = invz *fx_;</span><br><span class="line">        jacobian_uv_ksai ( <span class="number">0</span>,<span class="number">4</span> ) = <span class="number">0</span>;</span><br><span class="line">        jacobian_uv_ksai ( <span class="number">0</span>,<span class="number">5</span> ) = -x*invz_2 *fx_;</span><br><span class="line"></span><br><span class="line">        jacobian_uv_ksai ( <span class="number">1</span>,<span class="number">0</span> ) = - ( <span class="number">1</span>+y*y*invz_2 ) *fy_;</span><br><span class="line">        jacobian_uv_ksai ( <span class="number">1</span>,<span class="number">1</span> ) = x*y*invz_2 *fy_;</span><br><span class="line">        jacobian_uv_ksai ( <span class="number">1</span>,<span class="number">2</span> ) = x*invz *fy_;</span><br><span class="line">        jacobian_uv_ksai ( <span class="number">1</span>,<span class="number">3</span> ) = <span class="number">0</span>;</span><br><span class="line">        jacobian_uv_ksai ( <span class="number">1</span>,<span class="number">4</span> ) = invz *fy_;</span><br><span class="line">        jacobian_uv_ksai ( <span class="number">1</span>,<span class="number">5</span> ) = -y*invz_2 *fy_;</span><br><span class="line"></span><br><span class="line">        Eigen::Matrix&lt;<span class="keyword">double</span>, <span class="number">1</span>, <span class="number">2</span>&gt; jacobian_pixel_uv;</span><br><span class="line"></span><br><span class="line">        jacobian_pixel_uv ( <span class="number">0</span>,<span class="number">0</span> ) = ( getPixelValue ( u+<span class="number">1</span>,v )-getPixelValue ( u<span class="number">-1</span>,v ) ) /<span class="number">2</span>;</span><br><span class="line">        jacobian_pixel_uv ( <span class="number">0</span>,<span class="number">1</span> ) = ( getPixelValue ( u,v+<span class="number">1</span> )-getPixelValue ( u,v<span class="number">-1</span> ) ) /<span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">        _jacobianOplusXi = jacobian_pixel_uv*jacobian_uv_ksai;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// dummy read and write functions because we don't care...</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">bool</span> <span class="title">read</span> <span class="params">( <span class="built_in">std</span>::istream&amp; in )</span> </span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">bool</span> <span class="title">write</span> <span class="params">( <span class="built_in">std</span>::ostream&amp; out )</span> <span class="keyword">const</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    <span class="comment">// get a gray scale value from reference image (bilinear interpolated)</span></span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">float</span> <span class="title">getPixelValue</span> <span class="params">( <span class="keyword">float</span> x, <span class="keyword">float</span> y )</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        uchar* data = &amp; image_-&gt;data[ <span class="keyword">int</span> ( y ) * image_-&gt;step + <span class="keyword">int</span> ( x ) ];</span><br><span class="line">        <span class="keyword">float</span> xx = x - <span class="built_in">floor</span> ( x );</span><br><span class="line">        <span class="keyword">float</span> yy = y - <span class="built_in">floor</span> ( y );</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">float</span> (</span><br><span class="line">                   ( <span class="number">1</span>-xx ) * ( <span class="number">1</span>-yy ) * data[<span class="number">0</span>] +</span><br><span class="line">                   xx* ( <span class="number">1</span>-yy ) * data[<span class="number">1</span>] +</span><br><span class="line">                   ( <span class="number">1</span>-xx ) *yy*data[ image_-&gt;step ] +</span><br><span class="line">                   xx*yy*data[image_-&gt;step+<span class="number">1</span>]</span><br><span class="line">               );</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Eigen::Vector3d x_world_;   <span class="comment">// 3D point in world frame</span></span><br><span class="line">    <span class="keyword">float</span> cx_=<span class="number">0</span>, cy_=<span class="number">0</span>, fx_=<span class="number">0</span>, fy_=<span class="number">0</span>; <span class="comment">// Camera intrinsics</span></span><br><span class="line">    cv::Mat* image_=<span class="literal">nullptr</span>;    <span class="comment">// reference image</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">( <span class="keyword">int</span> argc, <span class="keyword">char</span>** argv )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> ( argc != <span class="number">2</span> )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"usage: useLK path_to_dataset"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    srand ( ( <span class="keyword">unsigned</span> <span class="keyword">int</span> ) time ( <span class="number">0</span> ) );</span><br><span class="line">    <span class="built_in">string</span> path_to_dataset = argv[<span class="number">1</span>];</span><br><span class="line">    <span class="built_in">string</span> associate_file = path_to_dataset + <span class="string">"/associate.txt"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">ifstream <span class="title">fin</span> <span class="params">( associate_file )</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">string</span> rgb_file, depth_file, time_rgb, time_depth;</span><br><span class="line">    cv::Mat color, depth, gray;</span><br><span class="line">    <span class="built_in">vector</span>&lt;Measurement&gt; measurements;</span><br><span class="line">    <span class="comment">// 相机内参</span></span><br><span class="line">    <span class="keyword">float</span> cx = <span class="number">325.5</span>;</span><br><span class="line">    <span class="keyword">float</span> cy = <span class="number">253.5</span>;</span><br><span class="line">    <span class="keyword">float</span> fx = <span class="number">518.0</span>;</span><br><span class="line">    <span class="keyword">float</span> fy = <span class="number">519.0</span>;</span><br><span class="line">    <span class="keyword">float</span> depth_scale = <span class="number">1000.0</span>;</span><br><span class="line">    Eigen::Matrix3f K;</span><br><span class="line">    K&lt;&lt;fx,<span class="number">0.f</span>,cx,<span class="number">0.f</span>,fy,cy,<span class="number">0.f</span>,<span class="number">0.f</span>,<span class="number">1.0f</span>;</span><br><span class="line"></span><br><span class="line">    Eigen::Isometry3d Tcw = Eigen::Isometry3d::Identity();</span><br><span class="line"></span><br><span class="line">    cv::Mat prev_color;</span><br><span class="line">    <span class="comment">// 我们以第一个图像为参考，对后续图像和参考图像做直接法</span></span><br><span class="line">    <span class="keyword">for</span> ( <span class="keyword">int</span> index=<span class="number">0</span>; index&lt;<span class="number">10</span>; index++ )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"*********** loop "</span>&lt;&lt;index&lt;&lt;<span class="string">" ************"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">        fin&gt;&gt;time_rgb&gt;&gt;rgb_file&gt;&gt;time_depth&gt;&gt;depth_file;</span><br><span class="line">        color = cv::imread ( path_to_dataset+<span class="string">"/"</span>+rgb_file );</span><br><span class="line">        depth = cv::imread ( path_to_dataset+<span class="string">"/"</span>+depth_file, <span class="number">-1</span> );</span><br><span class="line">        <span class="keyword">if</span> ( color.data==<span class="literal">nullptr</span> || depth.data==<span class="literal">nullptr</span> )</span><br><span class="line">            <span class="keyword">continue</span>; </span><br><span class="line">        cv::cvtColor ( color, gray, cv::COLOR_BGR2GRAY );</span><br><span class="line">        <span class="keyword">if</span> ( index ==<span class="number">0</span> )</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 对第一帧提取FAST特征点</span></span><br><span class="line">            <span class="built_in">vector</span>&lt;cv::KeyPoint&gt; keypoints;</span><br><span class="line">            cv::Ptr&lt;cv::FastFeatureDetector&gt; detector = cv::FastFeatureDetector::create();</span><br><span class="line">            detector-&gt;detect ( color, keypoints );</span><br><span class="line">            <span class="keyword">for</span> ( <span class="keyword">auto</span> kp:keypoints )</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">// 去掉邻近边缘处的点</span></span><br><span class="line">                <span class="keyword">if</span> ( kp.pt.x &lt; <span class="number">20</span> || kp.pt.y &lt; <span class="number">20</span> || ( kp.pt.x+<span class="number">20</span> ) &gt;color.cols || ( kp.pt.y+<span class="number">20</span> ) &gt;color.rows )</span><br><span class="line">                    <span class="keyword">continue</span>;</span><br><span class="line">                ushort d = depth.ptr&lt;ushort&gt; ( cvRound ( kp.pt.y ) ) [ cvRound ( kp.pt.x ) ];</span><br><span class="line">                <span class="keyword">if</span> ( d==<span class="number">0</span> )</span><br><span class="line">                    <span class="keyword">continue</span>;</span><br><span class="line">                Eigen::Vector3d p3d = project2Dto3D ( kp.pt.x, kp.pt.y, d, fx, fy, cx, cy, depth_scale );</span><br><span class="line">                <span class="keyword">float</span> grayscale = <span class="keyword">float</span> ( gray.ptr&lt;uchar&gt; ( cvRound ( kp.pt.y ) ) [ cvRound ( kp.pt.x ) ] );</span><br><span class="line">                measurements.push_back ( Measurement ( p3d, grayscale ) );</span><br><span class="line">            &#125;</span><br><span class="line">            prev_color = color.clone();</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 使用直接法计算相机运动</span></span><br><span class="line">        chrono::steady_clock::time_point t1 = chrono::steady_clock::now();</span><br><span class="line">        poseEstimationDirect ( measurements, &amp;gray, K, Tcw );</span><br><span class="line">        chrono::steady_clock::time_point t2 = chrono::steady_clock::now();</span><br><span class="line">        chrono::duration&lt;<span class="keyword">double</span>&gt; time_used = chrono::duration_cast&lt;chrono::duration&lt;<span class="keyword">double</span>&gt;&gt; ( t2-t1 );</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"direct method costs time: "</span>&lt;&lt;time_used.count() &lt;&lt;<span class="string">" seconds."</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"Tcw="</span>&lt;&lt;Tcw.matrix() &lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// plot the feature points</span></span><br><span class="line">        cv::<span class="function">Mat <span class="title">img_show</span> <span class="params">( color.rows*<span class="number">2</span>, color.cols, CV_8UC3 )</span></span>;</span><br><span class="line">        prev_color.copyTo ( img_show ( cv::Rect ( <span class="number">0</span>,<span class="number">0</span>,color.cols, color.rows ) ) );</span><br><span class="line">        color.copyTo ( img_show ( cv::Rect ( <span class="number">0</span>,color.rows,color.cols, color.rows ) ) );</span><br><span class="line">        <span class="keyword">for</span> ( Measurement m:measurements )</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> ( rand() &gt; RAND_MAX/<span class="number">5</span> )</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            Eigen::Vector3d p = m.pos_world;</span><br><span class="line">            Eigen::Vector2d pixel_prev = project3Dto2D ( p ( <span class="number">0</span>,<span class="number">0</span> ), p ( <span class="number">1</span>,<span class="number">0</span> ), p ( <span class="number">2</span>,<span class="number">0</span> ), fx, fy, cx, cy );</span><br><span class="line">            Eigen::Vector3d p2 = Tcw*m.pos_world;</span><br><span class="line">            Eigen::Vector2d pixel_now = project3Dto2D ( p2 ( <span class="number">0</span>,<span class="number">0</span> ), p2 ( <span class="number">1</span>,<span class="number">0</span> ), p2 ( <span class="number">2</span>,<span class="number">0</span> ), fx, fy, cx, cy );</span><br><span class="line">            <span class="keyword">if</span> ( pixel_now(<span class="number">0</span>,<span class="number">0</span>)&lt;<span class="number">0</span> || pixel_now(<span class="number">0</span>,<span class="number">0</span>)&gt;=color.cols || pixel_now(<span class="number">1</span>,<span class="number">0</span>)&lt;<span class="number">0</span> || pixel_now(<span class="number">1</span>,<span class="number">0</span>)&gt;=color.rows )</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">float</span> b = <span class="number">255</span>*<span class="keyword">float</span> ( rand() ) /RAND_MAX;</span><br><span class="line">            <span class="keyword">float</span> g = <span class="number">255</span>*<span class="keyword">float</span> ( rand() ) /RAND_MAX;</span><br><span class="line">            <span class="keyword">float</span> r = <span class="number">255</span>*<span class="keyword">float</span> ( rand() ) /RAND_MAX;</span><br><span class="line">            cv::circle ( img_show, cv::Point2d ( pixel_prev ( <span class="number">0</span>,<span class="number">0</span> ), pixel_prev ( <span class="number">1</span>,<span class="number">0</span> ) ), <span class="number">8</span>, cv::Scalar ( b,g,r ), <span class="number">2</span> );</span><br><span class="line">            cv::circle ( img_show, cv::Point2d ( pixel_now ( <span class="number">0</span>,<span class="number">0</span> ), pixel_now ( <span class="number">1</span>,<span class="number">0</span> ) +color.rows ), <span class="number">8</span>, cv::Scalar ( b,g,r ), <span class="number">2</span> );</span><br><span class="line">            cv::line ( img_show, cv::Point2d ( pixel_prev ( <span class="number">0</span>,<span class="number">0</span> ), pixel_prev ( <span class="number">1</span>,<span class="number">0</span> ) ), cv::Point2d ( pixel_now ( <span class="number">0</span>,<span class="number">0</span> ), pixel_now ( <span class="number">1</span>,<span class="number">0</span> ) +color.rows ), cv::Scalar ( b,g,r ), <span class="number">1</span> );</span><br><span class="line">        &#125;</span><br><span class="line">        cv::imshow ( <span class="string">"result"</span>, img_show );</span><br><span class="line">        cv::waitKey ( <span class="number">0</span> );</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">poseEstimationDirect</span> <span class="params">( <span class="keyword">const</span> <span class="built_in">vector</span>&lt; Measurement &gt;&amp; measurements, cv::Mat* gray, Eigen::Matrix3f&amp; K, Eigen::Isometry3d&amp; Tcw )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 初始化g2o</span></span><br><span class="line">    <span class="keyword">typedef</span> g2o::BlockSolver&lt;g2o::BlockSolverTraits&lt;<span class="number">6</span>,<span class="number">1</span>&gt;&gt; DirectBlock;  <span class="comment">// 求解的向量是6＊1的</span></span><br><span class="line">    DirectBlock::LinearSolverType* linearSolver = <span class="keyword">new</span> g2o::LinearSolverDense&lt; DirectBlock::PoseMatrixType &gt; ();</span><br><span class="line">    DirectBlock* solver_ptr = <span class="keyword">new</span> DirectBlock ( linearSolver );</span><br><span class="line">    <span class="comment">// g2o::OptimizationAlgorithmGaussNewton* solver = new g2o::OptimizationAlgorithmGaussNewton( solver_ptr ); // G-N</span></span><br><span class="line">    g2o::OptimizationAlgorithmLevenberg* solver = <span class="keyword">new</span> g2o::OptimizationAlgorithmLevenberg ( solver_ptr ); <span class="comment">// L-M</span></span><br><span class="line">    g2o::SparseOptimizer optimizer;</span><br><span class="line">    optimizer.setAlgorithm ( solver );</span><br><span class="line">    optimizer.setVerbose( <span class="literal">true</span> );</span><br><span class="line"></span><br><span class="line">    g2o::VertexSE3Expmap* pose = <span class="keyword">new</span> g2o::VertexSE3Expmap();</span><br><span class="line">    pose-&gt;setEstimate ( g2o::SE3Quat ( Tcw.rotation(), Tcw.translation() ) );</span><br><span class="line">    pose-&gt;setId ( <span class="number">0</span> );</span><br><span class="line">    optimizer.addVertex ( pose );</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 添加边</span></span><br><span class="line">    <span class="keyword">int</span> id=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> ( Measurement m: measurements )</span><br><span class="line">    &#123;</span><br><span class="line">        EdgeSE3ProjectDirect* edge = <span class="keyword">new</span> EdgeSE3ProjectDirect (</span><br><span class="line">            m.pos_world,</span><br><span class="line">            K ( <span class="number">0</span>,<span class="number">0</span> ), K ( <span class="number">1</span>,<span class="number">1</span> ), K ( <span class="number">0</span>,<span class="number">2</span> ), K ( <span class="number">1</span>,<span class="number">2</span> ), gray</span><br><span class="line">        );</span><br><span class="line">        edge-&gt;setVertex ( <span class="number">0</span>, pose );</span><br><span class="line">        edge-&gt;setMeasurement ( m.grayscale );</span><br><span class="line">        edge-&gt;setInformation ( Eigen::Matrix&lt;<span class="keyword">double</span>,<span class="number">1</span>,<span class="number">1</span>&gt;::Identity() );</span><br><span class="line">        edge-&gt;setId ( id++ );</span><br><span class="line">        optimizer.addEdge ( edge );</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"edges in graph: "</span>&lt;&lt;optimizer.edges().size() &lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    optimizer.initializeOptimization();</span><br><span class="line">    optimizer.optimize ( <span class="number">30</span> );</span><br><span class="line">    Tcw = pose-&gt;estimate();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-使用直接法估计相机运动"><a href="#5-3-使用直接法估计相机运动" class="headerlink" title="5.3 使用直接法估计相机运动"></a>5.3 使用直接法估计相机运动</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">build/direct_sparse ~/dataset/rgbd_dataset_freiburg1_desk</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-4-半稠密直接法"><a href="#5-4-半稠密直接法" class="headerlink" title="5.4 半稠密直接法"></a>5.4 半稠密直接法</h3><pre><code>我们很容易就能把程序拓展成半稠密的直接法形式。对参考帧中，先提取梯度较明显  </code></pre><p>的像素，然后用直接法，以这些像素为图优化边，来估计相机运动。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">            <span class="comment">// select the pixels with high gradiants </span></span><br><span class="line"><span class="keyword">for</span> ( <span class="keyword">int</span> x=<span class="number">10</span>; x&lt;gray.cols<span class="number">-10</span>; x++ )</span><br><span class="line">    <span class="keyword">for</span> ( <span class="keyword">int</span> y=<span class="number">10</span>; y&lt;gray.rows<span class="number">-10</span>; y++ )</span><br><span class="line">    &#123;</span><br><span class="line">        Eigen::<span class="function">Vector2d <span class="title">delta</span> <span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">            gray.ptr&lt;uchar&gt;(y)[x+<span class="number">1</span>] - gray.ptr&lt;uchar&gt;(y)[x<span class="number">-1</span>], </span></span></span><br><span class="line"><span class="function"><span class="params">            gray.ptr&lt;uchar&gt;(y+<span class="number">1</span>)[x] - gray.ptr&lt;uchar&gt;(y<span class="number">-1</span>)[x]</span></span></span><br><span class="line"><span class="function"><span class="params">        )</span></span>;</span><br><span class="line">        <span class="keyword">if</span> ( delta.norm() &lt; <span class="number">50</span> )</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        ushort d = depth.ptr&lt;ushort&gt; (y)[x];</span><br><span class="line">        <span class="keyword">if</span> ( d==<span class="number">0</span> )</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        Eigen::Vector3d p3d = project2Dto3D ( x, y, d, fx, fy, cx, cy, depth_scale );</span><br><span class="line">        <span class="keyword">float</span> grayscale = <span class="keyword">float</span> ( gray.ptr&lt;uchar&gt; (y) [x] );</span><br><span class="line">        measurements.push_back ( Measurement ( p3d, grayscale ) );</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这只是一个很简单的改动。我们把先前的稀疏特征点改成了带有明显梯度的像素。于是在<br>图优化中会增加许多的边。这些边都会参与估计相机位姿的优化问题，利用大量的像素而<br>不单单是稀疏的特征点。由于我们并没有使用所有的像素，所以这种方式又称为半稠密方<br>法（Semi-dense）</p>
+<h3 id="5-5-直接法的讨论"><a href="#5-5-直接法的讨论" class="headerlink" title="5.5 直接法的讨论"></a>5.5 直接法的讨论</h3><p>相比于特征点法，直接法完全依靠优化来求解相机位姿。从式（8.16）中可以看到，像<br>素梯度引导着优化的方向。如果我们想要得到正确的优化结果，就必须保证大部分像素梯<br>度能够把优化引导到正确的方向。</p>
+<h3 id="5-6-直接法优缺点总结"><a href="#5-6-直接法优缺点总结" class="headerlink" title="5.6 直接法优缺点总结"></a>5.6 直接法优缺点总结</h3><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>优点</td>
+<td>省略计算特征点，描述子的时间，</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>只需要有像素梯度即可，无需特征点</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>可以构建半稠密，乃至稠密地图，（特征点法无法做到）</td>
+<td></td>
+</tr>
+<tr>
+<td>缺点</td>
+<td>非凸性</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>单个像素没有区分度</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>混渎职不变是很强的假设</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><p>1、除了 LK 光流之外，还有哪些光流方法？它们各有什么特点？  </p>
+<p>2、在本节的程序的求图像梯度过程中，我们简单地求了 u + 1 和 u - 1 的灰度之差除 2，<br>作为 u 方向上的梯度值。这种做法有什么缺点？提示：对于距离较近的特征，变化<br>应该较快；而距离较远的特征在图像中变化较慢，求梯度时能否利用此信息？  </p>
+<p>3、在稀疏直接法中，假设单个像素周围小块的光度也不变，是否可以提高算法鲁棒性？<br>请编程实现此事。  </p>
+<p>4、使用 Ceres 实现 RGB-D 上的稀疏直接法和半稠密直接法。  </p>
+<p>5、相比于 RGB-D 的直接法，单目直接法往往更加复杂。除了匹配未知之外，像素的距<br>离也是待估计的。我们需要在优化时把像素深度也作为优化变量。阅读 [59, 57]，你<br>能理解它的原理吗？如果不能，请在 13 讲之后再回来阅读。  </p>
+<p>6、由于图像的非凸性，直接法目前还只能用于短距离，非自动曝光的相机。你能否提出<br>增强直接法鲁棒性的方案？阅读 [58, 60] 可能会给你一些灵感。</p>
+<h2 id="必备知识："><a href="#必备知识：" class="headerlink" title="必备知识："></a>必备知识：</h2><ul>
+<li><p>泰勒展开</p>
+</li>
+<li><p>超定线性方程（最小二乘法求解）</p>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/SLAM/" rel="tag"># SLAM</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/08/09/Sub_Language/CPlus/Cplus_bug_log/" rel="next" title="C++ 编译报错解决集锦">
+                <i class="fa fa-chevron-left"></i> C++ 编译报错解决集锦
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/12/02/Course/SLAMs/ORB_SLAM2/" rel="prev" title="ORB_SLAM2开源代码">
+                ORB_SLAM2开源代码 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Simon Shi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">269</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">234</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、直接法引出"><span class="nav-number">1.</span> <span class="nav-text">1、直接法引出</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特征点法的缺点："><span class="nav-number">1.1.</span> <span class="nav-text">特征点法的缺点：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、光流（特征点法）"><span class="nav-number">2.</span> <span class="nav-text">2、光流（特征点法）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Lucas-Kanade光流"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Lucas-Kanade光流</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、实践：LK光流"><span class="nav-number">3.</span> <span class="nav-text">3、实践：LK光流</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-TMU数据集"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 TMU数据集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-LK光流"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 LK光流</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、直接法"><span class="nav-number">4.</span> <span class="nav-text">4、直接法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-推导："><span class="nav-number">4.1.</span> <span class="nav-text">4.1 推导：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-讨论"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 讨论</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-实践-RGB-D的直接法"><span class="nav-number">5.</span> <span class="nav-text">5 实践 RGB-D的直接法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-稀疏直接法"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 稀疏直接法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-定义直接法的边"><span class="nav-number">5.2.</span> <span class="nav-text">5,2 定义直接法的边</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-使用直接法估计相机运动"><span class="nav-number">5.3.</span> <span class="nav-text">5.3 使用直接法估计相机运动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-半稠密直接法"><span class="nav-number">5.4.</span> <span class="nav-text">5.4 半稠密直接法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-5-直接法的讨论"><span class="nav-number">5.5.</span> <span class="nav-text">5.5 直接法的讨论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-6-直接法优缺点总结"><span class="nav-number">5.6.</span> <span class="nav-text">5.6 直接法优缺点总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思考"><span class="nav-number">6.</span> <span class="nav-text">思考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#必备知识："><span class="nav-number">7.</span> <span class="nav-text">必备知识：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+    
+
+        
+
+
+
+
+
+
+<div>
+<!-- 填写你的友盟代码 -->
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1277989586'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s9.cnzz.com/z_stat.php%3Fid%3D1277989586%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+<!-- 你的友盟代码 end -->
+</div>
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'novav',
+            repo: 'blog_comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'ea8aae03b5381e13ab9cdedd0282b60d8ec412cb',
+            
+                client_id: 'c3934b23eb001aa3243d'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

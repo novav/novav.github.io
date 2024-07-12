@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="DNN,TF,TenforFlow,Torch,Caffe,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Simon Shi的小站" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="Caffe、Tensorflow和Pytorch通道维度顺序小结N: batch; C: channel H: height W: width Caffe 的Blob通道顺序是：NCHW; Tensorflow的tensor通道顺序：默认是NHWC， 也支持NCHW，使用cuDNN会更快; Pytorch中tensor的通道顺序：NCHW TensorRT中的tensor 通道顺序： NCHW n">
+<meta name="keywords" content="DNN,TF,TenforFlow,Torch,Caffe">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Caffe、Tensorflow和Pytorch通道维度顺序小结">
+<meta property="og:url" content="http://yoursite.com/2023/05/04/Sub_Language/DL_Train/DL_NN_Common/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="Caffe、Tensorflow和Pytorch通道维度顺序小结N: batch; C: channel H: height W: width Caffe 的Blob通道顺序是：NCHW; Tensorflow的tensor通道顺序：默认是NHWC， 也支持NCHW，使用cuDNN会更快; Pytorch中tensor的通道顺序：NCHW TensorRT中的tensor 通道顺序： NCHW n">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2024-07-12T16:02:12.828Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Caffe、Tensorflow和Pytorch通道维度顺序小结">
+<meta name="twitter:description" content="Caffe、Tensorflow和Pytorch通道维度顺序小结N: batch; C: channel H: height W: width Caffe 的Blob通道顺序是：NCHW; Tensorflow的tensor通道顺序：默认是NHWC， 也支持NCHW，使用cuDNN会更快; Pytorch中tensor的通道顺序：NCHW TensorRT中的tensor 通道顺序： NCHW n">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2023/05/04/Sub_Language/DL_Train/DL_NN_Common/">
+
+
+
+
+
+  <title>Caffe、Tensorflow和Pytorch通道维度顺序小结 | Simon Shi的小站</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simon Shi的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人工智能，机器学习 学习记录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2023/05/04/Sub_Language/DL_Train/DL_NN_Common/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Caffe、Tensorflow和Pytorch通道维度顺序小结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2023-05-04T12:00:00+00:00">
+                2023-05-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DNM-Platform/" itemprop="url" rel="index">
+                    <span itemprop="name">DNM_Platform</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2023/05/04/Sub_Language/DL_Train/DL_NN_Common/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2023/05/04/Sub_Language/DL_Train/DL_NN_Common/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="Caffe、Tensorflow和Pytorch通道维度顺序小结"><a href="#Caffe、Tensorflow和Pytorch通道维度顺序小结" class="headerlink" title="Caffe、Tensorflow和Pytorch通道维度顺序小结"></a><a href="https://www.cnblogs.com/sddai/p/14447105.html" target="_blank" rel="noopener">Caffe、Tensorflow和Pytorch通道维度顺序小结</a></h3><p>N: batch;</p>
+<p>C: channel</p>
+<p>H: height</p>
+<p>W: width</p>
+<p>Caffe 的Blob通道顺序是：NCHW;</p>
+<p>Tensorflow的tensor通道顺序：默认是NHWC， 也支持NCHW，使用cuDNN会更快;</p>
+<p>Pytorch中tensor的通道顺序：NCHW</p>
+<p>TensorRT中的tensor 通道顺序： NCHW</p>
+<p>numpy image: H x W x C<br>torch image: C X H X W</p>
+<hr>
+<p>目前世面上深度学习框架比较多，常用的有三大类：Caffe、Tensorflow和Pytorch，这三种深度学习框架都主要在英伟达显卡上面进行训练和测试，很奇怪的是，它们之间的通道维度顺序并没有保持一致，在多个框架中替换着使用，很容易让人混淆了，所以做一个小结。</p>
+<p>Caffe 的通道顺序是NCHW;</p>
+<p>Tensorflow的通道顺序默认是NHWC（但可以设置成NCHW），NHWC 的访存局部性更好（每三个输入像素即可得到一个输出像素），NCHW 则必须等所有通道输入准备好才能得到最终输出结果，需要占用较大的临时空间。</p>
+<p>TensorFlow 为什么选择 NHWC 格式作为默认格式？因为早期开发都是基于 CPU，使用 NHWC 比 NCHW 稍快一些（不难理解，NHWC 局部性更好，cache 利用率高）。</p>
+<p>NCHW 则是 Nvidia cuDNN 默认格式，使用 GPU 加速时用 NCHW 格式速度会更快（也有个别情况例外）。</p>
+<p>最佳实践：设计网络时充分考虑两种格式，最好能灵活切换，在 GPU 上训练时使用 NCHW 格式，在 CPU 上做预测时使用 NHWC 格式。</p>
+<p>Pytorch的通道顺序是NCHW</p>
+<h3 id="下采样"><a href="#下采样" class="headerlink" title="下采样"></a>下采样</h3><table>
+<thead>
+<tr>
+<th>常见下采样方法</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>最大池化</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>平均池化</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>卷积（strides&gt;1）</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>空洞卷积(Atrous Convolution / Dilated Convolution)</td>
+<td>也是一种变相的下采样方式，但它通常用于保持特征图尺寸的同时增加感受野</td>
+<td></td>
+</tr>
+<tr>
+<td>自适应下采样(Adaptive Sampling)：</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="上采样"><a href="#上采样" class="headerlink" title="上采样"></a>上采样</h3><p>（将低分辨率特征图放大至高分辨率）</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Function</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Nearest Neighbor Upsampling<br>（最近邻插值<br>Bilinear Interpolation Upsampling<br>（双线性插值）</td>
+<td>old函数 nn.Upsample()<br>F.interpolate (1.6版本之后)</td>
+<td></td>
+</tr>
+<tr>
+<td>Transposed Convolution（转置卷积/反卷积）</td>
+<td>nn.ConvTranspose2d</td>
+<td></td>
+</tr>
+<tr>
+<td>PixelShuffle（像素重组）</td>
+<td>nn.PixelShuffle</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="spectral-norm"><a href="#spectral-norm" class="headerlink" title="spectral_norm"></a>spectral_norm</h3><p>是深度学习中的一种正则化技术，主要用于稳定和约束神经网络中的权重矩阵，特别是对于生成对抗网络（GANs）和其他涉及大型权重矩阵的模型，可以有效地解决训练过程中的梯度消失或爆炸问题，以及防止模型过度拟合。</p>
+<p>Spectral normalization（谱范数归一化）通过对权重矩阵的谱范数（即该矩阵的最大奇异值）进行规范化，强制限制权重矩阵的影响范围，从而使网络的训练更加稳定。</p>
+<ol>
+<li>给定一个卷积层 <code>conv</code>，我们可以应用谱范数归一化：</li>
+</ol>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> torch.nn.utils <span class="keyword">import</span> spectral_norm</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个卷积层</span></span><br><span class="line">conv = nn.Conv2d(in_channels, out_channels, kernel_size, bias=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 对权重矩阵应用谱范数归一化</span></span><br><span class="line">conv = spectral_norm(conv)</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>或者在初始化时直接使用 <code>nn.SpectralNorm</code>：</li>
+</ol>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> torch.nn <span class="keyword">import</span> SpectralNorm</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建并直接应用谱范数归一化的卷积层</span></span><br><span class="line">conv = nn.Conv2d(in_channels, out_channels, kernel_size, bias=<span class="literal">False</span>)</span><br><span class="line">conv = SpectralNorm(conv)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Container-Class"><a href="#Container-Class" class="headerlink" title="Container Class"></a>Container Class</h3><h4 id="nn-Sequential"><a href="#nn-Sequential" class="headerlink" title="nn.Sequential"></a>nn.Sequential</h4><p>是一个有序的模块容器，其中的子模块会按照添加的顺序依次执行。它非常适用于堆叠一系列简单的线性操作序列，如连续的卷积和全连接层。定义和使用方式如下：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> torch.nn <span class="keyword">import</span> Sequential, Conv2d, Linear</span><br><span class="line"></span><br><span class="line">model = Sequential(</span><br><span class="line">    Conv2d(in_channels=<span class="number">3</span>, out_channels=<span class="number">64</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>),</span><br><span class="line">    ReLU(),</span><br><span class="line">    MaxPool2d(kernel_size=<span class="number">2</span>),</span><br><span class="line">    Linear(<span class="number">64</span> * reduced_image_size * reduced_image_size, num_classes)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h4 id="nn-ModuleList"><a href="#nn-ModuleList" class="headerlink" title="nn.ModuleList"></a>nn.ModuleList</h4><p> 是一个可迭代的模块容器，但不保持顺序索引。它可以容纳任意数量的 <code>nn.Module</code> 子类实例，并且可以通过索引访问和修改。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> torch.nn <span class="keyword">import</span> ModuleList, Conv2d</span><br><span class="line">conv_layers = ModuleList([Conv2d(<span class="number">32</span>, <span class="number">64</span>, <span class="number">3</span>), Conv2d(<span class="number">64</span>, <span class="number">128</span>, <span class="number">3</span>)])</span><br><span class="line"></span><br><span class="line">self_layers = ModuleList([MyModule(<span class="number">12</span>, <span class="number">24</span>), MyModule2(<span class="number">24</span>,<span class="number">12</span>)])</span><br></pre></td></tr></table></figure>
+
+<h4 id="nn-ModuleDict"><a href="#nn-ModuleDict" class="headerlink" title="nn.ModuleDict"></a>nn.ModuleDict</h4><p><code>nn.ModuleDict</code> 是一个键值对形式的模块容器，其中键是字符串类型，值是 <code>nn.Module</code> 实例。它允许通过字符串关键字来访问和管理子模块，这对于具有命名组件的复杂网络结构非常有用。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> torch.nn <span class="keyword">import</span> ModuleDict, Conv2d</span><br><span class="line"></span><br><span class="line">conv_blocks = ModuleDict(&#123;</span><br><span class="line">    <span class="string">'block1'</span>: Conv2d(<span class="number">3</span>, <span class="number">32</span>, <span class="number">3</span>),</span><br><span class="line">    <span class="string">'block2'</span>: Conv2d(<span class="number">32</span>, <span class="number">64</span>, <span class="number">5</span>),</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="functional"><a href="#functional" class="headerlink" title="functional"></a>functional</h3><h4 id="Leak-relu"><a href="#Leak-relu" class="headerlink" title="Leak_relu"></a>Leak_relu</h4><p><code>F.leaky_relu_()</code> 和 <code>F.leaky_relu()</code> 都是用来实现Leaky ReLU激活函数的，它们的区别在于是否原地修改输入张量：</p>
+<ol>
+<li><p><strong>F.leaky_relu()</strong>： 这是一个普通的函数调用，它接收一个张量作为输入，计算并返回带有Leaky ReLU激活的输出张量。这个操作不会改变原始输入张量的内容，而是返回一个新的张量。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"><span class="number">2</span>input = torch.randn(<span class="number">10</span>, <span class="number">10</span>)</span><br><span class="line"><span class="number">3</span>output = F.leaky_relu(input, negative_slope=<span class="number">0.01</span>)  <span class="comment"># 返回一个新的张量</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>F.leaky_relu_()</strong>： 这是一个原地(in-place)操作符版本，它会在原始输入张量上直接进行Leaky ReLU激活计算，覆盖掉原来的值，不返回新的张量，而是直接修改输入张量。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"><span class="number">2</span>input = torch.randn(<span class="number">10</span>, <span class="number">10</span>)</span><br><span class="line"><span class="number">3</span>F.leaky_relu_(input, negative_slope=<span class="number">0.01</span>)  <span class="comment"># 直接在原始输入上修改</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>总结来说，如果你希望保留原始输入张量以便后续使用，请使用 <code>F.leaky_relu()</code>；如果你愿意直接在原始输入上进行操作且不需要保留原始值，可以使用 <code>F.leaky_relu_()</code>，这在内存有限的情况下有助于节省存储空间。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DNN/" rel="tag"># DNN</a>
+          
+            <a href="/tags/TF/" rel="tag"># TF</a>
+          
+            <a href="/tags/TenforFlow/" rel="tag"># TenforFlow</a>
+          
+            <a href="/tags/Torch/" rel="tag"># Torch</a>
+          
+            <a href="/tags/Caffe/" rel="tag"># Caffe</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2023/05/04/Sub_Language/DL_Train/TFpb_To_PTModel_1/" rel="next" title="PB(tf) to Pth(Torch)">
+                <i class="fa fa-chevron-left"></i> PB(tf) to Pth(Torch)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2023/05/05/Sub_Language/DL_Train/Pytorch/deploy_libtorch/" rel="prev" title="(pytorch) libtorch Models deploy">
+                (pytorch) libtorch Models deploy <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Simon Shi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">269</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">234</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Caffe、Tensorflow和Pytorch通道维度顺序小结"><span class="nav-number">1.</span> <span class="nav-text">Caffe、Tensorflow和Pytorch通道维度顺序小结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下采样"><span class="nav-number">2.</span> <span class="nav-text">下采样</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#上采样"><span class="nav-number">3.</span> <span class="nav-text">上采样</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#spectral-norm"><span class="nav-number">4.</span> <span class="nav-text">spectral_norm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Container-Class"><span class="nav-number">5.</span> <span class="nav-text">Container Class</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#nn-Sequential"><span class="nav-number">5.1.</span> <span class="nav-text">nn.Sequential</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nn-ModuleList"><span class="nav-number">5.2.</span> <span class="nav-text">nn.ModuleList</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nn-ModuleDict"><span class="nav-number">5.3.</span> <span class="nav-text">nn.ModuleDict</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#functional"><span class="nav-number">6.</span> <span class="nav-text">functional</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Leak-relu"><span class="nav-number">6.1.</span> <span class="nav-text">Leak_relu</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+    
+
+        
+
+
+
+
+
+
+<div>
+<!-- 填写你的友盟代码 -->
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1277989586'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s9.cnzz.com/z_stat.php%3Fid%3D1277989586%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+<!-- 你的友盟代码 end -->
+</div>
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'novav',
+            repo: 'blog_comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'ea8aae03b5381e13ab9cdedd0282b60d8ec412cb',
+            
+                client_id: 'c3934b23eb001aa3243d'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="StyleGan,StyleGan2,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Simon Shi的小站" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="NVlab  [TOC] VAE生成模型Variational autoencoder == 变分自编码器 可以输入一个低维空间的Z，映射到高维空间的真实数据。比如，生成不同样的数字，人脸，卡通头像等等。   2）VAE与GAN之间的差异性 既然VAE与GAN都是属于最近很火的生成网络序列，那么他们之间有什么不同呢？ 假设，给定一系列猫的照片，我希望你能够对应我随机输入的一个n维向量，生成一张新的">
+<meta name="keywords" content="StyleGan,StyleGan2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Paper-CV-GAN">
+<meta property="og:url" content="http://yoursite.com/2020/01/07/Paper/Paper-CV-GAN/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="NVlab  [TOC] VAE生成模型Variational autoencoder == 变分自编码器 可以输入一个低维空间的Z，映射到高维空间的真实数据。比如，生成不同样的数字，人脸，卡通头像等等。   2）VAE与GAN之间的差异性 既然VAE与GAN都是属于最近很火的生成网络序列，那么他们之间有什么不同呢？ 假设，给定一系列猫的照片，我希望你能够对应我随机输入的一个n维向量，生成一张新的">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2020/01/07/Paper/Paper-CV-GAN/VAE_12.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/07/Paper/Paper-CV-GAN/VAE_GAN.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/07/Paper/Paper-CV-GAN/798706-20161222110521495-412598726.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/07/Paper/Paper-CV-GAN/image-20201012154819284.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/07/Paper/Paper-CV-GAN/image-20201012154844963.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/07/Paper/Paper-CV-GAN/image-20201012154857364.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/07/Paper/Paper-CV-GAN/1578381870941.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/07/Paper/Paper-CV-GAN/1578382642371.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/07/Paper/Paper-CV-GAN/1578475143653.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/07/Paper/Paper-CV-GAN/1578475162181.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/07/Paper/Paper-CV-GAN/1578475175948.png">
+<meta property="og:updated_time" content="2024-07-12T16:02:12.680Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Paper-CV-GAN">
+<meta name="twitter:description" content="NVlab  [TOC] VAE生成模型Variational autoencoder == 变分自编码器 可以输入一个低维空间的Z，映射到高维空间的真实数据。比如，生成不同样的数字，人脸，卡通头像等等。   2）VAE与GAN之间的差异性 既然VAE与GAN都是属于最近很火的生成网络序列，那么他们之间有什么不同呢？ 假设，给定一系列猫的照片，我希望你能够对应我随机输入的一个n维向量，生成一张新的">
+<meta name="twitter:image" content="http://yoursite.com/2020/01/07/Paper/Paper-CV-GAN/VAE_12.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/01/07/Paper/Paper-CV-GAN/">
+
+
+
+
+
+  <title>Paper-CV-GAN | Simon Shi的小站</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simon Shi的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人工智能，机器学习 学习记录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/07/Paper/Paper-CV-GAN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Paper-CV-GAN</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-07T11:03:52+00:00">
+                2020-01-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/" itemprop="url" rel="index">
+                    <span itemprop="name">CV</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/Networks/" itemprop="url" rel="index">
+                    <span itemprop="name">Networks</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/Networks/GAN/" itemprop="url" rel="index">
+                    <span itemprop="name">GAN</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/01/07/Paper/Paper-CV-GAN/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2020/01/07/Paper/Paper-CV-GAN/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>NVlab </p>
+<p>[TOC]</p>
+<h1 id="VAE生成模型"><a href="#VAE生成模型" class="headerlink" title="VAE生成模型"></a>VAE生成模型</h1><p>Variational autoencoder == 变分自编码器</p>
+<p>可以输入一个低维空间的Z，映射到高维空间的真实数据。比如，生成不同样的数字，人脸，卡通头像等等。</p>
+<img src="/2020/01/07/Paper/Paper-CV-GAN/VAE_12.png" alt="img" style="zoom:73%;">
+
+<p>2）VAE与GAN之间的差异性</p>
+<p>既然VAE与GAN都是属于最近很火的生成网络序列，那么他们之间有什么不同呢？</p>
+<p>假设，给定一系列猫的照片，我希望你能够对应我随机输入的一个n维向量，生成一张新的猫的照片，你需要怎么去做?对于GAN就是典型的深度学习时代的逻辑，你不是不清楚这个n维向量与猫的图片之间的关系嘛，没关系，我直接拟合出来猫的图片对于n维向量的分布，通过对抗学习的方式获得较好的模型效果，这个方法虽然很暴力，但是却是有效的。(<strong>暴力求解</strong>)</p>
+<p>VAE则不同，他通过说我希望生成一张新的猫脸，那么这个<strong>n维向量代表的就是n个决定最终猫脸模样的隐形因素</strong>。对于每个因素，都对应产生一种分布，从这些分布关系中进行采样，那么我就可以通过一个深度网络恢复出最终的猫脸。VAE相比较于GAN它的效果往往会略微模糊一点，但是也不失为一种良好的解决方案。并且相对于GAN的暴力求解，VAE的建模思路无疑要复杂的多，它更能体现理科思维的艺术感。</p>
+<p><a href="https://blog.csdn.net/weixin_40955254/article/details/82315224" target="_blank" rel="noopener">https://blog.csdn.net/weixin_40955254/article/details/82315224</a>  — Good</p>
+<p>VAE是<strong>直接计算</strong>生成图片和原始图片的<strong>均方误差</strong></p>
+<p>GAN 对抗来学习</p>
+<p><a href="https://antkillerfarm.github.io/gan%20&amp;%20vae/2019/05/05/VAE_3.html" target="_blank" rel="noopener">https://antkillerfarm.github.io/gan%20&amp;%20vae/2019/05/05/VAE_3.html</a></p>
+<p><img src="/2020/01/07/Paper/Paper-CV-GAN/VAE_GAN.jpg" alt="img"></p>
+<p>不像标准自编码器那样产生实数值向量，VAE的编码器会产生两个向量:一个是均值向量，一个是标准差向量。</p>
+<img src="/2020/01/07/Paper/Paper-CV-GAN/798706-20161222110521495-412598726.png" alt="img" style="zoom:27%;">
+
+<p>可以通过编码解码的步骤，直接比较重建图片和原始图片的差异，但是GAN做不到。</p>
+<p><a href="https://www.cnblogs.com/huangshiyu13/p/6209016.html" target="_blank" rel="noopener">https://www.cnblogs.com/huangshiyu13/p/6209016.html</a></p>
+<h1 id="GAN生成模型"><a href="#GAN生成模型" class="headerlink" title="GAN生成模型"></a>GAN生成模型</h1><p>Generative Adversarial Nets</p>
+<p><img src="/2020/01/07/Paper/Paper-CV-GAN/image-20201012154819284.png" alt="image-20201012154819284"></p>
+<p><img src="/2020/01/07/Paper/Paper-CV-GAN/image-20201012154844963.png" alt="image-20201012154844963"></p>
+<p>从判别器 D 的角度看，它希望自己能尽可能区分真实样本和虚假样本，因此希望 D(x) 尽可能大，D(G(z)) 尽可能小， 即 V(D,G)尽可能大。从生成器 G 的角度看，它希望自己尽可能骗过 D，也就是希望 D(G(z)) 尽可能大，即 V(D,G) 尽可能小。两个模型相对抗，最后达到全局最优。<br>从数据分布来说，就是开始的噪声noise，在G不断修正后，产生的分布，和目标数据分布达到一致：</p>
+<p><img src="/2020/01/07/Paper/Paper-CV-GAN/image-20201012154857364.png" alt="image-20201012154857364"></p>
+<h2 id="cGAN（Conditional-GAN）"><a href="#cGAN（Conditional-GAN）" class="headerlink" title="cGAN（Conditional GAN）"></a>cGAN（Conditional GAN）</h2><ul>
+<li>MG-VTON 采用了此技术</li>
+</ul>
+<h2 id="StyleGAN"><a href="#StyleGAN" class="headerlink" title="StyleGAN"></a>StyleGAN</h2><p>A Style-Based Generator Architecture for Generative Adversarial Networks</p>
+<p><a href="https://github.com/NVlabs/stylegan" target="_blank" rel="noopener">https://github.com/NVlabs/stylegan</a></p>
+<p><a href="https://arxiv.org/abs/1812.04948" target="_blank" rel="noopener">https://arxiv.org/abs/1812.04948</a></p>
+<h3 id="网络架构"><a href="#网络架构" class="headerlink" title="网络架构"></a>网络架构</h3><p><img src="/2020/01/07/Paper/Paper-CV-GAN/1578381870941.png" alt="1578381870941"></p>
+<h3 id="Custom-Date"><a href="#Custom-Date" class="headerlink" title="Custom Date"></a>Custom Date</h3><ul>
+<li><p>准备好数据集</p>
+</li>
+<li><p>把数据集储存为多重分辨率的Tfrecords</p>
+</li>
+<li><p>数据集表示为一个目录，里面的每张图像都有多种不同的分辨率，用于高效的streaming。每个分辨率都有一个自己的*.tfrecords文件。数据有标注的话，也是用一个分开的文件来储存的。</p>
+</li>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">1&gt; python dataset_tool.py create_lsun datasets/lsun-bedroom-full ~/lsun/bedroom_lmdb --resolution 256</span><br><span class="line"></span><br><span class="line">2&gt; python dataset_tool.py create_lsun_wide datasets/lsun-car -512x384 ~/lsun/car_lmdb --width 512--height 384</span><br><span class="line"></span><br><span class="line">3&gt; python dataset_tool.py create_lsun datasets/lsun-cat-full ~/lsun/cat_lmdb --resolution 256</span><br><span class="line"></span><br><span class="line">4&gt; python dataset_tool.py create_cifar10 datasets/cifar10 ~/cifar10</span><br><span class="line"></span><br><span class="line"># 自定义</span><br><span class="line">5&gt; python dataset_tool.py create_from_images datasets/custom-dataset ~/custom-images</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h3><p>官方提供的训练过程分四步：</p>
+<blockquote>
+<p>1.编辑train.py，通过取消注释或者修改某些行，来指定数据集和训练配置；</p>
+<p>2.用train.py来运行训练脚本；</p>
+<p>3.结果会写在一个新目录里，叫results/ - ；</p>
+<p>4.训练直至完成，几天时间可能是要的。</p>
+</blockquote>
+<h2 id="StyleGAN2"><a href="#StyleGAN2" class="headerlink" title="StyleGAN2"></a>StyleGAN2</h2><p>Analyzing and Improving the Image Quality of StyleGAN</p>
+<p><a href="https://github.com/NVlabs/stylegan2" target="_blank" rel="noopener">https://github.com/NVlabs/stylegan2</a></p>
+<p><a href="https://arxiv.org/abs/1912.04958" target="_blank" rel="noopener">https://arxiv.org/abs/1912.04958</a></p>
+<p><a href="https://colab.research.google.com/drive/1ShgW6wohEFQtqs_znMna3dzrcVoABKIH#scrollTo=4_s8h-ilzHQc" target="_blank" rel="noopener">StyleGAN2 Google Colab Example</a></p>
+<h3 id="网络结构："><a href="#网络结构：" class="headerlink" title="网络结构："></a>网络结构：</h3><p><img src="/2020/01/07/Paper/Paper-CV-GAN/1578382642371.png" alt="1578382642371"></p>
+<p>### </p>
+<h2 id="数据集-origin"><a href="#数据集-origin" class="headerlink" title="数据集(origin)"></a>数据集(origin)</h2><p><a href="https://github.com/NVlabs/ffhq-dataset" target="_blank" rel="noopener">https://github.com/NVlabs/ffhq-dataset</a></p>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Size</th>
+<th>Files</th>
+<th>Format</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="https://drive.google.com/open?id=1u2xu7bSrWxrbUxk-dT-UvEJq8IjdmNTP" target="_blank" rel="noopener">ffhq-dataset</a></td>
+<td>2.56 TB</td>
+<td>210,014</td>
+<td></td>
+<td>Main folder</td>
+</tr>
+<tr>
+<td>&boxvr;&nbsp;   <a href="https://drive.google.com/open?id=16N0RV4fHI6joBuKbQAoG34V_cQk7vxSA" target="_blank" rel="noopener">ffhq-dataset-v2.json</a></td>
+<td>255 MB</td>
+<td>1</td>
+<td>JSON</td>
+<td>Metadata including copyright info, URLs, etc.</td>
+</tr>
+<tr>
+<td>├  <a href="https://drive.google.com/open?id=1tZUcXDBeOibC6jcMCtgRRz67pzrAHeHL" target="_blank" rel="noopener">images1024x1024</a></td>
+<td>89.1 GB</td>
+<td>70,000</td>
+<td>PNG</td>
+<td>Aligned and cropped images at 1024×1024 (同in-the-wild-image, 大小统一格式化)</td>
+</tr>
+<tr>
+<td>├  <a href="https://drive.google.com/open?id=1tg-Ur7d4vk1T8Bn0pPpUSQPxlPGBlGfv" target="_blank" rel="noopener">thumbnails128x128</a></td>
+<td>1.95 GB</td>
+<td>70,000</td>
+<td>PNG</td>
+<td>Thumbnails at 128×128</td>
+</tr>
+<tr>
+<td>├  <a href="https://drive.google.com/open?id=1ZX7QOy6LZuTLTnsOtQk-kmKq2-69l5hu" target="_blank" rel="noopener">in-the-wild-images</a></td>
+<td>955 GB</td>
+<td>70,000</td>
+<td>PNG</td>
+<td>Original images from Flickr（Human top）</td>
+</tr>
+<tr>
+<td>├  <a href="https://drive.google.com/open?id=1LTBpJ0W_WLjqza3zdayligS8Dh1V1gA6" target="_blank" rel="noopener">tfrecords</a></td>
+<td>273 GB</td>
+<td>9</td>
+<td>tfrecords</td>
+<td>Multi-resolution data for <a href="https://github.com/NVlabs/stylegan" target="_blank" rel="noopener">StyleGAN</a> and <a href="https://github.com/NVlabs/stylegan2" target="_blank" rel="noopener">StyleGAN2</a></td>
+</tr>
+<tr>
+<td>└  <a href="https://drive.google.com/open?id=1WocxvZ4GEZ1DI8dOz30aSj2zT6pkATYS" target="_blank" rel="noopener">zips</a></td>
+<td>1.28 TB</td>
+<td>4</td>
+<td>ZIP</td>
+<td>Contents of each folder as a ZIP archive.</td>
+</tr>
+</tbody></table>
+<h4 id="数据集合（baiduYUN）："><a href="#数据集合（baiduYUN）：" class="headerlink" title="数据集合（baiduYUN）："></a>数据集合（baiduYUN）：</h4><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>images1024x1024</td>
+<td></td>
+<td>链接：<a href="https://pan.baidu.com/s/1Tdu2G2E8PLKsLnICUi13EQ" target="_blank" rel="noopener">https://pan.baidu.com/s/1Tdu2G2E8PLKsLnICUi13EQ</a><br>提取码：jtjv</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>参考资料： <a href="https://blog.csdn.net/qq_37867534/article/details/90404660#ffhqdatasetimages1024x1024_4" target="_blank" rel="noopener">ffhq-dataset（images1024x1024）</a></p>
+<h2 id="相关Blog"><a href="#相关Blog" class="headerlink" title="相关Blog"></a>相关Blog</h2><h3 id="1、零成本体验StyleGAN2："><a href="#1、零成本体验StyleGAN2：" class="headerlink" title="1、零成本体验StyleGAN2："></a>1、零成本体验StyleGAN2：</h3><p>style gan论文翻译</p>
+<p>Colab代码直接使用，细节逼真难以分辨 <a href="https://www.jiqizhixin.com/articles/2019-12-21-3" target="_blank" rel="noopener">https://www.jiqizhixin.com/articles/2019-12-21-3</a></p>
+<h3 id="2、StyleGAN效果图"><a href="#2、StyleGAN效果图" class="headerlink" title="2、StyleGAN效果图"></a>2、StyleGAN效果图</h3><p>用StyleGAN风格迁移模型生成人脸 <a href="https://www.jianshu.com/p/c728a7cc1a6b" target="_blank" rel="noopener">https://www.jianshu.com/p/c728a7cc1a6b</a></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td></td>
+<td><img src="/2020/01/07/Paper/Paper-CV-GAN/1578475143653.png" width="400px"></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><img src="/2020/01/07/Paper/Paper-CV-GAN/1578475162181.png" width="400px"></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><img src="/2020/01/07/Paper/Paper-CV-GAN/1578475175948.png" width="400"></td>
+</tr>
+</tbody></table>
+<h3 id="3、StyleGAN-人脸生成器（网红脸）"><a href="#3、StyleGAN-人脸生成器（网红脸）" class="headerlink" title="3、StyleGAN 人脸生成器（网红脸）"></a>3、StyleGAN 人脸生成器（网红脸）</h3><p><a href="http://www.gwylab.com/download.html" target="_blank" rel="noopener">http://www.gwylab.com/download.html</a></p>
+<p><a href="https://mp.weixin.qq.com/s/T9i7Pr054YylB3SI0k_88A" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/T9i7Pr054YylB3SI0k_88A</a> 超模脸、网红脸、萌娃脸…换头像不重样？我开源了5款人脸生成器</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/StyleGan/" rel="tag"># StyleGan</a>
+          
+            <a href="/tags/StyleGan2/" rel="tag"># StyleGan2</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/01/03/CV_3D/CV-3D-BuildModel-CMPL/" rel="next" title="CV_3D_BuildModel_SMPL">
+                <i class="fa fa-chevron-left"></i> CV_3D_BuildModel_SMPL
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/01/07/Books/Reading-2020-Yoga/" rel="prev" title="Reading_2020_Yoga">
+                Reading_2020_Yoga <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Simon Shi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">269</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">234</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#VAE生成模型"><span class="nav-number">1.</span> <span class="nav-text">VAE生成模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GAN生成模型"><span class="nav-number">2.</span> <span class="nav-text">GAN生成模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cGAN（Conditional-GAN）"><span class="nav-number">2.1.</span> <span class="nav-text">cGAN（Conditional GAN）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#StyleGAN"><span class="nav-number">2.2.</span> <span class="nav-text">StyleGAN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#网络架构"><span class="nav-number">2.2.1.</span> <span class="nav-text">网络架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Custom-Date"><span class="nav-number">2.2.2.</span> <span class="nav-text">Custom Date</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#训练"><span class="nav-number">2.2.3.</span> <span class="nav-text">训练</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#StyleGAN2"><span class="nav-number">2.3.</span> <span class="nav-text">StyleGAN2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#网络结构："><span class="nav-number">2.3.1.</span> <span class="nav-text">网络结构：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据集-origin"><span class="nav-number">2.4.</span> <span class="nav-text">数据集(origin)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#数据集合（baiduYUN）："><span class="nav-number">2.4.0.1.</span> <span class="nav-text">数据集合（baiduYUN）：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关Blog"><span class="nav-number">2.5.</span> <span class="nav-text">相关Blog</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、零成本体验StyleGAN2："><span class="nav-number">2.5.1.</span> <span class="nav-text">1、零成本体验StyleGAN2：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、StyleGAN效果图"><span class="nav-number">2.5.2.</span> <span class="nav-text">2、StyleGAN效果图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、StyleGAN-人脸生成器（网红脸）"><span class="nav-number">2.5.3.</span> <span class="nav-text">3、StyleGAN 人脸生成器（网红脸）</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+    
+
+        
+
+
+
+
+
+
+<div>
+<!-- 填写你的友盟代码 -->
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1277989586'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s9.cnzz.com/z_stat.php%3Fid%3D1277989586%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+<!-- 你的友盟代码 end -->
+</div>
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'novav',
+            repo: 'blog_comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'ea8aae03b5381e13ab9cdedd0282b60d8ec412cb',
+            
+                client_id: 'c3934b23eb001aa3243d'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

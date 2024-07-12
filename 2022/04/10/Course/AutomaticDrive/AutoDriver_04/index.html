@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Autopilot,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Simon Shi的小站" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="无人驾驶中的动态环境检测-2D检测[TOC] 2D检测  IDea: 位置：先找到所有的ROI Sliding Window / Slective Search / … | CNN(RPN …)   类别：对每个ROI进行分类提取类别信息 HOG/DPM/SIFT/LBP/… | CNN(conv pooling) SVM / Adaboost / … | CNN (softmax ….)   位">
+<meta name="keywords" content="Autopilot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="无人驾驶（4）动态环境感知与2D检测">
+<meta property="og:url" content="http://yoursite.com/2022/04/10/Course/AutomaticDrive/AutoDriver_04/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="无人驾驶中的动态环境检测-2D检测[TOC] 2D检测  IDea: 位置：先找到所有的ROI Sliding Window / Slective Search / … | CNN(RPN …)   类别：对每个ROI进行分类提取类别信息 HOG/DPM/SIFT/LBP/… | CNN(conv pooling) SVM / Adaboost / … | CNN (softmax ….)   位">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2022/04/10/Course/AutomaticDrive/AutoDriver_04/image-20220412180039632.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/10/Course/AutomaticDrive/AutoDriver_04/v2-7c925e17d56f866a8a48772408764872_r.jpg">
+<meta property="og:image" content="http://yoursite.com/2022/04/10/Course/AutomaticDrive/AutoDriver_04/v2-62f7f35e1dcacfb845d3dab24faac310_r.jpg">
+<meta property="og:image" content="http://yoursite.com/2022/04/10/Course/AutomaticDrive/AutoDriver_04/v2-97b35fb3615df521e1e029e3178491ba_r.jpg">
+<meta property="og:image" content="http://yoursite.com/2022/04/10/Course/AutomaticDrive/AutoDriver_04/v2-4ddbd3a444109c0fc7836c0a62b573ad_720w.jpg">
+<meta property="og:image" content="http://yoursite.com/2022/04/10/Course/AutomaticDrive/AutoDriver_04/v2-19d879caef80ceb7ddcc545e227f284e_720w.jpg">
+<meta property="og:image" content="http://yoursite.com/2022/04/10/Course/AutomaticDrive/AutoDriver_04/image-20220417232415966.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/10/Course/AutomaticDrive/AutoDriver_04/image-20220417232604317.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/10/Course/AutomaticDrive/AutoDriver_04/image-20220417233138483.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/10/Course/AutomaticDrive/AutoDriver_04/image-20220418014209305.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/10/Course/AutomaticDrive/AutoDriver_04/image-20220418021347698.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/10/Course/AutomaticDrive/AutoDriver_04/image-20220418021934942.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/10/Course/AutomaticDrive/AutoDriver_04/image-20220418022547449.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/10/Course/AutomaticDrive/AutoDriver_04/image-20220418023004836.png">
+<meta property="og:updated_time" content="2024-07-12T16:02:12.232Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="无人驾驶（4）动态环境感知与2D检测">
+<meta name="twitter:description" content="无人驾驶中的动态环境检测-2D检测[TOC] 2D检测  IDea: 位置：先找到所有的ROI Sliding Window / Slective Search / … | CNN(RPN …)   类别：对每个ROI进行分类提取类别信息 HOG/DPM/SIFT/LBP/… | CNN(conv pooling) SVM / Adaboost / … | CNN (softmax ….)   位">
+<meta name="twitter:image" content="http://yoursite.com/2022/04/10/Course/AutomaticDrive/AutoDriver_04/image-20220412180039632.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2022/04/10/Course/AutomaticDrive/AutoDriver_04/">
+
+
+
+
+
+  <title>无人驾驶（4）动态环境感知与2D检测 | Simon Shi的小站</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simon Shi的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人工智能，机器学习 学习记录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/04/10/Course/AutomaticDrive/AutoDriver_04/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">无人驾驶（4）动态环境感知与2D检测</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-04-10T12:00:00+00:00">
+                2022-04-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Autopilot/" itemprop="url" rel="index">
+                    <span itemprop="name">Autopilot</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Autopilot/入门提高/" itemprop="url" rel="index">
+                    <span itemprop="name">入门提高</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2022/04/10/Course/AutomaticDrive/AutoDriver_04/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2022/04/10/Course/AutomaticDrive/AutoDriver_04/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="无人驾驶中的动态环境检测-2D检测"><a href="#无人驾驶中的动态环境检测-2D检测" class="headerlink" title="无人驾驶中的动态环境检测-2D检测"></a>无人驾驶中的动态环境检测-2D检测</h1><p>[TOC]</p>
+<h2 id="2D检测"><a href="#2D检测" class="headerlink" title="2D检测"></a>2D检测</h2><p><img src="/2022/04/10/Course/AutomaticDrive/AutoDriver_04/image-20220412180039632.png" alt="image-20220412180039632"></p>
+<p><img src="/2022/04/10/Course/AutomaticDrive/AutoDriver_04/v2-7c925e17d56f866a8a48772408764872_r.jpg" alt="preview"></p>
+<h3 id="IDea"><a href="#IDea" class="headerlink" title="IDea:"></a>IDea:</h3><ul>
+<li>位置：先找到所有的ROI<ul>
+<li>Sliding Window / Slective Search / … | <strong>CNN(RPN …)</strong></li>
+</ul>
+</li>
+<li>类别：对每个ROI进行分类提取类别信息<ul>
+<li>HOG/DPM/SIFT/LBP/… | <strong>CNN(conv pooling)</strong></li>
+<li>SVM / Adaboost / … | <strong>CNN (softmax ….)</strong></li>
+</ul>
+</li>
+<li>位置修正：Bounding Box Regression<ul>
+<li>Linear Regresion / … | <strong>CNN(regression …)</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="How-to-Generate-ROI"><a href="#How-to-Generate-ROI" class="headerlink" title="How to Generate ROI"></a>How to Generate ROI</h3><p><img src="/2022/04/10/Course/AutomaticDrive/AutoDriver_04/v2-62f7f35e1dcacfb845d3dab24faac310_r.jpg" alt="preview"></p>
+<h3 id="How-To-Classify-ROI"><a href="#How-To-Classify-ROI" class="headerlink" title="How To Classify ROI"></a>How To Classify ROI</h3><p><img src="/2022/04/10/Course/AutomaticDrive/AutoDriver_04/v2-97b35fb3615df521e1e029e3178491ba_r.jpg" alt="preview"></p>
+<h2 id="4-1-two-step-基于图片的检测方法"><a href="#4-1-two-step-基于图片的检测方法" class="headerlink" title="4.1 two-step  (基于图片的检测方法)"></a>4.1 two-step  (基于图片的检测方法)</h2><ul>
+<li>RCNN, SPPnet, Fast-RCNN, Faster-RCNN</li>
+</ul>
+<h3 id="Befor-CNN"><a href="#Befor-CNN" class="headerlink" title="Befor CNN"></a>Befor CNN</h3><ul>
+<li><p>位置：sliding window / region proposal(候选框)</p>
+<ul>
+<li>手工特征 + 分类器</li>
+<li>位置修正</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2022/04/10/Course/AutomaticDrive/AutoDriver_04/v2-4ddbd3a444109c0fc7836c0a62b573ad_720w.jpg" alt="img"></p>
+<h3 id="RCNN"><a href="#RCNN" class="headerlink" title="RCNN"></a>RCNN</h3><ul>
+<li>位置：Selective Search 提取候选框 </li>
+<li>类别：CNN提取特征 + SVM分类<ul>
+<li>每个候选区域都要做一遍卷积，太多重复计算</li>
+</ul>
+</li>
+<li>位置修正：Linear Regression</li>
+</ul>
+<p><img src="/2022/04/10/Course/AutomaticDrive/AutoDriver_04/v2-19d879caef80ceb7ddcc545e227f284e_720w.jpg" alt="img"></p>
+<h3 id="SPPnet"><a href="#SPPnet" class="headerlink" title="SPPnet"></a>SPPnet</h3><ul>
+<li>位置：Selective Search 提取候选框 </li>
+<li>类别：CNN提取特征 + SVM分类<ul>
+<li>共享卷积，大大降低计算量</li>
+<li>SPP层，不同尺度的特征–&gt;固定特尺度特征（后接全连接层）<ul>
+<li>把原始图片中的box区域mapping映射到CNN提取后的feature的一个box</li>
+<li>通过金字塔池化，把原本不同大小的box，提取成固定大小的特征</li>
+<li>输入到FC层</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>位置修正：Linear Regression</li>
+</ul>
+<p><img src="/2022/04/10/Course/AutomaticDrive/AutoDriver_04/image-20220417232415966.png" alt="image-20220417232415966"></p>
+<h3 id="Fast-RCNN"><a href="#Fast-RCNN" class="headerlink" title="Fast-RCNN"></a>Fast-RCNN</h3><ul>
+<li>位置：Selective Search 提取候选框 </li>
+<li>类别：CNN特征提取 + <strong><em>CNN分类</em></strong><ul>
+<li>分类和回归都使用CNN实现，两种损失可以反传以实现联动调参（半end-to-end）</li>
+<li>SPP层—换成—&gt;ROI pooling: （可能损失精读）加速计算</li>
+</ul>
+</li>
+<li>位置修正：<strong><em>CNN回归</em></strong></li>
+</ul>
+<p><img src="/2022/04/10/Course/AutomaticDrive/AutoDriver_04/image-20220417232604317.png" alt="image-20220417232604317"></p>
+<h3 id="Faster-RCNN"><a href="#Faster-RCNN" class="headerlink" title="Faster-RCNN"></a>Faster-RCNN</h3><ul>
+<li>位置：CNN提取候选框<ul>
+<li>RPN：Region Proposal Net<ul>
+<li>feature 点对应的原图感受野框处生成不同ration/scale的anchor box</li>
+<li>对anchor box (锚点框) 二分类 + 回归<ul>
+<li>2k socre 是否有物体</li>
+<li>4k coork 回归量，修正位置（$\delta{A}$）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>类别：CNN特征提取 + CNN分类</li>
+<li>位置修正：CNN回归</li>
+</ul>
+<p><img src="/2022/04/10/Course/AutomaticDrive/AutoDriver_04/image-20220417233138483.png" alt="image-20220417233138483"></p>
+<h2 id="4-2-one-step"><a href="#4-2-one-step" class="headerlink" title="4.2 one-step"></a>4.2 one-step</h2><ul>
+<li>YOLO,</li>
+<li>SSD</li>
+<li>YOLOv2</li>
+</ul>
+<h3 id="YOLO"><a href="#YOLO" class="headerlink" title="YOLO"></a>YOLO</h3><ul>
+<li>位置：<ul>
+<li>Faster-RCNN</li>
+<li>YOLO<ul>
+<li>全图划分成7x7的网格，每个网格对应2个default box</li>
+<li>没有候选框，直接对default box做全分类+回归（box中心坐标的x,y相对于对应的网格归一化到0-1之间，w,h用图像的width和height归一化到0-1之间）</li>
+<li>FC1—-&gt;FC2{1470x1}–reshape-&gt;{7x7x30} ————{1x1x30}</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>类别：CNN提取特征 + CNN分类</li>
+<li>优点：实时性</li>
+<li>缺点：<ul>
+<li>准确率不高（不如faster-rcnn）；定位精度差（anchor box不够丰富且只能回归修正一次）</li>
+<li>小物体差：anchor和scale不够多样。</li>
+<li>不规则物体差：anchor的ratio不够多样。</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2022/04/10/Course/AutomaticDrive/AutoDriver_04/image-20220418014209305.png" alt="image-20220418014209305"></p>
+<p>1x1x30的含义：</p>
+<p>​    两个默认框的预测值</p>
+<p>​    4 xywh (坐标预测)， 1， 4 xywh（坐标预测）， 1， 20（20个分类预测）</p>
+<p><img src="/2022/04/10/Course/AutomaticDrive/AutoDriver_04/image-20220418021347698.png" alt="image-20220418021347698"></p>
+<h3 id="SSD"><a href="#SSD" class="headerlink" title="SSD"></a>SSD</h3><ul>
+<li>位置：<ul>
+<li>借鉴RPN的anchor Box机制: feature点对应的原图感受野框处生成不同ratio/scale的default box</li>
+<li>没有候选框！直接对default box做全分类+回归</li>
+</ul>
+</li>
+<li>类别：CNN提取特征 + CNN分类<ul>
+<li>多感受野特征词输出：前面层感受野小适合小物件，后面层感受野大适合大物体。</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2022/04/10/Course/AutomaticDrive/AutoDriver_04/image-20220418021934942.png" alt="image-20220418021934942"></p>
+<h3 id="YOLOv2"><a href="#YOLOv2" class="headerlink" title="YOLOv2"></a>YOLOv2</h3><ul>
+<li>更丰富的default box<ul>
+<li>从数据集统计出default box(k-means)；随着k的增大，IOU也增大（高召回率）但是复杂度也在增加，最终选择k=5</li>
+</ul>
+</li>
+<li>更灵活的类别预测<ul>
+<li>把预测类别的机制从空间位置（cell）中解耦，由default box同时预测类别和坐标，有效解决物体重叠。</li>
+<li></li>
+</ul>
+</li>
+</ul>
+<p><img src="/2022/04/10/Course/AutomaticDrive/AutoDriver_04/image-20220418022547449.png" alt="image-20220418022547449"></p>
+<h3 id="YOLOv3"><a href="#YOLOv3" class="headerlink" title="YOLOv3"></a>YOLOv3</h3><ul>
+<li>更好的基础网络<ul>
+<li>darknet-19 换成darknet-53</li>
+</ul>
+</li>
+<li>考虑多尺寸<ul>
+<li>多尺度</li>
+<li>多感受野特征层输出</li>
+<li>更多default box：K=9，被3个输出平分3*(5+80)=255; </li>
+<li>3个box 5(x,y,w,h,confi), 80(coco class)</li>
+<li></li>
+</ul>
+</li>
+</ul>
+<p><img src="/2022/04/10/Course/AutomaticDrive/AutoDriver_04/image-20220418023004836.png" alt="image-20220418023004836"></p>
+<h2 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h2><p><a href="https://github.com/andylei77/object-detector" target="_blank" rel="noopener">https://github.com/andylei77/object-detector</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Autopilot/" rel="tag"># Autopilot</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/04/04/Sub_Language/CPlus/Cplus_CallPythonDemo/" rel="next" title="C++ python Tutorial">
+                <i class="fa fa-chevron-left"></i> C++ python Tutorial
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/04/11/Sub_Language/DL_Train/Pytorch/inference_platform/" rel="prev" title="pytorch Model c++ inference in platform">
+                pytorch Model c++ inference in platform <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Simon Shi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">269</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">234</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#无人驾驶中的动态环境检测-2D检测"><span class="nav-number">1.</span> <span class="nav-text">无人驾驶中的动态环境检测-2D检测</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2D检测"><span class="nav-number">1.1.</span> <span class="nav-text">2D检测</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#IDea"><span class="nav-number">1.1.1.</span> <span class="nav-text">IDea:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#How-to-Generate-ROI"><span class="nav-number">1.1.2.</span> <span class="nav-text">How to Generate ROI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#How-To-Classify-ROI"><span class="nav-number">1.1.3.</span> <span class="nav-text">How To Classify ROI</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-two-step-基于图片的检测方法"><span class="nav-number">1.2.</span> <span class="nav-text">4.1 two-step  (基于图片的检测方法)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Befor-CNN"><span class="nav-number">1.2.1.</span> <span class="nav-text">Befor CNN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RCNN"><span class="nav-number">1.2.2.</span> <span class="nav-text">RCNN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SPPnet"><span class="nav-number">1.2.3.</span> <span class="nav-text">SPPnet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fast-RCNN"><span class="nav-number">1.2.4.</span> <span class="nav-text">Fast-RCNN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Faster-RCNN"><span class="nav-number">1.2.5.</span> <span class="nav-text">Faster-RCNN</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-one-step"><span class="nav-number">1.3.</span> <span class="nav-text">4.2 one-step</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#YOLO"><span class="nav-number">1.3.1.</span> <span class="nav-text">YOLO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSD"><span class="nav-number">1.3.2.</span> <span class="nav-text">SSD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#YOLOv2"><span class="nav-number">1.3.3.</span> <span class="nav-text">YOLOv2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#YOLOv3"><span class="nav-number">1.3.4.</span> <span class="nav-text">YOLOv3</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实战"><span class="nav-number">1.4.</span> <span class="nav-text">实战</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+    
+
+        
+
+
+
+
+
+
+<div>
+<!-- 填写你的友盟代码 -->
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1277989586'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s9.cnzz.com/z_stat.php%3Fid%3D1277989586%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+<!-- 你的友盟代码 end -->
+</div>
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'novav',
+            repo: 'blog_comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'ea8aae03b5381e13ab9cdedd0282b60d8ec412cb',
+            
+                client_id: 'c3934b23eb001aa3243d'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

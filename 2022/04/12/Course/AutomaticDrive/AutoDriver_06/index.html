@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Autopilot,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Simon Shi的小站" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="[TOC] 单目跟踪算法：  产生式 鉴别式 基于相关滤波 基于深度学习  6.1 什么是跟踪？  6.2 单目标跟踪 6.2.1 单目标跟踪-产生式模型 Kalman Filtercode: https://github.com/andylei77/kalman_particle_demo  N(均值，协方差)     Particle Filter 6.2.2 单目标跟踪-鉴别式模型 Boos">
+<meta name="keywords" content="Autopilot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="无人驾驶（6）动态环境感知与跟踪">
+<meta property="og:url" content="http://yoursite.com/2022/04/12/Course/AutomaticDrive/AutoDriver_06/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="[TOC] 单目跟踪算法：  产生式 鉴别式 基于相关滤波 基于深度学习  6.1 什么是跟踪？  6.2 单目标跟踪 6.2.1 单目标跟踪-产生式模型 Kalman Filtercode: https://github.com/andylei77/kalman_particle_demo  N(均值，协方差)     Particle Filter 6.2.2 单目标跟踪-鉴别式模型 Boos">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422012437176.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422012626480.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422012648811.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422012909705.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422013049774.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422013637320.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422013857445.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422014224130.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422014349327.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422014550639.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422014625230.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422014658024.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422014742417.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422014833974.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422014901835.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422014917316.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422014935909.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422014947881.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422015001612.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422015046313.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422015113333.png">
+<meta property="og:updated_time" content="2024-07-12T16:02:12.412Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="无人驾驶（6）动态环境感知与跟踪">
+<meta name="twitter:description" content="[TOC] 单目跟踪算法：  产生式 鉴别式 基于相关滤波 基于深度学习  6.1 什么是跟踪？  6.2 单目标跟踪 6.2.1 单目标跟踪-产生式模型 Kalman Filtercode: https://github.com/andylei77/kalman_particle_demo  N(均值，协方差)     Particle Filter 6.2.2 单目标跟踪-鉴别式模型 Boos">
+<meta name="twitter:image" content="http://yoursite.com/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422012437176.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2022/04/12/Course/AutomaticDrive/AutoDriver_06/">
+
+
+
+
+
+  <title>无人驾驶（6）动态环境感知与跟踪 | Simon Shi的小站</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simon Shi的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人工智能，机器学习 学习记录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/04/12/Course/AutomaticDrive/AutoDriver_06/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">无人驾驶（6）动态环境感知与跟踪</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-04-12T19:03:30+00:00">
+                2022-04-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Autopilot/" itemprop="url" rel="index">
+                    <span itemprop="name">Autopilot</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Autopilot/入门提高/" itemprop="url" rel="index">
+                    <span itemprop="name">入门提高</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[TOC]</p>
+<p>单目跟踪算法：</p>
+<ul>
+<li>产生式</li>
+<li>鉴别式</li>
+<li>基于相关滤波</li>
+<li>基于深度学习</li>
+</ul>
+<h2 id="6-1-什么是跟踪？"><a href="#6-1-什么是跟踪？" class="headerlink" title="6.1 什么是跟踪？"></a>6.1 什么是跟踪？</h2><p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422012437176.png" alt="image-20220422012437176"></p>
+<p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422012626480.png" alt="image-20220422012626480"></p>
+<h2 id="6-2-单目标跟踪"><a href="#6-2-单目标跟踪" class="headerlink" title="6.2 单目标跟踪"></a>6.2 单目标跟踪</h2><p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422012648811.png" alt="image-20220422012648811"></p>
+<h3 id="6-2-1-单目标跟踪-产生式模型"><a href="#6-2-1-单目标跟踪-产生式模型" class="headerlink" title="6.2.1 单目标跟踪-产生式模型"></a>6.2.1 单目标跟踪-产生式模型</h3><p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422012909705.png" alt="image-20220422012909705"></p>
+<h4 id="Kalman-Filter"><a href="#Kalman-Filter" class="headerlink" title="Kalman Filter"></a>Kalman Filter</h4><p>code: <a href="https://github.com/andylei77/kalman_particle_demo" target="_blank" rel="noopener">https://github.com/andylei77/kalman_particle_demo</a></p>
+<p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422013049774.png" alt="image-20220422013049774"></p>
+<p>N(均值，协方差)</p>
+<p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422013637320.png" alt="image-20220422013637320"></p>
+<p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422013857445.png" alt="image-20220422013857445"></p>
+<p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422014224130.png" alt="image-20220422014224130"></p>
+<p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422014349327.png" alt="image-20220422014349327"></p>
+<h4 id="Particle-Filter"><a href="#Particle-Filter" class="headerlink" title="Particle Filter"></a>Particle Filter</h4><p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422014550639.png" alt="image-20220422014550639"></p>
+<h3 id="6-2-2-单目标跟踪-鉴别式模型"><a href="#6-2-2-单目标跟踪-鉴别式模型" class="headerlink" title="6.2.2 单目标跟踪-鉴别式模型"></a>6.2.2 单目标跟踪-鉴别式模型</h3><p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422014625230.png" alt="image-20220422014625230"></p>
+<h4 id="Boosting"><a href="#Boosting" class="headerlink" title="Boosting"></a>Boosting</h4><h4 id="MIL"><a href="#MIL" class="headerlink" title="MIL"></a>MIL</h4><h4 id="MEDIANFLOW"><a href="#MEDIANFLOW" class="headerlink" title="MEDIANFLOW"></a>MEDIANFLOW</h4><p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422014658024.png" alt="image-20220422014658024"></p>
+<h4 id="TLD"><a href="#TLD" class="headerlink" title="TLD"></a>TLD</h4><ul>
+<li>跟踪器： 光流</li>
+<li>检测器：</li>
+</ul>
+<p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422014742417.png" alt="image-20220422014742417"></p>
+<p>OPENCV API</p>
+<p>code: <a href="https://github.com/andylei77/learnopencv/tree/master/tracking" target="_blank" rel="noopener">https://github.com/andylei77/learnopencv/tree/master/tracking</a></p>
+<h3 id="6-2-3-单目标跟踪-基于相关滤波算法"><a href="#6-2-3-单目标跟踪-基于相关滤波算法" class="headerlink" title="6.2.3 单目标跟踪-基于相关滤波算法"></a>6.2.3 单目标跟踪-基于相关滤波算法</h3><ul>
+<li></li>
+<li>MOSSE 评价相似性的滤波算法</li>
+</ul>
+<h4 id="CSK"><a href="#CSK" class="headerlink" title="CSK"></a>CSK</h4><ul>
+<li>CSK方法<ul>
+<li>密集采样，通过循环矩阵来实现</li>
+<li>分类器的学习通过快速傅里叶变换成频域内的计算，不受SVM或Boost等学习方法的限制(什么限制？？)。无论线性分类还是核分类，整个学习过程十分高效。</li>
+</ul>
+</li>
+<li>实时性好</li>
+</ul>
+<p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422014833974.png" alt="image-20220422014833974"></p>
+<h4 id="MOSSE"><a href="#MOSSE" class="headerlink" title="MOSSE"></a>MOSSE</h4><p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422014901835.png" alt="image-20220422014901835"></p>
+<h4 id="KCF"><a href="#KCF" class="headerlink" title="KCF"></a>KCF</h4><ul>
+<li>循环矩阵</li>
+<li>循环矩阵傅里叶对角化性质–简化计算加速分类器的学习过程</li>
+<li>基于HOG特征的分类器（DeepSRDCF：深度学习提取的特征+KCF方法）</li>
+</ul>
+<p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422014917316.png" alt="image-20220422014917316"></p>
+<h4 id="GOTURN-（深度学习）"><a href="#GOTURN-（深度学习）" class="headerlink" title="GOTURN （深度学习）"></a>GOTURN （深度学习）</h4><p><a href="https://www.learnopencv.com/goturn-deep-learning-based-object-tracking/" target="_blank" rel="noopener">https://www.learnopencv.com/goturn-deep-learning-based-object-tracking/</a></p>
+<p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422014935909.png" alt="image-20220422014935909"></p>
+<h3 id="算法综述"><a href="#算法综述" class="headerlink" title="算法综述"></a>算法综述</h3><p>数据集；深度学习CNN；CF-相关滤波；其它的</p>
+<p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422014947881.png" alt="image-20220422014947881"></p>
+<h2 id="6-3-多目标跟踪"><a href="#6-3-多目标跟踪" class="headerlink" title="6.3 多目标跟踪"></a>6.3 多目标跟踪</h2><p>分类方法</p>
+<ul>
+<li>按照轨迹形成的时间顺序<ul>
+<li>在线</li>
+<li>离线</li>
+</ul>
+</li>
+<li>按照算法机制<ul>
+<li>预测校正 / 关联方式</li>
+</ul>
+</li>
+<li>按照算法的数学表示<ul>
+<li>概率统计最大化 / 确定性推导</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422015001612.png" alt="image-20220422015001612"></p>
+<h4 id="Hungarian-Algorithm"><a href="#Hungarian-Algorithm" class="headerlink" title="Hungarian Algorithm"></a>Hungarian Algorithm</h4><p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422015046313.png" alt="image-20220422015046313"></p>
+<p><a href="https://github.com/andylei77/HungarianAlgorithm" target="_blank" rel="noopener">https://github.com/andylei77/HungarianAlgorithm</a></p>
+<p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422015113333.png" alt="image-20220422015113333"></p>
+<h4 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h4><p>发送端：<a href="https://github.com/andylei77/object-detector/tree/ROS" target="_blank" rel="noopener">https://github.com/andylei77/object-detector/tree/ROS</a></p>
+<ul>
+<li>基于二分图匹配的多目标跟踪</li>
+</ul>
+<p>接受端：<a href="https://github.com/andylei77/object-tracker/tree/master/tracker" target="_blank" rel="noopener">https://github.com/andylei77/object-tracker/tree/master/tracker</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Autopilot/" rel="tag"># Autopilot</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/04/12/Sub_Language/DL_Platform/TVM/TVM/" rel="next" title="深度学习编译器之TVM">
+                <i class="fa fa-chevron-left"></i> 深度学习编译器之TVM
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/04/15/Sub_Language/DL_Platform/ONNX/OnnxCplus/" rel="prev" title="Onnx Model inference by C++">
+                Onnx Model inference by C++ <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Simon Shi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">269</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">234</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-什么是跟踪？"><span class="nav-number">1.</span> <span class="nav-text">6.1 什么是跟踪？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2-单目标跟踪"><span class="nav-number">2.</span> <span class="nav-text">6.2 单目标跟踪</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-1-单目标跟踪-产生式模型"><span class="nav-number">2.1.</span> <span class="nav-text">6.2.1 单目标跟踪-产生式模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Kalman-Filter"><span class="nav-number">2.1.1.</span> <span class="nav-text">Kalman Filter</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Particle-Filter"><span class="nav-number">2.1.2.</span> <span class="nav-text">Particle Filter</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-2-单目标跟踪-鉴别式模型"><span class="nav-number">2.2.</span> <span class="nav-text">6.2.2 单目标跟踪-鉴别式模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Boosting"><span class="nav-number">2.2.1.</span> <span class="nav-text">Boosting</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MIL"><span class="nav-number">2.2.2.</span> <span class="nav-text">MIL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MEDIANFLOW"><span class="nav-number">2.2.3.</span> <span class="nav-text">MEDIANFLOW</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TLD"><span class="nav-number">2.2.4.</span> <span class="nav-text">TLD</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-3-单目标跟踪-基于相关滤波算法"><span class="nav-number">2.3.</span> <span class="nav-text">6.2.3 单目标跟踪-基于相关滤波算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CSK"><span class="nav-number">2.3.1.</span> <span class="nav-text">CSK</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MOSSE"><span class="nav-number">2.3.2.</span> <span class="nav-text">MOSSE</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#KCF"><span class="nav-number">2.3.3.</span> <span class="nav-text">KCF</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GOTURN-（深度学习）"><span class="nav-number">2.3.4.</span> <span class="nav-text">GOTURN （深度学习）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法综述"><span class="nav-number">2.4.</span> <span class="nav-text">算法综述</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-3-多目标跟踪"><span class="nav-number">3.</span> <span class="nav-text">6.3 多目标跟踪</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Hungarian-Algorithm"><span class="nav-number">3.0.1.</span> <span class="nav-text">Hungarian Algorithm</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实战"><span class="nav-number">3.0.2.</span> <span class="nav-text">实战</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+    
+
+        
+
+
+
+
+
+
+<div>
+<!-- 填写你的友盟代码 -->
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1277989586'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s9.cnzz.com/z_stat.php%3Fid%3D1277989586%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+<!-- 你的友盟代码 end -->
+</div>
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'novav',
+            repo: 'blog_comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'ea8aae03b5381e13ab9cdedd0282b60d8ec412cb',
+            
+                client_id: 'c3934b23eb001aa3243d'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
