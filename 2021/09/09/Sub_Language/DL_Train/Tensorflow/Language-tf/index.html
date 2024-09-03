@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="TF,tensorflow,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Simon Shi的小站" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="[TOC] tensorflow    TF Keras python     TF1.12 Keras2.2.4     TF1.13 Keras2.2.4     TF1.14 Keras2.2.5 3.6,3.7    TF1.15 Keras2.2.5    resnet模型搭建   eager keras resnet (转pb比较麻烦)  tf slim resnet（DDZ）  tf">
+<meta name="keywords" content="TF,tensorflow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tensorflow 1.x">
+<meta property="og:url" content="http://yoursite.com/2021/09/09/Sub_Language/DL_Train/Tensorflow/Language-tf/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="[TOC] tensorflow    TF Keras python     TF1.12 Keras2.2.4     TF1.13 Keras2.2.4     TF1.14 Keras2.2.5 3.6,3.7    TF1.15 Keras2.2.5    resnet模型搭建   eager keras resnet (转pb比较麻烦)  tf slim resnet（DDZ）  tf">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2024-09-03T13:49:22.182Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tensorflow 1.x">
+<meta name="twitter:description" content="[TOC] tensorflow    TF Keras python     TF1.12 Keras2.2.4     TF1.13 Keras2.2.4     TF1.14 Keras2.2.5 3.6,3.7    TF1.15 Keras2.2.5    resnet模型搭建   eager keras resnet (转pb比较麻烦)  tf slim resnet（DDZ）  tf">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2021/09/09/Sub_Language/DL_Train/Tensorflow/Language-tf/">
+
+
+
+
+
+  <title>Tensorflow 1.x | Simon Shi的小站</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simon Shi的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人工智能，机器学习 学习记录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/09/09/Sub_Language/DL_Train/Tensorflow/Language-tf/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Tensorflow 1.x</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-09-09T20:05:51+00:00">
+                2021-09-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DNN-platform/" itemprop="url" rel="index">
+                    <span itemprop="name">DNN_platform</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DNN-platform/tensorflow/" itemprop="url" rel="index">
+                    <span itemprop="name">tensorflow</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2021/09/09/Sub_Language/DL_Train/Tensorflow/Language-tf/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2021/09/09/Sub_Language/DL_Train/Tensorflow/Language-tf/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[TOC]</p>
+<h2 id="tensorflow"><a href="#tensorflow" class="headerlink" title="tensorflow"></a>tensorflow</h2><table>
+<thead>
+<tr>
+<th></th>
+<th>TF</th>
+<th>Keras</th>
+<th>python</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td>TF1.12</td>
+<td>Keras2.2.4</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>TF1.13</td>
+<td>Keras2.2.4</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>TF1.14</td>
+<td>Keras2.2.5</td>
+<td>3.6,3.7</td>
+</tr>
+<tr>
+<td></td>
+<td>TF1.15</td>
+<td>Keras2.2.5</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>resnet模型搭建</p>
+<ul>
+<li><input checked disabled type="checkbox"> eager keras resnet (转pb比较麻烦)</li>
+<li><input checked disabled type="checkbox"> tf slim resnet（DDZ）</li>
+<li><input disabled type="checkbox"> tf pure resnet (DDZ v2)</li>
+<li><input disabled type="checkbox"> keras</li>
+</ul>
+<h2 id="TF-cmd-flags"><a href="#TF-cmd-flags" class="headerlink" title="TF cmd flags"></a>TF cmd flags</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">TF_CPP_MIN_LOG_LEVEL 取值 0 ： 0也是默认值，输出所有信息</span><br><span class="line">TF_CPP_MIN_LOG_LEVEL 取值 1 ： 屏蔽通知信息</span><br><span class="line">TF_CPP_MIN_LOG_LEVEL 取值 2 ： 屏蔽通知信息和警告信息</span><br><span class="line">TF_CPP_MIN_LOG_LEVEL 取值 3 ： 屏蔽通知信息、警告信息和报错信息</span><br></pre></td></tr></table></figure>
+
+<h2 id="BN训练技巧"><a href="#BN训练技巧" class="headerlink" title="BN训练技巧"></a>BN训练技巧</h2><h3 id="demo1"><a href="#demo1" class="headerlink" title="demo1:"></a>demo1:</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS, scope)</span><br><span class="line">updates_op = tf.group(*update_ops)</span><br><span class="line"><span class="keyword">with</span> tf.control_dependencies([updates_op]):</span><br><span class="line">    losses = tf.get_collection(<span class="string">'losses'</span>, scope) <span class="comment"># 4</span></span><br><span class="line">    <span class="comment"># Calculate the total loss for the current tower.</span></span><br><span class="line">    total_loss = tf.add_n(losses, name=<span class="string">'total_loss'</span>) <span class="comment"># 5</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)</span><br><span class="line"><span class="keyword">with</span> tf.control_dependencies(update_ops):</span><br><span class="line">    train_op = opt.apply_gradients(mean_grads, global_step=global_step)</span><br></pre></td></tr></table></figure>
+
+<h3 id="demo2"><a href="#demo2" class="headerlink" title="demo2:"></a>demo2:</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tensorflow.python.training <span class="keyword">import</span> moving_averages</span><br><span class="line"><span class="comment"># 为每个通道计算均值、标准差</span></span><br><span class="line">mean, variance = tf.nn.moments(x, [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>], name=<span class="string">'moments'</span>)</span><br><span class="line"><span class="comment"># 新建或建立测试阶段使用的batch均值、标准差</span></span><br><span class="line">moving_mean = tf.get_variable(<span class="string">'moving_mean'</span>, </span><br><span class="line">                              params_shape, tf.float32, </span><br><span class="line">                              initializer=tf.constant_initializer(<span class="number">0.0</span>, tf.float32), </span><br><span class="line">                              trainable=<span class="literal">False</span>)</span><br><span class="line">moving_variance = tf.get_variable(<span class="string">'moving_variance'</span>, </span><br><span class="line">                         params_shape, </span><br><span class="line">                         tf.float32,initializer=tf.constant_initializer(<span class="number">1.0</span>, tf.float32),</span><br><span class="line">                         trainable=<span class="literal">False</span>)</span><br><span class="line"><span class="comment"># 添加batch均值和标准差的更新操作(滑动平均)</span></span><br><span class="line"><span class="comment"># moving_mean = moving_mean * decay + mean * (1 - decay)</span></span><br><span class="line"><span class="comment"># moving_variance = moving_variance * decay + variance * (1 - decay)</span></span><br><span class="line">self._extra_train_ops.append(moving_averages.assign_moving_average(</span><br><span class="line">                    moving_mean, mean, <span class="number">0.9</span>))</span><br><span class="line">self._extra_train_ops.append(moving_averages.assign_moving_average(</span><br><span class="line">                    moving_variance, variance, <span class="number">0.9</span>))</span><br></pre></td></tr></table></figure>
+
+<h2 id="EMA"><a href="#EMA" class="headerlink" title="EMA"></a>EMA</h2><p>shadow_variable = decay * shadow_variable + (1 - decay) * variable</p>
+<h3 id="demo1-1"><a href="#demo1-1" class="headerlink" title="demo1:"></a>demo1:</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## https://github.com/tensorflow/models/blob/master/tutorials/image/cifar10/cifar10_multi_gpu_train.py</span></span><br><span class="line"><span class="comment"># Track the moving averages of all trainable variables.</span></span><br><span class="line">variable_averages = tf.train.ExponentialMovingAverage(train_config.MOVING_AVERAGE_DECAY, global_step)</span><br><span class="line">variables_averages_op = variable_averages.apply(tf.trainable_variables())</span><br><span class="line">train_op = tf.group(apply_gradient_op, variables_averages_op)</span><br></pre></td></tr></table></figure>
+
+<h3 id="demo2-1"><a href="#demo2-1" class="headerlink" title="demo2:"></a>demo2:</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置exponential moving average</span></span><br><span class="line">variable_averages = tf.train.ExponentialMovingAverage(<span class="number">0.999</span>, self.global_step, name=<span class="string">'avg'</span>)</span><br><span class="line">losses = tf.get_collection(<span class="string">'cost'</span>)</span><br><span class="line">variables_averages_op = variable_averages.apply(losses)</span><br><span class="line"><span class="comment"># 将所有的更新捆绑到一个训练操作中</span></span><br><span class="line">train_op = tf.group(apply_op, variables_averages_op)</span><br></pre></td></tr></table></figure>
+
+<h2 id="多GPU训练"><a href="#多GPU训练" class="headerlink" title="多GPU训练"></a>多GPU训练</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">next_img, next_label = iterator.get_next()</span><br><span class="line">image_splits = tf.split(next_img, num_gpus)</span><br><span class="line">label_splits = tf.split(next_label, num_gpus)</span><br><span class="line">tower_grads = []</span><br><span class="line">tower_loss = []</span><br><span class="line">counter = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> d <span class="keyword">in</span> self.gpu_id:</span><br><span class="line">    <span class="keyword">with</span> tf.device(<span class="string">'/gpu:%s'</span> % d):</span><br><span class="line">        <span class="keyword">with</span> tf.name_scope(<span class="string">'%s_%s'</span> % (<span class="string">'tower'</span>, d)):</span><br><span class="line">            cross_entropy = build_train_model(image_splits[counter], label_splits[counter], for_training=<span class="literal">True</span>)</span><br><span class="line">            counter += <span class="number">1</span></span><br><span class="line">            <span class="keyword">with</span> tf.variable_scope(<span class="string">"loss"</span>):</span><br><span class="line">                grads = opt.compute_gradients(cross_entropy)</span><br><span class="line">                tower_grads.append(grads)</span><br><span class="line">                tower_loss.append(cross_entropy)</span><br><span class="line">                tf.get_variable_scope().reuse_variables()</span><br><span class="line"></span><br><span class="line">mean_loss = tf.stack(axis=<span class="number">0</span>, values=tower_loss)</span><br><span class="line">mean_loss = tf.reduce_mean(mean_loss, <span class="number">0</span>)</span><br><span class="line">mean_grads = util.average_gradients(tower_grads)</span><br><span class="line">update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)</span><br><span class="line"><span class="keyword">with</span> tf.control_dependencies(update_ops):</span><br><span class="line">    train_op = opt.apply_gradients(mean_grads, global_step=global_step)</span><br></pre></td></tr></table></figure>
+
+<h2 id="APIs"><a href="#APIs" class="headerlink" title="APIs"></a>APIs</h2><h3 id="accuracy"><a href="#accuracy" class="headerlink" title="accuracy"></a>accuracy</h3><blockquote>
+<p> accuracy, update_op = tf.metrics.accuracy(labels=x, predictions=y) </p>
+</blockquote>
+<p>tf.metrics.accuracy*<em>返回*</em>两个值，*<em>accuracy*</em>为到上一个batch为止的准确度，*<em>update_op*</em>为更新本批次后的准确度。</p>
+<h3 id="BN"><a href="#BN" class="headerlink" title="BN:"></a>BN:</h3><p>tf.layers.BatchNormalization</p>
+<p>tf.layers.batch_normalization</p>
+<p>tf.keras.layers.BatchNormalization</p>
+<p>tf.nn.batch_normalization</p>
+<p>① tf.nn.moments  这个函数的输出就是BN需要的mean和variance。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">tensorflow中实现BN算法的各种函数</span><br><span class="line"></span><br><span class="line">tf.nn.batch_normalization()是一个低级的操作函数,调用者需要自己处理张量的平均值和方差</span><br><span class="line"></span><br><span class="line">tf.nn.fused_batch_norm是另一个低级的操作函数,和前者十分相似,不同之处在于它针对4维输入张量进行了优化,这是卷积神经网络中常见的情况,而前者tf.nn.batch_normalization则接受任何等级大于1的张量</span><br><span class="line"></span><br><span class="line">tf.layers.batch_normalization是对先前操作的高级封装,最大的不同在于它负责创建和管理运行张量的均值和方差,并尽可可能地快速融合计算,通常,这个函数应该是你的默认选择</span><br><span class="line"></span><br><span class="line">tf.contrib.layers.batch_norm是batch_norm的早期实现,其升级的核心api版本为(tf.layers.batch_normalization),不推荐使用它,因为它可能会在未来的版本中丢失.</span><br><span class="line"></span><br><span class="line">tf.nn.batch_norm_with_global_normalization是另一个被弃用的操作,现在这个函数会委托给tf.nn.batch_normalization执行,在未来这个函数会被放弃</span><br><span class="line"></span><br><span class="line">keras.layers.BatchNormalization是BN算法的keras实现,这个函数在后端会调用tensorflow的tf.nn.batch_normalization函数</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">————————————————</span><br><span class="line">版权声明：本文为CSDN博主「wanghua609」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。</span><br><span class="line">原文链接：https://blog.csdn.net/weixin_38145317/article/details/96132250</span><br></pre></td></tr></table></figure>
+
+<p>ref:</p>
+<p>tensorflow 中batch normalize 的使用(Slim.BN) <a href="https://blog.csdn.net/jiruiyang/article/details/77202674" target="_blank" rel="noopener">https://blog.csdn.net/jiruiyang/article/details/77202674</a></p>
+<p>BN 详解和使用Tensorflow实现（参数理解）<a href="https://www.cnblogs.com/WSX1994/p/10949079.html" target="_blank" rel="noopener">https://www.cnblogs.com/WSX1994/p/10949079.html</a></p>
+<h1 id="训练技巧"><a href="#训练技巧" class="headerlink" title="训练技巧"></a>训练技巧</h1><h3 id="BN-1"><a href="#BN-1" class="headerlink" title="BN"></a>BN</h3><p>is_training</p>
+<p>tf.GraphKeys.UPDATE_OPS</p>
+<p>EMA</p>
+<h3 id="loss"><a href="#loss" class="headerlink" title="loss"></a>loss</h3><p>l2_loss</p>
+<p>tower_loss</p>
+<h3 id="grad"><a href="#grad" class="headerlink" title="grad"></a>grad</h3><p>average_grad</p>
+<h2 id="ISSUEs"><a href="#ISSUEs" class="headerlink" title="ISSUEs"></a>ISSUEs</h2><h3 id="1、tf-gradients-VS-tf-train-Optimizer-computer-gradients"><a href="#1、tf-gradients-VS-tf-train-Optimizer-computer-gradients" class="headerlink" title="1、tf.gradients VS tf.train.Optimizer.computer_gradients"></a>1、tf.gradients VS tf.train.Optimizer.computer_gradients</h3><p><a href="https://www.tensorflow.org/api_docs/python/tf/gradients" target="_blank" rel="noopener"><code>tf.gradients</code></a>不允许您计算雅可比矩阵，它会汇总每个输出的梯度（类似于实际雅可比矩阵的每列的总和）。事实上，在TensorFlow中没有“好”的计算Jacobians的方法（基本上你必须每个输出调用<code>tf.gradients</code>一次，<a href="https://github.com/tensorflow/tensorflow/issues/675" target="_blank" rel="noopener">see this issue</a>）。</p>
+<p>关于<a href="https://www.tensorflow.org/api_docs/python/tf/train/Optimizer#compute_gradients" target="_blank" rel="noopener"><code>tf.train.Optimizer.compute_gradients</code></a>，是的，其结果基本相同，但是自动处理一些细节并以稍微方便的输出格式。如果你看看<a href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/python/training/optimizer.py" target="_blank" rel="noopener">the implementation</a>，你会发现它的核心是对<code>tf.gradients</code>（在这种情况下是别名<code>gradients.gradients</code>）的调用，但是对于优化器实现来说已经实现了周围的逻辑非常有用。另外，将它作为一种方法允许子类中的可扩展行为，以实现某种优化策略（不太可能在步骤<code>compute_gradients</code>步骤中）或辅助目的（如跟踪或调试）。</p>
+<h3 id="2、梯度裁剪"><a href="#2、梯度裁剪" class="headerlink" title="2、梯度裁剪"></a>2、梯度裁剪</h3><blockquote>
+<p>tf.clip_by_global_norm(gradients, max_gradient_norm)</p>
+<ol>
+<li>t_list 表示梯度张量</li>
+<li>clip_norm是截取的比率</li>
+</ol>
+<p>global_norm = sqrt(sum(l2norm(t)**2 for t in t_list)) </p>
+<p>t_list[i] = t_list[i] * clip_norm / max(global_norm, clip_norm)</p>
+<p>也就是分为两步：</p>
+<ol>
+<li>计算所有梯度的平方和global_norm</li>
+<li>如果梯度平方和 global_norm 超过我们指定的clip_norm，那么就对梯度进行缩放；否则就按照原本的计算结果，这个应该很好理解。</li>
+</ol>
+</blockquote>
+<p><a href="https://bigquant.com/community/t/topic/121493" target="_blank" rel="noopener">https://bigquant.com/community/t/topic/121493</a></p>
+<h1 id="Keras"><a href="#Keras" class="headerlink" title="Keras"></a>Keras</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#from tensorflow.keras.layers import Layer</span></span><br><span class="line"><span class="comment">#换成</span></span><br><span class="line">from tensorflow.python.keras.layers import Layer</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/TF/" rel="tag"># TF</a>
+          
+            <a href="/tags/tensorflow/" rel="tag"># tensorflow</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/06/12/Sub_Language/DL_Train/Pytorch/models/" rel="next" title="Pytorch pth to onnx">
+                <i class="fa fa-chevron-left"></i> Pytorch pth to onnx
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/09/09/Sub_Language/DL_Train/Tensorflow/Language-tf2/" rel="prev" title="Tensorflow 2.x">
+                Tensorflow 2.x <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Simon Shi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">283</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">132</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">239</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#tensorflow"><span class="nav-number">1.</span> <span class="nav-text">tensorflow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TF-cmd-flags"><span class="nav-number">2.</span> <span class="nav-text">TF cmd flags</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BN训练技巧"><span class="nav-number">3.</span> <span class="nav-text">BN训练技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#demo1"><span class="nav-number">3.1.</span> <span class="nav-text">demo1:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#demo2"><span class="nav-number">3.2.</span> <span class="nav-text">demo2:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EMA"><span class="nav-number">4.</span> <span class="nav-text">EMA</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#demo1-1"><span class="nav-number">4.1.</span> <span class="nav-text">demo1:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#demo2-1"><span class="nav-number">4.2.</span> <span class="nav-text">demo2:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多GPU训练"><span class="nav-number">5.</span> <span class="nav-text">多GPU训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#APIs"><span class="nav-number">6.</span> <span class="nav-text">APIs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#accuracy"><span class="nav-number">6.1.</span> <span class="nav-text">accuracy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BN"><span class="nav-number">6.2.</span> <span class="nav-text">BN:</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#训练技巧"><span class="nav-number"></span> <span class="nav-text">训练技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BN-1"><span class="nav-number">0.1.</span> <span class="nav-text">BN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#loss"><span class="nav-number">0.2.</span> <span class="nav-text">loss</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#grad"><span class="nav-number">0.3.</span> <span class="nav-text">grad</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ISSUEs"><span class="nav-number">1.</span> <span class="nav-text">ISSUEs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、tf-gradients-VS-tf-train-Optimizer-computer-gradients"><span class="nav-number">1.1.</span> <span class="nav-text">1、tf.gradients VS tf.train.Optimizer.computer_gradients</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、梯度裁剪"><span class="nav-number">1.2.</span> <span class="nav-text">2、梯度裁剪</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Keras"><span class="nav-number"></span> <span class="nav-text">Keras</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+    
+
+        
+
+
+
+
+
+
+<div>
+<!-- 填写你的友盟代码 -->
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1277989586'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s9.cnzz.com/z_stat.php%3Fid%3D1277989586%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+<!-- 你的友盟代码 end -->
+</div>
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'novav',
+            repo: 'blog_comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'ea8aae03b5381e13ab9cdedd0282b60d8ec412cb',
+            
+                client_id: 'c3934b23eb001aa3243d'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

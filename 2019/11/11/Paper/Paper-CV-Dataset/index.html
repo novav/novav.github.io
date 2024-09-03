@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Human Parsing,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Simon Shi的小站" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="[toc] 人体解析数据集 -human parsing    开源  项目     LIP [open] 2017 SS-NAN Single Person http://hcp.sysu.edu.cn/lip https://github.com/Engineering-Course/LIP_SSL   CIHP [open] 2018  http://sysu-hcp.net/lip/ove">
+<meta name="keywords" content="Human Parsing">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Paper-CV_Human Parsing Dataset">
+<meta property="og:url" content="http://yoursite.com/2019/11/11/Paper/Paper-CV-Dataset/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="[toc] 人体解析数据集 -human parsing    开源  项目     LIP [open] 2017 SS-NAN Single Person http://hcp.sysu.edu.cn/lip https://github.com/Engineering-Course/LIP_SSL   CIHP [open] 2018  http://sysu-hcp.net/lip/ove">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2019/11/11/Paper/Paper-CV-Dataset/20181102213456284.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/11/Paper/Paper-CV-Dataset/20181102213456243.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/11/Paper/Paper-CV-Dataset/20181102213456344.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/11/Paper/Paper-CV-Dataset/20181102213456375.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/11/Paper/Paper-CV-Dataset/20181102213456383.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/11/Paper/Paper-CV-Dataset/20181102213456303.png">
+<meta property="og:updated_time" content="2024-09-03T13:49:22.022Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Paper-CV_Human Parsing Dataset">
+<meta name="twitter:description" content="[toc] 人体解析数据集 -human parsing    开源  项目     LIP [open] 2017 SS-NAN Single Person http://hcp.sysu.edu.cn/lip https://github.com/Engineering-Course/LIP_SSL   CIHP [open] 2018  http://sysu-hcp.net/lip/ove">
+<meta name="twitter:image" content="http://yoursite.com/2019/11/11/Paper/Paper-CV-Dataset/20181102213456284.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/11/11/Paper/Paper-CV-Dataset/">
+
+
+
+
+
+  <title>Paper-CV_Human Parsing Dataset | Simon Shi的小站</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simon Shi的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人工智能，机器学习 学习记录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/11/Paper/Paper-CV-Dataset/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Paper-CV_Human Parsing Dataset</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-11-11T17:42:38+00:00">
+                2019-11-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Datasets/" itemprop="url" rel="index">
+                    <span itemprop="name">Datasets</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/11/11/Paper/Paper-CV-Dataset/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/11/11/Paper/Paper-CV-Dataset/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[toc]</p>
+<h1 id="人体解析数据集-human-parsing"><a href="#人体解析数据集-human-parsing" class="headerlink" title="人体解析数据集 -human parsing"></a>人体解析数据集 -human parsing</h1><table>
+<thead>
+<tr>
+<th></th>
+<th>开源</th>
+<th></th>
+<th>项目</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>LIP</strong></td>
+<td>[open]</td>
+<td>2017</td>
+<td>SS-NAN</td>
+<td>Single Person <a href="http://hcp.sysu.edu.cn/lip" target="_blank" rel="noopener">http://hcp.sysu.edu.cn/lip</a> <br><a href="https://github.com/Engineering-Course/LIP_SSL" target="_blank" rel="noopener">https://github.com/Engineering-Course/LIP_SSL</a></td>
+</tr>
+<tr>
+<td><strong>CIHP</strong></td>
+<td>[open]</td>
+<td>2018</td>
+<td></td>
+<td><a href="http://sysu-hcp.net/lip/overview.php" target="_blank" rel="noopener">http://sysu-hcp.net/lip/overview.php</a></td>
+</tr>
+<tr>
+<td><strong>ATR</strong></td>
+<td>[open]</td>
+<td>2015</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><em>Chictopia10k</em></td>
+<td></td>
+<td></td>
+<td>Co-CNN</td>
+<td>human parsing  <a href="http://www.cv-foundation.org/openaccess/content_iccv_2015/html/Liang_Human_Parsing_With_ICCV_2015_paper.html" target="_blank" rel="noopener">“Human parsing with contextualized convolutional neural network.” ICCV’15</a>,</td>
+</tr>
+<tr>
+<td><strong>VIP</strong></td>
+<td>[open]</td>
+<td></td>
+<td></td>
+<td>Video Multi-Person Human Parsing</td>
+</tr>
+<tr>
+<td><strong>MHP</strong></td>
+<td>[open]</td>
+<td>2017</td>
+<td></td>
+<td><a href="https://lv-mhp.github.io/dataset" target="_blank" rel="noopener">https://lv-mhp.github.io/dataset</a></td>
+</tr>
+<tr>
+<td><strong>Person-Part</strong></td>
+<td>[open]</td>
+<td>2014</td>
+<td></td>
+<td><a href="http://www.stat.ucla.edu/~xianjie.chen/pascal_part_dataset/pascal_part.html" target="_blank" rel="noopener">http://www.stat.ucla.edu/~xianjie.chen/pascal_part_dataset/pascal_part.html</a></td>
+</tr>
+<tr>
+<td>Fashionista</td>
+<td></td>
+<td>2012</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>DeepFashion</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>VITON</td>
+<td></td>
+<td>2017</td>
+<td>VITON</td>
+<td>闭源；16,253 pairs</td>
+</tr>
+<tr>
+<td><em>MPV</em></td>
+<td></td>
+<td>2019</td>
+<td>MG-VTON</td>
+<td>已经闭源</td>
+</tr>
+</tbody></table>
+<p><a href="https://blog.csdn.net/wxf19940618/article/details/83661891" target="_blank" rel="noopener">refer</a> </p>
+<h1 id="引文1-人体解析-human-parsing"><a href="#引文1-人体解析-human-parsing" class="headerlink" title="[引文1]人体解析-human parsing"></a>[引文1]人体解析-human parsing</h1><p>人体解析-human parsing</p>
+<p>研究目标与意义<br>人体解析是指将在图像中捕获的人分割成多个语义上一致的区域，例如， 身体部位和衣物。作为一种细粒度的语义分割任务，它比仅是寻找人体轮廓的人物分割更具挑战性。 人体解析对于以人为中心的分析非常重要，并且具有许多工业上的应用，例如，虚拟现实，视频监控和人类行为分析等等。</p>
+<p>Fashionista 数据集</p>
+<p>论文：Parsing Clothing in Fashion Photographs</p>
+<p>论文地址：<a href="http://www.tamaraberg.com/papers/parsingclothing.pdf" target="_blank" rel="noopener">http://www.tamaraberg.com/papers/parsingclothing.pdf</a></p>
+<p><img src="/2019/11/11/Paper/Paper-CV-Dataset/20181102213456284.png" alt="Fashionista"></p>
+<p>Person-part 数据集</p>
+<p>论文：Detect What You Can: Detecting and Representing Objects using Holistic Models and Body Parts</p>
+<p>论文地址：<a href="http://www.stat.ucla.edu/~xianjie.chen/paper/Chen14cvpr.pdf" target="_blank" rel="noopener">http://www.stat.ucla.edu/~xianjie.chen/paper/Chen14cvpr.pdf</a></p>
+<p>数据集地址：<a href="http://www.stat.ucla.edu/~xianjie.chen/pascal_part_dataset/pascal_part.html" target="_blank" rel="noopener">http://www.stat.ucla.edu/~xianjie.chen/pascal_part_dataset/pascal_part.html</a></p>
+<p><img src="/2019/11/11/Paper/Paper-CV-Dataset/20181102213456243.png" alt="Person Part"></p>
+<p>ATR 数据集</p>
+<p>论文：Deep Human Parsing with Active Template Regression</p>
+<p>论文地址：<a href="https://arxiv.org/pdf/1503.02391.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/1503.02391.pdf</a></p>
+<p><img src="/2019/11/11/Paper/Paper-CV-Dataset/20181102213456344.png" alt="ATR img"></p>
+<p>LIP数据集</p>
+<p>论文：Look into Person: Self-supervised Structure-sensitive Learning and A New Benchmark for Human Parsing</p>
+<p>论文地址：<a href="https://arxiv.org/pdf/1703.05446.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/1703.05446.pdf</a></p>
+<p>数据集地址：<a href="http://hcp.sysu.edu.cn/lip" target="_blank" rel="noopener">http://hcp.sysu.edu.cn/lip</a></p>
+<p>代码地址：<a href="https://github.com/Engineering-Course/LIP_SSL" target="_blank" rel="noopener">https://github.com/Engineering-Course/LIP_SSL</a></p>
+<p><img src="/2019/11/11/Paper/Paper-CV-Dataset/20181102213456375.png" alt="img"></p>
+<p>MHP数据集</p>
+<p>论文：Multi-Human Parsing in the Wild</p>
+<p>论文地址：<a href="https://arxiv.org/pdf/1705.07206.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/1705.07206.pdf</a></p>
+<p>数据集地址：<a href="https://lv-mhp.github.io/dataset" target="_blank" rel="noopener">https://lv-mhp.github.io/dataset</a></p>
+<p><img src="/2019/11/11/Paper/Paper-CV-Dataset/20181102213456383.png" alt="img"></p>
+<p>CIHP 数据集</p>
+<p>论文：Instance-level Human Parsing via Part Grouping Network</p>
+<p>论文地址：<a href="http://openaccess.thecvf.com/content_ECCV_2018/papers/Ke" target="_blank" rel="noopener">http://openaccess.thecvf.com/content_ECCV_2018/papers/Ke</a>_</p>
+<p>Gong_Instance-level_Human_Parsing_ECCV_2018_paper.pdf</p>
+<p>数据集地址：<a href="http://sysu-hcp.net/lip/overview.php" target="_blank" rel="noopener">http://sysu-hcp.net/lip/overview.php</a></p>
+<p>代码地址：<a href="http://sysu-hcp.net/lip/" target="_blank" rel="noopener">http://sysu-hcp.net/lip/</a></p>
+<p><img src="/2019/11/11/Paper/Paper-CV-Dataset/20181102213456303.png" alt="img"></p>
+<p><strong>DeepFashion:</strong></p>
+<p><a href="http://mmlab.ie.cuhk.edu.hk/projects/DeepFashion.html" target="_blank" rel="noopener">HomePage -Download</a></p>
+<p>​    DeepFashion [38] only have the pairs of the same person in different poses but do not have the image of clothes. </p>
+<h3 id="人体解析近年论文"><a href="#人体解析近年论文" class="headerlink" title="人体解析近年论文:"></a>人体解析近年论文:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">2018-ECCV-Mutual Learning to Adapt for Joint Human Parsing and Pose Estimation</span><br><span class="line">【MuLA】用于联合人体解析和姿态估计，通过反复利用其并行任务中的指导信息来预测动态任务特定的模型参数</span><br><span class="line"></span><br><span class="line">2018-ECCV-Instance-level Human Parsing via Part Grouping Network</span><br><span class="line">【PGN】在一次传递中解析图像中的多个人，将实例级人类解析重新定义为两个可以通过统一网络共同学习和相互提炼的双关联子任务：1）用于将每个像素指定为人体部位（例如，面部，手臂）的语义分割; 2）实例感知边缘检测，以将语义部位分组为不同的人物实例</span><br><span class="line"></span><br><span class="line">2018-ECCV-Macro-Micro Adversarial Network for Human Parsing</span><br><span class="line">【MMAN】有两个判别器，一个Macro D用于低分辨率标签图并对语义不一致进行惩罚，例如错位的身体部位。另一个Micro D专注于高分辨率标签图的多个patch，以解决局部不一致性，例如模糊和孔洞</span><br><span class="line"></span><br><span class="line">2018-CVPR-Weakly and Semi Supervised Human Body Part Parsing via Pose-Guided Knowledge Transfer</span><br><span class="line">提出了一种获得训练数据的新方法，可以使用人体关键点的数据来生成人体部位解析数据。主要想法是利用人类之间的形态相似性，将一个人的部位解析结果传递给具有相似姿势的另一个人</span><br><span class="line"></span><br><span class="line">2017-CVPR-Look Into Person: Self-Supervised Structure-Sensitive Learning and a New Benchmark for Human Parsing</span><br><span class="line">不引入额外信息，可以用自生成的人类关节的信息反过来指导人体解析</span><br><span class="line"></span><br><span class="line">2017-CVPR-Learning Adaptive Receptive Fields for Deep Image Parsing Network</span><br><span class="line">一种自动调节深度图像解析网络中感受野的新方法，在网络主干中使用两个仿射变换层并在特征映射上运行</span><br><span class="line"></span><br><span class="line">2017-CVPR- Multiple-Human Parsing in the Wild</span><br><span class="line">MH-Parser借助新的Graph-GAN模型以自下而上的方式同时生成全局解析和人物解析</span><br><span class="line"></span><br><span class="line">2015-ICCV-Human Parsing with Contextualized Convolutional Neural Network</span><br><span class="line">【Co-CNN】架构，将多级图像上下文集成到一个统一的网络中</span><br></pre></td></tr></table></figure>
+
+<h1 id="引文2-Dataset-Overview-中山大"><a href="#引文2-Dataset-Overview-中山大" class="headerlink" title="[引文2] Dataset Overview [中山大]"></a>[引文2] Dataset Overview [中山大]</h1><h2 id="1-Overview"><a href="#1-Overview" class="headerlink" title="1. Overview"></a>1. Overview</h2><p>Look into Person (LIP) is a new large-scale dataset, focus on semantic understanding of person. Following are the detailed descriptions.</p>
+<h3 id="1-1-Volume"><a href="#1-1-Volume" class="headerlink" title="1.1 Volume"></a>1.1 Volume</h3><p>The dataset contains 50,000 images with elaborated pixel-wise annotations with 19 semantic human part labels and 2D human poses with 16 key points.</p>
+<h3 id="1-2-Diversity"><a href="#1-2-Diversity" class="headerlink" title="1.2 Diversity"></a>1.2 Diversity</h3><p>The annotated 50,000 images are cropped person instances from <a href="http://mscoco.org/home/" target="_blank" rel="noopener">COCO dataset</a> with size larger than 50 * 50.The images collected from the real-world scenarios contain human appearing with challenging poses and views, heavily occlusions, various appearances and low-resolutions. We are working on collecting and annotating more images to increase diversity.</p>
+<h2 id="2-Download"><a href="#2-Download" class="headerlink" title="2. Download"></a>2. Download</h2><h3 id="2-1-Single-Person"><a href="#2-1-Single-Person" class="headerlink" title="2.1 Single Person"></a>2.1 Single Person</h3><p>We have divided images into three sets. 30462 images for training set, 10000 images for validation set and 10000 for testing set.The dataset is available at <a href="https://drive.google.com/drive/folders/0BzvH3bSnp3E9ZW9paE9kdkJtM3M?usp=sharing" target="_blank" rel="noopener">Google Drive</a> and <a href="http://pan.baidu.com/s/1nvqmZBN" target="_blank" rel="noopener">Baidu Drive</a>.</p>
+<p>Besides we have another large dataset mentioned in <a href="http://www.cv-foundation.org/openaccess/content_iccv_2015/html/Liang_Human_Parsing_With_ICCV_2015_paper.html" target="_blank" rel="noopener">“Human parsing with contextualized convolutional neural network.” ICCV’15</a>, which focuses on fashion images. You can download the dataset including 17000 images as extra training data.</p>
+<h3 id="2-2-Multi-Person"><a href="#2-2-Multi-Person" class="headerlink" title="2.2 Multi-Person"></a>2.2 Multi-Person</h3><p>To stimulate the multiple-human parsing research, we collect the images with multiple person instances to establish the first standard and comprehensive benchmark for instance-level human parsing. Our Crowd Instance-level Human Parsing Dataset (CIHP) contains 28280 training, 5000 validation and 5000 test images, in which there are 38280 multiple-person images in total.</p>
+<p>You can also downlod this dataset at <a href="https://drive.google.com/drive/folders/0BzvH3bSnp3E9ZW9paE9kdkJtM3M?usp=sharing" target="_blank" rel="noopener">Google Drive</a> and <a href="http://pan.baidu.com/s/1nvqmZBN" target="_blank" rel="noopener">Baidu Drive</a>.</p>
+<h3 id="2-3-Video-Multi-Person-Human-Parsing"><a href="#2-3-Video-Multi-Person-Human-Parsing" class="headerlink" title="2.3 Video Multi-Person Human Parsing"></a>2.3 Video Multi-Person Human Parsing</h3><p>VIP(Video instance-level Parsing) dataset, the first video multi-person human parsing benchmark, consists of 404 videos covering various scenarios. For every 25 consecutive frames in each video, one frame is annotated densely with pixel-wise semantic part categories and instance-level identification. There are 21247 densely annotated images in total. We divide these 404 sequences into 304 train sequences, 50 validation sequences and 50 test sequences.</p>
+<p>You can also downlod this dataset at <a href="https://1drv.ms/f/s!ArFSFaZzVErwgSHRpiJNJTzgMR8j" target="_blank" rel="noopener">OneDrive</a> and <a href="https://pan.baidu.com/s/18_PVNy7FCh4T74nVzRXbtA" target="_blank" rel="noopener">Baidu Drive</a>.</p>
+<ul>
+<li>VIP_Fine: All annotated images and fine annotations for train and val sets.</li>
+<li>VIP_Sequence: 20-frame surrounding each VIP_Fine image (-10 | +10).</li>
+<li>VIP_Videos: 404 video sequences of VIP dataset.</li>
+</ul>
+<h3 id="2-4-Image-based-Multi-pose-Virtual-Try-On"><a href="#2-4-Image-based-Multi-pose-Virtual-Try-On" class="headerlink" title="2.4 Image-based Multi-pose Virtual Try On"></a>2.4 Image-based Multi-pose Virtual Try On</h3><p>MPV (Multi-Pose Virtual try on) dataset, which consists of 35,687/13,524 person/clothes images, with the resolution of 256x192. Each person has different poses. We split them into the train/test set 52,236/10,544 three-tuples, respectively.</p>
+<p>You can also downlod this dataset at <a href="https://drive.google.com/open?id=1dCqrNCp9zac7vikYkBRZAPl-RFFsmZdR" target="_blank" rel="noopener">Google Drive</a> or <a href="https://pan.baidu.com/s/1ym9o9ScPRwGlfGjsPBlDkw" target="_blank" rel="noopener">Baidu Drive</a>.<br>Baidu Drive extract password:<br>        f6i2</p>
+<h1 id="引文"><a href="#引文" class="headerlink" title="引文"></a>引文</h1><p>引文1：<a href="https://blog.csdn.net/wxf19940618/article/details/83661891" target="_blank" rel="noopener">https://blog.csdn.net/wxf19940618/article/details/83661891</a></p>
+<p>引文2:  <a href="http://www.sysu-hcp.net/lip/overview.php" target="_blank" rel="noopener">http://www.sysu-hcp.net/lip/overview.php</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Human-Parsing/" rel="tag"># Human Parsing</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/11/11/CV/CV_VTON/Paper-CV+CP-VTON/" rel="next" title="Paper-CV+CP-VTON">
+                <i class="fa fa-chevron-left"></i> Paper-CV+CP-VTON
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/11/13/CV/CV_VTON/Paper-CV+WUTON/" rel="prev" title="Paper-CV+WUTON">
+                Paper-CV+WUTON <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Simon Shi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">283</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">132</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">239</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#人体解析数据集-human-parsing"><span class="nav-number">1.</span> <span class="nav-text">人体解析数据集 -human parsing</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#引文1-人体解析-human-parsing"><span class="nav-number">2.</span> <span class="nav-text">[引文1]人体解析-human parsing</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#人体解析近年论文"><span class="nav-number">2.0.1.</span> <span class="nav-text">人体解析近年论文:</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#引文2-Dataset-Overview-中山大"><span class="nav-number">3.</span> <span class="nav-text">[引文2] Dataset Overview [中山大]</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Overview"><span class="nav-number">3.1.</span> <span class="nav-text">1. Overview</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-Volume"><span class="nav-number">3.1.1.</span> <span class="nav-text">1.1 Volume</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-Diversity"><span class="nav-number">3.1.2.</span> <span class="nav-text">1.2 Diversity</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Download"><span class="nav-number">3.2.</span> <span class="nav-text">2. Download</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Single-Person"><span class="nav-number">3.2.1.</span> <span class="nav-text">2.1 Single Person</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Multi-Person"><span class="nav-number">3.2.2.</span> <span class="nav-text">2.2 Multi-Person</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-Video-Multi-Person-Human-Parsing"><span class="nav-number">3.2.3.</span> <span class="nav-text">2.3 Video Multi-Person Human Parsing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-Image-based-Multi-pose-Virtual-Try-On"><span class="nav-number">3.2.4.</span> <span class="nav-text">2.4 Image-based Multi-pose Virtual Try On</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#引文"><span class="nav-number">4.</span> <span class="nav-text">引文</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+    
+
+        
+
+
+
+
+
+
+<div>
+<!-- 填写你的友盟代码 -->
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1277989586'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s9.cnzz.com/z_stat.php%3Fid%3D1277989586%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+<!-- 你的友盟代码 end -->
+</div>
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'novav',
+            repo: 'blog_comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'ea8aae03b5381e13ab9cdedd0282b60d8ec412cb',
+            
+                client_id: 'c3934b23eb001aa3243d'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

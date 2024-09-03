@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Autopilot,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Simon Shi的小站" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="视频：bilibili up: 啥都会一点的研究生 知乎：王博Kings 无人驾驶系列知识入门到提高  总体概览 软件环境  课程评价 自动驾驶相关的代码只有ROS的一部分 实战==掉包  [TOC] 1、总体概览​        跳转【】 2、软件环境2.1 环境配置 cn/Installation/Ubuntu - ROS Wiki 清华源  16.04需要xenial版本  2.2 ROS开">
+<meta name="keywords" content="Autopilot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="无人驾驶（1）概览,(2)环境配置">
+<meta property="og:url" content="http://yoursite.com/2022/03/30/Course/AutomaticDrive/AutoDriver/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="视频：bilibili up: 啥都会一点的研究生 知乎：王博Kings 无人驾驶系列知识入门到提高  总体概览 软件环境  课程评价 自动驾驶相关的代码只有ROS的一部分 实战==掉包  [TOC] 1、总体概览​        跳转【】 2、软件环境2.1 环境配置 cn/Installation/Ubuntu - ROS Wiki 清华源  16.04需要xenial版本  2.2 ROS开">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2022/03/30/Course/AutomaticDrive/AutoDriver/image-20220402164457642.png">
+<meta property="og:updated_time" content="2024-09-03T13:49:21.566Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="无人驾驶（1）概览,(2)环境配置">
+<meta name="twitter:description" content="视频：bilibili up: 啥都会一点的研究生 知乎：王博Kings 无人驾驶系列知识入门到提高  总体概览 软件环境  课程评价 自动驾驶相关的代码只有ROS的一部分 实战==掉包  [TOC] 1、总体概览​        跳转【】 2、软件环境2.1 环境配置 cn/Installation/Ubuntu - ROS Wiki 清华源  16.04需要xenial版本  2.2 ROS开">
+<meta name="twitter:image" content="http://yoursite.com/2022/03/30/Course/AutomaticDrive/AutoDriver/image-20220402164457642.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2022/03/30/Course/AutomaticDrive/AutoDriver/">
+
+
+
+
+
+  <title>无人驾驶（1）概览,(2)环境配置 | Simon Shi的小站</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simon Shi的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人工智能，机器学习 学习记录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/03/30/Course/AutomaticDrive/AutoDriver/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">无人驾驶（1）概览,(2)环境配置</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-03-30T12:00:00+00:00">
+                2022-03-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Autopilot/" itemprop="url" rel="index">
+                    <span itemprop="name">Autopilot</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Autopilot/入门提高/" itemprop="url" rel="index">
+                    <span itemprop="name">入门提高</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2022/03/30/Course/AutomaticDrive/AutoDriver/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2022/03/30/Course/AutomaticDrive/AutoDriver/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>视频：bilibili up: 啥都会一点的研究生</p>
+<p>知乎：王博Kings</p>
+<p>无人驾驶系列知识入门到提高</p>
+<ul>
+<li>总体概览</li>
+<li>软件环境</li>
+</ul>
+<h2 id="课程评价"><a href="#课程评价" class="headerlink" title="课程评价"></a>课程评价</h2><ul>
+<li>自动驾驶相关的代码只有ROS的一部分</li>
+<li>实战==掉包</li>
+</ul>
+<p>[TOC]</p>
+<h2 id="1、总体概览"><a href="#1、总体概览" class="headerlink" title="1、总体概览"></a>1、总体概览</h2><p>​        跳转【】</p>
+<h2 id="2、软件环境"><a href="#2、软件环境" class="headerlink" title="2、软件环境"></a>2、软件环境</h2><h3 id="2-1-环境配置"><a href="#2-1-环境配置" class="headerlink" title="2.1 环境配置"></a>2.1 <strong>环境配置</strong></h3><ul>
+<li><a href="http://wiki.ros.org/cn/Installation/Ubuntu" target="_blank" rel="noopener">cn/Installation/Ubuntu - ROS Wiki</a></li>
+<li>清华源</li>
+<li><img src="/2022/03/30/Course/AutomaticDrive/AutoDriver/image-20220402164457642.png" alt="image-20220402164457642"></li>
+<li>16.04需要xenial版本</li>
+</ul>
+<h3 id="2-2-ROS开发环境安装"><a href="#2-2-ROS开发环境安装" class="headerlink" title="2.2 ROS开发环境安装"></a>2.2 ROS开发环境安装</h3><ul>
+<li>Ubuntu16.04 X 安装</li>
+</ul>
+<p><a href="http://wiki.ros.org/cn/Installation/Ubuntu" target="_blank" rel="noopener">http://wiki.ros.org/cn/Installation/Ubuntu</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1  sudo apt-key adv --keyserver <span class="string">'hkp://keyserver.ubuntu.com:80'</span> --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654</span><br><span class="line"></span><br><span class="line">10  sudo apt update</span><br><span class="line">11  sudo apt install ros-kinetic-desktop-full</span><br><span class="line"></span><br><span class="line">20  <span class="built_in">source</span> /opt/ros/kinetic/setup.bash</span><br><span class="line"></span><br><span class="line">21  cat ~/.bashrc</span><br><span class="line">23  sudo gedit ~/.bashrc</span><br><span class="line">24  cat /opt/ros/kinetic/setup.zsh</span><br><span class="line">25  <span class="built_in">history</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-IDE安装"><a href="#2-3-IDE安装" class="headerlink" title="2.3 IDE安装"></a>2.3 IDE安装</h3><p>Clion(收费)</p>
+<p>​    snap install clion –classic</p>
+<p>VSCode</p>
+<h3 id="2-4-工作目录创建"><a href="#2-4-工作目录创建" class="headerlink" title="2.4 工作目录创建"></a>2.4 工作目录创建</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mkdir –p ~/catkin_ws/src/</span><br><span class="line"><span class="built_in">cd</span> catkin_ws</span><br><span class="line">catkin_make</span><br><span class="line">（现在出现了build devel两个文件）</span><br><span class="line">devel文件夹下面有一个setup.bash</span><br><span class="line">把setup.bash路径添加到bashrc里</span><br><span class="line">vi ~/.bashrc</span><br><span class="line">末尾加：<span class="built_in">source</span>  /home/xxx/catkin_ws/devel/setup.bash</span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br><span class="line"></span><br><span class="line">----------------</span><br><span class="line">这时可以测试了  </span><br><span class="line"><span class="built_in">cd</span> -</span><br><span class="line">roscd</span><br><span class="line">就又回来devel目录下面了</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-5-HelloWorld"><a href="#2-5-HelloWorld" class="headerlink" title="2.5 HelloWorld"></a>2.5 HelloWorld</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">----------------julay_say</span><br><span class="line"><span class="comment"># 创建 julay_say项目（依赖std_msgs, roscpp）</span></span><br><span class="line"><span class="comment">## 现在进入catkin_ws/src文件夹中</span></span><br><span class="line">catkin_create_pkg julay_say  std_msgs roscpp</span><br><span class="line"></span><br><span class="line"><span class="comment">## IDE coding </span></span><br><span class="line">catkin_make</span><br><span class="line">rosrun julay_say julay_say_node</span><br><span class="line"></span><br><span class="line">----------------ros_core_node_topic</span><br><span class="line">roscore  <span class="comment"># Ros master Start</span></span><br><span class="line">rosnode info /</span><br><span class="line">rosnode list</span><br><span class="line">rostopic list</span><br><span class="line">rostopic <span class="built_in">echo</span> /kk_topic</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">----------------julay_listen</span><br><span class="line"><span class="comment"># 创建 julay_listen项目（依赖std_msgs, roscpp）</span></span><br><span class="line"><span class="built_in">cd</span> src/</span><br><span class="line">catkin_create_pkg julay_listen std_msgs roscpp</span><br><span class="line"><span class="comment">## IDE coding</span></span><br><span class="line">catkin_make</span><br><span class="line">rosrun julay_listen julay_listen_node</span><br></pre></td></tr></table></figure>
+
+<p>IDE Procject Cmakelist.txt</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find</span><br></pre></td></tr></table></figure>
+
+<h4 id="SourceCode"><a href="#SourceCode" class="headerlink" title="SourceCode"></a>SourceCode</h4><p>/home/simon/catkin_ws/src/julay_say/src/<strong>julay_say_node.cpp</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"ros/ros.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"std_msgs/String.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sstream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> ** argv )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ros::init(argc, argv, <span class="string">"kk_talker"</span>);</span><br><span class="line">    ros::NodeHandle n;</span><br><span class="line">    ros::Publisher kk_pub = n.advertise&lt;std_msgs::String&gt;(<span class="string">"/kk_topic"</span>, <span class="number">10</span>); <span class="comment">// cache 10</span></span><br><span class="line">    ros::<span class="function">Rate <span class="title">loop_rate</span><span class="params">(<span class="number">10</span>)</span></span>;</span><br><span class="line">    <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(ros::ok())</span><br><span class="line">    &#123;</span><br><span class="line">        std_msgs::String msg;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">stringstream</span> ss;</span><br><span class="line">        ss &lt;&lt; <span class="string">"Hello KK "</span> &lt;&lt; count;</span><br><span class="line">        count ++;</span><br><span class="line">        msg.data = ss.str();</span><br><span class="line"></span><br><span class="line">        kk_pub.publish(msg);</span><br><span class="line">        loop_rate.sleep();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>/home/simon/catkin_ws/src/julay_listen/src/<strong>julay_listen_node.cpp</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"ros/ros.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"std_msgs/String.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">julayCallback</span><span class="params">(<span class="keyword">const</span> std_msgs::String::ConstPtr&amp; msg)</span></span>&#123;</span><br><span class="line">    ROS_INFO(<span class="string">"I heard %s"</span> , msg-&gt;data.c_str());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> ** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ros::init(argc, argv, <span class="string">"july_listener"</span>);</span><br><span class="line">    ros::NodeHandle n;</span><br><span class="line">    ros::Subscriber sub = n.subscribe(<span class="string">"/kk_topic"</span>, <span class="number">10</span>, julayCallback);</span><br><span class="line">    ros::spin();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-6-custom-MSG"><a href="#2-6-custom-MSG" class="headerlink" title="2.6 custom MSG"></a>2.6 custom MSG</h3><h4 id="julay-msgs"><a href="#julay-msgs" class="headerlink" title="julay_msgs"></a>julay_msgs</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">catkin_create_pkg julay_msgs std_msgs roscpp</span><br><span class="line"><span class="comment"># 创建 .msg文件</span></span><br><span class="line"><span class="comment"># 修改项目Cmakelist</span></span><br><span class="line"><span class="comment"># 修改package.xml</span></span><br><span class="line">catkin_make</span><br><span class="line"><span class="comment"># 检查生成文件位置</span></span><br><span class="line">ls catkin_ws/devel/include/julay_msgs</span><br><span class="line">JulyMsg.h</span><br></pre></td></tr></table></figure>
+
+<h5 id="msg-JulyMsg-msg"><a href="#msg-JulyMsg-msg" class="headerlink" title="msg/JulyMsg.msg"></a>msg/JulyMsg.msg</h5><p>catkin_ws/src/julay_msgs/msg/JulyMsg.msg</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">string detail</span><br><span class="line">int32 id</span><br></pre></td></tr></table></figure>
+
+<h5 id="CmakeLists-txt"><a href="#CmakeLists-txt" class="headerlink" title="CmakeLists.txt"></a>CmakeLists.txt</h5><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">find_package</span>(catkin REQUIRED COMPONENTS</span><br><span class="line">  roscpp</span><br><span class="line">  std_msgs message_generation</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">## Generate messages in the 'msg' folder</span></span><br><span class="line">add_message_files(</span><br><span class="line">  DIRECTORY msg</span><br><span class="line">  FILES</span><br><span class="line">  JulyMsg.msg</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">## Generate added messages and services with any dependencies listed here</span></span><br><span class="line">generate_messages(</span><br><span class="line">  DEPENDENCIES</span><br><span class="line">  std_msgs</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h5 id="Package-xml"><a href="#Package-xml" class="headerlink" title="Package.xml"></a>Package.xml</h5><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build_depend</span>&gt;</span>message_generation<span class="tag">&lt;/<span class="name">build_depend</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">exec_depend</span>&gt;</span>message_runtime<span class="tag">&lt;/<span class="name">exec_depend</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="julay-say-Ros-Param"><a href="#julay-say-Ros-Param" class="headerlink" title="julay_say(Ros Param)"></a>julay_say(Ros Param)</h4><h5 id="src-julay-say-node-cpp"><a href="#src-julay-say-node-cpp" class="headerlink" title="src/julay_say_node.cpp"></a>src/julay_say_node.cpp</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"ros/ros.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"std_msgs/String.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"julay_msgs/JulyMsg.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> ** argv )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ros::init(argc, argv, <span class="string">"kk_talker"</span>);</span><br><span class="line">    ros::NodeHandle n;</span><br><span class="line">    ros::Publisher kk_pub = n.advertise&lt;std_msgs::String&gt;(<span class="string">"/kk_topic"</span>, <span class="number">10</span>); <span class="comment">// cache 10</span></span><br><span class="line">    ros::Publisher kk_pub_new = n.advertise&lt;julay_msgs::JulyMsg&gt;(<span class="string">"/kk_topic_new"</span>, <span class="number">10</span>);</span><br><span class="line">    ros::<span class="function">Rate <span class="title">loop_rate</span><span class="params">(<span class="number">10</span>)</span></span>;</span><br><span class="line">    <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(ros::ok())</span><br><span class="line">    &#123;</span><br><span class="line">        std_msgs::String msg;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">stringstream</span> ss;</span><br><span class="line">        ss &lt;&lt; <span class="string">"Hello KK "</span> &lt;&lt; count;</span><br><span class="line">        count ++;</span><br><span class="line">        msg.data = ss.str();</span><br><span class="line">        kk_pub.publish(msg);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">string</span> param_string;</span><br><span class="line">        n.param&lt;<span class="built_in">std</span>::<span class="built_in">string</span>&gt;(<span class="string">"myparam"</span>, param_string, <span class="string">"hi julay"</span>);</span><br><span class="line"></span><br><span class="line">        julay_msgs::JulyMsg julyMsg;</span><br><span class="line">        julyMsg.id = count;</span><br><span class="line">        julyMsg.detail = param_string; <span class="comment">//"hello julay new";</span></span><br><span class="line">        kk_pub_new.publish(julyMsg);</span><br><span class="line"></span><br><span class="line">        loop_rate.sleep();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="CmakeList"><a href="#CmakeList" class="headerlink" title="CmakeList"></a>CmakeList</h5><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">find_package</span>(catkin REQUIRED COMPONENTS</span><br><span class="line">  roscpp</span><br><span class="line">  std_msgs</span><br><span class="line">  julay_msgs</span><br><span class="line">)</span><br><span class="line">catkin_package(</span><br><span class="line">  CATKIN_DEPENDS roscpp std_msgs julay_msgs</span><br><span class="line">)</span><br><span class="line"><span class="keyword">include_directories</span>(</span><br><span class="line">  <span class="variable">$&#123;catkin_INCLUDE_DIRS&#125;</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">add_executable</span>(<span class="variable">$&#123;PROJECT_NAME&#125;</span>_node src/julay_say_node.cpp)</span><br><span class="line"><span class="keyword">add_dependencies</span>(<span class="variable">$&#123;PROJECT_NAME&#125;</span>_node <span class="variable">$&#123;$&#123;PROJECT_NAME&#125;</span>_EXPORTED_TARGETS&#125; <span class="variable">$&#123;catkin_EXPORTED_TARGETS&#125;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">target_link_libraries</span>(<span class="variable">$&#123;PROJECT_NAME&#125;</span>_node</span><br><span class="line">   <span class="variable">$&#123;catkin_LIBRARIES&#125;</span></span><br><span class="line"> )</span><br></pre></td></tr></table></figure>
+
+<h5 id="Package-xml-1"><a href="#Package-xml-1" class="headerlink" title="Package.xml"></a>Package.xml</h5><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build_depend</span>&gt;</span>julay_msgs<span class="tag">&lt;/<span class="name">build_depend</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">exec_depend</span>&gt;</span>julay_msgs<span class="tag">&lt;/<span class="name">exec_depend</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="RUN"><a href="#RUN" class="headerlink" title="RUN"></a>RUN</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">roscore</span><br><span class="line">rosrun julay_say julay_say_node</span><br><span class="line">rostopic <span class="built_in">echo</span> /kk_topic_new</span><br><span class="line">rosparam <span class="built_in">set</span> myparam <span class="string">"OK"</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-7-Decker"><a href="#2-7-Decker" class="headerlink" title="2.7 Decker"></a>2.7 Decker</h3><p>todo</p>
+<h2 id="3、感知基础"><a href="#3、感知基础" class="headerlink" title="3、感知基础"></a>3、感知基础</h2><h2 id="4、动态环境感知与2D检测"><a href="#4、动态环境感知与2D检测" class="headerlink" title="4、动态环境感知与2D检测"></a>4、动态环境感知与2D检测</h2><h2 id="5、动态环境感知与3D检测"><a href="#5、动态环境感知与3D检测" class="headerlink" title="5、动态环境感知与3D检测"></a>5、动态环境感知与3D检测</h2><h2 id="6、动态环境感知与跟踪"><a href="#6、动态环境感知与跟踪" class="headerlink" title="6、动态环境感知与跟踪"></a>6、动态环境感知与跟踪</h2><h2 id="7、高精地图V2X-HD-MAP"><a href="#7、高精地图V2X-HD-MAP" class="headerlink" title="7、高精地图V2X HD MAP"></a>7、高精地图V2X HD MAP</h2><h2 id="8、无人车定位系统"><a href="#8、无人车定位系统" class="headerlink" title="8、无人车定位系统"></a>8、无人车定位系统</h2><h2 id="9、预测系统"><a href="#9、预测系统" class="headerlink" title="9、预测系统"></a>9、预测系统</h2><h2 id="10、道路规划"><a href="#10、道路规划" class="headerlink" title="10、道路规划"></a>10、道路规划</h2><h2 id="11、控制理论"><a href="#11、控制理论" class="headerlink" title="11、控制理论"></a>11、控制理论</h2><h2 id="12、强化学习"><a href="#12、强化学习" class="headerlink" title="12、强化学习"></a>12、强化学习</h2><h2 id="系列大纲"><a href="#系列大纲" class="headerlink" title="系列大纲"></a>系列大纲</h2><p><a href="https://zhuanlan.zhihu.com/p/339527655" target="_blank" rel="noopener">王博Kings：无人驾驶系列知识入门到提高0-总体目录</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/339660644" target="_blank" rel="noopener">王博Kings -无人驾驶系列知识入门到提高1–总体概述</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/340035744" target="_blank" rel="noopener">王博Kings -无人驾驶系列知识入门到提高2–软件环境</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/342574704" target="_blank" rel="noopener">王博Kings：无人驾驶系列知识入门到提高3–感知基础</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/342829550" target="_blank" rel="noopener">王博Kings：无人驾驶系列知识入门到提高4–动态环境感知与2D检测</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/343797494" target="_blank" rel="noopener">王博Kings：无人驾驶系列知识入门到提高5–动态环境感知与3D检测</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/345787464" target="_blank" rel="noopener">王博Kings：无人驾驶系列知识入门到提高6-动态环境感知与跟踪</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/348124453" target="_blank" rel="noopener">王博Kings：无人驾驶系列知识入门到提高7-高精度地图 V2X HD MAP</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/359577240" target="_blank" rel="noopener">王博Kings：无人驾驶系列知识入门到提高8-无人车定位系统</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/388943096" target="_blank" rel="noopener">王博Kings：无人驾驶系列知识入门到提高9-预测系统</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Autopilot/" rel="tag"># Autopilot</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/03/22/Sub_Language/CPlus/Cplus_lock/" rel="next" title="C++ 多线程互斥锁(mutex，lock，lock_guard)">
+                <i class="fa fa-chevron-left"></i> C++ 多线程互斥锁(mutex，lock，lock_guard)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/03/31/Course/Graphics/Games101/" rel="prev" title="现代计算机图形学入门">
+                现代计算机图形学入门 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Simon Shi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">283</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">132</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">239</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#课程评价"><span class="nav-number">1.</span> <span class="nav-text">课程评价</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1、总体概览"><span class="nav-number">2.</span> <span class="nav-text">1、总体概览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、软件环境"><span class="nav-number">3.</span> <span class="nav-text">2、软件环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-环境配置"><span class="nav-number">3.1.</span> <span class="nav-text">2.1 环境配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-ROS开发环境安装"><span class="nav-number">3.2.</span> <span class="nav-text">2.2 ROS开发环境安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-IDE安装"><span class="nav-number">3.3.</span> <span class="nav-text">2.3 IDE安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-工作目录创建"><span class="nav-number">3.4.</span> <span class="nav-text">2.4 工作目录创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-HelloWorld"><span class="nav-number">3.5.</span> <span class="nav-text">2.5 HelloWorld</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SourceCode"><span class="nav-number">3.5.1.</span> <span class="nav-text">SourceCode</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-custom-MSG"><span class="nav-number">3.6.</span> <span class="nav-text">2.6 custom MSG</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#julay-msgs"><span class="nav-number">3.6.1.</span> <span class="nav-text">julay_msgs</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#msg-JulyMsg-msg"><span class="nav-number">3.6.1.1.</span> <span class="nav-text">msg/JulyMsg.msg</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CmakeLists-txt"><span class="nav-number">3.6.1.2.</span> <span class="nav-text">CmakeLists.txt</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Package-xml"><span class="nav-number">3.6.1.3.</span> <span class="nav-text">Package.xml</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#julay-say-Ros-Param"><span class="nav-number">3.6.2.</span> <span class="nav-text">julay_say(Ros Param)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#src-julay-say-node-cpp"><span class="nav-number">3.6.2.1.</span> <span class="nav-text">src/julay_say_node.cpp</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CmakeList"><span class="nav-number">3.6.2.2.</span> <span class="nav-text">CmakeList</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Package-xml-1"><span class="nav-number">3.6.2.3.</span> <span class="nav-text">Package.xml</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RUN"><span class="nav-number">3.6.3.</span> <span class="nav-text">RUN</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7-Decker"><span class="nav-number">3.7.</span> <span class="nav-text">2.7 Decker</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、感知基础"><span class="nav-number">4.</span> <span class="nav-text">3、感知基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、动态环境感知与2D检测"><span class="nav-number">5.</span> <span class="nav-text">4、动态环境感知与2D检测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5、动态环境感知与3D检测"><span class="nav-number">6.</span> <span class="nav-text">5、动态环境感知与3D检测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6、动态环境感知与跟踪"><span class="nav-number">7.</span> <span class="nav-text">6、动态环境感知与跟踪</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7、高精地图V2X-HD-MAP"><span class="nav-number">8.</span> <span class="nav-text">7、高精地图V2X HD MAP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8、无人车定位系统"><span class="nav-number">9.</span> <span class="nav-text">8、无人车定位系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9、预测系统"><span class="nav-number">10.</span> <span class="nav-text">9、预测系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10、道路规划"><span class="nav-number">11.</span> <span class="nav-text">10、道路规划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11、控制理论"><span class="nav-number">12.</span> <span class="nav-text">11、控制理论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12、强化学习"><span class="nav-number">13.</span> <span class="nav-text">12、强化学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系列大纲"><span class="nav-number">14.</span> <span class="nav-text">系列大纲</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+    
+
+        
+
+
+
+
+
+
+<div>
+<!-- 填写你的友盟代码 -->
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1277989586'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s9.cnzz.com/z_stat.php%3Fid%3D1277989586%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+<!-- 你的友盟代码 end -->
+</div>
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'novav',
+            repo: 'blog_comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'ea8aae03b5381e13ab9cdedd0282b60d8ec412cb',
+            
+                client_id: 'c3934b23eb001aa3243d'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

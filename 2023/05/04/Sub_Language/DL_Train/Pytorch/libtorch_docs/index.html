@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="PyTorch,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Simon Shi的小站" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="Tensor初始化123456789101112131415161718192021222324252627//1 数组 -&amp;gt; Tensorint data[10] = &amp;#123;3,4,6&amp;#125;torch::Tensor x_data = torch::from_blob(data,&amp;#123;3&amp;#125;,torch::kFloat)//2 vector -&amp;gt; Tenso">
+<meta name="keywords" content="PyTorch">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LibPyTorch Doc">
+<meta property="og:url" content="http://yoursite.com/2023/05/04/Sub_Language/DL_Train/Pytorch/libtorch_docs/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="Tensor初始化123456789101112131415161718192021222324252627//1 数组 -&amp;gt; Tensorint data[10] = &amp;#123;3,4,6&amp;#125;torch::Tensor x_data = torch::from_blob(data,&amp;#123;3&amp;#125;,torch::kFloat)//2 vector -&amp;gt; Tenso">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2024-09-03T13:49:22.182Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LibPyTorch Doc">
+<meta name="twitter:description" content="Tensor初始化123456789101112131415161718192021222324252627//1 数组 -&amp;gt; Tensorint data[10] = &amp;#123;3,4,6&amp;#125;torch::Tensor x_data = torch::from_blob(data,&amp;#123;3&amp;#125;,torch::kFloat)//2 vector -&amp;gt; Tenso">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2023/05/04/Sub_Language/DL_Train/Pytorch/libtorch_docs/">
+
+
+
+
+
+  <title>LibPyTorch Doc | Simon Shi的小站</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simon Shi的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人工智能，机器学习 学习记录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2023/05/04/Sub_Language/DL_Train/Pytorch/libtorch_docs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">LibPyTorch Doc</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2023-05-04T12:00:00+00:00">
+                2023-05-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DNN-Platform/" itemprop="url" rel="index">
+                    <span itemprop="name">DNN_Platform</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DNN-Platform/PyTorch/" itemprop="url" rel="index">
+                    <span itemprop="name">PyTorch</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2023/05/04/Sub_Language/DL_Train/Pytorch/libtorch_docs/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2023/05/04/Sub_Language/DL_Train/Pytorch/libtorch_docs/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="Tensor初始化"><a href="#Tensor初始化" class="headerlink" title="Tensor初始化"></a>Tensor初始化</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1 数组 -&gt; Tensor</span></span><br><span class="line"><span class="keyword">int</span> data[<span class="number">10</span>] = &#123;<span class="number">3</span>,<span class="number">4</span>,<span class="number">6</span>&#125;</span><br><span class="line">torch::Tensor x_data = torch::from_blob(data,&#123;<span class="number">3</span>&#125;,torch::kFloat)</span><br><span class="line"></span><br><span class="line"><span class="comment">//2 vector -&gt; Tensor</span></span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">float</span>&gt; std_vector = &#123;<span class="number">3</span>，<span class="number">4</span>，<span class="number">6</span>&#125;;</span><br><span class="line">torch::Tensor vector_data = torch::from_brob(std_vector.data(),&#123;<span class="number">3</span>&#125;,torch::kFloat);</span><br><span class="line"></span><br><span class="line"><span class="comment">//3 Tensor like</span></span><br><span class="line">torch::Tensor x = torch::zeros(&#123;<span class="number">3</span>,<span class="number">4</span>&#125;);</span><br><span class="line">torch::Tensor x_zeros = torch::zeros_like(x);</span><br><span class="line">torch::Tensor x_ones = torch::ones_like(x);</span><br><span class="line">torch::Tensor x_rand = torch::rand_like(x);</span><br><span class="line"><span class="comment">//浅拷贝</span></span><br><span class="line">torch::Tensor y = x</span><br><span class="line"><span class="comment">//深拷贝</span></span><br><span class="line">torch::Tensor z = x.clone();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//4 new shape Tensor</span></span><br><span class="line">torch::Tensor x_ones = torch::ones(&#123;<span class="number">3</span>,<span class="number">4</span>&#125;);</span><br><span class="line">torch::Tensor x_zeros = torch::zeros(&#123;<span class="number">3</span>,<span class="number">4</span>&#125;);</span><br><span class="line">torch::Tensor x_eye = torch::eye(<span class="number">4</span>);</span><br><span class="line">torch::Tensor x_full = torch::full(&#123;<span class="number">3</span>,<span class="number">4</span>&#125;,<span class="number">10</span>);</span><br><span class="line">torch::Tensor x_rand = torch::rand(&#123;<span class="number">3</span>,<span class="number">4</span>&#125;);</span><br><span class="line">torch::Tensor x_randn = torch::randn(&#123;<span class="number">3</span>,<span class="number">4</span>&#125;);</span><br><span class="line">torch::Tensor x_randint = torch::randint(<span class="number">0</span>,<span class="number">4</span>,&#123;<span class="number">3</span>,<span class="number">3</span>&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="Tensor-操作"><a href="#Tensor-操作" class="headerlink" title="Tensor 操作"></a>Tensor 操作</h3><h4 id="index-select"><a href="#index-select" class="headerlink" title="index_select"></a>index_select</h4><p>提取指定元素形成新的张量（关键字index：就代表是提取出来相应的元素组成新的张量）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;b.index_select(<span class="number">0</span>,torch::tensor(&#123;<span class="number">0</span>, <span class="number">3</span>, <span class="number">3</span>&#125;)).sizes();<span class="comment">//选择第0维的0，3，3组成新张量[3,3,28,28]</span></span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;b.index_select(<span class="number">1</span>,torch::tensor(&#123;<span class="number">0</span>,<span class="number">2</span>&#125;)).sizes(); <span class="comment">//选择第1维的第0和第2的组成新张量[10, 2, 28, 28]</span></span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;b.index_select(<span class="number">2</span>,torch::arange(<span class="number">0</span>,<span class="number">8</span>)).sizes(); <span class="comment">//选择十张图片每个通道的前8列的所有像素[10, 3, 8, 28]</span></span><br><span class="line"></span><br><span class="line">Tensor x_data = torch::rand(&#123;<span class="number">3</span>,<span class="number">4</span>&#125;);</span><br><span class="line">Tensor mask = torch::zeros(&#123;<span class="number">3</span>,<span class="number">4</span>&#125;);</span><br><span class="line"></span><br><span class="line">mask[<span class="number">1</span>][<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">mask[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//index()方法输入参量为布尔值组成的数组，输出参量为对应index的值组成新的张量(新的内存空间)</span></span><br><span class="line">Tensor x = x_data.index(&#123; mask.to(kBool) &#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="torch-topk"><a href="#torch-topk" class="headerlink" title="torch::topk"></a>torch::topk</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">torch::Tensor torch::topk(<span class="keyword">const</span> torch::Tensor&amp; input, <span class="keyword">int</span> k, <span class="keyword">int</span> dim=<span class="number">-1</span>, <span class="keyword">bool</span> largest=<span class="literal">true</span>, <span class="keyword">bool</span> sorted=<span class="literal">false</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// input：输入张量。</span></span><br><span class="line"><span class="comment">// k：最大的 k 个值的数量。</span></span><br><span class="line"><span class="comment">// dim：要获取最大值的位置的维度，默认为 -1（最后一位）。</span></span><br><span class="line"><span class="comment">// largest：如果为 true，则返回最大的 k 个值；如果为 false，则返回最小的 k 个值。默认为 true。</span></span><br><span class="line"><span class="comment">// sorted：如果为 true，则返回的值是排序的；如果为 false，则不保证排序。默认为 false。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/// return </span></span><br><span class="line"><span class="comment">// 一个张量，包含最大的 k 个值（如果 largest=true）或最小的 k 个值（如果 largest=false）。</span></span><br><span class="line"><span class="comment">// 一个张量，包含这些值的索引。</span></span><br><span class="line"></span><br><span class="line">torch::Tensor x = torch::tensor(&#123;<span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="number">5</span>, <span class="number">9</span>, <span class="number">6</span>&#125;);  </span><br><span class="line"><span class="keyword">auto</span> [values, indices] = torch::topk(x, <span class="number">3</span>);  </span><br><span class="line"></span><br><span class="line"><span class="comment">// values: tensor([9, 7, 6])  </span></span><br><span class="line"><span class="comment">// indices: tensor([8, 5, 4])</span></span><br></pre></td></tr></table></figure>
+
+<p>E2:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">torch::Tensor scores = torch::rand(&#123;<span class="number">10</span>&#125;);</span><br><span class="line"><span class="built_in">std</span>::tuple&lt;torch::Tensor,torch::Tensor&gt; sort_ret = torch::sort(scores.unsqueeze(<span class="number">1</span>), <span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">torch::Tensor v = <span class="built_in">std</span>::get&lt;<span class="number">0</span>&gt;(sort_ret).squeeze(<span class="number">1</span>).to(scores.device());</span><br><span class="line">torch::Tensor idx = <span class="built_in">std</span>::get&lt;<span class="number">1</span>&gt;(sort_ret).squeeze(<span class="number">1</span>).to(scores.device());</span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;scores&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;v&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;idx&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++)</span><br><span class="line">&#123;</span><br><span class="line">     <span class="keyword">int</span> idx_1 = idx[i].item&lt;<span class="keyword">int</span>&gt;();</span><br><span class="line">     <span class="keyword">float</span> s = v[i].item&lt;<span class="keyword">float</span>&gt;();</span><br><span class="line"></span><br><span class="line">      <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;idx_1&lt;&lt;<span class="string">"  "</span>&lt;&lt;s&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p><a href="https://blog.csdn.net/yang332233/article/details/106199180" target="_blank" rel="noopener">libtorch 常用api函数示例（史上最全、最详细）_无左无右的博客-CSDN博客</a></p>
+<p><a href="https://blog.csdn.net/weixin_43917589/article/details/126335273" target="_blank" rel="noopener">Libtorch教程(二)：基于Libtorch分类模型推理_脆皮茄条的博客-CSDN博客_libtorch 推理</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PyTorch/" rel="tag"># PyTorch</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2023/04/20/Sub_Language/DL_Train/PT_To_TF/" rel="next" title="TF <--> Torch">
+                <i class="fa fa-chevron-left"></i> TF <--> Torch
+              </--></a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2023/05/04/Sub_Language/DL_Train/TFpb_To_PTModel_1/" rel="prev" title="PB(tf) to Pth(Torch)">
+                PB(tf) to Pth(Torch) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Simon Shi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">283</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">132</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">239</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Tensor初始化"><span class="nav-number">1.</span> <span class="nav-text">Tensor初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tensor-操作"><span class="nav-number">2.</span> <span class="nav-text">Tensor 操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#index-select"><span class="nav-number">2.1.</span> <span class="nav-text">index_select</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#torch-topk"><span class="nav-number">2.2.</span> <span class="nav-text">torch::topk</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+    
+
+        
+
+
+
+
+
+
+<div>
+<!-- 填写你的友盟代码 -->
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1277989586'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s9.cnzz.com/z_stat.php%3Fid%3D1277989586%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+<!-- 你的友盟代码 end -->
+</div>
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'novav',
+            repo: 'blog_comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'ea8aae03b5381e13ab9cdedd0282b60d8ec412cb',
+            
+                client_id: 'c3934b23eb001aa3243d'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
