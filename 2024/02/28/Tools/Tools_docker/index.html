@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Docker,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Simon Shi的小站" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="Docker 架构  docker images -a 12345678910111213141516安装Docker：https://github.com/NVIDIA/nvidia-docker注意：要在不带 sudo 的情况下运行 docker 命令，请创建 docker 组并添加用户。有关详情，请参阅针对 Linux 的安装后步骤。https://docs.docker.com/insta">
+<meta name="keywords" content="Docker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker 安装使用">
+<meta property="og:url" content="http://yoursite.com/2024/02/28/Tools/Tools_docker/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="Docker 架构  docker images -a 12345678910111213141516安装Docker：https://github.com/NVIDIA/nvidia-docker注意：要在不带 sudo 的情况下运行 docker 命令，请创建 docker 组并添加用户。有关详情，请参阅针对 Linux 的安装后步骤。https://docs.docker.com/insta">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2024/02/28/Tools/Tools_docker/2024-03-01-10-39-04-image.png">
+<meta property="og:updated_time" content="2024-10-12T06:50:39.467Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Docker 安装使用">
+<meta name="twitter:description" content="Docker 架构  docker images -a 12345678910111213141516安装Docker：https://github.com/NVIDIA/nvidia-docker注意：要在不带 sudo 的情况下运行 docker 命令，请创建 docker 组并添加用户。有关详情，请参阅针对 Linux 的安装后步骤。https://docs.docker.com/insta">
+<meta name="twitter:image" content="http://yoursite.com/2024/02/28/Tools/Tools_docker/2024-03-01-10-39-04-image.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2024/02/28/Tools/Tools_docker/">
+
+
+
+
+
+  <title>Docker 安装使用 | Simon Shi的小站</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simon Shi的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人工智能，机器学习 学习记录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2024/02/28/Tools/Tools_docker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Docker 安装使用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2024-02-28T15:23:00+00:00">
+                2024-02-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/" itemprop="url" rel="index">
+                    <span itemprop="name">Tools</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/Docker/" itemprop="url" rel="index">
+                    <span itemprop="name">Docker</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2024/02/28/Tools/Tools_docker/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2024/02/28/Tools/Tools_docker/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Docker 架构</p>
+<p><img src="/2024/02/28/Tools/Tools_docker/2024-03-01-10-39-04-image.png" alt></p>
+<p>docker images -a</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">安装Docker：</span><br><span class="line"></span><br><span class="line">https://github.com/NVIDIA/nvidia-docker</span><br><span class="line">注意：要在不带 sudo 的情况下运行 docker 命令，请创建 docker 组并添加用户。有关详情，请参阅针对 Linux 的安装后步骤。</span><br><span class="line">https://docs.docker.com/install/linux/linux-postinstall/</span><br><span class="line"></span><br><span class="line">下载 TensorFlow Docker 映像</span><br><span class="line"></span><br><span class="line">docker pull tensorflow/tensorflow                # latest stable release</span><br><span class="line">docker pull tensorflow/tensorflow:1.12.0-gpu-py3</span><br><span class="line">docker pull tensorflow/tensorflow:nightly-devel-gpu  # nightly dev release w/ GPU support</span><br><span class="line">运行测试：</span><br><span class="line">docker run --runtime=nvidia -it --rm tensorflow/tensorflow:latest-gpu \</span><br><span class="line">   python -c "import tensorflow as tf; tf.enable_eager_execution(); print(tf.reduce_sum(tf.random_normal([1000, 1000])))"</span><br><span class="line">docker run --runtime=nvidia -it --rm tensorflow/tensorflow:1.12.0-gpu-py3 \</span><br><span class="line">   python -c "import tensorflow as tf; tf.enable_eager_execution(); print(tf.reduce_sum(tf.random_normal([1000, 1000])))"</span><br></pre></td></tr></table></figure>
+
+<p>docker run -it –rm -v $PWD:/tmp -w /tmp tensorflow/tensorflow:1.12.0-gpu-py3 python3 ./selfplay/tf_nn_policy_network_01.py</p>
+<blockquote>
+<h1 id="docker-run-–runtime-nvidia-it-–rm-v-PWD-home-user-shixinxin-tensorflow-tensorflow-1-12-0-gpu-py3"><a href="#docker-run-–runtime-nvidia-it-–rm-v-PWD-home-user-shixinxin-tensorflow-tensorflow-1-12-0-gpu-py3" class="headerlink" title="docker run –runtime=nvidia -it –rm -v $PWD:/home/user/shixinxin  tensorflow/tensorflow:1.12.0-gpu-py3"></a>docker run –runtime=nvidia -it –rm -v $PWD:/home/user/shixinxin  tensorflow/tensorflow:1.12.0-gpu-py3</h1></blockquote>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>docker run –runtime=nvidia -it –rm -v $PWD:/home/user/shixinxin  tensorflow/tensorflow:1.12.0-gpu-py3</td>
+<td>创建一个镜像（共享文件路径）</td>
+</tr>
+<tr>
+<td>sudo docker ps</td>
+<td>查看dockers</td>
+</tr>
+<tr>
+<td>sudo docker exec -it 88ce65ec31e3 /bin/bash</td>
+<td>进入docker bash</td>
+</tr>
+<tr>
+<td>python3 -u xxx.py</td>
+<td>运行.py</td>
+</tr>
+<tr>
+<td>Python3</td>
+<td>运行python</td>
+</tr>
+<tr>
+<td>nvidia-smi</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="Docker镜像"><a href="#Docker镜像" class="headerlink" title="Docker镜像"></a>Docker镜像</h3><p><a href="https://hub.docker.com/r/pytorch/pytorch/tags?page=1&name=cuda10.0" target="_blank" rel="noopener">Docker</a></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>cuda10.0</td>
+<td>1.2-cuda10.0-cudnn7-devel<br>1.1-cuda10.0-cudnn7-devel<br>1.0-cuda10.0-cudnn7-devel</td>
+<td></td>
+</tr>
+<tr>
+<td>cuda10.1</td>
+<td>1.3.0 ~ 1.6.0-cuda10.1-cudnn7-devel</td>
+<td></td>
+</tr>
+<tr>
+<td>cuda10.2</td>
+<td>1.8.1 ~ 1.9.0-cuda10.2-cudnn7-devel</td>
+<td></td>
+</tr>
+<tr>
+<td>cuda11.0</td>
+<td>1.7.1-cuda11.0-cudnn8-devel</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="Docker测试"><a href="#Docker测试" class="headerlink" title="Docker测试"></a>Docker测试</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ -I/usr/local/cuda-11.0/targets/x86_64-linux/include/ gemfield.cpp -o gemfield -L/usr/local/cuda-11.0/targets/x86_64-linux/lib/ -lcudart</span><br></pre></td></tr></table></figure>
+
+<h3 id="Docker-服务"><a href="#Docker-服务" class="headerlink" title="Docker 服务"></a>Docker 服务</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Stop</span></span><br><span class="line">systemctl status docker</span><br><span class="line">systemctl stop docker</span><br><span class="line">systemctl disable docker.service</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> start</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">重载unit配置文件</span></span><br><span class="line">systemctl daemon-reload </span><br><span class="line"><span class="meta">#</span><span class="bash">启动Docker</span></span><br><span class="line">systemctl start docker </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">设置开机自启</span></span><br><span class="line">systemctl enable docker.service</span><br></pre></td></tr></table></figure>
+
+<h3 id="镜像"><a href="#镜像" class="headerlink" title="镜像"></a>镜像</h3><h4 id="Pull-amp-Run-创建容器"><a href="#Pull-amp-Run-创建容器" class="headerlink" title="Pull &amp; Run(创建容器)"></a>Pull &amp; Run(创建容器)</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 镜像</span></span><br><span class="line">docker images  </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># run</span></span></span><br><span class="line">docker run IMAGE:TAG</span><br><span class="line">docker run -it --ipc host --gpus all -v /data/shixx/face_swap/hififace:/workspace </span><br><span class="line">    -v /data:/DATA --name hififace hififace:latent</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 单次运行容器，运行后会终止运行</span></span><br><span class="line">docker run ubuntu:latest /bin/echo 'Hello world'</span><br><span class="line"><span class="meta">#</span><span class="bash"> 交互方式运行容器 （-i 保持常开，-t 分配终端访问容器）</span></span><br><span class="line"></span><br><span class="line">docker run -t -i ubuntu:latest /bin/bash</span><br><span class="line"><span class="meta">#</span><span class="bash"> run -d 后台（守护方式）运行；</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> docker container logs ID 查看日志</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="cp镜像-save-load"><a href="#cp镜像-save-load" class="headerlink" title="cp镜像(save,load)"></a>cp镜像(save,load)</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> save</span></span><br><span class="line">docker save 镜像名字:版本号 &gt; /root/打包名字.tar</span><br><span class="line">docker save -o /root/打包名字.tar 镜像名字:版本号</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> load</span></span><br><span class="line">docker load &lt; /root/打包名字.tar</span><br><span class="line">docker load -i qwenllmcu117.tar </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> tag</span></span><br><span class="line">docker tag 镜像ID 镜像名字:版本号</span><br></pre></td></tr></table></figure>
+
+<h4 id="run"><a href="#run" class="headerlink" title="run"></a>run</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">docker run</span><br><span class="line">-d：后台运行容器（以守护进程模式）。</span><br><span class="line">-it：交互式操作，通常与 -d 一起使用。</span><br><span class="line">--name：为容器指定一个名称。</span><br><span class="line">--rm：容器停止后自动删除容器文件系统。</span><br><span class="line">-v：挂载主机目录到容器内部的指定路径。</span><br><span class="line">-p，指定端口映射，格式：主机(宿主)端口:容器端口</span><br><span class="line">-P，随机端口映射，容器内部端口随机映射到主机的端口</span><br><span class="line">-u，以什么用户身份创建容器</span><br></pre></td></tr></table></figure>
+
+<h3 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h3><h4 id="命令-启动，关闭，结束"><a href="#命令-启动，关闭，结束" class="headerlink" title="命令(启动，关闭，结束)"></a>命令(启动，关闭，结束)</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 容器查看</span></span><br><span class="line">docker ps -a(查看已经暂停的容器实例)</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> start （启动终止状态 （exited）容器）</span></span><br><span class="line">docker start xxxID </span><br><span class="line">docker container start ID</span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">exec</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># stop给与一定的关闭时间交由容器自己保存状态，kill直接关闭容器</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Stop</span></span><br><span class="line">docker stop ID/Name</span><br><span class="line"><span class="meta">#</span><span class="bash"> Kill</span></span><br><span class="line">docker kill ID/Name</span><br><span class="line"><span class="meta">#</span><span class="bash"> restart</span></span><br><span class="line">docker restart xxxx</span><br></pre></td></tr></table></figure>
+
+<h4 id="进入容器"><a href="#进入容器" class="headerlink" title="进入容器"></a>进入容器</h4><p>exited 状态的容器，需要先start之后，才能进入</p>
+<ul>
+<li>启动的容器，会有一个overlay的存储占用/var/lib/docker/overlay2/container_id</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">docker start [container ID]</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> docker <span class="built_in">exec</span> </span></span><br><span class="line">docker exec -i 69d1 bash  # 只运行命令，不进入容器</span><br><span class="line"></span><br><span class="line">docker exec -it [container ID or NAMES]  /bin/bash</span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">exit</span> (只需键入 <span class="built_in">exit</span> 命令回车即可)当使用 <span class="built_in">exit</span> 退出容器时，不会导致容器停止。</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> docker attch</span></span><br><span class="line">docker attach [container ID or NAMES] </span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">exit</span> 当使用 <span class="built_in">exit</span> 退出容器时，容器停止。</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="导出容器、导入成镜像"><a href="#导出容器、导入成镜像" class="headerlink" title="导出容器、导入成镜像"></a>导出容器、导入成镜像</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">export</span></span></span><br><span class="line">docker ps -a</span><br><span class="line">docker export XXXID  &gt; redis.tar</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> import </span></span><br><span class="line">cat redis.tar | docker import - test/redis:v1.0</span><br><span class="line">docker iamges</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> import URL/目录  容器</span></span><br><span class="line">docker import http://example.com/exampleimage.tgz example/imagerepo</span><br></pre></td></tr></table></figure>
+
+<h4 id="容器–commit-gt-镜像"><a href="#容器–commit-gt-镜像" class="headerlink" title="容器–commit-&gt;镜像"></a>容器–commit-&gt;镜像</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker commit &lt;container_id&gt;  &lt;image_name&gt;</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://blog.51cto.com/u_16213404/10234492" target="_blank" rel="noopener">docker容器打包成镜像并导出_mob64ca12e9cad4的技术博客_51CTO博客</a></p>
+<p><a href="https://blog.csdn.net/2401_85558754/article/details/139816394" target="_blank" rel="noopener">Docker：通过容器生成镜像的三种方法_docker容器打包成镜像-CSDN博客</a></p>
+<h4 id="RM删除容器"><a href="#RM删除容器" class="headerlink" title="RM删除容器"></a>RM删除容器</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 删除</span></span><br><span class="line">docker rm [container-ID or Name]</span><br><span class="line"><span class="meta">#</span><span class="bash"> 强制删除</span></span><br><span class="line">docker rm -f [container-ID or Name]</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 删除所有已经停止运行的容器</span></span><br><span class="line">docker container prune</span><br></pre></td></tr></table></figure>
+
+<h3 id="自定义容器"><a href="#自定义容器" class="headerlink" title="自定义容器"></a>自定义容器</h3><h4 id="Docker-File（-Build-With-PATH-本地路径-）"><a href="#Docker-File（-Build-With-PATH-本地路径-）" class="headerlink" title="Docker File（## Build With PATH(本地路径)）"></a>Docker File（## Build With PATH(本地路径)）</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t test:v1.0 .</span><br></pre></td></tr></table></figure>
+
+<p>这个 . 就表示 PATH。Docker-client 会将当前目录下的所有文件打包全部发送给 Docker-engine。<a href="https://mp.weixin.qq.com/s/lcyj6QnI6MN06RQtB8bQEw" target="_blank" rel="noopener">Docker build使用</a></p>
+<p><a href="https://mp.weixin.qq.com/s/OxbBAsmQWJLgtQJpZzRBrA" target="_blank" rel="noopener">04-docker-commit构建自定义镜像</a></p>
+<h4 id="RUN-Demo"><a href="#RUN-Demo" class="headerlink" title="RUN Demo"></a>RUN Demo</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --rm --gpus all nvidia/cuda:11.0.3-base-ubuntu18.04 nvidia-smi</span><br></pre></td></tr></table></figure>
+
+<p>Docker中使用GPU原来是需要安装nvidia-docker2的（方法在下面），已经不需要了： 从docker 19.03开始，已经内置支持，不需要单独安装和设置了。</p>
+<h2 id="docker-compose"><a href="#docker-compose" class="headerlink" title="docker-compose"></a>docker-compose</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up</span><br><span class="line">docker-compose up -d</span><br><span class="line">docker-compose stop</span><br><span class="line">docker-compose logs</span><br><span class="line">---</span><br><span class="line">docker-compose restart</span><br><span class="line">---</span><br><span class="line">docker-compose down</span><br><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
+
+<h3 id="docker-compose-gpu"><a href="#docker-compose-gpu" class="headerlink" title="docker-compose gpu"></a>docker-compose gpu</h3><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3.9'</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">    hififace:</span></span><br><span class="line"><span class="attr">        command:</span> <span class="string">'bash'</span></span><br><span class="line"><span class="attr">        image:</span> <span class="string">'hififace:latent2'</span></span><br><span class="line"><span class="attr">        container_name:</span> <span class="string">demo_hifi</span></span><br><span class="line"><span class="attr">        logging:</span></span><br><span class="line"><span class="attr">            options:</span></span><br><span class="line"><span class="attr">                max-size:</span> <span class="number">1</span><span class="string">g</span></span><br><span class="line"><span class="attr">        volumes:</span></span><br><span class="line"><span class="bullet">            -</span> <span class="string">'/databig_2:/databig_2'</span></span><br><span class="line"><span class="bullet">            -</span> <span class="string">'/databig:/databig'</span></span><br><span class="line"><span class="bullet">            -</span> <span class="string">'/data3:/data3'</span></span><br><span class="line"><span class="attr">        restart:</span> <span class="string">unless-stopped</span></span><br><span class="line"><span class="attr">        ipc:</span> <span class="string">host</span></span><br><span class="line"><span class="attr">        network_mode:</span> <span class="string">host</span></span><br><span class="line"><span class="attr">        tty:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">        ports:</span></span><br><span class="line"><span class="bullet">            -</span> <span class="string">'6080:6080'</span></span><br><span class="line"><span class="attr">    deploy:</span></span><br><span class="line"><span class="attr">            resources:</span></span><br><span class="line"><span class="attr">                reservations:</span></span><br><span class="line"><span class="attr">                    devices:</span></span><br><span class="line"><span class="attr">                      - driver:</span> <span class="string">"nvidia"</span></span><br><span class="line"><span class="attr">                        count:</span> <span class="string">"all"</span></span><br><span class="line"><span class="attr">                        capabilities:</span> <span class="string">["gpu"]</span></span><br></pre></td></tr></table></figure>
+
+<p>docker-compose.yaml文件编写<br>docker-compose.yaml文件我们注意有version、services、networks三个关键字，version用于指定代码编写使用的版本规则；services用于配置服务；networks用于配置网络。<br>下面我列出一个测试文</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">"3.8"</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">    pdf:</span></span><br><span class="line"><span class="attr">        image:</span> <span class="string">"xxxx:xxxxx"</span></span><br><span class="line"><span class="attr">        user:</span> <span class="string">"root"</span></span><br><span class="line"><span class="attr">        restart:</span> <span class="string">"on-failure"</span></span><br><span class="line"><span class="attr">        expose:</span></span><br><span class="line"><span class="bullet">          -</span> <span class="string">"22"</span></span><br><span class="line"><span class="bullet">          -</span> <span class="string">"51002-51003"</span></span><br><span class="line"><span class="attr">        ports:</span></span><br><span class="line"><span class="bullet">          -</span> <span class="string">"51001:22"</span></span><br><span class="line"><span class="bullet">          -</span> <span class="string">"51002-51003:51002-51003"</span></span><br><span class="line"><span class="attr">        shm_size:</span> <span class="string">"4g"</span></span><br><span class="line"><span class="attr">        networks:</span></span><br><span class="line"><span class="bullet">          -</span> <span class="string">"ana"</span></span><br><span class="line"><span class="attr">        container_name:</span> <span class="string">"literature_pdf"</span></span><br><span class="line"><span class="attr">        tty:</span> <span class="string">"true"</span></span><br><span class="line"><span class="attr">    fig:</span></span><br><span class="line"><span class="attr">        image:</span> <span class="string">"xxxxx:xxxxx"</span></span><br><span class="line"><span class="attr">        user:</span> <span class="string">"root"</span></span><br><span class="line"><span class="attr">        restart:</span> <span class="string">"on-failure"</span></span><br><span class="line"><span class="attr">        expose:</span></span><br><span class="line"><span class="bullet">          -</span> <span class="string">"22"</span></span><br><span class="line"><span class="bullet">          -</span> <span class="string">"51009-51020"</span></span><br><span class="line"><span class="attr">        ports:</span></span><br><span class="line"><span class="bullet">          -</span> <span class="string">"51008:22"</span></span><br><span class="line"><span class="bullet">          -</span> <span class="string">"51009-51020:51009-51020"</span></span><br><span class="line"><span class="attr">        shm_size:</span> <span class="string">"8g"</span></span><br><span class="line"><span class="attr">        volumes:</span></span><br><span class="line"><span class="bullet">          -</span> <span class="string">"/data/elfin/utils/detectron2-master:/home/appuser/detectron2-master"</span></span><br><span class="line"><span class="attr">        environment:</span></span><br><span class="line"><span class="bullet">          -</span> <span class="string">"NVIDIA_VISIBLE_DEVICES=all"</span></span><br><span class="line"><span class="attr">        deploy:</span></span><br><span class="line"><span class="attr">            resources:</span></span><br><span class="line"><span class="attr">                reservations:</span></span><br><span class="line"><span class="attr">                    devices:</span></span><br><span class="line"><span class="attr">                      - driver:</span> <span class="string">"nvidia"</span></span><br><span class="line"><span class="attr">                        count:</span> <span class="string">"all"</span></span><br><span class="line"><span class="attr">                        capabilities:</span> <span class="string">["gpu"]</span></span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line"><span class="attr">    sd_net:</span></span><br><span class="line"><span class="attr">        driver:</span> <span class="string">bridge</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Docker-Mirror-镜像"><a href="#Docker-Mirror-镜像" class="headerlink" title="Docker Mirror 镜像"></a>Docker Mirror 镜像</h3><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">    ocr:</span></span><br><span class="line"><span class="attr">        image:</span> <span class="string">"xxxxx:xxxxx"</span></span><br><span class="line"><span class="attr">        user:</span> <span class="string">"root"</span></span><br><span class="line"><span class="attr">        restart:</span> <span class="string">"on-failure"</span></span><br><span class="line"><span class="attr">        volumes:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">/etc/localtime:/etc/localtime:ro</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">/etc/timezone:/etc/timezone:ro</span></span><br><span class="line"><span class="attr">        expose:</span></span><br><span class="line"><span class="bullet">          -</span> <span class="string">"22"</span></span><br><span class="line"><span class="bullet">          -</span> <span class="string">"51005-51007"</span></span><br><span class="line"><span class="attr">        ports:</span></span><br><span class="line"><span class="bullet">          -</span> <span class="string">"51004:22"</span></span><br><span class="line"><span class="bullet">          -</span> <span class="string">"51005-51007:51005-51007"</span></span><br><span class="line"><span class="attr">        shm_size:</span> <span class="string">"6g"</span></span><br><span class="line"><span class="attr">        deploy:</span></span><br><span class="line"><span class="attr">            resources:</span></span><br><span class="line"><span class="attr">                reservations:</span></span><br><span class="line"><span class="attr">                    devices:</span></span><br><span class="line"><span class="attr">                      - device_ids:</span> <span class="string">["1"]</span></span><br><span class="line"><span class="attr">                        capabilities:</span> <span class="string">["gpu"]</span></span><br><span class="line"><span class="attr">                        driver:</span> <span class="string">"nvidia"</span></span><br><span class="line"><span class="attr">        networks:</span></span><br><span class="line"><span class="bullet">          -</span> <span class="string">"ana"</span></span><br><span class="line"><span class="attr">        container_name:</span> <span class="string">"ocr"</span></span><br><span class="line"><span class="attr">        tty:</span> <span class="string">"true"</span></span><br><span class="line"><span class="attr">        entrypoint:</span> <span class="string">["supervisord",</span> <span class="string">"-n"</span><span class="string">,</span> <span class="string">"-c"</span><span class="string">,</span> <span class="string">"/etc/supervisor/supervisord.conf"</span><span class="string">]</span></span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line"><span class="attr">    ana:</span></span><br><span class="line"><span class="attr">        driver:</span> <span class="string">bridge</span></span><br></pre></td></tr></table></figure>
+
+<p>下面是关于容器的GPU依赖配置：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line"><span class="attr">    resources:</span></span><br><span class="line"><span class="attr">        reservations:</span></span><br><span class="line"><span class="attr">            devices:</span></span><br><span class="line"><span class="attr">                - driver:</span> <span class="string">"nvidia"</span></span><br><span class="line"><span class="attr">                  count:</span> <span class="string">"all"</span></span><br><span class="line"><span class="attr">                  capabilities:</span> <span class="string">["gpu"]</span></span><br></pre></td></tr></table></figure>
+
+<p>这里的capabilities是必须要指定的，而且count、driver、capabilities这是一组，不能每个加”-“，不然会报错。关于GPU的其他配置可以参考官方文档 <a href="https://docs.docker.com/compose/gpu-support/" target="_blank" rel="noopener">https://docs.docker.com/compose/gpu-support/</a> 。</p>
+<h2 id="Docker-切换主Root路径"><a href="#Docker-切换主Root路径" class="headerlink" title="Docker 切换主Root路径"></a>Docker 切换主Root路径</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 1 Stop</span></span><br><span class="line">systemctl stop docker.service </span><br><span class="line">systemctl status docker.    </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 2 主目录创建，copy</span></span><br><span class="line">mkdir /home/service/docker/</span><br><span class="line">mv /var/lib/docker/*  /home/service/docker/</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 3.法1</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 修改 docker.service 配置文件，使用 --graph 参数指定存储位置</span></span><br><span class="line">vim /usr/lib/systemd/system/docker.service</span><br><span class="line">ExecStart=/usr/bin/dockerd --graph /data/docker -H fd:// --containerd=/run/containerd/containerd.sock</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 3法2（测试过）</span></span><br><span class="line">vim /etc/docker/daemon.json</span><br><span class="line">    &#123;</span><br><span class="line">    "registry-mirrors":["http://docker.mirrors.ustc.edu.cn"],</span><br><span class="line">    "exec-opts": ["native.cgroupdriver=systemd"],</span><br><span class="line">    "data-root": "/dockerdata/docker"</span><br><span class="line">    &#125;</span><br><span class="line"><span class="meta">#</span><span class="bash"> 4 reload dockerserver</span></span><br><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl restart docker</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 5 check</span></span><br><span class="line">docker info | grep -i dir</span><br><span class="line"><span class="meta">  #</span><span class="bash"> Docker Root Dir: /data/docker</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="容器瘦身"><a href="#容器瘦身" class="headerlink" title="容器瘦身"></a>容器瘦身</h2><h4 id="查看-Docker-镜像的大小"><a href="#查看-Docker-镜像的大小" class="headerlink" title="查看 Docker 镜像的大小"></a>查看 Docker 镜像的大小</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure>
+
+<h4 id="查看-Docker-容器的大小"><a href="#查看-Docker-容器的大小" class="headerlink" title="查看 Docker 容器的大小"></a>查看 Docker 容器的大小</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container ls --format <span class="string">"&#123;&#123;.ID&#125;&#125; &#123;&#123;.Size&#125;&#125;"</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="查看-Docker-系统的总体磁盘使用情况"><a href="#查看-Docker-系统的总体磁盘使用情况" class="headerlink" title="查看 Docker 系统的总体磁盘使用情况"></a>查看 Docker 系统的总体磁盘使用情况</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker system df</span><br></pre></td></tr></table></figure>
+
+<h3 id="FIX-Issue"><a href="#FIX-Issue" class="headerlink" title="FIX Issue"></a>FIX Issue</h3><ol>
+<li><p>V100 515驱动，docker无法运行torch2.2.1-cu121;</p>
+<p>解决方案，cu121的torch需要的驱动版本较高，建议升级到530及以上</p>
+</li>
+<li><p>驱动更新后，docker无法启动nVidia容器</p>
+</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu8:sdgradio# ../docker-compose up -d</span><br><span class="line">Starting sdgradio ... error</span><br><span class="line"></span><br><span class="line">ERROR: for sdgradio  Cannot start service server: could not select device driver "nvidia" with capabilities: [[gpu]]</span><br><span class="line"></span><br><span class="line">ERROR: for server  Cannot start service server: could not select device driver "nvidia" with capabilities: [[gpu]]</span><br><span class="line">ERROR: Encountered errors while bringing up the project.</span><br></pre></td></tr></table></figure>
+
+<p>解决方案</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">apt install nvidia-docker2</span><br><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl restart docker</span><br></pre></td></tr></table></figure>
+
+<p>完美解决</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Docker/" rel="tag"># Docker</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2024/02/24/Tools/Tools_dev_WSL2/" rel="next" title="WSL2 Docker CUDA Config">
+                <i class="fa fa-chevron-left"></i> WSL2 Docker CUDA Config
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2024/03/05/Course/Math/KalmanFilters/" rel="prev" title="Kalman Filters">
+                Kalman Filters <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Simon Shi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">286</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">132</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">243</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#docker-run-–runtime-nvidia-it-–rm-v-PWD-home-user-shixinxin-tensorflow-tensorflow-1-12-0-gpu-py3"><span class="nav-number">1.</span> <span class="nav-text">docker run –runtime=nvidia -it –rm -v $PWD:/home/user/shixinxin  tensorflow/tensorflow:1.12.0-gpu-py3</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker镜像"><span class="nav-number">1.0.1.</span> <span class="nav-text">Docker镜像</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker测试"><span class="nav-number">1.1.</span> <span class="nav-text">Docker测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker-服务"><span class="nav-number">1.1.1.</span> <span class="nav-text">Docker 服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#镜像"><span class="nav-number">1.1.2.</span> <span class="nav-text">镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Pull-amp-Run-创建容器"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">Pull &amp; Run(创建容器)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cp镜像-save-load"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">cp镜像(save,load)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#run"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">run</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#容器"><span class="nav-number">1.1.3.</span> <span class="nav-text">容器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#命令-启动，关闭，结束"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">命令(启动，关闭，结束)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进入容器"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">进入容器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#导出容器、导入成镜像"><span class="nav-number">1.1.3.3.</span> <span class="nav-text">导出容器、导入成镜像</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#容器–commit-gt-镜像"><span class="nav-number">1.1.3.4.</span> <span class="nav-text">容器–commit-&gt;镜像</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RM删除容器"><span class="nav-number">1.1.3.5.</span> <span class="nav-text">RM删除容器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义容器"><span class="nav-number">1.1.4.</span> <span class="nav-text">自定义容器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Docker-File（-Build-With-PATH-本地路径-）"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">Docker File（## Build With PATH(本地路径)）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RUN-Demo"><span class="nav-number">1.1.4.2.</span> <span class="nav-text">RUN Demo</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-compose"><span class="nav-number">1.2.</span> <span class="nav-text">docker-compose</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-compose-gpu"><span class="nav-number">1.2.1.</span> <span class="nav-text">docker-compose gpu</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker-Mirror-镜像"><span class="nav-number">1.2.2.</span> <span class="nav-text">Docker Mirror 镜像</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-切换主Root路径"><span class="nav-number">1.3.</span> <span class="nav-text">Docker 切换主Root路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#容器瘦身"><span class="nav-number">1.4.</span> <span class="nav-text">容器瘦身</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#查看-Docker-镜像的大小"><span class="nav-number">1.4.0.1.</span> <span class="nav-text">查看 Docker 镜像的大小</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看-Docker-容器的大小"><span class="nav-number">1.4.0.2.</span> <span class="nav-text">查看 Docker 容器的大小</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看-Docker-系统的总体磁盘使用情况"><span class="nav-number">1.4.0.3.</span> <span class="nav-text">查看 Docker 系统的总体磁盘使用情况</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FIX-Issue"><span class="nav-number">1.4.1.</span> <span class="nav-text">FIX Issue</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+    
+
+        
+
+
+
+
+
+
+<div>
+<!-- 填写你的友盟代码 -->
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1277989586'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s9.cnzz.com/z_stat.php%3Fid%3D1277989586%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+<!-- 你的友盟代码 end -->
+</div>
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'novav',
+            repo: 'blog_comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'ea8aae03b5381e13ab9cdedd0282b60d8ec412cb',
+            
+                client_id: 'c3934b23eb001aa3243d'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

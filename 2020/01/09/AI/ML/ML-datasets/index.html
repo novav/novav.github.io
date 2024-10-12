@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ImageNet,dataset,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Simon Shi的小站" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="[toc] 开源数据集-物体识别：Cifar10：go: ref:http://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz http://www.cs.toronto.edu/~kriz/cifar-10-matlab.tar.gz http://www.cs.toronto.edu/~kriz/cifar-10-binary.tar.gz 该数">
+<meta name="keywords" content="ImageNet,dataset">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ML-datasets -- 物体识别">
+<meta property="og:url" content="http://yoursite.com/2020/01/09/AI/ML/ML-datasets/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="[toc] 开源数据集-物体识别：Cifar10：go: ref:http://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz http://www.cs.toronto.edu/~kriz/cifar-10-matlab.tar.gz http://www.cs.toronto.edu/~kriz/cifar-10-binary.tar.gz 该数">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://www.yf.io/p/lsun/img/teaser_web.jpg">
+<meta property="og:updated_time" content="2024-10-12T06:50:38.523Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ML-datasets -- 物体识别">
+<meta name="twitter:description" content="[toc] 开源数据集-物体识别：Cifar10：go: ref:http://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz http://www.cs.toronto.edu/~kriz/cifar-10-matlab.tar.gz http://www.cs.toronto.edu/~kriz/cifar-10-binary.tar.gz 该数">
+<meta name="twitter:image" content="https://www.yf.io/p/lsun/img/teaser_web.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/01/09/AI/ML/ML-datasets/">
+
+
+
+
+
+  <title>ML-datasets -- 物体识别 | Simon Shi的小站</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simon Shi的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人工智能，机器学习 学习记录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/09/AI/ML/ML-datasets/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ML-datasets -- 物体识别</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-09T14:29:58+00:00">
+                2020-01-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index">
+                    <span itemprop="name">AI</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Datasets/" itemprop="url" rel="index">
+                    <span itemprop="name">Datasets</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/Datasets/" itemprop="url" rel="index">
+                    <span itemprop="name">Datasets</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/01/09/AI/ML/ML-datasets/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2020/01/09/AI/ML/ML-datasets/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[toc]</p>
+<h2 id="开源数据集-物体识别："><a href="#开源数据集-物体识别：" class="headerlink" title="开源数据集-物体识别："></a>开源数据集-物体识别：</h2><h3 id="Cifar10：go-ref"><a href="#Cifar10：go-ref" class="headerlink" title="Cifar10：go: ref:"></a>Cifar10：<a href="http://www.cs.toronto.edu/~kriz/cifar.html" target="_blank" rel="noopener">go</a>: <a href="https://www.cnblogs.com/Jerry-Dong/p/8109938.html" target="_blank" rel="noopener">ref</a>:</h3><p><a href="http://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz" target="_blank" rel="noopener">http://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz</a></p>
+<p><a href="http://www.cs.toronto.edu/~kriz/cifar-10-matlab.tar.gz" target="_blank" rel="noopener">http://www.cs.toronto.edu/~kriz/cifar-10-matlab.tar.gz</a></p>
+<p><a href="http://www.cs.toronto.edu/~kriz/cifar-10-binary.tar.gz" target="_blank" rel="noopener">http://www.cs.toronto.edu/~kriz/cifar-10-binary.tar.gz</a></p>
+<p>该数据集文件包含data_batch1……data_batch5，和test_batch。他们都是由cPickle库产生的序列化后的对象（关于pickle,移步<a href="https://docs.python.org/3/library/pickle.html）。" target="_blank" rel="noopener">https://docs.python.org/3/library/pickle.html）。</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">unpickle</span><span class="params">(file)</span>:</span></span><br><span class="line">	<span class="keyword">import</span> pickle</span><br><span class="line">	<span class="keyword">with</span> open(file, <span class="string">'rb'</span>) <span class="keyword">as</span> fo:</span><br><span class="line">	    dict = pickle.load(fo, encoding=<span class="string">'bytes'</span>)</span><br><span class="line">    <span class="keyword">return</span> dict</span><br></pre></td></tr></table></figure>
+
+<h3 id="Cifar100-go"><a href="#Cifar100-go" class="headerlink" title="Cifar100 go:"></a>Cifar100 <a href="http://www.cs.toronto.edu/~kriz/cifar.html" target="_blank" rel="noopener">go</a>:</h3><table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Size</th>
+<th>md5sum</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="http://www.cs.toronto.edu/~kriz/cifar-100-python.tar.gz" target="_blank" rel="noopener">CIFAR-100 python version</a></td>
+<td>161 MB</td>
+<td>eb9058c3a382ffc7106e4002c42a8d85</td>
+</tr>
+<tr>
+<td><a href="http://www.cs.toronto.edu/~kriz/cifar-100-matlab.tar.gz" target="_blank" rel="noopener">CIFAR-100 Matlab version</a></td>
+<td>175 MB</td>
+<td>6a4bfa1dcd5c9453dda6bb54194911f4</td>
+</tr>
+<tr>
+<td><a href="http://www.cs.toronto.edu/~kriz/cifar-100-binary.tar.gz" target="_blank" rel="noopener">CIFAR-100 binary version (suitable for C programs)</a></td>
+<td>161 MB</td>
+<td>03b5dce01913d631647c71ecec9e9cb8</td>
+</tr>
+</tbody></table>
+<h3 id="VOC"><a href="#VOC" class="headerlink" title="VOC:"></a>VOC:</h3><h3 id="LSUN-go"><a href="#LSUN-go" class="headerlink" title="LSUN: go"></a>LSUN: <a href="https://www.yf.io/p/lsun" target="_blank" rel="noopener">go</a></h3><p>LSUN: Construction of a Large-scale Image Dataset using Deep Learning with Humans in the Loop</p>
+<p><img src="https://www.yf.io/p/lsun/img/teaser_web.jpg" alt="img"></p>
+<p>国外的PASCAL<br>VOC和ImageNet ILSVRC比赛使用的数据集，数据领域包括卧室、冰箱、教师、厨房、起居室、酒店等多个主题。</p>
+<p>推荐度：★★，推荐应用方向：图像识别</p>
+<p>介绍和下载地址：<a href="https://link.zhihu.com/?target=http%3A//lsun.cs.princeton.edu" target="_blank" rel="noopener">http://lsun.cs.princeton.edu</a></p>
+<h4 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h4><p>While there has been remarkable progress in the performance of visual recognition algorithms, the state-of-the-art models tend to be exceptionally data-hungry. Large labeled training datasets, expensive and tedious to produce, are required to optimize millions of parameters in deep network models. Lagging behind the growth in model capacity, the available datasets are quickly becoming outdated in terms of size and density. To circumvent this bottleneck, we propose to amplify human effort through a partially automated labeling scheme, leveraging deep learning with humans in the loop. Starting from a large set of candidate images for each category, we iteratively sample a subset, ask people to label them, classify the others with a trained model, split the set into positives, negatives, and unlabeled based on the classification confidence, and then iterate with the unlabeled set. To assess the effectiveness of this cascading procedure and enable further progress in visual recognition research, we construct a new image dataset, LSUN. It contains around one million labeled images for each of 10 scene categories and 20 object categories. We experiment with training popular convolutional networks and find that they achieve substantial performance gains when trained on this dataset.</p>
+<h4 id="Paper"><a href="#Paper" class="headerlink" title="Paper"></a>Paper</h4><p>Fisher Yu, Ari Seff, Yinda Zhang, Shuran Song, Thomas Funkhouser and Jianxiong Xiao<br><a href="http://arxiv.org/abs/1506.03365" target="_blank" rel="noopener">LSUN: Construction of a Large-scale Image Dataset using Deep Learning with Humans in the Loop</a><br><em>arXiv:1506.03365 [cs.CV], 10 Jun 2015</em></p>
+<h4 id="Data"><a href="#Data" class="headerlink" title="Data"></a>Data</h4><p><strong>10 scene categories</strong> for LSUN Scene Classification Challange: <a href="https://github.com/fyu/lsun" target="_blank" rel="noopener">Downloading Code</a></p>
+<p><strong>20 object categories</strong>: <a href="http://dl.yf.io/lsun/objects/" target="_blank" rel="noopener">Link List</a>. Images for each category are stored in LMDB format and the database is then zipped. After downloading and decompressing the zip files, please to refer to <a href="https://github.com/fyu/lsun" target="_blank" rel="noopener">LSUN utility code</a> to visualize and export the images. MD5 sum for each zip file is also provided so that you can verify your downloads.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">../</span><br><span class="line">airplane.zip                                       06-Mar-2019 00:14     34G</span><br><span class="line">airplane.zip.md5                                   19-Dec-2019 20:04      47</span><br><span class="line">bicycle.zip                                        06-Mar-2019 00:44    129G</span><br><span class="line">bicycle.zip.md5                                    19-Dec-2019 20:04      46</span><br><span class="line">bird.zip                                           06-Mar-2019 00:57     65G</span><br><span class="line">bird.zip.md5                                       19-Dec-2019 20:04      43</span><br><span class="line">boat.zip                                           06-Mar-2019 01:12     86G</span><br><span class="line">boat.zip.md5                                       19-Dec-2019 20:04      43</span><br><span class="line">bottle.zip                                         06-Mar-2019 01:24     64G</span><br><span class="line">bottle.zip.md5                                     19-Dec-2019 20:04      45</span><br><span class="line">bus.zip                                            06-Mar-2019 01:29     24G</span><br><span class="line">bus.zip.md5                                        19-Dec-2019 20:04      42</span><br><span class="line">car.zip                                            06-Mar-2019 02:05    173G</span><br><span class="line">car.zip.md5                                        19-Dec-2019 20:04      42</span><br><span class="line">cat.zip                                            06-Mar-2019 02:12     42G</span><br><span class="line">cat.zip.md5                                        19-Dec-2019 20:04      42</span><br><span class="line">chair.zip                                          06-Mar-2019 02:31    116G</span><br><span class="line">chair.zip.md5                                      19-Dec-2019 20:04      44</span><br><span class="line">cow.zip                                            06-Mar-2019 02:34     15G</span><br><span class="line">cow.zip.md5                                        19-Dec-2019 20:04      42</span><br><span class="line">dining_table.zip                                   06-Mar-2019 02:50     48G</span><br><span class="line">dining_table.zip.md5                               19-Dec-2019 20:04      51</span><br><span class="line">dog.zip                                            06-Mar-2019 03:14    145G</span><br><span class="line">dog.zip.md5                                        19-Dec-2019 20:04      42</span><br><span class="line">horse.zip                                          06-Mar-2019 03:25     69G</span><br><span class="line">horse.zip.md5                                      19-Dec-2019 20:04      44</span><br><span class="line">motorbike.zip                                      06-Mar-2019 03:32     42G</span><br><span class="line">motorbike.zip.md5                                  19-Dec-2019 20:04      48</span><br><span class="line">person.zip                                         06-Mar-2019 04:47    477G</span><br><span class="line">person.zip.md5                                     19-Dec-2019 20:04      45</span><br><span class="line">potted_plant.zip                                   06-Mar-2019 04:54     43G</span><br><span class="line">potted_plant.zip.md5                               19-Dec-2019 20:04      51</span><br><span class="line">sheep.zip                                          06-Mar-2019 04:57     18G</span><br><span class="line">sheep.zip.md5                                      19-Dec-2019 20:04      44</span><br><span class="line">sofa.zip                                           06-Mar-2019 05:06     56G</span><br><span class="line">sofa.zip.md5                                       19-Dec-2019 20:04      43</span><br><span class="line">train.zip                                          06-Mar-2019 05:13     43G</span><br><span class="line">train.zip.md5                                      19-Dec-2019 20:04      44</span><br><span class="line">tv-monitor.zip                                     06-Mar-2019 05:21     46G</span><br><span class="line">tv-monitor.zip.md5                                 19-Dec-2019 20:04      49</span><br></pre></td></tr></table></figure>
+
+<h4 id="LSUN-Challenge"><a href="#LSUN-Challenge" class="headerlink" title="LSUN Challenge"></a>LSUN Challenge</h4><p>In CVPR 2015 and 2016, a image classification challenge has been hosted in LSUN Challenge workshop to evaluate the progress of large-scale image understanding. More information can be found at the <a href="http://lsun.cs.princeton.edu/2016/" target="_blank" rel="noopener">challenge webpage</a>.</p>
+<h3 id="ImageNet数据集"><a href="#ImageNet数据集" class="headerlink" title="ImageNet数据集"></a><strong>ImageNet数据集</strong></h3><p>ImageNet数据集是目前深度学习图像领域应用得非常多的一个领域，该数据集有1000多个图像，涵盖图像分类、定位、检测等应用方向。Imagenet数据集文档详细，有专门的团队维护，在计算机视觉领域研究论文中应用非常广，几乎成为了目前深度学习图像领域算法性能检验的“标准”数据集。很多大型科技公司都会参加ImageNet图像识别大赛，包括百度、谷歌、微软等。</p>
+<p>推荐度：★★★，推荐应用方向：图像识别</p>
+<p>介绍和下载地址：<a href="https://link.zhihu.com/?target=http%3A//www.image-net.org/" target="_blank" rel="noopener">http://www.image-net.org/</a></p>
+<h3 id="Tiny-Images-Dataset"><a href="#Tiny-Images-Dataset" class="headerlink" title="Tiny Images Dataset"></a><strong>Tiny Images Dataset</strong></h3><p>该数据集由79302017张图像组成，每张图像为32x32彩色图像。 该数据以二进制文件的形式存储，大约有400Gb图像。</p>
+<p>推荐度：★★，推荐应用方向：图像识别</p>
+<p>介绍和下载地址：<a href="https://link.zhihu.com/?target=http%3A//horatio.cs.nyu.edu/mit/tiny/data/index.html" target="_blank" rel="noopener">http://horatio.cs.nyu.edu/mit/tiny/data/index.html</a></p>
+<h3 id="CoPhIR"><a href="#CoPhIR" class="headerlink" title="CoPhIR"></a><strong>CoPhIR</strong></h3><p>CoPhIR是从Flickr中采集的大概1.06亿个图像数据集，图像中不仅包含了图表本身的数据，例如位置、标题、GPS、标签、评论等，还可提取出颜色模式、颜色布局、边缘直方图、均匀纹理等数据。</p>
+<p>推荐度：★★，推荐应用方向：图像识别</p>
+<p>介绍和下载地址：<a href="https://link.zhihu.com/?target=http%3A//cophir.isti.cnr.it/whatis.html" target="_blank" rel="noopener">http://cophir.isti.cnr.it/whatis.html</a></p>
+<h3 id="Labeled-Faces-in-the-Wild数据集"><a href="#Labeled-Faces-in-the-Wild数据集" class="headerlink" title="Labeled Faces in the Wild数据集"></a><strong>Labeled Faces in the Wild数据集</strong></h3><p>该数据集是用于研究无约束面部识别问题的面部照片数据库。数据集包含从网络收集的13000多张图像。每张脸都贴上了所画的人的名字，图片中的1680人在数据集中有两个或更多不同的照片。</p>
+<p>推荐度：★★，推荐应用方向：人脸识别</p>
+<p>介绍和下载地址：<a href="https://link.zhihu.com/?target=http%3A//vis-www.cs.umass.edu/lfw/" target="_blank" rel="noopener">http://vis-www.cs.umass.edu/lfw/</a></p>
+<h3 id="SVHN"><a href="#SVHN" class="headerlink" title="SVHN"></a><strong>SVHN</strong></h3><p>SVHN数据来源于 Google 街景视图中房屋信息，它是一个真实世界的图像数据集，用于开发机器学习和对象识别算法，对数据预处理和格式化的要求最低。它跟MNIST相似，但是包含更多数量级的标签数据（超过60万个数字图像），并且来源更加多样，用来识别自然场景图像中的数字。 </p>
+<p>推荐度：★★，推荐应用方向：机器学习、图像识别</p>
+<p>介绍和下载地址：<a href="https://link.zhihu.com/?target=http%3A//ufldl.stanford.edu/housenumbers/" target="_blank" rel="noopener">http://ufldl.stanford.edu/housenumbers/</a></p>
+<h3 id="MS-COCO"><a href="#MS-COCO" class="headerlink" title="MS COCO"></a><strong>MS COCO</strong></h3><p>COCO（Common Objects in Context）是一个新的图像识别、分割和图像语义数据集，由微软赞助，图像中不仅有标注类别、位置信息，还有对图像的语义文本描述。COCO数据集的开源使得近两、三年来图像分割语义理解取得了巨大的进展，也几乎成为了图像语义理解算法性能评价的“标准”数据集。</p>
+<p>推荐度：★★★，推荐应用方向：图像识别、图像语义理解</p>
+<p>介绍和下载地址：<a href="https://link.zhihu.com/?target=http%3A//mscoco.org/" target="_blank" rel="noopener">http://mscoco.org/</a></p>
+<h3 id="谷歌YouTube-8M"><a href="#谷歌YouTube-8M" class="headerlink" title="谷歌YouTube-8M"></a><strong>谷歌YouTube-8M</strong></h3><p>YouTube-8M一个大型的多样性标注的视频数据集，目前拥有700万的YouTube视频链接、45万小时视频时长、3.2亿视频/音频特征、4716个分类、平均每个视频拥有3个标签。</p>
+<p>推荐度：★★★，推荐应用方向：视频理解、表示学习（representation learning）、嘈杂数据建模、转移学习（transfer learning）和视频域适配方法（domain<br>adaptation approaches）</p>
+<p>数据集介绍和下载地址：<a href="https://link.zhihu.com/?target=https%3A//research.google.com/youtube8m/" target="_blank" rel="noopener">https://research.google.com/youtube8m/</a>。</p>
+<h3 id="Udacity开源的车辆行使视频数据集"><a href="#Udacity开源的车辆行使视频数据集" class="headerlink" title="Udacity开源的车辆行使视频数据集"></a><strong>Udacity开源的车辆行使视频数据集</strong></h3><p>数据集大概有223G，主要是有关车辆驾驶的数据，其中除了车辆拍摄的图像以外，还包括车辆本身的属性和参数信息，例如经纬度、制动器、油门、转向度、转速等。这些数据可用于车辆自动驾驶方向的模型训练和学习。</p>
+<p>推荐度：★★★，推荐应用方向：自动驾驶</p>
+<p>介绍和下载地址：<a href="https://link.zhihu.com/?target=https%3A//github.com/udacity/self-driving-car" target="_blank" rel="noopener">https://github.com/udacity/self-driving-car</a></p>
+<h3 id="牛津RobotCar视频数据集"><a href="#牛津RobotCar视频数据集" class="headerlink" title="牛津RobotCar视频数据集"></a><strong>牛津RobotCar视频数据集</strong></h3><p>RobotCar数据集包含时间范围超过1年，测试超过100次的相同路线的驾驶数据。数据集采集了天气、交通、行人、建筑和道路施工等不同组合的数据。</p>
+<p>推荐度：★★★，推荐应用方向：自动驾驶</p>
+<p>介绍和下载地址：<a href="https://link.zhihu.com/?target=http%3A//robotcar-dataset.robots.ox.ac.uk/" target="_blank" rel="noopener">http://robotcar-dataset.robots.ox.ac.uk/</a></p>
+<h3 id="Udacity开源的自然场景短视频数据集"><a href="#Udacity开源的自然场景短视频数据集" class="headerlink" title="Udacity开源的自然场景短视频数据集"></a><strong>Udacity开源的自然场景短视频数据集</strong></h3><p>数据集大概为9T，由3500万个视频剪辑组成，每个视频为短视频（32帧），大约1秒左右的时长。</p>
+<p>推荐度：★★★，推荐应用方向：目标跟踪、视频目标识别</p>
+<p>介绍和下载地址：<a href="https://link.zhihu.com/?target=http%3A//web.mit.edu/vondrick/tinyvideo/%23data" target="_blank" rel="noopener">http://web.mit.edu/vondrick/tinyvideo/#data</a></p>
+<h2 id="3-自然语言数据集"><a href="#3-自然语言数据集" class="headerlink" title="3. 自然语言数据集"></a>3. 自然语言数据集</h2><p>【todo】</p>
+<p>ref：</p>
+<p><a href="https://www.zhihu.com/question/63383992" target="_blank" rel="noopener">https://www.zhihu.com/question/63383992</a></p>
+<p><a href="http://blog.itpub.net/29829936/viewspace-2219159/" target="_blank" rel="noopener">http://blog.itpub.net/29829936/viewspace-2219159/</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ImageNet/" rel="tag"># ImageNet</a>
+          
+            <a href="/tags/dataset/" rel="tag"># dataset</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/01/07/Books/Reading-2020-Yoga/" rel="next" title="Reading_2020_Yoga">
+                <i class="fa fa-chevron-left"></i> Reading_2020_Yoga
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/01/10/CV/CV-Human-attr/" rel="prev" title="人脸属性分析–性别">
+                人脸属性分析–性别 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Simon Shi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">286</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">132</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">243</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#开源数据集-物体识别："><span class="nav-number">1.</span> <span class="nav-text">开源数据集-物体识别：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Cifar10：go-ref"><span class="nav-number">1.1.</span> <span class="nav-text">Cifar10：go: ref:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cifar100-go"><span class="nav-number">1.2.</span> <span class="nav-text">Cifar100 go:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VOC"><span class="nav-number">1.3.</span> <span class="nav-text">VOC:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LSUN-go"><span class="nav-number">1.4.</span> <span class="nav-text">LSUN: go</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Abstract"><span class="nav-number">1.4.1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Paper"><span class="nav-number">1.4.2.</span> <span class="nav-text">Paper</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Data"><span class="nav-number">1.4.3.</span> <span class="nav-text">Data</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LSUN-Challenge"><span class="nav-number">1.4.4.</span> <span class="nav-text">LSUN Challenge</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ImageNet数据集"><span class="nav-number">1.5.</span> <span class="nav-text">ImageNet数据集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tiny-Images-Dataset"><span class="nav-number">1.6.</span> <span class="nav-text">Tiny Images Dataset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CoPhIR"><span class="nav-number">1.7.</span> <span class="nav-text">CoPhIR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Labeled-Faces-in-the-Wild数据集"><span class="nav-number">1.8.</span> <span class="nav-text">Labeled Faces in the Wild数据集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SVHN"><span class="nav-number">1.9.</span> <span class="nav-text">SVHN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MS-COCO"><span class="nav-number">1.10.</span> <span class="nav-text">MS COCO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#谷歌YouTube-8M"><span class="nav-number">1.11.</span> <span class="nav-text">谷歌YouTube-8M</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Udacity开源的车辆行使视频数据集"><span class="nav-number">1.12.</span> <span class="nav-text">Udacity开源的车辆行使视频数据集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#牛津RobotCar视频数据集"><span class="nav-number">1.13.</span> <span class="nav-text">牛津RobotCar视频数据集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Udacity开源的自然场景短视频数据集"><span class="nav-number">1.14.</span> <span class="nav-text">Udacity开源的自然场景短视频数据集</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-自然语言数据集"><span class="nav-number">2.</span> <span class="nav-text">3. 自然语言数据集</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+    
+
+        
+
+
+
+
+
+
+<div>
+<!-- 填写你的友盟代码 -->
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1277989586'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s9.cnzz.com/z_stat.php%3Fid%3D1277989586%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+<!-- 你的友盟代码 end -->
+</div>
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'novav',
+            repo: 'blog_comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'ea8aae03b5381e13ab9cdedd0282b60d8ec412cb',
+            
+                client_id: 'c3934b23eb001aa3243d'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="transform,CG,Open3d,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Simon Shi的小站" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="[TOC] 三维坐标变换原理-平移, 旋转, 缩放 基础知识齐次坐标给定一个二维点(x, y)，那么形如(kx, ky, k)的所有三元组就都是等价的，它们就是这个点的齐次坐标(homogeneous)。齐次坐标就是将一个原本是n维的向量用一个n+1维向量来表示，是指一个用于投影几何里的坐标系统，如同用于欧氏几何里的笛卡儿坐标一般 矩阵的乘法矩阵的乘法运算，阮一峰老师写的比较清楚,具体可以看 这里">
+<meta name="keywords" content="transform,CG,Open3d">
+<meta property="og:type" content="article">
+<meta property="og:title" content="三维坐标变换原理-平移, 旋转, 缩放">
+<meta property="og:url" content="http://yoursite.com/2020/03/17/CV_3D/CV-3D-Transform/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="[TOC] 三维坐标变换原理-平移, 旋转, 缩放 基础知识齐次坐标给定一个二维点(x, y)，那么形如(kx, ky, k)的所有三元组就都是等价的，它们就是这个点的齐次坐标(homogeneous)。齐次坐标就是将一个原本是n维的向量用一个n+1维向量来表示，是指一个用于投影几何里的坐标系统，如同用于欧氏几何里的笛卡儿坐标一般 矩阵的乘法矩阵的乘法运算，阮一峰老师写的比较清楚,具体可以看 这里">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2020/03/17/CV_3D/CV-3D-Transform/2024-04-03-12-06-39-image.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/17/CV_3D/CV-3D-Transform/2024-04-03-12-07-12-image.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/17/CV_3D/CV-3D-Transform/2024-04-03-12-07-53-image.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/17/CV_3D/CV-3D-Transform/2024-04-03-12-08-19-image.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/17/CV_3D/CV-3D-Transform/2024-04-03-12-08-30-image.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/17/CV_3D/CV-3D-Transform/2024-04-03-12-08-36-image.png">
+<meta property="og:updated_time" content="2024-10-12T06:50:38.811Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="三维坐标变换原理-平移, 旋转, 缩放">
+<meta name="twitter:description" content="[TOC] 三维坐标变换原理-平移, 旋转, 缩放 基础知识齐次坐标给定一个二维点(x, y)，那么形如(kx, ky, k)的所有三元组就都是等价的，它们就是这个点的齐次坐标(homogeneous)。齐次坐标就是将一个原本是n维的向量用一个n+1维向量来表示，是指一个用于投影几何里的坐标系统，如同用于欧氏几何里的笛卡儿坐标一般 矩阵的乘法矩阵的乘法运算，阮一峰老师写的比较清楚,具体可以看 这里">
+<meta name="twitter:image" content="http://yoursite.com/2020/03/17/CV_3D/CV-3D-Transform/2024-04-03-12-06-39-image.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/03/17/CV_3D/CV-3D-Transform/">
+
+
+
+
+
+  <title>三维坐标变换原理-平移, 旋转, 缩放 | Simon Shi的小站</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simon Shi的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人工智能，机器学习 学习记录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/17/CV_3D/CV-3D-Transform/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">三维坐标变换原理-平移, 旋转, 缩放</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-03-17T10:39:11+00:00">
+                2020-03-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CG/" itemprop="url" rel="index">
+                    <span itemprop="name">CG</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CG/transform/" itemprop="url" rel="index">
+                    <span itemprop="name">transform</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/03/17/CV_3D/CV-3D-Transform/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2020/03/17/CV_3D/CV-3D-Transform/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[TOC]</p>
+<p><a href="https://www.syen.me/article/2019/05/20/three-dimensions-transform" target="_blank" rel="noopener">三维坐标变换原理-平移, 旋转, 缩放</a></p>
+<h1 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h1><h2 id="齐次坐标"><a href="#齐次坐标" class="headerlink" title="齐次坐标"></a>齐次坐标</h2><p>给定一个二维点(x, y)，那么形如(kx, ky, k)的所有三元组就都是等价的，它们就是这个点的齐次坐标(homogeneous)。齐次坐标就是将一个原本是n维的向量用一个n+1维向量来表示，是指一个用于投影几何里的坐标系统，如同用于欧氏几何里的笛卡儿坐标一般</p>
+<h2 id="矩阵的乘法"><a href="#矩阵的乘法" class="headerlink" title="矩阵的乘法"></a>矩阵的乘法</h2><p>矩阵的乘法运算，阮一峰老师写的比较清楚,具体可以看 <a href="http://www.ruanyifeng.com/blog/2015/09/matrix-multiplication.html" target="_blank" rel="noopener">这里</a></p>
+<h2 id="矩阵的线性变换"><a href="#矩阵的线性变换" class="headerlink" title="矩阵的线性变换"></a>矩阵的线性变换</h2><p>矩阵的线性变换就是从一个线性空间 $V_1$ 的某一个点跃迁到另一个线性空间  $V_2$ 的另一个点的运动。也就是说是一个点不仅可以变换到同一个线性空间中的另一个点，而且可以变换到另一个线性空间中的另一个点去</p>
+<p><strong>矩阵和线性变换之间的关系</strong>： 矩阵本身描述了一个坐标系，矩阵与矩阵的乘法描述了一个运动。换句话说：如果矩阵仅仅自己出现，那么他描述了一个坐标系，如果他和另一个矩阵或向量同时出现，而且做乘法运算，那么它表示运动（线性变换）</p>
+<p>数学表述为: $\vec{b}=M\vec{a}$, 即矩阵 M 描述了向量 $a$ 到向量$b$ 的运动</p>
+<p>如将三维坐标D1经过矩阵M变换到坐标D2, 就可以表达为： </p>
+<p>$$<br>D_2 = D_1 \cdot M =<br>\left[<br>\begin{matrix} a1 &amp; b1 &amp; c1 \ b2 &amp; b2 &amp; c2 \ a3 &amp; b3 &amp; c3 \end{matrix}<br>\right]<br>\left( \begin{matrix} z1 \ y2 \ z3 \end{matrix} \right)<br>= x1 \left( \begin{matrix} z1 \ y2 \ z3 \end{matrix} \right)</p>
+<ul>
+<li>y2 \left( \begin{matrix} b1 \ b2 \ b3 \end{matrix} \right)</li>
+<li>z3 \left( \begin{matrix} c1 \ c2 \ c3 \end{matrix} \right)<br>= \left( \begin{matrix} X \ Y \ Z \end{matrix} \right)<br>$$</li>
+</ul>
+<h1 id="坐标变换"><a href="#坐标变换" class="headerlink" title="坐标变换"></a>坐标变换</h1><h3 id="平移"><a href="#平移" class="headerlink" title="平移"></a>平移</h3><p>假设在三维空间坐标系中, 点Ai​(x, y, z)在x方向移动了dx, y方向移动dy, z方向移动了dz。到达点Aj​(X, Y, Z), 则</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">X = x + dx</span><br><span class="line">Y = y + dy</span><br><span class="line">Z = z + dz</span><br></pre></td></tr></table></figure>
+
+<p>如上所述, 则存在一个平移矩阵M,使得Ai​M=Aj​，但是在纯粹的三维矩阵中，我们永远也找不到这样一个矩阵M使条件成立。此时可以借助齐次坐标。齐次坐标规定用一个n+1维度的向量来表示原来的n维向量. 此时将Ai(x, y, z) 表示为(x, y, z, 1), 则可以得到矩阵M</p>
+<p><img src="/2020/03/17/CV_3D/CV-3D-Transform/2024-04-03-12-06-39-image.png" alt></p>
+<p>验证: 假设Ai(4, 8, 2), x方向移动了dx, y方向移动dy, z方向移动了dz, 则Aj(4+dx, 8+dy , 2+dz) </p>
+<p><img src="/2020/03/17/CV_3D/CV-3D-Transform/2024-04-03-12-07-12-image.png" alt></p>
+<h3 id="缩放"><a href="#缩放" class="headerlink" title="缩放"></a>缩放</h3><p>假设在三维空间坐标系中, 点Ai(x, y, z)在x方向缩放了Sx, y方向缩放了Sy, z方向缩放了Sz。到达点Aj(X, Y, Z), 则</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">X = x * Sx</span><br><span class="line">Y = y * Sy</span><br><span class="line">Z = z * Sz</span><br></pre></td></tr></table></figure>
+
+<p>同理，缩放矩阵为</p>
+<p><img src="/2020/03/17/CV_3D/CV-3D-Transform/2024-04-03-12-07-53-image.png" alt></p>
+<h3 id="旋转"><a href="#旋转" class="headerlink" title="旋转"></a>旋转</h3><p>矩阵的旋转比较复杂，需要涉及到三角函数。 点Ai(x, y, z)绕X轴旋转θ度时， 到达点Aj(X, Y, Z), 则</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">X = X</span><br><span class="line">Y = y*cosθ - y*sinθ</span><br><span class="line">z = z*sinθ + z*cosθ</span><br></pre></td></tr></table></figure>
+
+<p>矩阵M为</p>
+<p><img src="/2020/03/17/CV_3D/CV-3D-Transform/2024-04-03-12-08-19-image.png" alt></p>
+<p>绕Y轴旋转时</p>
+<p><img src="/2020/03/17/CV_3D/CV-3D-Transform/2024-04-03-12-08-30-image.png" alt></p>
+<p>绕Z轴旋转时</p>
+<p><img src="/2020/03/17/CV_3D/CV-3D-Transform/2024-04-03-12-08-36-image.png" alt></p>
+<p>欧拉变换是绕3个旋转轴的旋转矩阵的乘积</p>
+<h1 id="Open3D示例"><a href="#Open3D示例" class="headerlink" title="Open3D示例"></a>Open3D示例</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> open3d <span class="keyword">as</span> o3d</span><br><span class="line"><span class="keyword">import</span> copy</span><br><span class="line"></span><br><span class="line">vec = np.identity(<span class="number">4</span>)</span><br><span class="line">vec[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">2</span></span><br><span class="line">vec[<span class="number">1</span>][<span class="number">1</span>] = <span class="number">2</span></span><br><span class="line">vec[<span class="number">2</span>][<span class="number">2</span>] = <span class="number">2</span></span><br><span class="line">print(vec)</span><br><span class="line"></span><br><span class="line"><span class="comment"># filename = 'data/hello_smpl_stand_new.ply'</span></span><br><span class="line">mbody = <span class="string">'/home/simon/tf_demo/vton3d/3dface/Align/data/hello_smpl_stand_new.ply'</span></span><br><span class="line">mface = <span class="string">'/home/simon/tf_demo/vton3d/3dface/Align/data/mx_new.ply'</span></span><br><span class="line"></span><br><span class="line">mmbody = o3d.io.read_triangle_mesh(mbody)</span><br><span class="line"></span><br><span class="line">mesh_face = o3d.io.read_triangle_mesh(mface)</span><br><span class="line">mmface = o3d.geometry.Geometry3D.transform(mesh_face, vec)</span><br><span class="line">print(mmface)</span><br><span class="line"></span><br><span class="line">o3d.visualization.draw_geometries([mmface, mmbody])</span><br></pre></td></tr></table></figure>
+
+<p>问题：给定两个坐标，如何计算变换矩阵？</p>
+<h1 id="webgl示例分析"><a href="#webgl示例分析" class="headerlink" title="webgl示例分析"></a>webgl示例分析</h1><p>在webgl中, 在矩阵变换常用的库<a href="http://glmatrix.net/" target="_blank" rel="noopener">glmatrix</a>中有计算平移矩阵的<strong>translate</strong>方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Translate a mat4 by the given vector</span><br><span class="line"> *</span><br><span class="line"> * @param &#123;mat4&#125; out the receiving matrix</span><br><span class="line"> * @param &#123;mat4&#125; a the matrix to translate</span><br><span class="line"> * @param &#123;vec3&#125; v vector to translate by</span><br><span class="line"> * @returns &#123;mat4&#125; out</span><br><span class="line"> */</span><br><span class="line">function translate(out, a, v) &#123;</span><br><span class="line">  var x = v[0],</span><br><span class="line">      y = v[1],</span><br><span class="line">      z = v[2];</span><br><span class="line">  var a00 = void 0,</span><br><span class="line">      a01 = void 0,</span><br><span class="line">      a02 = void 0,</span><br><span class="line">      a03 = void 0;</span><br><span class="line">  var a10 = void 0,</span><br><span class="line">      a11 = void 0,</span><br><span class="line">      a12 = void 0,</span><br><span class="line">      a13 = void 0;</span><br><span class="line">  var a20 = void 0,</span><br><span class="line">      a21 = void 0,</span><br><span class="line">      a22 = void 0,</span><br><span class="line">      a23 = void 0;</span><br><span class="line"></span><br><span class="line">  if (a === out) &#123;</span><br><span class="line">    out[12] = a[0] * x + a[4] * y + a[8] * z + a[12];</span><br><span class="line">    out[13] = a[1] * x + a[5] * y + a[9] * z + a[13];</span><br><span class="line">    out[14] = a[2] * x + a[6] * y + a[10] * z + a[14];</span><br><span class="line">    out[15] = a[3] * x + a[7] * y + a[11] * z + a[15];</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    a00 = a[0];a01 = a[1];a02 = a[2];a03 = a[3];</span><br><span class="line">    a10 = a[4];a11 = a[5];a12 = a[6];a13 = a[7];</span><br><span class="line">    a20 = a[8];a21 = a[9];a22 = a[10];a23 = a[11];</span><br><span class="line"></span><br><span class="line">    out[0] = a00;out[1] = a01;out[2] = a02;out[3] = a03;</span><br><span class="line">    out[4] = a10;out[5] = a11;out[6] = a12;out[7] = a13;</span><br><span class="line">    out[8] = a20;out[9] = a21;out[10] = a22;out[11] = a23;</span><br><span class="line"></span><br><span class="line">    out[12] = a00 * x + a10 * y + a20 * z + a[12];</span><br><span class="line">    out[13] = a01 * x + a11 * y + a21 * z + a[13];</span><br><span class="line">    out[14] = a02 * x + a12 * y + a22 * z + a[14];</span><br><span class="line">    out[15] = a03 * x + a13 * y + a23 * z + a[15];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  return out;</span><br><span class="line">&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<p>通常使用translate方法来创建一个平移矩阵, 之后再shader中便可以通过这个平移矩阵来计算gl_Position的值。 通过上面的结果我们知道平移矩阵由最后四位数决定, 所以只需要计算数组的最后四位数即可。 根据矩阵的运算法则, 即可得到结果。</p>
+<p>通常如果在webgl想创建一个平移矩阵, 可以使用下面的方式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var translateMatrix = mat4.create(); //创建单位矩阵</span><br><span class="line">mat4.translate(translateMatrix, translateMatrix, vec3.fromValues(dx, dy, dz));</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<p>得到平移矩阵后，传递到顶点shader中与需要计算的点相乘即可得到目标点的坐标。</p>
+<h3 id="ref"><a href="#ref" class="headerlink" title="ref"></a>ref</h3><p><a href="https://blog.csdn.net/u014090429/article/details/100762308" target="_blank" rel="noopener">人脸姿态估计（计算欧拉角）-CSDN博客</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/transform/" rel="tag"># transform</a>
+          
+            <a href="/tags/CG/" rel="tag"># CG</a>
+          
+            <a href="/tags/Open3d/" rel="tag"># Open3d</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/16/CV/CV-Face-Recognition/" rel="next" title="计算机视觉--人脸识别发展">
+                <i class="fa fa-chevron-left"></i> 计算机视觉--人脸识别发展
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/17/Sub_Language/CVs/Language-Open3d/" rel="prev" title="Open3d API">
+                Open3d API <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Simon Shi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">286</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">132</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">243</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基础知识"><span class="nav-number">1.</span> <span class="nav-text">基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#齐次坐标"><span class="nav-number">1.1.</span> <span class="nav-text">齐次坐标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#矩阵的乘法"><span class="nav-number">1.2.</span> <span class="nav-text">矩阵的乘法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#矩阵的线性变换"><span class="nav-number">1.3.</span> <span class="nav-text">矩阵的线性变换</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#坐标变换"><span class="nav-number">2.</span> <span class="nav-text">坐标变换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#平移"><span class="nav-number">2.0.1.</span> <span class="nav-text">平移</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缩放"><span class="nav-number">2.0.2.</span> <span class="nav-text">缩放</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#旋转"><span class="nav-number">2.0.3.</span> <span class="nav-text">旋转</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#Open3D示例"><span class="nav-number">3.</span> <span class="nav-text">Open3D示例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#webgl示例分析"><span class="nav-number">4.</span> <span class="nav-text">webgl示例分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ref"><span class="nav-number">4.0.1.</span> <span class="nav-text">ref</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+    
+
+        
+
+
+
+
+
+
+<div>
+<!-- 填写你的友盟代码 -->
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1277989586'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s9.cnzz.com/z_stat.php%3Fid%3D1277989586%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+<!-- 你的友盟代码 end -->
+</div>
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'novav',
+            repo: 'blog_comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'ea8aae03b5381e13ab9cdedd0282b60d8ec412cb',
+            
+                client_id: 'c3934b23eb001aa3243d'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

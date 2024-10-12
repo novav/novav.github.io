@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="FER,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Simon Shi的小站" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="人脸属性分析–性别、年龄和表情识别开源集合人脸属性指的是根据给定的人脸判断其性别、年龄和表情等，当前在github上开源了一些相关的工作，大部分都是基于tensorflow的，还有一部分是keras，CVPR2015曾有一篇是用caffe做的。 1、CVPR2015 caffe实现 https://github.com/GilLevi/AgeGenderDeepLearning 2、CVPR201">
+<meta name="keywords" content="FER">
+<meta property="og:type" content="article">
+<meta property="og:title" content="人脸属性分析–性别">
+<meta property="og:url" content="http://yoursite.com/2020/01/10/CV/CV-Human-attr/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="人脸属性分析–性别、年龄和表情识别开源集合人脸属性指的是根据给定的人脸判断其性别、年龄和表情等，当前在github上开源了一些相关的工作，大部分都是基于tensorflow的，还有一部分是keras，CVPR2015曾有一篇是用caffe做的。 1、CVPR2015 caffe实现 https://github.com/GilLevi/AgeGenderDeepLearning 2、CVPR201">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2024-10-12T06:50:38.615Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="人脸属性分析–性别">
+<meta name="twitter:description" content="人脸属性分析–性别、年龄和表情识别开源集合人脸属性指的是根据给定的人脸判断其性别、年龄和表情等，当前在github上开源了一些相关的工作，大部分都是基于tensorflow的，还有一部分是keras，CVPR2015曾有一篇是用caffe做的。 1、CVPR2015 caffe实现 https://github.com/GilLevi/AgeGenderDeepLearning 2、CVPR201">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/01/10/CV/CV-Human-attr/">
+
+
+
+
+
+  <title>人脸属性分析–性别 | Simon Shi的小站</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simon Shi的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人工智能，机器学习 学习记录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/10/CV/CV-Human-attr/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">人脸属性分析–性别</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-10T12:00:00+00:00">
+                2020-01-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV-Apply/" itemprop="url" rel="index">
+                    <span itemprop="name">CV_Apply</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV-Apply/Face-Edit/" itemprop="url" rel="index">
+                    <span itemprop="name">Face Edit</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/01/10/CV/CV-Human-attr/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2020/01/10/CV/CV-Human-attr/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="人脸属性分析–性别、年龄和表情识别开源集合"><a href="#人脸属性分析–性别、年龄和表情识别开源集合" class="headerlink" title="人脸属性分析–性别、年龄和表情识别开源集合"></a>人脸属性分析–性别、年龄和表情识别开源集合</h1><p>人脸属性指的是根据给定的人脸判断其性别、年龄和表情等，当前在github上开源了一些相关的<a href="http://www.seotest.cn/wenzhang/gongzuo/" target="_blank" rel="noopener">工作</a>，大部分都是基于tensorflow的，还有一部分是keras，CVPR2015曾有一篇是用caffe做的。</p>
+<p>1、CVPR2015 caffe实现</p>
+<p><a href="https://github.com/GilLevi/AgeGenderDeepLearning" target="_blank" rel="noopener">https://github.com/GilLevi/AgeGenderDeepLearning</a></p>
+<p>2、CVPR2015对应的tensorflow实现</p>
+<p><a href="https://github.com/dpressel/rude-carnie" target="_blank" rel="noopener">https://github.com/dpressel/rude-carnie</a></p>
+<p>3、DEX: Deep EXpectation 实现</p>
+<p><a href="https://github.com/truongnmt/multi-task-learning" target="_blank" rel="noopener">https://github.com/truongnmt/multi-task-learning</a></p>
+<p>4、CVPR2017 Age <a href="http://www.seotest.cn/jishu/34534.html" target="_blank" rel="noopener">progress</a>ion/<a href="http://www.seotest.cn/jishu/34304.html" target="_blank" rel="noopener">regression</a> by <a href="http://www.seotest.cn/jishu/33944.html" target="_blank" rel="noopener">conditional</a> Adversarial Autoencoder </p>
+<p><a href="https://github.com/ZZUTK/Face-Aging-CAAE" target="_blank" rel="noopener">https://github.com/ZZUTK/Face-Aging-CAAE</a></p>
+<p>5、使用<a href="http://www.seotest.cn/jishu/34449.html" target="_blank" rel="noopener">inception</a> v1同时预测性别和年龄，受限于使用的dlib检测器，效果<a href="http://www.seotest.cn/yingxiao/36205.html" target="_blank" rel="noopener">并不是</a>很好</p>
+<p><a href="https://github.com/BoyuanJiang/Age-Gender-Estimate-TF" target="_blank" rel="noopener">https://github.com/BoyuanJiang/Age-Gender-Estimate-TF</a></p>
+<p>6、性别种族识别：gender Accuracy: 0.951493,race Accuracy: 0.87557212</p>
+<p><a href="https://github.com/zZyan/race_gender_[recognition](http://www.seotest.cn/jishu/35507.html)" target="_blank" rel="noopener">https://github.com/zZyan/race_gender_[recognition](http://www.seotest.cn/jishu/35507.html)</a></p>
+<p>8、性别识别全流程实现：<strong>94% accuracy</strong> </p>
+<p><a href="https://github.com/jocialiang/gender_classifier" target="_blank" rel="noopener">https://github.com/jocialiang/gender_classifier</a></p>
+<p>9、表情、性别识别（keras）</p>
+<p><a href="https://github.com/oarriaga/face_classification" target="_blank" rel="noopener">https://github.com/oarriaga/face_classification</a></p>
+<p>注明：两个分开的模型对应表情识别和性别识别</p>
+<p>10、性别和种族识别</p>
+<p><a href="https://github.com/wondonghyeon/face-classification" target="_blank" rel="noopener">https://github.com/wondonghyeon/face-classification</a></p>
+<p>11、年龄识别</p>
+<p><a href="https://github.com/shamangary/SSR-Net" target="_blank" rel="noopener">https://github.com/shamangary/SSR-Net</a></p>
+<p>12、年龄识别（亚洲人<a href="http://www.seotest.cn/wenzhang/youhua/" target="_blank" rel="noopener">优化</a>）</p>
+<p><a href="https://github.com/b02901145/SSR-Net_megaage-asian" target="_blank" rel="noopener">https://github.com/b02901145/SSR-Net_megaage-asian</a></p>
+<p>13、年龄和性别识别(Keras )</p>
+<p><a href="https://github.com/yu4u/age-gender-estimation" target="_blank" rel="noopener">https://github.com/yu4u/age-gender-estimation</a></p>
+<p>14、表情和性别识别：表情66% with fer2013</p>
+<p><a href="https://github.com/isseu/emotion-recognition-neural-networks" target="_blank" rel="noopener">https://github.com/isseu/emotion-recognition-neural-networks</a></p>
+<p>15、性别和年龄识别(tensorflow )：<strong>91%</strong> accuracy in gender and <strong>55%</strong> in age</p>
+<p><a href="https://github.com/zealerww/gender_age_classification" target="_blank" rel="noopener">https://github.com/zealerww/gender_age_classification</a></p>
+<p><strong>16</strong>、人脸检测、性别和表情识别、数字化妆、轮廓标识等多功能（tensorflow 、keras）</p>
+<p><a href="https://github.com/vipstone/faceai" target="_blank" rel="noopener">https://github.com/vipstone/faceai</a></p>
+<p><a href="http://www.seotest.cn/wenzhang/ai_7841/" target="_blank" rel="noopener">http://www.seotest.cn/wenzhang/ai_7841/</a></p>
+<p>17、表情识别（tensorflow、keras）：fer2013</p>
+<p><a href="https://github.com/XiuweiHe/EmotionClassifier" target="_blank" rel="noopener">https://github.com/XiuweiHe/EmotionClassifier</a></p>
+<p>18、表情和种族识别：表情 72% accuracy ，种族95% accuracy</p>
+<p><a href="https://github.com/HectorAnadon/Face-expression-and-ethnic-recognition" target="_blank" rel="noopener">https://github.com/HectorAnadon/Face-expression-and-ethnic-recognition</a></p>
+<p>19、表情识别（caffe）:66.7% on fer2013 with resnet50</p>
+<p><a href="https://github.com/ybch14/Facial-Expression-Recognition-ResNet" target="_blank" rel="noopener">https://github.com/ybch14/Facial-Expression-Recognition-ResNet</a></p>
+<p>20、表情识别（keras）</p>
+<p><a href="https://github.com/JostineHo/mememoji" target="_blank" rel="noopener">https://github.com/JostineHo/mememoji</a></p>
+<p>21、种族识别</p>
+<p><a href="https://github.com/mangorocoro/racedetector" target="_blank" rel="noopener">https://github.com/mangorocoro/racedetector</a></p>
+<p>22、多任务学习:性别、年龄、表情（tensorflow）</p>
+<p><a href="https://github.com/truongnmt/multi-task-learning" target="_blank" rel="noopener">https://github.com/truongnmt/multi-task-learning</a></p>
+<p>23、性别识别（tensorflow、keras）:爬虫图片+人脸提取识别</p>
+<p><a href="https://github.com/StevenKe8080/recognition_gender" target="_blank" rel="noopener">https://github.com/StevenKe8080/recognition_gender</a></p>
+<p>24、年龄识别（tensorflow）</p>
+<p><a href="https://github.com/zonetrooper32/AgeEstimateAdience" target="_blank" rel="noopener">https://github.com/zonetrooper32/AgeEstimateAdience</a></p>
+<p>25、年龄和性别识别</p>
+<p><a href="https://github.com/OValery16/gender-age-classification" target="_blank" rel="noopener">https://github.com/OValery16/gender-age-classification</a></p>
+<p><strong>26、表情识别</strong></p>
+<p><a href="https://github.com/WuJie1010/Facial-Expression-Recognition.Pytorch" target="_blank" rel="noopener">【Fer】GitHub - WuJie1010/Facial-Expression-Recognition.Pytorch </a></p>
+<p><a href="https://modelscope.cn/models/damo/cv_vgg19_facial-expression-recognition_fer/summary" target="_blank" rel="noopener">modelscope.cn / Facial Expression Recognition Summary</a></p>
+<p>A CNN based pytorch implementation on facial expression recognition (FER2013 and CK+), achieving 73.112% (state-of-the-art) in FER2013 and 94.64% in CK+ dataset</p>
+<h1 id="姿态识别"><a href="#姿态识别" class="headerlink" title="姿态识别"></a>姿态识别</h1><p>详见: <a href="../Paper/Paper-CV-PoseEstimation.md">../Paper/Paper-CV-PoseEstimation.md</a></p>
+<p>1、多人姿态识别框架——<a href="https://cloud.tencent.com/developer/article/2119537?from=15425&areaSource=102001.1&traceId=_4NO_SAwr9tc-Xhx9HNzm" target="_blank" rel="noopener">AlphaPose</a></p>
+<p><a href="https://github.com/MVIG-SJTU/AlphaPose" target="_blank" rel="noopener">https://github.com/MVIG-SJTU/AlphaPose</a></p>
+<p>2、</p>
+<h3 id="开源表情"><a href="#开源表情" class="headerlink" title="开源表情"></a>开源表情</h3><p><a href="https://github.com/WuJie1010/Facial-Expression-Recognition.Pytorch" target="_blank" rel="noopener">GitHub - WuJie1010/Facial-Expression-Recognition.Pytorch: A CNN based pytorch implementation on facial expression recognition (FER2013 and CK+), achieving 73.112% (state-of-the-art) in FER2013 and 94.64% in CK+ dataset</a></p>
+<p><a href="https://github.com/vipstone/faceai" target="_blank" rel="noopener">GitHub - vipstone/faceai: 一款入门级的人脸、视频、文字检测以及识别的项目.</a></p>
+<p><a href="https://modelscope.cn/models/damo/cv_vgg19_facial-expression-recognition_fer/summary" target="_blank" rel="noopener">阿里# Fer 模型介绍</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/FER/" rel="tag"># FER</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/01/09/AI/ML/ML-datasets/" rel="next" title="ML-datasets -- 物体识别">
+                <i class="fa fa-chevron-left"></i> ML-datasets -- 物体识别
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/01/16/Paper/Paper-CV-NetworkRepresentationLearning/" rel="prev" title="Paper-CV-NetworkRepresentationLearning">
+                Paper-CV-NetworkRepresentationLearning <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Simon Shi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">286</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">132</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">243</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#人脸属性分析–性别、年龄和表情识别开源集合"><span class="nav-number">1.</span> <span class="nav-text">人脸属性分析–性别、年龄和表情识别开源集合</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#姿态识别"><span class="nav-number">2.</span> <span class="nav-text">姿态识别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#开源表情"><span class="nav-number">2.0.1.</span> <span class="nav-text">开源表情</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+    
+
+        
+
+
+
+
+
+
+<div>
+<!-- 填写你的友盟代码 -->
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1277989586'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s9.cnzz.com/z_stat.php%3Fid%3D1277989586%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+<!-- 你的友盟代码 end -->
+</div>
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'novav',
+            repo: 'blog_comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'ea8aae03b5381e13ab9cdedd0282b60d8ec412cb',
+            
+                client_id: 'c3934b23eb001aa3243d'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

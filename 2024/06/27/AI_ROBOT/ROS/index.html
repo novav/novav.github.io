@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ROS,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Simon Shi的小站" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="ROS: 机器人操作系统（Robot Operating  System， ROS）机器人软件框架。 开源社区内的ROS功能包呈指  数级增长， 涉及的应用领域包括轮式机器人、 人形机器人、 工业机器 人、 农业机器人等。 ROS中的功能模块都封装于独立的功能包（Package） 或元功能包（Meta Package） 实验室或者研究机构共同协作来开发机器人软件 。 例如一个拥有室内地图建模领域专">
+<meta name="keywords" content="ROS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ROS">
+<meta property="og:url" content="http://yoursite.com/2024/06/27/AI_ROBOT/ROS/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="ROS: 机器人操作系统（Robot Operating  System， ROS）机器人软件框架。 开源社区内的ROS功能包呈指  数级增长， 涉及的应用领域包括轮式机器人、 人形机器人、 工业机器 人、 农业机器人等。 ROS中的功能模块都封装于独立的功能包（Package） 或元功能包（Meta Package） 实验室或者研究机构共同协作来开发机器人软件 。 例如一个拥有室内地图建模领域专">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2024/06/27/AI_ROBOT/ROS/2024-06-27-11-59-14-image.png">
+<meta property="og:image" content="http://yoursite.com/2024/06/27/AI_ROBOT/ROS/2024-06-27-12-01-48-image.png">
+<meta property="og:image" content="http://yoursite.com/2024/06/27/AI_ROBOT/ROS/2024-06-27-12-10-38-image.png">
+<meta property="og:image" content="http://yoursite.com/2024/06/27/AI_ROBOT/ROS/2024-06-27-12-11-18-image.png">
+<meta property="og:image" content="http://yoursite.com/2024/06/27/AI_ROBOT/ROS/2024-06-27-14-10-22-image.png">
+<meta property="og:image" content="http://yoursite.com/2024/06/27/AI_ROBOT/ROS/2024-06-27-14-25-47-image.png">
+<meta property="og:image" content="http://yoursite.com/2024/06/27/AI_ROBOT/ROS/2024-06-27-14-26-12-image.png">
+<meta property="og:image" content="http://yoursite.com/2024/06/27/AI_ROBOT/ROS/2024-06-27-14-26-26-image.png">
+<meta property="og:image" content="http://yoursite.com/2024/06/27/AI_ROBOT/ROS/2024-06-28-09-44-52-image.png">
+<meta property="og:image" content="http://yoursite.com/2024/06/27/AI_ROBOT/ROS/2024-06-28-11-19-59-image.png">
+<meta property="og:image" content="http://yoursite.com/2024/06/27/AI_ROBOT/ROS/2024-06-28-11-23-04-image.png">
+<meta property="og:image" content="http://yoursite.com/2024/06/27/AI_ROBOT/ROS/2024-07-01-10-38-36-image.png">
+<meta property="og:image" content="http://yoursite.com/2024/06/27/AI_ROBOT/ROS/2024-07-01-15-46-30-image.png">
+<meta property="og:image" content="http://yoursite.com/2024/06/27/AI_ROBOT/ROS/2024-07-03-19-29-52-image.png">
+<meta property="og:image" content="http://yoursite.com/2024/06/27/AI_ROBOT/ROS/2024-07-03-19-35-43-image.png">
+<meta property="og:image" content="http://yoursite.com/2024/06/27/AI_ROBOT/ROS/2024-07-03-20-13-51-image.png">
+<meta property="og:image" content="http://yoursite.com/2024/06/27/AI_ROBOT/ROS/2024-07-03-20-13-25-image.png">
+<meta property="og:image" content="http://yoursite.com/2024/06/27/AI_ROBOT/ROS/2024-07-09-19-59-05-image.png">
+<meta property="og:image" content="http://yoursite.com/2024/06/27/AI_ROBOT/ROS/2024-07-04-11-28-06-image.png">
+<meta property="og:image" content="http://yoursite.com/2024/06/27/AI_ROBOT/ROS/2024-07-04-11-30-21-image.png">
+<meta property="og:image" content="http://yoursite.com/2024/06/27/AI_ROBOT/ROS/2024-07-04-17-26-04-image.png">
+<meta property="og:image" content="http://yoursite.com/2024/06/27/AI_ROBOT/ROS/2024-07-04-20-14-03-image.png">
+<meta property="og:image" content="http://yoursite.com/2024/06/27/AI_ROBOT/ROS/2024-07-08-16-02-23-image.png">
+<meta property="og:image" content="http://yoursite.com/2024/06/27/AI_ROBOT/ROS/2024-07-09-15-49-32-image.png">
+<meta property="og:updated_time" content="2024-10-12T06:50:38.575Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ROS">
+<meta name="twitter:description" content="ROS: 机器人操作系统（Robot Operating  System， ROS）机器人软件框架。 开源社区内的ROS功能包呈指  数级增长， 涉及的应用领域包括轮式机器人、 人形机器人、 工业机器 人、 农业机器人等。 ROS中的功能模块都封装于独立的功能包（Package） 或元功能包（Meta Package） 实验室或者研究机构共同协作来开发机器人软件 。 例如一个拥有室内地图建模领域专">
+<meta name="twitter:image" content="http://yoursite.com/2024/06/27/AI_ROBOT/ROS/2024-06-27-11-59-14-image.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2024/06/27/AI_ROBOT/ROS/">
+
+
+
+
+
+  <title>ROS | Simon Shi的小站</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simon Shi的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人工智能，机器学习 学习记录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2024/06/27/AI_ROBOT/ROS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ROS</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2024-06-27T00:00:00+00:00">
+                2024-06-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Robot/" itemprop="url" rel="index">
+                    <span itemprop="name">Robot</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Robot/ROS/" itemprop="url" rel="index">
+                    <span itemprop="name">ROS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2024/06/27/AI_ROBOT/ROS/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2024/06/27/AI_ROBOT/ROS/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>ROS: 机器人操作系统（Robot Operating  System， ROS）机器人软件框架。</p>
+<p>开源社区内的ROS功能包呈指  数级增长， 涉及的应用领域包括轮式机器人、 人形机器人、 工业机器 人、 农业机器人等。</p>
+<p>ROS中的功能模块都封装于独立的功能包（Package） 或元功能包（Meta Package）</p>
+<p>实验室或者研究机构共同协作来开发机器人软件 。 例如一个拥有室内地图建模领域专家的实验室可能会开发并发布一个先进的地图建模系统； 一个拥有导航方面专家的组织可以使用建模完成的地图进行机器人导航； 另一个专注于机器人视觉的组织可能开发出了一种物体识别的有效方法。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo sh -c '. /etc/lsb-release &amp;&amp; echo \</span><br><span class="line"> "deb http://mirrors.ustc.edu.cn/ros/ubuntu/ $DISTRIB_CODENAME main" \</span><br><span class="line"> /etc/apt/sources.list.d/ros-latest.list'</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-架构"><a href="#2-架构" class="headerlink" title="2-架构"></a>2-架构</h3><p>架构分层：</p>
+<ul>
+<li><p>OS层：基于Linux系统的OS层； </p>
+</li>
+<li><p>中间层：实现ROS核心通信机制以及众多机器人开发库； </p>
+</li>
+<li><p>应用层：在ROS Master的管理下保证功能节点的正常运行。</p>
+</li>
+</ul>
+<p>ROS的三种通信机制： </p>
+<ul>
+<li><p>基于发布/订阅的话题通信、 </p>
+</li>
+<li><p>基于客户端/服务器的服务通信</p>
+</li>
+<li><p>基于RPC的参数服务器</p>
+</li>
+</ul>
+<p>系统实现角度，ROS划分三个层次：计算图、 文件系统和 开源社区。其中涵盖了ROS中的关键概念， 如节点、 消息、 话题、 服务、 功能包、 元功能包等。</p>
+<img src="/2024/06/27/AI_ROBOT/ROS/2024-06-27-11-59-14-image.png" title alt width="330">
+
+<p>通信层：</p>
+<p>除了TCPROS/UDPROS的通信机制外， ROS还提供一种进程内的通信方法——Nodelet， 可以为多进程通信提供一种更优化的数据传输方式， 适合对数据传输实时性方面有较高要求的应用。</p>
+<p>在通信机制之上， ROS提供了大量机器人开发相关的库， 如数据类型定义、 坐标变换、 运动控制等， 可以提供给应用层使用。</p>
+<img src="/2024/06/27/AI_ROBOT/ROS/2024-06-27-12-01-48-image.png" title alt width="351">
+
+<h4 id="计算图"><a href="#计算图" class="headerlink" title="计算图"></a>计算图</h4><ul>
+<li><p>节点：执行运算任务的进程</p>
+</li>
+<li><p>消息：支持标准数据类型（整型、 浮点型、 布尔型等） ， 也支持嵌套结构和数组（类似于C语言的结构体struct） ， 还可以根据需求由开发者自主定义。</p>
+</li>
+<li><p>话题：消息以一种发布/订阅（Publish/Subscribe） 的方式传递。 </p>
+<ul>
+<li><p>一个节点可以针对一个给定的话题（Topic） 发布消息（称为发布者/Talker） ， </p>
+</li>
+<li><p>也可以关注某个话题并订阅特定类型的数据（称为订阅者/Listener） 。</p>
+</li>
+<li><p>多对多模式：可以多个Talker，多个Listener</p>
+</li>
+<li><p>不适合双向的同步传输模式</p>
+</li>
+</ul>
+</li>
+<li><p>服务：基于客户端/服务器（Client/Server） 模型， 包含两个部分的通信数据类型： 一个用于请求， 另一个用于应答， 类似于Web服务器。 </p>
+<ul>
+<li>与话题不同的是， ROS中只允许有一个节点提供指定命名的服务。</li>
+</ul>
+</li>
+<li><p>ROS Master ：节点管理器</p>
+</li>
+</ul>
+<h4 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h4><ul>
+<li><p>Package： 功能包，包含节点，库，配置文件</p>
+</li>
+<li><p>Package Manifest： package.xml 记录功能包基本信息，作者，许可，依赖，编译标志</p>
+</li>
+<li><p>Meta Package：组织多个用于同一目地的功能包，例如ROS导航功能包，包含建模，定位，导航等多个功能包</p>
+</li>
+</ul>
+<img src="/2024/06/27/AI_ROBOT/ROS/2024-06-27-12-10-38-image.png" title alt width="344">
+
+<p>功能包：</p>
+<img src="/2024/06/27/AI_ROBOT/ROS/2024-06-27-12-11-18-image.png" title alt width="311">
+
+<p>1） config： 放置功能包中的配置文件， 由用户创建， 文件名可以不同。<br>2） include： 放置功能包中需要用到的头文件。<br>3） scripts： 放置可以直接运行的Python脚本。<br>4） src： 放置需要编译的C++代码。<br>5） launch： 放置功能包中的所有启动文件。<br>6） msg： 放置功能包自定义的消息类型。<br>7） srv： 放置功能包自定义的服务类型。<br>8） action： 放置功能包自定义的动作指令。<br>9） CMakeLists.txt： 编译器编译功能包的规则。<br>10） package.xml： 功能包清单， 图2-7是一个典型的功能包清单示例。</p>
+<h4 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h4><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>catkin_create_pkg</td>
+<td>创建功能包</td>
+</tr>
+<tr>
+<td>rospack</td>
+<td>获取功能包的信息</td>
+</tr>
+<tr>
+<td>catkin_make</td>
+<td>编译工作空间中的功能包</td>
+</tr>
+<tr>
+<td>rosdep</td>
+<td>自动安装功能包依赖的其他包</td>
+</tr>
+<tr>
+<td>roscd</td>
+<td>功能包目录跳转</td>
+</tr>
+<tr>
+<td>roscp</td>
+<td>拷贝功能包中的文件</td>
+</tr>
+<tr>
+<td>rosed</td>
+<td>编辑功能包中的文件</td>
+</tr>
+<tr>
+<td>rosrun</td>
+<td>运行功能包中的可执行文件</td>
+</tr>
+<tr>
+<td>roslaunch</td>
+<td>运行启动文件</td>
+</tr>
+</tbody></table>
+<h4 id="Meta-Package"><a href="#Meta-Package" class="headerlink" title="Meta Package"></a>Meta Package</h4><p>package.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">package</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">buildtool_depend</span>&gt;</span>catkin<span class="tag">&lt;/<span class="name">buildtool_depend</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;<span class="name">run_depend</span>&gt;</span>amcl<span class="tag">&lt;/<span class="name">run_depend</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">run_depend</span>&gt;</span>carrot_planner<span class="tag">&lt;/<span class="name">run_depend</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">run_depend</span>&gt;</span>dwa_local_planner<span class="tag">&lt;/<span class="name">run_depend</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">export</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">metapackage</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">export</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">package</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">roscd navigation</span><br><span class="line">vim package.xml</span><br></pre></td></tr></table></figure>
+
+<h4 id="社区"><a href="#社区" class="headerlink" title="社区"></a>社区</h4><img src="/2024/06/27/AI_ROBOT/ROS/2024-06-27-14-10-22-image.png" title alt width="321">
+
+<h4 id="通信机制"><a href="#通信机制" class="headerlink" title="通信机制"></a>通信机制</h4><ul>
+<li><p>话题通信机制</p>
+<ul>
+<li>节点建立连接后， 可以关掉ROS Master， 节点之间的数据传输并不<br>会受到影响， 但是其他节点也无法加入这两个节点之间的网络。</li>
+</ul>
+</li>
+<li><p>服务通信机制</p>
+</li>
+<li><p>参数管理机制RPC</p>
+<ul>
+<li>不涉及TCP/UDP的通信</li>
+</ul>
+</li>
+</ul>
+<h4 id="话题服务"><a href="#话题服务" class="headerlink" title="话题服务"></a>话题服务</h4><img title src="/2024/06/27/AI_ROBOT/ROS/2024-06-27-14-25-47-image.png" alt width="391">
+
+<img src="/2024/06/27/AI_ROBOT/ROS/2024-06-27-14-26-12-image.png" title alt width="393">
+
+<img src="/2024/06/27/AI_ROBOT/ROS/2024-06-27-14-26-26-image.png" title alt width="392">
+
+<h3 id="3-基础"><a href="#3-基础" class="headerlink" title="3-基础"></a>3-基础</h3><p>1） src： 代码空间（Source Space） ， 开发过程中最常用的文件夹，用来存储所有ROS功能包的源码文件。<br>2） build： 编译空间（Build Space） ， 用来存储工作空间编译过程 中产生的缓存信息和中间文件。<br>3） devel： 开发空间（Development Space） ， 用来放置编译生成的可执行文件。<br>4） install： 安装空间（Install Space） ， 编译成功后， 可以使用make install命令将可执行文件安装到该空间中， 运行该空间中的环境变量脚本， 即可在终端中运行这些可执行文件。 安装空间并不是必需的，很多工作空间中可能并没有该文件夹</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mkdir -p ~/catkin_ws/src</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> ~/catkin_ws/src</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> catkin_init_workspace</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> ~/catkin_ws/</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> catkin_make</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">source devel/setup.bash</span><br></pre></td></tr></table></figure>
+
+<p>创建新包</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">catkin_create_pkg &lt;package_name&gt; [depend1] [depend2] [depend3]</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> ~/catkin_ws/src</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> catkin_create_pkg learning_communication std_msgs rospy roscpp</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 创建完成后， 代码空间src中会生成一个learning_communication功能</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 包， 其中已经包含package.xml和CMakeLists.txt文件。</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> ~/catkin_ws</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> catkin_make</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">source</span> ~/catkin_ws/devel/setup.bash</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="小乌龟仿真"><a href="#小乌龟仿真" class="headerlink" title="小乌龟仿真"></a>小乌龟仿真</h4><p>键盘控制一只小乌龟在界面中移动，而且会接触到第一个ROS功能包——turtlesim。 </p>
+<p>该功能包的核心是turtlesim_node节点， 提供一个可视化的乌龟仿真器， 可以实现很多ROS基础功能的测试。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 安装依赖</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> sudo apt-get install ros-kinetic-turtlesim</span></span><br><span class="line">sudo apt-get install ros-noetic-turtlesim</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> master</span></span><br><span class="line"><span class="meta">$</span><span class="bash">roscore</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> rosrun (可视化仿真器界面)</span></span><br><span class="line"><span class="meta">$</span><span class="bash">rosrun turtlesim turtlesim_node</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> rosrun 新终端， 运行键盘控制的节点</span></span><br><span class="line"><span class="meta">$</span><span class="bash">rosrun turtlesim turtle_teleop_key</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Publisher-Subscriber"><a href="#Publisher-Subscriber" class="headerlink" title="Publisher/Subscriber"></a>Publisher/Subscriber</h4><h4 id="Server-Client"><a href="#Server-Client" class="headerlink" title="Server/Client"></a>Server/Client</h4><h4 id="多机器通信"><a href="#多机器通信" class="headerlink" title="多机器通信"></a>多机器通信</h4><p>master_URI=ip:11311</p>
+<h3 id="4-组件"><a href="#4-组件" class="headerlink" title="4-组件"></a>4-组件</h3><ul>
+<li><p>launch文件</p>
+</li>
+<li><p>TF坐标转换</p>
+</li>
+<li><p>Qt工具箱</p>
+</li>
+<li><p>rviz三维可视化平台</p>
+</li>
+<li><p>gazebo仿真环境</p>
+</li>
+<li><p>rosbag数据记录与回放</p>
+</li>
+</ul>
+<h4 id="launch启动文件"><a href="#launch启动文件" class="headerlink" title="launch启动文件"></a>launch启动文件</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">node</span> <span class="attr">pkg</span>=<span class="string">"package-name"</span> <span class="attr">type</span>=<span class="string">"executable-name"</span> <span class="attr">name</span>=<span class="string">"node-name"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"output_frame"</span> <span class="attr">value</span>=<span class="string">"odom"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">rosparam</span> <span class="attr">file</span>=<span class="string">"$(find 2dnav_pr2)/config/costmap_common_params.yaml"</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">command</span>=<span class="string">"load"</span> <span class="attr">ns</span>=<span class="string">"local_cos"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">"arg-name"</span> <span class="attr">default</span>= <span class="string">"arg-value"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"foo"</span> <span class="attr">value</span>=<span class="string">"$(arg arg-name)"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">"node"</span> <span class="attr">pkg</span>=<span class="string">"package"</span> <span class="attr">type</span>=<span class="string">"type "</span> <span class="attr">args</span>=<span class="string">"$(arg arg-name)"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--# 重映射机制--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">remap</span> <span class="attr">from</span>=<span class="string">"turtlebot/cmd_wel"</span> <span class="attr">to</span>=<span class="string">"/cmd_wel"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>嵌套使用</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">include</span> <span class="attr">file</span>=<span class="string">"$(dirname)/other.launch"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="TF工具"><a href="#TF工具" class="headerlink" title="TF工具"></a>TF工具</h4><p>tf_monitor</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">tf_monitor</span></span><br><span class="line"><span class="meta">$</span><span class="bash">tf_monitor  &lt;source_target&gt;    &lt;target_target&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>tf_echo: 查看指定坐标系之间的变换关系</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">tf_echo  &lt;source_frame&gt;   &lt;target_frame&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>static_transform_publisher</p>
+<ul>
+<li>发布两个坐标系之间的静态左边变换</li>
+</ul>
+<p>view_frames</p>
+<ul>
+<li><p>可视化调试工具，生成pdf</p>
+</li>
+<li><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">rosrun tf view_frames</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看TF树信息</span></span><br><span class="line"><span class="meta">$</span><span class="bash">evince frames.pdf</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="QT工具"><a href="#QT工具" class="headerlink" title="QT工具"></a>QT工具</h4><h4 id="Rviz可视化"><a href="#Rviz可视化" class="headerlink" title="Rviz可视化"></a>Rviz可视化</h4><h4 id="Gazebo仿真环境"><a href="#Gazebo仿真环境" class="headerlink" title="Gazebo仿真环境"></a>Gazebo仿真环境</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Install</span></span><br><span class="line">sudo apt-get install ros-kinetic-gazebo-ros-pkgs  \</span><br><span class="line">    ros-kinetic-gazebo-ros-control</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> start ros gazebo</span></span><br><span class="line">roscore</span><br><span class="line">rosrun gazebo_ros gazebo</span><br><span class="line"></span><br><span class="line">rostopic list # 查看gazebo的topic</span><br><span class="line"></span><br><span class="line">rosservice list # 查看gazebo的服务</span><br></pre></td></tr></table></figure>
+
+<p>模型的加载需要连接国外网站， 为了保证模型顺利加载， 可以提前将模型文件下载并放置到本地路径~/.gazebo/models下， 模型文件的下载地址： </p>
+<p><a href="https://github.com/osrf/gazebo_models" target="_blank" rel="noopener">GitHub - osrf/gazebo_models: Gazebo database of SDF models. This is a predecessor to https://app.gazebosim.org</a></p>
+<h4 id="rosbag数据记录和回放"><a href="#rosbag数据记录和回放" class="headerlink" title="rosbag数据记录和回放"></a>rosbag数据记录和回放</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 首先启动键盘控制乌龟例程所需的所有节点：</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> roscore</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> rosrun turtlesim turtlesim_node</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> rosrun turtlesim turtle_teleop_key</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 移动操作一会</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> rostopic list -v</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 抓取日志</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> mkdir ~/bagfiles</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> ~/bagfiles</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> rosbag record -a</span></span><br><span class="line"></span><br><span class="line">回放数据</span><br><span class="line"><span class="meta">$</span><span class="bash"> rosbag info &lt;your bagfile&gt;</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> rosbag play &lt;your bagfile&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-ROBOT平台搭建"><a href="#5-ROBOT平台搭建" class="headerlink" title="5-ROBOT平台搭建"></a>5-ROBOT平台搭建</h3><p>什么是机器人？ 一个完整的机器人系统包含哪些部分？</p>
+<p>如何构建一个真实的机器人系统？ 学习完本章内容后， 你就会有答案了</p>
+<p>控制系统</p>
+<p><img src="/2024/06/27/AI_ROBOT/ROS/2024-06-28-09-44-52-image.png" alt></p>
+<p>嵌入式系统的选择有很多， 比如常用的Raspberry Pi、 TK1、RK3288、 Odroid、 Arduino等</p>
+<h4 id="Raspberry-PI控制系统"><a href="#Raspberry-PI控制系统" class="headerlink" title="Raspberry PI控制系统"></a>Raspberry PI控制系统</h4><p><a href="https://github.com/dajianli/mrobot" target="_blank" rel="noopener">GitHub - dajianli/mrobot: mrobot ros package</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> QT 图像显示工具--订阅图像topic</span></span><br><span class="line">rqt_image_view</span><br></pre></td></tr></table></figure>
+
+<p>mrobot_teleop</p>
+<h3 id="6-ROBOT建模，仿真"><a href="#6-ROBOT建模，仿真" class="headerlink" title="6-ROBOT建模，仿真"></a>6-ROBOT建模，仿真</h3><p>大纲：</p>
+<ul>
+<li><p>URDF</p>
+</li>
+<li><p>xacro优化模型</p>
+</li>
+<li><p><code>&lt;gazebo&gt;</code> 标签，传感器，转动结构等仿真</p>
+</li>
+<li><p>rviz + ArbotiX 仿真环境，机器人控制等仿真</p>
+</li>
+<li><p>ros_control 在Gazebo物理仿真创建世界，仿真</p>
+</li>
+</ul>
+<h4 id="6-1-URDF语法"><a href="#6-1-URDF语法" class="headerlink" title="6.1 URDF语法"></a>6.1 URDF语法</h4><p>（Unified Robot Description Format， 统一机器人描述格式）</p>
+<p><strong>link（刚体）</strong></p>
+<p><code>&lt;link&gt;</code>标签用于描述机器人某个刚体部分的外观和物理属性，<br>包括尺寸（size） 、 颜色（color） 、 形状（shape） 、 惯性矩阵（inertial  matrix） 、 碰撞参数（collision properties）</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">inertial</span>&gt;</span>惯性<span class="tag">&lt;/<span class="name">inertail</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">visual</span>&gt;</span><span class="tag">&lt;/<span class="name">visual</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">collision</span>&gt;</span>碰撞属性<span class="tag">&lt;/<span class="name">collision</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">link</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>joint（关节）</strong></p>
+<p>描述机器人关节的运动学和动力学属性， 包括关节运动的位置和速度限制。</p>
+<table>
+<thead>
+<tr>
+<th>关节类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>continuous</td>
+<td>旋转关节，可以围绕单轴无限旋转</td>
+</tr>
+<tr>
+<td>revolute</td>
+<td>旋转关节，类似于continuous,但是有旋转的角度极限</td>
+</tr>
+<tr>
+<td>prismatic</td>
+<td>滑动关节，沿某一轴线移动的关节，带有位置极限</td>
+</tr>
+<tr>
+<td>planar</td>
+<td>平面关节，允许在平面正交方向上平移或者旋转</td>
+</tr>
+<tr>
+<td>floating</td>
+<td>浮动关节，允许进行平移、旋转运动</td>
+</tr>
+<tr>
+<td>fixed</td>
+<td>固定关节，不允许运动的特殊关节</td>
+</tr>
+</tbody></table>
+<img src="/2024/06/27/AI_ROBOT/ROS/2024-06-28-11-19-59-image.png" title alt width="424">
+
+<p>与人的关节一样， 机器人关节的主要作用是连接两个刚体link， 这两个link分别称为parent link和child link，</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">joint</span> <span class="attr">name</span>=<span class="string">"&lt;name of the joint&gt;"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">parent</span> <span class="attr">link</span>=<span class="string">"parent_link"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">child</span> <span class="attr">link</span>=<span class="string">"child_link"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">calibration</span> <span class="attr">....</span> /&gt;</span>  位置</span><br><span class="line">    <span class="tag">&lt;<span class="name">dynamics</span> <span class="attr">damping</span> <span class="attr">....</span>/&gt;</span>  物理属性</span><br><span class="line">    <span class="tag">&lt;<span class="name">limit</span> <span class="attr">effort</span> <span class="attr">....</span> /&gt;</span> 极限值</span><br><span class="line">    ....</span><br><span class="line"><span class="tag">&lt;/<span class="name">joint</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>其中必须指定joint的parent link和child link， 还可以设置关节的其他属性。<br>·<calibration>： 关节的参考位置， 用来校准关节的绝对位置。<br>·<dynamics>： 用于描述关节的物理属性， 例如阻尼值、 物理静摩擦力等， 经常在动力学仿真中用到。<br>·<limit>： 用于描述运动的一些极限值， 包括关节运动的上下限位置、 速度限制、 力矩限制等。<br>·<mimic>： 用于描述该关节与已有关节的关系。<br>·<safety_controller>： 用于描述安全控制器参数。</safety_controller></mimic></limit></dynamics></calibration></p>
+<img src="/2024/06/27/AI_ROBOT/ROS/2024-06-28-11-23-04-image.png" title alt width="310">
+
+<p><strong>robot</strong></p>
+<p>最顶层标签， <link>和<joint>标签都必须包含在<robot>标签内。</robot></joint></p>
+<p><strong>gazebo</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">gazebo</span> <span class="attr">reference</span>=<span class="string">"link_1"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">material</span>&gt;</span>Gazebo/Black<span class="tag">&lt;/<span class="name">material</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">gazebo</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="6-2-创建URDF模型"><a href="#6-2-创建URDF模型" class="headerlink" title="6.2 创建URDF模型"></a>6.2 创建URDF模型</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">catkin_create_pkg  mrobot_description urdf xacro</span></span><br></pre></td></tr></table></figure>
+
+<p>mrobot_description功能包含urdf，meshes，launch和config文件夹</p>
+<ul>
+<li><p>urdf:  存放URDF或 xacro文件</p>
+</li>
+<li><p>meshes： 模型渲染文件</p>
+</li>
+<li><p>launch： 启动文件</p>
+</li>
+<li><p>config： rviz配置文件</p>
+</li>
+</ul>
+<p>MRobot底盘模型有7个link和6个joint。7个link包含1个底盘，2个电机，2个驱动轮，2个万向轮‘；6个joint负责连接各个组件到底盘上；</p>
+<p>模型文件mrobot_description/urdf/mrobot_chassis.urdf</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" ?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">robot</span> <span class="attr">name</span>=<span class="string">"mrobot_chassis"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">name</span>=<span class="string">"base_link"</span> &gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">visual</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">visual</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">link</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">joint</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">origin</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">parent</span> <span class="attr">link</span>=<span class="string">""</span> &gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">child</span> <span class="attr">link</span>=<span class="string">""</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">joint</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Left motor --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">name</span>=<span class="string">"left_motor"</span> &gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">visual</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">origin</span> <span class="attr">xyz</span>=<span class="string">""</span> <span class="attr">rpy</span>=<span class="string">""</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;/<span class="name">visual</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">link</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">joint</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">joint</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Left wheel --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- right motor --&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">robot</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>检查URDF模型整体结构(生成pdf文件)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">apt install liburdfdom-tools</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash">check_urdf mrobot_chassis.urdf</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">urdf_to_graphiz mrobot_chassis.urdf</span></span><br></pre></td></tr></table></figure>
+
+<p>模型解析</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- motor wheel joint  (type=?)--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">joint</span> <span class="attr">name</span>=<span class="string">"left_wheel_joint"</span> <span class="attr">type</span>=<span class="string">"continuous"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">origin</span> <span class="attr">xyz</span>=<span class="string">"0 0.0485 0"</span> <span class="attr">rpy</span>=<span class="string">"0 0 0"</span> /&gt;</span> <span class="comment">&lt;!--起点--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">parent</span> <span class="attr">link</span>=<span class="string">"left_motor"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">child</span> <span class="attr">link</span>=<span class="string">"left_wheel_link"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">axis</span> <span class="attr">xyz</span>=<span class="string">"0 1 0"</span> /&gt;</span>   <span class="comment">&lt;!--只围绕y轴旋转--&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">joint</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>viza显示模型</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"robot_description"</span> </span></span><br><span class="line"><span class="tag">        <span class="attr">textfile</span>=<span class="string">"$(find mrobot_description)/urdf/mrobot_chassis.urdf"</span> /&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 设置GUI参数，显示关节控制插件 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"use_gui"</span> <span class="attr">value</span>=<span class="string">"true"</span> /&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 运行joint_state_publisher node, 发布robot的关节状态 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"joint_state_publisher"</span> <span class="attr">pkg</span>=<span class="string">"joint_state_publisher"</span> </span></span><br><span class="line"><span class="tag">            <span class="attr">type</span>=<span class="string">"joint_state_publisher"</span> /&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 运行joint_state_publisher node, 发布TF --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">"robot_state_publisher"</span> <span class="attr">pkg</span>=<span class="string">"robot_state_publisher"</span> </span></span><br><span class="line"><span class="tag">            <span class="attr">type</span>= <span class="string">"robot_state_publisher"</span> /&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 运行rviz可视化界面--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">"rviz"</span> <span class="attr">pkg</span>=<span class="string">"rviz"</span> <span class="attr">type</span>=<span class="string">"rviz"</span> <span class="attr">args</span>=<span class="string">"-d $(find </span></span></span><br><span class="line"><span class="tag"><span class="string">              mrobot_description/config/morobot_urdf.rviz"</span> </span></span><br><span class="line"><span class="tag">              <span class="attr">required</span>=<span class="string">"true"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p># </p>
+<img src="/2024/06/27/AI_ROBOT/ROS/2024-07-01-10-38-36-image.png" title alt width="362">
+
+<img src="/2024/06/27/AI_ROBOT/ROS/2024-07-01-15-46-30-image.png" title alt width="364">
+
+<h4 id="6-3-模型xacro优化"><a href="#6-3-模型xacro优化" class="headerlink" title="6.3 模型xacro优化"></a>6.3 模型xacro优化</h4><p>xacro</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 将xacro文件转换成URDF文件</span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## $rosrun xacro xacro.py mrobot.urdf.xacro &gt; mrobot.urdf (Fail)</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash">rosrun xacro xacro mrobot.urdf.xacro &gt; mrobot.urdf</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"></span></span><br></pre></td></tr></table></figure>
+
+<p>直接调用xacro文件解析器</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">"model"</span> <span class="attr">default</span>=<span class="string">"$(find xacro)/xacro --inorder </span></span></span><br><span class="line"><span class="tag"><span class="string">          '$(find mrobot_description)/urdf/mrobot.' &gt;'</span></span></span><br><span class="line"><span class="tag"><span class="string">&lt;param name="</span><span class="attr">robot_description</span>" <span class="attr">command</span>=<span class="string">"$(arg model)"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<img src="/2024/06/27/AI_ROBOT/ROS/2024-07-03-19-29-52-image.png" title alt width="453">
+
+<ul>
+<li>注意：xacro定义的组件，使用时需要加xacro命名空间（ROS2)</li>
+</ul>
+<h4 id="6-4-传感器添加"><a href="#6-4-传感器添加" class="headerlink" title="6.4 传感器添加"></a>6.4 传感器添加</h4><ul>
+<li>注意：name=“ ”不要有空格</li>
+</ul>
+<img src="/2024/06/27/AI_ROBOT/ROS/2024-07-03-19-35-43-image.png" title alt width="455">
+
+<p><img title src="/2024/06/27/AI_ROBOT/ROS/2024-07-03-20-13-51-image.png" alt width="225"><img src="/2024/06/27/AI_ROBOT/ROS/2024-07-03-20-13-25-image.png" title alt width="204"></p>
+<h4 id="6-5-Arbox-rviz"><a href="#6-5-Arbox-rviz" class="headerlink" title="6.5 Arbox+rviz"></a>6.5 Arbox+rviz</h4><p>ArbotiX是一款控制电机、 舵机的控制板， 并提供相应的ROS功能包， 但是这个功能包的功能不仅可以驱动真实的ArbotiX控制板， 它还提供一个差速控制器， 通过接收速度控制指令更新机器人的joint状态，从而帮助我们实现机器人在rviz中的运动。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt install ros-noetic-arbotix</span><br><span class="line">apt install ros-noetic-arbotix-*</span><br></pre></td></tr></table></figure>
+
+<p><strong>配置arbotix</strong></p>
+<ul>
+<li><p>创建launch文件</p>
+</li>
+<li><p>创建配置文件（控制器）</p>
+</li>
+<li><p>运行仿真</p>
+<ul>
+<li><code>roslaunch mrobot_description arbotix_mrobot_with_kinect.launch</code></li>
+</ul>
+</li>
+<li><p>话题cmd_vel （tostopic list）</p>
+</li>
+<li><p>控制运行（键盘）</p>
+<ul>
+<li><code>roslaunch mrobot_teleop mrobot_teleop.launch</code></li>
+</ul>
+</li>
+</ul>
+<p>此时rviz中设置的“Fixed Frame”是odom， 也就是机器人的里程计坐 标系。 这是一个全局坐标系， 通过里程计记录机器人当前的运动位姿，从而更新rviz中的模型状态。 </p>
+<p>rviz+ArbotiX可以构建一个较为简单的运动仿真器， 在本书后续内  容中还会多次使用这个仿真器实现导航等功能。 除此之外， ROS还集成 了更为强大的物理仿真平台——Gazebo， 可以做到类似真实机器人的高度仿真状态， 包括物理属性、 传感器数据、 环境模型等</p>
+<p><strong>mrobot_teleop.launch</strong></p>
+<ul>
+<li>控制模块</li>
+</ul>
+<p><img src="/2024/06/27/AI_ROBOT/ROS/2024-07-09-19-59-05-image.png" alt></p>
+<h4 id="6-6-ros-control"><a href="#6-6-ros-control" class="headerlink" title="6.6 ros_control"></a>6.6 ros_control</h4><p>针对不同类型的机器人（移动机器人、 机械臂等），ros_control可以提供多种类型的控制器（controller） ， 但是这些控制器的接口各不相同。 为了提高代码的复用率， ros_control还提供一个硬件抽象层， 负责机器人硬件资源的管理， 而controller从抽象层请求资源即可， 并不直接接触硬件。</p>
+<p><strong>1 框架</strong></p>
+<p><img src="/2024/06/27/AI_ROBOT/ROS/2024-07-04-11-28-06-image.png" alt></p>
+<p>（1） 控制器管理器（Controller Manager）</p>
+<pre><code>提供一种通用的接口来管理不同的控制器。 控制器管理器的输入就是ROS上层应用功能包的输出。</code></pre><p><img src="/2024/06/27/AI_ROBOT/ROS/2024-07-04-11-30-21-image.png" alt></p>
+<p>（2） 控制器（Controller）</p>
+<p>控制器可以完成每个joint的控制， 读取硬件资源接口中的状态， 再发布控制命令， 并且提供PID控制器。</p>
+<p>（3） 硬件资源（Hardware Resource）<br>            为上下两层提供硬件资源的接口。  </p>
+<p>（4） 机器人硬件抽象（RobotHW）</p>
+<pre><code>机器人硬件抽象和硬件资源直接打交道， 通过write和read方法完成硬件操作， 这一层也包含关节约束、 力矩转换、 状态转换等功能。</code></pre><p>（5） 真实机器人（Real Robot）  </p>
+<pre><code>真实机器人上也需要有自己的嵌入式控制器， 将接收到的命令反映到执行器上， 比如接收到旋转90度的命令后， 就需要让执行器快速、 稳定地旋转90度。</code></pre><p><strong>2 控制器</strong></p>
+<p>目前ROS中的ros_controllers功能包提供了以下控制器（见图6-19） 。  </p>
+<ul>
+<li><p>effort_controllers  </p>
+</li>
+<li><p>joint_effort_controller  </p>
+</li>
+<li><p>joint_position_controller  </p>
+</li>
+<li><p>joint_velocity_controller  </p>
+</li>
+<li><p>joint_state_controller  </p>
+</li>
+<li><p>joint_state_controller  </p>
+</li>
+<li><p>position_controllers  </p>
+</li>
+<li><p>joint_position_controller  </p>
+</li>
+<li><p>velocity_controllers  </p>
+</li>
+<li><p>joint_velocity_controller</p>
+</li>
+</ul>
+<p>当然， 我们也可以根据自己的需求创建需要的控制器， 然后通过控  制器管理器来管理自己创建的控制器。 创建控制器的具体方法可以参考 wiki：<a href="https://github.com/ros-controls/ros_control/wiki/controller_interface" target="_blank" rel="noopener">controller_interface</a></p>
+<p><strong>3 硬件接口</strong></p>
+<p>硬件接口是控制器和RobotHW沟通的接口， 基本与控制器的种类相互对应（见图6-20） ， 同样可以自己创建需要的接口， 具体实现方法可以参考wiki： <a href="https://github.com/roscontrols/ros_control/wiki/hardware_interface" target="_blank" rel="noopener">wiki-hardware_interface</a></p>
+<p><img src="/2024/06/27/AI_ROBOT/ROS/2024-07-04-17-26-04-image.png" alt></p>
+<p><strong>4 传动系统</strong></p>
+<p>传动系统（Transmission） 可以将机器人的关节指令转换成执行器的控制信号。 机器人每个需要运动的关节都需要配置相应的传动系统。可以在机器人的URDF模型文件中按照以下方法配置：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">transmission</span> <span class="attr">name</span>=<span class="string">"simple_trans"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">type</span>&gt;</span>transmission_interface/SimpleTransmission<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">joint</span> <span class="attr">name</span>=<span class="string">"foo_joint"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">hardwareInterface</span>&gt;</span>EffortJointInterface<span class="tag">&lt;/<span class="name">hardwareInterface</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">joint</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">actuator</span> <span class="attr">name</span>=<span class="string">"foo_motor"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mechanicalReduction</span>&gt;</span>50<span class="tag">&lt;/<span class="name">mechanicalReduction</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">hardwareInterface</span>&gt;</span>EffortJointInterface<span class="tag">&lt;/<span class="name">hardwareInterface</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">actuator</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">transmission</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>5 关节约束</strong></p>
+<p>关节约束（Joint Limits） 是硬件抽象层中的一部分， 维护一个关节约束的数据结构， </p>
+<ul>
+<li><p>这些约束数据可以从机器人的URDF文件中加载， </p>
+</li>
+<li><p>也可以在ROS的参数服务器上加载（需要先用YAML配置文件导入ROS参数服务器） ， </p>
+</li>
+<li><p>不仅包含关节速度、 位置、 加速度、 加加速度、 力矩等方面的约束， </p>
+</li>
+<li><p>还包含起安全作用的位置软限位、 速度边界（k_v） 和位置边界（k_p） 等</p>
+</li>
+</ul>
+<p>URDF</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">joint</span> <span class="attr">name</span>=<span class="string">"$foo_joint"</span> <span class="attr">type</span>=<span class="string">"revolute"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- other joint description elements --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Joint limits --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">limit</span> <span class="attr">lower</span>=<span class="string">"0.0"</span> <span class="attr">upper</span>=<span class="string">"1.0"</span> <span class="attr">effort</span>=<span class="string">"10.0"</span> <span class="attr">xxx</span>=<span class="string">"5.0"</span> /&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Soft limits --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">safety_controller</span> <span class="attr">k_position</span>=<span class="string">"100"</span> <span class="attr">k_velocity</span>=<span class="string">"10"</span> </span></span><br><span class="line"><span class="tag">                       <span class="attr">soft_lower_limit</span>=<span class="string">"0.1"</span> <span class="attr">soft_upper_limit</span>=<span class="string">"0.9"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">joint</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>YAML参数服务器</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">joint_limits:</span></span><br><span class="line"><span class="attr">  foo_joint:</span></span><br><span class="line"><span class="attr">    has_position_limits:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">    min_position:</span> <span class="number">0.0</span></span><br><span class="line"><span class="attr">    max_position:</span> <span class="number">1.0</span></span><br><span class="line"><span class="attr">    has_velocity_limits:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">    max_velocity:</span> <span class="number">2.0</span></span><br><span class="line"><span class="attr">    has_acceleration_limits:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">    max_acceleration:</span> <span class="number">5.0</span></span><br><span class="line"><span class="attr">    has_jerk_limits:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">    max_jerk:</span> <span class="number">100.0</span></span><br><span class="line"><span class="attr">    has_effort_limits:</span> <span class="attr">truemax_effort:</span> <span class="number">5.0</span></span><br><span class="line"><span class="attr">  bar_joint:</span></span><br><span class="line"><span class="attr">    has_position_limits:</span> <span class="literal">false</span> <span class="comment"># Continuous joint</span></span><br><span class="line"><span class="attr">    has_velocity_limits:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">    max_velocity:</span> <span class="number">4.0</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>6 控制器管理器</strong></p>
+<p>controller_manager提供了一种多控制器控制的机制， 可以实现控制器的加载、 开始运行、 停止运行、 卸载等多种操作。</p>
+<p><img src="/2024/06/27/AI_ROBOT/ROS/2024-07-04-20-14-03-image.png" alt></p>
+<p>6.1 命令行工具</p>
+<p>管理</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">rosrun controller_manager controller_manager &lt;<span class="built_in">command</span>&gt; &lt;controller_name&gt;</span></span><br><span class="line">支持的&lt;command&gt;如下：</span><br><span class="line">·load： 加载一个控制器。·unload： 卸载一个控制器。</span><br><span class="line">·start： 启动控制器。</span><br><span class="line">·stop： 停止控制器。</span><br><span class="line">·spawn： 加载并启动一个控制器。</span><br><span class="line">·kill： 停止并卸载一个控制器</span><br></pre></td></tr></table></figure>
+
+<p>查看命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">rosrun controller_manager controller_manager &lt;<span class="built_in">command</span>&gt;</span></span><br><span class="line">支持的&lt;command&gt;如下：</span><br><span class="line">·list： 根据执行顺序列出所有控制器， 并显示每个控制器的状态。</span><br><span class="line">·list-types： 显示所有控制器的类型。</span><br><span class="line">·reload-libraries： 以插件的形式重载所有控制器的库， 不需要重新启动， 方便对控制器的开发和测试。</span><br><span class="line">·reload-libraries--restore： 以插件的形式重载所有控制器的库， 并恢复到初始状态。</span><br></pre></td></tr></table></figure>
+
+<p>spawner命令一次控制多个控制器：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">rosrun controller_manager spawner [--stopped] name1 name2 name3</span></span><br><span class="line"></span><br><span class="line">上面的命令可以自动加载、 启动控制器， 如果加上--stopped参数，那么控制器则只会被加载， </span><br><span class="line">但是并不会开始运行。</span><br><span class="line"></span><br><span class="line">如果想要停止一系列控制器， 但是不需要卸载， 可以使用如下命令：</span><br><span class="line"><span class="meta">$</span><span class="bash">rosrun controller_manager unspawner name1 name2 name3</span></span><br></pre></td></tr></table></figure>
+
+<p>6.2 launch工具</p>
+<p>在launch文件中， 同样可以通过运行controller_manager命令， 加载 和启动一系列控制器：  </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">node</span> <span class="attr">pkg</span>=<span class="string">"controller_manager"</span> <span class="attr">type</span>=<span class="string">"spawner"</span> </span></span><br><span class="line"><span class="tag">            <span class="attr">args</span>=<span class="string">"controller_name1 controller_name2"</span> /&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>以上launch文件会加载并启动controller， 如果只需加载不必启动，可以使用以下配置：  </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">node</span> <span class="attr">pkg</span>=<span class="string">"controller_manager"</span> <span class="attr">type</span>=<span class="string">"spawner"</span> </span></span><br><span class="line"><span class="tag">        <span class="attr">args</span>=<span class="string">"--stopped controller_name1 controller_name"</span>  /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>6.3.可视化工具rqt_controller_manager</p>
+<p>controller_manager还提供了可视化工具rqt_controller_manager， 安装成功后， 直接使用以下命令即可打开界面：  </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">rosrun rqt_controller_manager rqt_controller_manager</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="6-7-Gazebo仿真"><a href="#6-7-Gazebo仿真" class="headerlink" title="6.7 Gazebo仿真"></a>6.7 Gazebo仿真</h4><p>使用xacro设计的机器人URDF模型已经描述了机器人的外观特征和物理特性， 虽然已经具备在Gazebo中仿真的基本条件， 但是， 由于没有 在模型中加入Gazebo的相关属性， 还是无法让模型在Gazebo仿真环境中动起来。 那么如何开始仿真呢？  </p>
+<p>首先我们需要确保每个link的<inertia>元素已经进行了合理的设置， 然后要为每个必要的<link>、 <joint>、 <robot>设置<gazebo>标签。 <gazebo>标签是URDF模型中描述gazebo仿真时所需要的扩展属性。</gazebo></gazebo></robot></joint></inertia></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cd src</span><br><span class="line"><span class="meta">$</span><span class="bash">catkin_create_pkg robot_package roscpp rospy std_msgs sensor_msgs </span></span><br><span class="line">                    gazebo_ros gazebo_plugins gazebo_ros_control</span><br><span class="line"></span><br><span class="line">cd ../</span><br><span class="line"><span class="meta">$</span><span class="bash">catkin_make</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash">roslaunch mrobot_gazebo view_mrobot_gazebo.launch</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/06/27/AI_ROBOT/ROS/2024-07-08-16-02-23-image.png" alt></p>
+<p>control</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">catkin_create_pkg mrobot_teleop geometry_msgs  roscpp  rospy</span></span><br><span class="line">cd ../</span><br><span class="line"><span class="meta">$</span><span class="bash">catkin_make</span></span><br><span class="line"><span class="meta">$</span><span class="bash">roslaunch mrobot_teleop mrobot_teleop.launch</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ERR: /usr/bin/env: ‘python’: No such file or directory</span><br><span class="line"></span><br><span class="line">1. 安装依赖</span><br><span class="line">apt install python3-rosinstall</span><br><span class="line">apt install python-setuptools</span><br><span class="line">2. ln软连接</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/06/27/AI_ROBOT/ROS/2024-07-09-15-49-32-image.png" alt></p>
+<h3 id="7-机器视觉"><a href="#7-机器视觉" class="headerlink" title="7-机器视觉"></a>7-机器视觉</h3><h3 id="8-机器语音"><a href="#8-机器语音" class="headerlink" title="8-机器语音"></a>8-机器语音</h3><h3 id="9-SLAM与自主导航"><a href="#9-SLAM与自主导航" class="headerlink" title="9 SLAM与自主导航"></a>9 SLAM与自主导航</h3><h3 id="10-Movelt机械臂"><a href="#10-Movelt机械臂" class="headerlink" title="10-Movelt机械臂"></a>10-Movelt机械臂</h3><h3 id="11-ROS与机器学习"><a href="#11-ROS与机器学习" class="headerlink" title="11-ROS与机器学习"></a>11-ROS与机器学习</h3><h3 id="12-ROS进阶"><a href="#12-ROS进阶" class="headerlink" title="12-ROS进阶"></a>12-ROS进阶</h3><h3 id="13-ROS机器人实例"><a href="#13-ROS机器人实例" class="headerlink" title="13-ROS机器人实例"></a>13-ROS机器人实例</h3><h3 id="14-ROS2"><a href="#14-ROS2" class="headerlink" title="14-ROS2"></a>14-ROS2</h3>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ROS/" rel="tag"># ROS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2024/06/25/AI_ROBOT/Gazebo_ROS/" rel="next" title="ROS通信，控制Gazebo-11机器人">
+                <i class="fa fa-chevron-left"></i> ROS通信，控制Gazebo-11机器人
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2024/07/10/Sub_Language/PythonDoc/web_dev/" rel="prev" title="Python Web 开发">
+                Python Web 开发 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Simon Shi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">286</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">132</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">243</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-架构"><span class="nav-number">1.</span> <span class="nav-text">2-架构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#计算图"><span class="nav-number">1.1.</span> <span class="nav-text">计算图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文件系统"><span class="nav-number">1.2.</span> <span class="nav-text">文件系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#命令"><span class="nav-number">1.3.</span> <span class="nav-text">命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Meta-Package"><span class="nav-number">1.4.</span> <span class="nav-text">Meta Package</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#社区"><span class="nav-number">1.5.</span> <span class="nav-text">社区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通信机制"><span class="nav-number">1.6.</span> <span class="nav-text">通信机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#话题服务"><span class="nav-number">1.7.</span> <span class="nav-text">话题服务</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-基础"><span class="nav-number">2.</span> <span class="nav-text">3-基础</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#小乌龟仿真"><span class="nav-number">2.1.</span> <span class="nav-text">小乌龟仿真</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Publisher-Subscriber"><span class="nav-number">2.2.</span> <span class="nav-text">Publisher/Subscriber</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Server-Client"><span class="nav-number">2.3.</span> <span class="nav-text">Server/Client</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多机器通信"><span class="nav-number">2.4.</span> <span class="nav-text">多机器通信</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-组件"><span class="nav-number">3.</span> <span class="nav-text">4-组件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#launch启动文件"><span class="nav-number">3.1.</span> <span class="nav-text">launch启动文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TF工具"><span class="nav-number">3.2.</span> <span class="nav-text">TF工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#QT工具"><span class="nav-number">3.3.</span> <span class="nav-text">QT工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Rviz可视化"><span class="nav-number">3.4.</span> <span class="nav-text">Rviz可视化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Gazebo仿真环境"><span class="nav-number">3.5.</span> <span class="nav-text">Gazebo仿真环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rosbag数据记录和回放"><span class="nav-number">3.6.</span> <span class="nav-text">rosbag数据记录和回放</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-ROBOT平台搭建"><span class="nav-number">4.</span> <span class="nav-text">5-ROBOT平台搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Raspberry-PI控制系统"><span class="nav-number">4.1.</span> <span class="nav-text">Raspberry PI控制系统</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-ROBOT建模，仿真"><span class="nav-number">5.</span> <span class="nav-text">6-ROBOT建模，仿真</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#6-1-URDF语法"><span class="nav-number">5.1.</span> <span class="nav-text">6.1 URDF语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-2-创建URDF模型"><span class="nav-number">5.2.</span> <span class="nav-text">6.2 创建URDF模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-3-模型xacro优化"><span class="nav-number">5.3.</span> <span class="nav-text">6.3 模型xacro优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-4-传感器添加"><span class="nav-number">5.4.</span> <span class="nav-text">6.4 传感器添加</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-5-Arbox-rviz"><span class="nav-number">5.5.</span> <span class="nav-text">6.5 Arbox+rviz</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-6-ros-control"><span class="nav-number">5.6.</span> <span class="nav-text">6.6 ros_control</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-7-Gazebo仿真"><span class="nav-number">5.7.</span> <span class="nav-text">6.7 Gazebo仿真</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-机器视觉"><span class="nav-number">6.</span> <span class="nav-text">7-机器视觉</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-机器语音"><span class="nav-number">7.</span> <span class="nav-text">8-机器语音</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-SLAM与自主导航"><span class="nav-number">8.</span> <span class="nav-text">9 SLAM与自主导航</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-Movelt机械臂"><span class="nav-number">9.</span> <span class="nav-text">10-Movelt机械臂</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-ROS与机器学习"><span class="nav-number">10.</span> <span class="nav-text">11-ROS与机器学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-ROS进阶"><span class="nav-number">11.</span> <span class="nav-text">12-ROS进阶</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-ROS机器人实例"><span class="nav-number">12.</span> <span class="nav-text">13-ROS机器人实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-ROS2"><span class="nav-number">13.</span> <span class="nav-text">14-ROS2</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+    
+
+        
+
+
+
+
+
+
+<div>
+<!-- 填写你的友盟代码 -->
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1277989586'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s9.cnzz.com/z_stat.php%3Fid%3D1277989586%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+<!-- 你的友盟代码 end -->
+</div>
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'novav',
+            repo: 'blog_comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'ea8aae03b5381e13ab9cdedd0282b60d8ec412cb',
+            
+                client_id: 'c3934b23eb001aa3243d'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

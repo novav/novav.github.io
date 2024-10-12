@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="TensorRT,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Simon Shi的小站" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989910010110210">
+<meta name="keywords" content="TensorRT">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TensorRT call By Python">
+<meta property="og:url" content="http://yoursite.com/2023/09/04/Sub_Language/DL_Platform/TensorRT/Trt_py/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989910010110210">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2024-10-12T06:50:39.455Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TensorRT call By Python">
+<meta name="twitter:description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989910010110210">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2023/09/04/Sub_Language/DL_Platform/TensorRT/Trt_py/">
+
+
+
+
+
+  <title>TensorRT call By Python | Simon Shi的小站</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simon Shi的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人工智能，机器学习 学习记录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2023/09/04/Sub_Language/DL_Platform/TensorRT/Trt_py/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">TensorRT call By Python</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2023-09-04T12:00:00+00:00">
+                2023-09-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index">
+                    <span itemprop="name">AI</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/deploy/" itemprop="url" rel="index">
+                    <span itemprop="name">deploy</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/deploy/TensorRT/" itemprop="url" rel="index">
+                    <span itemprop="name">TensorRT</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2023/09/04/Sub_Language/DL_Platform/TensorRT/Trt_py/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2023/09/04/Sub_Language/DL_Platform/TensorRT/Trt_py/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> tensorrt <span class="keyword">as</span> trt</span><br><span class="line"><span class="keyword">import</span> pycuda.driver <span class="keyword">as</span> cuda</span><br><span class="line"><span class="keyword">import</span> pycuda.autoinit</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> ImageDraw</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> yolov3_to_onnx <span class="keyword">import</span> download_file</span><br><span class="line"><span class="keyword">from</span> data_processing <span class="keyword">import</span> PreprocessYOLO, PostprocessYOLO, ALL_CATEGORIES</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys, os</span><br><span class="line">sys.path.insert(<span class="number">1</span>, os.path.join(sys.path[<span class="number">0</span>], <span class="string">".."</span>))</span><br><span class="line"><span class="keyword">import</span> common</span><br><span class="line"></span><br><span class="line">TRT_LOGGER = trt.Logger()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw_bboxes</span><span class="params">(image_raw, bboxes, confidences, categories, all_categories, bbox_color=<span class="string">'blue'</span>)</span>:</span></span><br><span class="line">    <span class="string">"""Draw the bounding boxes on the original input image and return it.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Keyword arguments:</span></span><br><span class="line"><span class="string">    image_raw -- a raw PIL Image</span></span><br><span class="line"><span class="string">    bboxes -- NumPy array containing the bounding box coordinates of N objects, with shape (N,4).</span></span><br><span class="line"><span class="string">    categories -- NumPy array containing the corresponding category for each object,</span></span><br><span class="line"><span class="string">    with shape (N,)</span></span><br><span class="line"><span class="string">    confidences -- NumPy array containing the corresponding confidence for each object,</span></span><br><span class="line"><span class="string">    with shape (N,)</span></span><br><span class="line"><span class="string">    all_categories -- a list of all categories in the correct ordered (required for looking up</span></span><br><span class="line"><span class="string">    the category name)</span></span><br><span class="line"><span class="string">    bbox_color -- an optional string specifying the color of the bounding boxes (default: 'blue')</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    draw = ImageDraw.Draw(image_raw)</span><br><span class="line">    print(bboxes, confidences, categories)</span><br><span class="line">    <span class="keyword">for</span> box, score, category <span class="keyword">in</span> zip(bboxes, confidences, categories):</span><br><span class="line">        x_coord, y_coord, width, height = box</span><br><span class="line">        left = max(<span class="number">0</span>, np.floor(x_coord + <span class="number">0.5</span>).astype(int))</span><br><span class="line">        top = max(<span class="number">0</span>, np.floor(y_coord + <span class="number">0.5</span>).astype(int))</span><br><span class="line">        right = min(image_raw.width, np.floor(x_coord + width + <span class="number">0.5</span>).astype(int))</span><br><span class="line">        bottom = min(image_raw.height, np.floor(y_coord + height + <span class="number">0.5</span>).astype(int))</span><br><span class="line"></span><br><span class="line">        draw.rectangle(((left, top), (right, bottom)), outline=bbox_color)</span><br><span class="line">        draw.text((left, top - <span class="number">12</span>), <span class="string">'&#123;0&#125; &#123;1:.2f&#125;'</span>.format(all_categories[category], score), fill=bbox_color)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> image_raw</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_engine</span><span class="params">(onnx_file_path, engine_file_path=<span class="string">""</span>)</span>:</span></span><br><span class="line">    <span class="string">"""Attempts to load a serialized engine if available, otherwise builds a new TensorRT engine and saves it."""</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">build_engine</span><span class="params">()</span>:</span></span><br><span class="line">        <span class="string">"""Takes an ONNX file and creates a TensorRT engine to run inference with"""</span></span><br><span class="line">        <span class="keyword">with</span> trt.Builder(TRT_LOGGER) <span class="keyword">as</span> builder, builder.create_network() <span class="keyword">as</span> network, trt.OnnxParser(network, TRT_LOGGER) <span class="keyword">as</span> parser:</span><br><span class="line">            builder.max_workspace_size = <span class="number">1</span> &lt;&lt; <span class="number">30</span> <span class="comment"># 1GB</span></span><br><span class="line">            builder.max_batch_size = <span class="number">1</span></span><br><span class="line">            <span class="comment"># Parse model file</span></span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(onnx_file_path):</span><br><span class="line">                print(<span class="string">'ONNX file &#123;&#125; not found, please run yolov3_to_onnx.py first to generate it.'</span>.format(onnx_file_path))</span><br><span class="line">                exit(<span class="number">0</span>)</span><br><span class="line">            print(<span class="string">'Loading ONNX file from path &#123;&#125;...'</span>.format(onnx_file_path))</span><br><span class="line">            <span class="keyword">with</span> open(onnx_file_path, <span class="string">'rb'</span>) <span class="keyword">as</span> model:</span><br><span class="line">                print(<span class="string">'Beginning ONNX file parsing'</span>)</span><br><span class="line">                parser.parse(model.read())</span><br><span class="line">            print(<span class="string">'Completed parsing of ONNX file'</span>)</span><br><span class="line">            print(<span class="string">'Building an engine from file &#123;&#125;; this may take a while...'</span>.format(onnx_file_path))</span><br><span class="line">            engine = builder.build_cuda_engine(network)</span><br><span class="line">            print(<span class="string">"Completed creating Engine"</span>)</span><br><span class="line">            <span class="keyword">with</span> open(engine_file_path, <span class="string">"wb"</span>) <span class="keyword">as</span> f:</span><br><span class="line">                f.write(engine.serialize())</span><br><span class="line">            <span class="keyword">return</span> engine</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> os.path.exists(engine_file_path):</span><br><span class="line">        <span class="comment"># If a serialized engine exists, use it instead of building an engine.</span></span><br><span class="line">        print(<span class="string">"Reading engine from file &#123;&#125;"</span>.format(engine_file_path))</span><br><span class="line">        <span class="keyword">with</span> open(engine_file_path, <span class="string">"rb"</span>) <span class="keyword">as</span> f, trt.Runtime(TRT_LOGGER) <span class="keyword">as</span> runtime:</span><br><span class="line">            <span class="keyword">return</span> runtime.deserialize_cuda_engine(f.read())</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> build_engine()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""Create a TensorRT engine for ONNX-based YOLOv3-608 and run inference."""</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Try to load a previously generated YOLOv3-608 network graph in ONNX format:</span></span><br><span class="line">    onnx_file_path = <span class="string">'yolov3.onnx'</span></span><br><span class="line">    engine_file_path = <span class="string">"yolov3.trt"</span></span><br><span class="line">    <span class="comment"># Download a dog image and save it to the following file path:</span></span><br><span class="line">    input_image_path = download_file(<span class="string">'dog.jpg'</span>,</span><br><span class="line">        <span class="string">'https://github.com/pjreddie/darknet/raw/f86901f6177dfc6116360a13cc06ab680e0c86b0/data/dog.jpg'</span>, checksum_reference=<span class="literal">None</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Two-dimensional tuple with the target network's (spatial) input resolution in HW ordered</span></span><br><span class="line">    input_resolution_yolov3_HW = (<span class="number">608</span>, <span class="number">608</span>)</span><br><span class="line">    <span class="comment"># Create a pre-processor object by specifying the required input resolution for YOLOv3</span></span><br><span class="line">    preprocessor = PreprocessYOLO(input_resolution_yolov3_HW)</span><br><span class="line">    <span class="comment"># Load an image from the specified input path, and return it together with  a pre-processed version</span></span><br><span class="line">    image_raw, image = preprocessor.process(input_image_path)</span><br><span class="line">    <span class="comment"># Store the shape of the original input image in WH format, we will need it for later</span></span><br><span class="line">    shape_orig_WH = image_raw.size</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Output shapes expected by the post-processor</span></span><br><span class="line">    output_shapes = [(<span class="number">1</span>, <span class="number">255</span>, <span class="number">19</span>, <span class="number">19</span>), (<span class="number">1</span>, <span class="number">255</span>, <span class="number">38</span>, <span class="number">38</span>), (<span class="number">1</span>, <span class="number">255</span>, <span class="number">76</span>, <span class="number">76</span>)]</span><br><span class="line">    <span class="comment"># Do inference with TensorRT</span></span><br><span class="line">    trt_outputs = []</span><br><span class="line">    <span class="keyword">with</span> get_engine(onnx_file_path, engine_file_path) <span class="keyword">as</span> engine, engine.create_execution_context() <span class="keyword">as</span> context:</span><br><span class="line">        inputs, outputs, bindings, stream = common.allocate_buffers(engine)</span><br><span class="line">        <span class="comment"># Do inference</span></span><br><span class="line">        print(<span class="string">'Running inference on image &#123;&#125;...'</span>.format(input_image_path))</span><br><span class="line">        <span class="comment"># Set host input to the image. The common.do_inference function will copy the input to the GPU before executing.</span></span><br><span class="line">        inputs[<span class="number">0</span>].host = image</span><br><span class="line">        trt_outputs = common.do_inference(context, bindings=bindings, inputs=inputs, outputs=outputs, stream=stream)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Before doing post-processing, we need to reshape the outputs as the common.do_inference will give us flat arrays.</span></span><br><span class="line">    trt_outputs = [output.reshape(shape) <span class="keyword">for</span> output, shape <span class="keyword">in</span> zip(trt_outputs, output_shapes)]</span><br><span class="line"></span><br><span class="line">    postprocessor_args = &#123;<span class="string">"yolo_masks"</span>: [(<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>), (<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>), (<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>)],                    <span class="comment"># A list of 3 three-dimensional tuples for the YOLO masks</span></span><br><span class="line">                          <span class="string">"yolo_anchors"</span>: [(<span class="number">10</span>, <span class="number">13</span>), (<span class="number">16</span>, <span class="number">30</span>), (<span class="number">33</span>, <span class="number">23</span>), (<span class="number">30</span>, <span class="number">61</span>), (<span class="number">62</span>, <span class="number">45</span>),  <span class="comment"># A list of 9 two-dimensional tuples for the YOLO anchors</span></span><br><span class="line">                                           (<span class="number">59</span>, <span class="number">119</span>), (<span class="number">116</span>, <span class="number">90</span>), (<span class="number">156</span>, <span class="number">198</span>), (<span class="number">373</span>, <span class="number">326</span>)],</span><br><span class="line">                          <span class="string">"obj_threshold"</span>: <span class="number">0.6</span>,                                               <span class="comment"># Threshold for object coverage, float value between 0 and 1</span></span><br><span class="line">                          <span class="string">"nms_threshold"</span>: <span class="number">0.5</span>,                                               <span class="comment"># Threshold for non-max suppression algorithm, float value between 0 and 1</span></span><br><span class="line">                          <span class="string">"yolo_input_resolution"</span>: input_resolution_yolov3_HW&#125;</span><br><span class="line"></span><br><span class="line">    postprocessor = PostprocessYOLO(**postprocessor_args)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Run the post-processing algorithms on the TensorRT outputs and get the bounding box details of detected objects</span></span><br><span class="line">    boxes, classes, scores = postprocessor.process(trt_outputs, (shape_orig_WH))</span><br><span class="line">    <span class="comment"># Draw the bounding boxes onto the original input image and save it as a PNG file</span></span><br><span class="line">    obj_detected_img = draw_bboxes(image_raw, boxes, scores, classes, ALL_CATEGORIES)</span><br><span class="line">    output_image_path = <span class="string">'dog_bboxes.png'</span></span><br><span class="line">    obj_detected_img.save(output_image_path, <span class="string">'PNG'</span>)</span><br><span class="line">    print(<span class="string">'Saved image with bounding boxes of detected objects to &#123;&#125;.'</span>.format(output_image_path))</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/TensorRT/" rel="tag"># TensorRT</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2023/08/15/Course/SLAMs/ORB_SLAM2_Analysis/" rel="next" title="SLAM 随笔">
+                <i class="fa fa-chevron-left"></i> SLAM 随笔
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2023/09/09/Course/SLAM/ch14_future/" rel="prev" title="SLAM tuture">
+                SLAM tuture <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Simon Shi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">286</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">132</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">243</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+    
+
+        
+
+
+
+
+
+
+<div>
+<!-- 填写你的友盟代码 -->
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1277989586'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s9.cnzz.com/z_stat.php%3Fid%3D1277989586%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+<!-- 你的友盟代码 end -->
+</div>
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'novav',
+            repo: 'blog_comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'ea8aae03b5381e13ab9cdedd0282b60d8ec412cb',
+            
+                client_id: 'c3934b23eb001aa3243d'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

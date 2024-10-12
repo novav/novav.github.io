@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Simon Shi的小站" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="Thread创建Thread方式1 实例化Thread类创建线程Thread类对象属性：  name ：线程名。  ident ：线程标识符。  daemon ：布尔标志，表示这个线程是否是守护线程。   Thread类的构造方法的参数如下： Thread(self,group=None,target=None,name=None,args=(),kwargs={},*,daemon=None)">
+<meta name="keywords" content="AI,Machine Learning, Deep Learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python Thread etc">
+<meta property="og:url" content="http://yoursite.com/2024/09/20/Sub_Language/PythonDoc/Language-py-threads/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="Thread创建Thread方式1 实例化Thread类创建线程Thread类对象属性：  name ：线程名。  ident ：线程标识符。  daemon ：布尔标志，表示这个线程是否是守护线程。   Thread类的构造方法的参数如下： Thread(self,group=None,target=None,name=None,args=(),kwargs={},*,daemon=None)">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2024-10-12T06:50:39.459Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python Thread etc">
+<meta name="twitter:description" content="Thread创建Thread方式1 实例化Thread类创建线程Thread类对象属性：  name ：线程名。  ident ：线程标识符。  daemon ：布尔标志，表示这个线程是否是守护线程。   Thread类的构造方法的参数如下： Thread(self,group=None,target=None,name=None,args=(),kwargs={},*,daemon=None)">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2024/09/20/Sub_Language/PythonDoc/Language-py-threads/">
+
+
+
+
+
+  <title>Python Thread etc | Simon Shi的小站</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simon Shi的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人工智能，机器学习 学习记录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2024/09/20/Sub_Language/PythonDoc/Language-py-threads/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Python Thread etc</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2024-09-20T12:00:00+00:00">
+                2024-09-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2024/09/20/Sub_Language/PythonDoc/Language-py-threads/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2024/09/20/Sub_Language/PythonDoc/Language-py-threads/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Thread"><a href="#Thread" class="headerlink" title="Thread"></a>Thread</h2><h3 id="创建Thread方式"><a href="#创建Thread方式" class="headerlink" title="创建Thread方式"></a>创建Thread方式</h3><p><strong>1 实例化Thread类创建线程</strong><br>Thread类对象属性：</p>
+<ul>
+<li><p>name ：线程名。</p>
+</li>
+<li><p>ident ：线程标识符。</p>
+</li>
+<li><p>daemon ：布尔标志，表示这个线程是否是守护线程。</p>
+</li>
+</ul>
+<p>Thread类的构造方法的参数如下：</p>
+<p><code>Thread(self,group=None,target=None,name=None,args=(),kwargs={},*,daemon=None)</code></p>
+<ul>
+<li><p>group ：默认为None，该参数不必理会。</p>
+</li>
+<li><p>target ：指定线程要调用的方法或函数。</p>
+</li>
+<li><p>name ：指定线程的别名。</p>
+</li>
+<li><p>args ：指定target所指向的方法或者函数要用到的位置参数。</p>
+</li>
+<li><p>kwargs ：指定target所指向的方法或者函数要用到的关键字参数。</p>
+</li>
+<li><p>daemon ：指定线程是否为守护线程。<br>示例：</p>
+</li>
+</ul>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">text</span><span class="params">()</span>:</span></span><br><span class="line"> print(<span class="string">'thread %s is running.'</span> % (threading.current_thread().name)</span><br><span class="line"> print(<span class="string">'thread %s end.'</span> % (threading.current_thread().name))</span><br><span class="line">print(<span class="string">'thread %s is running.'</span> % (threading.current_thread().name))</span><br><span class="line">t = threading.Thread(target=text)</span><br><span class="line">t.start()</span><br><span class="line">t.join()</span><br><span class="line">print(<span class="string">'thread %s end.'</span> % (threading.current_thread().name))</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">thread MainThread is running.</span><br><span class="line">thread Thread-<span class="number">1</span> is running.</span><br><span class="line">thread Thread-<span class="number">1</span> end.</span><br><span class="line">thread MainThread end.</span><br></pre></td></tr></table></figure>
+
+<p>&lt;分析&gt;</p>
+<p>这个例子比较简单，只是简单的展示了创建线程的方法。每一个进程都有一个主线程，主线程是默认启动的，于是可以看到我们只实例化Thread类创建了一个线程，但运行结果却有两个线程。</p>
+<p>另外可以发现每一个线程都有一个name，比方说MainThread(主线程)、Thread-1，这个name是哪来的呢？threading模块内有一个current_thread()函数，该函数总是返回当前线程的实例，那么current_thread().name不就是返回当前线程实例的name了么。另外，主线程默认的name就是MainThread，子线程如果没有在创建时指定，那么默认就是Thread-1、Thread-2…以此类推。</p>
+<p>另外，启动一个线程的start()方法、用以表示现线程活动的run()方法、等待一个线程结束的join(timeout)方法，判断线程是否”存活”的is_alive()方法…这些方法都和进程中的这些方法完全类似，鉴于有关进程我已经在前两篇介绍过，这里就不再细说。</p>
+<p>唯一提一点就是，进程中关于强制终止进程的terminate()方法不适用于Thread对象，唯独这一个不要在线程中去用。</p>
+<p>最后，threading模块下除current_thread()之外的其他常用函数：</p>
+<ul>
+<li>threading.enumerate() ：返回一个包含正在运行的线程的list。</li>
+<li>threading.activeCount() ：返回正在运行的线程数量。等价于len(threading.enumerate())。</li>
+</ul>
+<p>Thread类的一些其它方法：</p>
+<ul>
+<li><p>getName() : 返回线程名。</p>
+</li>
+<li><p>setName() ：设置线程名。</p>
+</li>
+<li><p>isDaemon() ：判断该线程是否是守护线程，是返回True。</p>
+</li>
+<li><p>setDaemon() ：设置线程的thread.daemon属性，该方法必须在线程start()之前调用。</p>
+</li>
+</ul>
+<p>以上方法都已经不常用，在Python的新版本中，设定name或者daemon属性可以不借助方法直接设定。</p>
+<h3 id="2-并发线程"><a href="#2-并发线程" class="headerlink" title="2 并发线程"></a>2 并发线程</h3><p><strong>进程和线程都可以并发执行，但线程由于划分尺度小，因此并发性相比于进程是要高的；另外，创建线程要更加简单，也更易于维护，由于多个线程共享进程的内存空间，这也使得线程更易于通信；除此之外，线程是Python直接支持的，这也简化了多线程的编程。</strong></p>
+<p>Python中的多线程也并不全是优点，事实上，Python中的多线程只是表面上的多线程，它和C++或者java中的不同，由于全局解释器锁GIL的存在，Python在一个时刻只会有一个线程在运行，这只是并发而不是并行。所以同样是多线程，java可以充分利用CPU的多核，但Python自始至终只会用到一个核，这就像单核CPU系统的多进程一样，Python的多线程是名不副实的。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> sleep</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">text</span><span class="params">(n)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">        print(<span class="string">'thread %s is running &gt;&gt; %d'</span> % (threading.current_thread().name,i))</span><br><span class="line">        <span class="keyword">if</span> i == n<span class="number">-1</span>:</span><br><span class="line">            print(<span class="string">'thread %s end.'</span> % (threading.current_thread().name))</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        sleep(<span class="number">2</span>)</span><br><span class="line">print(<span class="string">'thread %s is running.'</span> % (threading.current_thread().name))</span><br><span class="line">t1 = threading.Thread(target=text,args=(<span class="number">4</span>,))</span><br><span class="line">t2 = threading.Thread(target=text,args=(<span class="number">4</span>,))</span><br><span class="line">t1.start()</span><br><span class="line">t2.start()</span><br><span class="line">t1.join()</span><br><span class="line">t2.join()</span><br><span class="line">print(<span class="string">'thread %s end'</span> % (threading.current_thread().name))</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-继承Thread类创建线程"><a href="#3-继承Thread类创建线程" class="headerlink" title="3.继承Thread类创建线程"></a>3.继承Thread类创建线程</h3><p>通过继承Thread，重写Thread类的run()方法得到Thread类的子类，实例化子类也能创建线程。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Another_thread</span><span class="params">(threading.Thread)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        super().__init__()</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">'thread %s is running.'</span> % (threading.current_thread().name))</span><br><span class="line">        print(<span class="string">'thread %s end.'</span> % (threading.current_thread().name))</span><br><span class="line">print(<span class="string">'thread %s is running.'</span> % (threading.current_thread().name))</span><br><span class="line">t = Another_thread()</span><br><span class="line">t.start()</span><br><span class="line">t.join()</span><br><span class="line">print(<span class="string">'thread %s end.'</span> % (threading.current_thread().name))</span><br></pre></td></tr></table></figure>
+
+<p>如上，通过重写Thread类的run()方法，就可以在接下来直接使用Thread的子类创建一个线程，当然也可以重写Thread类的<strong>init</strong>()方法，得到一个令人满意、功能完备的Thread类的子类。这种创建线程的方式更加适合<strong>面向对象编程</strong>。</p>
+<h3 id="4-实例化Thread，传入一个类实例"><a href="#4-实例化Thread，传入一个类实例" class="headerlink" title="4. 实例化Thread，传入一个类实例"></a>4. 实例化Thread，传入一个类实例</h3><p>我们一般更倾向于使用上面介绍的两种方法创建线程，在第一种方法中，我们实例化Thread类，并传给它一个函数，第二种方法通过继承Thread得到子类创建线程，而接下来介绍的第三种方法，你会发现<mark>传入一个可调用的类实例</mark>同样可以创建线程。</p>
+<p>这种创建线程的方法更加接近于面向对象的多线程编程，相比于传入函数而言具有更高的灵活性。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> sleep</span><br><span class="line">loops = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,func,args,name=<span class="string">''</span>)</span>:</span></span><br><span class="line">        self.name = name</span><br><span class="line">        self.func = func</span><br><span class="line">        self.args = args</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.func(*self.args)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">text</span><span class="params">(x,sp)</span>:</span></span><br><span class="line">    print(<span class="string">'thread %s is running &gt;&gt; %d.'</span> % (threading.current_thread().name,x))</span><br><span class="line">    sleep(sp)</span><br><span class="line">    print(<span class="string">'thread %s end.'</span> % (threading.current_thread().name))</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'START!'</span>)</span><br><span class="line">    threads = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">        t = threading.Thread(target=MyThread(text,(i,loops[i])))</span><br><span class="line">        threads.append(t)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">        threads[i].start()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">        threads[i].join()</span><br><span class="line">    print(<span class="string">'ALL END!'</span>)</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<p>START!<br>thread Thread-1 is running &gt;&gt; 0.<br>thread Thread-2 is running &gt;&gt; 1.<br>thread Thread-3 is running &gt;&gt; 2.<br>thread Thread-1 end.<br>thread Thread-2 end.<br>thread Thread-3 end.<br>ALL END!</p>
+<p>&lt;分析&gt;</p>
+<p>这种创建线程的方法比起前两种应该稍微复杂了一点，但实际上也就是相比于传入函数改为传入一个类，类完全由我们自己定制，构造方法<strong>init</strong>()可以添加任何我们需要的参数，之后注意这个特殊方法<strong>call</strong>()，它调用传入类的函数，并使用我们传入类的参数。</p>
+<p>如果我们力求逻辑清晰地快速创建一个线程，任务要求不高，我们倾向于使用第一种创建线程的方法；如果我们需要完全面向对象的多线程编程，我们倾向于使用继承Thread类、实例化子类创建线程的方法，所以这第三种方法的地位有点尴尬，它并不被常用，这里了解一下知道就好。</p>
+<h3 id="ref"><a href="#ref" class="headerlink" title="ref:"></a>ref:</h3><p><a href="https://blog.csdn.net/ckk727/article/details/99717895" target="_blank" rel="noopener">Python 三种方法创建线程_python创建线程-CSDN博客</a></p>
+<h2 id="asyncio"><a href="#asyncio" class="headerlink" title="asyncio"></a>asyncio</h2><p><code>asyncio</code> 是 Python 中的一个异步 I/O 框架，它支持编写并发代码使用协程、多路复用 I/O 访问操作以及高级别并发原语（如事件循环、锁、条件变量等）。<code>asyncio</code> 使得 Python 能够高效地处理 I/O 密集型任务，如网络请求、文件 I/O 等</p>
+<h3 id="asyncio-的基本概念"><a href="#asyncio-的基本概念" class="headerlink" title="asyncio 的基本概念"></a>asyncio 的基本概念</h3><ol>
+<li><p><strong>事件循环（Event Loop）</strong>：事件循环是 <code>asyncio</code> 的核心组件，它调度协程（coroutines）的执行。事件循环负责管理回调函数的注册和调度。</p>
+</li>
+<li><p><strong>协程（Coroutines）</strong>：协程是一种特殊的生成器函数，它可以暂停执行并恢复。协程在事件循环中被调度执行。</p>
+</li>
+<li><p><strong>Future</strong>：<code>Future</code> 是一个特殊类型的对象，代表了将来某个时刻可能会得到的结果。<code>Future</code> 对象可以用来挂起协程的执行，直到结果可用为止。</p>
+</li>
+<li><p><strong>Task</strong>：<code>Task</code> 是 <code>Future</code> 的子类，用于封装协程的执行。通过 <code>asyncio.create_task()</code> 或 <code>loop.create_task()</code> 创建 <code>Task</code> 对象。</p>
+</li>
+<li><p><strong>异步函数（Async Functions）</strong>：定义以 <code>async def</code> 开头的函数称为异步函数。异步函数可以使用 <code>await</code> 关键字来等待另一个协程的完成。</p>
+</li>
+</ol>
+<h3 id="asyncio-的基本用法"><a href="#asyncio-的基本用法" class="headerlink" title="asyncio 的基本用法"></a>asyncio 的基本用法</h3><h4 id="创建事件循环"><a href="#创建事件循环" class="headerlink" title="创建事件循环"></a>创建事件循环</h4><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> asyncio</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">hello_world</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">"Hello World!"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建事件循环</span></span><br><span class="line">loop = asyncio.get_event_loop()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行协程</span></span><br><span class="line">loop.run_until_complete(hello_world())</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭事件循环</span></span><br><span class="line">loop.close()</span><br></pre></td></tr></table></figure>
+
+<h4 id="使用-async-和-await"><a href="#使用-async-和-await" class="headerlink" title="使用 async 和 await"></a>使用 <code>async</code> 和 <code>await</code></h4><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> asyncio</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">sleep_and_print</span><span class="params">(seconds)</span>:</span></span><br><span class="line">    print(<span class="string">f"Sleeping for <span class="subst">&#123;seconds&#125;</span> seconds..."</span>)</span><br><span class="line">    <span class="keyword">await</span> asyncio.sleep(seconds)</span><br><span class="line">    print(<span class="string">"Done sleeping."</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">await</span> sleep_and_print(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行协程</span></span><br><span class="line">asyncio.run(main())</span><br></pre></td></tr></table></figure>
+
+<p>创建任务</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2024/09/08/Sub_Language/Web/Fastapi/" rel="next" title="FastAPI">
+                <i class="fa fa-chevron-left"></i> FastAPI
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2024/10/12/Sub_Language/py_cplus/" rel="prev" title="Python call CPlus">
+                Python call CPlus <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Simon Shi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">286</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">132</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">243</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Thread"><span class="nav-number">1.</span> <span class="nav-text">Thread</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建Thread方式"><span class="nav-number">1.1.</span> <span class="nav-text">创建Thread方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-并发线程"><span class="nav-number">1.2.</span> <span class="nav-text">2 并发线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-继承Thread类创建线程"><span class="nav-number">1.3.</span> <span class="nav-text">3.继承Thread类创建线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-实例化Thread，传入一个类实例"><span class="nav-number">1.4.</span> <span class="nav-text">4. 实例化Thread，传入一个类实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ref"><span class="nav-number">1.5.</span> <span class="nav-text">ref:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#asyncio"><span class="nav-number">2.</span> <span class="nav-text">asyncio</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#asyncio-的基本概念"><span class="nav-number">2.1.</span> <span class="nav-text">asyncio 的基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#asyncio-的基本用法"><span class="nav-number">2.2.</span> <span class="nav-text">asyncio 的基本用法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建事件循环"><span class="nav-number">2.2.1.</span> <span class="nav-text">创建事件循环</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用-async-和-await"><span class="nav-number">2.2.2.</span> <span class="nav-text">使用 async 和 await</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+    
+
+        
+
+
+
+
+
+
+<div>
+<!-- 填写你的友盟代码 -->
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1277989586'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s9.cnzz.com/z_stat.php%3Fid%3D1277989586%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+<!-- 你的友盟代码 end -->
+</div>
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'novav',
+            repo: 'blog_comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'ea8aae03b5381e13ab9cdedd0282b60d8ec412cb',
+            
+                client_id: 'c3934b23eb001aa3243d'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

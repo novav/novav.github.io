@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Paper Reading,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Simon Shi的小站" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="[TOC] 截至2019年12月11日 2019年度阅读论文: 视觉领域论文Fashion 相关论文:1611.09577 Fast Face-swap Using Convolutional Neural Networks.pdf1711.08447 [VITON] An Image-based Virtual Try-on Network.pdf1807.07688 [CP-VTON] Tow">
+<meta name="keywords" content="Paper Reading">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Papers-Log 2019">
+<meta property="og:url" content="http://yoursite.com/2019/12/11/ResearchRecord/Papers-Log/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="[TOC] 截至2019年12月11日 2019年度阅读论文: 视觉领域论文Fashion 相关论文:1611.09577 Fast Face-swap Using Convolutional Neural Networks.pdf1711.08447 [VITON] An Image-based Virtual Try-on Network.pdf1807.07688 [CP-VTON] Tow">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2024-10-12T06:50:39.415Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Papers-Log 2019">
+<meta name="twitter:description" content="[TOC] 截至2019年12月11日 2019年度阅读论文: 视觉领域论文Fashion 相关论文:1611.09577 Fast Face-swap Using Convolutional Neural Networks.pdf1711.08447 [VITON] An Image-based Virtual Try-on Network.pdf1807.07688 [CP-VTON] Tow">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/12/11/ResearchRecord/Papers-Log/">
+
+
+
+
+
+  <title>Papers-Log 2019 | Simon Shi的小站</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simon Shi的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人工智能，机器学习 学习记录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/11/ResearchRecord/Papers-Log/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Papers-Log 2019</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-12-11T09:50:45+00:00">
+                2019-12-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Self/" itemprop="url" rel="index">
+                    <span itemprop="name">Self</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Self/Plan/" itemprop="url" rel="index">
+                    <span itemprop="name">Plan</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/12/11/ResearchRecord/Papers-Log/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/12/11/ResearchRecord/Papers-Log/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[TOC]</p>
+<p>截至2019年12月11日 2019年度阅读论文:</p>
+<h1 id="视觉领域论文"><a href="#视觉领域论文" class="headerlink" title="视觉领域论文"></a>视觉领域论文</h1><h2 id="Fashion-相关论文"><a href="#Fashion-相关论文" class="headerlink" title="Fashion 相关论文:"></a><strong>Fashion 相关论文:</strong></h2><p>1611.09577 Fast Face-swap Using Convolutional Neural Networks.pdf<br>1711.08447 [VITON] An Image-based Virtual Try-on Network.pdf<br>1807.07688 [CP-VTON] Toward Characteristic-Preserving Image-based Virtual Try-On Network.pdf<br>1906.01347 [WUTON] End-to-End Learning of Geometric Deformations of Feature Maps for Virtual Try-On .pdf<br>1906.07251 (ncsu JD Oppo)Pose Guided Fashion Image Synthesis Using Deep Generative Model.pdf<br>[MG-VTON] Towards Multi-pose Guided Virtual Try-on Network.pdf<br>[ClothFlow] Han_ClothFlow_A_Flow-Based_Model_for_Clothed_Person_Generation_ICCV_2019_paper.pdf<br>[DeepFashion] Liu_DeepFashion_Powering_Robust_CVPR_2016_paper.pdf<br>[DeepFashion2]—A Versatile Benchmark for Detection, Pose Estimation,Segmentation and Re-Identification of Clothing Images.pdf<br>[OpenPose] 1611.08050 Realtime Multi-Person 2D Pose Estimation using Part Affinity Fields .pdf<br>[OpenPose] 1812.08008 [OpenPose] Realtime Multi-Person 2D Pose Estimation using Part Affinity Fields.pdf<br>[Parsing] Liang_Human_Parsing_With_Contextualized Convolutional Neural Network ICCV_2015_paper.pdf<br>[Parsing] Zhao_Self-Supervised_Neural_Aggregation_CVPR_2017_paper.pdf<br>Fashion is my profession.pdf<br>Parsing Clothing in Fashion Photographs .pdf<br>MG-VTON-sysu.edu/<br>ViTON-xintong/</p>
+<p><strong>中山大学：</strong><br>Dong_7329-[SG-WGAN] soft-gated-warping-gan-for-pose-guided-person-image-synthesis.pdf<br>Dong_FW-GAN_Flow-Navigated_Warping_GAN_for_Video_Virtual_Try-On_ICCV_2019_paper.pdf</p>
+<h2 id="Viton相关："><a href="#Viton相关：" class="headerlink" title="Viton相关："></a><strong>Viton相关：</strong></h2><p>1805.04953 Learning Rich Features for Image Manipulation Detection.pdf<br>1902.01096 FiNet-Compatible and Diverse Fashion Image Inpainting.pdf<br>1910.02624 Label-PEnet .pdf<br>automatic-fashion-concept-final.pdf<br>Han_ClothFlow_A_Flow-Based_Model_for_Clothed_Person_Generation_ICCV_2019_paper.pdf<br>Han_FiNet_Compatible_and_Diverse_Fashion_Image_Inpainting_ICCV_2019_paper.pdf<br>iFAN_ Image-Instance Full Alignment Networks for Adaptive Object Detection.pdf</p>
+<h2 id="CV-相关论文"><a href="#CV-相关论文" class="headerlink" title="CV 相关论文:"></a><strong>CV 相关论文:</strong></h2><p>0700.00000 A duality based approach for realtime tv-l 1 optical flow.pdf<br>1911.05722 [MoCo] Momentum Contrast for Unsupervised Visual Representation Learning .pdf<br>2010 视觉挑战赛 The PASCAL Visual Object Classes (VOC) Challenge .pdf<br>hodan2017tless [T-LESS] An RGB-D Dataset for 6D Pose Estimation of Texture-less Objects .pdf</p>
+<h2 id="CV-classfication"><a href="#CV-classfication" class="headerlink" title="CV classfication:"></a><strong>CV classfication:</strong></h2><p>1406.4729  [SPP] PPT .pdf<br>1406.4729  [SPP] Spatial Pyramid Pooling in Deep Convolutional Networks for Visual Recognition.pdf<br>1412.0767  [C3D] Learning Spatiotemporal Features with 3D Convolutional Networks.pdf<br>1512.03385 [ResNet] -Deep Residual Learning for Image Recognition.pdf<br>1608.00859 [TSN] Temporal Segment Networks-Towards Good Practices for Deep Action Recognition.pdf<br>1703.05593 [Geometric Matching] Convolutional neural network architecture for geometric matching.pdf<br>1705.07750 [I3D] Quo Vadis, Action Recognition A New Model and the Kinetics Dataset .pdf<br>1708.05038 [R3D] ConvNet Architecture Search for Spatiotemporal Feature Learning.pdf<br>1709.01507 [SeNet] Squeeze-and-Excitation Networks.pdf<br>1711.07971 [NoLocal] Non-local Neural Networks.pdf<br>1711.08200 [T3D] Temporal 3D ConvNets-New Architecture and Transfer Learning for video Classification.pdf<br>1711.11248 [R21D] A Closer Look at Spatiotemporal Convolutions for Action Recognition.pdf<br>1711.11248v3 [R21D] A Closer Look at Spatiotemporal Convolutions for Action Recognition.pdf<br>1712.00559 [PNasNet] Progressive Neural Architecture Search.pdf<br>I3D_PPT.pdf<br>NVIDIA_R3DCNN_cvpr2016.pdf</p>
+<h2 id="3D"><a href="#3D" class="headerlink" title="*3D *"></a>*<em>3D *</em></h2><p>1803.11527v3 [SpiderCNN] Deep Learning on Point Sets with .pdf</p>
+<h2 id="attention"><a href="#attention" class="headerlink" title="attention"></a><strong>attention</strong></h2><p>‘1809.00916 [OCNet] Object Context Network for Scene Parsing.pdf’<br>‘1809.02983 [DANet] Dual Attention Network for Scene Segmentation.pdf’<br>‘1811.11721 [CCNet] Criss-Cross Attention for Semantic Segmentation.pdf’<br>‘1908.06955 [DGMN] Dynamic Graph Message Passing Networks.pdf’<br>‘7318 [A^2Net] -a2-nets-double-attention-networks.pdf’</p>
+<h2 id="GAN"><a href="#GAN" class="headerlink" title="GAN"></a><strong>GAN</strong></h2><p>‘1411.1784  [CGAN] Conditional Generative Adversarial Nets.pdf’<br>‘1611.02200 UNSUPERVISED CROSS-DOMAIN IMAGE GENERATION.pdf’<br>‘1710.00962 [GP-GAN] Gender Ptreserving GAN for Synathesizing Faces from Landmarks.pdf’<br>‘1803.04189 [N2N] Noise2Noise- learning Image restoration with Clean Data.pdf’<br>‘1909.04988 How Old Are You–Face Age Translation with Identity Preservation Using GANs .pdf’<br>‘1910.10334 Relation Modeling with Graph Convolutional Networks for Facial Action Unit Detection.pdf’<br>‘1910.10344 Facial Expression Restoration Based on Improved Graph Convolutional Networks.pdf’<br>‘CVPR-2019-Drawing [APDrawingGAN]Generating Artistic Portrait Drawings from Face Photos with Hierarchical GANs.pdf’</p>
+<h2 id="object-detection"><a href="#object-detection" class="headerlink" title="object detection"></a><strong>object detection</strong></h2><p>‘1611.10012   [vs] Speed-accuracy trade-offs for modern convolutional object detectors.pdf’<br>‘1707.09605v2 [Crowd Counting] CNN-based Cascaded Multi-task Learning of High-level Prior and Density Estimation for Crowd Counting.pdf’</p>
+<h2 id="segmentation"><a href="#segmentation" class="headerlink" title="segmentation"></a><strong>segmentation</strong></h2><p>‘1411.4038  [FCN] Fully Convolutional Networks for Semantic Segmentation.pdf’<br>‘1500.00000 [FCN -CVPR ] Fully convolutional networks for semantic segmentation.pdf’<br>‘1505.04597 [U-Net] Convolutional Networks for Biomedical Image Segmentation.pdf’<br>‘1511.00561 [SegNet] SegNet A Deep Convolutional Encoder-Decoder Architecture for Image Segmentation.pdf’<br>‘1605.06211 [FCN] Fully Convolutional Networks for Semantic Segmentation.pdf’<br>‘1700.00000 [LIP] CVPR_2017_paper Look into Person Self-supervised Structure-sensitive Learning and A New Benchmark for Human Parsing.pdf’<br>‘1703.06870 [2018.1] Mark R-CNN.pdf’<br>‘1803.10683v3 [Human Instance Segmentation] Pose2Seg-Detection Free Human Instance Segmentation.pdf’<br>‘1804.01984 [LIP] Look into Person Joint Body Parsing and Pose Estimation Network and A New Benchmark.pdf’<br>‘1811.12596v1 [Human Part segmentation] Parsing R-CNN for Instance-Level Human Analysis.pdf’<br>‘1910.09777 [CVPR2019] Self-Correction for Human Parsing .pdf’</p>
+<h2 id="GeometricMatching"><a href="#GeometricMatching" class="headerlink" title="GeometricMatching"></a><strong>GeometricMatching</strong></h2><p>‘1511.05065 【Proposal Flow】.pdf’  ‘Articulated Human Detection with Flexible Mixtures-of-Parts.pdf’</p>
+<hr>
+<h1 id="GAME-Papers"><a href="#GAME-Papers" class="headerlink" title="GAME Papers"></a>GAME Papers</h1><p>‘[DRL] Playing FPS Games with Deep Reinforcement Learning 14456-66873-1-PB.pdf’<br>‘[facebook AI]Better Computer Go Player with Neural Network and Long-Term Prediction 1511.06410.pdf’<br>‘[MLL] 2006 Multi-Label Neural Networks with Applications to Functional Genomics and Text Categorization.pdf’<br>‘[MLL] gibaja2015 A Tutorial on Multilabel Learning.pdf’<br>‘[MLL] TKDE14- A Review On Multi-Label Learning Algorithms.pdf’<br>‘[MLL][PPT] A Review on Multi-Label Learning Algorithms.pdf’<br>‘[PaperRead] Accurate, Large Minibatch SGD- Training ImageNet in One Hour .docx’<br> 0709/<br>‘1603.05027_Identity Mappings in Deep Residual Networks.pdf’<br>‘1706.02677_[Facebook] Accurate,LargeMinibatch SGD-training ImageNet in 1 Hour.pdf’<br>‘1806.07366 [NIPs2018 best paper] Neural Ordinary Differential Equations.pdf’<br>‘1810.09026 Actor-Critic Policy Optimization in Partially Observable Multiagent Enviroments.pdf’<br>‘1811.08883v1 [kaiming.he] Rethinking ImageNet Pre-training .pdf’<br>‘baier2018 [[Baier et al] Emulating human play in a leading mobile card game.pdf’<br> DDZ/<br>‘Deep Decentralized Multi-task Multi-Agent Reinforcement Learning under Partial Observability <a href="mailto:10.0000@dl.acm.org" target="_blank" rel="noopener">10.0000@dl.acm.org</a>@3305958.pdf’<br> Game/<br>‘hierarchical-deep-reinforcement-learning-integrating-temporal-abstraction-and-intrinsic-motivation 6233-.pdf’<br> lstm_cnn/<br>‘mcts-A survery of Monte Carlo Tree Search Methods REVIEW.pdf’<br> mcts-survey.pdf<br>‘MiniMax etc’/<br>‘Multi-armed Bandits with Episode Context.pdf’<br>‘sample statistical gradient-following algorithms for connectionist reinforcement learning -williams92simple.pdf’<br> Texas/<br> 发表/<br> 基于深度森林算法的慢性胃炎中医证候分类.pdf<br> 深度强化学习进展-从AlphaGo到AlphaGoZero.pdf</p>
+<h2 id="RL"><a href="#RL" class="headerlink" title="RL:"></a><strong>RL:</strong></h2><p>‘[Professor]Peter Stone_ Publications Sorted by Date.pdf的注释概要.pdf’<br> rl_ppt/<br>    7-pg Lecture 7 Policy Gradient.pdf<br>    8-dyna Lecture 8 Integrating Learning and Planning.pdf<br>‘RL-1-Playing Atari with Deep Reinforcement Learning_1312.5602.pdf’<br>‘RL-2-human-level control through deep reinforcement learing - mnih2015.pdf’<br>‘RL-3-Deep Recurrent Q-Learing for Partially Observable MDPs 1507.06527.pdf’<br> RLbook2018.pdf<br>‘RL-ppt-Deep Recurrent Q-Learning for Partially - SDMIA15-Hausknecht.slides.pdf’<br>“强化学习—DQN算法原理详解 _ Wanjun’s blog.pdf”<br>“强化学习-基本概念 _ Wanjun’s blog.pdf”</p>
+<h2 id="0709"><a href="#0709" class="headerlink" title="0709:"></a><strong>0709:</strong></h2><p>‘1602.02867_v1_Value Iteration Networks.pdf’<br>‘1602.02867_v2_Value Iteration Networks.pdf’<br>‘1611.01626_v2_PGQ-Combining Policy Gradietn And Q-Learning.pdf’<br>‘1611.05763_Learning to reinforcement learn.pdf’<br>‘1702.03037_Multi-agent Reinforcement Learning in Sequential Social Dilemmas.pdf’<br>‘1706.02677[Facebook] Accurate,LargeMinibatch SGD-training ImageNet in 1 Hour.pdf’<br>‘mu-thesis Scaling Distributed Machine Learning with System and Algorithm Co-design.pdf’<br>‘phd_perolat_Reinforcement Learning- The Multi-Player Case.pdf’<br>‘stochgames.ijcai09_Computing Equilibria in Multiplayer Stochastic Games of Imperfect Information.pdf’<br> Temporal-difference_search_in_Computer_Go.pdf<br> 深度强化学习进展-从AlphaGo到AlphaGoZero.pdf</p>
+<h2 id="DDZ"><a href="#DDZ" class="headerlink" title="*DDZ:        *"></a>*<em>DDZ:        *</em></h2><p>‘0176 [IJCAI] DeltaDou- Expert-level Doudizhu AI through Self-play.pdf’<br>‘A Solution to China Competitive Poker Using Deep learning .pdf’<br>‘1901.08925_Combinational Q-Learning for Dou Di Zhu.pdf’</p>
+<h2 id="GAME"><a href="#GAME" class="headerlink" title="*GAME:       *"></a>*<em>GAME:       *</em></h2><p>‘[DeepMind] Mastering the Game of Go With Deep Neural Networks and Tree Search.pdf’<br>‘[DeepMind] Mastering the Game of Go With Deep Neural Networks and Tree Search-DESKTOP-828K1I6.pdf’<br>‘[DeepMind] Mastering the game of Go without human knowledge.pdf’<br>‘[DeepMind] Move Evaluation in Go Using Deep Convolutional Neural Networks 1412.6564.pdf’<br>‘[DeepMind][IN] 1612.00222 Interaction Networks for Learning about Objects, Relations and Physics .pdf’<br>‘[DeepMind][smooth_uct] Smooth UCT Search in Computer Poker.pdf’<br>‘[DeepMind][StarCraft II]1708.04782 StarCraft II- A New Challenge for .pdf’<br>‘[DeepMind][VIN]1706.01433 Visual Interaction Networks.pdf’<br>‘[DeepStack] 1701.01724 Expert-Level Artificail Intelligence in Heads-Up No-Limit Poker.pdf’<br>‘[Google] 1706.03762 Attention Is All You Need.pdf’<br>‘[SP] [FSP] Fictitious self-play in extensive-form games [UCL &amp; DeepMind]heinrich15.pdf’<br>‘[SP] [MC-NFSP][Othello] 1903.09569 [ZJU] Monte Carlo Neural Fictitious Self-Play Approach to Approximate Nash Equilibrium of Imperfect-Information Games.pdf’<br>‘[SP] [NFSP] 1603.01121 Deep Reinforcement Learning from Self-Play in Imperfect-Information Games.pdf’<br>‘1807.06813 [Scopone] Traditional Wisdom and Monte Carlo Tree Search Face-to-Face in the Card Game Scopone.pdf’<br>‘1910.04376 [RLCard] A Toolkit for Reinforcement Learning in Card Games.pdf’<br> Bridge/<br> ‘1509.06731 Poker-CNN APattern Learning Strategy for Making Draws and Bets In Poker Game.pdf’<br> ‘1607.03290 [CN] Automatic Bridge Bidding Using Deep Reinforcement Learning.pdf’<br> ‘1903.00900v2 Competitive Bridge Bidding with Deep Neural Networks .pdf’<br> ‘2010 [NYU] The State of Automated Bridge Play.pdf’<br>  Double_Dummy_Analysis.pdf<br>  DraftBoostingBridge.pdf<br> Skat/<br> ‘09-IJCAI [Skat] Improving State Evaluation, Inference, and Search in Trick-Based Card Games.pdf’<br> ‘11 [UA] [Skat] Search, Inference and Opponent Modelling in an Expert-Caliber Skat Player.pdf’<br> ‘11 [UA] [Skat] Search, Inference and Opponent Modelling in an Expert-Caliber Skat Player-DESKTOP-828K1I6.pdf’<br> ‘13 [UA] [Skat] Symmetries and Search in Trick-Taking Card Games.pdf’<br> ‘1903.09604 [Skat] Improving Search with Supervised Learning in Trick-Based Card Games.pdf’<br> ‘1905.10907 [Skat] Learning Policies from Human Data for Skat.pdf’<br> ‘1906.00000 [Skat] Policy Based Inference in Trick-Taking Card Games.pdf’</p>
+<h2 id="Lstm-CNN"><a href="#Lstm-CNN" class="headerlink" title="*Lstm_CNN:   *"></a>*<em>Lstm_CNN:   *</em></h2><p>‘[CLDNN] Convolutional, Long Short-Term Memory, fully connected Deep Neural Networks - sainath2015.pdf’<br>‘[ConvLSTM] 5955-convolutional-lstm-network-a-machine-learning-approach-for-precipitation-nowcasting.pdf’<br>‘[ConvLSTM]-21-Unsupervised Learning of Video Representations using LSTMs - 1502.04681.pdf’<br>‘[LRCN] Long-term Recurrent Convolutional Networks for Visual Recognition and Description - 1411.4389.pdf’<br>‘[lstm + RL-PG] Recurrent Policy Gradients joa2009.pdf’<br>‘[lstm+ DRL] Language Understanding for Text-based Games using Deep 1506.08941v2.pdf’<br>‘[lstm+ RL] 1953-reinforcement-learning-with-long-short-term-memory.pdf’<br>‘[lstm-cards] Implementing a Doppelkopf Card Game - BA-Obenaus.pdf’<br>‘1502.04681 [LSTMs] Unsupervised Learning of Video Representations using LSTMs.pdf’</p>
+<h2 id="MiniMax-etc"><a href="#MiniMax-etc" class="headerlink" title="MiniMax etc:"></a><strong>MiniMax etc:</strong></h2><p>allis-thesis.pdf<br>Proof-number search allis1994.pdf</p>
+<h2 id="Texas"><a href="#Texas" class="headerlink" title="*Texas:      *"></a>*<em>Texas:      *</em></h2><p>‘1809.04040-Solving Imperfect-Information Games.pdf’<br> CFR/<br>    ‘1407.5042-Solving Large Imperfect Information Gmae Using CFR+.pdf’<br>    ‘17-AAAI-Refinement Safe and Nested Endgame Solving for Imperfect-Information Games.pdf’<br>    ‘17-AAAI-Safe and Nested Endgame Solving for Imperfect.docx’<br>    ‘CFR Variant.pptx’<br>     CFR+.pptx<br>    ‘REGRET MINIMIZATION IN GAMES AND THE DEVELOPMENT OF CHAMPION MULTIPLAYER Computer POKER_PLAYINGACENTS.pdf’<br>‘Generalized Sampling and Variance in Counterfactual Regret Minimization.pdf’<br> Libratus.pptx<br>‘Superhuman AI for heads up no limit poker Libratus beats top professionals.pdf’<br>‘Superhuman AI for multiplayer poker.pdf’<br>‘博论全文-REGRET MINIMIZATION IN GAMES AND THE DEVELOPMENT OF CHAMPION MULTIPLAYER Computer POKER_PLAYINGACENTS.pdf’</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Paper-Reading/" rel="tag"># Paper Reading</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/04/Tools/Coding-Model-labelme/" rel="next" title="Coding_Model_labelme">
+                <i class="fa fa-chevron-left"></i> Coding_Model_labelme
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/12/11/CV/CV_VTON/Paper-CV+FashionAI/" rel="prev" title="Paper-CV+FashionAI">
+                Paper-CV+FashionAI <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Simon Shi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">286</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">132</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">243</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#视觉领域论文"><span class="nav-number">1.</span> <span class="nav-text">视觉领域论文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Fashion-相关论文"><span class="nav-number">1.1.</span> <span class="nav-text">Fashion 相关论文:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Viton相关："><span class="nav-number">1.2.</span> <span class="nav-text">Viton相关：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CV-相关论文"><span class="nav-number">1.3.</span> <span class="nav-text">CV 相关论文:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CV-classfication"><span class="nav-number">1.4.</span> <span class="nav-text">CV classfication:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3D"><span class="nav-number">1.5.</span> <span class="nav-text">*3D *</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#attention"><span class="nav-number">1.6.</span> <span class="nav-text">attention</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GAN"><span class="nav-number">1.7.</span> <span class="nav-text">GAN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#object-detection"><span class="nav-number">1.8.</span> <span class="nav-text">object detection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#segmentation"><span class="nav-number">1.9.</span> <span class="nav-text">segmentation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GeometricMatching"><span class="nav-number">1.10.</span> <span class="nav-text">GeometricMatching</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GAME-Papers"><span class="nav-number">2.</span> <span class="nav-text">GAME Papers</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RL"><span class="nav-number">2.1.</span> <span class="nav-text">RL:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0709"><span class="nav-number">2.2.</span> <span class="nav-text">0709:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DDZ"><span class="nav-number">2.3.</span> <span class="nav-text">*DDZ:        *</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GAME"><span class="nav-number">2.4.</span> <span class="nav-text">*GAME:       *</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lstm-CNN"><span class="nav-number">2.5.</span> <span class="nav-text">*Lstm_CNN:   *</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MiniMax-etc"><span class="nav-number">2.6.</span> <span class="nav-text">MiniMax etc:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Texas"><span class="nav-number">2.7.</span> <span class="nav-text">*Texas:      *</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+    
+
+        
+
+
+
+
+
+
+<div>
+<!-- 填写你的友盟代码 -->
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1277989586'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s9.cnzz.com/z_stat.php%3Fid%3D1277989586%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+<!-- 你的友盟代码 end -->
+</div>
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'novav',
+            repo: 'blog_comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'ea8aae03b5381e13ab9cdedd0282b60d8ec412cb',
+            
+                client_id: 'c3934b23eb001aa3243d'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
