@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Flow概念理解：什么是人脸识别？  4特点 便捷性。人脸是生物特征，不需要携带类似身份证的东西 非强制性。识别的过程甚至不需要对象的配合，只要拍摄到人脸就可以进行识别，例如安防领域就是如此。 非接触性。不需要跟设备进行接触，相比指纹更加安全一些。 并行处理。一张照片里有多个人脸时可以一起处理，不像指纹和虹膜，需要一个一个来。  人脸识别的 4 个步骤人脸识别的过程中有4个关键的步骤：  人脸检测">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机视觉--人脸识别应用">
+<meta property="og:url" content="https://novav.github.io/2020/04/07/CV/CV-Appliy-face/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="Flow概念理解：什么是人脸识别？  4特点 便捷性。人脸是生物特征，不需要携带类似身份证的东西 非强制性。识别的过程甚至不需要对象的配合，只要拍摄到人脸就可以进行识别，例如安防领域就是如此。 非接触性。不需要跟设备进行接触，相比指纹更加安全一些。 并行处理。一张照片里有多个人脸时可以一起处理，不像指纹和虹膜，需要一个一个来。  人脸识别的 4 个步骤人脸识别的过程中有4个关键的步骤：  人脸检测">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2020/04/07/CV/CV-Appliy-face/image-20200714105508084.png">
+<meta property="og:image" content="https://novav.github.io/2020/04/07/CV/CV-Appliy-face/image-20200714110004953.png">
+<meta property="og:image" content="https://novav.github.io/2020/04/07/CV/CV-Appliy-face/image-20200714110035830.png">
+<meta property="og:image" content="https://novav.github.io/2020/04/07/CV/CV-Appliy-face/image-20200714110052133.png">
+<meta property="og:image" content="https://novav.github.io/2020/04/07/CV/CV-Appliy-face/image-20200714110106899.png">
+<meta property="og:image" content="https://novav.github.io/2020/04/07/CV/CV-Appliy-face/20170103150455829">
+<meta property="og:image" content="https://novav.github.io/2020/04/07/CV/CV-Appliy-face/image-20200708145221603.png">
+<meta property="article:published_time" content="2020-04-07T16:36:57.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:38.205Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="CV">
+<meta property="article:tag" content="Facial Recognition">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2020/04/07/CV/CV-Appliy-face/image-20200714105508084.png">
+
+<link rel="canonical" href="https://novav.github.io/2020/04/07/CV/CV-Appliy-face/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>计算机视觉--人脸识别应用 | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2020/04/07/CV/CV-Appliy-face/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          计算机视觉--人脸识别应用
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-04-07 16:36:57" itemprop="dateCreated datePublished" datetime="2020-04-07T16:36:57+00:00">2020-04-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV-Apply/" itemprop="url" rel="index"><span itemprop="name">CV_Apply</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV-Apply/Face-Recongnition/" itemprop="url" rel="index"><span itemprop="name">Face Recongnition</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Flow"><a href="#Flow" class="headerlink" title="Flow"></a>Flow</h1><p>概念理解：什么是人脸识别？</p>
+<p><img src="/2020/04/07/CV/CV-Appliy-face/image-20200714105508084.png" alt="image-20200714105508084"></p>
+<h2 id="4特点"><a href="#4特点" class="headerlink" title="4特点"></a>4特点</h2><ol>
+<li>便捷性。人脸是生物特征，不需要携带类似身份证的东西</li>
+<li>非强制性。识别的过程甚至不需要对象的配合，只要拍摄到人脸就可以进行识别，例如安防领域就是如此。</li>
+<li>非接触性。不需要跟设备进行接触，相比指纹更加安全一些。</li>
+<li>并行处理。一张照片里有多个人脸时可以一起处理，不像指纹和虹膜，需要一个一个来。</li>
+</ol>
+<h2 id="人脸识别的-4-个步骤"><a href="#人脸识别的-4-个步骤" class="headerlink" title="人脸识别的 4 个步骤"></a>人脸识别的 4 个步骤</h2><p>人脸识别的过程中有4个关键的步骤：</p>
+<ol>
+<li>人脸检测</li>
+<li>人脸对齐</li>
+<li>人脸编码</li>
+<li>人脸匹配</li>
+</ol>
+<h3 id="人脸检测"><a href="#人脸检测" class="headerlink" title="人脸检测"></a>人脸检测</h3><p>常用api:  Yolo &gt; Dlib &gt; cv2</p>
+<p>人脸检测的目的是寻找图片中人脸的位置。当发现有人脸出现在图片中时，不管这个脸是谁，都会标记出人脸的坐标信息，或者将人脸切割出来。</p>
+<p>可以使用方向梯度直方图(HOG)来检测人脸位置。先将图片灰度化，接着计算图像中像素的梯度。通过将图像转变成HOG形式，就可以获得人脸位置。</p>
+<img src="/2020/04/07/CV/CV-Appliy-face/image-20200714110004953.png" alt="image-20200714110004953" style="zoom: 33%;">
+
+<h3 id="人脸对齐"><a href="#人脸对齐" class="headerlink" title="人脸对齐"></a>人脸对齐</h3><p>人脸对齐是将不同角度的人脸图像对齐成同一种标准的形状。</p>
+<p>先定位人脸上的特征点，然后通过几何变换（仿射、旋转、缩放），使各个特征点对齐（将眼睛、嘴等部位移到相同位置）。</p>
+<img src="/2020/04/07/CV/CV-Appliy-face/image-20200714110035830.png" alt="image-20200714110035830" style="zoom:33%;">
+
+<h3 id="人脸编码"><a href="#人脸编码" class="headerlink" title="人脸编码"></a>人脸编码</h3><p>人脸图像的像素值会被转换成紧凑且可判别的特征向量，这也被称为模板（template）。理想情况下，同一个主体的所有人脸都应该映射到相似的特征向量。</p>
+<img src="/2020/04/07/CV/CV-Appliy-face/image-20200714110052133.png" alt="image-20200714110052133" style="zoom:33%;">
+
+<h3 id="人脸匹配"><a href="#人脸匹配" class="headerlink" title="人脸匹配"></a>人脸匹配</h3><p>在人脸匹配构建模块中，两个模板会进行比较，从而得到一个相似度分数，该分数给出了两者属于同一个主体的可能性。</p>
+<img src="/2020/04/07/CV/CV-Appliy-face/image-20200714110106899.png" alt="image-20200714110106899" style="zoom:33%;">
+
+<h2 id="人脸识别的-5-个难点"><a href="#人脸识别的-5-个难点" class="headerlink" title="人脸识别的 5 个难点"></a>人脸识别的 5 个难点</h2><ol>
+<li>头部姿势</li>
+<li>年龄</li>
+<li>遮挡</li>
+<li>光照条件</li>
+<li>人脸表情</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://medium.com/@pkqiang49/%E4%B8%80%E6%96%87%E7%9C%8B%E6%87%82%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB-4%E4%B8%AA%E7%89%B9%E7%82%B9-4%E4%B8%AA%E5%AE%9E%E7%8E%B0%E6%AD%A5%E9%AA%A4-5%E4%B8%AA%E9%9A%BE%E7%82%B9-%E7%AE%97%E6%B3%95%E5%8F%91%E5%B1%95%E8%BD%A8%E8%BF%B9-2661078386ad">一文看懂人脸识别-4个特点-4个实现步骤-5个难点-算法发展轨迹</a></p>
+<h1 id="人脸识别"><a href="#人脸识别" class="headerlink" title="人脸识别"></a>人脸识别</h1><h3 id="1-人脸识别的相关概念"><a href="#1-人脸识别的相关概念" class="headerlink" title="1.人脸识别的相关概念"></a>1.人脸识别的相关概念</h3><p>​    人脸识别(Facial Recognition)，即通过视频采集设备获取用户的面部图像，再利用核心的算法对其脸部的五官位置、脸型和角度进行计算分析，进而和自身数据库里已有的范本进行比对，从而判断出用户的真实身份.人脸识别算法，在检测到人脸并定位面部关键特征点之后，主要的人脸区域就可以被裁剪出来，经过预处理之后，馈入后端的识别算法。识别算法要完成人脸特征的提取，并与库存的已知人脸进行比对，完成最终的分类</p>
+<p>2、人脸验证</p>
+<p>​        人脸验证做的是1：1的比对，其身份验证模式本质上是计算机对当前人脸与人像数据库进行快速人脸比对，并得出是否匹配的过程，可以简单理解为证明你就是你。就是我们先告诉人脸识别系统，我是张三，然后用来验证站在机器面前的“我”到底是不是张三。<br>​<br>​        这种模式最常见的应用场景便是人脸解锁，终端设备(如手机)只需将用户事先注册的照片与临场采集的照片做对比，判断是否为同一人，即可完成身份验证.1：1作为一种静态比对，一般在金融、信息安全领域中应用较多。例如在高速路、机场安检时，受检人员手持身份证等证件，通过检查通道，同时对受检人员的外貌及身份证信息进行识别，此过程就是典型的1：1模式的人脸识别。<br>​    </p>
+<p>1，face++（0.9950 ）；2，DeepFace（0.9735 ）；3,FR+FCN（0.9645 ）；4，DeepID（0.9745 ）；5，FaceNet（0.9963 ）；6， baidu的方法（0.9977 ）；7,pose+shape+expression augmentation（0.9807）；8，CNN-3DMM estimation(0.9235 )</p>
+<p>第一类：face++，DeepFace，DeepID，FaceNet和baidu。他们方法的核心是搜集大数据，通过更多更全的数据集让模型学会去识别人脸的多样性。这类方法适合百度&#x2F;腾讯&#x2F;谷歌等大企业，未来可以搜集更多更全的训练数据集。数据集包扩同一个体不同年龄段的照片，不同人种的照片，不同类型（美丑等）。通过更全面的数据，提高模型对现场应用中人脸差异的适应能力。</p>
+<p>第二类：FR+FCN，pose+shape+expression augmentation和CNN-3DMM estimation。这类方法采用的是合成的思路，通过3D模型等合成不同类型的人脸，增加数据集。这类方法操作成本更低，更适合推广。其中，特别是CNN-3DMM estimation，作者做了非常出色的工作，同时提供了源码，可以进一步参考和深度研究。</p>
+<p>常规人脸识别流程是：人脸检测-对齐-表达-分类。</p>
+<h3 id="DeepFace（0-9735-）【★★★】"><a href="#DeepFace（0-9735-）【★★★】" class="headerlink" title="DeepFace（0.9735 ）【★★★】"></a>DeepFace（0.9735 ）【★★★】</h3><p>一，基于3d模型的人脸对齐方法；二，大数据训练的人工神经网络。</p>
+<p>简介：基于开源框架实现的人脸识别、脸脸检测、人脸关键点检测等任务 各个任务分别在FaceDetection, FaceAlignment, FaceRecognition 三个文件中。人脸检测 baseline: 基于基于滑动窗口的人脸检测，将训练好了的网络改为全卷积网络，然后利用全卷积网络对于任意大小的图像输入，进行获取输出HeapMap。</p>
+<p>源码网址：<a target="_blank" rel="noopener" href="https://github.com/RiweiChen/DeepFace">https://github.com/RiweiChen/DeepFace</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">detect -&gt; aligh -&gt; represent -&gt; classify</span><br></pre></td></tr></table></figure>
+
+<p><strong>DeepID和FaceNet并没有对齐，</strong></p>
+<p><strong>DeepID的解决方案是将一个人脸切成很多部分，每个部分都训练一个模型，然后模型聚合。</strong></p>
+<p><strong>FaceNet则是没有考虑这一点，直接以数据量大和特殊的目标函数取胜。</strong></p>
+<h3 id="DeepID（0-9745-）【★★★】"><a href="#DeepID（0-9745-）【★★★】" class="headerlink" title="DeepID（0.9745 ）【★★★】"></a>DeepID（0.9745 ）【★★★】</h3><h3 id="FaceNet-0-9963-【★★★★】"><a href="#FaceNet-0-9963-【★★★★】" class="headerlink" title="FaceNet(0.9963)【★★★★】"></a>FaceNet(0.9963)【★★★★】</h3><h3 id="Baidu的方法：Targeting-Ultimate-Accuracy-Face-Recognition-via-Deep-Embedding"><a href="#Baidu的方法：Targeting-Ultimate-Accuracy-Face-Recognition-via-Deep-Embedding" class="headerlink" title="Baidu的方法：Targeting Ultimate Accuracy : Face Recognition via Deep Embedding"></a>Baidu的方法：<a href="https://link.zhihu.com/?target=http://xueshu.baidu.com/s?wd=paperuri:(3932460d37f978db26e386460904a032)&filter=sc_long_sign&sc_ks_para=q=Targeting+Ultimate+Accuracy:+Face+Recognition+via+Deep+Embedding&tn=SE_baiduxueshu_c1gjeupa&ie=utf-8&sc_us=5602776512742270991">Targeting Ultimate Accuracy : Face Recognition via Deep Embedding</a></h3><h3 id="pose-shape-expression-augmentation（0-9807）"><a href="#pose-shape-expression-augmentation（0-9807）" class="headerlink" title="pose+shape+expression augmentation（0.9807）"></a>pose+shape+expression augmentation（0.9807）</h3><h3 id="CNN-3DMM-estimation-0-9235"><a href="#CNN-3DMM-estimation-0-9235" class="headerlink" title="CNN-3DMM estimation(0.9235)"></a>CNN-3DMM estimation(0.9235)</h3><h3 id="Insightface-【★★★★★】"><a href="#Insightface-【★★★★★】" class="headerlink" title="Insightface 【★★★★★】"></a>Insightface 【★★★★★】</h3><p><a target="_blank" rel="noopener" href="https://github.com/deepinsight/insightface">https://github.com/deepinsight/insightface</a></p>
+<ul>
+<li>All face images are aligned by <a target="_blank" rel="noopener" href="https://kpzhang93.github.io/MTCNN_face_detection_alignment/index.html">MTCNN</a> and cropped to 112x112:</li>
+<li></li>
+</ul>
+<h1 id="引用资源："><a href="#引用资源：" class="headerlink" title="引用资源："></a>引用资源：</h1><p><a target="_blank" rel="noopener" href="https://www.sharebook.site/2017/07/30/face-recognition-technology-trend-and-summary/">人脸识别技术开源代码及最新趋势汇总</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/24816781">基于深度学习的人脸识别技术综述</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/dongxiaodong/p/13157901.html">Python人脸识别和手势识别应用（face++）开发</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.sohu.com/a/333012550_99979179">face_recognition 史上最简单的人脸识别项目登上GitHub趋势榜 </a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Anita9002/p/7798907.html">基于机器学习人脸识别face recognition具体的算法和原理</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/27aae9ec045d">人脸识别、人脸检测、人脸对齐相关算法和论文汇总</a> <a target="_blank" rel="noopener" href="https://github.com/polarisZhao/awesome-face">https://github.com/polarisZhao/awesome-face</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/25025596">基于mtcnn和facenet的实时人脸检测与识别系统开发</a></p>
+<h2 id="OpenFace"><a href="#OpenFace" class="headerlink" title="OpenFace"></a>OpenFace</h2><p>​    <em>Free and open source face recognition with deep neural networks.</em></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/FlyAway2013/p/8184089.html">Openface 简单入门</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/hongbin_xu/article/details/80253684?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-3.nonecase&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-3.nonecase">OpenFace学习(2)：FaceNet+SVM匹配人脸</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_14845119/article/details/53994607">OpenPose 介绍</a></p>
+<p><img src="/2020/04/07/CV/CV-Appliy-face/20170103150455829" alt="img"></p>
+<h2 id="DeepFace"><a href="#DeepFace" class="headerlink" title="DeepFace"></a>DeepFace</h2><p>FaceDetection, </p>
+<p>FaceAlignment, </p>
+<p>FaceRecognition</p>
+<p>Face Detection: baseline: 基于基于滑动窗口的人脸检测，将训练好了的网络改为全卷积网络，然后利用全卷积网络对于任意大小的图像输入，进行获取输出HeapMap。</p>
+<p>人脸关键点检测: try1_1： 基于DeepID网络结构的人脸关键点检测</p>
+<p>Identifition : deepid： 基于DeepID网络结构的人脸验证</p>
+<h2 id="Facenet"><a href="#Facenet" class="headerlink" title="Facenet"></a>Facenet</h2><p>​        Face alignment using <strong>MTCNN</strong></p>
+<p>​        Face Recognition using <strong>Inception-ResNet-v1 model</strong>        </p>
+<p>​      </p>
+<h2 id="face-recognition"><a href="#face-recognition" class="headerlink" title="face_recognition"></a>face_recognition</h2><p>face_locations:     返回人脸的box</p>
+<p>face_landmarks:  返回人脸的关键点，五官，轮廓    _raw_face_landmarks</p>
+<p>face Recognition：</p>
+<p>​        face_encodings： _raw_face_landmarks</p>
+<p>​        compare_faces</p>
+<p>特点：</p>
+<ul>
+<li>流程清晰</li>
+<li>部署简单</li>
+<li>无法自定义，较难基于此架构的重新训练</li>
+</ul>
+<h1 id="猫脸识别"><a href="#猫脸识别" class="headerlink" title="猫脸识别"></a>猫脸识别</h1><p>face detection 提取</p>
+<p>face alignment 对齐</p>
+<p>face recongnition 识别</p>
+<ul>
+<li>face vertification</li>
+<li>face identification</li>
+</ul>
+<p>detection</p>
+<p>alignment</p>
+<h1 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h1><p>FaceDetection, </p>
+<p>FaceAlignment, </p>
+<p>FaceRecognition</p>
+<h2 id="目标检测："><a href="#目标检测：" class="headerlink" title="目标检测："></a>目标检测：</h2><p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1483587">盘点性能最强的One-stage目标检测算法</a></p>
+<p><img src="/2020/04/07/CV/CV-Appliy-face/image-20200708145221603.png" alt="image-20200708145221603"></p>
+<h2 id="Face-Detection相关资料："><a href="#Face-Detection相关资料：" class="headerlink" title="Face Detection相关资料："></a>Face Detection相关资料：</h2><p><strong>1.单个CNN人脸检测方法</strong><br><strong>2.级联CNN人脸检测方法</strong><br><strong>3.OpenCV人脸检测方法</strong><br><strong>4.Dlib人脸检测方法</strong><br><strong>5.libfacedetect人脸检测方法</strong><br><strong>6.Seetaface人脸检测方法</strong></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_14916279/article/details/71273892">人脸检测（一）单个CNN</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_14916279/article/details/71305094">人脸检测（二）.级联CNN</a></p>
+<p>​      《A Convolution Neural Network Cascade for Face Detection》</p>
+<p>​        <a target="_blank" rel="noopener" href="http://www.cs.stevens.edu/~ghua/publication/CVPR15b.pdf">http://www.cs.stevens.edu/~ghua/publication/CVPR15b.pdf</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/anson0910/CNN_face_detection">github开源代码</a><br><a target="_blank" rel="noopener" href="https://github.com/anson0910/CNN_face_detection_models">github开源模型</a></p>
+<p><a href></a></p>
+<p>Face Alignment</p>
+<h3 id="MTCNN"><a href="#MTCNN" class="headerlink" title="MTCNN"></a>MTCNN</h3><p>MTCNN 包含三个级联的多任务卷积神经网络，分别是 Proposal Network (P-Net)、Refine Network (R-Net)、Output Network (O-Net)，每个多任务卷积神经网络均有三个学习任务，分别是人脸分类、边框回归和关键点定位。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CV/" rel="tag"># CV</a>
+              <a href="/tags/Facial-Recognition/" rel="tag"># Facial Recognition</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/04/07/CV/CV-Datasets-Animal/" rel="prev" title="计算机视觉--视觉数据库--The Oxford-IIIT 宠物图像数据">
+      <i class="fa fa-chevron-left"></i> 计算机视觉--视觉数据库--The Oxford-IIIT 宠物图像数据
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/04/23/ResearchRecord/Research_MPI/" rel="next" title="马普所 Virtual Human Research">
+      马普所 Virtual Human Research <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Flow"><span class="nav-number">1.</span> <span class="nav-text">Flow</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E7%89%B9%E7%82%B9"><span class="nav-number">1.1.</span> <span class="nav-text">4特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%9A%84-4-%E4%B8%AA%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.2.</span> <span class="nav-text">人脸识别的 4 个步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%BA%E8%84%B8%E6%A3%80%E6%B5%8B"><span class="nav-number">1.2.1.</span> <span class="nav-text">人脸检测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%BA%E8%84%B8%E5%AF%B9%E9%BD%90"><span class="nav-number">1.2.2.</span> <span class="nav-text">人脸对齐</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%BA%E8%84%B8%E7%BC%96%E7%A0%81"><span class="nav-number">1.2.3.</span> <span class="nav-text">人脸编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%BA%E8%84%B8%E5%8C%B9%E9%85%8D"><span class="nav-number">1.2.4.</span> <span class="nav-text">人脸匹配</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%9A%84-5-%E4%B8%AA%E9%9A%BE%E7%82%B9"><span class="nav-number">1.3.</span> <span class="nav-text">人脸识别的 5 个难点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB"><span class="nav-number">2.</span> <span class="nav-text">人脸识别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB%E7%9A%84%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="nav-number">2.0.1.</span> <span class="nav-text">1.人脸识别的相关概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DeepFace%EF%BC%880-9735-%EF%BC%89%E3%80%90%E2%98%85%E2%98%85%E2%98%85%E3%80%91"><span class="nav-number">2.0.2.</span> <span class="nav-text">DeepFace（0.9735 ）【★★★】</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DeepID%EF%BC%880-9745-%EF%BC%89%E3%80%90%E2%98%85%E2%98%85%E2%98%85%E3%80%91"><span class="nav-number">2.0.3.</span> <span class="nav-text">DeepID（0.9745 ）【★★★】</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FaceNet-0-9963-%E3%80%90%E2%98%85%E2%98%85%E2%98%85%E2%98%85%E3%80%91"><span class="nav-number">2.0.4.</span> <span class="nav-text">FaceNet(0.9963)【★★★★】</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Baidu%E7%9A%84%E6%96%B9%E6%B3%95%EF%BC%9ATargeting-Ultimate-Accuracy-Face-Recognition-via-Deep-Embedding"><span class="nav-number">2.0.5.</span> <span class="nav-text">Baidu的方法：Targeting Ultimate Accuracy : Face Recognition via Deep Embedding</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pose-shape-expression-augmentation%EF%BC%880-9807%EF%BC%89"><span class="nav-number">2.0.6.</span> <span class="nav-text">pose+shape+expression augmentation（0.9807）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CNN-3DMM-estimation-0-9235"><span class="nav-number">2.0.7.</span> <span class="nav-text">CNN-3DMM estimation(0.9235)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Insightface-%E3%80%90%E2%98%85%E2%98%85%E2%98%85%E2%98%85%E2%98%85%E3%80%91"><span class="nav-number">2.0.8.</span> <span class="nav-text">Insightface 【★★★★★】</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%95%E7%94%A8%E8%B5%84%E6%BA%90%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">引用资源：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenFace"><span class="nav-number">3.1.</span> <span class="nav-text">OpenFace</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DeepFace"><span class="nav-number">3.2.</span> <span class="nav-text">DeepFace</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Facenet"><span class="nav-number">3.3.</span> <span class="nav-text">Facenet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#face-recognition"><span class="nav-number">3.4.</span> <span class="nav-text">face_recognition</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8C%AB%E8%84%B8%E8%AF%86%E5%88%AB"><span class="nav-number">4.</span> <span class="nav-text">猫脸识别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80"><span class="nav-number">5.</span> <span class="nav-text">基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%EF%BC%9A"><span class="nav-number">5.1.</span> <span class="nav-text">目标检测：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Face-Detection%E7%9B%B8%E5%85%B3%E8%B5%84%E6%96%99%EF%BC%9A"><span class="nav-number">5.2.</span> <span class="nav-text">Face Detection相关资料：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MTCNN"><span class="nav-number">5.2.1.</span> <span class="nav-text">MTCNN</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

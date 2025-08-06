@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="[TOC] MG-VTON  《Towards Multi-pose Guided Virtual Try-on Network 》https:&#x2F;&#x2F;arxiv.org&#x2F;abs&#x2F;1902.11026 Virtual try-on system 虚拟试穿系统。 —现有的方法，只能从单个固定的人体姿态上换装。往往失去纹理细节，缺少姿态多样性。 three Stages:  a desired human">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Paper_CV+ MG-VTON">
+<meta property="og:url" content="https://novav.github.io/2019/11/06/CV/CV_VTON/Paper-CV+MG-VTON/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="[TOC] MG-VTON  《Towards Multi-pose Guided Virtual Try-on Network 》https:&#x2F;&#x2F;arxiv.org&#x2F;abs&#x2F;1902.11026 Virtual try-on system 虚拟试穿系统。 —现有的方法，只能从单个固定的人体姿态上换装。往往失去纹理细节，缺少姿态多样性。 three Stages:  a desired human">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2019/11/06/CV/CV_VTON/Paper-CV+MG-VTON/1573111435377.png">
+<meta property="og:image" content="https://novav.github.io/2019/11/06/CV/CV_VTON/Paper-CV+MG-VTON/1573117982297.png">
+<meta property="og:image" content="https://novav.github.io/2019/11/06/CV/CV_VTON/Paper-CV+MG-VTON/1573203694348.png">
+<meta property="og:image" content="https://novav.github.io/2019/11/06/CV/CV_VTON/Paper-CV+MG-VTON/1573203679896.png">
+<meta property="og:image" content="https://novav.github.io/2019/11/06/CV/CV_VTON/Paper-CV+MG-VTON/1573203710267.png">
+<meta property="og:image" content="https://novav.github.io/2019/11/06/CV/CV_VTON/Paper-CV+MG-VTON/1573203724114.png">
+<meta property="article:published_time" content="2019-11-06T20:10:57.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:38.325Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="VTON">
+<meta property="article:tag" content="MG-VTON">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2019/11/06/CV/CV_VTON/Paper-CV+MG-VTON/1573111435377.png">
+
+<link rel="canonical" href="https://novav.github.io/2019/11/06/CV/CV_VTON/Paper-CV+MG-VTON/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Paper_CV+ MG-VTON | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2019/11/06/CV/CV_VTON/Paper-CV+MG-VTON/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Paper_CV+ MG-VTON
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-11-06 20:10:57" itemprop="dateCreated datePublished" datetime="2019-11-06T20:10:57+00:00">2019-11-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV-Apply/" itemprop="url" rel="index"><span itemprop="name">CV_Apply</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV-Apply/VTON/" itemprop="url" rel="index"><span itemprop="name">VTON</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>[TOC]</p>
+<h2 id="MG-VTON-《Towards-Multi-pose-Guided-Virtual-Try-on-Network-》"><a href="#MG-VTON-《Towards-Multi-pose-Guided-Virtual-Try-on-Network-》" class="headerlink" title="MG-VTON  《Towards Multi-pose Guided Virtual Try-on Network 》"></a>MG-VTON  《Towards Multi-pose Guided Virtual Try-on Network 》</h2><p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1902.11026">https://arxiv.org/abs/1902.11026</a></p>
+<p>Virtual try-on system 虚拟试穿系统。</p>
+<p>—现有的方法，只能从单个固定的人体姿态上换装。往往失去纹理细节，缺少姿态多样性。</p>
+<p>three Stages:</p>
+<ol>
+<li><p>a desired human parsing map of the target image is synthesized to match both the desired pose and the desired clothes shape; 合成目标图像的所需人工解析映射，以匹配所需的姿态和所需的衣服形状</p>
+</li>
+<li><p>a deep Warping Generative Adversarial Network (Warp-GAN) warps the desired clothes appearance into the synthesized human parsing map and alleviates the misalignment problem between the input human pose and desired human pose; 深度扭曲生成对抗网络(Warp-GAN)将期望的服装外观扭曲到合成的人体解析图中，解决了输入人体姿态与期望人体姿态之间的错位问题</p>
+</li>
+<li><p>a refinement render utilizing multi-pose composition masks recovers the texture details of clothes and removes some artifacts. Extensive experiments on well-known datasets and our newly collected largest virtual try-on benchmark demonstrate that our MGVTON significantly outperforms all state-of-the-art  methods both qualitatively and quantitatively with promising multipose virtual try-on performances. 使用多姿态合成蒙版的细化渲染恢复衣服的纹理细节，并删除一些人工制品.在知名数据集上的大量实验和我们新收集的最大的虚拟试测基准表明，我们的MGVTON在定性和定量上都显著优于所有最先进的方法，具有很有前途的多姿态虚拟试测性能。</p>
+</li>
+</ol>
+<p><strong>Key:</strong></p>
+<p>数据(人工标记)：姿态，衣服形状</p>
+<p>数据集: well-know【DeepFashion】 &amp; self conllected largest</p>
+<p>网络架构：Warp-GAN</p>
+<p>技术储备：多姿态合成蒙版（一种利用多姿态合成掩模来恢复纹理细节和减少伪影的细化网络）</p>
+<p><strong>Apply:</strong> 虚拟试穿、虚拟现实和人机交互</p>
+<p>Other exiting works [14, 20, 35] usually leverage 3D measurements  to solve those issues since the 3D information have abundant details of the shape of the body that can help to generate the realistic results. However, it needs expert knowledge and huge labor cost to build the 3D models, which requires collecting the 3D annotated data and massive computation. These costs and complexity would limit the applications in the practical virtual try-on simulation. 3D建模，这些费用和复杂性限制了虚拟试验仿真的实际应用。</p>
+<h2 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset:"></a>Dataset:</h2><p><strong>MPV:</strong></p>
+<p>​    collect from the internet, named MPV ;</p>
+<p>​    contains 35,687 person images and 13,524 clothes images.  </p>
+<p>​    The image is in the resolution of 256 × 192. We extract the 62,780 three-tuples of the same person in the same clothes but with diverse poses .</p>
+<p>​    图片大小265x192，提取了62780组图片，每组含同一人的不同姿势的三张图片。</p>
+<h2 id="MG-VTON"><a href="#MG-VTON" class="headerlink" title="MG_VTON"></a>MG_VTON</h2><p>Picture  + clothes + pose -&gt; 穿新衣的人物Pose照片</p>
+<p>MG-VTON 四个组成部分：</p>
+<p>1- a pose-clothes-guided human parsing network is designed to guide the image synthesis;  设计了一种基于服装姿态引导的人工解析网络来指导图像合成;</p>
+<p>2- a Warp-GAN learns to synthesized realistic image by using a warping features strategy。GAN学习合成真实图像。</p>
+<p>3- a refinement network learns to recover the texture details </p>
+<p>4- a mask-based geometric matching network is presented to warp clothes that enhances the visual quality of the generated image 提出了一种基于掩模的几何匹配网络，通过对衣服的变形来提高图像的视觉质量。</p>
+<p>我们采用了一个“粗-精”策略，将这个任务分成三个子任务，three subtasks ：</p>
+<ul>
+<li><p><input disabled type="checkbox"> 
+conditional parsing learning,(条件解析学习)</p>
+</li>
+<li><p><input disabled type="checkbox"> 
+the Warp-GAN, </p>
+</li>
+<li><p><input disabled type="checkbox"> 
+the refinement render.  （细化纹理）</p>
+</li>
+</ul>
+<p><img src="/2019/11/06/CV/CV_VTON/Paper-CV+MG-VTON/1573111435377.png" alt="OverView MG-VTON"></p>
+<p>姿态编码：使用pose estimator [4]  ，我们将姿态编码为18个热图，其中填充一个半径为4像素的圆，其他地方为0。</p>
+<p>使用人解析器[6]来预测由20个标签组成的人类分割地图，从中提取面部、头发和身体形状的二进制掩码</p>
+<p>根据VITON[8]，我们将身体形状的采样降低到一个较低的分辨率(16×12)，并直接将其调整到原始分辨率(256×192)，这减轻了由于身体形状的变化所造成的人为影响</p>
+<p><img src="/2019/11/06/CV/CV_VTON/Paper-CV+MG-VTON/1573117982297.png" alt="1573117982297"></p>
+<p>Architecture </p>
+<h3 id="3-1-Conditional-Parsing-Learning-【-人体解析-语义分割】"><a href="#3-1-Conditional-Parsing-Learning-【-人体解析-语义分割】" class="headerlink" title="3.1. Conditional Parsing Learning 【~人体解析&#x2F;语义分割】"></a>3.1. Conditional Parsing Learning 【~人体解析&#x2F;语义分割】</h3><p><img src="/2019/11/06/CV/CV_VTON/Paper-CV+MG-VTON/1573203694348.png" alt="1573203694348"></p>
+<p>L1-loss 产生更平滑的结果</p>
+<p>softmax_loss 合成高质量的人工Parsing Map</p>
+<p>IN: (ImageOfClothes, postHeatMap, body shape, mask Hair, mask Face)</p>
+<p>p(St’|(Mh, Mf, Mb, C, P))</p>
+<p>G: 该阶段基于条件生成对抗网络(CGAN)</p>
+<p>D: We adopt the discriminator D directly from the pix2pixHD  </p>
+<p>OUT: Parsing</p>
+<h3 id="3-2-Warp-GAN-【-Fake】"><a href="#3-2-Warp-GAN-【-Fake】" class="headerlink" title="3.2. Warp-GAN 【~Fake】"></a>3.2. Warp-GAN 【~Fake】</h3><p><img src="/2019/11/06/CV/CV_VTON/Paper-CV+MG-VTON/1573203679896.png" alt="1573203679896"></p>
+<p>[geometric matching](《Convolutional neural network architecture for geometric matching》) module to warp clothes image<a href="###3.4">3.4</a> </p>
+<h3 id="3-3-Refinement-render-【-高像素修复】"><a href="#3-3-Refinement-render-【-高像素修复】" class="headerlink" title="3.3. Refinement render 【~高像素修复】"></a>3.3. Refinement render 【~高像素修复】</h3><p><img src="/2019/11/06/CV/CV_VTON/Paper-CV+MG-VTON/1573203710267.png" alt="1573203710267"></p>
+<h3 id="3-4-Geometric-matching-learning-【-】"><a href="#3-4-Geometric-matching-learning-【-】" class="headerlink" title="3.4. Geometric matching learning 【~】"></a>3.4. Geometric matching learning 【~】</h3><p><img src="/2019/11/06/CV/CV_VTON/Paper-CV+MG-VTON/1573203724114.png" alt="1573203724114"></p>
+<h2 id="Implementation-Detail"><a href="#Implementation-Detail" class="headerlink" title="Implementation Detail:"></a>Implementation Detail:</h2><p><strong>Setting.</strong> We train the conditional parsing network, WarpGAN, refinement render, and geometric matching network for 200, 15, 5, 35 epochs, respectively, using ADAM optimizer [13], with the batch size of 40, learning rate of 0.0002, β1 &#x3D; 0:5, β2 &#x3D; 0:999. We use two NVIDIA Titan XP GPUs and Pytorch platform on Ubuntu 14.04. </p>
+<p><strong>Architecture.</strong> </p>
+<p>each <strong>generator</strong> of MG-VTON is a ResNet-like network, which consists of three  downsample layers, three upsample layers, and nine residual blocks, each block has three convolutional layers with 3x3 filter kernels followed by the bath-norm layer and Relu activation function.  </p>
+<p>64, 128, 256, 512, 512, 512, 512, 512, 512, 512, 512, 512, 256, 128, 64. </p>
+<p><strong>discriminator</strong>  we apply the same architecture as <strong>pix2pixHD</strong> [30], which can handle the feature map<br>in different scale with different layers. Each discriminator contains four downsample layers which include 4x4 kernels, InstanceNorm, and LeakyReLU activation function. </p>
+<h2 id="相关技术"><a href="#相关技术" class="headerlink" title="相关技术"></a>相关技术</h2><h3 id="GAN"><a href="#GAN" class="headerlink" title="GAN"></a>GAN</h3><h3 id="Person-image-synthesis-（人像合成）"><a href="#Person-image-synthesis-（人像合成）" class="headerlink" title="Person image synthesis （人像合成）"></a>Person image synthesis （人像合成）</h3><p>骨架辅助[32]提出了一种骨架导向的人体图像生成方法，该方法以人体图像和目标骨骼为条件。</p>
+<p>PG2[17]应用了由粗到细的框架，包括粗级和精级。novel model [18] to further improve the quality of result by using a decomposition strategy（分解策略）</p>
+<p>deformableGANs[27]和[1]分别在粗糙矩形区域使用仿射变换和在pixellevel上对零件进行翘曲，试图缓解不同位姿之间的错位问题</p>
+<p>V-UNET[5]引入了一个变化的U-Net[24]，通过用stickman标签重组形状来合成人的图像</p>
+<p>[21]直接应用CycleGAN[36]进行位姿操作</p>
+<p>However, all those works fail to preserve the texture details consistency corresponding with the pose. 然而，所有这些作品都未能保持与姿态相对应的纹理细节的一致性。</p>
+<p>The reason behind that is they ignore to consider the interplay between the human parsing map and the pose in the person image synthesis。</p>
+<p>这背后的原因是他们忽略了人解析映射和人图像合成中的姿态之间的相互作用。</p>
+<p>人体解析图可以指导生成器在精确的区域级合成图像，保证了人体结构的一致性</p>
+<h3 id="Virtual-try-on"><a href="#Virtual-try-on" class="headerlink" title="Virtual try-on."></a>Virtual try-on.</h3><p><strong>fiexd pose</strong>:</p>
+<p>VITON[8]  computed the transformation mapping by the shape context TPS warps [2]  </p>
+<p>CP-VTON[29] 估计变换参数的学习方法。</p>
+<p>FanshionGAN[37] 学会了在输入图像的基础上生成新衣服，这个人以描述不同衣服的句子为条件</p>
+<p>ClothNet[15]提出了一种基于图像的生成模型，根据颜色生成新衣服。</p>
+<p>CAGAN[10]提出了一个条件类比网络来合成以衣服配对为条件的人的图像，这限制了实际的虚拟试穿场景。</p>
+<p>ClothCap[20]利用3D扫描仪自动捕捉衣服和身体的形状</p>
+<p>[26]提出了一种需要三维人体形态的虚拟试衣系统，对注释的采集十分繁琐。</p>
+<p>—-learning to synthesize image with the new outfit on the person through adversarial learning , which can manipulate the pose simultaneously. </p>
+<p>—-使用对抗学习用新衣服合成图像, 同时控制姿势</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/VTON/" rel="tag"># VTON</a>
+              <a href="/tags/MG-VTON/" rel="tag"># MG-VTON</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/10/29/Games/Paper-Game-Bridge/" rel="prev" title="Paper_game_Bridge">
+      <i class="fa fa-chevron-left"></i> Paper_game_Bridge
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/11/11/CV/CV_VTON/Paper-CV+VTON/" rel="next" title="Paper-CV+VTON">
+      Paper-CV+VTON <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MG-VTON-%E3%80%8ATowards-Multi-pose-Guided-Virtual-Try-on-Network-%E3%80%8B"><span class="nav-number">1.</span> <span class="nav-text">MG-VTON  《Towards Multi-pose Guided Virtual Try-on Network 》</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dataset"><span class="nav-number">2.</span> <span class="nav-text">Dataset:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MG-VTON"><span class="nav-number">3.</span> <span class="nav-text">MG_VTON</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-Conditional-Parsing-Learning-%E3%80%90-%E4%BA%BA%E4%BD%93%E8%A7%A3%E6%9E%90-%E8%AF%AD%E4%B9%89%E5%88%86%E5%89%B2%E3%80%91"><span class="nav-number">3.1.</span> <span class="nav-text">3.1. Conditional Parsing Learning 【~人体解析&#x2F;语义分割】</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-Warp-GAN-%E3%80%90-Fake%E3%80%91"><span class="nav-number">3.2.</span> <span class="nav-text">3.2. Warp-GAN 【~Fake】</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-Refinement-render-%E3%80%90-%E9%AB%98%E5%83%8F%E7%B4%A0%E4%BF%AE%E5%A4%8D%E3%80%91"><span class="nav-number">3.3.</span> <span class="nav-text">3.3. Refinement render 【~高像素修复】</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-Geometric-matching-learning-%E3%80%90-%E3%80%91"><span class="nav-number">3.4.</span> <span class="nav-text">3.4. Geometric matching learning 【~】</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Implementation-Detail"><span class="nav-number">4.</span> <span class="nav-text">Implementation Detail:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E6%8A%80%E6%9C%AF"><span class="nav-number">5.</span> <span class="nav-text">相关技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GAN"><span class="nav-number">5.1.</span> <span class="nav-text">GAN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Person-image-synthesis-%EF%BC%88%E4%BA%BA%E5%83%8F%E5%90%88%E6%88%90%EF%BC%89"><span class="nav-number">5.2.</span> <span class="nav-text">Person image synthesis （人像合成）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Virtual-try-on"><span class="nav-number">5.3.</span> <span class="nav-text">Virtual try-on.</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

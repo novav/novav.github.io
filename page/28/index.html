@@ -1,0 +1,1558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Simon Shi的小站">
+<meta property="og:url" content="https://novav.github.io/page/28/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="AI,Machine Learning, Deep Learning">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://novav.github.io/page/28/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2019/12/30/ResearchRecord/SCI-CVPR2019-Face/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/12/30/ResearchRecord/SCI-CVPR2019-Face/" class="post-title-link" itemprop="url">CVPR 2019 人脸论文盘点</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-30 15:56:06" itemprop="dateCreated datePublished" datetime="2019-12-30T15:56:06+00:00">2019-12-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CVPR/" itemprop="url" rel="index"><span itemprop="name">CVPR</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CVPR/2019/" itemprop="url" rel="index"><span itemprop="name">2019</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[TOC]</p>
+<h1 id="CVPR-2019-论文大盘点-人脸技术篇"><a href="#CVPR-2019-论文大盘点-人脸技术篇" class="headerlink" title="CVPR 2019 论文大盘点-人脸技术篇"></a>CVPR 2019 论文大盘点-人脸技术篇</h1><p>转自：<a target="_blank" rel="noopener" href="http://www.e-tagsystems.cn/Industry/412.html">http://www.e-tagsystems.cn/Industry/412.html</a></p>
+<p>  CVPR 2019 所有人脸相关论文，总计51篇，其中研究人脸重建与识别的论文最多，人脸识别中新Loss的设计有好几篇，人脸表情分析也不少，检测和对齐相对很少了。这些论文有较大数量都来自工业界，一些很实用的技术被提出来，比如有趣的人脸编辑和老化。</p>
+<p>  可以在以下网站下载这些论文：</p>
+<p>  <a target="_blank" rel="noopener" href="http://openaccess.thecvf.com/CVPR2019.py">http://openaccess.thecvf.com/CVPR2019.py</a></p>
+<h3 id="人脸反欺诈、人脸识别对抗攻击"><a href="#人脸反欺诈、人脸识别对抗攻击" class="headerlink" title="人脸反欺诈、人脸识别对抗攻击"></a><strong>人脸反欺诈、人脸识别对抗攻击</strong></h3><p>大规模人脸反欺诈、活体检测库，中科院、京东等</p>
+<p>A Dataset and Benchmark for Large-Scale Multi-Modal Face Anti-Spoofing</p>
+<p>Shifeng Zhang, Xiaobo Wang, Ajian Liu, Chenxu Zhao, Jun Wan, Sergio Escalera, Hailin Shi, Zezheng Wang, Stan Z. Li</p>
+<p>深度树学习，用于零样本的人脸反欺诈，密歇根州立大学</p>
+<p>Deep Tree Learning for Zero-Shot Face Anti-Spoofing</p>
+<p>Yaojie Liu, Joel Stehouwer, Amin Jourabloo, Xiaoming Liu</p>
+<p>去相关的对抗学习，用于年龄不变的人脸识别，腾讯</p>
+<p>Decorrelated Adversarial Learning for Age-Invariant Face Recognition</p>
+<p>Hao Wang, Dihong Gong, Zhifeng Li, Wei Liu</p>
+<p>人脸识别对抗攻击，香港浸会大学</p>
+<p>Multi-Adversarial Discriminative Deep Domain Generalization for Face Presentation Attack Detection</p>
+<p>Rui Shao, Xiangyuan Lan, Jiawei Li, Pong C. Yuen</p>
+<p>人脸识别对抗攻击，清华、腾讯、港理工</p>
+<p>Efficient Decision-Based Black-Box Adversarial Attacks on Face Recognition</p>
+<p>Yinpeng Dong, Hang Su, Baoyuan Wu, Zhifeng Li, Wei Liu, Tong Zhang, Jun Zhu</p>
+<h3 id="人脸重建与生成"><a href="#人脸重建与生成" class="headerlink" title="人脸重建与生成"></a><strong>人脸重建与生成</strong></h3><p>多视图3D人脸变形模型回归，腾讯、香港中文、上交、电子科大</p>
+<p>MVF-Net: Multi-View 3D Face Morphable Model Regression</p>
+<p>Fanzi Wu, Linchao Bao, Yajing Chen, Yonggen Ling, Yibing Song, Songnan Li, King Ngi Ngan, Wei Liu</p>
+<p>2500fps的3D人脸解码，3DMM（3D变形模型），帝国理工等</p>
+<p>Dense 3D Face Decoding Over 2500FPS: Joint Texture &amp; Shape Convolutional Mesh Decoders</p>
+<p>Yuxiang Zhou, Jiankang Deng, Irene Kotsia, Stefanos Zafeiriou</p>
+<p>GAN 用于3D 人脸重建，帝国理工等</p>
+<p>GANFIT: Generative Adversarial Network Fitting for High Fidelity 3D Face Reconstruction</p>
+<p>Baris Gecer, Stylianos Ploumpis, Irene Kotsia, Stefanos Zafeiriou</p>
+<p>3DMM（3D变形模型），密歇根州立大学</p>
+<p>Towards High-Fidelity Nonlinear 3D Face Morphable Model</p>
+<p>Luan Tran, Feng Liu, Xiaoming Liu</p>
+<p>3DMM（3D变形模型），帝国理工等</p>
+<p>Combining 3D Morphable Models: A Large Scale Face-And-Head Model</p>
+<p>Stylianos Ploumpis, Haoyang Wang, Nick Pears, William A. P. Smith, Stefanos Zafeiriou</p>
+<p>3D人脸形状的解偶表示学习，中国科技大学</p>
+<p>Disentangled Representation Learning for 3D Face Shape</p>
+<p>Zi-Hang Jiang, Qianyi Wu, Keyu Chen, Juyong Zhang</p>
+<p>单目人脸3D重建、跟踪与动画驱动，明尼苏达大学、Facebook</p>
+<p>Self-Supervised Adaptation of High-Fidelity Face Models for Monocular Performance Tracking</p>
+<p>Jae Shin Yoon, Takaaki Shiratori, Shoou-I Yu, Hyun Soo Park</p>
+<p>多度量回归网络，用于非限制的人脸重建，北大、腾讯</p>
+<p>MMFace: A Multi-Metric Regression Network for Unconstrained Face Reconstruction</p>
+<p>Hongwei Yi, Chen Li, Qiong Cao, Xiaoyong Shen, Sheng Li, Guoping Wang, Yu-Wing Tai</p>
+<p>单图像重建3D人脸形状和表情，德国马普研究所</p>
+<p>Learning to Regress 3D Face Shape and Expression From an Image Without 3D Supervision</p>
+<p>Soubhik Sanyal, Timo Bolkart, Haiwen Feng, Michael J. Black</p>
+<p>密集3D人脸对应，中科院，Visytem公司</p>
+<p>Boosting Local Shape Matching for Dense 3D Face Correspondence</p>
+<p>Zhenfeng Fan, Xiyuan Hu, Chen Chen, Silong Peng</p>
+<p>从视频中人脸模型和人脸3D重建的联合学习，MPI Informatics等</p>
+<p>FML: Face Model Learning From Videos</p>
+<p>Ayush Tewari, Florian Bernard, Pablo Garrido, Gaurav Bharaj, Mohamed Elgharib, Hans-Peter Seidel, Patrick Perez, Michael Zollhofer, Christian Theobalt</p>
+<p>使用动态像素级Loss，层次跨模态说话人脸生成，罗彻斯特大学</p>
+<p>Hierarchical Cross-Modal Talking Face Generation With Dynamic Pixel-Wise Loss</p>
+<p>Lele Chen, Ross K. Maddox, Zhiyao Duan, Chenliang Xu</p>
+<p>通过语音重建人脸，MIT</p>
+<p>Speech2Face: Learning the Face Behind a Voice</p>
+<p>Tae-Hyun Oh, Tali Dekel, Changil Kim, Inbar Mosseri, William T. Freeman, Michael Rubinstein, Wojciech Matusik</p>
+<h3 id="人脸聚类"><a href="#人脸聚类" class="headerlink" title="人脸聚类"></a><strong>人脸聚类</strong></h3><p>图卷积人脸聚类，清华、澳大利亚国立大学</p>
+<p>Linkage Based Face Clustering via Graph Convolution Network</p>
+<p>Zhongdao Wang, Liang Zheng, Yali Li, Shengjin Wang</p>
+<p>图卷积人脸聚类，商汤、港中文、南洋理工</p>
+<p>Learning to Cluster Faces on an Affinity Graph</p>
+<p>Lei Yang, Xiaohang Zhan, Dapeng Chen, Junjie Yan, Chen Change Loy, Dahua Lin</p>
+<h3 id="人脸识别"><a href="#人脸识别" class="headerlink" title="人脸识别"></a><strong>人脸识别</strong></h3><p>长尾噪声数据的不平等训练，用于深度人脸识别，北邮、佳能</p>
+<p>Unequal-Training for Deep Face Recognition With Long-Tailed Noisy Data</p>
+<p>Yaoyao Zhong, Weihong Deng, Mei Wang, Jiani Hu, Jianteng Peng, Xunqiang Tao, Yaohai Huang</p>
+<p>Exclusive正则化的人脸识别，南开大学</p>
+<p>RegularFace: Deep Face Recognition via Exclusive Regularization</p>
+<p>Kai Zhao, Jingyi Xu, Ming-Ming Cheng</p>
+<p>深度分布表示，用于人脸识别，清华</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2019/12/25/ResearchRecord/PapersDaily-191225/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/12/25/ResearchRecord/PapersDaily-191225/" class="post-title-link" itemprop="url">Papers Daily 2019-12-25</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-25 10:00:00" itemprop="dateCreated datePublished" datetime="2019-12-25T10:00:00+00:00">2019-12-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Papers/" itemprop="url" rel="index"><span itemprop="name">Papers</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="3D-建模相关："><a href="#3D-建模相关：" class="headerlink" title="3D 建模相关："></a>3D 建模相关：</h1><p>[TOC]</p>
+<h2 id="1-1803-11527v3-SpiderCNN-Deep-Learning-on-Point-Sets-with-Parameterized-Convolutional-Filters"><a href="#1-1803-11527v3-SpiderCNN-Deep-Learning-on-Point-Sets-with-Parameterized-Convolutional-Filters" class="headerlink" title="1&gt; 1803.11527v3 [SpiderCNN] Deep Learning on Point Sets with Parameterized Convolutional Filters"></a>1&gt; 1803.11527v3 [SpiderCNN] Deep Learning on Point Sets with Parameterized Convolutional Filters</h2><p>利用参数化卷积滤波进行点集深度学习（ECCV2018-13）</p>
+<p><a target="_blank" rel="noopener" href="https://www.sohu.com/a/274180405_715754">泡泡点云时空 论文阅读</a></p>
+<p>Deep neural networks have enjoyed remarkable success for various vision tasks, however it remains challenging to apply CNNs to domains lacking a regular underlying structures such as 3D point clouds. Towards this we propose a novel convolutional architecture, termed SpiderCNN, to efficiently extract geometric features from point clouds. SpiderCNN is comprised of units called SpiderConv, which extend convolutional operations from regular grids to irregular point sets that can be embedded in Rn, by parametrizing a family of convolutional filters. We design the filter as a product of a simple step function that captures local geodesic information and a Taylor polynomial that ensures the expressiveness. SpiderCNN inherits the multi-scale hierarchical architecture from classical CNNs, which allows it to extract semantic deep features. Experiments on ModelNet40[4] demonstrate that SpiderCNN achieves state-of-the-art accuracy 92:4% on standard benchmarks, and shows competitive performance on segmentation task.</p>
+<p>深度神经网络已经在各种视觉任务中取得了显著的成功，但是将CNNs应用到缺乏规则底层结构(如3D点云)的领域仍然具有挑战性。为此，我们提出了一种新颖的卷积结构，称为SpiderCNN，以有效地提取点云的几何特征。SpiderCNN由SpiderConv单元组成，通过参数化卷积滤波器族，将卷积运算从常规网格扩展到可嵌入Rn的不规则点集。我们设计的滤波器是一个简单的步长函数和一个泰勒多项式的乘积。SpiderCNN继承了传统cnn的多尺度层次结构，可以提取语义深度特征。在ModelNet40[4]上的实验表明，SpiderCNN在标准基准上的准确率达到了92:4%，在分割任务上表现出了较强的竞争力。</p>
+<p>我们提出了一种卷积架构SpiderCNN，它旨在直接从点云中提取特征。我们验证了其在分类和分段基准方面的有效性。通过离散化如图1所示的卷积积分公式，并在上使用一系列特殊的参数化非线性函数作为滤波器，我们为点云引入了一个新的卷积层SpiderConv。</p>
+<p><img src="/2019/12/25/ResearchRecord/PapersDaily-191225/c648eec550014dcaaea40727f7d1d3e6.jpeg" alt="img"></p>
+<h2 id="2-1812-02246-Photo-Wake-Up-3D-Character-Animation-from-a-Single-Photo"><a href="#2-1812-02246-Photo-Wake-Up-3D-Character-Animation-from-a-Single-Photo" class="headerlink" title="2&gt; 1812.02246 [Photo Wake-Up] 3D Character Animation from a Single Photo"></a>2&gt; 1812.02246 [Photo Wake-Up] 3D Character Animation from a Single Photo</h2><p>CVPR 2019</p>
+<p><a target="_blank" rel="noopener" href="http://www.atyun.com/34764.html">二维人物变3D，AI让人物从静态图像中走出来 atyun</a></p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1812.02246.pdf">arxiv</a></p>
+<p><a target="_blank" rel="noopener" href="https://grail.cs.washington.edu/projects/wakeup/">官网</a></p>
+<p>系统的核心是：找到人物轮廓和SMPL轮廓之间的映射，将SMPL贴图变形到输出，并通过整合变形的贴图来构建深度贴图。</p>
+<p><img src="/2019/12/25/ResearchRecord/PapersDaily-191225/1577265075912.png" alt="1577265075912"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2019/12/23/ResearchRecord/PapersDaily-191223/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/12/23/ResearchRecord/PapersDaily-191223/" class="post-title-link" itemprop="url">Papers Daily 2019-12-23</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-23 10:00:00" itemprop="dateCreated datePublished" datetime="2019-12-23T10:00:00+00:00">2019-12-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Papers/" itemprop="url" rel="index"><span itemprop="name">Papers</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="DensePose-citations"><a href="#DensePose-citations" class="headerlink" title="DensePose citations:"></a>DensePose citations:</h1><p>[TOC]</p>
+<h2 id="应用场景："><a href="#应用场景：" class="headerlink" title="应用场景："></a>应用场景：</h2><p>单张图片的人脸三维建模： 11， </p>
+<p>密集人脸对齐方面: 8，11，</p>
+<p>Human DensePose Estimation：4， 7，9</p>
+<p>Hand 三维建模： 10</p>
+<p>三维形状建模：5，</p>
+<p>三维物体的深度姿态估计: 6,</p>
+<h4 id="密集人脸对齐："><a href="#密集人脸对齐：" class="headerlink" title="密集人脸对齐："></a>密集人脸对齐：</h4><p> 人脸对齐这项技术的应用很广泛，比如自动人脸识别，表情识别以及人脸动画自动合成等</p>
+<p>密集人脸对齐算法将人脸图像匹配到一个最佳的3D人脸模型上，这些3D人脸模型中包含数以千计的特征点，从而实现了密集的人脸对齐。但是我们仍然面临两个问题：目前基于3D人脸模型匹配的人脸对齐算法仅仅利用稀疏的特征点来构造，如果要实现高质量的密集人脸对齐(DeFA)，面临的首要问题就是没有相应的训练数据库，所有的人脸对齐数据库中标记的特征点都不超过68个特征点，所以我们需要寻找有用的信息来作为额外的限制条件，并将这些信息嵌入到学习框架中。面临的第二个问题就是需要各种的训练数据，但是不同的人脸对齐数据库标记的特征点个数不一样。 </p>
+<h2 id="1-Slim-DensePose-Thrifty-Learning-from-Sparse-Annotations-and-Motion-Cues"><a href="#1-Slim-DensePose-Thrifty-Learning-from-Sparse-Annotations-and-Motion-Cues" class="headerlink" title="1. Slim DensePose: Thrifty Learning from Sparse Annotations and Motion Cues"></a>1. Slim DensePose: Thrifty Learning from Sparse Annotations and Motion Cues</h2><p>《Slim DensePose:从稀疏的注释和动作线索中学习》</p>
+<ul>
+<li>CVPR 2019 <a target="_blank" rel="noopener" href="https://www.semanticscholar.org/paper/Slim-DensePose%3A-Thrifty-Learning-from-Sparse-and-Neverova-Thewlis/3aeaf0c52d2dc9b09478f5598429c6be8ef3745e">semanticscholar</a></li>
+</ul>
+<p>DensePose将图像像素密集地映射到人体表面坐标，从而取代了传统的地标探测器。然而，这一功能大大增加了注释时间，因为管理模型需要为每个pose实例手动标记数百个点。因此，在这项工作中，我们<strong>寻找方法来显著地精简DensePose注释，从而提出更有效的数据收集策略。<strong>特别地，我们证明如果在视频帧中收集注释，它们的效果可以通过使用动作线索免费倍增。为了探索这个想法，我们引入了</strong>DensePose- track</strong>，这是一个视频数据集，其中选择的帧以传统的DensePose方式进行注释。然后，基于密度映射的几何特性，利用视频的动态特性及时传播地面真值注释，并学习暹罗等方差约束。在对各种数据注释和学习策略进行了详尽的经验评估之后，我们证明这样做可以在强基线上提供显著改进的姿态估计结果。然而，尽管最近的一些研究表明，仅仅通过对孤立的帧应用几何变换来合成运动模式的效果要差得多，而从视频中提取运动线索的效果要大得多。</p>
+<p><img src="/2019/12/23/ResearchRecord/PapersDaily-191223/3-Figure2-1.png" alt="Figure 2: Real (top) and synthetic (bottom) transformation fields exploited to enforce equivariance constraints."></p>
+<h2 id="2-BodyNet-Volumetric-Inference-of-3D-Human-Body-Shapes"><a href="#2-BodyNet-Volumetric-Inference-of-3D-Human-Body-Shapes" class="headerlink" title="2. BodyNet: Volumetric Inference of 3D Human Body Shapes"></a>2. BodyNet: Volumetric Inference of 3D Human Body Shapes</h2><p>《BodyNet:三维人体形状的体积推理》</p>
+<ul>
+<li>ECCV 2018 <a target="_blank" rel="noopener" href="https://www.semanticscholar.org/paper/BodyNet%3A-Volumetric-Inference-of-3D-Human-Body-Varol-Ceylan/bbb4e98488d65cee2e0acc2ca27b12235e1dbef1#citing-papers">semanticscholar</a></li>
+</ul>
+<p>Human shape estimation is an important task for video editing , animation and fashion industry. Predicting 3D human body shape from natural images, however, is highly challenging due to factors such as variation in human bodies, clothing and viewpoint. Prior methods addressing this problem typically attempt to fit parametric body models with certain priors on pose and shape. In this work we argue for an alternative representation and propose BodyNet, a neural network for direct inference of volumetric body shape from a single image. BodyNet is an end-to-end trainable network that benefits from (i) a volumetric 3D loss, (ii) a multi-view re-projection loss, and (iii) intermediate supervision of 2D pose, 2D body part segmentation, and 3D pose. Each of them results in performance improvement as demonstrated by our experiments. To evaluate the method, we fit the SMPL model to our network output and show state-of-the-art results on the SURREAL and Unite the People datasets, outperforming recent approaches. Besides achieving state-of-the-art performance, our method also enables volumetric body-part segmentation.</p>
+<p>人体形态估计是<strong>视频编辑</strong>、<strong>动画制作</strong>和<strong>时尚产业</strong>的一项重要工作。然而，从自然图像中预测三维人体形状，由于人体、服装和视角的变化等因素，具有很高的挑战性。解决这一问题的先前的方法通常试图将参数化的身体模型与特定的姿态和形状进行拟合。在这项工作中，我们提出了一种替代的表示方法，并提出了<strong>BodyNet</strong>，这是一种神经网络，可以直接从<strong>单个图像推断出身体的体积形状</strong>。BodyNet是一个端到端可训练的网络，它受益于(i)体三维损失，(ii)多视图再投影损失，和(iii)中间监督2D位姿，2D身体部分分割，和3D位姿。实验结果表明，每一种方法都能提高系统的性能。为了对该方法进行评估，我们将SMPL模型与我们的网络输出相匹配，并在SURREAL数据库上显示最新的结果，并将人员数据集统一起来，从而优于最近的方法。除了实现最先进的性能，我们的方法还可以实现体块分割。</p>
+<p><img src="/2019/12/23/ResearchRecord/PapersDaily-191223/2-Figure1-1.png" alt="Fig. 1: Our BodyNet predicts a volumetric 3D human body shape and 3D body parts from a single image. We show the input image, the predicted human voxels, and the predicted part voxels."></p>
+<h2 id="3-Synthesizing-facial-photometries-and-corresponding-geometries-using-generative-adversarial-networks"><a href="#3-Synthesizing-facial-photometries-and-corresponding-geometries-using-generative-adversarial-networks" class="headerlink" title="3. Synthesizing facial photometries and corresponding geometries using generative adversarial networks"></a>3. Synthesizing facial photometries and corresponding geometries using generative adversarial networks</h2><p>《利用生成对抗性网络合成人脸照片和相应的几何图形》</p>
+<ul>
+<li>TOMM 2019</li>
+</ul>
+<p>Artificial data synthesis is currently a well studied topic with useful applications in data science, computer vision, graphics and many other fields. Generating realistic data is especially challenging since human perception is highly sensitive to non-realistic appearance. In recent times, new levels of realism have been achieved by advances in GAN training procedures and architectures. These successful models, however, are tuned mostly for use with regularly sampled data such as images, audio and video. Despite the successful application of the architecture on these types of media, applying the same tools to geometric data poses a far greater challenge. The study of geometric deep learning is still a debated issue within the academic community as the lack of intrinsic parametrization inherent to geometric objects prohibits the direct use of convolutional filters, a main building block of today’s machine learning systems. In this paper we propose a new method for generating realistic human facial geometries coupled with overlayed textures. We circumvent the parametrization issue by imposing a global mapping from our data to the unit rectangle. This mapping enables the representation of our geometric data as regularly sampled 2D images. We further discuss how to design such a mapping to control the mapping distortion and conserve area within the mapped image. By representing geometric textures and geometries as images, we are able to use advanced GAN methodologies to generate new geometries. We address the often neglected topic of relation between texture and geometry and propose to use this correlation to match between generated textures and their corresponding geometries. In addition, we widen the scope of our discussion and offer a new method for training GAN models on partially corrupted data. Finally, we provide empirical evidence demonstrating our generative modelâĂŹs is ability to produce examples of new identities independent from the training data while maintaining a high level of realism, two traits that are often at odds. </p>
+<p>人工数据合成是当前研究的热点，在数据科学、计算机视觉、图形学等诸多领域有着广泛的应用。<strong>生成真实的数据尤其具有挑战性</strong>，因为人类感知对非真实的外观高度敏感。近年来，随着GAN培训程序和体系结构的进步，现实主义达到了新的水平。然而，这些成功的模型主要针对图像、音频和视频等定期采样的数据进行了调优。尽管在这些类型的媒体上成功地应用了架构，但在几何数据上应用相同的工具带来了更大的挑战。几何深度学习的研究在学术界仍然是一个有争议的问题，因为几何对象缺乏固有的参数化，因此无法直接使用卷积滤波器，而卷积滤波器是当今机器学习系统的主要组成部分。在这篇论文中，我们提出了一种新的方法来<strong>生成具有叠加纹理的真实的人脸几何图形</strong>。我们通过<strong>将数据映射到单元矩形来避免参数化问题</strong>。这种映射使我们的几何数据表示为定期采样的2D图像。我们进一步讨论了如何设计这样一个映射来控制映射失真和保留映射图像中的区域。通过将几何纹理和几何图形表示为图像，我们能够使用高级GAN方法生成新的几何图形。**我们解决了纹理和几何之间经常被忽视的问题，并建议使用这种相关性来匹配生成的纹理和它们相应的几何图形。**此外，我们扩大了讨论的范围，并提供了一种新的方法来训练GAN模型对部分损坏的数据。最后,我们提供了经验证据证明生成modelaĂŹs能力产生新的身份独立于训练数据的例子,同时保持高水平的现实主义,这两个特征常常相左。</p>
+<p><img src="/2019/12/23/ResearchRecord/PapersDaily-191223/7-Figure2-1.png" alt="Fig. 2. Left to right: Raw scan with landmark points, The template is deformed to fit the scan and texture is transferred onto the template, canonical UV mapping between the deformed template and the 2D image, final mapped texture as image."></p>
+<h2 id="4-Adaptive-Multi-Path-Aggregation-for-Human-DensePose-Estimation-in-the-Wild"><a href="#4-Adaptive-Multi-Path-Aggregation-for-Human-DensePose-Estimation-in-the-Wild" class="headerlink" title="4. Adaptive Multi-Path Aggregation for Human DensePose Estimation in the Wild"></a>4. Adaptive Multi-Path Aggregation for Human DensePose Estimation in the Wild</h2><p>《自适应多路径聚合技术在野外进行人体密度估计》</p>
+<ul>
+<li>2019</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/nobody-g/AMA-net">https://github.com/nobody-g/AMA-net</a></li>
+</ul>
+<p>Dense human pose “in the wild’’ task aims to map all 2D pixels of the detected human body to a 3D surface by establishing surface correspondences, i.e., surface patch index and part-specific UV coordinates. It remains challenging especially under the condition of “in the wild’’, where RGB images capture complex, real-world scenes with background, occlusions, scale variations, and postural diversity. In this paper, we propose an end-to-end deep Adaptive Multi-path Aggregation network (AMA-net) for Dense Human Pose Estimation. In the proposed framework, we address two main problems: 1) how to design a simple yet effective pipeline for supporting distinct sub-tasks (e.g., instance segmentation, body part segmentation, and UV estimation); and 2) how to equip this pipeline with the ability of handling “in the wild’’. To solve these problems, we first extend FPN by adding a branch for mapping 2D pixels to a 3D surface in parallel with the existing branch for bounding box detection. Then, in AMA-net, we extract variable-sized object-level feature maps (e.g., 7×7, 14×14, and 28×28), named multi-path, from multi-layer feature maps, which capture rich information of objects and are then adaptively utilized in different tasks. AMA-net is simple to train and adds only a small overhead to FPN. We discover that aside from the deep feature map, Adaptive Multi-path Aggregation is of particular importance for improving the accuracy of dense human pose estimation “in the wild’’. The experimental results on the challenging Dense-COCO dataset demonstrate that our approach sets a new record for Dense Human Pose Estimation task, and it significantly outperforms the state-of-the-art methods. Our code: \url<a target="_blank" rel="noopener" href="https://github.com/nobody-g/AMA-net">https://github.com/nobody-g/AMA-net</a></p>
+<p>密集人体姿态“在野外”任务的目的是通过建立表面对应，将被检测人体的所有2D像素映射到3D表面，即，表面斑块指数和部分特异性UV坐标。它仍然具有挑战性，特别是在“在野外”的条件下，RGB图像捕获复杂的，现实世界的场景与背景，遮挡，尺度变化，和姿势多样性。本文提出了一种用于密集姿态估计的端到端深度自适应多路径汇聚网络(AMA-net)。<strong>在该框架中，我们解决了两个主要问题</strong>:1)如何设计一个简单而有效的管道来支持不同的子任务(如实例分割、身体部分分割和紫外线估计);2)如何使管道具备“野外”处理能力。为了解决这些问题，我们首先扩展了FPN，在现有的边界盒检测分支的基础上，加入一个用于将2D像素映射到3D表面的分支。然后，在AMA-net中，我们从多层特征图中提取可变大小的对象级特征图(如7×7、14×14、28×28)，并命名为multi-path，这些特征图捕获对象的丰富信息，然后自适应地用于不同的任务。net训练简单，只增加了FPN的一小部分开销。我们发现，除了深度特征图外，自适应多路径聚合对于提高“野外”密集人体姿态估计的准确性尤为重要。在具有挑战性的Dense- coco数据集上的实验结果表明，我们的方法为密集人体姿态估计任务创造了新的记录，并且显著优于目前最先进的方法。我们的代码: https: &#x2F; &#x2F;github.com&#x2F;nobody-g&#x2F;AMA-net</p>
+<p><img src="/2019/12/23/ResearchRecord/PapersDaily-191223/1577088824319.png" alt="1577088824319"></p>
+<p>Figure 5: DensePose R-CNN vs AMA-net. Left: input image; middle: DensePose R-CNN; right: AMA-net. The red circles spot the difference between the DensePose R-CNN and AMA-net estimation. The yellow circles mark the positions where both methods fail to estimate UV coordinates.</p>
+<h2 id="5-Pix3D-Dataset-and-Methods-for-Single-Image-3D-Shape-Modeling"><a href="#5-Pix3D-Dataset-and-Methods-for-Single-Image-3D-Shape-Modeling" class="headerlink" title="5. Pix3D: Dataset and Methods for Single-Image 3D Shape Modeling"></a>5. Pix3D: Dataset and Methods for Single-Image 3D Shape Modeling</h2><p>《Pix3D:单图像三维形状建模的数据集和方法》</p>
+<p>IEEE 2018</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/xingyuansun/pix3d">https://github.com/xingyuansun/pix3d</a></p>
+<p>We study 3D shape modeling from a single image and make contributions to it in three aspects. First, we present Pix3D, a large-scale benchmark of diverse image-shape pairs with pixel-level 2D-3D alignment. Pix3D has wide applications in shape-related tasks including reconstruction, retrieval, viewpoint estimation, etc. Building such a large-scale dataset, however, is highly challenging; existing datasets either contain only synthetic data, or lack precise alignment between 2D images and 3D shapes, or only have a small number of images. Second, we calibrate the evaluation criteria for 3D shape reconstruction through behavioral studies, and use them to objectively and systematically benchmark cutting-edge reconstruction algorithms on Pix3D. Third, we design a novel model that simultaneously performs 3D reconstruction and pose estimation; our multi-task learning approach achieves state-of-the-art performance on both tasks. </p>
+<p> 我们研究了单一图像的三维形状建模，并在三个方面做出了贡献。首先，我们提出了Pix3D，一个大规模的基准的各种图像形状对<strong>像素级2D-3D对齐</strong>。Pix3D在形状相关的重建、检索、视点估计等方面有着广泛的应用。然而，建立如此大规模的数据集是极具挑战性的;现有的数据集要么只包含合成数据，要么缺乏二维图像和三维形状之间的精确对齐，要么只有少量图像。其次，<strong>通过行为研究对三维形状重建的评价标准进行校准，并将其用于客观、系统地对Pix3D上的前沿重建算法进行基准测试</strong>。第三，我们设计了一个可以<strong>同时进行三维重建和姿态估计</strong>的新模型;我们的多任务学习方法在两个任务上都达到了最先进的性能。</p>
+<p><img src="/2019/12/23/ResearchRecord/PapersDaily-191223/1577089496934.png" alt="1577089496934"></p>
+<h2 id="6-Pose-from-Shape-Deep-Pose-Estimation-for-Arbitrary-3D-Objects"><a href="#6-Pose-from-Shape-Deep-Pose-Estimation-for-Arbitrary-3D-Objects" class="headerlink" title="6. Pose from Shape: Deep Pose Estimation for Arbitrary 3D Objects"></a>6. Pose from Shape: Deep Pose Estimation for Arbitrary 3D Objects</h2><p>《形状生成姿态:任意三维物体的深度姿态估计》</p>
+<ul>
+<li><p>2019</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/YoungXIAO13/PoseFromShape">https://github.com/YoungXIAO13/PoseFromShape</a></p>
+</li>
+</ul>
+<p>Most deep pose estimation methods need to be trained for specific object instances or categories. In this work we propose a completely generic deep pose estimation approach, which does not require the network to have been trained on relevant categories, nor objects in a category to have a canonical pose. We believe this is a crucial step to design robotic systems that can interact with new objects “in the wild” not belonging to a predefined category. Our main insight is to dynamically condition pose estimation with a representation of the 3D shape of the target object. More precisely, we train a Convolutional Neural Network that takes as input both a test image and a 3D model, and outputs the relative 3D pose of the object in the input image with respect to the 3D model. Key ResultWe demonstrate that our method boosts performances for supervised category pose estimation on standard benchmarks, namely Pascal3D+, ObjectNet3D and Pix3D, on which we provide results superior to the state of the art. More importantly, we show that our network trained on everyday man-made objects from ShapeNet generalizes without any additional training to completely new types of 3D objects by providing results on the LINEMOD dataset as well as on natural entities such as animals from ImageNet.</p>
+<p>大多数深度姿态估计方法需要针对特定的对象实例或类别进行训练。在这项工作中，我们<strong>提出了一种完全通用的深度位姿估计方法</strong>，它不需要网络对相关类别进行训练，也不需要类别中的对象具有标准位姿。我们相信，这是设计机器人系统的关键一步，它可以与“在野外”不属于预先定义的类别的新对象进行交互。我们的主要观点是用目标物体的三维形状表示动态条件位姿估计。更准确地说，我们训练了一个卷积神经网络，它以测试图像和三维模型为输入，输出输入图像中物体相对于三维模型的三维姿态。关键结果我们证明，我们的方法提高了监督类别的性能估计的标准基准，即Pascal3D+， ObjectNet3D和Pix3D，我们提供的结果优于目前的水平。更重要的是，我们通过提供LINEMOD数据集和来自ImageNet的动物等自然实体的结果，展示了我们的网络在ShapeNet的日常人造对象上的训练，而不需要任何额外的训练就可以概括为全新类型的3D对象。</p>
+<p><img src="/2019/12/23/ResearchRecord/PapersDaily-191223/1577091330586.png" alt="1577091330586"></p>
+<p><img src="/2019/12/23/ResearchRecord/PapersDaily-191223/1577091342945.png" alt="1577091342945"></p>
+<h2 id="7-DaNet-Decompose-and-aggregate-Network-for-3D-Human-Shape-and-Pose-Estimation"><a href="#7-DaNet-Decompose-and-aggregate-Network-for-3D-Human-Shape-and-Pose-Estimation" class="headerlink" title="7. DaNet: Decompose-and-aggregate Network for 3D Human Shape and Pose Estimation"></a>7. DaNet: Decompose-and-aggregate Network for 3D Human Shape and Pose Estimation</h2><p>《DaNet:用于三维人体形状和姿态估计的分集网络》</p>
+<ul>
+<li>2019 </li>
+<li><a target="_blank" rel="noopener" href="https://www.semanticscholar.org/paper/DaNet%3A-Decompose-and-aggregate-Network-for-3D-Human-Zhang-Cao/2ce4e8932b8ad3a6f9209a7fa1dd9a3da6a4c5ee/figure/9">semanticscholar</a></li>
+</ul>
+<p>Reconstructing 3D human shape and pose from a monocular image is challenging despite the promising results achieved by most recent learning based methods. The commonly occurred misalignment comes from the facts that the mapping from image to model space is highly non-linear and the rotation-based pose representation of the body model is prone to result in drift of joint positions. In this work, we present the Decompose-and-aggregate Network (DaNet) to address these issues. DaNet includes three new designs, namely UVI guided learning, decomposition for fine-grained perception, and aggregation for robust prediction. First, we adopt the UVI maps, which densely build a bridge between 2D pixels and 3D vertexes, as an intermediate representation to facilitate the learning of image-to-model mapping. Second, we decompose the prediction task into one global stream and multiple local streams so that the network not only provides global perception for the camera and shape prediction, but also has detailed perception for part pose prediction. Lastly, we aggregate the message from local streams to enhance the robustness of part pose prediction, where a position-aided rotation feature refinement strategy is proposed to exploit the spatial relationship between body parts. Such a refinement strategy is more efficient since the correlations between position features are stronger than that in the original rotation feature space. The effectiveness of our method is validated on the Human3.6M and UP-3D datasets. Experimental results show that the proposed method significantly improves the reconstruction performance in comparison with previous state-of-the-art methods. Our code is publicly available at <a target="_blank" rel="noopener" href="https://github.com/HongwenZhang/DaNet-3DHumanReconstrution">https://github.com/HongwenZhang/DaNet-3DHumanReconstrution</a> </p>
+<p>从单眼图像重建三维人体形状和姿态是一项具有挑战性的工作，尽管最新的基于学习的方法已经取得了令人满意的结果。常见的失配是由于图像到模型空间的映射高度非线性和人体模型基于旋转的姿态表示容易导致关节位置的漂移。在这项工作中，我们提出了<strong>分解-聚合网络</strong>(DaNet)来解决这些问题。DaNet包括三种新的设计，即UVI引导学习、细粒度感知分解和鲁棒预测聚合。首先，我们采用UVI映射，它密集地在2D像素和3D顶点之间建立桥梁，作为中间表示，以方便学习图像到模型的映射。其次，我们将预测任务分解为一个全局流和多个局部流，使得网络不仅可以为摄像机提供全局感知和形状预测，还可以为部分姿态预测提供详细的感知。最后，我们将局部流中的信息进行聚合，以增强零件姿态预测的鲁棒性，并提出了一种利用人体部位间空间关系的位置辅助旋转特征细化策略。由于位置特征之间的相关性比原始旋转特征空间强，因此这种细化策略更有效。在Human3.6M和UP-3D数据集上验证了该方法的有效性。实验结果表明，与现有的重建方法相比，该方法显著提高了重建的性能。我们的代码可以在<a target="_blank" rel="noopener" href="https://github.com/HongwenZhang/DaNet-3DHumanReconstrution%E6%89%BE%E5%88%B0">https://github.com/HongwenZhang/DaNet-3DHumanReconstrution找到</a></p>
+<p><img src="/2019/12/23/ResearchRecord/PapersDaily-191223/1577091987233.png" alt="1577091987233"></p>
+<h2 id="8-DeCaFA-Deep-Convolutional-Cascade-for-Face-Alignment-In-The-Wild"><a href="#8-DeCaFA-Deep-Convolutional-Cascade-for-Face-Alignment-In-The-Wild" class="headerlink" title="8. DeCaFA: Deep Convolutional Cascade for Face Alignment In The Wild"></a>8. DeCaFA: Deep Convolutional Cascade for Face Alignment In The Wild</h2><p>《DeCaFA:用于野外面部对齐的深卷积级联》</p>
+<ul>
+<li>ICCV 2019</li>
+<li><a target="_blank" rel="noopener" href="https://www.semanticscholar.org/paper/DeCaFA%3A-Deep-Convolutional-Cascade-for-Face-In-The-Dapogny-Bailly/88d08b3ed1e7d838d1e5c292b623a5d473d54993">semanticscholar</a></li>
+</ul>
+<p>Face Alignment is an active computer vision domain, that consists in localizing a number of facial landmarks that vary across datasets. State-of-the-art face alignment methods either consist in end-to-end regression, or in refining the shape in a cascaded manner, starting from an initial guess. In this paper, we introduce DeCaFA, an end-to-end deep convolutional cascade architecture for face alignment. DeCaFA uses fully-convolutional stages to keep full spatial resolution throughout the cascade. Between each cascade stage, DeCaFA uses multiple chained transfer layers with spatial softmax to produce landmark-wise attention maps for each of several landmark alignment tasks. Weighted intermediate supervision, as well as efficient feature fusion between the stages allow to learn to progressively refine the attention maps in an end-to-end manner. We show experimentally that DeCaFA significantly outperforms existing approaches on 300W, CelebA and WFLW databases. In addition, we show that DeCaFA can learn fine alignment with reasonable accuracy from very few images using coarsely annotated data.</p>
+<p>人脸定位是一个活跃的计算机视觉领域，它包括定位大量的不同数据集的面部地标。目前最先进的人脸定位方法要么是<strong>端到端回归</strong>，要么是从最初的<strong>猜测开始，以级联的方式细化形状</strong>。本文介绍了一种<strong>面向人脸对齐的端到端深卷积级联结构DeCaFA</strong>。DeCaFA使用全卷积级联来保持整个级联的空间分辨率。在每个级联阶段之间，DeCaFA使用带有空间softmax的多个链接传输层，为几个地标对齐任务中的每个任务生成陆标智能注意力地图。加权中间监督，以及各阶段之间的有效的特征融合，允许学习以端到端的方式逐步细化注意力地图。我们通过实验证明，DeCaFA在300W、CelebA和WFLW数据库上显著优于现有方法。此外，我们证明，DeCaFA可以使用粗略注释的数据，从很少的图像中获得合理的精度。</p>
+<p><img src="/2019/12/23/ResearchRecord/PapersDaily-191223/1577092335348.png" alt="1577092335348"></p>
+<h2 id="9-DenseRaC-Joint-3D-Pose-and-Shape-Estimation-by-Dense-Render-and-Compare"><a href="#9-DenseRaC-Joint-3D-Pose-and-Shape-Estimation-by-Dense-Render-and-Compare" class="headerlink" title="9. DenseRaC: Joint 3D Pose and Shape Estimation by Dense Render-and-Compare"></a>9. DenseRaC: Joint 3D Pose and Shape Estimation by Dense Render-and-Compare</h2><p>《DenseRaC:通过密集渲染和比较，联合三维姿态和形状估计》</p>
+<ul>
+<li>2019</li>
+</ul>
+<p>We present DenseRaC, a novel end-to-end framework for jointly estimating 3D human pose and body shape from a monocular RGB image. Our two-step framework takes the body pixel-to-surface correspondence map (i.e., IUV map) as proxy representation and then performs estimation of parameterized human pose and shape. Specifically, given an estimated IUV map, we develop a deep neural network optimizing 3D body reconstruction losses and further integrating a render-and-compare scheme to minimize differences between the input and the rendered output, i.e., dense body landmarks, body part masks, and adversarial priors. To boost learning, we further construct a large-scale synthetic dataset (MOCA) utilizing web-crawled Mocap sequences, 3D scans and animations. The generated data covers diversified camera views, human actions and body shapes, and is paired with full ground truth. Our model jointly learns to represent the 3D human body from hybrid datasets, mitigating the problem of unpaired training data. Our experiments show that DenseRaC obtains superior performance against state of the art on public benchmarks of various humanrelated tasks.</p>
+<p>我们提出了一种新的端到端框架DenseRaC，用于从单目RGB图像中联合估计<strong>三维人体姿态和体型</strong>。我们的两步框架采取身体像素到表面的对应映射(即。作为代理表示，然后对参数化的人体姿态和形状进行估计。具体来说，给定一个估计的IUV图，我们开发了一个深度神经网络优化三维人体重建损失，并进一步整合一个渲染和比较方案，以最小化输入和渲染输出之间的差异，即。密集的身体标志，身体部分的面具，和对抗性的先验。为了提高学习效率，我们进一步利用网络抓取的动作捕捉序列、3D扫描和动画构建了大规模的综合数据集(MOCA)。生成的数据涵盖了多样化的摄像机视角、人类动作和体型，并与完整的地面真相相匹配。我们的模型联合学习从混合数据集中表示三维人体，缓解了训练数据不配对的问题。我们的实验表明，DenseRaC在各种与人类相关的任务的公共基准测试中取得了优于现有水平的性能。</p>
+<p><img src="/2019/12/23/ResearchRecord/PapersDaily-191223/1577092590644.png" alt="1577092590644"></p>
+<h2 id="10-Dual-Grid-Net-hand-mesh-vertex-regression-from-single-depth-maps"><a href="#10-Dual-Grid-Net-hand-mesh-vertex-regression-from-single-depth-maps" class="headerlink" title="10. Dual Grid Net: hand mesh vertex regression from single depth maps"></a>10. Dual Grid Net: hand mesh vertex regression from single depth maps</h2><p>We present a method for recovering the dense 3D surface of the hand by regressing the vertex coordinates of a mesh model from a single depth map. To this end, we use a two-stage 2D fully convolutional network architecture. In the first stage, the network estimates a dense correspondence field for every pixel on the depth map or image grid to the mesh grid. In the second stage, we design a differentiable operator to map features learned from the previous stage and regress a 3D coordinate map on the mesh grid. Finally, we sample from the mesh grid to recover the mesh vertices, and fit it an articulated template mesh in closed form. During inference, the network can predict all the mesh vertices, transformation matrices for every joint and the joint coordinates in a single forward pass. When given supervision on the sparse key-point coordinates, our method achieves state-of-the-art accuracy on NYU dataset for key point localization while recovering mesh vertices and a dense correspondence map. Our framework can also be learned through self-supervision by minimizing a set of data fitting and kinematic prior terms. With multi-camera rig during training to resolve self-occlusion, it can perform competitively with strongly supervised methods Without any human annotation. LESS</p>
+<p>提出了一种从<strong>单深度图回归网格模型顶点坐标来恢复手部密集三维曲面的方法</strong>。为此，我们使用了一个两阶段的2D全卷积网络架构。在第一个阶段，网络对深度图或图像网格上的每个像素估计一个密集的对应字段到网格。在第二阶段，我们设计了一个可微算子来映射前一阶段学习到的特征，并在网格上对三维坐标映射进行回归。最后，我们从网格中采样来恢复网格顶点，并以封闭的形式将其拟合为铰接模板网格。在推理过程中，该网络可以预测所有的网格顶点、每个节点的变换矩阵以及单个前向遍历的节点坐标。在稀疏关键点坐标的监督下，我们的方法在NYU数据集上达到了最先进的关键点定位精度，同时恢复网格顶点和稠密对应映射。我们的框架也可以通过最小化一组数据拟合和运动学先验项来通过自我监督来学习。在训练过程中使用多摄像机来解决自遮挡问题，它可以在没有任何人工标注的情况下，通过严格监督的方法进行竞争。</p>
+<h2 id="11-Joint-3D-Face-Reconstruction-and-Dense-Face-Alignment-from-A-Single-Image-with-2D-Assisted-Self-Supervised-Learning"><a href="#11-Joint-3D-Face-Reconstruction-and-Dense-Face-Alignment-from-A-Single-Image-with-2D-Assisted-Self-Supervised-Learning" class="headerlink" title="11. Joint 3D Face Reconstruction and Dense Face Alignment from A Single Image with 2D-Assisted Self-Supervised Learning"></a>11. Joint 3D Face Reconstruction and Dense Face Alignment from A Single Image with 2D-Assisted Self-Supervised Learning</h2><p>《利用二维辅助自监督学习技术，对单个图像进行联合三维人脸重建和密集人脸对齐》</p>
+<ul>
+<li><p>2019</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/XgTu/2DASL">https://github.com/XgTu/2DASL</a></p>
+</li>
+</ul>
+<p>3D face reconstruction from a single 2D image is a challenging problem with broad applications. Recent methods typically aim to learn a CNN-based 3D face model that regresses coefficients of 3D Morphable Model (3DMM) from 2D images to render 3D face reconstruction or dense face alignment. However, the shortage of training data with 3D annotations considerably limits performance of those methods. To alleviate this issue, we propose a novel 2D-assisted self-supervised learning (2DASL) method that can effectively use “in-the-wild” 2D face images with noisy landmark information to substantially improve 3D face model learning. Specifically, taking the sparse 2D facial landmarks as additional information, 2DSAL introduces four novel self-supervision schemes that view the 2D landmark and 3D landmark prediction as a self-mapping process, including the 2D and 3D landmark self-prediction consistency, cycle-consistency over the 2D landmark prediction and self-critic over the predicted 3DMM coefficients based on landmark predictions. Using these four self-supervision schemes, the 2DASL method significantly relieves demands on the the conventional paired 2D-to-3D annotations and gives much higher-quality 3D face models without requiring any additional 3D annotations. Experiments on multiple challenging datasets show that our method outperforms state-of-the-arts for both 3D face reconstruction and dense face alignment by a large margin.</p>
+<p><strong>单张二维图像的三维人脸重建</strong>是一个具有广泛应用前景的难题。目前的方法主要是学习一种基于cnn的三维人脸模型，该模型将三维可变形模型(3DMM)的系数从二维图像中回归，从而实现三维人脸重建或密集人脸对齐。然而，缺乏3D标注的训练数据在很大程度上限制了这些方法的性能。为了缓解这一问题，我们提出了一种新颖的2D-assisted self-supervised learning (2DASL)方法，该方法可以有效地利用具有噪声地标信息的“野外”2D人脸图像，大幅提高3D人脸模型的学习效果。特别,稀疏的2 d面部地标作为附加信息,2 dsal介绍四个小说自身的监督计划这一观点2 d地标和3 d具有里程碑意义的预测self-mapping过程,包括2 d和3 d地标self-prediction一致性,在2 d cycle-consistency具有里程碑意义的预测和令人欣喜的预测3 dmm系数基于里程碑式的预测。通过这四种自我监督方案，2DASL方法大大降低了传统的2d -3D配对注释的要求，在不需要额外3D注释的情况下，提供了更高质量的3D人脸模型。在多个具有挑战性的数据集上进行的实验表明，我们的方法在三维人脸重建和密集人脸对齐方面都有较大的优势。</p>
+<p><img src="/2019/12/23/ResearchRecord/PapersDaily-191223/1577095465349.png" alt="1577095465349"></p>
+<h2 id="12-HoloPose-Real-Time-Holistic-3-D-Human-Reconstruction-InThe-Wild"><a href="#12-HoloPose-Real-Time-Holistic-3-D-Human-Reconstruction-InThe-Wild" class="headerlink" title="12. HoloPose : Real Time Holistic 3 D Human Reconstruction InThe-Wild"></a>12. HoloPose : Real Time Holistic 3 D Human Reconstruction InThe-Wild</h2><p>《全息:野外实时整体三维人体重建》</p>
+<ul>
+<li><p>2019 </p>
+</li>
+<li><p>使用DensePose搭建的实施转换系统</p>
+</li>
+</ul>
+<p>Figure 1: We introduce HoloPose, a method for holistic monocular 3D body reconstruction in-the-wild. We start with an accurate, part-based estimate of 3D model parameters θ, and decoupled, FCN-based estimates of DensePose, 2D and 3D joints. We then efficiently optimize a misalignment loss Ltotal(θ) between the top-down 3D model predictions to the bottomup pose estimates, thereby largely improving alignment. The 3D model estimation and iterative fitting steps are efficiently implemented as network layers, facilitating multi-person 3D pose estimation in-the-wild at more than 10 frames per second</p>
+<p>图1:我们介绍了HoloPose，一种在野外进行整体单眼三维身体重建的方法。我们从一个精确的开始,部分原因估计的3 d模型参数θ,解耦,FCN-based DensePose估计,2 d和3 d关节。然后我们有效地优化偏差损失Ltotal(θ)之间的自顶向下的3 d模型预测bottomup姿势估计,从而很大程度上提高对齐。将三维模型估计和迭代拟合步骤有效地实现为网络层，以超过每秒10帧的速度实现多人三维姿态估计</p>
+<h2 id="13-A-Neural-Network-for-Detailed-Human-Depth-Estimation-from-a-Single-Image"><a href="#13-A-Neural-Network-for-Detailed-Human-Depth-Estimation-from-a-Single-Image" class="headerlink" title="13. A Neural Network for Detailed Human Depth Estimation from a Single Image"></a>13. A Neural Network for Detailed Human Depth Estimation from a Single Image</h2><ul>
+<li>2019</li>
+<li></li>
+</ul>
+<p>《一种用于从单个图像中详细估计人体深度的神经网络》</p>
+<p>This paper presents a neural network to estimate a detailed depth map of the foreground human in a single RGB image. The result captures geometry details such as cloth wrinkles, which are important in visualization applications. To achieve this goal, we separate the depth map into a smooth base shape and a residual detail shape and design a network with two branches to regress them respectively. We design a training strategy to ensure both base and detail shapes can be faithfully learned by the corresponding network branches. Furthermore, we introduce a novel network layer to fuse a rough depth map and surface normals to further improve the final result. Quantitative comparison with fused &#96;ground truth’ captured by real depth cameras and qualitative examples on unconstrained Internet images demonstrate the strength of the proposed method</p>
+<p>提出了一种基于神经网络的<strong>单RGB图像前景人物深度细节估计方法</strong>。结果捕获了诸如<strong>织物褶皱等几何细节</strong>，这些在可视化应用中非常重要。为了实现这一目标，我们将深度图分为平滑的基础形状和剩余的细节形状，并设计了一个具有两个分支的网络分别对它们进行回归。我们设计了一个训练策略，以确保基础形状和细节形状都能被相应的网络分支忠实地学习。在此基础上，我们引入了一种新的网络层来融合粗糙深度图和表面法线以进一步提高最终结果。通过与真实深度相机捕获的融合“地面真实”的定量比较和对无约束网络图像的定性分析，验证了该方法的有效性</p>
+<p><img src="/2019/12/23/ResearchRecord/PapersDaily-191223/1577107700040.png" alt="1577107700040"></p>
+<h2 id="Other："><a href="#Other：" class="headerlink" title="Other："></a>Other：</h2><p>A Review of Facial Landmark Extraction in 2D Images and Videos Using Deep Learning</p>
+<p>用深度学习技术提取二维图像和视频中的面部特征的研究进展</p>
+<hr>
+<h1 id="Dense-Cloth-（FashionAI）"><a href="#Dense-Cloth-（FashionAI）" class="headerlink" title="Dense Cloth （FashionAI）"></a>Dense Cloth （FashionAI）</h1><ul>
+<li>Dense Cloth 换装； </li>
+<li>Dense Pose-guild Image 生成，</li>
+</ul>
+<h2 id="1-360-Degree-Textures-of-People-in-Clothing-from-a-Single-Image"><a href="#1-360-Degree-Textures-of-People-in-Clothing-from-a-Single-Image" class="headerlink" title="1. 360-Degree Textures of People in Clothing from a Single Image"></a>1. 360-Degree Textures of People in Clothing from a Single Image</h2><p>《人的衣服360度纹理–从单一的形象》</p>
+<p>In this paper we predict a full 3D avatar of a person from a single image. We infer texture and geometry in the UV-space of the SMPL model using an image-to-image translation method. Given partial texture and segmentation layout maps derived from the input view, our model predicts the complete segmentation map, the complete texture map, and a displacement map. The predicted maps can be applied to the SMPL model in order to naturally generalize to novel poses, shapes, and even new clothing. In order to learn our model in a common UV-space, we non-rigidly register the SMPL model to thousands of 3D scans, effectively encoding textures and geometries as images in correspondence. This turns a difficult 3D inference task into a simpler image-to-image translation one. Results on rendered scans of people and images from the DeepFashion dataset demonstrate that our method can reconstruct plausible 3D avatars from a single image. We further use our model to digitally change pose, shape, swap garments between people and edit clothing. To encourage research in this direction we will make the source code available for research purpose [5]</p>
+<p>在这篇论文中，我们预测一个人的完整的3D头像从一个单一的图像。我们使用图像到图像的转换方法在<strong>SMPL模型的uv空间中推断出纹理和几何形状</strong>。根据输入视图中的局部纹理和分割布局图，我们的模型可以预测完整的分割图、完整的纹理图和位移图。预测的地图可以应用于SMPL模型，以便自然地推广到新的姿势、形状，甚至新衣服。为了在公共uv空间中学习我们的模型，我们不严格地将SMPL模型注册到数千次3D扫描中，有效地将纹理和几何图形编码为对应的图像。这将一个困难的3D推理任务变成了一个更简单的图像到图像的转换任务。对DeepFashion数据集中的人物和图像的渲染扫描结果表明，我们的方法可以从一张图像重建可信的3D头像。我们进一步使用我们的模型来数字化地改变姿势、形状、在人们之间交换衣服和编辑衣服。为了鼓励这方面的研究，我们将把源代码提供给研究目的[5]</p>
+<p><img src="/2019/12/23/ResearchRecord/PapersDaily-191223/1577104615261.png" alt="1577104615261"></p>
+<h2 id="2-DwNet-Dense-warp-based-network-for-pose-guided-human-video-generation"><a href="#2-DwNet-Dense-warp-based-network-for-pose-guided-human-video-generation" class="headerlink" title="2. DwNet: Dense warp-based network for pose-guided human video generation"></a>2. DwNet: Dense warp-based network for pose-guided human video generation</h2><p>《DwNet:密集的基于翘曲的网络，用于位置引导的人类视频生成》</p>
+<ul>
+<li>2019</li>
+</ul>
+<p>Generation of realistic high-resolution videos of human subjects is a challenging and important task in computer vision. In this paper, we focus on human motion transfer - generation of a video depicting a particular subject, observed in a single image, performing a series of motions exemplified by an auxiliary (driving) video. Our GAN-based architecture, DwNet, leverages dense intermediate pose-guided representation and refinement process to warp the required subject appearance, in the form of the texture, from a source image into a desired pose. Temporal consistency is maintained by further conditioning the decoding process within a GAN on the previously generated frame. In this way a video is generated in an iterative and recurrent fashion. We illustrate the efficacy of our approach by showing state-of-the-art quantitative and qualitative performance on two benchmark datasets: TaiChi and Fashion Modeling. The latter is collected by us and will be made publicly available to the community.</p>
+<p>生成逼真的高分辨率人体视频是计算机视觉领域的一项重要任务。在这篇论文中，我们关注的是人体运动的转移——以一个辅助(驱动)视频为例，在一个单独的图像中观察一个特定对象的视频，并执行一系列的运动。我们基于gan的架构DwNet利用密集的中间位置引导表示和细化过程，以纹理的形式将所需的主题外观从源图像扭曲为所需的姿态。时间一致性是通过进一步调整GAN中先前生成的帧上的解码过程来保持的。通过这种方式，视频以迭代和重复的方式生成。我们通过在太极和时尚建模两个基准数据集上展示最先进的定量和定性性能来说明我们的方法的有效性。后者由我们收集，并将向社会公开。</p>
+<p><strong>对原图的换衣效果还行，转Pose效果较差</strong></p>
+<p><img src="/2019/12/23/ResearchRecord/PapersDaily-191223/1577106975775.png" alt="1577106975775"></p>
+<h2 id="3-Coordinate-based-Texture-Inpainting-for-Pose-Guided-Image-Generation"><a href="#3-Coordinate-based-Texture-Inpainting-for-Pose-Guided-Image-Generation" class="headerlink" title="3. Coordinate-based Texture Inpainting for Pose-Guided Image Generation"></a>3. <a target="_blank" rel="noopener" href="https://www.semanticscholar.org/paper/Coordinate-based-Texture-Inpainting-for-Pose-Guided-Grigorev-Sevastopolsky/66fbe029982737acbf6c80897ea6ba8ce119fad9">Coordinate-based Texture Inpainting for Pose-Guided Image Generation</a></h2><ul>
+<li>2018</li>
+<li>pose-guided resynthesis of human photographs</li>
+<li>coordinate-base 基于坐标的纹理修复</li>
+</ul>
+<p>We present a new deep learning approach to pose-guided resynthesis of human photographs. At the heart of the new approach is the estimation of the complete body surface texture based on a single photograph. Since the input photograph always observes only a part of the surface, we suggest a new inpainting method that completes the texture of the human body. Rather than working directly with colors of texture elements, the inpainting network estimates an appropriate source location in the input image for each element of the body surface. This correspondence field between the input image and the texture is then further warped into the target image coordinate frame based on the desired pose, effectively establishing the correspondence between the source and the target view even when the pose change is drastic. The final convolutional network then uses the established correspondence and all other available information to synthesize the output image. A fully-convolutional architecture with deformable skip connections guided by the estimated correspondence field is used. We show state-of-the-art result for pose-guided image synthesis. Additionally, we demonstrate the performance of our system for garment transfer and pose-guided face resynthesis.</p>
+<p>我们提出了一种新的深度学习方法，以位置引导重新合成人体照片。新方法的核心是基于一张照片来估计整个身体表面的纹理。由于输入的照片总是只观察到表面的一部分，我们提出了一种新的绘画方法来完成人体的纹理。与直接处理纹理元素的颜色不同，inpainting网络在输入图像中为身体表面的每个元素估计一个合适的源位置。然后，将输入图像与纹理之间的对应字段根据所需的位姿进一步扭曲到目标图像坐标系中，从而在位姿变化剧烈的情况下有效地建立源和目标视图之间的对应关系。最后的卷积网络使用建立的通信和所有其他可用信息来合成输出图像。采用全卷积结构，在估计对应域的引导下实现可变形的跳跃连接。我们展示了位置引导图像合成的最新成果。此外，我们还演示了我们的系统在服装转移和位置导向面部合成方面的性能</p>
+<p><img src="/2019/12/23/ResearchRecord/PapersDaily-191223/1577109652206.png" alt="1577109652206"></p>
+<p><img src="/2019/12/23/ResearchRecord/PapersDaily-191223/1577109629105.png" alt="1577109629105"></p>
+<h2 id="4-MoCoGAN-Decomposing-Motion-and-Content-for-Video-Generation"><a href="#4-MoCoGAN-Decomposing-Motion-and-Content-for-Video-Generation" class="headerlink" title="4. MoCoGAN: Decomposing Motion and Content for Video Generation"></a>4. <a target="_blank" rel="noopener" href="https://www.semanticscholar.org/paper/MoCoGAN%3A-Decomposing-Motion-and-Content-for-Video-Tulyakov-Liu/e76edb86f270c3a77ed9f5a1e1b305461f36f96f">MoCoGAN: Decomposing Motion and Content for Video Generation</a></h2><p>《MoCoGAN:分解运动和内容，生成视频》</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/sergeytulyakov/mocogan">https://github.com/sergeytulyakov/mocogan</a></p>
+<p>Visual signals in a video can be divided into content and motion. While content specifies which objects are in the video, motion describes their dynamics. Based on this prior, we propose the Motion and Content decomposed Generative Adversarial Network (MoCoGAN) framework for video generation. The proposed framework generates a video by mapping a sequence of random vectors to a sequence of video frames. Each random vector consists of a content part and a motion part. While the content part is kept fixed, the motion part is realized as a stochastic process. To learn motion and content decomposition in an unsupervised manner, we introduce a novel adversarial learning scheme utilizing both image and video discriminators. Extensive experimental results on several challenging datasets with qualitative and quantitative comparison to the state-of-theart approaches, verify effectiveness of the proposed framework. In addition, we show that MoCoGAN allows one to generate videos with same content but different motion as well as videos with different content and same motion.</p>
+<p>视频中的视觉信号可以分为内容和动作。内容指定了视频中的对象，而动作描述了它们的动态。在此基础上，提出了视频生成的运动和内容分解生成对抗网络(MoCoGAN)框架。该框架通过将随机向量序列映射到视频帧序列来生成视频。每个随机向量由一个内容部分和一个运动部分组成。在内容部分保持不变的情况下，运动部分实现为随机过程。为了以无监督的方式学习运动和内容分解，我们引入了一种利用图像和视频鉴别器的对抗学习方案。在几个具有挑战性的数据集上的大量实验结果，定性和定量地与最先进的方法进行比较，验证了所提框架的有效性。此外，我们还演示了MoCoGAN可以生成内容相同但动作A Neural Network for Detailed Human Depth Estimation from a Single Image不同的视频，以及内容不同但动作相同的视频。</p>
+<h2 id="5-Animating-Arbitrary-Objects-via-Deep-Motion-Transfer"><a href="#5-Animating-Arbitrary-Objects-via-Deep-Motion-Transfer" class="headerlink" title="5. Animating Arbitrary Objects via Deep Motion Transfer"></a>5. <a target="_blank" rel="noopener" href="https://www.semanticscholar.org/paper/Animating-Arbitrary-Objects-via-Deep-Motion-Siarohin-Lathuili%C3%A8re/edce7f037c840b7db2612f47c35ae374c4a80e3a">Animating Arbitrary Objects via Deep Motion Transfer</a></h2><p>《通过深动作传输来制作任意物体的动画》</p>
+<ul>
+<li>对象+动作序列 — &gt; 动画</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/AliaksandrSiarohin/monkey-net">https://github.com/AliaksandrSiarohin/monkey-net</a></li>
+</ul>
+<p>This paper introduces a novel deep learning framework for image animation. Given an input image with a target object and a driving video sequence depicting a moving object, our framework generates a video in which the target object is animated according to the driving sequence. This is achieved through a deep architecture that decouples appearance and motion information. Our framework consists of three main modules: (i) a Keypoint Detector unsupervisely trained to extract object keypoints, (ii) a Dense Motion prediction network for generating dense heatmaps from sparse keypoints, in order to better encode motion information and (iii) a Motion Transfer Network, which uses the motion heatmaps and appearance information extracted from the input image to synthesize the output frames. We demonstrate the effectiveness of our method on several benchmark datasets, spanning a wide variety of object appearances, and show that our approach outperforms state-of-the-art image animation and video generation methods. Our source code is publicly available.</p>
+<p>提出了一种新的图像动画深度学习框架。给定目标对象的输入图像和描述运动对象的驱动视频序列，我们的框架生成一个视频，其中目标对象根据驱动序列进行动画。这是通过一个深入的架构来实现的，它将外观和动作信息解耦。我们的框架包括三个主要模块:(i)关键点检测器unsupervisely训练要点提取对象,(2)一个密集的运动预测网络从稀疏生成致密的热图要点、为了更好的编码运动信息和(iii)运动传输网络,它使用运动的热图和外观信息从输入图像中提取合成输出帧。我们证明了我们的方法在几个基准数据集的有效性，跨越了广泛的对象外观，并表明我们的方法优于最先进的图像动画和视频生成方法。我们的源代码是公开的。</p>
+<p><img src="/2019/12/23/ResearchRecord/PapersDaily-191223/1577110031280.png" alt="1577110031280"></p>
+<h2 id="6-Convolutional-Mesh-Regression-for-Single-Image-Human-Shape-Reconstruction"><a href="#6-Convolutional-Mesh-Regression-for-Single-Image-Human-Shape-Reconstruction" class="headerlink" title="6. Convolutional Mesh Regression for Single-Image Human Shape Reconstruction"></a>6. <a target="_blank" rel="noopener" href="https://www.semanticscholar.org/paper/Convolutional-Mesh-Regression-for-Single-Image-Kolotouros-Pavlakos/9ce6d7373d307eb14f7ee76357e442f920be631a">Convolutional Mesh Regression for Single-Image Human Shape Reconstruction</a></h2><p>《卷积网格回归用于单图像人体形态重建》</p>
+<ul>
+<li>单目图像三维人体重建</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://github.com/nkolot/GraphCMR">https://github.com/nkolot/GraphCMR</a></p>
+<p>This paper addresses the problem of 3D human pose and shape estimation from a single image. Previous approaches consider a parametric model of the human body, SMPL, and attempt to regress the model parameters that give rise to a mesh consistent with image evidence. This parameter regression has been a very challenging task, with model-based approaches underperforming compared to nonparametric solutions in terms of pose estimation. In our work, we propose to relax this heavy reliance on the model’s parameter space. We still retain the topology of the SMPL template mesh, but instead of predicting model parameters, we directly regress the 3D location of the mesh vertices. This is a heavy task for a typical network, but our key insight is that the regression becomes significantly easier using a Graph-CNN. This architecture allows us to explicitly encode the template mesh structure within the network and leverage the spatial locality the mesh has to offer. Image-based features are attached to the mesh vertices and the Graph-CNN is responsible to process them on the mesh structure, while the regression target for each vertex is its 3D location. Having recovered the complete 3D geometry of the mesh, if we still require a specific model parametrization, this can be reliably regressed from the vertices locations. We demonstrate the flexibility and the effectiveness of our proposed graph-based mesh regression by attaching different types of features on the mesh vertices. In all cases, we outperform the comparable baselines relying on model parameter regression, while we also achieve state-of-the-art results among model-based pose estimation approaches</p>
+<p><img src="/2019/12/23/ResearchRecord/PapersDaily-191223/1577107522709.png" alt="1577107522709"></p>
+<h2 id="7-HumanMeshNet-Polygonal-Mesh-Recovery-of-Humans"><a href="#7-HumanMeshNet-Polygonal-Mesh-Recovery-of-Humans" class="headerlink" title="7. HumanMeshNet: Polygonal Mesh Recovery of Humans"></a>7. <a target="_blank" rel="noopener" href="https://www.semanticscholar.org/paper/HumanMeshNet%3A-Polygonal-Mesh-Recovery-of-Humans-Venkat-Patel/032d3d6a83e8bb7635037814c879c9ec9a6e7ddb">HumanMeshNet: Polygonal Mesh Recovery of Humans</a></h2><p>《HumanMeshNet:多边形网格恢复人类》</p>
+<ul>
+<li>单目图像三维人体重建</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://github.com/yudhik11/HumanMeshNet">https://github.com/yudhik11/HumanMeshNet</a></p>
+<p>3D Human Body Reconstruction from a monocular image is an important problem in computer vision with applications in virtual and augmented reality platforms, animation industry, en-commerce domain, etc. While several of the existing works formulate it as a volumetric or parametric learning with complex and indirect reliance on re-projections of the mesh, we would like to focus on implicitly learning the mesh representation. To that end, we propose a novel model, HumanMeshNet, that regresses a template mesh’s vertices, as well as receives a regularization by the 3D skeletal locations in a multi-branch, multi-task setup. The image to mesh vertex regression is further regularized by the neighborhood constraint imposed by mesh topology ensuring smooth surface reconstruction. The proposed paradigm can theoretically learn local surface deformations induced by body shape variations and can therefore learn high-resolution meshes going ahead. We show comparable performance with SoA (in terms of surface and joint error) with far lesser computational complexity, modeling cost and therefore real-time reconstructions on three publicly available datasets. We also show the generalizability of the proposed paradigm for a similar task of predicting hand mesh models. Given these initial results, we would like to exploit the mesh topology in an explicit manner going ahead.</p>
+<p>单目图像三维人体重建是计算机视觉领域的一个重要研究课题，在虚拟增强现实平台、动漫产业、电子商务等领域有着广泛的应用。虽然现有的一些作品将其描述为一种复杂且间接地依赖于网格重投影的体积或参数学习，但我们希望将重点放在对网格表示的隐式学习上。为此，我们提出了一个新的模型，HumanMeshNet，该模型对模板网格的顶点进行回归，并通过多分支、多任务设置中的3D骨骼位置进行正则化。利用网格拓扑所施加的邻域约束进一步正则化网格顶点回归图像，保证了曲面重建的平稳性。提出的模型在理论上可以学习由体型变化引起的局部表面变形，因此可以学习未来的高分辨率网格。我们展示了与SoA相当的性能(在表面和联合错误方面)，并且计算复杂度、建模成本和因此在三个公开数据集上的实时重构都要低得多。我们还展示了所提出的范例的通用性，为类似的任务预测手网格模型。考虑到这些初始结果，我们希望以一种显式的方式利用网格拓扑。</p>
+<p><img src="/2019/12/23/ResearchRecord/PapersDaily-191223/1577109341592.png" alt="1577109341592"></p>
+<h2 id="8-Deformable-GANs-for-Pose-based-Human-Image-Generation"><a href="#8-Deformable-GANs-for-Pose-based-Human-Image-Generation" class="headerlink" title="8. [Deformable GANs] for Pose-based Human Image Generation"></a>8. [Deformable GANs] for Pose-based Human Image Generation</h2><ul>
+<li>Deformable GANs</li>
+</ul>
+<p>In this paper we address the problem of generating person images conditioned on a given pose. Specifically, given an image of a person and a target pose, we synthesize a new image of that person in the novel pose. In order to deal with pixel-to-pixel misalignments caused by the pose differences, we introduce deformable skip connections in the generator of our Generative Adversarial Network. Moreover, a nearest-neighbour loss is proposed instead of the common L1 and L2 losses in order to match the details of the generated image with the target image. We test our approach using photos of persons in different poses and we compare our method with previous work in this area showing state-of-the-art results in two benchmarks. Our method can be applied to the wider field of deformable object generation, provided that the pose of the articulated object can be extracted using a keypoint detector</p>
+<p>在这篇论文中，我们讨论了<strong>在给定姿态条件下生成人物图像</strong>的问题。具体来说，给定一个人的图像和一个目标姿势，我们合成一个新的人的图像在新的姿势。为了解决由位姿差异引起的像素间的不匹配问题，我们在生成对抗网络的生成器中引入了可变形的跳跃连接。此外，为了使生成的图像与目标图像的细节匹配，我们提出了一种最近邻损失来代替常见的L1和L2损失。我们使用不同姿势的人的照片来测试我们的方法，并将我们的方法与之前在这一领域的工作进行比较，在两个基准中显示出最先进的结果。我们的方法可以应用于更广泛的可变形对象生成领域，前提是可以使用关键点检测器提取关节对象的位姿</p>
+<p><img src="/2019/12/23/ResearchRecord/PapersDaily-191223/1577267069836.png" alt="1577267069836"></p>
+<h1 id="GM"><a href="#GM" class="headerlink" title="GM"></a>GM</h1><h2 id="GeoNet-Geometric-Neural-Network-for-Joint-Depth-and-Surface-Normal-Estimation"><a href="#GeoNet-Geometric-Neural-Network-for-Joint-Depth-and-Surface-Normal-Estimation" class="headerlink" title="GeoNet: Geometric Neural Network for Joint Depth and Surface Normal Estimation"></a>GeoNet: Geometric Neural Network for Joint Depth and Surface Normal Estimation</h2><p><img src="/2019/12/23/ResearchRecord/PapersDaily-191223/1577109075961.png" alt="1577109075961"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2019/12/18/CV/CV-transformations/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/12/18/CV/CV-transformations/" class="post-title-link" itemprop="url">CV_transformations</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-18 22:20:22" itemprop="dateCreated datePublished" datetime="2019-12-18T22:20:22+00:00">2019-12-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/" itemprop="url" rel="index"><span itemprop="name">CV</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>图片处理基础知识： 放射变换、双线性插值</p>
+<h3 id="线性变换"><a href="#线性变换" class="headerlink" title="线性变换"></a>线性变换</h3><p>定义：</p>
+<ul>
+<li>点$K$的坐标为$\begin{bmatrix} x \ y \end{bmatrix}$ 代表一个 2x1的列向量</li>
+<li>矩阵$M&#x3D; \left[ \begin{matrix}  a&amp;b \ c&amp;d \end{matrix} \right]$ 代表 shape(2x2)的矩阵</li>
+</ul>
+<h4 id="恒等变换："><a href="#恒等变换：" class="headerlink" title="恒等变换："></a>恒等变换：</h4><p>令 a&#x3D;d&#x3D;1, b&#x3D;c&#x3D;0, 即 $M&#x3D;\begin{bmatrix}  1&amp;0 \ 0&amp;1 \end{bmatrix}$ 则<br>$$<br>K’&#x3D;\begin{bmatrix}  1&amp;0 \   0&amp;1 \end{bmatrix} \begin{bmatrix}  x \     y \end{bmatrix}&#x3D;\begin{bmatrix}  x \       y \end{bmatrix}&#x3D;K<br>$$<br>即此时$M$的值表示做恒等变换</p>
+<h4 id="缩放："><a href="#缩放：" class="headerlink" title="缩放："></a>缩放：</h4><p><img src="/2019/12/18/CV/CV-transformations/20180324104353675.png" alt="这里写图片描述"></p>
+<p>令$b&#x3D;c&#x3D;0 $，即$M&#x3D;\begin{bmatrix}  a&amp;0 \   0&amp;d \end{bmatrix}$，则：<br>$$<br>K’&#x3D;\begin{bmatrix}  a&amp;0 \<br>  0&amp;b  \end{bmatrix}  \begin{bmatrix}  x \<br>    y \end{bmatrix}&#x3D;\begin{bmatrix}  ax \<br>    by \end{bmatrix}<br>$$</p>
+<h4 id="旋转："><a href="#旋转：" class="headerlink" title="旋转："></a>旋转：</h4><h4 id="shear："><a href="#shear：" class="headerlink" title="shear："></a>shear：</h4><p>总结一下，这里讲了3个基本的线性变换：</p>
+<ul>
+<li>放缩</li>
+<li>shear</li>
+<li>旋转</li>
+</ul>
+<p>我们可将这三个变换矩阵表示为$H,S,R$，则变换可写成：<br>$$<br>K’&#x3D;R[S(HK)]&#x3D;MK<br>$$<br>其中 $M&#x3D;RSH$ 用一个矩阵来表示各种线性变换</p>
+<h3 id="仿射变换-Affine-Transformation"><a href="#仿射变换-Affine-Transformation" class="headerlink" title="仿射变换(Affine Transformation)"></a>仿射变换(Affine Transformation)</h3><p>对于M为2×2矩阵，可完成线性变换，将图形扭曲成其他形状。但这样的变换存在一个缺点：不能做<strong>平移</strong>，故需要进一调整。</p>
+<p>可以看到是添加一个轴，再变换。对此将参数矩阵由2D换成3D：</p>
+<p>点$K$变成了$(3×1)$的列向量$\begin{bmatrix}  x \ y  \ 1 \end{bmatrix}$<br>为了表示变换，添加了两个新参数，矩阵$M&#x3D;\begin{bmatrix}  a&amp;b&amp;e \   c&amp;d&amp;f  \  0&amp;0&amp;1 \end{bmatrix}$变成了shape$(3×3)$的矩阵<br>注意到，我们需要2D的输出，可将M改为$2×3$卷积形式。</p>
+<p>例如,做平移操作：<br>$$<br>K’&#x3D;\begin{bmatrix}  1&amp;0&amp;\Delta \ 0&amp;1&amp;\Delta \end{bmatrix}\begin{bmatrix}  x\  y\<br>    1 \end{bmatrix}&#x3D;\begin{bmatrix}  x+\Delta \<br>      y+\Delta \end{bmatrix}<br>使用这样一个技巧，可通过一个新的变换表示所有变换，这即是仿射变换，我们可以一般化结果，这4中变换使用放射矩阵表示：<br>M&#x3D;[adbecf]<br>M&#x3D;[abcdef]<br>总结来讲就是：仿射变换&#x3D;线性变换+平移功能<br>$$</p>
+<p>使用这样一个技巧，可通过一个新的变换表示所有变换，这即是仿射变换，我们可以一般化结果，这4中变换使用放射矩阵表示：<br>$$<br>M&#x3D;\begin{bmatrix}  a&amp;b&amp;c \<br>  d&amp;e&amp;f \end{bmatrix}<br>$$<br>总结来讲就是：仿射变换&#x3D;线性变换+平移功能</p>
+<h3 id="双线性插值-Bilinear-Interpolation"><a href="#双线性插值-Bilinear-Interpolation" class="headerlink" title="双线性插值(Bilinear Interpolation)"></a>双线性插值(Bilinear Interpolation)</h3><p>考虑到当我们做仿射变换时：例如旋转或放缩，图片中的像素会移动到其他地方。这会暴露出一个问题，<strong>输出中的像素位置可能没有对应的输入图片中的位置</strong>。 下面的旋转示例，可以清晰的看到输出中有些点没有在对应棋盘网格中央，这意味着输入中没有对应的像素点：</p>
+<p><img src="/2019/12/18/CV/CV-transformations/1576719936502.png" alt="1576719936502"></p>
+<p>为了支持这样输出是分数坐标点的，可使用双线性插值去寻找合适的颜色值。</p>
+<h4 id="线性插值"><a href="#线性插值" class="headerlink" title="线性插值"></a>线性插值</h4><p>要说双线性插值，先看看线性插值。 已知坐标$(x0,y0)$​和$(x1,y1)$，需要在$[x0,x1]$之间$x$插值，如下:</p>
+<p>两点之间线性方程：<br>$$<br>y-y_0&#x3D;(x-x_0)\frac{y_1-y_0}{x_1-x_0}<br>$$<br>变换：<br>$$<br>y&#x3D;y_0\frac{x_1-x}{x_1-x_0}+y_1\frac{x-x_0}{x_1-x_0}<br>$$</p>
+<h4 id="双线性插值"><a href="#双线性插值" class="headerlink" title="双线性插值"></a>双线性插值</h4><p>双线性插值是线性插值的拓展~</p>
+<p>4个像素点坐标为 $Q11(x1,y1),Q12(x1,y2),Q21(x2,y1),Q22(x2,y2)$，像素值为$f(Q11),f(Q12),f(Q21),f(Q22)$：</p>
+<p><img src="/2019/12/18/CV/CV-transformations/1576720317731.png" alt="1576720317731"></p>
+<p>先是线性插值获得$R_1(x, y_1),R_2(x, y_2)$:<br>$$<br>f(R_1)&#x3D;f(Q_{11})\frac{x_2-x}{x_2-x_1}+f(Q_{21})\frac{x-x_1}{x_2-x_1} \tag 1<br>$$</p>
+<p>$$<br>f(R_2)&#x3D;f(Q_{12})\frac{x_2-x}{x_2-x_1}+f(Q_{22})\frac{x-x_1}{x_2-x_1} \tag 2<br>$$</p>
+<p>再使用$R_1, R_2$纵向插值得到$P(x, y)$:<br>$$<br>f(P)&#x3D;f(R_1)\frac{y_2-y}{y_2-y_1}+f(R_2)\frac{y-y_1}{y_2-y_1} \tag 3<br>$$<br>在像素计算中，通常是以4个相邻的像素点做插值，故所有分母项都为1，联立(1)(2)(3)(1)(2)(3)可得：</p>
+<p>$$<br>f(P)&#x3D;f(Q_{11})(x_2-x)(y_2-y)+f(Q_{21})(x-x_1)(y_2-y)+f(Q_{12})(x_2-x)(y-y_1)+f(Q_{22})(x-x_1)(y-y_1) \tag 4<br>$$</p>
+<p>可以将公式化为：<br>$$<br>f(P)&#x3D;[(x_2-x),(x-x_1)] \begin{bmatrix}<br>f(Q_{11})\ &amp;f(Q_{12})\<br> f(Q_{21}) &amp; f(Q_{22})<br>\end{bmatrix} [(y_2-y),(y-y_1)] \tag 5<br>$$</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2019/12/11/CV/CV_VTON/Paper-CV+ClothFlow/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/12/11/CV/CV_VTON/Paper-CV+ClothFlow/" class="post-title-link" itemprop="url">Paper-CV+ClothFlow</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-11 15:07:01" itemprop="dateCreated datePublished" datetime="2019-12-11T15:07:01+00:00">2019-12-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV-Apply/" itemprop="url" rel="index"><span itemprop="name">CV_Apply</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV-Apply/VTON/" itemprop="url" rel="index"><span itemprop="name">VTON</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[toc]</p>
+<h1 id="Cloth-Flow"><a href="#Cloth-Flow" class="headerlink" title="Cloth Flow"></a>Cloth Flow</h1><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/89101331">ICCV 2019丨ClothFlow：一种基于外观流的人物服装图像生成模型</a></p>
+<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>Pose-guided person generation 和Virtual try on 领域的处理主流方法：</p>
+<ul>
+<li><p>Deformation-based methods (eg: affine  ; TPS)</p>
+</li>
+<li><p>DensePose-based methods </p>
+<p>即基于变形的方法和基于密度的方法</p>
+</li>
+</ul>
+<p>几何变形的更好的外观转移，但是较大的几何变换，容易导致不准确、不自然的变换估计</p>
+<p>基于密度的方法，映射2D图片到3D的人身体，结果看起来不够逼真。</p>
+<p>因此作者提出的ClothFlow： a flow-based generative model ；解决衣服变形clothing deformation；从而更好的合成人穿衣的图片；</p>
+<h3 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h3><p>(1) A conditional layout generator  </p>
+<p>预测Target Pose-让结果(人物身体)更连贯</p>
+<p>(2) clothing flow estimation stage （服装流估算阶段）</p>
+<p>ClothFlow估计了一个稠密的流场 (如2×256×256)，在捕捉空间形变时，具有较高的灵活性和准确性。</p>
+<p>(3) clothing preserving rendering stage (保留衣服，渲染阶段)</p>
+<p>preserve details from the warped source clothing regions. </p>
+<p><img src="/2019/12/11/CV/CV_VTON/Paper-CV+ClothFlow/1576048130132.png" alt="1576048130132"></p>
+<p>FPN计算</p>
+<p><img src="/2019/12/11/CV/CV_VTON/Paper-CV+ClothFlow/1576569529735.png" alt="1576569529735"></p>
+<hr>
+<p><img src="/2019/12/11/CV/CV_VTON/Paper-CV+ClothFlow/1576203882901.png" alt="1576203882901"></p>
+<hr>
+<p><img src="/2019/12/11/CV/CV_VTON/Paper-CV+ClothFlow/1576203781613.png" alt="1576203781613"></p>
+<p>$1$ is anindicator function </p>
+<p>i 代表segment的通道，此处设置19（0背景不计算？）</p>
+<hr>
+<p><img src="/2019/12/11/CV/CV_VTON/Paper-CV+ClothFlow/1576203793834.png" alt="1576203793834"></p>
+<p>$C_s$: Source cloth;  $S_s$: Source Segment; $C_s^{‘}$:  source wraped cloth</p>
+<p>$S_t $: target Segment; $ C_t$: Target Cloth;</p>
+<hr>
+<p><img src="/2019/12/11/CV/CV_VTON/Paper-CV+ClothFlow/1576203808770.png" alt="1576203808770"></p>
+<hr>
+<p>Apply:</p>
+<p><strong>Pose-guided Person Generation.</strong>  </p>
+<p><strong>Virtual Try-On.</strong> </p>
+<p><strong>Optical Flow Estimation.</strong> </p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2019/12/11/CV/CV_VTON/Paper-CV+FashionAI/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/12/11/CV/CV_VTON/Paper-CV+FashionAI/" class="post-title-link" itemprop="url">Paper-CV+FashionAI</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-11 13:56:19" itemprop="dateCreated datePublished" datetime="2019-12-11T13:56:19+00:00">2019-12-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV-Apply/" itemprop="url" rel="index"><span itemprop="name">CV_Apply</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV-Apply/VTON/" itemprop="url" rel="index"><span itemprop="name">VTON</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[toc]</p>
+<h2 id="FashionAI-Paper"><a href="#FashionAI-Paper" class="headerlink" title="FashionAI Paper"></a>FashionAI Paper</h2><h3 id="2019-6《Pose-Guided-Fashion-Image-Synthesis-Using-Deep-Generative-Model-》"><a href="#2019-6《Pose-Guided-Fashion-Image-Synthesis-Using-Deep-Generative-Model-》" class="headerlink" title="2019&#x2F;6《Pose Guided Fashion Image Synthesis Using Deep Generative Model 》"></a>2019&#x2F;6《Pose Guided Fashion Image Synthesis Using Deep Generative Model 》</h3><p>《利用深度生成模型进行姿态引导的时尚图像合成》</p>
+<ul>
+<li>Wei Sun ncsu.edu </li>
+<li>ncsu.edu , jd, oppo,</li>
+</ul>
+<p>对于智能照片编辑、电影制作、虚拟试穿和时尚展示等应用来说，生成具有预期人体姿态的逼真图像是一个有前途但具有挑战性的研究课题。</p>
+<p><img src="/2019/12/11/CV/CV_VTON/Paper-CV+FashionAI/1576043877453.png" alt="1576043877453"></p>
+<p><img src="/2019/12/11/CV/CV_VTON/Paper-CV+FashionAI/1576044123635.png" alt="1576044123635"></p>
+<p>2018&#x2F;9《Dense Pose Transfer 》密集姿态转移</p>
+<p>Natalia Neverova；Facebook AI Research</p>
+<ul>
+<li><p>姿态转移 生成</p>
+<p>效果一般（脸部模糊，错位）</p>
+</li>
+</ul>
+<p><img src="/2019/12/11/CV/CV_VTON/Paper-CV+FashionAI/1576044310623.png" alt="1576044310623"></p>
+<h3 id="2019-8-《M2E-Try-On-Net-Fashion-from-Model-to-Everyone》时尚从模特到每个人"><a href="#2019-8-《M2E-Try-On-Net-Fashion-from-Model-to-Everyone》时尚从模特到每个人" class="headerlink" title="2019&#x2F;8 《M2E-Try On Net: Fashion from Model to Everyone》时尚从模特到每个人"></a>2019&#x2F;8 《M2E-Try On Net: Fashion from Model to Everyone》时尚从模特到每个人</h3><ul>
+<li><p>Person Image</p>
+</li>
+<li><p>Model Image</p>
+</li>
+<li><p>Person + Model-cloth Image</p>
+</li>
+</ul>
+<p><img src="/2019/12/11/CV/CV_VTON/Paper-CV+FashionAI/1576044697708.png" alt="1576044697708"></p>
+<h3 id="2018-11《Coordinate-based-Texture-Inpainting-for-Pose-Guided-Image-Generation-》基于坐标的纹理绘制用于Pose引导图像生成"><a href="#2018-11《Coordinate-based-Texture-Inpainting-for-Pose-Guided-Image-Generation-》基于坐标的纹理绘制用于Pose引导图像生成" class="headerlink" title="2018&#x2F;11《Coordinate-based Texture Inpainting for Pose-Guided Image Generation 》基于坐标的纹理绘制用于Pose引导图像生成"></a>2018&#x2F;11《Coordinate-based Texture Inpainting for Pose-Guided Image Generation 》基于坐标的纹理绘制用于Pose引导图像生成</h3><p>我们提出了一种新的深度学习方法，以位置引导重新合成人体照片.</p>
+<hr>
+<p>以上方法都不够逼真。</p>
+<h3 id="2019-4-《Unsupervised-shape-transformer-for-image-translation-and-cross-domain-retrieval-》"><a href="#2019-4-《Unsupervised-shape-transformer-for-image-translation-and-cross-domain-retrieval-》" class="headerlink" title="2019&#x2F;4 《Unsupervised shape transformer for image translation and cross-domain retrieval 》"></a>2019&#x2F;4 《Unsupervised shape transformer for image translation and cross-domain retrieval 》</h3><p>《用于图像转换和跨域检索的无监督形状变换器》</p>
+<p>We use three datasets: </p>
+<p>VITON [12], Fashion-Style， CMU MultiPIE[10]</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2019/12/11/ResearchRecord/Papers-Log/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/12/11/ResearchRecord/Papers-Log/" class="post-title-link" itemprop="url">Papers-Log 2019</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-11 09:50:45" itemprop="dateCreated datePublished" datetime="2019-12-11T09:50:45+00:00">2019-12-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Self/" itemprop="url" rel="index"><span itemprop="name">Self</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Self/Plan/" itemprop="url" rel="index"><span itemprop="name">Plan</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[TOC]</p>
+<p>截至2019年12月11日 2019年度阅读论文:</p>
+<h1 id="视觉领域论文"><a href="#视觉领域论文" class="headerlink" title="视觉领域论文"></a>视觉领域论文</h1><h2 id="Fashion-相关论文"><a href="#Fashion-相关论文" class="headerlink" title="Fashion 相关论文:"></a><strong>Fashion 相关论文:</strong></h2><p>1611.09577 Fast Face-swap Using Convolutional Neural Networks.pdf<br>1711.08447 [VITON] An Image-based Virtual Try-on Network.pdf<br>1807.07688 [CP-VTON] Toward Characteristic-Preserving Image-based Virtual Try-On Network.pdf<br>1906.01347 [WUTON] End-to-End Learning of Geometric Deformations of Feature Maps for Virtual Try-On .pdf<br>1906.07251 (ncsu JD Oppo)Pose Guided Fashion Image Synthesis Using Deep Generative Model.pdf<br>[MG-VTON] Towards Multi-pose Guided Virtual Try-on Network.pdf<br>[ClothFlow] Han_ClothFlow_A_Flow-Based_Model_for_Clothed_Person_Generation_ICCV_2019_paper.pdf<br>[DeepFashion] Liu_DeepFashion_Powering_Robust_CVPR_2016_paper.pdf<br>[DeepFashion2]—A Versatile Benchmark for Detection, Pose Estimation,Segmentation and Re-Identification of Clothing Images.pdf<br>[OpenPose] 1611.08050 Realtime Multi-Person 2D Pose Estimation using Part Affinity Fields .pdf<br>[OpenPose] 1812.08008 [OpenPose] Realtime Multi-Person 2D Pose Estimation using Part Affinity Fields.pdf<br>[Parsing] Liang_Human_Parsing_With_Contextualized Convolutional Neural Network ICCV_2015_paper.pdf<br>[Parsing] Zhao_Self-Supervised_Neural_Aggregation_CVPR_2017_paper.pdf<br>Fashion is my profession.pdf<br>Parsing Clothing in Fashion Photographs .pdf<br>MG-VTON-sysu.edu&#x2F;<br>ViTON-xintong&#x2F;</p>
+<p><strong>中山大学：</strong><br>Dong_7329-[SG-WGAN] soft-gated-warping-gan-for-pose-guided-person-image-synthesis.pdf<br>Dong_FW-GAN_Flow-Navigated_Warping_GAN_for_Video_Virtual_Try-On_ICCV_2019_paper.pdf</p>
+<h2 id="Viton相关："><a href="#Viton相关：" class="headerlink" title="Viton相关："></a><strong>Viton相关：</strong></h2><p>1805.04953 Learning Rich Features for Image Manipulation Detection.pdf<br>1902.01096 FiNet-Compatible and Diverse Fashion Image Inpainting.pdf<br>1910.02624 Label-PEnet .pdf<br>automatic-fashion-concept-final.pdf<br>Han_ClothFlow_A_Flow-Based_Model_for_Clothed_Person_Generation_ICCV_2019_paper.pdf<br>Han_FiNet_Compatible_and_Diverse_Fashion_Image_Inpainting_ICCV_2019_paper.pdf<br>iFAN_ Image-Instance Full Alignment Networks for Adaptive Object Detection.pdf</p>
+<h2 id="CV-相关论文"><a href="#CV-相关论文" class="headerlink" title="CV 相关论文:"></a><strong>CV 相关论文:</strong></h2><p>0700.00000 A duality based approach for realtime tv-l 1 optical flow.pdf<br>1911.05722 [MoCo] Momentum Contrast for Unsupervised Visual Representation Learning .pdf<br>2010 视觉挑战赛 The PASCAL Visual Object Classes (VOC) Challenge .pdf<br>hodan2017tless [T-LESS] An RGB-D Dataset for 6D Pose Estimation of Texture-less Objects .pdf</p>
+<h2 id="CV-classfication"><a href="#CV-classfication" class="headerlink" title="CV classfication:"></a><strong>CV classfication:</strong></h2><p>1406.4729  [SPP] PPT .pdf<br>1406.4729  [SPP] Spatial Pyramid Pooling in Deep Convolutional Networks for Visual Recognition.pdf<br>1412.0767  [C3D] Learning Spatiotemporal Features with 3D Convolutional Networks.pdf<br>1512.03385 [ResNet] -Deep Residual Learning for Image Recognition.pdf<br>1608.00859 [TSN] Temporal Segment Networks-Towards Good Practices for Deep Action Recognition.pdf<br>1703.05593 [Geometric Matching] Convolutional neural network architecture for geometric matching.pdf<br>1705.07750 [I3D] Quo Vadis, Action Recognition A New Model and the Kinetics Dataset .pdf<br>1708.05038 [R3D] ConvNet Architecture Search for Spatiotemporal Feature Learning.pdf<br>1709.01507 [SeNet] Squeeze-and-Excitation Networks.pdf<br>1711.07971 [NoLocal] Non-local Neural Networks.pdf<br>1711.08200 [T3D] Temporal 3D ConvNets-New Architecture and Transfer Learning for video Classification.pdf<br>1711.11248 [R21D] A Closer Look at Spatiotemporal Convolutions for Action Recognition.pdf<br>1711.11248v3 [R21D] A Closer Look at Spatiotemporal Convolutions for Action Recognition.pdf<br>1712.00559 [PNasNet] Progressive Neural Architecture Search.pdf<br>I3D_PPT.pdf<br>NVIDIA_R3DCNN_cvpr2016.pdf</p>
+<h2 id="3D"><a href="#3D" class="headerlink" title="**3D **"></a>**3D **</h2><p>1803.11527v3 [SpiderCNN] Deep Learning on Point Sets with .pdf</p>
+<h2 id="attention"><a href="#attention" class="headerlink" title="attention"></a><strong>attention</strong></h2><p>‘1809.00916 [OCNet] Object Context Network for Scene Parsing.pdf’<br>‘1809.02983 [DANet] Dual Attention Network for Scene Segmentation.pdf’<br>‘1811.11721 [CCNet] Criss-Cross Attention for Semantic Segmentation.pdf’<br>‘1908.06955 [DGMN] Dynamic Graph Message Passing Networks.pdf’<br>‘7318 [A^2Net] -a2-nets-double-attention-networks.pdf’</p>
+<h2 id="GAN"><a href="#GAN" class="headerlink" title="GAN"></a><strong>GAN</strong></h2><p>‘1411.1784  [CGAN] Conditional Generative Adversarial Nets.pdf’<br>‘1611.02200 UNSUPERVISED CROSS-DOMAIN IMAGE GENERATION.pdf’<br>‘1710.00962 [GP-GAN] Gender Ptreserving GAN for Synathesizing Faces from Landmarks.pdf’<br>‘1803.04189 [N2N] Noise2Noise- learning Image restoration with Clean Data.pdf’<br>‘1909.04988 How Old Are You–Face Age Translation with Identity Preservation Using GANs .pdf’<br>‘1910.10334 Relation Modeling with Graph Convolutional Networks for Facial Action Unit Detection.pdf’<br>‘1910.10344 Facial Expression Restoration Based on Improved Graph Convolutional Networks.pdf’<br>‘CVPR-2019-Drawing [APDrawingGAN]Generating Artistic Portrait Drawings from Face Photos with Hierarchical GANs.pdf’</p>
+<h2 id="object-detection"><a href="#object-detection" class="headerlink" title="object detection"></a><strong>object detection</strong></h2><p>‘1611.10012   [vs] Speed-accuracy trade-offs for modern convolutional object detectors.pdf’<br>‘1707.09605v2 [Crowd Counting] CNN-based Cascaded Multi-task Learning of High-level Prior and Density Estimation for Crowd Counting.pdf’</p>
+<h2 id="segmentation"><a href="#segmentation" class="headerlink" title="segmentation"></a><strong>segmentation</strong></h2><p>‘1411.4038  [FCN] Fully Convolutional Networks for Semantic Segmentation.pdf’<br>‘1500.00000 [FCN -CVPR ] Fully convolutional networks for semantic segmentation.pdf’<br>‘1505.04597 [U-Net] Convolutional Networks for Biomedical Image Segmentation.pdf’<br>‘1511.00561 [SegNet] SegNet A Deep Convolutional Encoder-Decoder Architecture for Image Segmentation.pdf’<br>‘1605.06211 [FCN] Fully Convolutional Networks for Semantic Segmentation.pdf’<br>‘1700.00000 [LIP] CVPR_2017_paper Look into Person Self-supervised Structure-sensitive Learning and A New Benchmark for Human Parsing.pdf’<br>‘1703.06870 [2018.1] Mark R-CNN.pdf’<br>‘1803.10683v3 [Human Instance Segmentation] Pose2Seg-Detection Free Human Instance Segmentation.pdf’<br>‘1804.01984 [LIP] Look into Person Joint Body Parsing and Pose Estimation Network and A New Benchmark.pdf’<br>‘1811.12596v1 [Human Part segmentation] Parsing R-CNN for Instance-Level Human Analysis.pdf’<br>‘1910.09777 [CVPR2019] Self-Correction for Human Parsing .pdf’</p>
+<h2 id="GeometricMatching"><a href="#GeometricMatching" class="headerlink" title="GeometricMatching"></a><strong>GeometricMatching</strong></h2><p>‘1511.05065 【Proposal Flow】.pdf’  ‘Articulated Human Detection with Flexible Mixtures-of-Parts.pdf’</p>
+<hr>
+<h1 id="GAME-Papers"><a href="#GAME-Papers" class="headerlink" title="GAME Papers"></a>GAME Papers</h1><p>‘[DRL] Playing FPS Games with Deep Reinforcement Learning 14456-66873-1-PB.pdf’<br>‘[facebook AI]Better Computer Go Player with Neural Network and Long-Term Prediction 1511.06410.pdf’<br>‘[MLL] 2006 Multi-Label Neural Networks with Applications to Functional Genomics and Text Categorization.pdf’<br>‘[MLL] gibaja2015 A Tutorial on Multilabel Learning.pdf’<br>‘[MLL] TKDE14- A Review On Multi-Label Learning Algorithms.pdf’<br>‘[MLL][PPT] A Review on Multi-Label Learning Algorithms.pdf’<br>‘[PaperRead] Accurate, Large Minibatch SGD- Training ImageNet in One Hour .docx’<br> 0709&#x2F;<br>‘1603.05027_Identity Mappings in Deep Residual Networks.pdf’<br>‘1706.02677_[Facebook] Accurate,LargeMinibatch SGD-training ImageNet in 1 Hour.pdf’<br>‘1806.07366 [NIPs2018 best paper] Neural Ordinary Differential Equations.pdf’<br>‘1810.09026 Actor-Critic Policy Optimization in Partially Observable Multiagent Enviroments.pdf’<br>‘1811.08883v1 [kaiming.he] Rethinking ImageNet Pre-training .pdf’<br>‘baier2018 [[Baier et al] Emulating human play in a leading mobile card game.pdf’<br> DDZ&#x2F;<br>‘Deep Decentralized Multi-task Multi-Agent Reinforcement Learning under Partial Observability <a href="mailto:&#49;&#x30;&#x2e;&#48;&#48;&#x30;&#x30;&#x40;&#100;&#108;&#x2e;&#97;&#99;&#x6d;&#x2e;&#111;&#114;&#x67;">10.0000@dl.acm.org</a>@3305958.pdf’<br> Game&#x2F;<br>‘hierarchical-deep-reinforcement-learning-integrating-temporal-abstraction-and-intrinsic-motivation 6233-.pdf’<br> lstm_cnn&#x2F;<br>‘mcts-A survery of Monte Carlo Tree Search Methods REVIEW.pdf’<br> mcts-survey.pdf<br>‘MiniMax etc’&#x2F;<br>‘Multi-armed Bandits with Episode Context.pdf’<br>‘sample statistical gradient-following algorithms for connectionist reinforcement learning -williams92simple.pdf’<br> Texas&#x2F;<br> 发表&#x2F;<br> 基于深度森林算法的慢性胃炎中医证候分类.pdf<br> 深度强化学习进展-从AlphaGo到AlphaGoZero.pdf</p>
+<h2 id="RL"><a href="#RL" class="headerlink" title="RL:"></a><strong>RL:</strong></h2><p>‘[Professor]Peter Stone_ Publications Sorted by Date.pdf的注释概要.pdf’<br> rl_ppt&#x2F;<br>    7-pg Lecture 7 Policy Gradient.pdf<br>    8-dyna Lecture 8 Integrating Learning and Planning.pdf<br>‘RL-1-Playing Atari with Deep Reinforcement Learning_1312.5602.pdf’<br>‘RL-2-human-level control through deep reinforcement learing - mnih2015.pdf’<br>‘RL-3-Deep Recurrent Q-Learing for Partially Observable MDPs 1507.06527.pdf’<br> RLbook2018.pdf<br>‘RL-ppt-Deep Recurrent Q-Learning for Partially - SDMIA15-Hausknecht.slides.pdf’<br>“强化学习—DQN算法原理详解 _ Wanjun’s blog.pdf”<br>“强化学习-基本概念 _ Wanjun’s blog.pdf”</p>
+<h2 id="0709"><a href="#0709" class="headerlink" title="0709:"></a><strong>0709:</strong></h2><p>‘1602.02867_v1_Value Iteration Networks.pdf’<br>‘1602.02867_v2_Value Iteration Networks.pdf’<br>‘1611.01626_v2_PGQ-Combining Policy Gradietn And Q-Learning.pdf’<br>‘1611.05763_Learning to reinforcement learn.pdf’<br>‘1702.03037_Multi-agent Reinforcement Learning in Sequential Social Dilemmas.pdf’<br>‘1706.02677[Facebook] Accurate,LargeMinibatch SGD-training ImageNet in 1 Hour.pdf’<br>‘mu-thesis Scaling Distributed Machine Learning with System and Algorithm Co-design.pdf’<br>‘phd_perolat_Reinforcement Learning- The Multi-Player Case.pdf’<br>‘stochgames.ijcai09_Computing Equilibria in Multiplayer Stochastic Games of Imperfect Information.pdf’<br> Temporal-difference_search_in_Computer_Go.pdf<br> 深度强化学习进展-从AlphaGo到AlphaGoZero.pdf</p>
+<h2 id="DDZ"><a href="#DDZ" class="headerlink" title="**DDZ:        **"></a>**DDZ:        **</h2><p>‘0176 [IJCAI] DeltaDou- Expert-level Doudizhu AI through Self-play.pdf’<br>‘A Solution to China Competitive Poker Using Deep learning .pdf’<br>‘1901.08925_Combinational Q-Learning for Dou Di Zhu.pdf’</p>
+<h2 id="GAME"><a href="#GAME" class="headerlink" title="**GAME:       **"></a>**GAME:       **</h2><p>‘[DeepMind] Mastering the Game of Go With Deep Neural Networks and Tree Search.pdf’<br>‘[DeepMind] Mastering the Game of Go With Deep Neural Networks and Tree Search-DESKTOP-828K1I6.pdf’<br>‘[DeepMind] Mastering the game of Go without human knowledge.pdf’<br>‘[DeepMind] Move Evaluation in Go Using Deep Convolutional Neural Networks 1412.6564.pdf’<br>‘[DeepMind][IN] 1612.00222 Interaction Networks for Learning about Objects, Relations and Physics .pdf’<br>‘[DeepMind][smooth_uct] Smooth UCT Search in Computer Poker.pdf’<br>‘[DeepMind][StarCraft II]1708.04782 StarCraft II- A New Challenge for .pdf’<br>‘[DeepMind][VIN]1706.01433 Visual Interaction Networks.pdf’<br>‘[DeepStack] 1701.01724 Expert-Level Artificail Intelligence in Heads-Up No-Limit Poker.pdf’<br>‘[Google] 1706.03762 Attention Is All You Need.pdf’<br>‘[SP] [FSP] Fictitious self-play in extensive-form games [UCL &amp; DeepMind]heinrich15.pdf’<br>‘[SP] [MC-NFSP][Othello] 1903.09569 [ZJU] Monte Carlo Neural Fictitious Self-Play Approach to Approximate Nash Equilibrium of Imperfect-Information Games.pdf’<br>‘[SP] [NFSP] 1603.01121 Deep Reinforcement Learning from Self-Play in Imperfect-Information Games.pdf’<br>‘1807.06813 [Scopone] Traditional Wisdom and Monte Carlo Tree Search Face-to-Face in the Card Game Scopone.pdf’<br>‘1910.04376 [RLCard] A Toolkit for Reinforcement Learning in Card Games.pdf’<br> Bridge&#x2F;<br> ‘1509.06731 Poker-CNN APattern Learning Strategy for Making Draws and Bets In Poker Game.pdf’<br> ‘1607.03290 [CN] Automatic Bridge Bidding Using Deep Reinforcement Learning.pdf’<br> ‘1903.00900v2 Competitive Bridge Bidding with Deep Neural Networks .pdf’<br> ‘2010 [NYU] The State of Automated Bridge Play.pdf’<br>  Double_Dummy_Analysis.pdf<br>  DraftBoostingBridge.pdf<br> Skat&#x2F;<br> ‘09-IJCAI [Skat] Improving State Evaluation, Inference, and Search in Trick-Based Card Games.pdf’<br> ‘11 [UA] [Skat] Search, Inference and Opponent Modelling in an Expert-Caliber Skat Player.pdf’<br> ‘11 [UA] [Skat] Search, Inference and Opponent Modelling in an Expert-Caliber Skat Player-DESKTOP-828K1I6.pdf’<br> ‘13 [UA] [Skat] Symmetries and Search in Trick-Taking Card Games.pdf’<br> ‘1903.09604 [Skat] Improving Search with Supervised Learning in Trick-Based Card Games.pdf’<br> ‘1905.10907 [Skat] Learning Policies from Human Data for Skat.pdf’<br> ‘1906.00000 [Skat] Policy Based Inference in Trick-Taking Card Games.pdf’</p>
+<h2 id="Lstm-CNN"><a href="#Lstm-CNN" class="headerlink" title="**Lstm_CNN:   **"></a>**Lstm_CNN:   **</h2><p>‘[CLDNN] Convolutional, Long Short-Term Memory, fully connected Deep Neural Networks - sainath2015.pdf’<br>‘[ConvLSTM] 5955-convolutional-lstm-network-a-machine-learning-approach-for-precipitation-nowcasting.pdf’<br>‘[ConvLSTM]-21-Unsupervised Learning of Video Representations using LSTMs - 1502.04681.pdf’<br>‘[LRCN] Long-term Recurrent Convolutional Networks for Visual Recognition and Description - 1411.4389.pdf’<br>‘[lstm + RL-PG] Recurrent Policy Gradients joa2009.pdf’<br>‘[lstm+ DRL] Language Understanding for Text-based Games using Deep 1506.08941v2.pdf’<br>‘[lstm+ RL] 1953-reinforcement-learning-with-long-short-term-memory.pdf’<br>‘[lstm-cards] Implementing a Doppelkopf Card Game - BA-Obenaus.pdf’<br>‘1502.04681 [LSTMs] Unsupervised Learning of Video Representations using LSTMs.pdf’</p>
+<h2 id="MiniMax-etc"><a href="#MiniMax-etc" class="headerlink" title="MiniMax etc:"></a><strong>MiniMax etc:</strong></h2><p>allis-thesis.pdf<br>Proof-number search allis1994.pdf</p>
+<h2 id="Texas"><a href="#Texas" class="headerlink" title="**Texas:      **"></a>**Texas:      **</h2><p>‘1809.04040-Solving Imperfect-Information Games.pdf’<br> CFR&#x2F;<br>    ‘1407.5042-Solving Large Imperfect Information Gmae Using CFR+.pdf’<br>    ‘17-AAAI-Refinement Safe and Nested Endgame Solving for Imperfect-Information Games.pdf’<br>    ‘17-AAAI-Safe and Nested Endgame Solving for Imperfect.docx’<br>    ‘CFR Variant.pptx’<br>     CFR+.pptx<br>    ‘REGRET MINIMIZATION IN GAMES AND THE DEVELOPMENT OF CHAMPION MULTIPLAYER Computer POKER_PLAYINGACENTS.pdf’<br>‘Generalized Sampling and Variance in Counterfactual Regret Minimization.pdf’<br> Libratus.pptx<br>‘Superhuman AI for heads up no limit poker Libratus beats top professionals.pdf’<br>‘Superhuman AI for multiplayer poker.pdf’<br>‘博论全文-REGRET MINIMIZATION IN GAMES AND THE DEVELOPMENT OF CHAMPION MULTIPLAYER Computer POKER_PLAYINGACENTS.pdf’</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2019/12/04/Tools/Coding-Model-labelme/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/12/04/Tools/Coding-Model-labelme/" class="post-title-link" itemprop="url">Coding_Model_labelme</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-04 17:44:43" itemprop="dateCreated datePublished" datetime="2019-12-04T17:44:43+00:00">2019-12-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Data Gen</p>
+<p>1、图片元数据</p>
+<p>2、图片标注</p>
+<p>安装</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">conda create --name=labelme python=3.6</span><br><span class="line">conda activate labelme</span><br><span class="line">python -m pip install pyqt5</span><br><span class="line">python -m pip install labelme</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://github.com/wkentaro/labelme">https://github.com/wkentaro/labelme</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/hitzoro/FCN-ColorLabel">https://github.com/hitzoro/FCN-ColorLabel</a></p>
+<p>Model build</p>
+<p>Model Train</p>
+<p>Model inference</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2019/12/02/Sub_Language/DL_Train/Tensorflow/model_relate/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/12/02/Sub_Language/DL_Train/Tensorflow/model_relate/" class="post-title-link" itemprop="url">Model Apply Relate</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-02 00:00:00" itemprop="dateCreated datePublished" datetime="2019-12-02T00:00:00+00:00">2019-12-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DNN-platform/" itemprop="url" rel="index"><span itemprop="name">DNN_platform</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DNN-platform/tensorflow/" itemprop="url" rel="index"><span itemprop="name">tensorflow</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[TOC]</p>
+<h3 id="ckpt-2-pb"><a href="#ckpt-2-pb" class="headerlink" title="ckpt 2 pb"></a>ckpt 2 pb</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">save_pb</span>(<span class="params">dst_pb, sess, output_node_names=<span class="literal">None</span></span>):</span><br><span class="line">    <span class="comment"># nn build</span></span><br><span class="line">    <span class="comment"># saver = tf.train.Saver(tf.global_variables())</span></span><br><span class="line">    <span class="comment"># sess = tf.Session()</span></span><br><span class="line">    <span class="comment"># saver.restore(sess, ckpt)</span></span><br><span class="line"></span><br><span class="line">    constant_graph = graph_util.convert_variables_to_constants(sess, sess.graph_def, output_node_names)</span><br><span class="line">    <span class="keyword">with</span> tf.gfile.FastGFile(dst_pb, mode=<span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        f.write(constant_graph.SerializeToString())</span><br><span class="line">    <span class="keyword">return</span> constant_graph</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="comment"># model restore</span></span><br><span class="line">    dst_file = <span class="string">&#x27;dest.pb&#x27;</span></span><br><span class="line">    names = [<span class="string">&#x27;out_argmax&#x27;</span>, <span class="string">&#x27;softmax&#x27;</span>, <span class="string">&#x27;out_put_k_indices&#x27;</span>]</span><br><span class="line">    save_pb(dst_file, model.sess, output_node_names=names)</span><br></pre></td></tr></table></figure>
+
+<h3 id="read-run-pb"><a href="#read-run-pb" class="headerlink" title="read&#x2F;run pb"></a>read&#x2F;run pb</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">read_pb</span>(<span class="params">pb_file, in_elem, return_elements</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    :param pb_file: &#x27;./tmp/model-20000.pb&#x27;</span></span><br><span class="line"><span class="string">    :param in_elem</span></span><br><span class="line"><span class="string">                x_ = g_1.get_tensor_by_name(&#x27;import/X:0&#x27;)</span></span><br><span class="line"><span class="string">                drop = g_1.get_tensor_by_name(&#x27;import/drop_out:0&#x27;)</span></span><br><span class="line"><span class="string">    :param return_elements</span></span><br><span class="line"><span class="string">                out = g_1.get_tensor_by_name(&#x27;import/Softmax:0&#x27;)</span></span><br><span class="line"><span class="string">                out2 = g_1.get_tensor_by_name(&#x27;import/out_top_k:0&#x27;)</span></span><br><span class="line"><span class="string">                out3 = g_1.get_tensor_by_name(&#x27;import/out_put_k_indices:0&#x27;)</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    f = <span class="built_in">open</span>(pb_file, <span class="string">&#x27;rb&#x27;</span>)</span><br><span class="line">    graph_def = tf.GraphDef()</span><br><span class="line">    graph_def.ParseFromString(f.read())</span><br><span class="line">    f.close()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> tf.Graph().as_default() <span class="keyword">as</span> g_1:</span><br><span class="line">        output = tf.import_graph_def(graph_def, ) <span class="comment"># return_elements=[&#x27;Softmax&#x27;]</span></span><br><span class="line">    <span class="comment"># g = tf.Graph().as_default()</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;---------------------&#x27;</span>)</span><br><span class="line">    <span class="comment"># print(&#x27;read_pb----&#x27;, g_1.get_operations())</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;---------------------&#x27;</span>)</span><br><span class="line">    in_tensor = &#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> ele <span class="keyword">in</span> in_elem:</span><br><span class="line">        in_tensor[ele] = g_1.get_tensor_by_name(ele)</span><br><span class="line"></span><br><span class="line">    out_tensor = &#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> ele <span class="keyword">in</span> return_elements:</span><br><span class="line">        out_tensor[ele] = g_1.get_tensor_by_name(ele)</span><br><span class="line"></span><br><span class="line">    out_tensor.values() <span class="comment"># [v1, v2]</span></span><br><span class="line"></span><br><span class="line">    sess = tf.Session(graph=g_1)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> sess, in_tensor, out_tensor</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2019/11/27/Paper/Paper-CV-cnn-geometric/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/27/Paper/Paper-CV-cnn-geometric/" class="post-title-link" itemprop="url">Paper-CV-cnn_geometric</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-11-27 17:48:34" itemprop="dateCreated datePublished" datetime="2019-11-27T17:48:34+00:00">2019-11-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/" itemprop="url" rel="index"><span itemprop="name">CV</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/Geometric/" itemprop="url" rel="index"><span itemprop="name">Geometric</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[toc]</p>
+<h1 id="CNN-Geometric-中文介绍"><a href="#CNN-Geometric-中文介绍" class="headerlink" title="CNN Geometric 中文介绍"></a>CNN Geometric 中文介绍</h1><h2 id="论文1-CNN-Geometric"><a href="#论文1-CNN-Geometric" class="headerlink" title="论文1: CNN Geometric"></a>论文1: CNN Geometric</h2><p>Convolutional neural network architecture for geometric matching</p>
+<p>卷积神经网络结构用于几何匹配</p>
+<p>I. Rocco, R. Arandjelović and J. Sivic. <strong>Convolutional neural network architecture for geometric matching</strong>. CVPR 2017 [<a target="_blank" rel="noopener" href="http://www.di.ens.fr/willow/research/cnngeometric/">website</a>][<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1703.05593">arXiv</a>]</p>
+<h3 id="架构："><a href="#架构：" class="headerlink" title="架构："></a>架构：</h3><p>阶段1：仿射变换 estimates an affine transformation </p>
+<p>阶段2：薄板样条转换 thin-plate spline (TPS) transformation </p>
+<p><img src="/2019/11/27/Paper/Paper-CV-cnn-geometric/1578368378239.png" alt="1578368378239"></p>
+<h3 id="Started"><a href="#Started" class="headerlink" title="Started:"></a>Started:</h3><ul>
+<li>demo.py demonstrates the results on the ProposalFlow dataset (Proposal Flow Dataset 的示范结果)</li>
+<li>train.py is the main training script (训练入口)</li>
+<li>eval_pf.py evaluates on the ProposalFlow dataset (用于评估dataset)</li>
+</ul>
+<h3 id="Trained-models"><a href="#Trained-models" class="headerlink" title="Trained models"></a>Trained models</h3><p>Using Streetview-synth dataset + VGG</p>
+<p>Using Pascal-synth dataset + VGG</p>
+<p>Using Pascal-synth dataset + ResNet-101</p>
+<p>Streetview: 是通过对来自东京时间机器数据集[4]的图像应用合成变换生成的，该数据集包含了东京的谷歌街景图像</p>
+<p>Pascal: created from the training set of Pascal VOC 2011 [16]  </p>
+<h2 id="论文2-DGC-NET"><a href="#论文2-DGC-NET" class="headerlink" title="论文2: DGC-NET"></a>论文2: DGC-NET</h2><p>DGC-Net: Dense Geometric Correspondence Network </p>
+<p>稠密几何对应网络</p>
+<h3 id="架构：-1"><a href="#架构：-1" class="headerlink" title="架构："></a>架构：</h3><p>四个组成部分：</p>
+<ul>
+<li>特征金字塔（feature pyramid creator）siamese VGG16 双重连接；类似Vgg16的网络架构，进行特征提取</li>
+<li>关联层 （correlation layer）：5 convolutional blocks (Conv-BN-ReLU) to estimate a 2D dense correspondence field </li>
+<li>扭曲层（warp layer）：</li>
+<li>matchability译码器 （matchability decoder ）：It contains four convolutional layers outputting a probability map (parametrized as a sigmoid</li>
+</ul>
+<p><img src="/2019/11/27/Paper/Paper-CV-cnn-geometric/1578368506854.png" alt="1578368506854"></p>
+<p><img src="/2019/11/27/Paper/Paper-CV-cnn-geometric/1578369779325.png" alt="1578369779325"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/27/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><span class="page-number current">28</span><a class="page-number" href="/page/29/">29</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/29/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

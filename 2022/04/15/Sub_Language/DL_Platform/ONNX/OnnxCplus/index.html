@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="[TOC] 0. onnx模型准备以及测试图1. c++使用onnxruntime进行推理12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Onnx Model inference by C++">
+<meta property="og:url" content="https://novav.github.io/2022/04/15/Sub_Language/DL_Platform/ONNX/OnnxCplus/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="[TOC] 0. onnx模型准备以及测试图1. c++使用onnxruntime进行推理12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-04-15T11:19:08.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:40.536Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="Onnx">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://novav.github.io/2022/04/15/Sub_Language/DL_Platform/ONNX/OnnxCplus/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Onnx Model inference by C++ | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/04/15/Sub_Language/DL_Platform/ONNX/OnnxCplus/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Onnx Model inference by C++
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-04-15 11:19:08" itemprop="dateCreated datePublished" datetime="2022-04-15T11:19:08+00:00">2022-04-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/deploy/" itemprop="url" rel="index"><span itemprop="name">deploy</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/deploy/Onnx/" itemprop="url" rel="index"><span itemprop="name">Onnx</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>[TOC]</p>
+<h2 id="0-onnx模型准备以及测试图"><a href="#0-onnx模型准备以及测试图" class="headerlink" title="0. onnx模型准备以及测试图"></a>0. onnx模型准备以及测试图</h2><h2 id="1-c-使用onnxruntime进行推理"><a href="#1-c-使用onnxruntime进行推理" class="headerlink" title="1. c++使用onnxruntime进行推理"></a>1. c++使用onnxruntime进行推理</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;opencv2/core.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;opencv2/imgcodecs.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;opencv2/highgui.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;opencv2/core/core.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;opencv2/imgproc/imgproc_c.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;opencv2/dnn.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span>  </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;onnxruntime_cxx_api.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;assert.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fstream&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;     <span class="comment">//当定义这一行后，cv::imread可以直接写成imread</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> Ort;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv::dnn;</span><br><span class="line"></span><br><span class="line">String labels_txt_file = <span class="string">&quot;F:\\Pycharm\\PyCharm_Study\\Others\\c++_learning\\C++_Master\\Onnx\\classification\\classification_classes_ILSVRC2012.txt&quot;</span>;</span><br><span class="line"><span class="function">vector&lt;String&gt; <span class="title">readClassNames</span><span class="params">()</span></span>;                  <span class="comment">// string对象作为vector对象 </span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 图像处理  标准化处理</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">PreProcess</span><span class="params">(<span class="type">const</span> Mat&amp; image, Mat&amp; image_blob)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Mat input;</span><br><span class="line">    image.<span class="built_in">copyTo</span>(input);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//数据处理 标准化</span></span><br><span class="line">    std::vector&lt;Mat&gt; channels, channel_p;</span><br><span class="line">    <span class="built_in">split</span>(input, channels);</span><br><span class="line">    Mat R, G, B;</span><br><span class="line">    B = channels.<span class="built_in">at</span>(<span class="number">0</span>);</span><br><span class="line">    G = channels.<span class="built_in">at</span>(<span class="number">1</span>);</span><br><span class="line">    R = channels.<span class="built_in">at</span>(<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">    B = (B / <span class="number">255.</span> - <span class="number">0.406</span>) / <span class="number">0.225</span>;</span><br><span class="line">    G = (G / <span class="number">255.</span> - <span class="number">0.456</span>) / <span class="number">0.224</span>;</span><br><span class="line">    R = (R / <span class="number">255.</span> - <span class="number">0.485</span>) / <span class="number">0.229</span>;</span><br><span class="line"></span><br><span class="line">    channel_p.<span class="built_in">push_back</span>(R);</span><br><span class="line">    channel_p.<span class="built_in">push_back</span>(G);</span><br><span class="line">    channel_p.<span class="built_in">push_back</span>(B);</span><br><span class="line"></span><br><span class="line">    Mat outt;</span><br><span class="line">    <span class="built_in">merge</span>(channel_p, outt);</span><br><span class="line">    image_blob = outt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 读取txt文件</span></span><br><span class="line"><span class="function">std::vector&lt;String&gt; <span class="title">readClassNames</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    std::vector&lt;String&gt; classNames;</span><br><span class="line"></span><br><span class="line">    <span class="function">std::ifstream <span class="title">fp</span><span class="params">(labels_txt_file)</span></span>;</span><br><span class="line">    <span class="keyword">if</span> (!fp.<span class="built_in">is_open</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;could not open file...\n&quot;</span>);</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    std::string name;</span><br><span class="line">    <span class="keyword">while</span> (!fp.<span class="built_in">eof</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        std::<span class="built_in">getline</span>(fp, name);</span><br><span class="line">        <span class="keyword">if</span> (name.<span class="built_in">length</span>())</span><br><span class="line">            classNames.<span class="built_in">push_back</span>(name);</span><br><span class="line">    &#125;</span><br><span class="line">    fp.<span class="built_in">close</span>();</span><br><span class="line">    <span class="keyword">return</span> classNames;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span>         <span class="comment">// 返回值为整型带参的main函数. 函数体内使用或不使用argc和argv都可</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//environment （设置为VERBOSE（ORT_LOGGING_LEVEL_VERBOSE）时，方便控制台输出时看到是使用了cpu还是gpu执行）</span></span><br><span class="line">    <span class="function">Ort::Env <span class="title">env</span><span class="params">(ORT_LOGGING_LEVEL_WARNING, <span class="string">&quot;OnnxModel&quot;</span>)</span></span>;</span><br><span class="line">    Ort::SessionOptions session_options;</span><br><span class="line">    <span class="comment">// 使用1个线程执行op,若想提升速度，增加线程数</span></span><br><span class="line">    session_options.<span class="built_in">SetIntraOpNumThreads</span>(<span class="number">1</span>);</span><br><span class="line">    CUDA加速开启(由于onnxruntime的版本太高，无cuda_provider_factory.h的头文件，加速可以使用onnxruntime V<span class="number">1.8</span>的版本)</span><br><span class="line">    <span class="comment">//OrtSessionOptionsAppendExecutionProvider_CUDA(session_options, 0);</span></span><br><span class="line">    <span class="comment">// ORT_ENABLE_ALL: 启用所有可能的优化</span></span><br><span class="line">    session_options.<span class="built_in">SetGraphOptimizationLevel</span>(GraphOptimizationLevel::ORT_ENABLE_ALL);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//load  model and creat session</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> _WIN32</span></span><br><span class="line">    <span class="type">const</span> <span class="type">wchar_t</span>* model_path = <span class="string">L&quot;F:\\Pycharm\\PyCharm_Study\\Others\\c++_learning\\C++_Master\\Onnx\\classification\\vgg16.onnx&quot;</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line">    <span class="type">const</span> <span class="type">char</span>* model_path = <span class="string">&quot;F:\\Pycharm\\PyCharm_Study\\Others\\c++_learning\\C++_Master\\Onnx\\classification\\vgg16.onnx&quot;</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Using Onnxruntime C++ API\n&quot;</span>);</span><br><span class="line">    <span class="function">Ort::Session <span class="title">session</span><span class="params">(env, model_path, session_options)</span></span>;</span><br><span class="line">    <span class="comment">// print model input layer (node names, types, shape etc.)</span></span><br><span class="line">    Ort::AllocatorWithDefaultOptions allocator;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//model info</span></span><br><span class="line">    <span class="comment">// 获得模型又多少个输入和输出，一般是指对应网络层的数目</span></span><br><span class="line">    <span class="comment">// 一般输入只有图像的话input_nodes为1</span></span><br><span class="line">    <span class="type">size_t</span> num_input_nodes = session.<span class="built_in">GetInputCount</span>();</span><br><span class="line">    <span class="comment">// 如果是多输出网络，就会是对应输出的数目</span></span><br><span class="line">    <span class="type">size_t</span> num_output_nodes = session.<span class="built_in">GetOutputCount</span>();</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Number of inputs = %zu\n&quot;</span>, num_input_nodes);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Number of output = %zu\n&quot;</span>, num_output_nodes);</span><br><span class="line">    <span class="comment">//获取输入name</span></span><br><span class="line">    <span class="type">const</span> <span class="type">char</span>* input_name = session.<span class="built_in">GetInputName</span>(<span class="number">0</span>, allocator);               </span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;input_name:&quot;</span> &lt;&lt; input_name &lt;&lt; std::endl;</span><br><span class="line">    <span class="comment">//获取输出name</span></span><br><span class="line">    <span class="type">const</span> <span class="type">char</span>* output_name = session.<span class="built_in">GetOutputName</span>(<span class="number">0</span>, allocator);</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;output_name: &quot;</span> &lt;&lt; output_name &lt;&lt; std::endl;</span><br><span class="line">    <span class="comment">// 自动获取维度数量</span></span><br><span class="line">    <span class="keyword">auto</span> input_dims = session.<span class="built_in">GetInputTypeInfo</span>(<span class="number">0</span>).<span class="built_in">GetTensorTypeAndShapeInfo</span>().<span class="built_in">GetShape</span>();</span><br><span class="line">    <span class="keyword">auto</span> output_dims = session.<span class="built_in">GetOutputTypeInfo</span>(<span class="number">0</span>).<span class="built_in">GetTensorTypeAndShapeInfo</span>().<span class="built_in">GetShape</span>();</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;input_dims:&quot;</span> &lt;&lt; input_dims[<span class="number">0</span>] &lt;&lt; std::endl;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;output_dims:&quot;</span> &lt;&lt; output_dims[<span class="number">0</span>] &lt;&lt; std::endl;    </span><br><span class="line">    std::vector&lt;<span class="type">const</span> <span class="type">char</span>*&gt; input_names&#123; input_name &#125;;</span><br><span class="line">    std::vector&lt;<span class="type">const</span> <span class="type">char</span>*&gt; output_names = &#123; output_name &#125;;</span><br><span class="line">    std::vector&lt;<span class="type">const</span> <span class="type">char</span>*&gt; input_node_names = &#123; <span class="string">&quot;input.1&quot;</span> &#125;;</span><br><span class="line">    std::vector&lt;<span class="type">const</span> <span class="type">char</span>*&gt; output_node_names = &#123; <span class="string">&quot;70&quot;</span>&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//加载图片</span></span><br><span class="line">    Mat img = <span class="built_in">imread</span>(<span class="string">&quot;F:\\Pycharm\\PyCharm_Study\\Others\\c++_learning\\C++_Master\\Onnx\\classification\\dog.jpg&quot;</span>);</span><br><span class="line">    Mat det1, det2;</span><br><span class="line">    <span class="built_in">resize</span>(img, det1, <span class="built_in">Size</span>(<span class="number">256</span>, <span class="number">256</span>), INTER_AREA);</span><br><span class="line">    det<span class="number">1.</span><span class="built_in">convertTo</span>(det1, CV_32FC3);</span><br><span class="line">    <span class="built_in">PreProcess</span>(det1, det2);         <span class="comment">//标准化处理</span></span><br><span class="line">    Mat blob = dnn::<span class="built_in">blobFromImage</span>(det2, <span class="number">1.</span>, <span class="built_in">Size</span>(<span class="number">224</span>, <span class="number">224</span>), <span class="built_in">Scalar</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>), <span class="literal">false</span>, <span class="literal">true</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Load success!\n&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="type">clock_t</span> startTime, endTime;</span><br><span class="line">    <span class="comment">//创建输入tensor</span></span><br><span class="line">    <span class="keyword">auto</span> memory_info = Ort::MemoryInfo::<span class="built_in">CreateCpu</span>(OrtAllocatorType::OrtArenaAllocator, OrtMemType::OrtMemTypeDefault);</span><br><span class="line">    std::vector&lt;Ort::Value&gt; input_tensors;</span><br><span class="line">    input_tensors.<span class="built_in">emplace_back</span>(Ort::Value::<span class="built_in">CreateTensor</span>&lt;<span class="type">float</span>&gt;(memory_info, blob.<span class="built_in">ptr</span>&lt;<span class="type">float</span>&gt;(), blob.<span class="built_in">total</span>(), input_dims.<span class="built_in">data</span>(), input_dims.<span class="built_in">size</span>()));</span><br><span class="line">    <span class="comment">/*cout &lt;&lt; int(input_dims.size()) &lt;&lt; endl;*/</span></span><br><span class="line">    startTime = <span class="built_in">clock</span>();</span><br><span class="line"></span><br><span class="line">    推理(score model &amp; input tensor, get back output tensor)</span><br><span class="line">    <span class="keyword">auto</span> output_tensors = session.<span class="built_in">Run</span>(Ort::RunOptions&#123; <span class="literal">nullptr</span> &#125;, input_node_names.<span class="built_in">data</span>(), input_tensors.<span class="built_in">data</span>(), input_names.<span class="built_in">size</span>(), output_node_names.<span class="built_in">data</span>(), output_node_names.<span class="built_in">size</span>());</span><br><span class="line">    endTime = <span class="built_in">clock</span>();</span><br><span class="line">    <span class="built_in">assert</span>(output_tensors.<span class="built_in">size</span>() == <span class="number">1</span> &amp;&amp; output_tensors.<span class="built_in">front</span>().<span class="built_in">IsTensor</span>());</span><br><span class="line">    <span class="comment">//除了第一个节点外，其他参数与原网络对应不上程序就会无法执行</span></span><br><span class="line">    <span class="comment">//第二个参数代表输入节点的名称集合</span></span><br><span class="line">    <span class="comment">//第四个参数1代表输入层的数目</span></span><br><span class="line">    <span class="comment">//第五个参数代表输出节点的名称集合</span></span><br><span class="line">    <span class="comment">//最后一个参数代表输出节点的数目</span></span><br><span class="line">      获取输出(Get pointer to output tensor <span class="type">float</span> values)</span><br><span class="line">    <span class="type">float</span>* floatarr = output_tensors[<span class="number">0</span>].<span class="built_in">GetTensorMutableData</span>&lt;<span class="type">float</span>&gt;();     <span class="comment">// 也可以使用output_tensors.front(); 获取list中的第一个元素变量  list.pop_front(); 删除list中的第一个位置的元素</span></span><br><span class="line">    <span class="comment">// 得到最可能分类输出</span></span><br><span class="line">    Mat newarr = <span class="built_in">Mat_</span>&lt;<span class="type">double</span>&gt;(<span class="number">1</span>, <span class="number">1000</span>); <span class="comment">//定义一个1*1000的矩阵</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; newarr.rows; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; newarr.cols; j++) <span class="comment">//矩阵列数循环</span></span><br><span class="line">        &#123;</span><br><span class="line">            newarr.<span class="built_in">at</span>&lt;<span class="type">double</span>&gt;(i, j) = floatarr[j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/*cout &lt;&lt; newarr.size() &lt;&lt; endl;*/</span></span><br><span class="line"></span><br><span class="line">    vector&lt;String&gt; labels = <span class="built_in">readClassNames</span>();</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> n = <span class="number">0</span>; n &lt; newarr.rows; n++) &#123;</span><br><span class="line">        Point classNumber;</span><br><span class="line">        <span class="type">double</span> classProb;</span><br><span class="line">        Mat probMat = <span class="built_in">newarr</span>(<span class="built_in">Rect</span>(<span class="number">0</span>, n, <span class="number">1000</span>, <span class="number">1</span>)).<span class="built_in">clone</span>();</span><br><span class="line">        Mat result = probMat.<span class="built_in">reshape</span>(<span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">        <span class="built_in">minMaxLoc</span>(result, <span class="literal">NULL</span>, &amp;classProb, <span class="literal">NULL</span>, &amp;classNumber);</span><br><span class="line">        <span class="type">int</span> classidx = classNumber.x;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;\n current image classification : %s, possible : %.2f\n&quot;</span>, labels.<span class="built_in">at</span>(classidx).<span class="built_in">c_str</span>(), classProb);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 显示文本</span></span><br><span class="line">        <span class="built_in">putText</span>(img, labels.<span class="built_in">at</span>(classidx), <span class="built_in">Point</span>(<span class="number">10</span>, <span class="number">20</span>), FONT_HERSHEY_SIMPLEX, <span class="number">0.6</span>, <span class="built_in">Scalar</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>), <span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">        <span class="built_in">imshow</span>(<span class="string">&quot;Image Classification&quot;</span>, img);</span><br><span class="line">        <span class="built_in">waitKey</span>(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">     计算运行时间</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;The run time is:&quot;</span> &lt;&lt; (<span class="type">double</span>)(endTime - startTime) / CLOCKS_PER_SEC &lt;&lt; <span class="string">&quot;s&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Done!\n&quot;</span>);</span><br><span class="line">    <span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://onnxruntime.ai/docs/install/">Install ONNX Runtime (ORT)</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44747572/article/details/121467657">C++使用onnxruntime&#x2F;opencv对onnx模型进行推理(附代码)</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42995327/article/details/121051991">在C++上利用onnxruntime （CUDA）和 opencv 部署模型onnx</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Onnx/" rel="tag"># Onnx</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/" rel="prev" title="无人驾驶（6）动态环境感知与跟踪">
+      <i class="fa fa-chevron-left"></i> 无人驾驶（6）动态环境感知与跟踪
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/" rel="next" title="无人驾驶（5）动态环境感知与3D目标检测">
+      无人驾驶（5）动态环境感知与3D目标检测 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-onnx%E6%A8%A1%E5%9E%8B%E5%87%86%E5%A4%87%E4%BB%A5%E5%8F%8A%E6%B5%8B%E8%AF%95%E5%9B%BE"><span class="nav-number">1.</span> <span class="nav-text">0. onnx模型准备以及测试图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-c-%E4%BD%BF%E7%94%A8onnxruntime%E8%BF%9B%E8%A1%8C%E6%8E%A8%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">1. c++使用onnxruntime进行推理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

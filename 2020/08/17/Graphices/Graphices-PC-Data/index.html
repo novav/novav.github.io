@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="[TOC] 点云数据处理方法概述 ICP点云配准就是我们非常熟悉的点云处理算法之一。实际上点云数据在形状检测和分类、立体视觉、运动恢复结构、多视图重建中都有广泛的使用。点云的存储、压缩、渲染等问题也是研究的热点。随着点云采集设备的普及、双目立体视觉技术、VR和AR的发展，点云数据处理技术正成为最有前景的技术之一。PCL是三维点云数据处理领域必备的工具和基本技能，这篇文章也将粗略介绍。 三维点云数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Graphices Point Cloud 点云数据处理方法-刚性篇">
+<meta property="og:url" content="https://novav.github.io/2020/08/17/Graphices/Graphices-PC-Data/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="[TOC] 点云数据处理方法概述 ICP点云配准就是我们非常熟悉的点云处理算法之一。实际上点云数据在形状检测和分类、立体视觉、运动恢复结构、多视图重建中都有广泛的使用。点云的存储、压缩、渲染等问题也是研究的热点。随着点云采集设备的普及、双目立体视觉技术、VR和AR的发展，点云数据处理技术正成为最有前景的技术之一。PCL是三维点云数据处理领域必备的工具和基本技能，这篇文章也将粗略介绍。 三维点云数据">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2020/08/17/Graphices/Graphices-PC-Data/image-20200817104906916.png">
+<meta property="og:image" content="https://novav.github.io/2020/08/17/Graphices/Graphices-PC-Data/image-20200817104915747.png">
+<meta property="og:image" content="https://novav.github.io/2020/08/17/Graphices/Graphices-PC-Data/image-20200817104947276.png">
+<meta property="og:image" content="https://novav.github.io/2020/08/17/Graphices/Graphices-PC-Data/image-20200817105700692.png">
+<meta property="og:image" content="https://novav.github.io/2020/08/17/Graphices/Graphices-PC-Data/image-20200817105738655.png">
+<meta property="article:published_time" content="2020-08-17T10:35:21.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:39.952Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="3d rigistration">
+<meta property="article:tag" content="PCL">
+<meta property="article:tag" content="3D pointcloud">
+<meta property="article:tag" content="rigid transformation">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2020/08/17/Graphices/Graphices-PC-Data/image-20200817104906916.png">
+
+<link rel="canonical" href="https://novav.github.io/2020/08/17/Graphices/Graphices-PC-Data/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Graphices Point Cloud 点云数据处理方法-刚性篇 | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2020/08/17/Graphices/Graphices-PC-Data/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Graphices Point Cloud 点云数据处理方法-刚性篇
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-08-17 10:35:21" itemprop="dateCreated datePublished" datetime="2020-08-17T10:35:21+00:00">2020-08-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Graphices/" itemprop="url" rel="index"><span itemprop="name">Graphices</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Graphices/PointCloud/" itemprop="url" rel="index"><span itemprop="name">PointCloud</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>[TOC]</p>
+<p><strong>点云数据处理方法概述</strong></p>
+<p>ICP点云配准就是我们非常熟悉的点云处理算法之一。实际上点云数据在形状检测和分类、立体视觉、运动恢复结构、多视图重建中都有广泛的使用。点云的存储、压缩、渲染等问题也是研究的热点。随着点云采集设备的普及、双目立体视觉技术、VR和AR的发展，点云数据处理技术正成为最有前景的技术之一。PCL是三维点云数据处理领域必备的工具和基本技能，这篇文章也将粗略介绍。</p>
+<h3 id="三维点云数据处理技术-刚性变换篇"><a href="#三维点云数据处理技术-刚性变换篇" class="headerlink" title="三维点云数据处理技术(刚性变换篇)"></a>三维点云数据处理技术(刚性变换篇)</h3><h4 id="1-点云滤波（数据预处理）"><a href="#1-点云滤波（数据预处理）" class="headerlink" title="1. 点云滤波（数据预处理）"></a><strong>1. 点云滤波（数据预处理）</strong></h4><p>点云滤波，顾名思义，就是滤掉噪声。原始采集的点云数据往往包含大量散列点、孤立点，比如下图为滤波前后的点云效果对比。</p>
+<p>点云滤波的主要方法有：双边滤波、高斯滤波、条件滤波、直通滤波、随机采样一致滤波、VoxelGrid滤波等，这些算法都被封装在了PCL点云库中。</p>
+<p><img src="/2020/08/17/Graphices/Graphices-PC-Data/image-20200817104906916.png" alt="image-20200817104906916" style="zoom:50%;"> <img src="/2020/08/17/Graphices/Graphices-PC-Data/image-20200817104915747.png" alt="image-20200817104915747" style="zoom:50%;"></p>
+<h4 id="2-点云关键点-提取算法"><a href="#2-点云关键点-提取算法" class="headerlink" title="2. 点云关键点(提取算法)"></a><strong>2. 点云关键点</strong>(提取算法)</h4><p>我们都知道在二维图像上，有Harris、SIFT、SURF、KAZE这样的关键点提取算法，这种特征点的思想可以推广到三维空间。从技术上来说，关键点的数量相比于原始点云或图像的数据量减小很多，与局部特征描述子结合在一起，组成关键点描述子常用来形成原始数据的表示，而且不失代表性和描述性，从而加快了后续的识别，追踪等对数据的处理了速度，故而，关键点技术成为在2D和3D 信息处理中非常关键的技术。</p>
+<p>常见的三维点云关键点提取算法有一下几种：ISS3D、Harris3D、NARF、SIFT3D</p>
+<p>这些算法在PCL库中都有实现，其中NARF算法是博主见过用的比较多的。</p>
+<h4 id="3-特征和特征描述"><a href="#3-特征和特征描述" class="headerlink" title="3. 特征和特征描述"></a><strong>3. 特征和特征描述</strong></h4><p>如果要对一个三维点云进行描述，光有点云的位置是不够的，常常需要计算一些额外的参数，比如法线方向、曲率、文理特征等等。如同图像的特征一样，我们需要使用类似的方式来描述三维点云的特征。</p>
+<p>常用的特征描述算法有：法线和曲率计算、特征值分析、PFH、FPFH、3D Shape Context、Spin Image等。</p>
+<p>PFH：点特征直方图描述子，FPFH：跨苏点特征直方图描述子，FPFH是PFH的简化形式。这里不提供具体描述了，具体细节去谷歌吧。</p>
+<img src="/2020/08/17/Graphices/Graphices-PC-Data/image-20200817104947276.png" alt="image-20200817104947276" style="zoom: 67%;">
+
+<h4 id><a href="#" class="headerlink" title></a></h4><h4 id="4-点云配准"><a href="#4-点云配准" class="headerlink" title="4. 点云配准"></a><strong>4. 点云配准</strong></h4><p>点云配准的概念也可以类比于二维图像中的配准，只不过二维图像配准获取得到的是x，y，alpha，beta等放射变化参数，二三维点云配准可以模拟三维点云的移动和对其，也就是会获得一个旋转矩阵和一个平移向量，通常表达为一个4×3的矩阵，其中3×3是旋转矩阵，1<em>3是平移向量。严格说来是6个参数，因为旋转矩阵也可以通过罗格里德斯变换转变成1</em>3的旋转向量。</p>
+<p>常用的点云配准算法有两种：正太分布变换和著名的ICP点云配准，此外还有许多其它算法，列举如下：</p>
+<p>ICP：稳健ICP、point to plane ICP、point to line ICP、MBICP、GICP</p>
+<p>NDT 3D、Multil-Layer NDT</p>
+<p>FPCS、KFPSC、SAC-IA</p>
+<p>Line Segment Matching、ICL</p>
+<img src="/2020/08/17/Graphices/Graphices-PC-Data/image-20200817105700692.png" alt="image-20200817105700692" style="zoom:50%;">
+
+<h4 id="5-点云分割与分类"><a href="#5-点云分割与分类" class="headerlink" title="5. 点云分割与分类"></a><strong>5. 点云分割与分类</strong></h4><p>点云的分割与分类也算是一个大Topic了，这里因为多了一维就和二维图像比多了许多问题，点云分割又分为区域提取、线面提取、语义分割与聚类等。同样是分割问题，点云分割涉及面太广，确实是三言两语说不清楚的。只有从字面意思去理解了，遇到具体问题再具体归类。一般说来，点云分割是目标识别的基础。</p>
+<p>分割：区域声场、Ransac线面提取、NDT-RANSAC、K-Means、Normalize Cut、3D Hough Transform(线面提取)、连通分析</p>
+<p>分类：基于点的分类，基于分割的分类，监督分类与非监督分类</p>
+<h4 id="6-SLAM图优化"><a href="#6-SLAM图优化" class="headerlink" title="6. SLAM图优化"></a><strong>6. SLAM图优化</strong></h4><p>SLAM又是大Topic，SLAM技术中，在图像前端主要获取点云数据，而在后端优化主要就是依靠图优化工具。而SLAM技术近年来的发展也已经改变了这种技术策略。在过去的经典策略中，为了求解LandMark和Location，将它转化为一个稀疏图的优化，常常使用g2o工具来进行图优化。下面是一些常用的工具和方法。</p>
+<p>g2o、LUM、ELCH、Toro、SPA</p>
+<p>SLAM方法：ICP、MBICP、IDC、likehood Field、 Cross Correlation、NDT</p>
+<h4 id="7-目标识别检索"><a href="#7-目标识别检索" class="headerlink" title="7. 目标识别检索"></a><strong>7. 目标识别检索</strong></h4><p>这是点云数据处理中一个偏应用层面的问题，简单说来就是Hausdorff距离常被用来进行深度图的目标识别和检索，现在很多三维<a target="_blank" rel="noopener" href="https://cloud.tencent.com/product/facerecognition?from=10680">人脸识别</a>都是用这种技术来做的。</p>
+<h4 id="8-变化检测"><a href="#8-变化检测" class="headerlink" title="8. 变化检测"></a><strong>8. 变化检测</strong></h4><p>当无序点云在连续变化中，八叉树算法常常被用于检测变化，这种算法需要和关键点提取技术结合起来，八叉树算法也算是经典中的经典了。</p>
+<h4 id="9-三维重建"><a href="#9-三维重建" class="headerlink" title="9. 三维重建"></a><strong>9. 三维重建</strong></h4><p>我们获取到的点云数据都是一个个孤立的点，如何从一个个孤立的点得到整个曲面呢，这就是三维重建的topic。</p>
+<p>在玩kinectFusion时候，如果我们不懂，会发现曲面渐渐变平缓，这就是重建算法不断迭代的效果。我们采集到的点云是充满噪声和孤立点的，三维重建算法为了重构出曲面，常常要应对这种噪声，获得看上去很舒服的曲面。</p>
+<p>常用的三维重建算法和技术有：</p>
+<p>泊松重建、Delauary triangulatoins</p>
+<p>表面重建，人体重建，建筑物重建，输入重建</p>
+<p>实时重建：重建纸杯或者龙作物4D生长台式，人体姿势识别，表情识别</p>
+<img src="/2020/08/17/Graphices/Graphices-PC-Data/image-20200817105738655.png" alt="image-20200817105738655" style="zoom:50%;">
+
+<h4 id="10-点云数据管理"><a href="#10-点云数据管理" class="headerlink" title="10. 点云数据管理"></a><strong>10. 点云数据管理</strong></h4><p>点云压缩，点云索引（KDtree、Octree），点云LOD（金字塔），海量点云的渲染</p>
+<h3 id="PCL库简介"><a href="#PCL库简介" class="headerlink" title="PCL库简介"></a><strong>PCL库简介</strong></h3><p>点云数据处理中，不仅涉及前段数据的输入，中间数据和处理，还涉及到后端点云的渲染显示，如果这些函数都要我们亲自来实现，那么开发效率必然受到极大影响。在点云数据处理领域，有一个不可或缺的助手：PCL (Point Cloud Library)。PCL在点云数据处理中的地位犹如OpenCV在图像处理领域的地位，如果你接触三维点云数据处理，那么PCL将大大简化你的开发。</p>
+<h3 id="Ref"><a href="#Ref" class="headerlink" title="Ref:"></a>Ref:</h3><p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1462320">https://cloud.tencent.com/developer/article/1462320</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/3d-rigistration/" rel="tag"># 3d rigistration</a>
+              <a href="/tags/PCL/" rel="tag"># PCL</a>
+              <a href="/tags/3D-pointcloud/" rel="tag"># 3D pointcloud</a>
+              <a href="/tags/rigid-transformation/" rel="tag"># rigid transformation</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/07/23/Sub_Language/CVs/Language-pyrender/" rel="prev" title="3D 点云可視化">
+      <i class="fa fa-chevron-left"></i> 3D 点云可視化
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/08/26/Sub_Language/PythonDoc/Language-scipy/" rel="next" title="Scipy (Python 的科学计算包)">
+      Scipy (Python 的科学计算包) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E7%BB%B4%E7%82%B9%E4%BA%91%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E6%8A%80%E6%9C%AF-%E5%88%9A%E6%80%A7%E5%8F%98%E6%8D%A2%E7%AF%87"><span class="nav-number">1.</span> <span class="nav-text">三维点云数据处理技术(刚性变换篇)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E7%82%B9%E4%BA%91%E6%BB%A4%E6%B3%A2%EF%BC%88%E6%95%B0%E6%8D%AE%E9%A2%84%E5%A4%84%E7%90%86%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">1. 点云滤波（数据预处理）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E7%82%B9%E4%BA%91%E5%85%B3%E9%94%AE%E7%82%B9-%E6%8F%90%E5%8F%96%E7%AE%97%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">2. 点云关键点(提取算法)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E7%89%B9%E5%BE%81%E5%92%8C%E7%89%B9%E5%BE%81%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.3.</span> <span class="nav-text">3. 特征和特征描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">1.4.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E7%82%B9%E4%BA%91%E9%85%8D%E5%87%86"><span class="nav-number">1.5.</span> <span class="nav-text">4. 点云配准</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E7%82%B9%E4%BA%91%E5%88%86%E5%89%B2%E4%B8%8E%E5%88%86%E7%B1%BB"><span class="nav-number">1.6.</span> <span class="nav-text">5. 点云分割与分类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-SLAM%E5%9B%BE%E4%BC%98%E5%8C%96"><span class="nav-number">1.7.</span> <span class="nav-text">6. SLAM图优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-%E7%9B%AE%E6%A0%87%E8%AF%86%E5%88%AB%E6%A3%80%E7%B4%A2"><span class="nav-number">1.8.</span> <span class="nav-text">7. 目标识别检索</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-%E5%8F%98%E5%8C%96%E6%A3%80%E6%B5%8B"><span class="nav-number">1.9.</span> <span class="nav-text">8. 变化检测</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-%E4%B8%89%E7%BB%B4%E9%87%8D%E5%BB%BA"><span class="nav-number">1.10.</span> <span class="nav-text">9. 三维重建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-%E7%82%B9%E4%BA%91%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86"><span class="nav-number">1.11.</span> <span class="nav-text">10. 点云数据管理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PCL%E5%BA%93%E7%AE%80%E4%BB%8B"><span class="nav-number">2.</span> <span class="nav-text">PCL库简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ref"><span class="nav-number">3.</span> <span class="nav-text">Ref:</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

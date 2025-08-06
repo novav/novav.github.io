@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="BUG Analysisundefined reference to编译链接错误，  新增的.cpp没有加入makefile  没有指定对应的库（.o&#x2F;.a&#x2F;.so)   连接库参数的顺序不对 在默认情况下,对于-l 使用库的要求是越是基础的库越要写在后面,无论是静态还动态  gcc&#x2F;ld 版本不匹配 gcc&#x2F;ld的版本的兼容性问题,由于gcc2 到 gcc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ experience">
+<meta property="og:url" content="https://novav.github.io/2023/04/26/Sub_Language/CPlus/Cplus_Experience/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="BUG Analysisundefined reference to编译链接错误，  新增的.cpp没有加入makefile  没有指定对应的库（.o&#x2F;.a&#x2F;.so)   连接库参数的顺序不对 在默认情况下,对于-l 使用库的要求是越是基础的库越要写在后面,无论是静态还动态  gcc&#x2F;ld 版本不匹配 gcc&#x2F;ld的版本的兼容性问题,由于gcc2 到 gcc">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-04-26T09:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:40.528Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="c++">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://novav.github.io/2023/04/26/Sub_Language/CPlus/Cplus_Experience/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>C++ experience | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2023/04/26/Sub_Language/CPlus/Cplus_Experience/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          C++ experience
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-04-26 09:00:00" itemprop="dateCreated datePublished" datetime="2023-04-26T09:00:00+00:00">2023-04-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="BUG-Analysis"><a href="#BUG-Analysis" class="headerlink" title="BUG Analysis"></a>BUG Analysis</h2><h3 id="undefined-reference-to"><a href="#undefined-reference-to" class="headerlink" title="undefined reference to"></a>undefined reference to</h3><p>编译链接错误，</p>
+<ul>
+<li><p>新增的.cpp没有加入makefile</p>
+</li>
+<li><p>没有指定对应的库（.o&#x2F;.a&#x2F;.so) </p>
+</li>
+<li><p>连接库参数的顺序不对 在默认情况下,对于-l 使用库的要求是越是基础的库越要写在后面,无论是静态还动态</p>
+</li>
+<li><p>gcc&#x2F;ld 版本不匹配 gcc&#x2F;ld的版本的兼容性问题,由于gcc2 到 gcc3大版本的兼容性存在问题(其实gcc3.2到3.4也一定程度上存在这样的问题) 当在高版本机器上使用低版本的机器就会导致这样的错误, 这个问题比较常见在32位的环境上, 另外就在32位环境不小心使用了64位的库或者反过来64位环境使用了32位的库.</p>
+</li>
+<li><p>C&#x2F;C++相互依赖和链接 gcc和g++编译结果的混用需要保证能够extern “C” 两边都可以使用的接口,在我们的64位环境中gcc链接g++的库还需要加上 -lstdc++,具体见前文对于混合编译的说明</p>
+</li>
+<li><p>运行期报错 这个问题基本上是由于程序使用了dlopen方式载入.so, 但.so没有把所有需要的库都链接上,具体参加上文中对于静态库和动态库混合使用的说明</p>
+</li>
+</ul>
+<h2 id="Linux进程分析"><a href="#Linux进程分析" class="headerlink" title="Linux进程分析"></a>Linux进程分析</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/ktigerhero3/article/details/80004315">https://blog.csdn.net/ktigerhero3/article/details/80004315</a></p>
+<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1701569">https://cloud.tencent.com/developer/article/1701569</a></p>
+<p>手动释放Linux内存<a target="_blank" rel="noopener" href="https://www.cnblogs.com/jackhub/p/3736877.html">https://www.cnblogs.com/jackhub/p/3736877.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wwd0501/article/details/100041808">https://blog.csdn.net/wwd0501/article/details/100041808</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/shuihupo/article/details/80905641">https://blog.csdn.net/shuihupo/article/details/80905641</a></p>
+<h3 id="contab定时任务"><a href="#contab定时任务" class="headerlink" title="contab定时任务"></a>contab定时任务</h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/aminxu/p/5993769.html">https://www.cnblogs.com/aminxu/p/5993769.html</a></p>
+<h2 id="coredump"><a href="#coredump" class="headerlink" title="coredump"></a>coredump</h2><h2 id="SIGNAL"><a href="#SIGNAL" class="headerlink" title="SIGNAL"></a>SIGNAL</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">man 7 signal</span><br></pre></td></tr></table></figure>
+
+<p> Linux  supports  the standard signals listed below.  Several signal numbers are architecture-dependent, as indicated in the “Value” column.  (Where three values are given, the first one is usually valid for alpha and sparc, the<br>       middle one for x86, arm, and most other architectures, and the last one for mips.  (Values for parisc are not shown; see the Linux kernel source for signal numbering on that architecture.)  A dash (-) denotes that a  signal  is<br>       absent on the corresponding architecture.</p>
+<pre><code>   First the signals described in the original POSIX.1-1990 standard.
+
+   Signal     Value     Action   Comment
+   ──────────────────────────────────────────────────────────────────────
+   SIGHUP        1       Term    Hangup detected on controlling terminal
+                                 or death of controlling process
+   SIGINT        2       Term    Interrupt from keyboard
+   SIGQUIT       3       Core    Quit from keyboard
+   SIGILL        4       Core    Illegal Instruction
+   SIGABRT       6       Core    Abort signal from abort(3)
+   SIGFPE        8       Core    Floating-point exception
+   SIGKILL       9       Term    Kill signal
+   SIGSEGV      11       Core    Invalid memory reference
+   SIGPIPE      13       Term    Broken pipe: write to pipe with no
+                                 readers; see pipe(7)
+   SIGALRM      14       Term    Timer signal from alarm(2)
+   SIGTERM      15       Term    Termination signal
+   SIGUSR1   30,10,16    Term    User-defined signal 1
+   SIGUSR2   31,12,17    Term    User-defined signal 2
+   SIGCHLD   20,17,18    Ign     Child stopped or terminated
+   SIGCONT   19,18,25    Cont    Continue if stopped
+   SIGSTOP   17,19,23    Stop    Stop process
+   SIGTSTP   18,20,24    Stop    Stop typed at terminal
+   SIGTTIN   21,21,26    Stop    Terminal input for background process
+   SIGTTOU   22,22,27    Stop    Terminal output for background process
+
+   The signals SIGKILL and SIGSTOP cannot be caught, blocked, or ignored.
+</code></pre>
+<p>ref: <a target="_blank" rel="noopener" href="https://blog.csdn.net/wanxuexiang/article/details/88382733">https://blog.csdn.net/wanxuexiang/article/details/88382733</a></p>
+<h2 id="dmesg"><a href="#dmesg" class="headerlink" title="dmesg"></a>dmesg</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dmesg</span><br><span class="line">dmesg -T</span><br></pre></td></tr></table></figure>
+
+<h2 id="gdb调试"><a href="#gdb调试" class="headerlink" title="gdb调试"></a>gdb调试</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">r</span><br><span class="line">bt</span><br><span class="line">l  // list code</span><br><span class="line">watch</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">bt</span><br><span class="line">where</span><br><span class="line"></span><br><span class="line">f 1</span><br><span class="line">disassemble</span><br><span class="line"></span><br><span class="line">shell echo free@plt |c++filt</span><br></pre></td></tr></table></figure>
+
+<h2 id="LOGS"><a href="#LOGS" class="headerlink" title="LOGS:"></a>LOGS:</h2><h3 id="问题：torch-cudnn-Destory-ini-c-138-Backtrace-stopped-frame-did-not"><a href="#问题：torch-cudnn-Destory-ini-c-138-Backtrace-stopped-frame-did-not" class="headerlink" title="问题：torch cudnn Destory ini.c:138 Backtrace stopped: frame did not"></a>问题：torch cudnn Destory ini.c:138 Backtrace stopped: frame did not</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">(gdb) bt</span><br><span class="line">#0  0x00007f8891fed9fe in ?? () from /usr/local/cuda-10.0/lib64/libcudart.so.10.0</span><br><span class="line">#1  0x00007f8891ff296b in ?? () from /usr/local/cuda-10.0/lib64/libcudart.so.10.0</span><br><span class="line">#2  0x00007f889201f8e0 in cudaStreamDestroy () from /usr/local/cuda-10.0/lib64/libcudart.so.10.0</span><br><span class="line">#3  0x00007f88a24f563d in cudnnDestroy () from /data/include/libtorch/lib/libtorch.so</span><br><span class="line">#4  0x00007f8898d8fa15 in at::cuda::(anonymous namespace)::DeviceThreadHandlePool&lt;cudnnContext*, &amp;at::native::(anonymous namespace)::createCuDNNHandle, &amp;at::native::(anonymous namespace)::destroyCuDNNHandle&gt;::~Devi</span><br><span class="line">   from /data/include/libtorch/lib/libtorch.so</span><br><span class="line">#5  0x00007f8891681735 in __cxa_finalize (d=0x7f88d7684000) at cxa_finalize.c:83</span><br><span class="line">#6  0x00007f8893de4d43 in __do_global_dtors_aux () from /data/include/libtorch/lib/libtorch.so</span><br><span class="line">#7  0x00007ffed7d4bbb0 in ?? ()</span><br><span class="line">#8  0x00007f88dc13bd13 in _dl_fini () at dl-fini.c:138</span><br><span class="line">Backtrace stopped: frame did not save the PC</span><br></pre></td></tr></table></figure>
+
+<p>解决：</p>
+<ul>
+<li><p>SO库ld加载torch.so</p>
+</li>
+<li><p>主程序不需要再次ld了，不然就会上面报错</p>
+</li>
+</ul>
+<h3 id="问题C-】symbol-lookup-error-：undefined-reference-to找不到"><a href="#问题C-】symbol-lookup-error-：undefined-reference-to找不到" class="headerlink" title="问题C++】symbol lookup error ：undefined reference to找不到"></a>问题C++】symbol lookup error ：undefined reference to找不到</h3><p>解决：</p>
+<ul>
+<li><p>1、import *.h文件 没有声明定义</p>
+</li>
+<li><p>2、声明定义的函数参数定义与cpp实现不一致，比如参数多了const的修饰（编译可以通过）</p>
+</li>
+</ul>
+<h3 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h3><p>core dump 生成</p>
+<h4 id="1-调试"><a href="#1-调试" class="headerlink" title="1 调试"></a>1 调试</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">gdb exe_file core-file</span><br><span class="line"></span><br><span class="line">(gdb) l</span><br><span class="line">46    in ../sysdeps/unix/sysv/linux/raise.c</span><br></pre></td></tr></table></figure>
+
+<h4 id="2、bt-查看"><a href="#2、bt-查看" class="headerlink" title="2、bt 查看"></a>2、bt 查看</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">(gdb) bt</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">0  __GI_raise (sig=sig@entry=6) at ../sysdeps/unix/sysv/linux/raise.c:51</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">1  0x00007f056317e801 <span class="keyword">in</span> __GI_abort () at abort.c:79</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">2  0x00007f05631c7897 <span class="keyword">in</span> __libc_message (action=action@entry=do_abort, <span class="built_in">fmt</span>=<span class="built_in">fmt</span>@entry=0x7f05632f4b9a <span class="string">&quot;%s\n&quot;</span>) at ../sysdeps/posix/libc_fatal.c:181</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">3  0x00007f05631ce90a <span class="keyword">in</span> malloc_printerr (str=str@entry=0x7f05632f2d88 <span class="string">&quot;free(): invalid pointer&quot;</span>) at malloc.c:5350</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">4  0x00007f05631d5e1c <span class="keyword">in</span> _int_free (have_lock=0, p=0x7f0400000013, av=0x7f0563529c40 &lt;main_arena&gt;) at malloc.c:4157</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">5  __GI___libc_free (mem=0x7f0400000023) at malloc.c:3124</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">6  0x00007f0562c055a0 <span class="keyword">in</span> __gnu_cxx::new_allocator&lt;int&gt;::deallocate (this=0x7f0454019258, __p=0x7f0400000023) at /usr/include/c++/7/ext/new_allocator.h:125</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">7  0x00007f0562c0531a <span class="keyword">in</span> std::allocator_traits&lt;std::allocator&lt;int&gt; &gt;::deallocate (__a=..., __p=0x7f0400000023, __n=18446709159920402432) at /usr/include/c++/7/bits/alloc_traits.h:462</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">8  0x00007f0562c04f08 <span class="keyword">in</span> std::_Vector_base&lt;int, std::allocator&lt;int&gt; &gt;::_M_deallocate (this=0x7f0454019258, __p=0x7f0400000023, __n=18446709159920402432)</span></span><br><span class="line">    at /usr/include/c++/7/bits/stl_vector.h:180</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">9  0x00007f0562c06cd5 <span class="keyword">in</span> std::_Vector_base&lt;int, std::allocator&lt;int&gt; &gt;::~_Vector_base (this=0x7f0454019258, __in_chrg=&lt;optimized out&gt;) at /usr/include/c++/7/bits/stl_vector.h:162</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">10 0x00007f0562c06b15 <span class="keyword">in</span> std::vector&lt;int, std::allocator&lt;int&gt; &gt;::~vector (this=0x7f0454019258, __in_chrg=&lt;optimized out&gt;) at /usr/include/c++/7/bits/stl_vector.h:435</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">11 0x00007f0562c4cf02 <span class="keyword">in</span> __gnu_cxx::new_allocator&lt;std::vector&lt;int, std::allocator&lt;int&gt; &gt; &gt;::destroy&lt;std::vector&lt;int, std::allocator&lt;int&gt; &gt; &gt; (this=0x7f0493fd45b0, __p=0x7f0454019258)</span></span><br><span class="line">    at /usr/include/c++/7/ext/new_allocator.h:140</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">12 0x00007f0562c4b29e <span class="keyword">in</span> std::allocator_traits&lt;std::allocator&lt;std::vector&lt;int, std::allocator&lt;int&gt; &gt; &gt; &gt;::destroy&lt;std::vector&lt;int, std::allocator&lt;int&gt; &gt; &gt; (__a=..., __p=0x7f0454019258)</span></span><br><span class="line">    at /usr/include/c++/7/bits/alloc_traits.h:487</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">13 0x00007f0562c497bb <span class="keyword">in</span> std::vector&lt;std::vector&lt;int, std::allocator&lt;int&gt; &gt;, std::allocator&lt;std::vector&lt;int, std::allocator&lt;int&gt; &gt; &gt; &gt;::pop_back (this=0x7f0493fd45b0)</span></span><br><span class="line">    at /usr/include/c++/7/bits/stl_vector.h:979</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">14 0x00007f0562c53d82 <span class="keyword">in</span> ddzmove_sg::MoveGener::gen_type_1_single (this=0x7f0493fd4710, cards=0x7f0493fd4b00, result=std::vector of length -1, capacity 1 = &#123;...&#125;, is_start=<span class="literal">true</span>)</span></span><br><span class="line">    at /data/shixx/games/DDZ-QS-Server/ai_server_sanguo_call/src/move_utils_sg.cpp:532</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">15 0x00007f0562c537cf <span class="keyword">in</span> ddzmove_sg::MoveGener::gen_moves (this=0x7f0493fd4710, cards=0x7f0493fd4b00, outed_3dai_num=2, horse=std::vector of length 1, capacity 1 = &#123;...&#125;,</span> </span><br><span class="line">    result=std::vector of length -1, capacity 1 = &#123;...&#125;) at /data/shixx/games/DDZ-QS-Server/ai_server_sanguo_call/src/move_utils_sg.cpp:465</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">16 0x00007f0562c5879e <span class="keyword">in</span> ddzmove_sg::get_legal_card_play_actions[abi:cxx11](ddzmove_sg::MoveGener, int*, int*, int, int, std::vector&lt;int, std::allocator&lt;int&gt; &gt;, std::vector&lt;std::vector&lt;int, std::allocator&lt;int&gt; &gt;, std::allocator&lt;std::vector&lt;int, std::allocator&lt;int&gt; &gt; &gt; &gt;&amp;, bool, int) (mg=..., rival_move_cards=0x7f0493fd4b50, next_hands=0x7f0493fd4b00, hero_id=106,</span> </span><br><span class="line">    outed_3dai_num=2, horse=std::vector of length 1, capacity 1 = &#123;...&#125;, avail_moves=std::vector of length -1, capacity 1 = &#123;...&#125;, ignorePass=false, round_id=973329)</span><br><span class="line">    at /data/shixx/games/DDZ-QS-Server/ai_server_sanguo_call/src/move_utils_sg.cpp:1217</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">17 0x00007f0562c5f613 <span class="keyword">in</span> TorchServer::getPTOut (this=0x2f25ec0, result=std::vector of length 0, capacity 0, heroes=0x7f045401ff50, skill=0x7f0454006590, horse=0x7f0454019290,</span> </span><br><span class="line">    all_cards=0x7f0493fd68c0, bottom=0x7f0493fd6870, mingpai=0x7f0454002b20, remain_num=0x7f04540016f0, out_history=0x7f0493fd69a0, cur_turn=21, my_seat=1, dz_seat=1, aitype=0, ailevel=5, </span><br><span class="line">    round_id=973329, topk=3, ignorePass=false) at /data/shixx/games/DDZ-QS-Server/ai_server_sanguo_call/src/torch_server.cpp:323</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">18 0x00007f0562cbbfdc <span class="keyword">in</span> getPTOut (action=0x7f0493fda410, action_num=0x7f0493fda2e0, cards=0x7f047c3332a0, remain_num=0x7f04540016f0, bottom=0x7f045400f460, bottom_num=3,</span> </span><br><span class="line">    mingpai=0x7f0454002b20, out_history=0x7f0454033990, heroes=0x7f045401ff50, skill=0x7f0454006590, horse=0x7f0454019290, call_history=0x7f045400d1c0, cur_turn=21, my_seat=1, dz_seat=1, </span><br><span class="line">    first_bid_seat=-1, aitype=0, ailevel=5, round_id=973329) at /data/shixx/games/DDZ-QS-Server/ai_server_sanguo_call/src/torch_so.cpp:114</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-查看出错的栈信息"><a href="#3-查看出错的栈信息" class="headerlink" title="3 查看出错的栈信息"></a>3 查看出错的栈信息</h4><p>frame + (gdb) info args</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">(gdb) frame</span><br><span class="line">(gdb) f 14</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">14 0x00007f0562c53d82 <span class="keyword">in</span> ddzmove_sg::MoveGener::gen_type_1_single (this=0x7f0493fd4710, cards=0x7f0493fd4b00, result=std::vector of length -1, capacity 1 = &#123;...&#125;, is_start=<span class="literal">true</span>)</span></span><br><span class="line">    at /data/shixx/games/DDZ-QS-Server/ai_server_sanguo_call/src/move_utils_sg.cpp:532</span><br><span class="line">532    /data/shixx/games/DDZ-QS-Server/ai_server_sanguo_call/src/move_utils_sg.cpp: No such file or directory.</span><br><span class="line">(gdb) info args</span><br><span class="line">this = 0x7f0493fd4710</span><br><span class="line">cards = 0x7f0493fd4b00</span><br><span class="line">result = std::vector of length -1, capacity 1 = &#123;std::vector of length 1, capacity 1 = &#123;1409472400&#125;, std::vector of length -6, capacity -1073741833 = &#123;</span><br><span class="line">    &lt;error reading variable result (Cannot access memory at address 0x25)&gt;</span><br><span class="line">is_start = true</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-查看参数数据"><a href="#4-查看参数数据" class="headerlink" title="4 查看参数数据"></a>4 查看参数数据</h4><p>已知cards是一个数组（17位）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">(gdb) print cards</span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">1 = (int *) 0x7f0493fd4b00</span></span><br><span class="line">(gdb) print cards[0]</span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">2 = 0</span></span><br><span class="line">(gdb) print cards[1]</span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">3 = 0</span></span><br><span class="line">...</span><br><span class="line">(gdb) print cards[17]</span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">18 = 2</span></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/c/" rel="tag"># c++</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/04/20/Sub_Language/DL_Train/PT_To_TF/" rel="prev" title="TF <--> Torch">
+      <i class="fa fa-chevron-left"></i> TF <--> Torch
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/05/04/Sub_Language/DL_Train/Pytorch/libtorch_docs/" rel="next" title="LibPyTorch Doc">
+      LibPyTorch Doc <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#BUG-Analysis"><span class="nav-number">1.</span> <span class="nav-text">BUG Analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined-reference-to"><span class="nav-number">1.1.</span> <span class="nav-text">undefined reference to</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux%E8%BF%9B%E7%A8%8B%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">Linux进程分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#contab%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1"><span class="nav-number">2.1.</span> <span class="nav-text">contab定时任务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#coredump"><span class="nav-number">3.</span> <span class="nav-text">coredump</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SIGNAL"><span class="nav-number">4.</span> <span class="nav-text">SIGNAL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dmesg"><span class="nav-number">5.</span> <span class="nav-text">dmesg</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gdb%E8%B0%83%E8%AF%95"><span class="nav-number">6.</span> <span class="nav-text">gdb调试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LOGS"><span class="nav-number">7.</span> <span class="nav-text">LOGS:</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%EF%BC%9Atorch-cudnn-Destory-ini-c-138-Backtrace-stopped-frame-did-not"><span class="nav-number">7.1.</span> <span class="nav-text">问题：torch cudnn Destory ini.c:138 Backtrace stopped: frame did not</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98C-%E3%80%91symbol-lookup-error-%EF%BC%9Aundefined-reference-to%E6%89%BE%E4%B8%8D%E5%88%B0"><span class="nav-number">7.2.</span> <span class="nav-text">问题C++】symbol lookup error ：undefined reference to找不到</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Debug"><span class="nav-number">7.3.</span> <span class="nav-text">Debug</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E8%B0%83%E8%AF%95"><span class="nav-number">7.3.1.</span> <span class="nav-text">1 调试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81bt-%E6%9F%A5%E7%9C%8B"><span class="nav-number">7.3.2.</span> <span class="nav-text">2、bt 查看</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E6%9F%A5%E7%9C%8B%E5%87%BA%E9%94%99%E7%9A%84%E6%A0%88%E4%BF%A1%E6%81%AF"><span class="nav-number">7.3.3.</span> <span class="nav-text">3 查看出错的栈信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E6%9F%A5%E7%9C%8B%E5%8F%82%E6%95%B0%E6%95%B0%E6%8D%AE"><span class="nav-number">7.3.4.</span> <span class="nav-text">4 查看参数数据</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

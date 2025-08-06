@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="[toc] MCTS_Leeapply: GO	:	UCT (MCTS + UCB) Pluribus :  MCTS-CFR Dota2 :  MCTS StarCraft2 : MCTS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MCTS GO">
+<meta property="og:url" content="https://novav.github.io/2019/08/15/Games/MCTS_GO/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="[toc] MCTS_Leeapply: GO	:	UCT (MCTS + UCB) Pluribus :  MCTS-CFR Dota2 :  MCTS StarCraft2 : MCTS">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2019/08/15/Games/MCTS_GO/mcts_own.png">
+<meta property="og:image" content="https://novav.github.io/2019/08/15/Games/MCTS_GO/search_algo2.png">
+<meta property="article:published_time" content="2019-08-15T08:39:31.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:39.868Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="Game">
+<meta property="article:tag" content="MCTS">
+<meta property="article:tag" content="NashEquilibriun">
+<meta property="article:tag" content="Go">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2019/08/15/Games/MCTS_GO/mcts_own.png">
+
+<link rel="canonical" href="https://novav.github.io/2019/08/15/Games/MCTS_GO/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>MCTS GO | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2019/08/15/Games/MCTS_GO/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MCTS GO
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-08-15 08:39:31" itemprop="dateCreated datePublished" datetime="2019-08-15T08:39:31+00:00">2019-08-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Game/" itemprop="url" rel="index"><span itemprop="name">Game</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/RL/" itemprop="url" rel="index"><span itemprop="name">RL</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/Game/" itemprop="url" rel="index"><span itemprop="name">Game</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>[toc]</p>
+<h1 id="MCTS-Lee"><a href="#MCTS-Lee" class="headerlink" title="MCTS_Lee"></a>MCTS_Lee</h1><h2 id="apply"><a href="#apply" class="headerlink" title="apply:"></a>apply:</h2><ol>
+<li>GO	:	UCT (MCTS + UCB)</li>
+<li>Pluribus :  MCTS-CFR</li>
+<li>Dota2 :  MCTS</li>
+<li>StarCraft2 : MCTS</li>
+</ol>
+<span id="more"></span>
+
+<h2 id="Vanilla-MCTS"><a href="#Vanilla-MCTS" class="headerlink" title="Vanilla MCTS"></a>Vanilla MCTS</h2><p><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/ml-monte-carlo-tree-search-mcts/">参考资料-GeeksforGeeks </a></p>
+<p><img src="/2019/08/15/Games/MCTS_GO/mcts_own.png"></p>
+<p><strong>Advantages of Monte Carlo Tree Search:</strong></p>
+<ol>
+<li>MCTS is a simple algorithm to implement.</li>
+<li>Monte Carlo Tree Search is a heuristic algorithm. MCTS can operate effectively without any knowledge in the particular domain, apart from the rules and end conditions, and can can find its own moves and learn from them by playing random playouts.</li>
+<li>The MCTS can be saved in any intermediate state and that state can be used in future use cases whenever required.</li>
+<li>MCTS supports asymmetric expansion of the search tree based on the circumstances in which it is operating.</li>
+</ol>
+<p><strong>Disadvantages of Monte Carlo Tree Search:</strong></p>
+<ol>
+<li><p>As the tree growth becomes rapid after a few iterations, it requires a huge amount of memory.</p>
+</li>
+<li><p>There is a bit of a reliability issue with Monte Carlo Tree Search. In certain scenarios, there might be a single branch or path, that might lead to loss against the opposition when implemented for those turn-based games. This is mainly due to the vast amount of combinations and each of the nodes might not be visited enough number of times to understand its result or outcome in the long run.</p>
+</li>
+<li><p>MCTS algorithm needs a huge number of iterations to be able to effectively decide the most efficient path. So, there is a bit of a speed issue there.</p>
+</li>
+</ol>
+<p><strong>蒙特卡罗树搜索的优点：</strong></p>
+<ol>
+<li>MCTS是一种简单的算法。</li>
+<li>蒙特卡罗树搜索是一种启发式算法。除了规则和结束条件之外，MCTS可以在没有任何特定领域知识的情况下有效地操作，并且可以通过播放随机播放来找到自己的动作并从中学习。</li>
+<li>MCTS可以保存在任何中间状态，并且该状态可以在需要时用于将来的用例。</li>
+<li>MCTS支持基于其运行环境的搜索树的非对称扩展。</li>
+</ol>
+<p><strong>蒙特卡罗树搜索的缺点：</strong></p>
+<ol>
+<li>随着树的增长在几次迭代后变得迅速，它需要大量的内存。</li>
+<li>蒙特卡罗树搜索存在一些可靠性问题。在某些情况下，可能存在单个分支或路径，当针对那些回合制游戏实施时，可能导致针对异议者的损失。这主要是由于大量的组合，并且从长远来看，可能无法访问每个节点足够多次以了解其结果或结果。</li>
+<li>MCTS算法需要大量迭代才能有效地确定最有效的路径。所以，那里有一点速度问题。</li>
+</ol>
+<h2 id="UCB"><a href="#UCB" class="headerlink" title="UCB"></a>UCB</h2><p>$$<br>UCB1&#x3D;\bar{X}_j+\sqrt{\frac{2\ln n}{n_j}}<br>$$</p>
+<h2 id="UCT-AlphaGO"><a href="#UCT-AlphaGO" class="headerlink" title="UCT (AlphaGO)"></a>UCT (AlphaGO)</h2><h3 id="MCTS-Search"><a href="#MCTS-Search" class="headerlink" title="MCTS Search"></a>MCTS Search</h3><p>Each edge store an action value Q(s,a), visit count N(s,a), prior probability P(s, a).</p>
+<h4 id="1-Select"><a href="#1-Select" class="headerlink" title="1.Select"></a>1.Select</h4><p>​	maximize action value plus a bonus(奖金)<br>$$<br>a_t&#x3D;\underset{a}{argmax}(Q(s_t,a)+u(s_t,a))<br>$$</p>
+<p>$$<br>u(s,a) \propto \frac{P(s,a)}{1+N(s,a)}<br>$$<br>​	that is proportional to the prior probability but decays with repeated visits to encourage exploration.</p>
+<p>​	这与先验概率成正比，但随着重复的访问而衰减以鼓励勘探。</p>
+<h4 id="2-Simulate-expand-leaf-Node"><a href="#2-Simulate-expand-leaf-Node" class="headerlink" title="2.Simulate &#x2F;expand leaf Node"></a>2.Simulate &#x2F;expand leaf Node</h4><p>​	the leaf position s_l is processed just once by the SL policy network Pσ</p>
+<p>​	SL策略网络pσ只处理一次叶位置s_l。<br>$$<br>P(s, a )  &#x3D; p_σ(a | s)<br>$$</p>
+<h4 id="3-Leaf-Node-Evaluated"><a href="#3-Leaf-Node-Evaluated" class="headerlink" title="3.Leaf Node Evaluated"></a>3.Leaf Node Evaluated</h4><p>​	1.value network $v_θ(s_L)$</p>
+<p>​	2.outcome $z_L$</p>
+<p>​	these evaluations are combined, using a mixing parameter λ, into a leaf evaluation $ V(s_L) $<br>$$<br>V(s_L) &#x3D; (1-λ)v_θ(s_L) + λz_L<br>$$</p>
+<h4 id="4-BackUp"><a href="#4-BackUp" class="headerlink" title="4.BackUp"></a>4.BackUp</h4><p>$$<br>\begin{split}<br>N(s,a)&#x3D;\sum_{i&#x3D;1}^{n}\mathbb{1}(s,a,i) \<br>Q(s,a)&#x3D;\frac{1}{N(s,a)}\sum_{i&#x3D;1}^{n}\mathbb{1}(s,a,i)V(s_L^i)<br>\end{split}<br>$$</p>
+<p>​	where $ s_L^i $ is the leaf node from the ith simulation, and 1(s, a, i) indicates whether an edge (s, a) was traversed during the ith simulation. ($s_L^i $ leaf node from 第i次模拟,   1(s, a, i)  代表第i次模拟，边(s,a)是否被遍历)</p>
+<h2 id="Alpha-Go-MCTS-UCT-Detail-Method"><a href="#Alpha-Go-MCTS-UCT-Detail-Method" class="headerlink" title="Alpha Go MCTS-UCT Detail Method"></a>Alpha Go MCTS-UCT Detail Method</h2><h3 id="Search"><a href="#Search" class="headerlink" title="Search"></a>Search</h3><p>asynchronous policy and value MCTS algorithm (APV-MCTS) </p>
+<p><img src="/2019/08/15/Games/MCTS_GO/search_algo2.png"></p>
+<p>Each node s in the search tree contains edges (s, a) for all legal actions a∈A( ) s .<br>Each edge stores a set of statistics,<br>$$<br>{ P(s,a),N_v(s,a),N_r(s,a),W_v(s,a),W_r(s,a),Q(s,a) }<br>$$<br>P(s,a)是局面s下走a的先验概率。</p>
+<p>$Wv(s,a)$是simulation时value network的打分，</p>
+<p>$Wr(s,a)$是simulation时rollout的打分。</p>
+<p>$Nv(s,a)$和$Nr(s,a)$ :black_nib:number </p>
+<p>$Wv(s, a)$ and $Wr(s, a)$ are Monte Carlo estimates of total action value, accumulated over $Nv(s, a)$ and $Nr(s, a) $leaf evaluations and rollout rewards,  </p>
+<p>$Q(s,a)$是最终融合了value network打分和rollout打分的最终得分。</p>
+<h3 id="Selection-a"><a href="#Selection-a" class="headerlink" title="Selection(a)"></a>Selection(a)</h3><p>using a variant of the PUCT<br>$$<br>% <!--[CDATA[
+\begin{split}
+a_t &= \underset{a}{argmax}(Q(s_t,a)+u(s_t,a)) \\
+u(s,a) &= c_{puct}P(s,a)\frac{\sqrt{\sum_bN_r(s,b)}}{1+N_r(s,a)}
+\end{split} %]]--><br>$$<br>this search control strategy initially prefers actions with high prior probability and low visit count, but asymptotically prefers actions with high action value</p>
+<p>该搜索控制策略<strong>最初优选具有高的先前概率和低访问计数的动作</strong>，但是渐近地倾向于具有<strong>高动作值</strong>的动作，</p>
+<h3 id="Expansion-b"><a href="#Expansion-b" class="headerlink" title="Expansion(b)"></a>Expansion(b)</h3><p>When the visit count exceeds a threshold, Nr(s, a)&gt; N_thr, the successor state s′&#x3D; f(s, a) is added to the search tree.  </p>
+<p>初始化统计量：<br>$$<br>N_v(s’,a)&#x3D;0, N_r(s’,a)&#x3D;0, W_v(s’,a)&#x3D;0, W_r(s’,a)&#x3D;0, P(s’,a)&#x3D;P(a \vert s’)<br>$$</p>
+<p>$$<br>P(a \vert s’) &#x3D; P_σ^β(a \vert s’)<br>$$</p>
+<p>the threshold nthr is adjusted dynamically to ensure that the rate at which positions are added to the policy queue matches the rate at which the gpus evaluate the policy network. (动态调整阈值nthr以确保将位置添加到策略队列的速率与GPU评估策略网络的速率相匹配。)</p>
+<p>positions are evaluated by both the policy network and the value network using a mini-batch size of 1 to minimize end-to-end evaluation time. ( 策略网络和值网都使用最小批处理大小1来评估位置，以最大限度地缩短端到端评估时间。)</p>
+<p>拓展选择的节点，当有一个子节点的visite次数超过阈值时，则把此节点加入tree，并对此节点进行SL Policy 计算Prior probabilities（下一个Select模块使用）。</p>
+<h3 id="Evaluation-c"><a href="#Evaluation-c" class="headerlink" title="Evaluation(c)"></a>Evaluation(c)</h3><p>叶子节点$s_L$被加到一个队列中等到value network计算得分（异步的），然后从$s_L$开始使用rollout policy模拟对局到游戏结束。</p>
+<h3 id="Backup-d"><a href="#Backup-d" class="headerlink" title="Backup(d)"></a>Backup(d)</h3><p><strong>rollout 统计信息更新</strong></p>
+<p>virtual loss discourages other threads from simultaneously exploring the identical variation</p>
+<p>vl阻止其他线程同时探索相同的变化。<br>$$<br>\begin{split}<br>N_r(s_t,a_t) \leftarrow N_r(s_t,a_t)+n_{vl} \<br>W_r(s_t,a_t) \leftarrow W_r(s_t,a_t)-n_{vl}<br>\end{split}<br>$$<br>上面的给(s,a)增加virtual 的loss，那么根据上面选择的公式，就不太会选中它了。当模拟结束了，需要把这个virtual loss去掉，同时加上这次Simulation的得分。<br>$$<br>\begin{split}<br>N_r(s_t,a_t) \leftarrow N_r(s_t,a_t)-n_{vl}+1 \<br>W_r(s_t,a_t) \leftarrow W_r(s_t,a_t)+n_{vl}+z_t<br>\end{split}<br>$$<br>the output of the value network vθ(sl) is used to update value statistics</p>
+<p><strong>估值网络</strong>vθ(Sl)的输出用于更新值统计信息。<br>$$<br>\begin{split}<br>N_v(s_t,a_t) \leftarrow N_v(s_t,a_t)+1 \<br>W_v(s_t,a_t) \leftarrow W_v(s_t,a_t)+v_\theta(s_L)<br>\end{split}<br>$$<br>the overall evaluation of each state action is a weighted average of the monte carlo estimates,</p>
+<p>对每个Stat action的总体评估是蒙特卡罗估计的<strong>加权平均值</strong>，<br>$$<br>\begin{equation}<br>Q(s,a)&#x3D;(1-\lambda)\frac{W_v(s,a)}{N_v(s,a)}+\lambda\frac{W_r(s,a)}{N_r(s,a)}<br>\end{equation}<br>$$</p>
+<h3 id="Search-END"><a href="#Search-END" class="headerlink" title="Search END"></a>Search END</h3><p>AlphaGo selects the action with maximum visit count，</p>
+<p>AlphaGO resigns when 它的总体评价下降到10%以下的概率赢得比赛，也就是 max_a Q( s, a) &lt; -0.8</p>
+<h2 id="Policy-network-classfication"><a href="#Policy-network-classfication" class="headerlink" title="Policy network: classfication"></a>Policy network: classfication</h2><p>todo</p>
+<h2 id="Policy-network-reinforcement-learning"><a href="#Policy-network-reinforcement-learning" class="headerlink" title="Policy network: reinforcement learning"></a>Policy network: reinforcement learning</h2><p>todo</p>
+<h2 id="value-regression"><a href="#value-regression" class="headerlink" title="value regression"></a>value regression</h2><p>todo</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a target="_blank" rel="noopener" href="http://fancyerii.github.io/books/alphago/">http://fancyerii.github.io/books/alphago/</a></p>
+<h1 id="MCTS-GO-Zero"><a href="#MCTS-GO-Zero" class="headerlink" title="MCTS_GO_Zero"></a>MCTS_GO_Zero</h1><h2 id="UCT"><a href="#UCT" class="headerlink" title="UCT*"></a>UCT*</h2><p>expand &amp; evalue:</p>
+<ul>
+<li>nural network using mini-batch size of 8</li>
+</ul>
+<p>$$<br>a_t &#x3D; argmax(Q(s_t,a) + U(s_t, a))<br>$$</p>
+<p>$$<br>U(s, a) &#x3D; c_{puct}P(s,a) \frac{\sum_b N(s, a)}{1 + N(s, a)}<br>$$<br>backup<br>$$<br>W(s_t, a_t) &#x3D; W(s_t, a_t) + v\<br>Q(s_t, a_t) &#x3D; \frac{W(s_t, a_t)}{N(s_t, a_t)}<br>$$<br>play<br>$$<br>π(a| s ) &#x3D; \frac{N(s_0, a)^{1&#x2F;\tau}}{\sum_b N(s_0, b)^(1&#x2F;\tau)}<br>$$<br>τ is a temperature parameter that controls the level of exploration </p>
+<h3 id="KEY"><a href="#KEY" class="headerlink" title="KEY:"></a>KEY:</h3><p>Train Time:</p>
+<p>0.4s per move(一局游戏？) ；1600次simulate；</p>
+<p>409W game 【143,360W&#x2F;409W&#x3D;350 每局】【0.4s * 409W &#x3D; 454 Hour】</p>
+<p>70W mini-batches (2048样本&#x2F;32&#x3D;64GPU?) 【70W*2048&#x3D; 143,360W】</p>
+<p>36Hour 超越Lee（lee defeat Lee Sedol）</p>
+<p>单个机器，4TPU(4块TPU2芯片和4块V100GPU是速度相同)</p>
+<p>MSE:</p>
+<p>The MSE is between the actual outcome z ∈ {-1, +1} and the neural network value v, scaled by<br>a factor of 1&#x2F;4 to the range of 0–1.  </p>
+<h3 id="Train-Pipeline"><a href="#Train-Pipeline" class="headerlink" title="Train Pipeline"></a>Train Pipeline</h3><p>C: 三场游戏的前80step，不同训练阶段的play，using 1,600 simulations (around 0.4 s) per search </p>
+<p>训练到第3小时，游戏的重点是贪婪地捕获石头，很像一个人类初学者。</p>
+<p>在19小时，游戏展示了生死攸关、影响力和疆域的基本要素</p>
+<p>在70小时，游戏是非常平衡的，涉及多场战斗和复杂的KO战斗，最终分解为半点胜利的白色。</p>
+<h3 id="最终性能："><a href="#最终性能：" class="headerlink" title="最终性能："></a>最终性能：</h3><p>40 block 40 day 训练</p>
+<p>29 million games of self­play were generated. parameters were updated from 3.1 million mini­batches of 2,048 positions each.</p>
+<p>制作了2900万个自我游戏。参数从310万个小批次更新，每批2048个职位。</p>
+<h3 id="Go-Zero-5185"><a href="#Go-Zero-5185" class="headerlink" title="Go Zero 5185"></a>Go Zero 5185</h3><p>5,185  NN + MCTS 训练40Days, 40 block</p>
+<p>3,055  NN (比第一版Alpha Fan 3144 弱)</p>
+<p>– 对比网络版本</p>
+<p>3400 NN + MCTS(5s) 72Hour（3day）</p>
+<h3 id="GO-master-4858"><a href="#GO-master-4858" class="headerlink" title="GO master 4858"></a>GO master 4858</h3><p>AlphaGo Master—a program based on the algorithm and architecture presented in this paper but using human data and features (see Methods) </p>
+<p>human data + handcrafted features</p>
+<p>基于本文提出的算法和体系结构，但使用人工数据和特征的程序(见方法)</p>
+<p>在一台机器上播放，有4个tpus。</p>
+<h3 id="AlphaGo-Fan-3144"><a href="#AlphaGo-Fan-3144" class="headerlink" title="AlphaGo Fan 3144"></a>AlphaGo Fan 3144</h3><p>176 GPUs </p>
+<h3 id="AlphaGo-Lee-3739"><a href="#AlphaGo-Lee-3739" class="headerlink" title="AlphaGo Lee  3739"></a>AlphaGo Lee  3739</h3><p>48 TPUs,  </p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Game/" rel="tag"># Game</a>
+              <a href="/tags/MCTS/" rel="tag"># MCTS</a>
+              <a href="/tags/NashEquilibriun/" rel="tag"># NashEquilibriun</a>
+              <a href="/tags/Go/" rel="tag"># Go</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/08/15/Tools/hello-world/" rel="prev" title="Hello World">
+      <i class="fa fa-chevron-left"></i> Hello World
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/08/15/Games/MCTS_CFR/" rel="next" title="MCTS-CFR">
+      MCTS-CFR <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MCTS-Lee"><span class="nav-number">1.</span> <span class="nav-text">MCTS_Lee</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#apply"><span class="nav-number">1.1.</span> <span class="nav-text">apply:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vanilla-MCTS"><span class="nav-number">1.2.</span> <span class="nav-text">Vanilla MCTS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UCB"><span class="nav-number">1.3.</span> <span class="nav-text">UCB</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UCT-AlphaGO"><span class="nav-number">1.4.</span> <span class="nav-text">UCT (AlphaGO)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MCTS-Search"><span class="nav-number">1.4.1.</span> <span class="nav-text">MCTS Search</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Select"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">1.Select</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Simulate-expand-leaf-Node"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">2.Simulate &#x2F;expand leaf Node</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-Leaf-Node-Evaluated"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">3.Leaf Node Evaluated</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-BackUp"><span class="nav-number">1.4.1.4.</span> <span class="nav-text">4.BackUp</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Alpha-Go-MCTS-UCT-Detail-Method"><span class="nav-number">1.5.</span> <span class="nav-text">Alpha Go MCTS-UCT Detail Method</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Search"><span class="nav-number">1.5.1.</span> <span class="nav-text">Search</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Selection-a"><span class="nav-number">1.5.2.</span> <span class="nav-text">Selection(a)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Expansion-b"><span class="nav-number">1.5.3.</span> <span class="nav-text">Expansion(b)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Evaluation-c"><span class="nav-number">1.5.4.</span> <span class="nav-text">Evaluation(c)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Backup-d"><span class="nav-number">1.5.5.</span> <span class="nav-text">Backup(d)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Search-END"><span class="nav-number">1.5.6.</span> <span class="nav-text">Search END</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Policy-network-classfication"><span class="nav-number">1.6.</span> <span class="nav-text">Policy network: classfication</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Policy-network-reinforcement-learning"><span class="nav-number">1.7.</span> <span class="nav-text">Policy network: reinforcement learning</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#value-regression"><span class="nav-number">1.8.</span> <span class="nav-text">value regression</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">1.9.</span> <span class="nav-text">Reference</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MCTS-GO-Zero"><span class="nav-number">2.</span> <span class="nav-text">MCTS_GO_Zero</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#UCT"><span class="nav-number">2.1.</span> <span class="nav-text">UCT*</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#KEY"><span class="nav-number">2.1.1.</span> <span class="nav-text">KEY:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Train-Pipeline"><span class="nav-number">2.1.2.</span> <span class="nav-text">Train Pipeline</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E6%80%A7%E8%83%BD%EF%BC%9A"><span class="nav-number">2.1.3.</span> <span class="nav-text">最终性能：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Go-Zero-5185"><span class="nav-number">2.1.4.</span> <span class="nav-text">Go Zero 5185</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GO-master-4858"><span class="nav-number">2.1.5.</span> <span class="nav-text">GO master 4858</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AlphaGo-Fan-3144"><span class="nav-number">2.1.6.</span> <span class="nav-text">AlphaGo Fan 3144</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AlphaGo-Lee-3739"><span class="nav-number">2.1.7.</span> <span class="nav-text">AlphaGo Lee  3739</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

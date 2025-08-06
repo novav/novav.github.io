@@ -1,0 +1,2151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Simon Shi的小站">
+<meta property="og:url" content="https://novav.github.io/page/20/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="AI,Machine Learning, Deep Learning">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://novav.github.io/page/20/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/02/15/Course/Algorithm/Advance_Leetcode/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/02/15/Course/Algorithm/Advance_Leetcode/" class="post-title-link" itemprop="url">LeetCode</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-02-15 21:51:02" itemprop="dateCreated datePublished" datetime="2022-02-15T21:51:02+00:00">2022-02-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="C-�����������"><a href="#C-�����������" class="headerlink" title="C++�����������"></a>C++�����������</h4><p>��ҵ��Ŀ��<br>����������ݣ�5X5���������飩��<br> 1     2     3     4    5<br>16   17   18   19   6<br>15   24   25   20   7<br>14   23   22   21   8<br>13   12   11   10   9</p>
+<p>˼·��<br>ʹ�ö�ά���飬Ϊʹ�䲻������5X5����ά������һ����̬�Ķ�ά���飬�����±�ֱ�Ϊx��y,���� arr[x][y]��<br>ʹ��forѭ����ѭ����ʼֵtempΪ1����������ΪtempС�����������±���˵õ��Ļ���ȱʡѭ�����ñ���ʽ��forѭ���ڻ���4��forѭ��<br>ѭ����ʼ������ͼ��</p>
+<p>****<img src="/2022/02/15/Course/Algorithm/Advance_Leetcode/2025-03-18-09-35-52-%7B87EB8A30-110E-4740-B735-6BCF4D9D4CDA%7D.png"></p>
+<p>��һȦ���ӵ�һ�ŵ�һ����ʼ<br>3.1 ��һ��ѭ������������Ҹ�ֵ<br>3.2 �ڶ���ѭ����������ϵ��¸�ֵ<br>3.3 ������ѭ����������ҵ���ֵ<br>3.4 ���ĸ�ѭ����������µ��ϸ�ֵ��<br>��һ�Σ�ѭ��������<br>�ڶ�Ȧ�������±������������λ���ڶ��ŵڶ�������ִ�������ѭ����<br>����Ȧ�������±������������λ�������ŵ���������ִ�������ѭ��<br>����<br>ѭ��������<br>4��ʹ������ѭ����������顣<br>5. ɾ����̬����</p>
+<p><strong>����ʵ�ִ������£�</strong><br>1��������ά����</p>
+<p>2����������</p>
+<p>3��ѭ����ʼ��<br>���½�˵�� 5 X 5 Ϊ����</p>
+<p>3.1 ��һ��ѭ������������Ҹ�ֵ<br>K &#x3D; 25��temp &#x3D; 1<br>��һȦ��arr[0][0] &#x3D; 1  �� arr[0][1] &#x3D; 2 �� arr[0][2] &#x3D; 3��arr[0][3] &#x3D; 4<br>�ڶ�Ȧ��arr[1][1] &#x3D; 17�� arr[1][2] &#x3D; 18</p>
+<p>3.2 �ڶ���ѭ����������ϵ��¸�ֵ<br>��һȦ��arr[0][4] &#x3D; 5 �� arr[1][4] &#x3D; 6 �� arr[2][4] &#x3D; 7��arr[3][4] &#x3D; 8<br>�ڶ�Ȧ��arr[1][3] &#x3D; 19��arr[2][3] &#x3D; 20</p>
+<p>3.3 ������ѭ����������ҵ���ֵ<br>��һȦ��arr[4][4] &#x3D; 9 �� arr[4][3] &#x3D; 10 �� arr[4][2] &#x3D; 11��arr[4][1] &#x3D; 12<br>�ڶ�Ȧ��arr[3][3] &#x3D; 21��arr[3][2] &#x3D; 22</p>
+<p>3.4 ���ĸ�ѭ����������µ��ϸ�ֵ<br>��һȦ��arr[4][0] &#x3D; 13�� arr[3][0] &#x3D; 14�� arr[2][0] &#x3D; 15��arr[1][0] &#x3D; 16<br>�ڶ�Ȧ��arr[3][1] &#x3D; 23�� arr[2][1] &#x3D; 24</p>
+<p>��ʱ������ǰ����<br>��һȦ��x &#x3D; 0�� y &#x3D; 0�� a &#x3D; 0�� b &#x3D; 0�� num &#x3D; 0��temp &#x3D; 17<br>�ڶ�Ȧ��x &#x3D; 1�� y &#x3D; 1�� a &#x3D; 1�� b &#x3D; 1�� num &#x3D; 1��temp &#x3D; 25</p>
+<p>3.5 �����������±����¶�λ��Ȧ������<br>��ʱ��������<br>��һȦ��x &#x3D; 1, y &#x3D; 1, a &#x3D; 1, b &#x3D; 1, num &#x3D; 1<br>��һȦ��x &#x3D; 1, y &#x3D; 1, a &#x3D; 1, b &#x3D; 1, num &#x3D; 1</p>
+<p>3.6 ����<br>arr[2][2] &#x3D; 25</p>
+<p>4�����</p>
+<p>5��ɾ����ά���飬�ͷ��ڴ�</p>
+<p>�������� 5 X 5</p>
+<p>���±�������</p>
+<p>�������� 11 X 7</p>
+<p>���������forѭ���ڵ�4��forѭ�����if�жϵĲ���˵����<br>��ĳЩ����£�����4��forѭ�����ᵼ�²����Ѿ�����ֵ���������ٴα���ֵ��ԭ���Ļᱻ���ǵ���<br>����if�жϺ󣬿��Ա�����������ķ�����</p>
+<p>����ͼ���ǲ���if�жϵ����н��������նԱ�������ͬλ�õ� 11 X 7��</p>
+<p>��л���������<br>��������������������������������</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line">using namespace <span class="built_in">std</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//��ά����</span></span><br><span class="line">	<span class="type">int</span> **arr = <span class="literal">NULL</span>;</span><br><span class="line">	<span class="type">int</span> m, n;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;��Ҫ���˼��ķ������������������� &quot;</span>;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m;</span><br><span class="line">	arr = new <span class="type">int</span>*[m];</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; i++)</span><br><span class="line">	&#123; </span><br><span class="line">		arr[i] = new <span class="type">int</span>[n]; </span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// x,y �����±�   a����¼��   b����¼��</span></span><br><span class="line">	<span class="type">int</span> x = <span class="number">0</span>, y = <span class="number">0</span>, a = <span class="number">0</span>, b = <span class="number">0</span>;</span><br><span class="line">	<span class="type">int</span> num = <span class="number">0</span>;<span class="comment">//ѭ��Ȧ��</span></span><br><span class="line">	<span class="type">int</span> k = m*n;<span class="comment">//��������һ����</span></span><br><span class="line">	<span class="type">int</span> temp = <span class="number">1</span>;<span class="comment">//�����鸳��ֵ</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//ѭ����ʼ</span></span><br><span class="line">	<span class="keyword">for</span> (; temp &lt; k; )</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//�� a �� �� b �� n-1 ��  -&gt; ������</span></span><br><span class="line">		<span class="keyword">for</span> (y = b; y &lt; n - <span class="number">1</span> - num; y++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (arr[x][y] &lt; <span class="number">0</span>) </span><br><span class="line">			&#123;</span><br><span class="line">				arr[x][y] = temp;</span><br><span class="line">				temp++;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="comment">//	cout &lt;&lt; &quot;arr[&quot; &lt;&lt; x &lt;&lt; &quot;][&quot; &lt;&lt; y &lt;&lt; &quot;] = &quot; &lt;&lt; arr[x][y] &lt;&lt; &quot;\n&quot;;</span></span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//�� a - c �� �� d ��  \|/ ���ϵ���</span></span><br><span class="line">		<span class="keyword">for</span> (x = a; x &lt; m - <span class="number">1</span> - num; x++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (arr[x][y] &lt; <span class="number">0</span>) </span><br><span class="line">			&#123;</span><br><span class="line">				arr[x][y] = temp;</span><br><span class="line">				temp++;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="comment">//	cout &lt;&lt; &quot;arr[&quot; &lt;&lt; x &lt;&lt; &quot;][&quot; &lt;&lt; y &lt;&lt; &quot;] = &quot; &lt;&lt; arr[x][y] &lt;&lt; &quot;\n&quot;;</span></span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//�� c �� �� d - b  ��  &lt;- ���ҵ���</span></span><br><span class="line">		<span class="keyword">for</span> (y = n - <span class="number">1</span> - num; y &gt; b; y--)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (arr[x][y] &lt; <span class="number">0</span>) </span><br><span class="line">			&#123;</span><br><span class="line">				arr[x][y] = temp;</span><br><span class="line">				temp++;</span><br><span class="line">			&#125;</span><br><span class="line">			</span><br><span class="line">		<span class="comment">//�� c -a �� �� b ��   /|\  / ���µ���</span></span><br><span class="line">		<span class="keyword">for</span> (x = m - <span class="number">1</span> - num; x &gt; a; x--)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (arr[x][y] &lt; <span class="number">0</span>) </span><br><span class="line">			&#123;</span><br><span class="line">				arr[x][y] = temp;</span><br><span class="line">				temp++;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="comment">//	cout &lt;&lt; &quot;arr[&quot; &lt;&lt; x &lt;&lt; &quot;][&quot; &lt;&lt; y &lt;&lt; &quot;] = &quot; &lt;&lt; arr[x][y] &lt;&lt; &quot;\n&quot;;</span></span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//���� �ı�����к���</span></span><br><span class="line">		x++;</span><br><span class="line">		y++;</span><br><span class="line">		a++;</span><br><span class="line">		b++;</span><br><span class="line">		num++;		</span><br><span class="line">		<span class="comment">/*</span></span><br><span class="line"><span class="comment">		  cout &lt;&lt; a &lt;&lt; &quot;\t&quot; </span></span><br><span class="line"><span class="comment">			   &lt;&lt; b &lt;&lt; &quot;\t&quot; </span></span><br><span class="line"><span class="comment">			   &lt;&lt; x &lt;&lt; &quot;\t&quot; </span></span><br><span class="line"><span class="comment">			   &lt;&lt; y &lt;&lt; &quot;\t&quot; </span></span><br><span class="line"><span class="comment">			   &lt;&lt; num &lt;&lt; &quot;\t&quot; </span></span><br><span class="line"><span class="comment">			   &lt;&lt; temp &lt;&lt; &quot;\n&quot;;</span></span><br><span class="line"><span class="comment">		*/</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//���䣬���������±���ȣ��Ҷ�Ϊ�����������,</span></span><br><span class="line">	<span class="comment">//λ���������м���Ǹ�λ�õ��������һ������,</span></span><br><span class="line">	<span class="comment">//ѭ���������ڴ�������</span></span><br><span class="line">	<span class="keyword">if</span> (temp == k)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (arr[x][y] &lt;= <span class="number">0</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			arr[x][y] = temp;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//���</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; n; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; arr[i][j] &lt;&lt; <span class="string">&#x27;\t&#x27;</span>;</span><br><span class="line">			<span class="comment">//cout &lt;&lt; &quot;arr[&quot; &lt;&lt; i &lt;&lt; &quot;][&quot; &lt;&lt; j &lt;&lt; &quot;] = &quot; &lt;&lt; arr[i][j] &lt;&lt;&quot;\t&quot;;</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//ɾ������</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; i++) </span><br><span class="line">	&#123;</span><br><span class="line">		delete[] arr[i]; </span><br><span class="line">	&#125;</span><br><span class="line">	delete arr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>ԭ�����ӣ�<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44566320/article/details/90273077">https://blog.csdn.net/weixin_44566320/article/details/90273077</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/02/05/Course/MMML/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/02/05/Course/MMML/" class="post-title-link" itemprop="url">MultiModal Machine Learning (MMML)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-02-05 16:21:30" itemprop="dateCreated datePublished" datetime="2022-02-05T16:21:30+00:00">2022-02-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/ML/" itemprop="url" rel="index"><span itemprop="name">ML</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>转自 <a target="_blank" rel="noopener" href="https://blog.csdn.net/electech6/article/details/85142769"> 什么是多模态机器学习？ </a></p>
+<p>模态（Modality）</p>
+<p>每一种信息的来源或者形式，都可以称为一种模态。例如，人有触觉，听觉，视觉，嗅觉；信息的媒介，有语音、视频、文字等；多种多样的传感器，如雷达、红外、加速度计等。以上的每一种都可以称为一种模态。</p>
+<p>MultiModal Machine Learning (MMML)</p>
+<p>多模态<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0&spm=1001.2101.3001.7020">机器学习</a>，英文全称 MultiModal Machine Learning (MMML)，旨在通过机器学习的方法实现处理和理解多源模态信息的能力。目前比较热门的研究方向是图像、视频、音频、语义之间的多模态学习。</p>
+<p>多模态学习可以划分为以下五个研究方向：</p>
+<ol>
+<li><strong>多模态表示学习 Multimodal Representation</strong></li>
+<li><strong>模态转化 Translation</strong></li>
+<li><strong>对齐 Alignment</strong></li>
+<li><strong>多模态融合 Multimodal Fusion</strong></li>
+<li><strong>协同学习 Co-learning</strong></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/02/03/Sub_Language/DL_Platform/TensorRT/Env/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/02/03/Sub_Language/DL_Platform/TensorRT/Env/" class="post-title-link" itemprop="url">TensorRT Ubuntu Env</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-02-03 12:00:09" itemprop="dateCreated datePublished" datetime="2022-02-03T12:00:09+00:00">2022-02-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/deploy/" itemprop="url" rel="index"><span itemprop="name">deploy</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/deploy/TensorRT/" itemprop="url" rel="index"><span itemprop="name">TensorRT</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Ubuntu 安装tensorRT</p>
+<h2 id="1、下载"><a href="#1、下载" class="headerlink" title="1、下载"></a>1、下载</h2><p><a target="_blank" rel="noopener" href="https://developer.nvidia.com/nvidia-tensorrt-download">https://developer.nvidia.com/nvidia-tensorrt-download</a></p>
+<p><a target="_blank" rel="noopener" href="https://developer.nvidia.com/nvidia-tensorrt-8x-download">https://developer.nvidia.com/nvidia-tensorrt-8x-download</a></p>
+<p><a target="_blank" rel="noopener" href="https://developer.nvidia.com/nvidia-tensorrt-5x-download">https://developer.nvidia.com/nvidia-tensorrt-5x-download</a></p>
+<h2 id="Window"><a href="#Window" class="headerlink" title="Window"></a>Window</h2><h2 id="Ubuntu"><a href="#Ubuntu" class="headerlink" title="Ubuntu"></a>Ubuntu</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/skyli114/article/details/123623858">Ubuntu安装TensorRT</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.csdn.net/tags/MtjaggxsNjQ3OTUtYmxvZwO0O0OO0O0O.html">TensorRT python API 安装</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/02/01/Tools/Tools_VMware/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/02/01/Tools/Tools_VMware/" class="post-title-link" itemprop="url">VMware</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-02-01 13:00:00" itemprop="dateCreated datePublished" datetime="2022-02-01T13:00:00+00:00">2022-02-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="0、文件准备"><a href="#0、文件准备" class="headerlink" title="0、文件准备"></a>0、文件准备</h2><ul>
+<li><p>VmwarePalyer</p>
+</li>
+<li><p>ubuntu-desk.iso</p>
+</li>
+</ul>
+<h2 id="1、硬件配置"><a href="#1、硬件配置" class="headerlink" title="1、硬件配置"></a>1、硬件配置</h2><p>1、CPU查看是否虚拟化开启</p>
+<p><img src="/2022/02/01/Tools/Tools_VMware/image-20220403143329865.png" alt="image-20220403143329865"></p>
+<p>2、开启Windows功能</p>
+<ul>
+<li>Windows虚拟机监控程序平台</li>
+<li>虚拟机平台</li>
+</ul>
+<p>optionalFeatures</p>
+<p><img src="/2022/02/01/Tools/Tools_VMware/image-20220403143436106.png" alt="image-20220403143436106"></p>
+<p><img src="/2022/02/01/Tools/Tools_VMware/image-20220403143418438.png" alt="image-20220403143418438"></p>
+<h2 id="2、系统安装"><a href="#2、系统安装" class="headerlink" title="2、系统安装"></a>2、系统安装</h2><p><img src="/2022/02/01/Tools/Tools_VMware/image-20220403144318901.png" alt="image-20220403144318901"></p>
+<h2 id="3、快捷键"><a href="#3、快捷键" class="headerlink" title="3、快捷键"></a>3、快捷键</h2><p>Ctrl-Alt-Enter    进入全屏模式</p>
+<p>ctrl+alt+insert      退出全屏</p>
+<p>Ctrl-Alt            返回正常（窗口）模式</p>
+<p>Ctrl-Alt-Tab      当鼠标和键盘焦点在<a target="_blank" rel="noopener" href="http://wenwen.soso.com/z/Search.e?sp=S%E8%99%9A%E6%8B%9F%E6%9C%BA&ch=w.search.yjjlink&cid=w.search.yjjlink">虚拟机</a>中时，在打开的虚拟机中切换。</p>
+<p>Ctrl-Tab           当鼠标和键盘焦点不在虚拟机中时，在打开的虚拟机中切换。VMware Workstation应用程序必须在活动应用状态上。</p>
+<p>Ctrl-Shift-Tab    当鼠标和键盘焦点不在虚拟机中时，在打开的虚拟机中切换。VMware Workstation应用程序必须在活动应用状态上。</p>
+<p>Ctrl-D               编辑虚拟机配置</p>
+<p>Ctrl-G               为虚拟机捕获鼠标和键盘焦点</p>
+<p>Ctrl-P               编辑参数</p>
+<p>Ctrl-F4              关闭所选择虚拟机的概要或者控制视图。如果虚拟机开着，一个确认对话框将出现。</p>
+<p>Ctrl-B               开机</p>
+<p>Ctrl-E               关机</p>
+<p>Ctrl-R               重启</p>
+<p>Ctrl-Z               挂起</p>
+<p>Ctrl-N               新建一个虚拟机</p>
+<p>Ctrl-O               打开一个虚拟机</p>
+<h2 id="Ubuntu使用"><a href="#Ubuntu使用" class="headerlink" title="Ubuntu使用"></a>Ubuntu使用</h2><h3 id="16-拼音安装"><a href="#16-拼音安装" class="headerlink" title="16 拼音安装"></a>16 拼音安装</h3><p>安装步骤:<br>第一步: Ctrl+Alt+T,打开Terminal,在命令行输入 sudo apt install ibus-sunpinyin ;<br>遇到选择,输入y,等待安装完成后.<br>第二步:重启电脑;<br>第三步:点击桌面右上角的En小图标,选择Text Entry Settings打开;<br>第四步:点击左下角的+按钮;在输入框输入pinyin;选择Chinese(SunPinyin)(IBus),点击右下角的Add;即可<br>第五步:点击En按钮选择SunPinyin,即可.<br>第六步:即可进行中文输入了.<br>————————————————</p>
+<h3 id="共享文件夹使用"><a href="#共享文件夹使用" class="headerlink" title="共享文件夹使用"></a>共享文件夹使用</h3><ul>
+<li><p>开机前，禁用共享文件夹</p>
+</li>
+<li><p>开机后，再设置“在下次关机或挂起前一直启用”，否则非root登录Ubuntu会有问题。</p>
+</li>
+</ul>
+<h3 id="网络-DNS解析"><a href="#网络-DNS解析" class="headerlink" title="网络-DNS解析"></a>网络-DNS解析</h3><p>方法一: &#x2F;etc&#x2F;resolvconf&#x2F;resolv.conf.d</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1.需要创建一个文件/etc/resolvconf/resolv.conf.d/tail</span><br><span class="line"><span class="built_in">sudo</span> vi /etc/resolvconf/resolv.conf.d/tail</span><br><span class="line">2.在该文件中写入自己需要的dns服务器，格式与/etc/resolv.conf相同</span><br><span class="line">nameserver 8.8.8.8  </span><br><span class="line">3.重启下resolvconf程序</span><br><span class="line"><span class="built_in">sudo</span> /etc/init.d/resolvconf restart </span><br><span class="line">再去看看/etc/resolv.conf文件,可以看到自己添加的dns服务器已经加到该文件中</span><br></pre></td></tr></table></figure>
+
+<p>方法2: 在&#x2F;etc&#x2F;network&#x2F;interfaces中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">###interfaces中#######     </span></span><br><span class="line">auto eth0     </span><br><span class="line">iface eth0 inet static     </span><br><span class="line">address 192.168.3.250     </span><br><span class="line">netmask 255.255.255.0                  <span class="comment">#子网掩码     </span></span><br><span class="line">gateway 192.168.3.1                      <span class="comment">#网关     </span></span><br><span class="line">dns-nameservers 8.8.8.8 8.8.4.4    <span class="comment">#设置dns服务器</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/02/01/Course/Algorithm/c++/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/02/01/Course/Algorithm/c++/" class="post-title-link" itemprop="url">C++ 数据结构与算法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-02-01 12:00:00" itemprop="dateCreated datePublished" datetime="2022-02-01T12:00:00+00:00">2022-02-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>《基于c++的数据结构与算法》bilibili GeekBand</p>
+<ul>
+<li><p>数组和字符串</p>
+</li>
+<li><p>链表</p>
+</li>
+<li><p>栈与队列</p>
+</li>
+<li><p>二叉树</p>
+</li>
+<li><p>排序</p>
+</li>
+<li><p>动态规划、递归</p>
+</li>
+<li><p>图</p>
+</li>
+<li><p>高频算法</p>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/hithongming/p/9229871.html">https://www.cnblogs.com/hithongming/p/9229871.html</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/01/28/Tools/Tools_linux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/01/28/Tools/Tools_linux/" class="post-title-link" itemprop="url">Linux CMD</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-01-28 10:59:01" itemprop="dateCreated datePublished" datetime="2022-01-28T10:59:01+00:00">2022-01-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OS/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[TOC]</p>
+<p>ref: <a target="_blank" rel="noopener" href="https://shimo.im/docs/YhHCqh9rPpwqTQKd">常用工作命令-shixx</a></p>
+<h3 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">打开一个terminal</span><br><span class="line">ctrl+alt+t</span><br><span class="line"></span><br><span class="line">在terminal中打开多个标签</span><br><span class="line">ctrl+shift+t</span><br></pre></td></tr></table></figure>
+
+<h3 id="apt"><a href="#apt" class="headerlink" title="apt"></a>apt</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">apt 命令打印软件包下载地址 -o Debug::Acquire::http=<span class="literal">true</span></span></span><br><span class="line">apt-get -o Debug::Acquire::http=true install nginx</span><br></pre></td></tr></table></figure>
+
+<h2 id="进程相关"><a href="#进程相关" class="headerlink" title="进程相关"></a>进程相关</h2><h3 id="ps-kill"><a href="#ps-kill" class="headerlink" title="ps (kill)"></a>ps (kill)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ps -ef | grep train.py | grep lianzha | grep -v grep | awk <span class="string">&#x27;&#123;print &quot;kill -9 &quot;$2&#125;&#x27;</span> | sh</span><br><span class="line">ps -ef | grep torch | grep -v grep | awk <span class="string">&#x27;&#123;print &quot;kill -9 &quot;$2&#125;&#x27;</span> | sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">watch -n 0.5  nvidia-smi</span><br><span class="line"></span><br><span class="line">nvidia-smi -l 0.3</span><br></pre></td></tr></table></figure>
+
+<h2 id="网络端口"><a href="#网络端口" class="headerlink" title="网络端口"></a>网络端口</h2><h3 id="netstat"><a href="#netstat" class="headerlink" title="netstat"></a>netstat</h3><p>netstat 查看端口占用语法格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">netstat -tunlp | grep 端口号</span><br><span class="line"></span><br><span class="line">-t (tcp) 仅显示tcp相关选项</span><br><span class="line">-u (udp)仅显示udp相关选项</span><br><span class="line">-n 拒绝显示别名，能显示数字的全部转化为数字</span><br><span class="line">-l 仅列出在Listen(监听)的服务状态</span><br><span class="line">-p 显示建立相关链接的程序名</span><br></pre></td></tr></table></figure>
+
+<h2 id="shell"><a href="#shell" class="headerlink" title="shell"></a>shell</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-eq 等于,如:if [ &quot;$a&quot; -eq &quot;$b&quot; ]</span><br><span class="line">-ne 不等于,如:if [ &quot;$a&quot; -ne &quot;$b&quot; ]</span><br><span class="line">-gt 大于,如:if [ &quot;$a&quot; -gt &quot;$b&quot; ]</span><br><span class="line">-ge 大于等于,如:if [ &quot;$a&quot; -ge &quot;$b&quot; ]</span><br><span class="line">-lt 小于,如:if [ &quot;$a&quot; -lt &quot;$b&quot; ]</span><br><span class="line">-le 小于等于,如:if [ &quot;$a&quot; -le &quot;$b&quot; ]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">if 判断式</span><br><span class="line">if [ 条件判断一 ] &amp;&amp; (||) [ 条件判断二 ]; then</span><br><span class="line">elif [ 条件判断三 ] &amp;&amp; (||) [ 条件判断四 ]; then</span><br><span class="line">else</span><br><span class="line">   执行第三段內容程式</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<h3 id="find-del"><a href="#find-del" class="headerlink" title="find del"></a>find del</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rm</span> <span class="built_in">log</span>/*</span><br><span class="line"><span class="comment"># -bash: /bin/rm: Argument list too long</span></span><br><span class="line">find . -name <span class="string">&#x27;*&#x27;</span> | xargs <span class="built_in">rm</span></span><br><span class="line"></span><br><span class="line">find /Volumes/WD/data/data/sg3d/server -<span class="built_in">type</span> d |grep .svn | xargs <span class="built_in">rm</span> -rf</span><br><span class="line"></span><br><span class="line"><span class="comment"># exe文件查找</span></span><br><span class="line">find . -name <span class="string">&#x27;*.exe&#x27;</span> -<span class="built_in">type</span> f -<span class="built_in">print</span> -<span class="built_in">exec</span> <span class="built_in">rm</span> -rf &#123;&#125; \;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 一天前的文件，都删掉</span></span><br><span class="line">find  -mtime +1 -<span class="built_in">exec</span> <span class="built_in">rm</span> -rf &#123;&#125; \; </span><br></pre></td></tr></table></figure>
+
+<p>find del loop(每隔24小时，删除（最近改动日期超过10天的）文件)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;init---auto loop-&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="keyword">time</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">true</span>; <span class="keyword">do</span></span><br><span class="line">    find  -name <span class="string">&#x27;*.log&#x27;</span> -mtime +10  -<span class="built_in">exec</span> <span class="built_in">rm</span> &#123;&#125; \;</span><br><span class="line">    <span class="built_in">sleep</span> 24h</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="大文件查找"><a href="#大文件查找" class="headerlink" title="大文件查找"></a>大文件查找</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查找文件，格式化输出</span></span><br><span class="line">find / -<span class="built_in">type</span> f -<span class="built_in">printf</span> <span class="string">&quot;%s\t%p\n&quot;</span> | <span class="built_in">sort</span> -n | <span class="built_in">tail</span> -1  </span><br><span class="line"></span><br><span class="line"><span class="comment">#显示大于100MiB</span></span><br><span class="line">find / -size +100M -<span class="built_in">ls</span> </span><br><span class="line"><span class="comment"># 查找一个区间大小的(比如 100MiB 和 200MiB )之间的文件：</span></span><br><span class="line">find / -size +100M -size -200M -<span class="built_in">ls</span> </span><br><span class="line"><span class="comment">#查找某个目录最大的5个文件：</span></span><br><span class="line">find <span class="variable">$DIRECTORY</span> -<span class="built_in">type</span> f -<span class="built_in">exec</span> <span class="built_in">ls</span> -s &#123;&#125; \; | <span class="built_in">sort</span> -n | <span class="built_in">tail</span> -n 5 </span><br></pre></td></tr></table></figure>
+
+<h3 id="shell-echo-date"><a href="#shell-echo-date" class="headerlink" title="shell echo date"></a>shell echo date</h3><p>在crontab 定时事件中， 执行过的脚本记录事件</p>
+<p>在sh 文件中</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">echo $(date)</span><br><span class="line">echo $(date &quot;+%Y-%m-%d %H:%M:%S&quot;)</span><br><span class="line"></span><br><span class="line">即可输出执行的事件， 同时记录到log中</span><br></pre></td></tr></table></figure>
+
+<p>执行结果</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Sat Jun 23 15:41:31 CST 2018</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">赋值</span></span><br><span class="line">cur_dateTime=&quot;`date +%Y-%m-%d,%H:%m:%s`&quot; </span><br></pre></td></tr></table></figure>
+
+<h3 id="shell-中的sleep命令"><a href="#shell-中的sleep命令" class="headerlink" title="shell 中的sleep命令"></a>shell 中的sleep命令</h3><p>在有的shell（比如linux中的bash）中sleep还支持睡眠（分，小时）<br>sleep 1  睡眠1秒<br>sleep 1s  睡眠1秒<br>sleep 1m  睡眠1分<br>sleep 1h  睡眠1小时 </p>
+<h3 id="shell-参数传递"><a href="#shell-参数传递" class="headerlink" title="shell 参数传递"></a>shell 参数传递</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># author:菜鸟教程</span></span><br><span class="line"><span class="comment"># url:www.runoob.com</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Shell 传递参数实例！&quot;</span>;</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;执行的文件名：<span class="variable">$0</span>&quot;</span>;</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;第一个参数为：<span class="variable">$1</span>&quot;</span>;</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;第二个参数为：<span class="variable">$2</span>&quot;</span>;</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;第三个参数为：<span class="variable">$3</span>&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ ./test.sh 1 2 3</span><br><span class="line">Shell 传递参数实例！</span><br><span class="line">执行的文件名：./test.sh</span><br><span class="line">第一个参数为：1</span><br><span class="line">第二个参数为：2</span><br><span class="line">第三个参数为：3</span><br></pre></td></tr></table></figure>
+
+<h3 id="awk"><a href="#awk" class="headerlink" title="awk"></a>awk</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$</span><span class="language-bash"><span class="built_in">echo</span> <span class="string">&quot;123456789&quot;</span> | awk <span class="string">&#x27;&#123;print substr($0, 5, 2)&#125;&#x27;</span></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="sed"><a href="#sed" class="headerlink" title="sed"></a>sed</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sed -n &#x27;100,200p&#x27; filename </span><br><span class="line"></span><br><span class="line">“;” --&gt; &quot;\n&quot;</span><br><span class="line">sed -i &quot;s/;/\\n/g&quot; test.txt</span><br></pre></td></tr></table></figure>
+
+<h3 id="rename"><a href="#rename" class="headerlink" title="rename"></a>rename</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Perl 版本 Ubuntu()</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rename -v <span class="string">&quot;s/txt/log/g&quot;</span> 1.txt 2.txt</span></span><br><span class="line">1.txt renamed as 1.log</span><br><span class="line">2.txt renamed as 2.log</span><br><span class="line"></span><br><span class="line">rename &quot;s//.html//.php/&quot; *     # 把.html 后缀的改成 .php后缀</span><br><span class="line">rename &quot;s/$//.txt/&quot; *  # 把所有的文件名都以txt结尾</span><br><span class="line">rename &quot;s//.txt//&quot; *   # 把所有以.txt结尾的文件名的.txt删掉</span><br><span class="line">rename &#x27;s/^/googluck/&#x27; *    #统一在所有文件名前添加某个字符串</span><br><span class="line">rename -v &quot;s/amsr-vector-fs-/01_amsr-vector-fs-/&quot; amsr-vector-fs-*</span><br></pre></td></tr></table></figure>
+
+<h3 id="tail"><a href="#tail" class="headerlink" title="tail"></a>tail</h3><h3 id="head"><a href="#head" class="headerlink" title="head"></a>head</h3><h3 id="history"><a href="#history" class="headerlink" title="history"></a>history</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">history</span></span><br><span class="line"><span class="comment"># delete line 9</span></span><br><span class="line"><span class="built_in">history</span> -d 9</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://www.baeldung.com/linux/delete-commands-history">https://www.baeldung.com/linux/delete-commands-history</a></p>
+<h1 id="压缩工具"><a href="#压缩工具" class="headerlink" title="压缩工具"></a>压缩工具</h1><h3 id="tar"><a href="#tar" class="headerlink" title="tar"></a>tar</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tar -cvf ***.tar Floder</span><br><span class="line">tar -xvf ***.tar </span><br><span class="line"></span><br><span class="line">tar -czvf my_folder.tar.gz my_folder</span><br><span class="line">tar -xzcf my_folder.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h3 id="zip-unzip"><a href="#zip-unzip" class="headerlink" title="zip&#x2F;unzip"></a>zip&#x2F;unzip</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将/root/mcw_test/这个目录下所有文件和文件夹打包为当前目录下的 mcw.zip：</span></span><br><span class="line">zip -q -r mcw.zip /root/mcw_test  </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">unzip test.zip              <span class="comment">#-&gt;将test.zip解压到当前文件下</span></span><br><span class="line">unzip -n test.zip -d /tmp   <span class="comment">#-&gt;将test.zip解压到/tmp目录下，并且不要覆盖已有文件</span></span><br><span class="line">unzip -v test.zip           <span class="comment">#-&gt;查看test.zip内容，但不解压</span></span><br><span class="line">unzip -o test.zip -d tmp/   <span class="comment">#-&gt;将test.zip解压到/tmp目录下，并且覆盖已有文件</span></span><br></pre></td></tr></table></figure>
+
+<p>zip 分券解压</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">先压缩成完整zip：</span></span><br><span class="line">zip -r a.zip ./somethings ;</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">再分割成分卷：</span></span><br><span class="line">zip -s 4g a.zip --out b.zip ，单位可以是m、g、t等</span><br><span class="line">-----------------------------</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">1 分卷合并成完整zip(三个方法)</span></span><br><span class="line">1.1 cat archivename.z* &gt; archivename.zip</span><br><span class="line">1.2 zip -F b.zip --out a.zip</span><br><span class="line">2.3 zip -s 0 b.zip --out a.zip</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">2 (-q 不显示任何信息)</span></span><br><span class="line">unzip -q archivename.zip -d ./dir</span><br></pre></td></tr></table></figure>
+
+<h3 id="screen"><a href="#screen" class="headerlink" title="screen"></a>screen</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">screen -S XX</span><br><span class="line">screen -ls</span><br><span class="line">screen -r XX</span><br><span class="line">screen -d xx</span><br><span class="line"></span><br><span class="line">screen -X -S sxx quit</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda config --<span class="built_in">set</span> auto_activate_base <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="lsof"><a href="#lsof" class="headerlink" title="lsof"></a>lsof</h3><p>    <code>lsof</code>命令用于查看你进程打开的文件，打开文件的进程，进程打开的端口(<code>TCP、UDP</code>)。找回&#x2F;恢复删除的文件。是十分方便的系统监视工具，因为<code>lsof</code>命令需要访问核心内存和各种文件，所以需要root<code>用户</code>执行。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">lsof (选项)</span><br><span class="line"></span><br><span class="line">lsof -i:端口号</span><br><span class="line"></span><br><span class="line">选项：</span><br><span class="line">-a：列出打开文件存在的进程；</span><br><span class="line">-c&lt;进程名&gt;：列出指定进程所打开的文件；</span><br><span class="line">-g：列出GID号进程详情；</span><br><span class="line">-d&lt;文件号&gt;：列出占用该文件号的进程；</span><br><span class="line">+d&lt;目录&gt;：列出目录下被打开的文件；</span><br><span class="line">+D&lt;目录&gt;：递归列出目录下被打开的文件；</span><br><span class="line">-n&lt;目录&gt;：列出使用NFS的文件；</span><br><span class="line">-i&lt;条件&gt;：列出符合条件的进程（协议、:端口、 @ip ）</span><br><span class="line">-p&lt;进程号&gt;：列出指定进程号所打开的文件；</span><br><span class="line">-u：列出UID号进程详情；</span><br><span class="line">-h：显示帮助信息；</span><br><span class="line">-v：显示版本信息</span><br></pre></td></tr></table></figure>
+
+<p>lsof输出各列信息的意义如下：</p>
+<ul>
+<li>COMMAND：进程的名称</li>
+<li>PID：进程标识符</li>
+<li>PPID：父进程标识符（需要指定-R参数）</li>
+<li>USER：进程所有者</li>
+<li>PGID：进程所属组</li>
+<li>FD：文件描述符，应用程序通过文件描述符识别该文件。</li>
+<li>TYPE: [DIR, REG, unknown,]</li>
+</ul>
+<p>获取端口对应的进程<code>ID=&gt;pid</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsof -<span class="attr">i</span>:<span class="number">8080</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">lsof abc.txt 显示开启文件abc.txt的进程</span><br><span class="line">lsof -c abc 显示abc进程现在打开的文件</span><br><span class="line">lsof -c -p 1234 列出进程号为1234的进程所打开的文件</span><br><span class="line">lsof -g gid 显示归属gid的进程情况</span><br><span class="line">lsof +d /usr/local/ 显示目录下被进程开启的文件</span><br><span class="line">lsof +D /usr/local/ 同上，但是会搜索目录下的目录，时间较长</span><br><span class="line">lsof -d 4 显示使用fd为4的进程</span><br><span class="line">lsof -i 用以显示符合条件的进程情况</span><br><span class="line">lsof -i[46] [protocol][@hostname|hostaddr][:service|port]</span><br><span class="line">  46 --&gt; IPv4 or IPv6</span><br><span class="line">  protocol --&gt; TCP or UDP</span><br><span class="line">  hostname --&gt; Internet host name</span><br><span class="line">  hostaddr --&gt; IPv4地址</span><br><span class="line">  service --&gt; /etc/service中的 service name (可以不止一个)</span><br><span class="line">  port --&gt; 端口号 (可以不止一个)</span><br></pre></td></tr></table></figure>
+
+<h1 id="硬件相关"><a href="#硬件相关" class="headerlink" title="硬件相关"></a>硬件相关</h1><h2 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">lsblk      # 磁盘分区查看（tree）</span><br><span class="line">fdisk -l     # 更详细的磁盘分区</span><br><span class="line">df -h         # 各个磁盘的空间</span><br></pre></td></tr></table></figure>
+
+<h3 id="cpu"><a href="#cpu" class="headerlink" title="cpu"></a>cpu</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">lscpu</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">Architecture:        x86_64</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">CPU op-mode(s):      32-bit, 64-bit</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">Byte Order:          Little Endian</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">Address sizes:       36 bits physical, 48 bits virtual</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">CPU(s):              4</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Model name:          Intel(R) Celeron(R) CPU  J1900  @ 1.99GHz</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="显卡"><a href="#显卡" class="headerlink" title="显卡"></a>显卡</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lspci -t -v</span><br></pre></td></tr></table></figure>
+
+<h3 id="网卡"><a href="#网卡" class="headerlink" title="网卡"></a>网卡</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">lspci | grep -i eth</span><br><span class="line"></span><br><span class="line">ifconfig</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ip link show</span><br></pre></td></tr></table></figure>
+
+<h3 id="端口占用"><a href="#端口占用" class="headerlink" title="端口占用"></a>端口占用</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用netstat命令：</span></span><br><span class="line">netstat -tuln | grep &lt;端口号&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用lsof命令：</span></span><br><span class="line">lsof -i :&lt;端口号&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用ss命令：</span></span><br><span class="line">ss -tuln | grep &lt;端口号&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="USB"><a href="#USB" class="headerlink" title="USB"></a>USB</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsusb -t <span class="comment"># (-t 拓扑显示)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="User管理"><a href="#User管理" class="headerlink" title="User管理"></a>User管理</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"><span class="built_in">sudo</span> usermod -aG groupname username</span></span><br></pre></td></tr></table></figure>
+
+<p>内存</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dmidecode -t memory</span><br><span class="line">dmidecode -t 17</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Physical Memory Array</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="服务管理"><a href="#服务管理" class="headerlink" title="服务管理"></a>服务管理</h1><h3 id="redis-server-自启动关闭"><a href="#redis-server-自启动关闭" class="headerlink" title="redis-server (自启动关闭)"></a>redis-server (自启动关闭)</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu8:~# systemctl is-enabled redis-server</span><br><span class="line">enabled</span><br><span class="line">root@ubuntu8:~# </span><br><span class="line">root@ubuntu8:~# systemctl disable redis-server</span><br><span class="line">Synchronizing state of redis-server.service with SysV service script with /lib/systemd/systemd-sysv-install.</span><br><span class="line">Executing: /lib/systemd/systemd-sysv-install disable redis-server</span><br><span class="line">Removed /etc/systemd/system/redis.service.</span><br><span class="line">root@ubuntu8:~# </span><br><span class="line">root@ubuntu8:~# systemctl stop redis-server</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/01/18/Tools/Tools_makefile/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/01/18/Tools/Tools_makefile/" class="post-title-link" itemprop="url">Linux C++ compile</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-01-18 12:00:01" itemprop="dateCreated datePublished" datetime="2022-01-18T12:00:01+00:00">2022-01-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/makefile/" itemprop="url" rel="index"><span itemprop="name">makefile</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="c-complie"><a href="#c-complie" class="headerlink" title="c++ complie"></a>c++ complie</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">g++ --std=c++11 changeFuYunRecord.cpp -o changefyrecord -g -O0 -lpthread</span><br><span class="line"></span><br><span class="line">g++ --std=c++11 data_gen.cpp -o gen_data -g -O0 -lpthread</span><br></pre></td></tr></table></figure>
+
+<h2 id="MakeFileDemo"><a href="#MakeFileDemo" class="headerlink" title="MakeFileDemo"></a>MakeFileDemo</h2><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">cmake_minimum_required (VERSION 2.8.8)</span><br><span class="line">project (ddzpeiwan)</span><br><span class="line"></span><br><span class="line"><span class="comment"># cmake寻找cuda，这个要现在系统里面装好cuda，设置好cuda的环境参数啥的</span></span><br><span class="line">FIND_PACKAGE(CUDA REQUIRED)</span><br><span class="line"></span><br><span class="line">set(CMAKE_CXX_FLAGS <span class="string">&quot;$&#123;CMAKE_CXX_FLAGS&#125; -g -std=c++17  -pthread  -W &quot;</span>)</span><br><span class="line">SET(CUDA_NVCC_FLAGS $&#123;CUDA_NVCC_FLAGS&#125;;-gencode arch=compute_70,code=sm_70;-std=c++11;)</span><br><span class="line"></span><br><span class="line">link_directories(</span><br><span class="line">/usr/local/lib/libjsoncpp.a</span><br><span class="line">/home/user/wanran/lib</span><br><span class="line">/home/user/wanran/TensorRT-5.1.5.0/lib</span><br><span class="line">/usr/local/cuda-10.0/targets/x86_64-linux/lib/)</span><br><span class="line"></span><br><span class="line">include_directories(</span><br><span class="line">   ./<span class="keyword">include</span></span><br><span class="line">   /usr/src/tensorrt/samples/common</span><br><span class="line">   /home/user/wanran/<span class="keyword">include</span></span><br><span class="line">   /usr/local/<span class="keyword">include</span>/eigen3</span><br><span class="line">   /usr/<span class="keyword">include</span>/x86_64-linux-gnu</span><br><span class="line">   /usr/local/cuda-10.0/targets/x86_64-linux/<span class="keyword">include</span>/</span><br><span class="line">   ) </span><br><span class="line"></span><br><span class="line">CUDA_ADD_EXECUTABLE(ddzpeiwan</span><br><span class="line">            main.cpp </span><br><span class="line">        aimodel.cpp</span><br><span class="line">            cfg_reader.cpp</span><br><span class="line">            util.cpp</span><br><span class="line">        logger.cpp</span><br><span class="line">            exception.cpp</span><br><span class="line">            ThreadMod.cpp</span><br><span class="line">            TreatorBase.cpp</span><br><span class="line">            truncation_cards.cpp</span><br><span class="line">            UnixTime.cpp</span><br><span class="line">        PollServer.cpp</span><br><span class="line">        TFService.cpp</span><br><span class="line">            ddz_utils.cpp) </span><br><span class="line">        target_link_libraries(ddzpeiwan tensorflow_cc tensorflow_framework cudart nvinfer nvparsers glog jsoncpp )</span><br></pre></td></tr></table></figure>
+
+<h2 id="makefiles"><a href="#makefiles" class="headerlink" title="makefiles"></a>makefiles</h2><h3 id="cmake-minimum-required-VERSION-2-8-8"><a href="#cmake-minimum-required-VERSION-2-8-8" class="headerlink" title="cmake_minimum_required (VERSION 2.8.8)"></a>cmake_minimum_required (VERSION 2.8.8)</h3><h3 id="project-ddzpeiwan"><a href="#project-ddzpeiwan" class="headerlink" title="project (ddzpeiwan)"></a>project (ddzpeiwan)</h3><h3 id="FIND-PACKAGE"><a href="#FIND-PACKAGE" class="headerlink" title="FIND_PACKAGE"></a>FIND_PACKAGE</h3><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">find_package</span>(PythonLibs <span class="number">3</span> REQUIRED)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="include-directories"><a href="#include-directories" class="headerlink" title="include_directories"></a>include_directories</h3><h3 id="CUDA-ADD-EXECUTABLE"><a href="#CUDA-ADD-EXECUTABLE" class="headerlink" title="CUDA_ADD_EXECUTABLE"></a>CUDA_ADD_EXECUTABLE</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">CUDA_ADD_EXECUTABLE( cuda_target file0 file1 ...</span><br><span class="line">                     [WIN32] [MACOSX_BUNDLE] [EXCLUDE_FROM_ALL] [OPTIONS ...] )</span><br><span class="line">-- Creates an executable &quot;cuda_target&quot; which is made up of the files</span><br><span class="line">   specified.  All of the non CUDA C files are compiled using the standard</span><br><span class="line">   build rules specified by CMAKE and the cuda files are compiled to object</span><br><span class="line">   files using nvcc and the host compiler.  In addition CUDA_INCLUDE_DIRS is</span><br><span class="line">   added automatically to include_directories().  Some standard CMake target</span><br><span class="line">   calls can be used on the target after calling this macro</span><br><span class="line">   (e.g. set_target_properties and target_link_libraries), but setting</span><br><span class="line">   properties that adjust compilation flags will not affect code compiled by</span><br><span class="line">   nvcc.  Such flags should be modified before calling CUDA_ADD_EXECUTABLE,</span><br><span class="line">   CUDA_ADD_LIBRARY or CUDA_WRAP_SRCS.</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://cmake.org/cmake/help/v3.0/module/FindCUDA.html">https://cmake.org/cmake/help/v3.0/module/FindCUDA.html</a></p>
+<h3 id="target-link-libraries"><a href="#target-link-libraries" class="headerlink" title="target_link_libraries"></a>target_link_libraries</h3><p>target_link_libraries里库文件的顺序符合gcc链接顺序的规则，即被依赖的库放在依赖它的库的后面，比如</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">target_link_libraries</span>(hello A B.a C.so)</span><br></pre></td></tr></table></figure>
+
+<p>在上面的命令中，libA.so可能依赖于libB.a和libC.so，如果顺序有错，链接时会报错。还有一点，B.a会告诉CMake优先使用静态链接库libB.a，C.so会告诉CMake优先使用动态链接库libC.so，也可直接使用库文件的相对路径或绝对路径。使用绝对路径的好处在                                                                                                                                                                                                                                                                                                                                      于，当依赖的库被更新时，make的时候也会重新链接。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/01/10/Tools/Tools_markdown/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/01/10/Tools/Tools_markdown/" class="post-title-link" itemprop="url">Markdown 语法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-01-10 00:00:00" itemprop="dateCreated datePublished" datetime="2022-01-10T00:00:00+00:00">2022-01-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>ICON: <a target="_blank" rel="noopener" href="https://gist.github.com/rxaviers/7360908">https://gist.github.com/rxaviers/7360908</a></p>
+<h3 id="符号（基础）"><a href="#符号（基础）" class="headerlink" title="符号（基础）"></a>符号（基础）</h3><h4 id="二元关系"><a href="#二元关系" class="headerlink" title="二元关系"></a>二元关系</h4><table>
+<thead>
+<tr>
+<th>符号显示</th>
+<th>代码</th>
+<th>显示符号</th>
+<th>代码</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$\leq$</td>
+<td>\leq</td>
+<td>$\geq$</td>
+<td>\geq</td>
+</tr>
+<tr>
+<td>$\leqslant$</td>
+<td>\leqslant</td>
+<td>$\geqslant$</td>
+<td>\geqslant</td>
+</tr>
+<tr>
+<td>$\ne$</td>
+<td>\ne</td>
+<td>$\approx$</td>
+<td>\approx</td>
+</tr>
+<tr>
+<td>$\cong$</td>
+<td>\cong</td>
+<td>$\simeq$</td>
+<td>\simeq</td>
+</tr>
+<tr>
+<td>$\sdot$</td>
+<td>\sdot</td>
+<td>$\perp$ :</td>
+<td>\perp</td>
+</tr>
+<tr>
+<td>$\int$</td>
+<td>\int</td>
+<td>$\iint$</td>
+<td>\iint</td>
+</tr>
+<tr>
+<td>$\oint$</td>
+<td>\oint</td>
+<td>$\infin$</td>
+<td>\infin</td>
+</tr>
+<tr>
+<td>$\infty$</td>
+<td>\infty</td>
+<td>$\in$</td>
+<td>\in</td>
+</tr>
+<tr>
+<td>$\propto$</td>
+<td>\propto</td>
+<td>$\notin$</td>
+<td>\notin</td>
+</tr>
+<tr>
+<td>$\cap$</td>
+<td>\cap</td>
+<td>$\cup$</td>
+<td>\cup</td>
+</tr>
+<tr>
+<td>$\subset$</td>
+<td>\subset</td>
+<td>$\supset$</td>
+<td>\supset</td>
+</tr>
+<tr>
+<td>$\subseteq$</td>
+<td>\subseteq</td>
+<td>$\parallel$</td>
+<td>\parallel</td>
+</tr>
+<tr>
+<td>$\forall$</td>
+<td>\forall</td>
+<td>$\exists$</td>
+<td>\exists</td>
+</tr>
+<tr>
+<td>$\because$</td>
+<td>\because</td>
+<td>$\therefore$</td>
+<td>\therefore</td>
+</tr>
+</tbody></table>
+<h4 id="二元运算"><a href="#二元运算" class="headerlink" title="二元运算"></a>二元运算</h4><table>
+<thead>
+<tr>
+<th>+</th>
+<th>+</th>
+<th>-</th>
+<th>-</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$\times$</td>
+<td>\times</td>
+<td>$\div$</td>
+<td>\div</td>
+</tr>
+<tr>
+<td>$\setminus$</td>
+<td>\setminus</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>$\mp$</td>
+<td>\mp</td>
+<td>$\pm$</td>
+<td>\pm or \plusmn</td>
+</tr>
+<tr>
+<td>$\triangleleft$</td>
+<td>\triangleleft</td>
+<td>$\triangleright$</td>
+<td>\triangleright</td>
+</tr>
+<tr>
+<td>$\cdot$</td>
+<td>\cdot</td>
+<td>$\dots$</td>
+<td>\dots</td>
+</tr>
+<tr>
+<td>$\star$</td>
+<td>\star</td>
+<td>$\ast$</td>
+<td>\ast</td>
+</tr>
+<tr>
+<td>$\cap$</td>
+<td>\cap</td>
+<td>$\cup$</td>
+<td>\cup</td>
+</tr>
+<tr>
+<td>$\circ$</td>
+<td>\circ</td>
+<td>$\bullet$</td>
+<td>\bullet</td>
+</tr>
+<tr>
+<td>$\oplus$</td>
+<td>\oplus</td>
+<td>$\ominus$</td>
+<td>\ominus</td>
+</tr>
+<tr>
+<td>$\otimes$</td>
+<td>\otimes</td>
+<td>$\odot$</td>
+<td>\odot</td>
+</tr>
+<tr>
+<td>$\oslash$</td>
+<td>\oslash</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>$\diamond$</td>
+<td>\diamond</td>
+<td>$\bigcirc$</td>
+<td>\bigcirc</td>
+</tr>
+<tr>
+<td>$\bigtriangleup$</td>
+<td>\bigtriangleup</td>
+<td>$\bigtriangledown$</td>
+<td>\bigtriangledown</td>
+</tr>
+</tbody></table>
+<h4 id="数学符号"><a href="#数学符号" class="headerlink" title="数学符号"></a>数学符号</h4><table>
+<thead>
+<tr>
+<th>符号显示</th>
+<th>代码</th>
+<th>显示符号</th>
+<th>代码</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$\alpha$</td>
+<td>\alpha</td>
+<td>$\beta$</td>
+<td>\beta</td>
+</tr>
+<tr>
+<td>$\delta$</td>
+<td>\delta</td>
+<td>$\Delta$</td>
+<td>\Delta</td>
+</tr>
+<tr>
+<td>$\gamma$</td>
+<td>\gamma</td>
+<td>$\eta$</td>
+<td>\eta</td>
+</tr>
+<tr>
+<td>$\mu$</td>
+<td>\mu</td>
+<td>$\varphi$</td>
+<td>\varphi</td>
+</tr>
+<tr>
+<td>$\sigma$</td>
+<td>\sigma</td>
+<td>$\Sigma$</td>
+<td>\Sigma</td>
+</tr>
+<tr>
+<td>$\sum$</td>
+<td>\sum</td>
+<td>$\prod$</td>
+<td>\prod (求和)</td>
+</tr>
+<tr>
+<td>$\flat$</td>
+<td>\flat</td>
+<td>$\coprod$</td>
+<td>\coprod</td>
+</tr>
+<tr>
+<td>$\natural$</td>
+<td>\natural</td>
+<td>$\sharp$</td>
+<td>\sharp</td>
+</tr>
+<tr>
+<td>$\ell$</td>
+<td></td>
+<td>$\wp$</td>
+<td></td>
+</tr>
+<tr>
+<td>$\aleph$</td>
+<td></td>
+<td>$\mho$</td>
+<td></td>
+</tr>
+<tr>
+<td>$\nabla$</td>
+<td>\nabla 导数</td>
+<td>$\partial$</td>
+<td>\partial</td>
+</tr>
+<tr>
+<td>$\triangle$</td>
+<td></td>
+<td>$\surd$</td>
+<td></td>
+</tr>
+<tr>
+<td>$\top$</td>
+<td></td>
+<td>$\angle$</td>
+<td></td>
+</tr>
+<tr>
+<td>$\lnot$</td>
+<td>\neg或\lnot</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="箭头"><a href="#箭头" class="headerlink" title="箭头"></a>箭头</h3><table>
+<thead>
+<tr>
+<th>符号显示</th>
+<th>代码</th>
+<th>显示符号</th>
+<th>代码</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$\uparrow$</td>
+<td>\uparrow</td>
+<td>$\Uparrow$</td>
+<td>\Uparrow</td>
+</tr>
+<tr>
+<td>$\downarrow$</td>
+<td>\downarrow</td>
+<td>$\Downarrow$</td>
+<td>\Downarrow</td>
+</tr>
+<tr>
+<td>$\leftarrow$</td>
+<td>\leftarrow</td>
+<td>$\Leftarrow$</td>
+<td>\Leftarrow</td>
+</tr>
+<tr>
+<td>$\rightarrow$</td>
+<td>\rightarrow</td>
+<td>$\Rightarrow$</td>
+<td>\Rightarrow</td>
+</tr>
+<tr>
+<td>$\nearrow$</td>
+<td>\nearrow</td>
+<td>$\searrow$</td>
+<td>\searrow</td>
+</tr>
+<tr>
+<td>$\swarrow$</td>
+<td>\swarrow</td>
+<td>$\nwarrow$</td>
+<td>\nwarrow</td>
+</tr>
+<tr>
+<td>$\leftharpoonup$</td>
+<td>\leftharpoonup</td>
+<td>$\rightharpoonup$</td>
+<td>\rightharpoonup</td>
+</tr>
+<tr>
+<td>$\leftharpoondown$</td>
+<td>\leftharpoondown</td>
+<td>$\rightharpoondown$</td>
+<td>\rightharpoondown</td>
+</tr>
+<tr>
+<td>$\iff$</td>
+<td>\iff</td>
+<td>$\rightleftharpoons$</td>
+<td>\rightleftharpoons</td>
+</tr>
+<tr>
+<td>$\longleftarrow$</td>
+<td>\longleftarrow</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="P"><a href="#P" class="headerlink" title="P"></a>P</h4><table>
+<thead>
+<tr>
+<th>符号显示</th>
+<th>代码</th>
+<th>显示符号</th>
+<th>代码</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$\frac{x}{y}$</td>
+<td>\frac{x}{y}</td>
+<td>$\lfloor{x}\rfloor$</td>
+<td>\lfloor{x}\rfloor</td>
+</tr>
+<tr>
+<td>$\left{\right}$</td>
+<td>\left{\right}</td>
+<td>$\wedge$</td>
+<td>\wedge</td>
+</tr>
+<tr>
+<td>$\vee$</td>
+<td>\vee</td>
+<td>$\overline x$</td>
+<td>\overline</td>
+</tr>
+<tr>
+<td>$\hat x$</td>
+<td>\hat{x}</td>
+<td>$\dot x$</td>
+<td>\dot{x}</td>
+</tr>
+<tr>
+<td>$\diamondsuit$</td>
+<td>\diamondsuit</td>
+<td>$\heartsuit$</td>
+<td>\heartsuit</td>
+</tr>
+<tr>
+<td>$\clubsuit$</td>
+<td>\clubsuit</td>
+<td>$\spadesuit$</td>
+<td>\spadesuit</td>
+</tr>
+<tr>
+<td>$\hbar$</td>
+<td>\hbar</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>$\Re$</td>
+<td>\Re</td>
+<td>$\Im$</td>
+<td>\Im</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="数学（高数）"><a href="#数学（高数）" class="headerlink" title="数学（高数）"></a>数学（高数）</h3><table>
+<thead>
+<tr>
+<th>符号</th>
+<th>代码</th>
+<th>符号</th>
+<th>代码</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$\sqrt{N}$</td>
+<td>\sqrt{N}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>$\grave{a}$</td>
+<td>\grave{a}</td>
+<td>$\check{a}$</td>
+<td>check{a}</td>
+</tr>
+<tr>
+<td>$\ddot{a}$</td>
+<td>\ddot{a}</td>
+<td>$\dot{a}$</td>
+<td>\dot{a}</td>
+</tr>
+<tr>
+<td>$\widetilde{A}$</td>
+<td>\widetilde{A}</td>
+<td>$\widehat{A}$</td>
+<td>\widehat{A}</td>
+</tr>
+<tr>
+<td>$\bar{a}$</td>
+<td>\bar{a}</td>
+<td>$\vec{a}$</td>
+<td>\vec{a}</td>
+</tr>
+<tr>
+<td>$\hat{a}$</td>
+<td>\hat{a}</td>
+<td>$\tilde{a}$</td>
+<td>\tilde{a}</td>
+</tr>
+<tr>
+<td>$\breve{a}$</td>
+<td>\breve{a}</td>
+<td>$\acute{a}$</td>
+<td>\acute{a}</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p><img src="https://pic2.zhimg.com/v2-89e0411005c6d32494fa1bfdd732ff5d_r.jpg"></p>
+<h3 id="希腊字母"><a href="#希腊字母" class="headerlink" title="希腊字母"></a>希腊字母</h3><p><img src="https://pic1.zhimg.com/v2-2f1addec9649e9c57ef1e21632ccbe04_r.jpg"></p>
+<h3 id="括号"><a href="#括号" class="headerlink" title="括号"></a>括号</h3><table>
+<thead>
+<tr>
+<th></th>
+<th>big, Big, bigg, Bigg</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$\Bigg(\bigg(\Big(\big((x)\big)\Big)\bigg)\Bigg)$</td>
+<td><code>\Bigg(\bigg(\Big(\big((x)\big)\Big)\bigg)\Bigg)</code>{% raw %}</td>
+<td></td>
+</tr>
+<tr>
+<td>$\Bigg[\bigg[\Big[\big[[x]\big]\Big]\bigg]\Bigg]$</td>
+<td>{% raw %}<code>\Bigg[\bigg[\Big[\big[[x]\big]\Big]\bigg]\Bigg]</code>{% raw %}</td>
+<td></td>
+</tr>
+<tr>
+<td>$\Bigg{\bigg{ \Big{\big{ {x} \big}\Big} \bigg} \Bigg}$</td>
+<td>{% raw %}&#96;&#96;&#96;\Bigg{\bigg{\Big{\big{{x}\big}\Big}\bigg}\Bigg}```{% raw %} |     |
+
+### 积分
+
+|                             |                           |
+| --------------------------- | ------------------------- |
+| $\int$                      | \int                      |
+| $\iint$                     | \iint                     |
+| $\iiint$                    | \iiint                    |
+| $\oint$                     | \oint                     |
+| $\nabla$                    | \nabla                    |
+| $\int_0^2 x^2 \mathrm{d} x$ | \int_0^2 x^2 \mathrm{d} x |
+|                             |                           |
+
+### 矩阵
+
+$$
+\begin{matrix}
+ 1 & 2 & 3 \\
+ 4 & 5 & 6 \\
+ 7 & 8 & 9
+ \end{matrix} \tag{1}
+$$
+
+$$
+\left\{
+\begin{matrix}
+1 & 2 & 3 \\
+4 & 5 & 6 \\
+7 & 8 & 9
+\end{matrix}
+\right\} \tag{1}
+$$
+
+$$
+\left[
+\begin{matrix}
+1 & 2 & 3 \\
+4 & 5 & 6 \\
+7 & 8 & 9
+\end{matrix}
+\right] \tag{2}
+
+$$
+
+$$
+\begin{bmatrix}
+{a_{11}}&amp;{a_{12}}&amp;{\cdots}&amp;{a_{1n}}\</td>
+<td></td>
+</tr>
+<tr>
+<td>{a_{21}}&amp;{a_{22}}&amp;{\cdots}&amp;{a_{2n}}\</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>{\vdots}&amp;{\vdots}&amp;{\ddots}&amp;{\vdots}\</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>{a_{m1}}&amp;{a_{m2}}&amp;{\cdots}&amp;{a_{mn}}\</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>\end{bmatrix} \tag{5}</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>$$</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="参数矩阵"><a href="#参数矩阵" class="headerlink" title="参数矩阵"></a>参数矩阵</h4><p>$$<br>\begin{array}{c|lll}<br>{↓}&amp;{a}&amp;{b}&amp;{c}\<br>\hline<br>{R_1}&amp;{c}&amp;{b}&amp;{a}\<br>{R_2}&amp;{b}&amp;{c}&amp;{c}\<br>\end{array} \tag{6}<br>$$</p>
+<p>方程式</p>
+<p>$$<br>\begin{cases}<br>a_1x+b_1y+c_1z&#x3D;d_1\<br>a_2x+b_2y+c_2z&#x3D;d_2\<br>a_3x+b_3y+c_3z&#x3D;d_3\<br>\end{cases} \tag{8}<br>$$</p>
+<h3 id="对齐-begin-aligned"><a href="#对齐-begin-aligned" class="headerlink" title="对齐 \begin{aligned"></a>对齐 \begin{aligned</h3><p>$$<br>\begin{aligned}<br>x^2 + 6x + 8 &amp;&#x3D; (x+3)^2-9+8 \<br> &amp;&#x3D; (x+3)^2-1 \<br> &amp;&#x3D; (x+4)(x+2)<br>\end{aligned}<br>$$</p>
+<h3 id="Flowchart流程图"><a href="#Flowchart流程图" class="headerlink" title="Flowchart流程图"></a>Flowchart流程图</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Iccyco/article/details/106202945">Markdown+Flowchart流程图语法_Icyco_的博客-CSDN博客_flowchart markdown</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/b5410e0fb759">markdown流程图 - 简书</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">s=&gt;start: 系统初始化</span><br><span class="line">io=&gt;inputoutput: User Input</span><br><span class="line">c1=&gt;condition: KEY按下？</span><br><span class="line">c2=&gt;condition: 体温正常？</span><br><span class="line">o1=&gt;operation: 开始测温</span><br><span class="line">o2=&gt;operation: LCD屏幕显示体温</span><br><span class="line">o3=&gt;operation: 蜂鸣器响起</span><br><span class="line">e=&gt;end: 测温结束</span><br><span class="line"></span><br><span class="line">s-&gt;c1(yes)-&gt;o1-&gt;o2-&gt;c2(yes)-&gt;e</span><br><span class="line">c1(no)-&gt;c1</span><br><span class="line">c2(no)-&gt;o3-&gt;e</span><br></pre></td></tr></table></figure>
+
+<h3 id="Vega图表"><a href="#Vega图表" class="headerlink" title="Vega图表:"></a>Vega图表:</h3><p><a target="_blank" rel="noopener" href="https://www.csdn.net/tags/OtTaIg5sNDE2NDYtYmxvZwO0O0OO0O0O.html">vega 图表 - CSDN</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Darlingqiang/article/details/119620489">【Tools】Markdown数学符号&amp;公式（史上最全公式表）_markdown 求和符号_大江东去浪淘尽千古风流人物的博客-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.ngui.cc/zz/2134496.html?action=onClick">Markdown常用符号及排版</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/01/03/Sub_Language/DL_Train/Pytorch/version/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/01/03/Sub_Language/DL_Train/Pytorch/version/" class="post-title-link" itemprop="url">Pytorch 版本对应关系表</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-01-03 19:00:00" itemprop="dateCreated datePublished" datetime="2022-01-03T19:00:00+00:00">2022-01-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DNN-platform/" itemprop="url" rel="index"><span itemprop="name">DNN_platform</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DNN-platform/pytorch/" itemprop="url" rel="index"><span itemprop="name">pytorch</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[TOC]</p>
+<p>Offical Web: <a target="_blank" rel="noopener" href="https://pytorch.org/get-started/locally/">https://pytorch.org/get-started/locally/</a></p>
+<h3 id="torch-and-torchaudio-版本对应表"><a href="#torch-and-torchaudio-版本对应表" class="headerlink" title="torch and torchaudio 版本对应表"></a>torch and torchaudio 版本对应表</h3><p><a target="_blank" rel="noopener" href="https://wenku.baidu.com/view/99163a4cac1ffc4ffe4733687e21af45b307fe04.html">https://wenku.baidu.com/view/99163a4cac1ffc4ffe4733687e21af45b307fe04.html</a></p>
+<p><img src="/2022/01/03/Sub_Language/DL_Train/Pytorch/version/image-20220413100221920.png" alt="image-20220413100221920"></p>
+<h3 id="Torch-TorchVision-版本"><a href="#Torch-TorchVision-版本" class="headerlink" title="Torch : TorchVision 版本"></a>Torch : TorchVision 版本</h3><table>
+<thead>
+<tr>
+<th>torch</th>
+<th>torchvision</th>
+<th>python</th>
+<th>cuda</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1.11.??</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1.10.2</td>
+<td>0.11.3</td>
+<td>&gt;&#x3D;3.7  &lt;&#x3D;3.9</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>1.10.1</strong></td>
+<td>0.11.2</td>
+<td>&gt;&#x3D;3.6  &lt;&#x3D;3.9</td>
+<td>111</td>
+</tr>
+<tr>
+<td>1.10.0</td>
+<td>0.11.1</td>
+<td>&gt;&#x3D;3.6  &lt;&#x3D;3.9</td>
+<td></td>
+</tr>
+<tr>
+<td>1.9.1</td>
+<td>0.10.1</td>
+<td>&gt;&#x3D;3.6  &lt;&#x3D;3.9</td>
+<td></td>
+</tr>
+<tr>
+<td>1.9.0</td>
+<td>0.10.0</td>
+<td>&gt;&#x3D;3.6  &lt;&#x3D;3.9</td>
+<td></td>
+</tr>
+<tr>
+<td>1.8.2</td>
+<td>0.9.2</td>
+<td>&gt;&#x3D;3.6  &lt;&#x3D;3.9</td>
+<td></td>
+</tr>
+<tr>
+<td>1.8.1</td>
+<td>0.9.1</td>
+<td>&gt;&#x3D;3.6  &lt;&#x3D;3.9</td>
+<td></td>
+</tr>
+<tr>
+<td>1.8.0</td>
+<td>0.9.0</td>
+<td>&gt;&#x3D;3.6  &lt;&#x3D;3.9</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>1.7.1</strong></td>
+<td>0.8.1</td>
+<td>&gt;&#x3D;3.6  &lt;&#x3D;3.9</td>
+<td>9.2</td>
+</tr>
+<tr>
+<td>1.7.0</td>
+<td>0.8.0</td>
+<td>&gt;&#x3D;3.6  &lt;&#x3D;3.8</td>
+<td></td>
+</tr>
+<tr>
+<td>1.6.0</td>
+<td>0.7.0</td>
+<td>&gt;&#x3D;3.6  &lt;&#x3D;3.8</td>
+<td></td>
+</tr>
+<tr>
+<td>1.5.1</td>
+<td>0.6.1</td>
+<td>&gt;&#x3D;3.6  &lt;&#x3D;3.8</td>
+<td>9.2, 10.1,10.2</td>
+</tr>
+<tr>
+<td>1.5.0</td>
+<td>0.6.0</td>
+<td>&gt;&#x3D;3.6  &lt;&#x3D;3.8</td>
+<td>9.2, 10.1,10.2</td>
+</tr>
+<tr>
+<td><strong>1.4.0</strong></td>
+<td>0.5.0</td>
+<td>&#x3D;&#x3D;2.7, &gt;&#x3D;3.5, &lt;&#x3D;3.8</td>
+<td>9.2, 10.0</td>
+</tr>
+<tr>
+<td>1.3.1</td>
+<td>0.4.2</td>
+<td>&#x3D;&#x3D;2.7, &gt;&#x3D;3.5, &lt;&#x3D;3.7</td>
+<td>9.2, 10.0</td>
+</tr>
+<tr>
+<td>1.3.0</td>
+<td>0.4.1</td>
+<td>&#x3D;&#x3D;2.7, &gt;&#x3D;3.5, &lt;&#x3D;3.7</td>
+<td>9.2, 10.0</td>
+</tr>
+<tr>
+<td>1.2.0</td>
+<td>0.4.0</td>
+<td>&#x3D;&#x3D;2.7, &gt;&#x3D;3.5, &lt;&#x3D;3.7</td>
+<td>9.2, 10.0</td>
+</tr>
+<tr>
+<td>1.1.0</td>
+<td>0.3.0</td>
+<td>&#x3D;&#x3D;2.7, &gt;&#x3D;3.5, &lt;&#x3D;3.7</td>
+<td>9.0, 10.0</td>
+</tr>
+<tr>
+<td>&lt;1.0.1</td>
+<td>0.2.2</td>
+<td>&#x3D;&#x3D;2.7, &gt;&#x3D;3.5, &lt;&#x3D;3.7</td>
+<td>9.0, 10.0</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="安装命令："><a href="#安装命令：" class="headerlink" title="安装命令："></a>安装命令：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># CUDA 10.0</span><br><span class="line">conda install pytorch==1.4.0 torchvision==0.5.0 cudatoolkit=10.0 -c pytorch</span><br><span class="line"># CUDA 10.1</span><br><span class="line">conda install pytorch==1.4.0 torchvision==0.5.0 cudatoolkit=10.1 -c pytorch</span><br></pre></td></tr></table></figure>
+
+<h3 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://download.pytorch.org/whl/cpu/torch_stable.html">https://download.pytorch.org/whl/cpu/torch_stable.html</a> # CPU-only build</li>
+<li><a target="_blank" rel="noopener" href="https://download.pytorch.org/whl/cu80/torch_stable.html">https://download.pytorch.org/whl/cu80/torch_stable.html</a> # CUDA 8.0 build</li>
+<li><a target="_blank" rel="noopener" href="https://download.pytorch.org/whl/cu90/torch_stable.html">https://download.pytorch.org/whl/cu90/torch_stable.html</a> # CUDA 9.0 build</li>
+<li><a target="_blank" rel="noopener" href="https://download.pytorch.org/whl/cu92/torch_stable.html">https://download.pytorch.org/whl/cu92/torch_stable.html</a> # CUDA 9.2 build</li>
+<li><a target="_blank" rel="noopener" href="https://download.pytorch.org/whl/cu100/torch_stable.html">https://download.pytorch.org/whl/cu100/torch_stable.html</a> # CUDA 10.0 build</li>
+</ul>
+<p>​            最大torch-1.4.0 cu100    </p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/01/01/Improve/2022-Plan/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/01/01/Improve/2022-Plan/" class="post-title-link" itemprop="url">2022_PLAN</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-01-01 15:47:57" itemprop="dateCreated datePublished" datetime="2022-01-01T15:47:57+00:00">2022-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Self/" itemprop="url" rel="index"><span itemprop="name">Self</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Self/Plan/" itemprop="url" rel="index"><span itemprop="name">Plan</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="提升"><a href="#提升" class="headerlink" title="提升"></a>提升</h3><ul>
+<li><input disabled type="checkbox"> <del>电子信息</del></li>
+<li><input disabled type="checkbox"> MEM</li>
+<li><input disabled type="checkbox"> <del>软考高级（系统分析师，软件架构师）</del></li>
+</ul>
+<h3 id="专业精进："><a href="#专业精进：" class="headerlink" title="专业精进："></a>专业精进：</h3><ul>
+<li>RL book <ul>
+<li><input disabled type="checkbox"> 博弈论</li>
+<li><input disabled type="checkbox"> 《Reinforcement Learning: An Introduction》【PDF】</li>
+<li><input checked disabled type="checkbox"> 《强化学习 第二版》机械工业出版社</li>
+<li><input disabled type="checkbox"> 《动手学强化学习–上海交大-余勇教授团队》</li>
+<li><input checked disabled type="checkbox"> 《深度强化学习–学术前沿》刘驰 机械工业</li>
+<li><input disabled type="checkbox"> 《机器学习》西瓜书 【实体书】</li>
+<li><input disabled type="checkbox"> 《机器学习公式详解》南瓜书</li>
+<li><input checked disabled type="checkbox"> 《视觉SLAM十四讲》【实体书】</li>
+</ul>
+</li>
+<li>英语阅读<ul>
+<li><input disabled type="checkbox"> 《The Million Pound Bank Note》<ul>
+<li><input checked disabled type="checkbox"> 第一遍</li>
+<li><input disabled type="checkbox"> 第二遍</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>高数<ul>
+<li><input disabled type="checkbox"> 概率论</li>
+<li><input disabled type="checkbox"> 导数</li>
+</ul>
+</li>
+<li>目标追踪<ul>
+<li><input disabled type="checkbox"> Mask-RCNN</li>
+<li><input disabled type="checkbox"> 目标追踪</li>
+</ul>
+</li>
+<li>自动驾驶<ul>
+<li><input checked disabled type="checkbox"> 九月-自动驾驶基础</li>
+<li><input disabled type="checkbox"> 《视觉SLAM十四讲》<ul>
+<li><input disabled type="checkbox"> 《计算机视觉中的多视图几何》</li>
+<li><input disabled type="checkbox"> 《概率机器人》</li>
+<li><input disabled type="checkbox"> 《机器人学中的状态估计》</li>
+</ul>
+</li>
+<li><input disabled type="checkbox"> 《ROS机器人编程与SLAM算法解析指南》</li>
+<li><input disabled type="checkbox"> 浙大-自主驾驶穿越机</li>
+</ul>
+</li>
+</ul>
+<h3 id="技术："><a href="#技术：" class="headerlink" title="技术："></a>技术：</h3><p>C++网络编程：</p>
+<ul>
+<li><p><input disabled type="checkbox"> 
+Window网络编程C++</p>
+</li>
+<li><p><input disabled type="checkbox"> 
+Unix网络编程C++</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/19/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><span class="page-number current">20</span><a class="page-number" href="/page/21/">21</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/21/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

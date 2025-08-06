@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="SIFThttps:&#x2F;&#x2F;github.com&#x2F;alicevision&#x2F;popsift SIFT即尺度不变特征变换，是用于图像处理领域的一种描述。这种描述具有尺度不变性，可在图像中检测出关键点，是一种局部特征描述子。 一、SIFT算法特点：1、具有较好的稳定性和不变性，能够适应旋转、尺度缩放、亮度的变化，能在一定程度上不受视角变化、仿射变换、噪声的干扰。 2、区分性好，能够在海量特征数据库中进行快速">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CV_Algorithm_SIFT">
+<meta property="og:url" content="https://novav.github.io/2020/01/03/CV/CV-Algorithm-SIFT/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="SIFThttps:&#x2F;&#x2F;github.com&#x2F;alicevision&#x2F;popsift SIFT即尺度不变特征变换，是用于图像处理领域的一种描述。这种描述具有尺度不变性，可在图像中检测出关键点，是一种局部特征描述子。 一、SIFT算法特点：1、具有较好的稳定性和不变性，能够适应旋转、尺度缩放、亮度的变化，能在一定程度上不受视角变化、仿射变换、噪声的干扰。 2、区分性好，能够在海量特征数据库中进行快速">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2020/01/03/CV/CV-Algorithm-SIFT/20190316212036359.png">
+<meta property="article:published_time" content="2020-01-03T15:51:57.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:38.205Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="CV">
+<meta property="article:tag" content="SIFT">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2020/01/03/CV/CV-Algorithm-SIFT/20190316212036359.png">
+
+<link rel="canonical" href="https://novav.github.io/2020/01/03/CV/CV-Algorithm-SIFT/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>CV_Algorithm_SIFT | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2020/01/03/CV/CV-Algorithm-SIFT/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CV_Algorithm_SIFT
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-01-03 15:51:57" itemprop="dateCreated datePublished" datetime="2020-01-03T15:51:57+00:00">2020-01-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/" itemprop="url" rel="index"><span itemprop="name">CV</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="SIFT"><a href="#SIFT" class="headerlink" title="SIFT"></a>SIFT</h2><p><a target="_blank" rel="noopener" href="https://github.com/alicevision/popsift">https://github.com/alicevision/popsift</a></p>
+<p>SIFT即<strong>尺度不变特征变换</strong>，是用于图像处理领域的一种描述。这种描述具有尺度不变性，可在图像中检测出关键点，是一种<strong>局部特征描述子</strong>。</p>
+<h3 id="一、SIFT算法特点："><a href="#一、SIFT算法特点：" class="headerlink" title="一、SIFT算法特点："></a>一、SIFT算法特点：</h3><p>1、具有较好的稳定性和不变性，能够适应旋转、尺度缩放、亮度的变化，能在一定程度上不受视角变化、仿射变换、噪声的干扰。</p>
+<p>2、区分性好，能够在海量特征数据库中进行快速准确的区分信息进行匹配</p>
+<p>3、多量性，就算只有单个物体，也能产生大量特征向量</p>
+<p>4、高速性，能够快速的进行特征向量匹配</p>
+<p>5、可扩展性，能够与其它形式的特征向量进行联合</p>
+<h3 id="二、SIFT算法实质"><a href="#二、SIFT算法实质" class="headerlink" title="二、SIFT算法实质"></a>二、SIFT算法实质</h3><p>在不同的尺度空间上查找关键点，并计算出关键点的方向。<br><img src="/2020/01/03/CV/CV-Algorithm-SIFT/20190316212036359.png" alt="在这里插入图片描述"></p>
+<h3 id="三、SIFT算法实现特征匹配主要有以下三个流程："><a href="#三、SIFT算法实现特征匹配主要有以下三个流程：" class="headerlink" title="三、SIFT算法实现特征匹配主要有以下三个流程："></a>三、SIFT算法实现特征匹配主要有以下三个流程：</h3><p>1、提取关键点：关键点是一些十分突出的不会因光照、尺度、旋转等因素而消失的点，比如角点、边缘点、暗区域的亮点以及亮区域的暗点。此步骤是搜索所有尺度空间上的图像位置。通过高斯微分函数来识别潜在的具有尺度和旋转不变的兴趣点。</p>
+<p>2、定位关键点并确定特征方向：在每个候选的位置上，通过一个拟合精细的模型来确定位置和尺度。关键点的选择依据于它们的稳定程度。然后基于图像局部的梯度方向，分配给每个关键点位置一个或多个方向。所有后面的对图像数据的操作都相对于关键点的方向、尺度和位置进行变换，从而提供对于这些变换的不变性。</p>
+<p>3、通过各关键点的特征向量，进行两两比较找出相互匹配的若干对特征点，建立景物间的对应关系。</p>
+<h3 id="四、尺度空间"><a href="#四、尺度空间" class="headerlink" title="四、尺度空间"></a>四、尺度空间</h3><h4 id="1、概念"><a href="#1、概念" class="headerlink" title="1、概念"></a>1、概念</h4><p>尺度空间即试图在图像领域中模拟人眼观察物体的概念与方法。例如：观察一颗树，关键在于我们想要观察是树叶子还是整棵树：如果是一整棵树(相当于大尺度情况下观察)，那么就应该去除图像的细节部分。如果是树叶(小尺度情况下观察)，那么就该观察局部细节特征。<br>SIFT算法在构建尺度空间时候采取高斯核函数进行滤波，使原始图像保存最多的细节特征，经过高斯滤波后细节特征逐渐减少来模拟大尺度情况下的特征表示。<br>利用高斯核函数进行滤波的主要原因有两个：<br>（1）高斯核函数是唯一的尺度不变核函数。<br>（2）DoG核函数可以近似为LoG函数，这样可以使特征提取更加简单。同时，David. Lowe作者在论文中提出将原始图像进行2倍上采样后滤波能够保留更多的信息便于后续特征提取与匹配。其实尺度空间图像生成就是当前图像与不同尺度核参数σ进行卷积运算后产生的图像。</p>
+<h4 id="2、表示"><a href="#2、表示" class="headerlink" title="2、表示"></a>2、表示</h4><p>L(x, y, σ) ,定义为原始图像 I(x, y)与一个可变尺度的2维高斯函数G(x, y, σ) 卷积运算。</p>
+<p>*表示卷积运算，(x,y)代表图像的像素位置。是尺度空间因子，值越小表示图像被平滑的越少，相应的尺度也就越小。大尺度对应于图像的概貌特征，小尺度对应于图像的细节特征。</p>
+<h3 id="五、高斯金字塔的构建"><a href="#五、高斯金字塔的构建" class="headerlink" title="五、高斯金字塔的构建"></a>五、高斯金字塔的构建</h3><h4 id="1、概念-1"><a href="#1、概念-1" class="headerlink" title="1、概念"></a>1、概念</h4><p>尺度空间在实现时使用高斯金字塔表示，高斯金字塔的构建分为两步：<br>（1）对图像做高斯平滑；<br>（2）对图像做降采样。</p>
+<p>图像的金字塔模型是指将原始图像不断降阶采样，得到一系列大小不一的图像，由大到小，从下到上构成的塔状模型。原图像为金子塔的第一层，每次降采样所得到的新图像为金字塔的一层(每层一张图像)，每个金字塔共n层。为了让尺度体现其连续性，高斯金字塔在简单降采样的基础上加上了高斯滤波。如上图所示，将图像金字塔每层的一张图像使用不同参数做高斯模糊，Octave表示一幅图像可产生的图像组数，Interval表示一组图像包括的图像层数。另外，降采样时，高斯金字塔上一组图像的初始图像(底层图像)是由前一组图像的倒数第三张图像隔点采样得到的。</p>
+<h3 id="2、表示-1"><a href="#2、表示-1" class="headerlink" title="2、表示"></a>2、表示</h3><p>高斯图像金字塔共o组、s层，则有</p>
+<p>σ：尺度空间坐标；s：sub-level层坐标；σ0：初始尺度；S：每组层数（一般为3~5）<br>组内和组间尺度：</p>
+<p>i:金字塔组数；n:每一组的层数</p>
+<h3 id="六、DOG空间极值检测"><a href="#六、DOG空间极值检测" class="headerlink" title="六、DOG空间极值检测"></a>六、DOG空间极值检测</h3><h4 id="1、DOG函数"><a href="#1、DOG函数" class="headerlink" title="1、DOG函数"></a>1、DOG函数</h4><h4 id="2、DoG高斯差分金字塔"><a href="#2、DoG高斯差分金字塔" class="headerlink" title="2、DoG高斯差分金字塔"></a>2、DoG高斯差分金字塔</h4><p>（1）对应DOG算子，需构建DOG金字塔。<br>可以通过高斯差分图像看出图像上的像素值变化情况。（如果没有变化，也就没有特征。特征必须是变化尽可能多的点。）DOG图像描绘的是目标的轮廓。</p>
+<p>（2）DOG局部极值检测<br>特征点是由DOG空间的局部极值点组成的。为了寻找DoG函数的极值点，每一个像素点要和它所有的相邻点比较，看其是否比它的图像域和尺度域的相邻点大或者小。特征点是由DOG空间的局部极值点组成的。为了寻找DoG函数的极值点，每一个像素点要和它所有的相邻点比较，看其是否比它的图像域和尺度域的相邻点大或者小。如下图，中间的检测点和它同尺度的8个相邻点和上下相邻尺度对应的9×2个点共26个点比较，以确保在尺度空间和二维图像空间都检测到极值点。</p>
+<p>（2）去除边缘效应<br>在边缘梯度的方向上主曲率值比较大，而沿着边缘方向则主曲率值较小。候选特征点的DoG函数D(x)的主曲率与2×2Hessian矩阵H的特征值成正比。</p>
+<p>其中，是候选点邻域对应位置的差分求得的。<br>H的特征值α和β代表x和y方向的梯度</p>
+<p>表示矩阵H对角线元素之和，表示矩阵H的行列式。假设是α较大的特征值，而是β较小的特征值，令，则</p>
+<p>该值在两特征值相等时达最小。Lowe论文中建议阈值T为1.2，即<br>时保留关键点，反之剔除</p>
+<h3 id="七、关键点方向分配"><a href="#七、关键点方向分配" class="headerlink" title="七、关键点方向分配"></a>七、关键点方向分配</h3><p>1、通过尺度不变性求极值点，需要利用图像的局部特征为给每一个关键点分配一个基准方向，使描述子对图像旋转具有不变性。对于在DOG金字塔中检测出的关键点，采集其所在高斯金字塔图像3σ邻域窗口内像素的梯度和方向分布特征。梯度的模值和方向如下：</p>
+<p>2、本算法采用梯度直方图统计法，统计以关键点为原点，一定区域内的图像像素点确定关键点方向。在完成关键点的梯度计算后，使用直方图统计邻域内像素的梯度和方向。梯度直方图将0~360度的方向范围分为36个柱，其中每柱10度。如下图所示，直方图的峰值方向代表了关键点的主方向，方向直方图的峰值则代表了该特征点处邻域梯度的方向，以直方图中最大值作为该关键点的主方向。为了增强匹配的鲁棒性，只保留峰值大于主方向峰值80％的方向作为该关键点的辅方向。</p>
+<h3 id="八、关键点描述"><a href="#八、关键点描述" class="headerlink" title="八、关键点描述"></a>八、关键点描述</h3><p>对于每一个关键点，都拥有位置、尺度以及方向三个信息。为每个关键点建立一个描述符，用一组向量将这个关键点描述出来，使其不随各种变化而改变，比如光照变化、视角变化等等。这个描述子不但包括关键点，也包含关键点周围对其有贡献的像素点，并且描述符应该有较高的独特性，以便于提高特征点正确匹配的概率。</p>
+<p>Lowe实验结果表明：描述子采用4×4×8＝128维向量表征，综合效果最优（不变性与独特性）。</p>
+<h3 id="九、关键点匹配"><a href="#九、关键点匹配" class="headerlink" title="九、关键点匹配"></a>九、关键点匹配</h3><p>1、分别对模板图（参考图，reference image）和实时图（观测图，<br>observation image）建立关键点描述子集合。目标的识别是通过两点集内关键点描述子的比对来完成。具有128维的关键点描述子的相似性度量采用欧式距离。</p>
+<p>3、匹配可采取穷举法完成，但所花费的时间太多。所以一般采用kd树的数据结构来完成搜索。搜索的内容是以目标图像的关键点为基准，搜索与目标图像的特征点最邻近的原图像特征点和次邻近的原图像特征点。<br>Kd树如下如所示，是个平衡二叉树</p>
+<h3 id="十、总结"><a href="#十、总结" class="headerlink" title="十、总结"></a>十、总结</h3><p>SIFT特征具有稳定性和不变性，在图像处理和计算机视觉领域有着很重要的作用。<br>1、DoG尺度空间的极值检测。<br>2、删除不稳定的极值点。<br>3、确定特征点的主方向<br>4、生成特征点的描述子进行关键点匹配。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>SIFT百科 <a target="_blank" rel="noopener" href="https://baike.baidu.com/item/SIFT/1396275?fr=aladdin">https://baike.baidu.com/item/SIFT/1396275?fr=aladdin</a></p>
+<p>SIFT算法详解 <a target="_blank" rel="noopener" href="https://blog.csdn.net/zddblog/article/details/7521424">https://blog.csdn.net/zddblog/article/details/7521424</a></p>
+<p>SIFT算法系列之尺度空间 <a target="_blank" rel="noopener" href="https://blog.csdn.net/Small_Munich/article/details/79968229">https://blog.csdn.net/Small_Munich/article/details/79968229</a></p>
+<p>SIFT特征详解 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/wangguchangqing/p/4853263.html">https://www.cnblogs.com/wangguchangqing/p/4853263.html</a></p>
+<p>SIFT算法原理 <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_37374643/article/details/88606351">https://blog.csdn.net/qq_37374643/article/details/88606351</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CV/" rel="tag"># CV</a>
+              <a href="/tags/SIFT/" rel="tag"># SIFT</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/01/03/CV_3D/CV-3D-BuildModel/" rel="prev" title="CV—CV_3D_BuildModel">
+      <i class="fa fa-chevron-left"></i> CV—CV_3D_BuildModel
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/01/03/CV_3D/CV-3D-BuildModel-CMPL/" rel="next" title="CV_3D_BuildModel_SMPL">
+      CV_3D_BuildModel_SMPL <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SIFT"><span class="nav-number">1.</span> <span class="nav-text">SIFT</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81SIFT%E7%AE%97%E6%B3%95%E7%89%B9%E7%82%B9%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">一、SIFT算法特点：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81SIFT%E7%AE%97%E6%B3%95%E5%AE%9E%E8%B4%A8"><span class="nav-number">1.2.</span> <span class="nav-text">二、SIFT算法实质</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81SIFT%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0%E7%89%B9%E5%BE%81%E5%8C%B9%E9%85%8D%E4%B8%BB%E8%A6%81%E6%9C%89%E4%BB%A5%E4%B8%8B%E4%B8%89%E4%B8%AA%E6%B5%81%E7%A8%8B%EF%BC%9A"><span class="nav-number">1.3.</span> <span class="nav-text">三、SIFT算法实现特征匹配主要有以下三个流程：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%B0%BA%E5%BA%A6%E7%A9%BA%E9%97%B4"><span class="nav-number">1.4.</span> <span class="nav-text">四、尺度空间</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E6%A6%82%E5%BF%B5"><span class="nav-number">1.4.1.</span> <span class="nav-text">1、概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E8%A1%A8%E7%A4%BA"><span class="nav-number">1.4.2.</span> <span class="nav-text">2、表示</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E9%AB%98%E6%96%AF%E9%87%91%E5%AD%97%E5%A1%94%E7%9A%84%E6%9E%84%E5%BB%BA"><span class="nav-number">1.5.</span> <span class="nav-text">五、高斯金字塔的构建</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E6%A6%82%E5%BF%B5-1"><span class="nav-number">1.5.1.</span> <span class="nav-text">1、概念</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E8%A1%A8%E7%A4%BA-1"><span class="nav-number">1.6.</span> <span class="nav-text">2、表示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AD%E3%80%81DOG%E7%A9%BA%E9%97%B4%E6%9E%81%E5%80%BC%E6%A3%80%E6%B5%8B"><span class="nav-number">1.7.</span> <span class="nav-text">六、DOG空间极值检测</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81DOG%E5%87%BD%E6%95%B0"><span class="nav-number">1.7.1.</span> <span class="nav-text">1、DOG函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81DoG%E9%AB%98%E6%96%AF%E5%B7%AE%E5%88%86%E9%87%91%E5%AD%97%E5%A1%94"><span class="nav-number">1.7.2.</span> <span class="nav-text">2、DoG高斯差分金字塔</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E5%85%B3%E9%94%AE%E7%82%B9%E6%96%B9%E5%90%91%E5%88%86%E9%85%8D"><span class="nav-number">1.8.</span> <span class="nav-text">七、关键点方向分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E5%85%B3%E9%94%AE%E7%82%B9%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.9.</span> <span class="nav-text">八、关键点描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E5%85%B3%E9%94%AE%E7%82%B9%E5%8C%B9%E9%85%8D"><span class="nav-number">1.10.</span> <span class="nav-text">九、关键点匹配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%81%E3%80%81%E6%80%BB%E7%BB%93"><span class="nav-number">1.11.</span> <span class="nav-text">十、总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">2.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

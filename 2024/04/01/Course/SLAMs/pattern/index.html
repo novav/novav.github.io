@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Opencv 相机内参标定及使用一、功能描述1.本文用于记录通过 Opencv 进行相机内参标定和对内参的使用来进行图像畸变矫正。 1）相机矩阵：包括焦距（fx，fy），光学中心（Cx，Cy），完全取决于相机本身，是相机的固有属性，只需要计算一次，可用矩阵表示如下：[fx, 0, Cx; 0, fy, cy; 0,0,1];  畸变系数：畸变数学模型的5个参数 D &#x3D; （k1，k2， P">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenCV 相机标定">
+<meta property="og:url" content="https://novav.github.io/2024/04/01/Course/SLAMs/pattern/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="Opencv 相机内参标定及使用一、功能描述1.本文用于记录通过 Opencv 进行相机内参标定和对内参的使用来进行图像畸变矫正。 1）相机矩阵：包括焦距（fx，fy），光学中心（Cx，Cy），完全取决于相机本身，是相机的固有属性，只需要计算一次，可用矩阵表示如下：[fx, 0, Cx; 0, fy, cy; 0,0,1];  畸变系数：畸变数学模型的5个参数 D &#x3D; （k1，k2， P">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-04-01T12:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:39.856Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="pattern">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://novav.github.io/2024/04/01/Course/SLAMs/pattern/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>OpenCV 相机标定 | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2024/04/01/Course/SLAMs/pattern/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OpenCV 相机标定
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-04-01 12:00:00" itemprop="dateCreated datePublished" datetime="2024-04-01T12:00:00+00:00">2024-04-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Opencv-相机内参标定及使用"><a href="#Opencv-相机内参标定及使用" class="headerlink" title="Opencv 相机内参标定及使用"></a>Opencv 相机内参标定及使用</h1><h2 id="一、功能描述"><a href="#一、功能描述" class="headerlink" title="一、功能描述"></a>一、功能描述</h2><p>1.本文用于记录通过 Opencv 进行相机内参标定和对内参的使用来进行图像畸变矫正。</p>
+<p>1）相机矩阵：包括焦距（fx，fy），光学中心（Cx，Cy），完全取决于相机本身，是相机的固有属性，只需要计算一次，可用矩阵表示如下：[fx, 0, Cx; 0, fy, cy; 0,0,1];</p>
+<ol start="2">
+<li>畸变系数：畸变数学模型的5个参数 D &#x3D; （k1，k2， P1， P2， k3）；</li>
+</ol>
+<p>3）相机内参：相机矩阵和畸变系数统称为相机内参，在不考虑畸变的时候，相机矩阵也会被称为相机内参；</p>
+<p>4） 相机外参：通过旋转和平移变换将3D的坐标转换为相机2维的坐标，其中的旋转矩阵和平移矩阵就被称为相机的外参；描述的是将世界坐标系转换成相机坐标系的过程。</p>
+<h2 id="二、标定板制作"><a href="#二、标定板制作" class="headerlink" title="二、标定板制作"></a><strong>二、标定板制作</strong></h2><p>方法一： 标定板可以直接从opencv官网下载：<a href="https://link.zhihu.com/?target=https://docs.opencv.org/2.4/_downloads/pattern.png">标定板</a></p>
+<p>方法二：Matlab DIY 制作</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">J = (checkerboard(300,4,5)&gt;0.5);</span><br><span class="line">figure, imshow(J);</span><br></pre></td></tr></table></figure>
+
+<p>打印完成后，测量实际打印出的网格边长，备用（本人制作的标定板网格边长为 26mm）。将打印纸贴附在硬纸板上（粘贴的尽可能平整），如下图所示。</p>
+<h2 id="三、图像采集"><a href="#三、图像采集" class="headerlink" title="三、图像采集"></a><strong>三、图像采集</strong></h2><p>运行以下参考程序按q键即可保存图像，注意尽量把镜头的每个方格都覆盖到，最好拍到整张打印纸。保存大约20到25张,通过 Matlab 标定软件可能会剔除部分图片。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;opencv2/opencv.hpp&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line">using namespace cv;</span><br><span class="line">using namespace <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">    Mat frame;</span><br><span class="line">    <span class="built_in">string</span> imgname;</span><br><span class="line">    <span class="type">int</span> f = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    VideoCapture <span class="title function_">inputVideo</span><span class="params">(<span class="number">0</span>)</span>;</span><br><span class="line">    <span class="keyword">if</span> (!inputVideo.isOpened())&#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Could not open the input video &quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;video is opened!&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>)&#123;</span><br><span class="line">        inputVideo &gt;&gt; frame;              </span><br><span class="line">        <span class="keyword">if</span> (frame.empty()) <span class="keyword">continue</span>;         </span><br><span class="line">        imshow(<span class="string">&quot;Camera&quot;</span>, frame);</span><br><span class="line">        <span class="type">char</span> key = waitKey(<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">if</span> (key == <span class="number">27</span>) <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">if</span> (key == <span class="string">&#x27;q&#x27;</span> || key == <span class="string">&#x27;Q&#x27;</span>)&#123;</span><br><span class="line">            imgname = to_string(f++) + <span class="string">&quot;.jpg&quot;</span>;</span><br><span class="line">            imwrite(imgname, frame);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Finished writing&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、标定内参"><a href="#四、标定内参" class="headerlink" title="四、标定内参"></a><strong>四、标定内参</strong></h2><h3 id="方法一：Matlab标定"><a href="#方法一：Matlab标定" class="headerlink" title="方法一：Matlab标定"></a>方法一：Matlab标定</h3><p>**步骤1：**在Matlab的Command Window里面输入cameraCalibrator即可调用标定应用程序。</p>
+<p>**步骤2：**选择from file 在自己的图片集全选待标定的图片，输入自己实际测量打印的标定板方格实际长度（本人的标定板方格边长26mm）,导入后我的有2张图片被拒绝。</p>
+<p>**步骤3：**关键步骤</p>
+<p>畸变参数，总共有五个，径向畸变3个（k1,k2,k3）和切向畸变2个(p1,p2)。</p>
+<p>径向畸变：</p>
+<p>实验表明，在MATLAB中选择使用三个参数，并且选择错切和桶形畸变，关于三个参数还是两个参数，可以根据自己的试验效果选择 。点击 Calibrate 后等待一段时间即可完成标定，标定完成后可通过点击 show Undistorted 对比校正前后效果。</p>
+<p>右上角平均误差推荐在0.5以下时，表明该标定数据可信（本人此次平均误差为0.47 ）。</p>
+<p>**步骤4：**导出参数，即可把参数进行保存，保存后可退出标定应用，在MATLAB主界面中将保存的Mat文件打开。</p>
+<p>**步骤5：**记录、保存数据</p>
+<p>上图中，RadialDistortion对应k1，k2，k3，TangentialDistortion对应p1，p2。</p>
+<p>IntrinsicMatrix对应相机矩阵，注意具体数值和OpenCV中数据是互为转置的关系。</p>
+<p>此次本人测得的数据为：</p>
+<h3 id="方法二：C-程序标定"><a href="#方法二：C-程序标定" class="headerlink" title="方法二：C++程序标定"></a>方法二：C++程序标定</h3><p>简单粗暴直接上程序：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;opencv2/imgproc/types_c.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line">using namespace cv;</span><br><span class="line">using namespace <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line">Mat image, img_gray;</span><br><span class="line"><span class="type">int</span> BOARDSIZE[<span class="number">2</span>]&#123; <span class="number">6</span>,<span class="number">9</span> &#125;;<span class="comment">//棋盘格每行每列角点个数</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;Point3f&gt;&gt; objpoints_img;<span class="comment">//保存棋盘格上角点的三维坐标</span></span><br><span class="line">    <span class="built_in">vector</span>&lt;Point3f&gt; obj_world_pts;<span class="comment">//三维世界坐标</span></span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;Point2f&gt;&gt; images_points;<span class="comment">//保存所有角点</span></span><br><span class="line">    <span class="built_in">vector</span>&lt;Point2f&gt; img_corner_points;<span class="comment">//保存每张图检测到的角点</span></span><br><span class="line">    <span class="built_in">vector</span>&lt;String&gt; images_path;<span class="comment">//创建容器存放读取图像路径</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">string</span> image_path = <span class="string">&quot;/home/titan/Calibration/image/pictures/*.jpg&quot;</span>;<span class="comment">//待处理图路径    </span></span><br><span class="line">    glob(image_path, images_path);<span class="comment">//读取指定文件夹下图像</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//转世界坐标系</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; BOARDSIZE[<span class="number">1</span>]; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; BOARDSIZE[<span class="number">0</span>]; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            obj_world_pts.push_back(Point3f(j, i, <span class="number">0</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; images_path.size(); i++)</span><br><span class="line">    &#123;</span><br><span class="line">        image = imread(images_path[i]);</span><br><span class="line">        cvtColor(image, img_gray, COLOR_BGR2GRAY);</span><br><span class="line">        <span class="comment">//检测角点</span></span><br><span class="line">        <span class="type">bool</span> found_success = findChessboardCorners(img_gray, Size(BOARDSIZE[<span class="number">0</span>], BOARDSIZE[<span class="number">1</span>]),</span><br><span class="line">            img_corner_points,</span><br><span class="line">            CALIB_CB_ADAPTIVE_THRESH | CALIB_CB_FAST_CHECK | CALIB_CB_NORMALIZE_IMAGE);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//显示角点</span></span><br><span class="line">        <span class="keyword">if</span> (found_success)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//迭代终止条件</span></span><br><span class="line">            TermCriteria <span class="title function_">criteria</span><span class="params">(CV_TERMCRIT_EPS | CV_TERMCRIT_ITER, <span class="number">30</span>, <span class="number">0.001</span>)</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//进一步提取亚像素角点</span></span><br><span class="line">            cornerSubPix(img_gray, img_corner_points, Size(<span class="number">11</span>, <span class="number">11</span>),</span><br><span class="line">                Size(<span class="number">-1</span>, <span class="number">-1</span>), criteria);</span><br><span class="line"></span><br><span class="line">            <span class="comment">//绘制角点</span></span><br><span class="line">            drawChessboardCorners(image, Size(BOARDSIZE[<span class="number">0</span>], BOARDSIZE[<span class="number">1</span>]), img_corner_points,</span><br><span class="line">                found_success);</span><br><span class="line"></span><br><span class="line">            objpoints_img.push_back(obj_world_pts);<span class="comment">//从世界坐标系到相机坐标系</span></span><br><span class="line">            images_points.push_back(img_corner_points);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//char *output = &quot;image&quot;;</span></span><br><span class="line">        <span class="type">char</span> text[] = <span class="string">&quot;image&quot;</span>;</span><br><span class="line">        <span class="type">char</span> *output = text;</span><br><span class="line">        imshow(output, image);</span><br><span class="line">        waitKey(<span class="number">200</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    计算内参和畸变系数等</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line"></span><br><span class="line">    Mat cameraMatrix, distCoeffs, R, T;<span class="comment">//内参矩阵，畸变系数，旋转量，偏移量</span></span><br><span class="line">    calibrateCamera(objpoints_img, images_points, img_gray.size(),</span><br><span class="line">        cameraMatrix, distCoeffs, R, T);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;cameraMatrix:&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; cameraMatrix &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;*****************************&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;distCoeffs:&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; distCoeffs &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;*****************************&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Rotation vector:&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; R &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;*****************************&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Translation vector:&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; T &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">///*</span></span><br><span class="line">    <span class="comment">//畸变图像校准</span></span><br><span class="line">    <span class="comment">//*/</span></span><br><span class="line">    Mat src, dst;</span><br><span class="line">    src = imread(<span class="string">&quot;/home/titan/Calibration/image/pictures/02.jpg&quot;</span>);  <span class="comment">//读取校正前图像</span></span><br><span class="line">    undistort(src, dst, cameraMatrix, distCoeffs);</span><br><span class="line"></span><br><span class="line">    <span class="type">char</span> texts[] = <span class="string">&quot;image_dst&quot;</span>;</span><br><span class="line">    <span class="type">char</span> *dst_output = texts;</span><br><span class="line">    <span class="comment">//char *dst_output = &quot;image_dst&quot;;</span></span><br><span class="line">    imshow(dst_output, dst);</span><br><span class="line">    waitKey(<span class="number">100</span>);</span><br><span class="line">    imwrite(<span class="string">&quot;/home/titan/Calibration/image/pictures/002.jpg&quot;</span>, dst);  <span class="comment">//校正后图像</span></span><br><span class="line"></span><br><span class="line">    destroyAllWindows();<span class="comment">//销毁显示窗口</span></span><br><span class="line">    system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行上述程序，经过一番图片处理与切换，最终通过终端得到获取相机内参及畸变系数。</p>
+<h2 id="五、使用内参"><a href="#五、使用内参" class="headerlink" title="五、使用内参"></a>五、使用内参</h2><p>简单粗暴直接上程序：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;ctime&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"></span><br><span class="line">using namespace cv;</span><br><span class="line">using namespace <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    VideoCapture <span class="title function_">inputVideo</span><span class="params">(<span class="number">0</span>)</span>;</span><br><span class="line">    <span class="keyword">if</span>(!inputVideo.isOpened())&#123;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;video is not opened\n\n&quot;</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;video is opened \n\n&quot;</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//  Matlab 标定的相机参数</span></span><br><span class="line">    Mat frame, frameCalibration;</span><br><span class="line">    inputVideo &gt;&gt; frame;</span><br><span class="line">    Mat cameraMatrix = Mat::eye(<span class="number">3</span>, <span class="number">3</span>, CV_64F);</span><br><span class="line">    cameraMatrix.at&lt;<span class="type">double</span>&gt;(<span class="number">0</span>,<span class="number">0</span>) = <span class="number">1982.56844306278</span>;</span><br><span class="line">    cameraMatrix.at&lt;<span class="type">double</span>&gt;(<span class="number">0</span>,<span class="number">1</span>) = <span class="number">1.79099355543064</span>;</span><br><span class="line">    cameraMatrix.at&lt;<span class="type">double</span>&gt;(<span class="number">0</span>,<span class="number">2</span>) = <span class="number">1042.90384922068</span>;</span><br><span class="line">    cameraMatrix.at&lt;<span class="type">double</span>&gt;(<span class="number">1</span>,<span class="number">1</span>) = <span class="number">1983.84445594899</span>;</span><br><span class="line">    cameraMatrix.at&lt;<span class="type">double</span>&gt;(<span class="number">1</span>,<span class="number">2</span>) = <span class="number">480.442502729538</span>;</span><br><span class="line"></span><br><span class="line">    Mat distCoeffs = Mat::zeros(<span class="number">5</span>, <span class="number">1</span>, CV_64F);</span><br><span class="line">    distCoeffs.at&lt;<span class="type">double</span>&gt;(<span class="number">0</span>,<span class="number">0</span>) = <span class="number">-0.515906663211726</span>;</span><br><span class="line">    distCoeffs.at&lt;<span class="type">double</span>&gt;(<span class="number">1</span>,<span class="number">0</span>) =  <span class="number">0.201811855093355</span>;</span><br><span class="line">    distCoeffs.at&lt;<span class="type">double</span>&gt;(<span class="number">2</span>,<span class="number">0</span>) =  <span class="number">0.00228453839673728</span>;</span><br><span class="line">    distCoeffs.at&lt;<span class="type">double</span>&gt;(<span class="number">3</span>,<span class="number">0</span>) = <span class="number">-0.00134697993045861</span>;</span><br><span class="line">    distCoeffs.at&lt;<span class="type">double</span>&gt;(<span class="number">4</span>,<span class="number">0</span>) = <span class="number">-0.0572379026696125</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*  C++程序标定的相机参数</span></span><br><span class="line"><span class="comment">    Mat frame, frameCalibration;</span></span><br><span class="line"><span class="comment">    inputVideo &gt;&gt; frame;</span></span><br><span class="line"><span class="comment">    Mat cameraMatrix = Mat::eye(3, 3, CV_64F);</span></span><br><span class="line"><span class="comment">    cameraMatrix.at&lt;double&gt;(0,0) = 1978.304376178962;</span></span><br><span class="line"><span class="comment">    cameraMatrix.at&lt;double&gt;(0,1) =                   0;</span></span><br><span class="line"><span class="comment">    cameraMatrix.at&lt;double&gt;(0,2) = 1044.639043480329;</span></span><br><span class="line"><span class="comment">    cameraMatrix.at&lt;double&gt;(1,1) = 1979.71454820083;</span></span><br><span class="line"><span class="comment">    cameraMatrix.at&lt;double&gt;(1,2) = 482.6287237060178;</span></span><br><span class="line"><span class="comment">    Mat distCoeffs = Mat::zeros(5, 1, CV_64F);</span></span><br><span class="line"><span class="comment">    distCoeffs.at&lt;double&gt;(0,0) = -0.5277684150872038;</span></span><br><span class="line"><span class="comment">    distCoeffs.at&lt;double&gt;(1,0) =  0.2663992436241138;</span></span><br><span class="line"><span class="comment">    distCoeffs.at&lt;double&gt;(2,0) = -0.001857829391420174;</span></span><br><span class="line"><span class="comment">    distCoeffs.at&lt;double&gt;(3,0) = -0.002175774665050042;</span></span><br><span class="line"><span class="comment">    distCoeffs.at&lt;double&gt;(4,0) = -0.1007311729522544;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line">    Mat view, rview, map1, map2;</span><br><span class="line">    Size image_Size;</span><br><span class="line">    image_Size = frame.size();</span><br><span class="line"></span><br><span class="line">    initUndistortRectifyMap(cameraMatrix, distCoeffs, Mat(), cameraMatrix, image_Size, CV_16SC2, map1, map2);</span><br><span class="line">    <span class="comment">// initUndistortRectifyMap(cameraMatrix, distCoeffs, Mat(),getOptimalNewCameraMatrix(cameraMatrix, distCoeffs, image_Size, 0.5, image_Size, 0),image_Size, CV_16SC2, map1, map2);</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">        inputVideo &gt;&gt; frame;</span><br><span class="line">        <span class="keyword">if</span>(frame.empty()) <span class="keyword">break</span>;</span><br><span class="line">        remap(frame, frameCalibration, map1, map2, INTER_LINEAR);</span><br><span class="line">        imshow(<span class="string">&quot;Original_image&quot;</span>,frame);</span><br><span class="line">        imshow(<span class="string">&quot;Calibrated_image&quot;</span>, frameCalibration);</span><br><span class="line">        <span class="type">char</span> key =waitKey(<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">if</span>(key == <span class="number">27</span> || key == <span class="string">&#x27;q&#x27;</span> || key == <span class="string">&#x27;Q&#x27;</span>) <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试效果如下：</p>
+<h3 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h3><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/532797417">Opencv 相机内参标定及使用(C++,Matlab)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jb51.net/python/284665tr5.htm">Python+OpenCV实现相机标定的方法详解_python_脚本之家</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/chenshiming1995/article/details/106546455">双目相机标定+去畸变+获得视差+深度（一次解决所有问题）（python+openCV）_双目相机视差怎么解决-CSDN博客</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/pattern/" rel="tag"># pattern</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/03/26/NLP/Qwen/" rel="prev" title="通义千问">
+      <i class="fa fa-chevron-left"></i> 通义千问
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/04/01/NLP/LLM_RAG/" rel="next" title="LLM RAG">
+      LLM RAG <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Opencv-%E7%9B%B8%E6%9C%BA%E5%86%85%E5%8F%82%E6%A0%87%E5%AE%9A%E5%8F%8A%E4%BD%BF%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">Opencv 相机内参标定及使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%8A%9F%E8%83%BD%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">一、功能描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%A0%87%E5%AE%9A%E6%9D%BF%E5%88%B6%E4%BD%9C"><span class="nav-number">1.2.</span> <span class="nav-text">二、标定板制作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%9B%BE%E5%83%8F%E9%87%87%E9%9B%86"><span class="nav-number">1.3.</span> <span class="nav-text">三、图像采集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%A0%87%E5%AE%9A%E5%86%85%E5%8F%82"><span class="nav-number">1.4.</span> <span class="nav-text">四、标定内参</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%9AMatlab%E6%A0%87%E5%AE%9A"><span class="nav-number">1.4.1.</span> <span class="nav-text">方法一：Matlab标定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%EF%BC%9AC-%E7%A8%8B%E5%BA%8F%E6%A0%87%E5%AE%9A"><span class="nav-number">1.4.2.</span> <span class="nav-text">方法二：C++程序标定</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E4%BD%BF%E7%94%A8%E5%86%85%E5%8F%82"><span class="nav-number">1.5.</span> <span class="nav-text">五、使用内参</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Ref"><span class="nav-number">1.5.1.</span> <span class="nav-text">Ref</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

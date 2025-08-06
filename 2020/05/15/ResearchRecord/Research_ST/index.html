@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="商汤科技 SenseTime [TOC] 论文CVPR 2020 《对人脸生成模型的隐空间可解释性分析》入选CVPR 2020论文《对人脸生成模型的隐空间可解释性分析》提出了一种简单而通用的技术InterFaceGAN，用于在潜在空间中进行语义人脸编辑，可控制姿势以及其他面部属性，例如性别、年龄、眼镜等，还能够纠正GAN造成的伪影。  这种方法对GAN的隐空间进行了深入分析，能更好理解GAN是如何">
+<meta property="og:type" content="article">
+<meta property="og:title" content="商汤AI_Research">
+<meta property="og:url" content="https://novav.github.io/2020/05/15/ResearchRecord/Research_ST/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="商汤科技 SenseTime [TOC] 论文CVPR 2020 《对人脸生成模型的隐空间可解释性分析》入选CVPR 2020论文《对人脸生成模型的隐空间可解释性分析》提出了一种简单而通用的技术InterFaceGAN，用于在潜在空间中进行语义人脸编辑，可控制姿势以及其他面部属性，例如性别、年龄、眼镜等，还能够纠正GAN造成的伪影。  这种方法对GAN的隐空间进行了深入分析，能更好理解GAN是如何">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2020/05/15/ResearchRecord/Research_ST/5eba4ddd26b5e.png">
+<meta property="og:image" content="https://novav.github.io/2020/05/15/ResearchRecord/Research_ST/5dc2bd069eeb5.png">
+<meta property="og:image" content="https://novav.github.io/2020/05/15/ResearchRecord/Research_ST/5dc2bd3b08def.png">
+<meta property="og:image" content="https://novav.github.io/2020/05/15/ResearchRecord/Research_ST/5dc2bdbc78cd9.png">
+<meta property="og:image" content="https://novav.github.io/2020/05/15/ResearchRecord/Research_ST/5dc2be70e2044.png">
+<meta property="og:image" content="https://novav.github.io/2020/05/15/ResearchRecord/Research_ST/5dc2be8f5efe0.png">
+<meta property="og:image" content="https://novav.github.io/2020/05/15/ResearchRecord/Research_ST/5dc2beaa58a32.png">
+<meta property="article:published_time" content="2020-05-15T23:02:54.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:40.504Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="AI Research">
+<meta property="article:tag" content="SenseTime">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2020/05/15/ResearchRecord/Research_ST/5eba4ddd26b5e.png">
+
+<link rel="canonical" href="https://novav.github.io/2020/05/15/ResearchRecord/Research_ST/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>商汤AI_Research | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2020/05/15/ResearchRecord/Research_ST/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          商汤AI_Research
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-05-15 23:02:54" itemprop="dateCreated datePublished" datetime="2020-05-15T23:02:54+00:00">2020-05-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI-Research/" itemprop="url" rel="index"><span itemprop="name">AI Research</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>商汤科技 SenseTime</p>
+<p>[TOC]</p>
+<h2 id="论文"><a href="#论文" class="headerlink" title="论文"></a>论文</h2><h3 id="CVPR-2020-《对人脸生成模型的隐空间可解释性分析》"><a href="#CVPR-2020-《对人脸生成模型的隐空间可解释性分析》" class="headerlink" title="CVPR 2020 《对人脸生成模型的隐空间可解释性分析》"></a>CVPR 2020 《对人脸生成模型的隐空间可解释性分析》</h3><p>入选CVPR 2020论文《对人脸生成模型的隐空间可解释性分析》提出了一种简单而通用的技术InterFaceGAN，用于在潜在空间中进行语义人脸编辑，可控制姿势以及其他面部属性，例如性别、年龄、眼镜等，还能够纠正GAN造成的伪影。</p>
+<p><img src="/2020/05/15/ResearchRecord/Research_ST/5eba4ddd26b5e.png" alt="img"></p>
+<p>这种方法对GAN的隐空间进行了深入分析，能更好理解GAN是如何将一个随机噪声转化为一张高质量图片的。</p>
+<h2 id="ICCV-2019"><a href="#ICCV-2019" class="headerlink" title="ICCV 2019"></a>ICCV 2019</h2><h4 id="面向目标检测的深度网络基础算子"><a href="#面向目标检测的深度网络基础算子" class="headerlink" title="面向目标检测的深度网络基础算子"></a><strong>面向目标检测的深度网络基础算子</strong></h4><p>《CARAFE:基于内容感知的特征重组》</p>
+<p>《CARAFE: Content-Aware ReAssembly of FEatures》</p>
+<p>特征上采样是深度神经网络结构中的一种基本的操作，例如：特征金字塔。它的设计对于需要进行密集预测的任务，例如物体检测、语义分割、实例分割，有着关键的影响。</p>
+<p>内容感知的特征重组（CARAFE），它是一种通用的，轻量的，效果显著的特征上采样操作。</p>
+<p><img src="/2020/05/15/ResearchRecord/Research_ST/5dc2bd069eeb5.png"></p>
+<p>CARAFE有这样一些引人注目的特性：1.大视野。不同于之前的上采样方法（如：双线性插值），仅使用亚像素的临近位置。CARAFE可以聚合来自大感受野的环境特征信息。2.基于特征感知的处理。不同于之前方法对于所有样本使用固定的核（如：反卷积），CARAFE可以对不同的位置进行内容感知，用生成的动态的核进行处理。3.轻量和快速计算。CARAFE仅带来很小的额外开销，可以容易地集成到现有网络结构中。我们对CARAFE在目标检测，实例分割，语义分割和图像修复的主流方法上进行广泛的测试，CARAFE在全部4种任务上都取得了一致的明显提升。CARAFE具有成为未来深度学习研究中一个有效的基础模块的潜力。</p>
+<h4 id="面向三维视觉的点云处理基础网络"><a href="#面向三维视觉的点云处理基础网络" class="headerlink" title="面向三维视觉的点云处理基础网络"></a><strong>面向三维视觉的点云处理基础网络</strong></h4><p>Interpolated Convolutional Networks for 3D Point Cloud Understanding </p>
+<p>内插卷积网络以了解3D点云</p>
+<p><em>代表性论文：《基于插值卷积的点云处理主干网络》</em></p>
+<p>点云是一种重要的三维数据类型，被广泛地运用于自动驾驶等场景中。传统方法依赖光栅化或者多视角投影，将点云转化成图像、体素其他数据类型进行处理。近年来池化和图神经元网络在点云处理中展现出良好的性能，但仍然受限于计算效率，并且算法易受物体尺度、点云密度等因素影响。</p>
+<p><img src="/2020/05/15/ResearchRecord/Research_ST/5dc2bd3b08def.png" alt="img"></p>
+<p>本文提出了一种全新的卷积方式，即插值卷积，能够从点云中高效地学习特征。插值卷积从标准图像卷积和图像插值中获取灵感，卷积核被划分成一组空间中离散的向量，每个向量拥有各自的三维坐标，当点云中的某点落在卷积向量的邻域时，参考图像插值的过程，我们将该点对应的特征向量插值到卷积向量对应的位置上，然后进行标准的卷积运算，最后通过正则化消除点云局部分布不均的影响。</p>
+<p>面向不同的任务，我们提出了基于插值卷积的点云分类和分割网络。分类网络采用多路径设计，每一条路径的插值卷积核具有不同的大小，从而网络能够同时捕获全局和细节特征。分割网络参考图像语义分割的网络设计，利用插值卷积做降采样。在<strong>三维物体识别，分割以及室内场景分割</strong>的数据集上，我们均取得了领先于其他方法的性能。</p>
+<h4 id="面向AR-VR的人体感知与生成"><a href="#面向AR-VR的人体感知与生成" class="headerlink" title="面向AR&#x2F;VR的人体感知与生成"></a>面向AR&#x2F;VR的人体感知与生成</h4><p><em>代表性论文：《深入研究用于无限制图片<strong>3D</strong>人体重建中的混合标注》</em></p>
+<p>​                        《Delving Deep into Hybrid Annotations for 3D Human Recovery in the Wild》</p>
+<p><a target="_blank" rel="noopener" href="https://penincillin.github.io/dct_iccv2019">https://penincillin.github.io/dct_iccv2019</a></p>
+<p>虽然计算机视觉研究者在<strong>单目3D人体重建</strong>方面已经取得长足进步，但对无限制图片进行3D人体重建依然是一个挑战。主要原因是在无限制图片上很难取得高质量的3D标注。为解决这个问题，之前的方法往往采用一种混合训练的策略来利用多种不同的标注，其中既包括3D标注，也包括2D标注。虽然这些方法取得了不错的效果，但是他们并没有研究不同标注对于这个任务的有效程度。</p>
+<p><img src="/2020/05/15/ResearchRecord/Research_ST/5dc2bdbc78cd9.png" alt="img"></p>
+<p>**本篇论文的目标就是详细地研究不同种类标注的投入产出比。**特别的，我们把目标定为重建给定无限制图片的3D人体。通过大量的实验，我们得到以下结论：1.3D标注非常有效，同时传统的2D标注，包括人体关键点和人体分割并不是非常有效。2.密集响应是非常有效的。当没有成对的3D标注时，利用了密集响应的模型可以达到使用3D标注训练的模型92%的效果。</p>
+<p><em>代表性论文：《基于卷积网络的人体骨骼序列生成》</em></p>
+<p>​                    《Convolutional Sequence Generation for Skeleton-Based Action Synthesis》</p>
+<p>现有的计算机视觉技术以及图形学技术已经可以生成或者渲染出栩栩如生的影像片段。在这些方法中，人体骨骼序列的驱动是不可缺少的。高质量的骨骼序列要么使用动作捕捉设备从人身上获取，要么由动作设计师手工制作。而让计算机代为完成这些动作，高效地生成丰富、生动、稳定、长时间的骨骼序列，就是这一工作的目标。</p>
+<p><img src="/2020/05/15/ResearchRecord/Research_ST/5dc2be70e2044.png" alt="img"></p>
+<p>本文使用高斯过程产生随机序列，使用对抗网络和时空图卷积网络来学习随机序列和动作序列之间的映射关系。该方法既可以产生动作序列，也可将动作序列映射到随机序列所在的空间，并利用高斯过程进行编辑、合成、补全。</p>
+<p>本方法在由真人动作捕捉得到的NTU-RGB+D数据集上，以及我们收集的虚拟歌手“初音未来”的大量舞蹈设计动作上，完成了详细的对比实验。实验表明，相对于传统的自回归模型（Autoregressive Model），本文使用的图卷积网络可以大大提高生成的质量和多样性。</p>
+<h4 id="面向全场景理解的多模态分析"><a href="#面向全场景理解的多模态分析" class="headerlink" title="面向全场景理解的多模态分析"></a><strong>面向全场景理解的多模态分析</strong></h4><p><em>代表性论文：《基于图匹配的电影视频跨模态检索框架》</em></p>
+<p>电影视频检索在日常生活中拥有极大需求。例如，人们在浏览某部电影的文字简介时，时常会被其中的精彩部分吸引而想要看相应的片段。但是，通过文字描述检索电影片段目前还存在许多挑战。相比于日常生活中普通人拍摄的短视频，电影有着极大的不同：1.电影是以小时为单位的长视频，时序结构很复杂。2.电影中角色的互动是构成故事情节的关键元素。因此，我们利用了电影的这两种内在结构设计了新的算法来匹配文本段落与电影片段，进而达到根据文本检索电影片段的目标。</p>
+<p><img src="/2020/05/15/ResearchRecord/Research_ST/5dc2be8f5efe0.png" alt="img"></p>
+<p>首先，我们提出事件流模块以建模电影的时序特性。该模块基于二分图匹配，将文本中的每一句话按照事件与电影片段的对应子片段匹配。其次，我们提出人物互动模块，该模块通过图匹配算法计算文本中解析得到的人物互动图和视频中提取的人物互动图的相似度。综合两个模块的结果，我们能得到与传统方法相比更精准的匹配结果，从而提高检索的正确率。</p>
+<p><em>代表性论文：《融合视觉信息的音频修复》</em></p>
+<p>多模态融合是交互智能发展的重要途径。在多媒体信息中，一段音频信号可能被噪声污染或在通信中丢失，从而需要进行修复。本文我们提出依据视频信息对缺失音频信息进行修复的一种融合视觉信息的音频修复方案。</p>
+<p><img src="/2020/05/15/ResearchRecord/Research_ST/5dc2beaa58a32.png" alt="img"></p>
+<p>此方案核心思想在于：1.将音频信号在频谱上进行操作，并将频谱作为二维图像信号进行处理，可以极大地利用计算机视觉领域的优势，超越传统的音频解决方案。2.为了融合视觉信息，基于音视频同步学习得到的联合子空间会发挥巨大的优势。</p>
+<p>针对此问题的研究，我们将已有的多模态乐器演奏数据集MUSIC扩大成为一个新的更全面的数据集，MUSICES。实验证明我们提出的视觉融合的音频修复系统可以在没有视频信息注入的情况下取得可观的效果，并在加入视频信息后，生成与视频和谐的音频片段。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AI-Research/" rel="tag"># AI Research</a>
+              <a href="/tags/SenseTime/" rel="tag"># SenseTime</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/04/23/ResearchRecord/Research_MPI/" rel="prev" title="马普所 Virtual Human Research">
+      <i class="fa fa-chevron-left"></i> 马普所 Virtual Human Research
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/05/19/Graphices/Graphics-3D-Mesh/" rel="next" title="Computer Graphices -- Verties subdivision">
+      Computer Graphices -- Verties subdivision <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BA%E6%96%87"><span class="nav-number">1.</span> <span class="nav-text">论文</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CVPR-2020-%E3%80%8A%E5%AF%B9%E4%BA%BA%E8%84%B8%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E7%9A%84%E9%9A%90%E7%A9%BA%E9%97%B4%E5%8F%AF%E8%A7%A3%E9%87%8A%E6%80%A7%E5%88%86%E6%9E%90%E3%80%8B"><span class="nav-number">1.1.</span> <span class="nav-text">CVPR 2020 《对人脸生成模型的隐空间可解释性分析》</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ICCV-2019"><span class="nav-number">2.</span> <span class="nav-text">ICCV 2019</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%A2%E5%90%91%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E7%9A%84%E6%B7%B1%E5%BA%A6%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%AE%97%E5%AD%90"><span class="nav-number">2.0.1.</span> <span class="nav-text">面向目标检测的深度网络基础算子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%A2%E5%90%91%E4%B8%89%E7%BB%B4%E8%A7%86%E8%A7%89%E7%9A%84%E7%82%B9%E4%BA%91%E5%A4%84%E7%90%86%E5%9F%BA%E7%A1%80%E7%BD%91%E7%BB%9C"><span class="nav-number">2.0.2.</span> <span class="nav-text">面向三维视觉的点云处理基础网络</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%A2%E5%90%91AR-VR%E7%9A%84%E4%BA%BA%E4%BD%93%E6%84%9F%E7%9F%A5%E4%B8%8E%E7%94%9F%E6%88%90"><span class="nav-number">2.0.3.</span> <span class="nav-text">面向AR&#x2F;VR的人体感知与生成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%A2%E5%90%91%E5%85%A8%E5%9C%BA%E6%99%AF%E7%90%86%E8%A7%A3%E7%9A%84%E5%A4%9A%E6%A8%A1%E6%80%81%E5%88%86%E6%9E%90"><span class="nav-number">2.0.4.</span> <span class="nav-text">面向全场景理解的多模态分析</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="分享 | 工业缺陷检测深度学习方法综述 原文 AIGC AIsjasper AI 　　网址：https:&#x2F;&#x2F;www.jasper.ai 　　在可用的 AI 文案写作工具中，Jasper 作为那些寻求通过内容生成赚钱的人来讲，它是经济实惠且高效的选择之一。 　　该工具精通短格式和长格式内容均能完成。 　　Jasper 拥有一系列功能，包括无需切换到模板即可快速生成内容的命令、用于创建文章的高效长格式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AIGC">
+<meta property="og:url" content="https://novav.github.io/2022/06/01/AI/Direction/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="分享 | 工业缺陷检测深度学习方法综述 原文 AIGC AIsjasper AI 　　网址：https:&#x2F;&#x2F;www.jasper.ai 　　在可用的 AI 文案写作工具中，Jasper 作为那些寻求通过内容生成赚钱的人来讲，它是经济实惠且高效的选择之一。 　　该工具精通短格式和长格式内容均能完成。 　　Jasper 拥有一系列功能，包括无需切换到模板即可快速生成内容的命令、用于创建文章的高效长格式">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-06-01T12:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:37.977Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="AIGC">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://novav.github.io/2022/06/01/AI/Direction/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>AIGC | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/06/01/AI/Direction/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          AIGC
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-06-01 12:00:00" itemprop="dateCreated datePublished" datetime="2022-06-01T12:00:00+00:00">2022-06-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:37" itemprop="dateModified" datetime="2025-08-06T08:16:37+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AIGC/" itemprop="url" rel="index"><span itemprop="name">AIGC</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzI2NTk5MTk1Mg==&mid=2247523438&idx=3&sn=7a9434af8abb24f3def6b95bade2b382&chksm=ea963e11dde1b707a0cb35dc7d7cb677835b2f0980b11e9f2ab9ae0b4ab987f381aebe4d38e8&scene=27">分享 | 工业缺陷检测深度学习方法综述</a> <a target="_blank" rel="noopener" href="http://scis.scichina.com/ssi2022.html#526">原文</a></p>
+<h3 id="AIGC-AIs"><a href="#AIGC-AIs" class="headerlink" title="AIGC AIs"></a>AIGC AIs</h3><p>jasper AI</p>
+<p>　　网址：<a target="_blank" rel="noopener" href="https://www.jasper.ai/">https://www.jasper.ai</a></p>
+<p>　　在可用的 AI 文案写作工具中，Jasper 作为那些寻求通过内容生成赚钱的人来讲，它是经济实惠且高效的选择之一。</p>
+<p>　　该工具精通短格式和长格式内容均能完成。</p>
+<p>　　Jasper 拥有一系列功能，包括无需切换到模板即可快速生成内容的命令、用于创建文章的高效长格式编辑器，以及包含有助于创建各种类型内容的向导的内容工作流，例如，博客文章、销售文案和重写。</p>
+<p>　　Jasper Chat 是该平台的一项特殊功能，它提供了 Google 搜索的替代方案，使 AI 能够使用可用的最新信息生成内容。</p>
+<p>　　此外，Jasper Art（下面有更多详细信息）是用于生成 AI 图像的令人印象深刻的功能。</p>
+<p>　　Jasper 的一个局限性是需要手动编辑来优化内容以吸引读者并超越 AI 检测工具。</p>
+<p>　　总的来说，Jasper 和 Content at Scale 仍然是最有用的 AI 文案工具之一。</p>
+<p>　　2. Jasper AI Art Generator</p>
+<p>　　网址：<a target="_blank" rel="noopener" href="https://www.jasper.ai/">https://www.jasper.ai</a></p>
+<p>　　使用 Jasper Art Generator 释放您的内在艺术家并创造令人惊叹的视觉艺术作品。</p>
+<p>　　但是这个工具需要收费，每月20 美元，这样，您就可以使用这款人工智能软件生成无限的高质量图像，包括抽象艺术、风景和肖像。</p>
+<p>　　该工具基于 OpenAI 的 Dall-E-2 模型构建，使用任何输入数据来创建独特且引人注目的视觉效果，您可以将其用于装饰、营销甚至销售。</p>
+<p>　　Jasper Art 具有直观的用户界面，即使对于非艺术家也易于使用。</p>
+<p>　　通过一系列自定义选项，您可以选择自己喜欢的艺术风格、媒介、灯光等。</p>
+<p>　　另外，您可以调整修饰符以达到您想要的效果。释放 Jasper Art 全部潜力的关键是编写有效的 AI 提示。</p>
+<p>　　3. Frase AI</p>
+<p>　　网址：<a target="_blank" rel="noopener" href="https://www.frase.io/">https://www.frase.io/</a></p>
+<p>　　Frase AI 是一种革命性的工具，可能是在内容世界中赚钱的缺失环节。它是博主和内容营销人员的理想选择，它拥有的功能可以将您的页面优化提升到一个新的水平。</p>
+<p>　　它最令人印象深刻的功能是能够优化您生成的内容，从热门搜索结果中汲取灵感。</p>
+<p>　　凭借受 SERP 启发的简介和大纲生成器、SEO 和内容规划工具以及内容优化工具，Frase AI 是您寻求在线成功的完美盟友。</p>
+<p>　　而且不止于此！您还将配备您期望从任何 AI 内容生成器获得的其他写作工具。</p>
+<p>　　它有一个免费使用7天的功能，结束后，需要付费使用。</p>
+<p>　　4. Writesonic</p>
+<p>　　网址：<a target="_blank" rel="noopener" href="https://writesonic.com/">https://writesonic.com/</a></p>
+<p>　　在生成内容方面，Writesonic 是 Jasper AI 的重要竞争对手。该工具提供了一系列功能，可以生成短格式和长格式的内容。</p>
+<p>　　Chatsonic 是该平台的一项突出功能，类似于 Jasper Chat，它连接到互联网但具有更强大的 AI 功能。</p>
+<p>　　Writesonic 的 Premium Writer 4.0 能够通过单击生成 1500 多篇完整的文章，并具有更多自定义选项，例如语气、观点、关键字和最多 20 项的大纲。</p>
+<p>　　如果您正在寻找有用且可靠的内容生成工具，Writesonic 可能是您的绝佳选择。</p>
+<p>　　5. AISEO writer</p>
+<p>　　网址：<a target="_blank" rel="noopener" href="https://aiseo.ai/">https://aiseo.ai/</a></p>
+<p>　　AISEO 是一种具有成本效益的选择，可以作为 Frase 的替代品。</p>
+<p>　　但是，它需要收费，AISEO 每月需 15 美元起，按年计费。</p>
+<p>　　不过它的功能也是非常不错的，其中，包括：</p>
+<p>　　博文生成工具</p>
+<p>　　可读性 AI 改进器</p>
+<p>　　搜索引擎优化文件</p>
+<p>　　SERP 分析</p>
+<p>　　一次单击即可释义多达 50K 个字符</p>
+<p>　　强大的 AI 改写工具</p>
+<p>　　生成内容的 Chrome 插件</p>
+<p>　　目前，AISEO 提供终身优惠，每月 7 个 SEO 文档的起价为 67 美元，15 个 SEO 文档的起价为 147 美元，无限数量的文档起价为 397 美元。</p>
+<p>　　个人觉得收费有点贵了。</p>
+<p>　　6. ChatGPT</p>
+<p>　　网址：<a target="_blank" rel="noopener" href="https://openai.com/blog/chatgpt/">https://openai.com/blog/chatgpt/</a></p>
+<p>　　ChatGPT 可以算是目前最火的一款AI工具了。</p>
+<p>　　它由 OpenAI 的 GPT-3 和 GPT-3.5 模型提供支持，能够生成任何格式的内容，包括可执行的代码。</p>
+<p>　　让 ChatGPT 脱颖而出的是它独特的聊天查询能力，可以记住线程中以前的对话，使用集成的 Codex 模型创建代码行，并生成与人类编写的内容几乎没有区别的高质量文本。</p>
+<p>　　ChatGPT 的高级上下文和对话处理功能使其成为聊天机器人和其他对话系统的非常有价值的工具。</p>
+<p>　　但它不仅限于此，它还可以执行一系列自然语言处理任务，如语言翻译、文本摘要和问答。</p>
+<p>　　使用 ChatGPT，您可以轻松地为任何目的生成高质量的文本。</p>
+<p>　　告别繁琐的内容创建，让 ChatGPT 为您完成繁重的工作。</p>
+<p>　　目前，ChatGPT，还推出了付费版本，一个月需要20美元。不过没有用过，不知道怎么样，感觉收费有点高了，换成人民币，一个月就是100多元了。</p>
+<p>　　当然，目前中国地区不能用。</p>
+<p>　　7. Pictory AI</p>
+<p>　　网址：<a target="_blank" rel="noopener" href="https://pictory.ai/">https://pictory.ai</a></p>
+<p>　　如果你正在寻找一种可靠的工具来制作品牌短片或病毒式传播视频，以帮助发展您的品牌并增加您的影响力？请来看看 Pictory AI。</p>
+<p>　　此工具具有功能强大的编辑器，可让您通过编辑脚本来修改视频。</p>
+<p>　　例如，您可以删除不需要的字词或短语以提高视频质量。</p>
+<p>　　Pictory AI是一款网页应用，无需下载，自动从Zoom、Webinars、Microsoft Teams等平台的录音中提取关键点。</p>
+<p>　　此工具还可以将脚本转换为高度转换的销售视频，将博客文章转换为 YouTube 视频，为您的视频添加字幕以提高可访问性，以及为社交媒体创建带字幕的视频。</p>
+<p>　　此外，Pictory AI 还提供以下功能：</p>
+<p>　　脚本到视频生成器</p>
+<p>　　博客到视频生成器</p>
+<p>　　能够使用文本编辑视频</p>
+<p>　　创建视频集锦</p>
+<p>　　自动总结长视频</p>
+<p>　　视频转录</p>
+<p>　　插入 B 卷</p>
+<p>　　您可以免费试用 Pictory AI，亲身体验这款强大的视频生成工具的优势。</p>
+<p>　　8. Synthesia</p>
+<p>　　网址：<a target="_blank" rel="noopener" href="https://www.synthesia.io/">https://www.synthesia.io</a></p>
+<p>　　在AI视频生成方面，Synthesia是业内知名的先行者。该平台提供了一个直观的界面，可以简化任何人的视频创作。</p>
+<p>　　Synthesia 的 AI 化身用几乎与人类无异的声音为您的视频解说，并且有超过 65 名 AI 演员和 60 多种支持的语言可供选择，您无疑可以找到与您的品牌相符的声音。</p>
+<p>　　AI 头像非常逼真，Anna 是 Copymatic AI 和 Writecream 等公司最常使用的头像来制作解说视频。</p>
+<p>　　Synthesia 拥有一系列功能，包括多语言支持、视频复制以及合并 Synthesia 创建的视频的能力，无需单独的视频编辑器。</p>
+<p>　　此外，您可以自定义声音，甚至可以用真人声音代替合成声音。</p>
+<p>　　该平台还允许您使用自己的声音和自定义头像，并通过 API 访问将 Synthesia 的功能扩展到平台之外。</p>
+<p>　　但是，需要付费，每月 30 美元，您就可以将此工具用于个人计划，最多可以创建 10 个视频。</p>
+<p>　　9. Rephrase AI</p>
+<p>　　网址：<a target="_blank" rel="noopener" href="https://www.rephrase.ai/">https://www.rephrase.ai/</a></p>
+<p>　　如果您正在寻找一种工具来帮助您将脚本变成完整的解说视频，您可能想看看这个功能强大的视频创建工具。</p>
+<p>　　与 Synthesia 类似，它允许您上传脚本，选择您的 AI 解说员和相应的声音，然后只需点击几下即可生成解说视频。</p>
+<p>　　凭借一系列可自定义的功能，此工具可以帮助您创建引人入胜的个性化视频，真正吸引观众的注意力。</p>
+<p>　　凭借其自定义演员、CTA 标签、超逼真的演示者和个性化功能，您可以使用合并标签让 AI 拼出您联系人的姓名以增加影响力。</p>
+<p>　　此外，该工具还提供了一个视频编辑工作室，使您能够真正地转换您的内容并将您的视频提升到一个新的水平。</p>
+<p>　　10. Photosonic</p>
+<p>　　网址：<a target="_blank" rel="noopener" href="https://photosonic.writesonic.com/">https://photosonic.writesonic.com/</a></p>
+<p>　　Photosonic 是一种出色的 AI 艺术工具，类似于 Jasper Art Generator。</p>
+<p>　　它由 Writesonic 开发，使用 OpenAI 的语言模型轻松生成独特的数字艺术和令人惊叹的视觉效果。</p>
+<p>　　使用 Photosonic 可以轻松创建精美且高质量的图像。</p>
+<p>　　您所要做的就是提供有关您要创建的图像类型的基本信息，然后让 Photosonic 完成剩下的工作。</p>
+<p>　　从抽象设计到错综复杂的风景，Photosonic 可以生成范围广泛的数字艺术作品。</p>
+<p>　　它的功能包括一个内置的照片增强器，允许您下载生成的图像的高清版本。</p>
+<p>　　11、Midjourney</p>
+<p>　　<a target="_blank" rel="noopener" href="https://www.midjourney.com/">https://www.midjourney.com</a></p>
+<p>　　Midjourney 是最近推出的 AI 艺术生成器，在艺术爱好者中迅速流行起来。</p>
+<p>　　使用自然语言处理，Midjourney 可以将基于文本的提示转换为惊人的超现实和逼真的图像。凭借其直观的用户界面和灵活的图像变化选项，该工具非常适合那些喜欢尝试创意的人。</p>
+<p>　　要使用 Midjourney，您需要拥有一个 Discord 帐户并请求访问该工具的测试版。</p>
+<p>　　获得访问权限后，导航至 Midjourney 频道并进入其中一个新人房间以开始生成图像。</p>
+<p>　　只需使用 &#x2F;imagine 命令输入您想要的提示，然后让 Midjourney 为您创建一个独特的个性化图像。</p>
+<p>　　为增强您的体验，请使用 &#x2F;help 命令获取有关如何更好地使用该平台的提示，以及可让您更好地控制生成的图像的各种可用命令。</p>
+<p>　　凭借其强大的图像放大功能，Midjourney 的图像已准备好用于商业应用，例如按需印刷产品。</p>
+<p>　　12. WordAi</p>
+<p>　　如果您需要改写您的内容，那么您可能需要考虑 WordAI，它是一款强大的人工智能工具，支持改写。</p>
+<p>　　它可以通过从不同角度处理同一消息、拆分句子和段落以及提高写作质量和清晰度来帮助您丰富内容。</p>
+<p>　　WordAI 与其他重写工具的不同之处在于它不只是用同义词替换单词。</p>
+<p>　　它理解句子的意思，然后从头开始重写概念，确保可读性保持不变。</p>
+<p>　　该工具可为一件内容生成多达 1,000 个独特的变体，通过其批量重写功能让您一次上传所有内容，从而节省您的时间。</p>
+<p>　　此外，它与 Article Forge 集成并提供 API 访问，允许您将其与您的工作流程无缝集成。</p>
+<p>　　13. QuillBot</p>
+<p>　　网址：<a target="_blank" rel="noopener" href="https://quillbot.com/">https://quillbot.com/</a></p>
+<p>　　QuillBot 是一个非常受欢迎的重写工具。</p>
+<p>　　它有五种不同的模式：Standard、Fluency、Formal、Simple 和 Creative，每种模式最多可以生成 5 种改写内容变体。</p>
+<p>　　除了重写，QuillBot 还提供了一个 AI 内容摘要器、一个共同作者工具以及语法和剽窃检测工具，您也可以直接生成引文。</p>
+<p>　　最好的部分是，您可以通过订阅 QuillBot Pro 来访问所有这些功能，每月需要 10 美元，如果您选择包年套餐，则费用更低。</p>
+<p>　　14.Copymatic Rewriter</p>
+<p>　　网址：<a target="_blank" rel="noopener" href="https://www.frugalforless.com/">https://www.frugalforless.com</a></p>
+<p>　　借助 Copymatic，您可以访问复杂的 AI 内容生成器，以及利用先进 AI 技术的强大重写向导。</p>
+<p>　　此 AI 改写器允许您自定义创意水平或语调，以生成准确反映您品牌形象的内容。</p>
+<p>　　不仅如此，重新制作的内容还经过精心优化以实现最大参与度，确保您的信息与目标受众产生共鸣。</p>
+<p>　　使用我们的创新工具，您甚至可以重写 URL 中的内容，从而简化为您的网站或博客创建引人入胜的新鲜内容的过程。</p>
+<p>　　此外，我们的 AI 改写器可以轻松处理长篇内容，确保您的作品以提高清晰度和影响力的方式进行改写。</p>
+<p>　　15. Semrush</p>
+<p>　　网址：<a target="_blank" rel="noopener" href="https://www.semrush.com/">https://www.semrush.com/</a></p>
+<p>　　想要提升您的在线形象？只需看看 Semrush，这是一款物有所值的强大关键字研究工具。</p>
+<p>　　Semrush 拥有超过 55 种工具的强大套件，拥有您进行内容营销、在竞争中脱颖而出并征服 SEO、PPC 和社交媒体世界所需的一切。</p>
+<p>　　在其众多功能中，Semrush 可以帮助您挖掘低竞争关键字来定位、跟踪您的每日 SERP 位置，并进行技术 SEO 审核，让您的竞争对手望尘莫及。</p>
+<p>　　此外，借助触手可及的实时指标，您可以改进现有内容并发现隐藏的关键字和主题差距，从而使您的策略更上一层楼。</p>
+<p>　　16. SERanking（更实惠的关键字研究软件）</p>
+<p>　　网址：<a target="_blank" rel="noopener" href="https://seranking.com/">https://seranking.com/</a></p>
+<p>　　如果您不想每月为 SEO 服务支付 119.95 美元，那么，我想您应该会想尝试一下 SERanking。</p>
+<p>　　该平台提供了成功搜索引擎优化所需的所有基本功能，包括高效的关键词研究。</p>
+<p>　　它类似于 Semrush，但具有更简单的界面，即使对于像我们这样的休闲博主来说也是用户友好的。</p>
+<p>　　但是，它目前起价为每月 23 美元。</p>
+<p>　　以下是您可以使用 SERanking 享受的一些突出功能：</p>
+<p>　　针对所有目标关键字的高度精确的搜索指标</p>
+<p>　　全面的网站审核，提供有用的、可操作的建议</p>
+<p>　　深入的反向链接检查和监控</p>
+<p>　　能够监控您感兴趣的任何网站上的变化</p>
+<p>　　全面的页面优化工具，帮助提升您的 SEO 工作</p>
+<p>　　智能分析和自动发布工具，优化您的社交媒体渠道</p>
+<p>　　高级关键字分组工具</p>
+<p>　　多种 SEO 报告工具</p>
+<p>　　当然，它有免费试用，你可以去亲自体验一下。</p>
+<p>　　17. Stock Photos Upscaler</p>
+<p>　　网址：<a target="_blank" rel="noopener" href="https://upscaler.stockphotos.com/">https://upscaler.stockphotos.com/</a></p>
+<p>　　使用 AI 艺术工具生成图像后，需要注意的是图像的质量和分辨率不高。</p>
+<p>　　为了使它们适合商业用途，例如，在按需印刷产品中，您需要通过升级来增强它们。</p>
+<p>　　Upscaler 是一个强大的工具，用于放大图像并确保它们符合所需的标准。使用 Upscaler 提高 AI 生成图像的质量。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AI/" rel="tag"># AI</a>
+              <a href="/tags/AIGC/" rel="tag"># AIGC</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/05/30/Course/SLAM/SLAM/" rel="prev" title="SLAM(simultaneous localization and mapping)">
+      <i class="fa fa-chevron-left"></i> SLAM(simultaneous localization and mapping)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/06/16/Sub_Language/DL_Platform/TensorRT/TensorRT/" rel="next" title="TensorRT的使用">
+      TensorRT的使用 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#AIGC-AIs"><span class="nav-number">1.</span> <span class="nav-text">AIGC AIs</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

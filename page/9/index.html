@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Simon Shi的小站">
+<meta property="og:url" content="https://novav.github.io/page/9/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="AI,Machine Learning, Deep Learning">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://novav.github.io/page/9/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2024/01/30/CV/activation_function/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/01/30/CV/activation_function/" class="post-title-link" itemprop="url">CNN 激活函数</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-01-30 12:00:00" itemprop="dateCreated datePublished" datetime="2024-01-30T12:00:00+00:00">2024-01-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/" itemprop="url" rel="index"><span itemprop="name">CV</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>常见激活函数：</p>
+<p><strong>岭函数，径向函数，以及应用在卷积神经网络中的折叠激活函数。</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>岭函数</td>
+<td>作用与输入变量的线性组合多元函数</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>线性函数</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>ReLU</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Heaviside</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Logistic</td>
+<td></td>
+</tr>
+<tr>
+<td>径向激活函数</td>
+<td>在欧几里得空间中求得点与点之间距离，作为通用的函数逼近器具有很好的效果。</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>高斯函数</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>多项式函数</td>
+<td></td>
+</tr>
+<tr>
+<td>折叠激活函数</td>
+<td>卷积神经网络中和多分类网络的输出层中</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>software</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="常见激活函数"><a href="#常见激活函数" class="headerlink" title="常见激活函数"></a>常见激活函数</h3><p><img src="/2024/01/30/CV/activation_function/2024-01-30-10-18-30-413eab8d01ee96724831e57c8c135722.jpg"></p>
+<h3 id="折叠函数"><a href="#折叠函数" class="headerlink" title="折叠函数"></a>折叠函数</h3><p><img src="/2024/01/30/CV/activation_function/2024-01-30-10-18-55-297a2b3d2c307837eb5051e77d733e16.jpg"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2024/01/30/NLP/LangChain/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/01/30/NLP/LangChain/" class="post-title-link" itemprop="url">LLM 编程框架-LangChain</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-01-30 12:00:00" itemprop="dateCreated datePublished" datetime="2024-01-30T12:00:00+00:00">2024-01-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="1、LangChain介绍"><a href="#1、LangChain介绍" class="headerlink" title="1、LangChain介绍"></a>1、LangChain介绍</h2><p>LangChain 就是一个 LLM 编程框架，你想开发一个基于 LLM 应用，需要什么组件它都有，直接使用就行；甚至针对常规的应用流程，它利用链(LangChain中Chain的由来)这个概念已经内置标准化方案了。下面我们从新兴的大语言模型（LLM）技术栈的角度来看看为何它的理念这么受欢迎。</p>
+<p>借助 Langchain，可以创建聊天机器人、问答系统和其他人工智能代理。</p>
+<p>其官方的定义</p>
+<blockquote>
+<p>LangChain是一个基于语言模型开发应用程序的框架。它可以实现以下应用程序：</p>
+</blockquote>
+<ul>
+<li>数据感知：将语言模型连接到其他数据源</li>
+<li>自主性：允许语言模型与其环境进行交互</li>
+</ul>
+<p>LangChain的主要价值在于：</p>
+<ul>
+<li>组件化：为使用语言模型提供抽象层，以及每个抽象层的一组实现。组件是模块化且易于使用的，无论您是否使用LangChain框架的其余部分。</li>
+<li>现成的链：结构化的组件集合，用于完成特定的高级任务</li>
+</ul>
+<p>现成的链使得入门变得容易。对于更复杂的应用程序和微妙的用例，组件化使得定制现有链或构建新链变得更容易。</p>
+<img title src="/2024/01/30/NLP/LangChain/2024-01-30-16-58-12-image.png" alt width="629">
+
+<h3 id="新兴-LLM-技术栈"><a href="#新兴-LLM-技术栈" class="headerlink" title="新兴 LLM 技术栈"></a><strong>新兴 <mark>LLM 技术栈</mark></strong></h3><p>大语言模型技术栈由四个主要部分组成：</p>
+<ul>
+<li>数据预处理流程（data preprocessing pipeline）</li>
+<li>嵌入端点（embeddings endpoint ）+向量存储（vector store）</li>
+<li>LLM 终端（LLM endpoints）</li>
+<li>LLM 编程框架（LLM programming framework）</li>
+</ul>
+<p><img src="/2024/01/30/NLP/LangChain/2024-01-30-16-58-26-image.png"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/01/30/NLP/LangChain/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2024/01/10/AI/RL/RL_DRL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/01/10/AI/RL/RL_DRL/" class="post-title-link" itemprop="url">DRL</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-01-10 21:00:00" itemprop="dateCreated datePublished" datetime="2024-01-10T21:00:00+00:00">2024-01-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><p>微分PI也很困难，除非我们能把它转换成对数。求偏导</p>
+<p><img src="/2024/01/10/AI/RL/RL_DRL/2024-01-16-11-36-47-image.png"></p>
+<p>那么这个log的偏导怎么求呢?</p>
+<img src="/2024/01/10/AI/RL/RL_DRL/2024-01-16-11-38-54-image.png" title alt width="503">
+
+<h3 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h3><ul>
+<li>TD 和SARSA几乎一样，只是把V换成Q</li>
+</ul>
+<p>$$<br>SARSA: Q(S,A) \larr Q(S,A) + \alpha[ R+ \gamma Q(S’,A’) - Q(S,A)] \<br>TD(0): V(S_t) \larr V(S_t) + \alpha[ R+ \gamma V(S_{t+1}) - V(S_t)] \<br>$$</p>
+<h4 id="Q-learning"><a href="#Q-learning" class="headerlink" title="Q-learning"></a>Q-learning</h4><ul>
+<li>Qlearning公式和SARSA相比，就差那么一个max。</li>
+</ul>
+<p>$$<br>QLeaning: Q(S,A) \larr Q(S,A) + \alpha[ R+ \gamma \max Q(S’, a) - Q(S,A)] \<br>$$</p>
+<h3 id="DQN"><a href="#DQN" class="headerlink" title="DQN"></a>DQN</h3><p>DQN &#x3D; TD + 神经网络</p>
+<p>DQN的深度网络，就像用一张布去覆盖Qlearning中的Qtable</p>
+<p>DQN用magic函数，也就是神经网络解决了Qlearning不能解决的连续状态空间问题。</p>
+<p>$$<br>Q(S,A) \larr Q(S,A )+ \alpha \big[<br>    R + \gamma \max Q(S’, a) - Q(S,A)<br>\big]<br>$$</p>
+<ul>
+<li><img src="/2024/01/10/AI/RL/RL_DRL/2024-01-17-16-42-41-image.png" title alt width="412"></li>
+</ul>
+<h3 id="DoubeDQN"><a href="#DoubeDQN" class="headerlink" title="DoubeDQN"></a>DoubeDQN</h3><ul>
+<li>新增一个TargetQ网络，解决DQN的Q网络的学习效率比较低，而且不稳定。</li>
+</ul>
+<h3 id="DuelingDQN"><a href="#DuelingDQN" class="headerlink" title="DuelingDQN"></a>DuelingDQN</h3><p>A + S &#x3D; Q : S值与A值的和，就是原来的Q值。</p>
+<h3 id="DDPG"><a href="#DDPG" class="headerlink" title="DDPG"></a>DDPG</h3><ul>
+<li><p>DDPG就是用magic解决DQN不能解决的连续控制型问题。</p>
+</li>
+<li><p>也就是说，用一个magic函数，直接替代maxQ(s’,a’)的功能。也就是说，我们期待我们输入状态s，magic函数返回我们动作action的取值，这个取值能够让q值最大。这个就是DDPG中的Actor的功能。</p>
+</li>
+<li><p>我们之前讲DQN也说过，DQN的深度网络，就像用一张布去覆盖Qlearning中的Qtable。这也是DDPG中Critic的功能。</p>
+</li>
+<li><p>DDPG其实并不是PG，并没有做带权重的梯度更新。而是在梯度上升，在寻找最大值。</p>
+</li>
+<li><p>Critic</p>
+<ul>
+<li><p>Critic网络的作用是预估Q，虽然它还叫Critic，但和AC中的Critic不一样，这里预估的是Q不是V；</p>
+</li>
+<li><p>注意Critic的输入有两个：动作和状态，需要一起输入到Critic中；</p>
+</li>
+<li><p>Critic网络的loss其还是和AC一样，用的是TD-error。</p>
+</li>
+</ul>
+</li>
+<li><p>Actor</p>
+<ul>
+<li><p>和AC不同，Actor输出的是一个动作；</p>
+</li>
+<li><p>Actor的功能是，输出一个动作A，这个动作A输入到Crititc后，能够获得最大的Q值。</p>
+</li>
+<li><p>所以Actor的更新方式和AC不同，不是用带权重梯度更新，而是用梯度上升。</p>
+</li>
+</ul>
+</li>
+</ul>
+<img src="/2024/01/10/AI/RL/RL_DRL/2024-01-17-10-41-23-image.png" title alt width="408">
+
+<h3 id="常见算法公式"><a href="#常见算法公式" class="headerlink" title="常见算法公式"></a>常见算法公式</h3><p>1、策略梯度法: $ \sum <em>{t’&#x3D;t}^{T} r(s</em>{i,t’}, a_{i,t’}) - b_i$</p>
+<p>2、状态值函数估计轨迹的return:  $q(s,a)$</p>
+<p>3、优势函数估计轨迹的return：$A(s,a) &#x3D; q(s,a) - V(s,a)$</p>
+<p>4、TD-Error 估计轨迹的return： $r(s,a) + q(s) - q(s’)$</p>
+<h3 id="Monte-Carlo"><a href="#Monte-Carlo" class="headerlink" title="Monte Carlo:"></a>Monte Carlo:</h3><p>    $V^{\pi}(s_t) &#x3D; \sum^T_{t’&#x3D;t} r(s_{t’}, a_{t’} )$</p>
+<p>    training data: ${s_{i,t}, V^{\pi}(s_t) }$</p>
+<p>    Loss: $ L &#x3D; 1&#x2F;2 \sum_i || \hat{V}^{\pi}(s_i) - y_i || ^2$</p>
+<p>$$<br>V(S_t) \larr V(S_t) + \alpha [G_t - V(S_t)]<br>$$</p>
+<ul>
+<li><p>蒙地卡罗需要完成整个游戏过程，直到最终状态，才能通过回溯计算G值。这使得PG方法的效率被限制。</p>
+</li>
+<li><p>那我们可不可以更快呢？相信大家已经想到了，那就是改为TD。</p>
+</li>
+<li><p>但改为TD还有一个问题需要解决，就是：在PG，我们需要计算G值；那么在TD中，我们应该怎样估算每一步的Q值呢？（答案是神经网络）</p>
+</li>
+</ul>
+<h3 id="TD-bootstrap"><a href="#TD-bootstrap" class="headerlink" title="TD(bootstrap):"></a>TD(bootstrap):</h3><p>    training data: $ {  s_{i,t}, r(s_{i,t}, a_{i,t} ) + \hat{V}^{\pi}<em>{\phi}( s</em>{i, t+1}) }$</p>
+<p>    引入bias，–&gt; 减少方差variance</p>
+<h3 id="AC-ac-zhihu"><a href="#AC-ac-zhihu" class="headerlink" title="AC:  ac-zhihu"></a>AC:  <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/110998399">ac-zhihu</a></h3><ul>
+<li><p>Actor: 一个输出策略，负责选择动作；</p>
+</li>
+<li><p>Critic: 一个负责计算每个动作的分数。</p>
+</li>
+</ul>
+<p>$$<br>\nabla L_{\theta} &#x3D; \frac{1}{N} \sum_{i&#x3D;1}^{N} \sum_{t&#x3D;0}^{T} \Big[ \nabla_{\theta} log \pi_{\theta}(a_{i,t}|s_{i,t}) \Big(r(s_{i,t}, a_{i,t}) + \gamma \hat{V}<em>{\phi}^{\pi} (s</em>{i,t+1}) - \hat{V}<em>{\phi}^{\pi}(s</em>{i,t}) - b_i \Big) \Big]<br>$$</p>
+<p>    lower variance with bias</p>
+<p>总结下TD-error的知识：</p>
+<ul>
+<li><p>为了避免正数陷阱，我们希望Actor的更新权重有正有负。因此，我们把Q值减去他们的均值V。有：Q(s,a)-V(s)</p>
+</li>
+<li><p>为了避免需要预估V值和Q值，我们希望把Q和V统一；由于Q(s,a) &#x3D; gamma * V(s’) + r - V(s)。所以我们得到TD-error公式： TD-error &#x3D; gamma * V(s’) + r - V(s)</p>
+</li>
+<li><p>TD-error就是Actor更新策略时候，带权重更新中的权重值；</p>
+</li>
+<li><p>现在Critic不再需要预估Q，而是预估V。而根据马可洛夫链所学，我们知道TD-error就是Critic网络需要的loss，也就是说，Critic函数需要最小化TD-error。</p>
+</li>
+</ul>
+<h3 id="Policy-Gradient"><a href="#Policy-Gradient" class="headerlink" title="Policy Gradient:"></a>Policy Gradient:</h3><ul>
+<li><p>PG是一个蒙地卡罗+神经网络的算法。</p>
+</li>
+<li><p>策略评估</p>
+</li>
+<li><p>策略提升</p>
+</li>
+<li><p>VPG更新算法</p>
+</li>
+<li><p>$$<br>Policy Graditent: E_{\pi}[\nabla_{\theta}(log_{\pi}(s,a,\theta)) R(\tau)]<br>$$</p>
+</li>
+<li><p>$$<br>Update rule: \Delta \theta &#x3D; \alpha * \nabla_\theta (<br>log\pi(s,a,\theta)<br>) R(\tau)<br>$$</p>
+</li>
+<li><p>$\pi : 策略函数，R(): score function 、alpha： lr $</p>
+</li>
+</ul>
+<p>    $\nabla L_{\theta} &#x3D; \frac{1}{N} \sum_{i&#x3D;1}^{N} \sum_{t&#x3D;0}^{T} \Big[ \nabla_{\theta} log \pi_{\theta}(a_{i,t}|s_{i,t}) \Big( \sum_{t’&#x3D;t}^{T} \gamma^{t’-t} r(s_{i,t}, a_{i,t}) - b_i \Big)\Big]$</p>
+<p>    no bias with higher variance (because use single sample estimate)</p>
+<p>PG算法，计算策略梯度的估计器，并将其插入随机梯度上升算法中。最常用的梯度估计器具有以下形式 </p>
+<p>$$<br>\hat{g} &#x3D; \hat{E}<em>t \Big[<br>    \nabla</em>{\theta} log {\pi}_{\theta}(a_t| s_t) \hat{A}_t<br>\Big]  \tag{PPO-1}<br>$$</p>
+<p>E: 表示有限批次样品的经验平均值。</p>
+<p>Loss PG:</p>
+<p>$$<br>L^{PG}(\theta) &#x3D; \hat{E}<em>t \Big[<br>    log {\pi}</em>{\theta} (a_t | s_t ) \hat{A}_t</p>
+<p>\Big] \tag{PPO-2}<br>$$</p>
+<h3 id="结合AC-PG"><a href="#结合AC-PG" class="headerlink" title="结合AC + PG:"></a>结合AC + PG:</h3><p>整条轨迹</p>
+<p>$$<br>\nabla L_{\theta} &#x3D;<br>\frac{1}{N} \sum_{i&#x3D;1}^{N} \sum_{t&#x3D;0}^{T}<br>\Big[<br> \nabla_{\theta} log \pi_{\theta}(a_{i,t}|s_{i,t})<br>\Big(<br>\sum_{t’&#x3D;t}^{T} \gamma^{t’-t} r(s_{i,t}, a_{i,t})</p>
+<ul>
+<li>\hat{V}<em>{\phi}^{\pi}(s</em>{i,t})<br>\Big)<br>\Big]<br>$$</li>
+</ul>
+<p>n-step:</p>
+<p>$$<br>\nabla L_{\theta} &#x3D;<br>\frac{1}{N} \sum_{i&#x3D;1}^{N} \sum_{t&#x3D;0}^{T}<br>[<br> \nabla_{\theta} log \pi_{\theta}(a_{i,t}|s_{i,t})<br>(<br>\sum_{t’&#x3D;t}^{t+n} \gamma^{t’-t} r(s_{i,t}, a_{i,t})</p>
+<ul>
+<li>\hat{V}<em>{\phi}^{\pi}(s</em>{i,t})<br>)<br>]<br>$$</li>
+</ul>
+<h3 id="“vanilla”-policy-gradient-REINFORCE"><a href="#“vanilla”-policy-gradient-REINFORCE" class="headerlink" title="“vanilla” policy gradient &#x2F; REINFORCE"></a>“vanilla” policy gradient &#x2F; REINFORCE</h3><h3 id="TRPO"><a href="#TRPO" class="headerlink" title="TRPO"></a>TRPO</h3><p>trust region &#x2F; natural policy gradient methods</p>
+<p>TRPO 与 PPO 之间的区别在于 TRPO 使用了 KL 散度作为约束条件，虽然损失函数是等价的，但是这种表示形式更难计算，所以较少使用。</p>
+<p>约束下最大化更新：</p>
+<p>$$<br>maxmize(\theta) \space \hat{E}<em>t<br>\Big[<br>\frac{\pi</em>{\theta}(a_t| s_t) }<br>     {\pi_{\theta_{old}}(a_t | s_t)}<br>\hat{A}_t<br>\Big]<br>\tag{PPO-3,4}<br>$$</p>
+<p>$$<br>subject \space to \space \hat{E}<em>t<br>\Big[<br>KL \big[<br>    \pi</em>{\theta_{old}}(\cdot|s_t),<br>    \pi_{\theta}(\cdot|s_t)<br>\big]<br>\Big] \leq \delta<br>$$</p>
+<p>PPO思想1，使用panalty（惩罚）求解无约束优化问题</p>
+<p>$$<br>maximize({\theta}) \space<br>\hat{E}<em>t \Big[<br>\frac{\pi</em>{\theta}(a_t| s_t) }<br>     {\pi_{\theta_{old}}(a_t | s_t)}<br>\hat{A}<em>t - \beta<br>   KL\big[\pi</em>{\theta_{old}} (\cdot| s_t),<br>      \pi_{\theta} (\cdot| s_t)<br>     \big]<br>\Big] \tag{PPO-5}<br>$$</p>
+<h3 id="相关算法"><a href="#相关算法" class="headerlink" title="相关算法"></a>相关算法</h3><p>single path TRPO; </p>
+<p>vine TRPO; </p>
+<p>cross-entropy method  (CEM)</p>
+<p>covariance matrix adaption (CMA) 协方差矩阵自适应</p>
+<p><strong>natural gradient</strong>, the classic natural policy gradient algorithm</p>
+<p>Max KL</p>
+<p>RWR</p>
+<h3 id="PPO"><a href="#PPO" class="headerlink" title="PPO"></a>PPO</h3><p>CPI : conservative policy iteration 保守政策迭代 (普通的PG算法)</p>
+<p>$$<br>L^{CPI}(\theta) &#x3D; \hat{E}<em>t \Big[<br>   \frac{ \pi</em>{\theta}(a_t| s_t) }<br>         {\pi_{\theta_{old}}(a_t| s_t)}<br>    \hat{A}_t<br>\Big]<br>&#x3D; \hat{E}_t [<br>    r_t(\theta) \hat{A}_t<br>]  \tag{6}<br>$$</p>
+<p><strong>PPO_2-CLIP</strong> (PPO2思想，对ratio(分布比率)进行clip) 即取一个lower bound，保证梯度更新后效果不会变差</p>
+<p>$$<br>L^{CLIP} (\theta)<br>&#x3D; \hat{E}_t \Big[<br>    min\Big(r_t(\theta) \hat{A}_t,<br>        clip \big(r_t(\theta), 1-\epsilon, 1+\epsilon \big) \hat{A}_t \Big)<br>\Big]   \tag{7}<br>$$</p>
+<p>$\epsilon &#x3D; 0.2$ , $L^{CLIP}$ 是$L^{CPI}$的下界。</p>
+<p><strong>PPO_1算法(Adaptive KL Penalty):</strong></p>
+<p>$$<br>L^{KLPEN} (\theta) &#x3D; \hat{E}<em>t \Big[<br>\frac{\pi</em>{\theta}(a_t| s_t)}<br>{\pi_{\theta_{old}}(a_t| s_t)}<br>\hat{A}<em>t - \beta<br>   KL \big[<br>          \pi</em>{\theta_{old}} (\cdot| s_t),<br>          \pi_{\theta} (\cdot| s_t)<br>      \big]<br>\Big]   \tag{8}<br>$$</p>
+<p>$$<br>d &#x3D; \hat{E}<em>t \Big[<br>   KL\big[<br>          \pi</em>{\theta_{old}} (\cdot| s_t),<br>          \pi_{\theta} (\cdot| s_t)<br>     \big]<br>\Big]<br>\<br>if d &lt; d_{targ} &#x2F; 1.5, \beta &#x3D; \beta &#x2F; 2 \<br>if d &lt; d_{targ} \times 1.5, \beta &#x3D; \beta \times 2</p>
+<p>$$</p>
+<p><strong>PPO_2算法(完整目标函数)</strong></p>
+<p>$$<br>L_t^{CLIP+VF+S}(\theta) &#x3D; \hat{E}_t<br>\Big[<br>    L_t^{CLIP}(\theta)<br>    - c_1 L_t^{VF}(\theta)<br>    + c_2 S<a href="s_t">\pi_{\theta}</a><br>\Big]<br>\tag{9}<br>$$</p>
+<p>S: 表示entropy bonus，当actor和critic共享一套参数时，需要加的误差项 S ：an entropy bonus，在exploration时很有用</p>
+<p>$L_t^{VF}$ squared-error loss $(V_{\theta(S_t)} - V_t^{targ})^2$</p>
+<p><strong>PG Advantage Estimator:</strong></p>
+<p>$$<br>\hat{A}<em>t &#x3D; -V(s_t) + r_t + \gamma r</em>{t+1} + …<br>          + \gamma^{T-t+1} r_{T-1}<br>          + \gamma^{T-t} V(s_T)<br>\tag{10}<br>$$</p>
+<blockquote>
+<p>GAE也是用于平衡bias和variance的一种方法，公式比较复杂一点，思想是$TD（\lambda）$</p>
+</blockquote>
+<p>truncated version of generalized advantage estimator（GAE）:</p>
+<p>$$<br>\hat{A}<em>t &#x3D; \delta_t + (\gamma \lambda )\delta</em>{t+1} + … + … +<br>          (\gamma \lambda )^{T-t+1 }\delta_{T-1}  \tag{11,12} \<br>    where \space \gamma_t &#x3D; r_t + \lambda V(s_{t+1}) - V(s_t)<br>$$</p>
+<p>No clipping or penalty:</p>
+<p>$$<br>L_t(\theta) &#x3D; r_t(\theta)\hat{A}_t<br>$$</p>
+<p>Clipping:</p>
+<p>$$<br>L_t(\theta) &#x3D; min \Big(<br>    r_t(\theta)\hat{A}_t,<br>    clip\big(r_t(\theta), 1-\epsilon, 1+\epsilon\big)\hat{A}_t<br>\Big)<br>$$</p>
+<p>KL penalty (fixed or adaptive)</p>
+<p>$$<br>L_t(\theta) &#x3D; r_t(\theta)\hat{A}<em>t -<br>    \beta KL<br>\big[<br>     \pi</em>{\theta_{old}}, \pi_{\theta}<br>\big]<br>$$</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2024/01/08/Course/Robot/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/01/08/Course/Robot/" class="post-title-link" itemprop="url">Robot Checklist</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-01-08 12:47:00" itemprop="dateCreated datePublished" datetime="2024-01-08T12:47:00+00:00">2024-01-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Robot/" itemprop="url" rel="index"><span itemprop="name">Robot</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Robot/SLAM/" itemprop="url" rel="index"><span itemprop="name">SLAM</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Robot</p>
+<p>路径规划</p>
+<ul>
+<li><p><input disabled type="checkbox"> 
+A*</p>
+</li>
+<li><p><input disabled type="checkbox"> 
+Dijkstra, </p>
+</li>
+<li><p><input disabled type="checkbox"> 
+D*</p>
+</li>
+<li><p><input disabled type="checkbox"> 
+TEB</p>
+</li>
+</ul>
+<p>2</p>
+<ul>
+<li><input disabled type="checkbox"> ros1&#x2F;ros2,</li>
+<li><input disabled type="checkbox"> rviz, gazebo</li>
+</ul>
+<p>3</p>
+<ul>
+<li><input disabled type="checkbox"> 点云配准</li>
+<li><input disabled type="checkbox"> 卡尔曼滤波融合</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/99984532">运动恢复结构</a> 从多张图像或视频序列中自动地恢复出相机的参数以及场景三维结构的技术</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2024/01/01/AI_ROBOT/ROS_xiihoo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/01/01/AI_ROBOT/ROS_xiihoo/" class="post-title-link" itemprop="url">Xiihoo DIY Robot</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-01-01 12:00:00" itemprop="dateCreated datePublished" datetime="2024-01-01T12:00:00+00:00">2024-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/hiram-zhang/p/10403822.html">SLAM+语音机器人DIY系列：（四）差分底盘设计——2.stm32主控软件设计 - 小虎哥哥爱学习 - 博客园</a></p>
+<p>官网：<a target="_blank" rel="noopener" href="http://www.xiihoo.com/#">xiihoo - 机器人开发者社区</a></p>
+<p>源码： <a target="_blank" rel="noopener" href="https://github.com/xiihoo/DIY_A_SLAM_Navigation_Robot">GitHub - xiihoo&#x2F;DIY_A_SLAM_Navigation_Robot: 自己动手做一台SLAM导航机器人</a></p>
+<h3 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h3><p><a target="_blank" rel="noopener" href="https://wenda.ncnynl.com/article/4">Ubuntu1804上源码安装cartographer问题整理 - 创客智造&#x2F;爱折腾智能机器人社区</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wakeup_high/article/details/136322243">Ubuntu20.04安装ROS-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/ros/rosdistro">GitHub - ros&#x2F;rosdistro: This repo maintains a lists of repositories for each ROS distribution</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2023/12/09/Course/ADAS/Fusion/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/12/09/Course/ADAS/Fusion/" class="post-title-link" itemprop="url">多传感器融合</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-12-09 12:00:00" itemprop="dateCreated datePublished" datetime="2023-12-09T12:00:00+00:00">2023-12-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ADAS/" itemprop="url" rel="index"><span itemprop="name">ADAS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>多传感器融合</p>
+<h3 id="背景："><a href="#背景：" class="headerlink" title="背景："></a>背景：</h3><p>机器人领域，需要解决的事情大致就这么几件：明确状态量的组成（变量？定位？地图模型？）获取各个位置的传感器读数、整合传感器数据生成地图、将传感器读数与地图模型建立关系、计算在地图模型中的位置、估计位置和模型的确定性、提升状态估计的正确性。</p>
+<h3 id="发展阶段："><a href="#发展阶段：" class="headerlink" title="发展阶段："></a>发展阶段：</h3><p>Kalman Filters框架</p>
+<p>全局定位、重定位和不确定处理（POMDPs）</p>
+<p>无参滤波器Particle Filters（PF)</p>
+<p>EKF的各个变体：ESKF、MSCKF和IKF</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2023/12/08/Course/ADAS/ADAS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/12/08/Course/ADAS/ADAS/" class="post-title-link" itemprop="url">ADAS 技术需求</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-12-08 20:00:00" itemprop="dateCreated datePublished" datetime="2023-12-08T20:00:00+00:00">2023-12-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ADAS/" itemprop="url" rel="index"><span itemprop="name">ADAS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="感知"><a href="#感知" class="headerlink" title="感知"></a>感知</h3><h3 id="BEV"><a href="#BEV" class="headerlink" title="BEV"></a>BEV</h3><p>鸟瞰视角（Bird’s Eye View，简称BEV）是一种从上方观看对象或场景的视角，就像鸟在空中俯视地面一样。在自动驾驶和机器人领域，通过传感器（如LiDAR和摄像头）获取的数据通常会被转换成BEV表示，以便更好地进行物体检测、路径规划等任务。BEV能够将复杂的三维环境简化为二维图像，这对于在实时系统中进行高效的计算尤其重要。</p>
+<p><strong>BEV（鸟瞰视图）景物表示方法</strong></p>
+<p>给定来自多个车载摄像机图像获得校正的360度BEV图像。校正的BEV图像被分割成语义类别，并且包括对遮挡区域的预测。</p>
+<p>神经网络方法并不依赖手动标记数据，而是在<mark>模拟合成数据集上进行训练</mark>，并泛化到现实世界数据。以语义分割图像作为输入，可以减少模拟数据与现实世界数据之间的现实差距，并也证明该方法可以成功应用于现实世界中。</p>
+<p>单应性变换应用于车载摄像头的四个语义分割图像，将其转换为BEV；IPM直接用homography转换误差很大（路面平坦的假设），而这种方法在无视觉失真情况下学习如何计算准确的BEV图像。</p>
+<h4 id="6-A-Sim2Real-DL-Approach-for-the-Transformation-of-Images-from-Multiple-Vehicle-Mounted-Cameras-to-a-Semantically-Segmented-Image-in-BEV，arXiv-2005-04078"><a href="#6-A-Sim2Real-DL-Approach-for-the-Transformation-of-Images-from-Multiple-Vehicle-Mounted-Cameras-to-a-Semantically-Segmented-Image-in-BEV，arXiv-2005-04078" class="headerlink" title="6 A Sim2Real DL Approach for the Transformation of Images from Multiple Vehicle-Mounted Cameras to a Semantically Segmented Image in BEV，arXiv 2005.04078"></a>6 A Sim2Real DL Approach for the Transformation of Images from Multiple Vehicle-Mounted Cameras to a Semantically Segmented Image in BEV，arXiv 2005.04078</h4><p>一是单输入模型，基于<strong>DeepLabv3+</strong>，其中主干分别采用MobileNetV2 和 Xception测试；二是 多输入模型，基于<strong>U-Net</strong>，做了一些变型。</p>
+<h4 id="7-FISHING-Net-Future-Inference-of-Semantic-Heatmaps-In-Grids，arXiv-2006-09917"><a href="#7-FISHING-Net-Future-Inference-of-Semantic-Heatmaps-In-Grids，arXiv-2006-09917" class="headerlink" title="7 FISHING Net: Future Inference of Semantic Heatmaps In Grids，arXiv 2006.09917"></a>7 FISHING Net: Future Inference of Semantic Heatmaps In Grids，arXiv 2006.09917</h4><p>FISHING Net体系结构如图所示：多个神经网络，每个传感器模态（雷达，雷达和摄像头）一个，接收一系列输入传感器数据，并输出代表<strong>3个目标类别</strong>（弱势道路用户即VRU、车辆和背景）的一系列自上而下的共享语义网格；然后，使用聚合函数融合序列，以输出语义网格的融合序列。</p>
+<h4 id="8-BEV-Seg-Bird’s-Eye-View-Semantic-Segmentation-Using-Geometry-and-Semantic-Point-Cloud，arXiv-2006-11436"><a href="#8-BEV-Seg-Bird’s-Eye-View-Semantic-Segmentation-Using-Geometry-and-Semantic-Point-Cloud，arXiv-2006-11436" class="headerlink" title="8 BEV-Seg: Bird’s Eye View Semantic Segmentation Using Geometry and Semantic Point Cloud，arXiv 2006.11436"></a>8 BEV-Seg: Bird’s Eye View Semantic Segmentation Using Geometry and Semantic Point Cloud，arXiv 2006.11436</h4><p>本文提出<strong>BEV-Seg</strong>，做BEV语义分割，这项任务可根据侧视（不是鸟瞰）摄像头的RGB图像预测BEV的像素级语义分割。存在两个主要挑战：从侧视图到鸟瞰图的视图转换，以及学习迁移到未见过的领域。作者提出的两级感知流水线方法，可显式预测像素深度，并以有效的方式将其与像素语义相结合，使模型利用深度信息来推断BEV中目标的空间位置。其中迁移学习的实现是，抽象高级几何特征，并预测跨不同领域通用的中间表示（IR）。</p>
+<p>BEV-Seg流水线如图所示：</p>
+<p><img src="https://pic4.zhimg.com/80/v2-7abbd1b8fb7de5c67ce282664dfa550b_720w.webp"></p>
+<p>第一步，N个RGB道路场景图像由不同角度的摄像头捕获，并分别通过语义分割网络S和深度估计网络D；所得到的侧视语义分割和深度图被组合并投影到3-D变成语义点云；这里点云语义图是不完整的。第二步，然后将该点云投影到不完整的鸟瞰图中，再将其输入到一个parser network预测最终的鸟瞰图分割，做“填洞”和“平滑”等工作。</p>
+<p>补充一些细节：对于侧视语义分割，用HRNet主干，这也是用于语义分割的最新卷积网络。对于单目深度估计，用与骨干网相同的HRNet来实现SORD模型。对于这两个任务，在所有四个视图训练相同的模型。生成的语义点云沿着垂直高度方向投影到512x512图像上。训练一个单独的HRNet模型作为parser network，进行最终的鸟瞰语义分割。</p>
+<p>通过模块化和抽象性做到的迁移学习包括：</p>
+<ul>
+<li>1）根据目标域的第一步数据微调第一步的模型；</li>
+<li>2）将训练的第二步模型应用于目标域中投影的点云数据。</li>
+</ul>
+<p>实验结果比较如下：VPN做比较</p>
+<p><img src="https://pic4.zhimg.com/80/v2-a7c18426bdc66f69813250ccb5007263_720w.webp"></p>
+<h4 id="常用算法"><a href="#常用算法" class="headerlink" title="常用算法"></a>常用算法</h4><p>BEVFormer、LSS、BEVDET</p>
+<h4 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h4><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/365561705">https://zhuanlan.zhihu.com/p/365561705</a></p>
+<blockquote>
+<p>9 Lift, Splat, Shoot: Encoding Images from Arbitrary Camera Rigs by Implicitly Unprojecting to 3D，arXiv 2008.05711</p>
+</blockquote>
+<blockquote>
+<p>10 Understanding Bird’s-Eye View Semantic HD-maps Using an Onboard Monocular Camera，arXiv 2012.03040</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/633483313">BEV系列一：BEV介绍和常用BEV算法简介</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.shenlanxueyuan.com/page/242">BEV感知理论与实践 - 深蓝学院 - 专注人工智能与自动驾驶的学习平台</a></p>
+<p><img src="/2023/12/08/Course/ADAS/ADAS/2023-12-08-17-31-00-image.png"></p>
+<h3 id="融合"><a href="#融合" class="headerlink" title="融合"></a>融合</h3><p>前融合</p>
+<img src="/2023/12/08/Course/ADAS/ADAS/2023-12-08-17-46-05-image.png" title alt width="474">
+
+<p>后融合</p>
+<img src="/2023/12/08/Course/ADAS/ADAS/2023-12-08-17-45-39-image.png" title alt width="474">
+
+<h3 id="数据闭环"><a href="#数据闭环" class="headerlink" title="数据闭环"></a>数据闭环</h3><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/636622001">数据闭环的核心 - Auto-labeling 方案分享 V2.0</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv26576137/">DetZero  # 超强3D目标检测范式  屠榜Waymo </a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2023/10/26/Sub_Language/DL_Train/DeepSpeed/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/10/26/Sub_Language/DL_Train/DeepSpeed/" class="post-title-link" itemprop="url">deepspeed入门教程</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-10-26 16:50:00" itemprop="dateCreated datePublished" datetime="2023-10-26T16:50:00+00:00">2023-10-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DNN-Platform/" itemprop="url" rel="index"><span itemprop="name">DNN_Platform</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DNN-Platform/deepspeed/" itemprop="url" rel="index"><span itemprop="name">deepspeed</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="deepspeed入门教程"><a href="#deepspeed入门教程" class="headerlink" title="deepspeed入门教程"></a>deepspeed入门教程</h1><p>DeepSpeed是微软推出的大规模模型分布式训练的工具，主要实现了ZeRO并行训练算法。</p>
+<p>本文是huggingface的DeepSpeed文档的笔记，做查询和备忘，初次学习建议结合原始文档食用。原始文档链接：</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/630734624">deepSpeed入门教程</a></p>
+<p><a target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/main/main_classes/deepspeed">https://huggingface.co/docs/transformers/main/main_classes/deepspeed</a></p>
+<h2 id="分布式训练"><a href="#分布式训练" class="headerlink" title="分布式训练"></a>分布式训练</h2><p>目前主流的大模型分布式训练主要包括两种：</p>
+<ul>
+<li><p>数据并行训练</p>
+</li>
+<li><p>模型并行训练</p>
+</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/10/26/Sub_Language/DL_Train/DeepSpeed/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2023/10/03/AI/RL/RL_envs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/10/03/AI/RL/RL_envs/" class="post-title-link" itemprop="url">RL Env Tools</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-10-03 12:00:00" itemprop="dateCreated datePublished" datetime="2023-10-03T12:00:00+00:00">2023-10-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/RL/" itemprop="url" rel="index"><span itemprop="name">RL</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>RL可以使用的虚拟化环境（仿真器）</p>
+<h3 id="gym"><a href="#gym" class="headerlink" title="gym"></a>gym</h3><h3 id="mujuco"><a href="#mujuco" class="headerlink" title="mujuco"></a>mujuco</h3><ul>
+<li><p><a target="_blank" rel="noopener" href="http://www.mujoco.org/">office site</a></p>
+</li>
+<li><p>学生邮箱，免费一年</p>
+</li>
+</ul>
+<p>MuJoCo是目前机器人<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0&spm=1001.2101.3001.7020">强化学习</a>中最流行的仿真器。它提供了很多有趣复杂的环境，通常以连续动作环境为主。所以，但我们想在这样的环境中测试自己算法的性能的时候，就必须<strong>下载Mujoco并且需要有密钥</strong>才可以使用它。</p>
+<img src="/2023/10/03/AI/RL/RL_envs/2023-10-08-15-22-54-image.png" title alt width="216">
+
+<h3 id="Vrep-机械臂仿真"><a href="#Vrep-机械臂仿真" class="headerlink" title="Vrep(机械臂仿真)"></a>Vrep(机械臂仿真)</h3><p>Player和edu版本可免费使用，pro版需要购买。</p>
+<p>Vrep是一款动力学仿真软件，主要定位于机器人仿真建模领域，可以利用内嵌脚本、ROS节点、远程API客户端等实现分布式的控制结构，是非常理想的机器人仿真建模的工具。</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/32967121">https://zhuanlan.zhihu.com/p/32967121</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/05d241ba1c9a">vrep1–初识vrep - 简书</a></p>
+<p><img src="/2023/10/03/AI/RL/RL_envs/2023-10-08-15-21-34-image.png"></p>
+<h3 id="Gazebo"><a href="#Gazebo" class="headerlink" title="Gazebo"></a>Gazebo</h3><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/367660310">https://zhuanlan.zhihu.com/p/367660310</a></p>
+<p><img src="/2023/10/03/AI/RL/RL_envs/2023-10-08-15-21-55-image.png"></p>
+<h3 id="Nvidia-lsaac"><a href="#Nvidia-lsaac" class="headerlink" title="Nvidia lsaac"></a>Nvidia lsaac</h3><p><a target="_blank" rel="noopener" href="https://www.nvidia.cn/deep-learning-ai/industries/robotics/">专为机器人开发打造的 ISAAC 平台 | NVIDIA</a></p>
+<p>Isaac SDK（软件开发工具包）：Isaac SDK 提供了一组用于构建机器人应用的库和工具。它包含了丰富的功能模块，如感知、规划、控制和通信等，帮助开发人员快速构建强大的机器人应用程序。</p>
+<p>Isaac Sim（仿真环境）：Isaac Sim 是 NVIDIA Isaac 平台的仿真环境，用于验证和调试机器人应用。它基于虚幻引擎，提供了逼真的物理模拟和可视化工具，帮助开发人员在真实环境之前进行快速迭代和测试。</p>
+<p>Isaac Robot Engine（机器人引擎）：Isaac Robot Engine 是 NVIDIA Isaac 平台的核心组件之一，用于实时控制机器人硬件。它提供了低延迟和高性能的机器人控制能力，支持各种传感器和执行器的集成。</p>
+<p>Isaac Apps（应用程序）：Isaac Apps 是一组预构建的机器人应用程序，用于演示和启发开发人员。它们涵盖了各种典</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2023/09/09/Course/SLAM/ch12_loopClosing/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/09/09/Course/SLAM/ch12_loopClosing/" class="post-title-link" itemprop="url">SLAM loop closing</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-09-09 20:05:51" itemprop="dateCreated datePublished" datetime="2023-09-09T20:05:51+00:00">2023-09-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SLAM/" itemprop="url" rel="index"><span itemprop="name">SLAM</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

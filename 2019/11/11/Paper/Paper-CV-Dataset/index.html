@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="[toc] 人体解析数据集 -human parsing    开源  项目     LIP [open] 2017 SS-NAN Single Person http:&#x2F;&#x2F;hcp.sysu.edu.cn&#x2F;lip https:&#x2F;&#x2F;github.com&#x2F;Engineering-Course&#x2F;LIP_SSL   CIHP [open] 2018  http:&#x2F;&#x2F;sysu-hcp.net&#x2F;lip&#x2F;ove">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Paper-CV_Human Parsing Dataset">
+<meta property="og:url" content="https://novav.github.io/2019/11/11/Paper/Paper-CV-Dataset/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="[toc] 人体解析数据集 -human parsing    开源  项目     LIP [open] 2017 SS-NAN Single Person http:&#x2F;&#x2F;hcp.sysu.edu.cn&#x2F;lip https:&#x2F;&#x2F;github.com&#x2F;Engineering-Course&#x2F;LIP_SSL   CIHP [open] 2018  http:&#x2F;&#x2F;sysu-hcp.net&#x2F;lip&#x2F;ove">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2019/11/11/Paper/Paper-CV-Dataset/20181102213456284.png">
+<meta property="og:image" content="https://novav.github.io/2019/11/11/Paper/Paper-CV-Dataset/20181102213456243.png">
+<meta property="og:image" content="https://novav.github.io/2019/11/11/Paper/Paper-CV-Dataset/20181102213456344.png">
+<meta property="og:image" content="https://novav.github.io/2019/11/11/Paper/Paper-CV-Dataset/20181102213456375.png">
+<meta property="og:image" content="https://novav.github.io/2019/11/11/Paper/Paper-CV-Dataset/20181102213456383.png">
+<meta property="og:image" content="https://novav.github.io/2019/11/11/Paper/Paper-CV-Dataset/20181102213456303.png">
+<meta property="article:published_time" content="2019-11-11T17:42:38.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:40.120Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="Human Parsing">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2019/11/11/Paper/Paper-CV-Dataset/20181102213456284.png">
+
+<link rel="canonical" href="https://novav.github.io/2019/11/11/Paper/Paper-CV-Dataset/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Paper-CV_Human Parsing Dataset | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2019/11/11/Paper/Paper-CV-Dataset/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Paper-CV_Human Parsing Dataset
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-11-11 17:42:38" itemprop="dateCreated datePublished" datetime="2019-11-11T17:42:38+00:00">2019-11-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Datasets/" itemprop="url" rel="index"><span itemprop="name">Datasets</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>[toc]</p>
+<h1 id="人体解析数据集-human-parsing"><a href="#人体解析数据集-human-parsing" class="headerlink" title="人体解析数据集 -human parsing"></a>人体解析数据集 -human parsing</h1><table>
+<thead>
+<tr>
+<th></th>
+<th>开源</th>
+<th></th>
+<th>项目</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>LIP</strong></td>
+<td>[open]</td>
+<td>2017</td>
+<td>SS-NAN</td>
+<td>Single Person <a target="_blank" rel="noopener" href="http://hcp.sysu.edu.cn/lip">http://hcp.sysu.edu.cn/lip</a> <br><a target="_blank" rel="noopener" href="https://github.com/Engineering-Course/LIP_SSL">https://github.com/Engineering-Course/LIP_SSL</a></td>
+</tr>
+<tr>
+<td><strong>CIHP</strong></td>
+<td>[open]</td>
+<td>2018</td>
+<td></td>
+<td><a target="_blank" rel="noopener" href="http://sysu-hcp.net/lip/overview.php">http://sysu-hcp.net/lip/overview.php</a></td>
+</tr>
+<tr>
+<td><strong>ATR</strong></td>
+<td>[open]</td>
+<td>2015</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><em>Chictopia10k</em></td>
+<td></td>
+<td></td>
+<td>Co-CNN</td>
+<td>human parsing  <a target="_blank" rel="noopener" href="http://www.cv-foundation.org/openaccess/content_iccv_2015/html/Liang_Human_Parsing_With_ICCV_2015_paper.html">“Human parsing with contextualized convolutional neural network.” ICCV’15</a>,</td>
+</tr>
+<tr>
+<td><strong>VIP</strong></td>
+<td>[open]</td>
+<td></td>
+<td></td>
+<td>Video Multi-Person Human Parsing</td>
+</tr>
+<tr>
+<td><strong>MHP</strong></td>
+<td>[open]</td>
+<td>2017</td>
+<td></td>
+<td><a target="_blank" rel="noopener" href="https://lv-mhp.github.io/dataset">https://lv-mhp.github.io/dataset</a></td>
+</tr>
+<tr>
+<td><strong>Person-Part</strong></td>
+<td>[open]</td>
+<td>2014</td>
+<td></td>
+<td><a target="_blank" rel="noopener" href="http://www.stat.ucla.edu/~xianjie.chen/pascal_part_dataset/pascal_part.html">http://www.stat.ucla.edu/~xianjie.chen/pascal_part_dataset/pascal_part.html</a></td>
+</tr>
+<tr>
+<td>Fashionista</td>
+<td></td>
+<td>2012</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>DeepFashion</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>VITON</td>
+<td></td>
+<td>2017</td>
+<td>VITON</td>
+<td>闭源；16,253 pairs</td>
+</tr>
+<tr>
+<td><em>MPV</em></td>
+<td></td>
+<td>2019</td>
+<td>MG-VTON</td>
+<td>已经闭源</td>
+</tr>
+</tbody></table>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wxf19940618/article/details/83661891">refer</a> </p>
+<h1 id="引文1-人体解析-human-parsing"><a href="#引文1-人体解析-human-parsing" class="headerlink" title="[引文1]人体解析-human parsing"></a>[引文1]人体解析-human parsing</h1><p>人体解析-human parsing</p>
+<p>研究目标与意义<br>人体解析是指将在图像中捕获的人分割成多个语义上一致的区域，例如， 身体部位和衣物。作为一种细粒度的语义分割任务，它比仅是寻找人体轮廓的人物分割更具挑战性。 人体解析对于以人为中心的分析非常重要，并且具有许多工业上的应用，例如，虚拟现实，视频监控和人类行为分析等等。</p>
+<p>Fashionista 数据集</p>
+<p>论文：Parsing Clothing in Fashion Photographs</p>
+<p>论文地址：<a target="_blank" rel="noopener" href="http://www.tamaraberg.com/papers/parsingclothing.pdf">http://www.tamaraberg.com/papers/parsingclothing.pdf</a></p>
+<p><img src="/2019/11/11/Paper/Paper-CV-Dataset/20181102213456284.png" alt="Fashionista"></p>
+<p>Person-part 数据集</p>
+<p>论文：Detect What You Can: Detecting and Representing Objects using Holistic Models and Body Parts</p>
+<p>论文地址：<a target="_blank" rel="noopener" href="http://www.stat.ucla.edu/~xianjie.chen/paper/Chen14cvpr.pdf">http://www.stat.ucla.edu/~xianjie.chen/paper/Chen14cvpr.pdf</a></p>
+<p>数据集地址：<a target="_blank" rel="noopener" href="http://www.stat.ucla.edu/~xianjie.chen/pascal_part_dataset/pascal_part.html">http://www.stat.ucla.edu/~xianjie.chen/pascal_part_dataset/pascal_part.html</a></p>
+<p><img src="/2019/11/11/Paper/Paper-CV-Dataset/20181102213456243.png" alt="Person Part"></p>
+<p>ATR 数据集</p>
+<p>论文：Deep Human Parsing with Active Template Regression</p>
+<p>论文地址：<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1503.02391.pdf">https://arxiv.org/pdf/1503.02391.pdf</a></p>
+<p><img src="/2019/11/11/Paper/Paper-CV-Dataset/20181102213456344.png" alt="ATR img"></p>
+<p>LIP数据集</p>
+<p>论文：Look into Person: Self-supervised Structure-sensitive Learning and A New Benchmark for Human Parsing</p>
+<p>论文地址：<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1703.05446.pdf">https://arxiv.org/pdf/1703.05446.pdf</a></p>
+<p>数据集地址：<a target="_blank" rel="noopener" href="http://hcp.sysu.edu.cn/lip">http://hcp.sysu.edu.cn/lip</a></p>
+<p>代码地址：<a target="_blank" rel="noopener" href="https://github.com/Engineering-Course/LIP_SSL">https://github.com/Engineering-Course/LIP_SSL</a></p>
+<p><img src="/2019/11/11/Paper/Paper-CV-Dataset/20181102213456375.png" alt="img"></p>
+<p>MHP数据集</p>
+<p>论文：Multi-Human Parsing in the Wild</p>
+<p>论文地址：<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1705.07206.pdf">https://arxiv.org/pdf/1705.07206.pdf</a></p>
+<p>数据集地址：<a target="_blank" rel="noopener" href="https://lv-mhp.github.io/dataset">https://lv-mhp.github.io/dataset</a></p>
+<p><img src="/2019/11/11/Paper/Paper-CV-Dataset/20181102213456383.png" alt="img"></p>
+<p>CIHP 数据集</p>
+<p>论文：Instance-level Human Parsing via Part Grouping Network</p>
+<p>论文地址：<a target="_blank" rel="noopener" href="http://openaccess.thecvf.com/content_ECCV_2018/papers/Ke">http://openaccess.thecvf.com/content_ECCV_2018/papers/Ke</a>_</p>
+<p>Gong_Instance-level_Human_Parsing_ECCV_2018_paper.pdf</p>
+<p>数据集地址：<a target="_blank" rel="noopener" href="http://sysu-hcp.net/lip/overview.php">http://sysu-hcp.net/lip/overview.php</a></p>
+<p>代码地址：<a target="_blank" rel="noopener" href="http://sysu-hcp.net/lip/">http://sysu-hcp.net/lip/</a></p>
+<p><img src="/2019/11/11/Paper/Paper-CV-Dataset/20181102213456303.png" alt="img"></p>
+<p><strong>DeepFashion:</strong></p>
+<p><a target="_blank" rel="noopener" href="http://mmlab.ie.cuhk.edu.hk/projects/DeepFashion.html">HomePage -Download</a></p>
+<p>​	DeepFashion [38] only have the pairs of the same person in different poses but do not have the image of clothes. </p>
+<h3 id="人体解析近年论文"><a href="#人体解析近年论文" class="headerlink" title="人体解析近年论文:"></a>人体解析近年论文:</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">2018-ECCV-Mutual Learning to Adapt for Joint Human Parsing and Pose Estimation</span><br><span class="line">【MuLA】用于联合人体解析和姿态估计，通过反复利用其并行任务中的指导信息来预测动态任务特定的模型参数</span><br><span class="line"></span><br><span class="line">2018-ECCV-Instance-level Human Parsing via Part Grouping Network</span><br><span class="line">【PGN】在一次传递中解析图像中的多个人，将实例级人类解析重新定义为两个可以通过统一网络共同学习和相互提炼的双关联子任务：1）用于将每个像素指定为人体部位（例如，面部，手臂）的语义分割; 2）实例感知边缘检测，以将语义部位分组为不同的人物实例</span><br><span class="line"></span><br><span class="line">2018-ECCV-Macro-Micro Adversarial Network for Human Parsing</span><br><span class="line">【MMAN】有两个判别器，一个Macro D用于低分辨率标签图并对语义不一致进行惩罚，例如错位的身体部位。另一个Micro D专注于高分辨率标签图的多个patch，以解决局部不一致性，例如模糊和孔洞</span><br><span class="line"></span><br><span class="line">2018-CVPR-Weakly and Semi Supervised Human Body Part Parsing via Pose-Guided Knowledge Transfer</span><br><span class="line">提出了一种获得训练数据的新方法，可以使用人体关键点的数据来生成人体部位解析数据。主要想法是利用人类之间的形态相似性，将一个人的部位解析结果传递给具有相似姿势的另一个人</span><br><span class="line"></span><br><span class="line">2017-CVPR-Look Into Person: Self-Supervised Structure-Sensitive Learning and a New Benchmark for Human Parsing</span><br><span class="line">不引入额外信息，可以用自生成的人类关节的信息反过来指导人体解析</span><br><span class="line"></span><br><span class="line">2017-CVPR-Learning Adaptive Receptive Fields for Deep Image Parsing Network</span><br><span class="line">一种自动调节深度图像解析网络中感受野的新方法，在网络主干中使用两个仿射变换层并在特征映射上运行</span><br><span class="line"></span><br><span class="line">2017-CVPR- Multiple-Human Parsing in the Wild</span><br><span class="line">MH-Parser借助新的Graph-GAN模型以自下而上的方式同时生成全局解析和人物解析</span><br><span class="line"></span><br><span class="line">2015-ICCV-Human Parsing with Contextualized Convolutional Neural Network</span><br><span class="line">【Co-CNN】架构，将多级图像上下文集成到一个统一的网络中</span><br></pre></td></tr></table></figure>
+
+<h1 id="引文2-Dataset-Overview-中山大"><a href="#引文2-Dataset-Overview-中山大" class="headerlink" title="[引文2] Dataset Overview [中山大]"></a>[引文2] Dataset Overview [中山大]</h1><h2 id="1-Overview"><a href="#1-Overview" class="headerlink" title="1. Overview"></a>1. Overview</h2><p>Look into Person (LIP) is a new large-scale dataset, focus on semantic understanding of person. Following are the detailed descriptions.</p>
+<h3 id="1-1-Volume"><a href="#1-1-Volume" class="headerlink" title="1.1 Volume"></a>1.1 Volume</h3><p>The dataset contains 50,000 images with elaborated pixel-wise annotations with 19 semantic human part labels and 2D human poses with 16 key points.</p>
+<h3 id="1-2-Diversity"><a href="#1-2-Diversity" class="headerlink" title="1.2 Diversity"></a>1.2 Diversity</h3><p>The annotated 50,000 images are cropped person instances from <a target="_blank" rel="noopener" href="http://mscoco.org/home/">COCO dataset</a> with size larger than 50 * 50.The images collected from the real-world scenarios contain human appearing with challenging poses and views, heavily occlusions, various appearances and low-resolutions. We are working on collecting and annotating more images to increase diversity.</p>
+<h2 id="2-Download"><a href="#2-Download" class="headerlink" title="2. Download"></a>2. Download</h2><h3 id="2-1-Single-Person"><a href="#2-1-Single-Person" class="headerlink" title="2.1 Single Person"></a>2.1 Single Person</h3><p>We have divided images into three sets. 30462 images for training set, 10000 images for validation set and 10000 for testing set.The dataset is available at <a target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/0BzvH3bSnp3E9ZW9paE9kdkJtM3M?usp=sharing">Google Drive</a> and <a target="_blank" rel="noopener" href="http://pan.baidu.com/s/1nvqmZBN">Baidu Drive</a>.</p>
+<p>Besides we have another large dataset mentioned in <a target="_blank" rel="noopener" href="http://www.cv-foundation.org/openaccess/content_iccv_2015/html/Liang_Human_Parsing_With_ICCV_2015_paper.html">“Human parsing with contextualized convolutional neural network.” ICCV’15</a>, which focuses on fashion images. You can download the dataset including 17000 images as extra training data.</p>
+<h3 id="2-2-Multi-Person"><a href="#2-2-Multi-Person" class="headerlink" title="2.2 Multi-Person"></a>2.2 Multi-Person</h3><p>To stimulate the multiple-human parsing research, we collect the images with multiple person instances to establish the first standard and comprehensive benchmark for instance-level human parsing. Our Crowd Instance-level Human Parsing Dataset (CIHP) contains 28280 training, 5000 validation and 5000 test images, in which there are 38280 multiple-person images in total.</p>
+<p>You can also downlod this dataset at <a target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/0BzvH3bSnp3E9ZW9paE9kdkJtM3M?usp=sharing">Google Drive</a> and <a target="_blank" rel="noopener" href="http://pan.baidu.com/s/1nvqmZBN">Baidu Drive</a>.</p>
+<h3 id="2-3-Video-Multi-Person-Human-Parsing"><a href="#2-3-Video-Multi-Person-Human-Parsing" class="headerlink" title="2.3 Video Multi-Person Human Parsing"></a>2.3 Video Multi-Person Human Parsing</h3><p>VIP(Video instance-level Parsing) dataset, the first video multi-person human parsing benchmark, consists of 404 videos covering various scenarios. For every 25 consecutive frames in each video, one frame is annotated densely with pixel-wise semantic part categories and instance-level identification. There are 21247 densely annotated images in total. We divide these 404 sequences into 304 train sequences, 50 validation sequences and 50 test sequences.</p>
+<p>You can also downlod this dataset at <a target="_blank" rel="noopener" href="https://1drv.ms/f/s!ArFSFaZzVErwgSHRpiJNJTzgMR8j">OneDrive</a> and <a target="_blank" rel="noopener" href="https://pan.baidu.com/s/18_PVNy7FCh4T74nVzRXbtA">Baidu Drive</a>.</p>
+<ul>
+<li>VIP_Fine: All annotated images and fine annotations for train and val sets.</li>
+<li>VIP_Sequence: 20-frame surrounding each VIP_Fine image (-10 | +10).</li>
+<li>VIP_Videos: 404 video sequences of VIP dataset.</li>
+</ul>
+<h3 id="2-4-Image-based-Multi-pose-Virtual-Try-On"><a href="#2-4-Image-based-Multi-pose-Virtual-Try-On" class="headerlink" title="2.4 Image-based Multi-pose Virtual Try On"></a>2.4 Image-based Multi-pose Virtual Try On</h3><p>MPV (Multi-Pose Virtual try on) dataset, which consists of 35,687&#x2F;13,524 person&#x2F;clothes images, with the resolution of 256x192. Each person has different poses. We split them into the train&#x2F;test set 52,236&#x2F;10,544 three-tuples, respectively.</p>
+<p>You can also downlod this dataset at <a target="_blank" rel="noopener" href="https://drive.google.com/open?id=1dCqrNCp9zac7vikYkBRZAPl-RFFsmZdR">Google Drive</a> or <a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1ym9o9ScPRwGlfGjsPBlDkw">Baidu Drive</a>.<br>Baidu Drive extract password:<br>		f6i2</p>
+<h1 id="引文"><a href="#引文" class="headerlink" title="引文"></a>引文</h1><p>引文1：<a target="_blank" rel="noopener" href="https://blog.csdn.net/wxf19940618/article/details/83661891">https://blog.csdn.net/wxf19940618/article/details/83661891</a></p>
+<p>引文2:  <a target="_blank" rel="noopener" href="http://www.sysu-hcp.net/lip/overview.php">http://www.sysu-hcp.net/lip/overview.php</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Human-Parsing/" rel="tag"># Human Parsing</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/11/11/CV/CV_VTON/Paper-CV+CP-VTON/" rel="prev" title="Paper-CV+CP-VTON">
+      <i class="fa fa-chevron-left"></i> Paper-CV+CP-VTON
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/11/13/CV/CV_VTON/Paper-CV+WUTON/" rel="next" title="Paper-CV+WUTON">
+      Paper-CV+WUTON <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%BA%E4%BD%93%E8%A7%A3%E6%9E%90%E6%95%B0%E6%8D%AE%E9%9B%86-human-parsing"><span class="nav-number">1.</span> <span class="nav-text">人体解析数据集 -human parsing</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%95%E6%96%871-%E4%BA%BA%E4%BD%93%E8%A7%A3%E6%9E%90-human-parsing"><span class="nav-number">2.</span> <span class="nav-text">[引文1]人体解析-human parsing</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%BA%E4%BD%93%E8%A7%A3%E6%9E%90%E8%BF%91%E5%B9%B4%E8%AE%BA%E6%96%87"><span class="nav-number">2.0.1.</span> <span class="nav-text">人体解析近年论文:</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%95%E6%96%872-Dataset-Overview-%E4%B8%AD%E5%B1%B1%E5%A4%A7"><span class="nav-number">3.</span> <span class="nav-text">[引文2] Dataset Overview [中山大]</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Overview"><span class="nav-number">3.1.</span> <span class="nav-text">1. Overview</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-Volume"><span class="nav-number">3.1.1.</span> <span class="nav-text">1.1 Volume</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-Diversity"><span class="nav-number">3.1.2.</span> <span class="nav-text">1.2 Diversity</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Download"><span class="nav-number">3.2.</span> <span class="nav-text">2. Download</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Single-Person"><span class="nav-number">3.2.1.</span> <span class="nav-text">2.1 Single Person</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Multi-Person"><span class="nav-number">3.2.2.</span> <span class="nav-text">2.2 Multi-Person</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-Video-Multi-Person-Human-Parsing"><span class="nav-number">3.2.3.</span> <span class="nav-text">2.3 Video Multi-Person Human Parsing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-Image-based-Multi-pose-Virtual-Try-On"><span class="nav-number">3.2.4.</span> <span class="nav-text">2.4 Image-based Multi-pose Virtual Try On</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%95%E6%96%87"><span class="nav-number">4.</span> <span class="nav-text">引文</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

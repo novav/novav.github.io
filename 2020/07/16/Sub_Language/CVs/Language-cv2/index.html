@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="[TOC] OpenCV -API  (python) APi Tutorialsimgproc 模块. 图像处理  OpenCV 2.3.2 documentation    图像平滑(模糊)处理 blur &#x2F;GaussianBlur &#x2F; MedianBlur &#x2F; BilaterFilter    腐蚀-膨胀    形态变换   一、Image I&#x2F;Oim">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python Lib OpenCV">
+<meta property="og:url" content="https://novav.github.io/2020/07/16/Sub_Language/CVs/Language-cv2/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="[TOC] OpenCV -API  (python) APi Tutorialsimgproc 模块. 图像处理  OpenCV 2.3.2 documentation    图像平滑(模糊)处理 blur &#x2F;GaussianBlur &#x2F; MedianBlur &#x2F; BilaterFilter    腐蚀-膨胀    形态变换   一、Image I&#x2F;Oim">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2020/07/16/Sub_Language/CVs/Language-cv2/2024-05-21-16-46-18-image.png">
+<meta property="og:image" content="https://novav.github.io/2020/07/16/Sub_Language/CVs/Language-cv2/2024-05-21-16-56-16-image.png">
+<meta property="og:image" content="https://novav.github.io/2020/07/16/Sub_Language/CVs/Language-cv2/2024-05-21-16-57-40-image.png">
+<meta property="og:image" content="https://novav.github.io/2020/07/16/Sub_Language/CVs/Language-cv2/2024-05-21-16-59-56-image.png">
+<meta property="og:image" content="https://novav.github.io/2020/07/16/Sub_Language/CVs/Language-cv2/2024-05-21-17-07-38-image.png">
+<meta property="og:image" content="https://novav.github.io/2020/07/16/Sub_Language/CVs/Language-cv2/2024-05-21-17-07-24-image.png">
+<meta property="og:image" content="https://novav.github.io/2020/07/16/Sub_Language/CVs/Language-cv2/boundingrect.png">
+<meta property="article:published_time" content="2020-07-16T16:00:52.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:40.532Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="cv2">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2020/07/16/Sub_Language/CVs/Language-cv2/2024-05-21-16-46-18-image.png">
+
+<link rel="canonical" href="https://novav.github.io/2020/07/16/Sub_Language/CVs/Language-cv2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Python Lib OpenCV | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2020/07/16/Sub_Language/CVs/Language-cv2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Python Lib OpenCV
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-07-16 16:00:52" itemprop="dateCreated datePublished" datetime="2020-07-16T16:00:52+00:00">2020-07-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/OpenCV/" itemprop="url" rel="index"><span itemprop="name">OpenCV</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>[TOC]</p>
+<p>OpenCV -API  (python)</p>
+<h2 id="APi-Tutorials"><a href="#APi-Tutorials" class="headerlink" title="APi Tutorials"></a>APi Tutorials</h2><p><a target="_blank" rel="noopener" href="https://www.opencv.org.cn/opencvdoc/2.3.2/html/doc/tutorials/imgproc/table_of_content_imgproc/table_of_content_imgproc.html">imgproc 模块. 图像处理  OpenCV 2.3.2 documentation</a></p>
+<ul>
+<li><p><input disabled type="checkbox"> 
+图像平滑(模糊)处理 blur &#x2F;GaussianBlur &#x2F; MedianBlur &#x2F; BilaterFilter</p>
+</li>
+<li><p><input checked disabled type="checkbox"> 
+腐蚀-膨胀</p>
+</li>
+<li><p><input disabled type="checkbox"> 
+形态变换</p>
+</li>
+</ul>
+<h2 id="一、Image-I-O"><a href="#一、Image-I-O" class="headerlink" title="一、Image I&#x2F;O"></a>一、Image I&#x2F;O</h2><h3 id="imread"><a href="#imread" class="headerlink" title="imread"></a>imread</h3><h3 id="imsave"><a href="#imsave" class="headerlink" title="imsave"></a>imsave</h3><h3 id="imshow"><a href="#imshow" class="headerlink" title="imshow()"></a>imshow()</h3><h3 id="resize"><a href="#resize" class="headerlink" title="resize"></a>resize</h3><p>cv2.resize的第二个参数dim是(W, H)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv2.resize(array, (W, H))</span><br></pre></td></tr></table></figure>
+
+<h3 id="copyMakeBorder"><a href="#copyMakeBorder" class="headerlink" title="copyMakeBorder"></a>copyMakeBorder</h3><p>cv2.copyMakeBorder的第二个到第五个参数是top, bottom, left, right，是先H后W</p>
+<p>opencv中以左上角为原点，W方向为x，H方向为y</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">copyMakeBorder</span>(<span class="params">src, top, bottom, left, right, borderType, dst=<span class="literal">None</span>, value=<span class="literal">None</span></span>): <span class="comment"># real signature unknown; restored from __doc__</span></span><br></pre></td></tr></table></figure>
+
+<p>**扩充src的边缘，将图像变大，**然后以各种外插方式自动填充图像边界,这个函数实际上调用了函数cv::borderInterpolate，这个函数最重要的功能就是为了处理边界，比如均值滤波或者中值滤波中，使用copyMakeBorder将原图稍微放大，然后我们就可以处理边界的情况了</p>
+<h3 id="CV-demo-实现crop-pad"><a href="#CV-demo-实现crop-pad" class="headerlink" title="CV demo {实现crop,pad)"></a>CV demo {实现crop,pad)</h3><p>使用opencv-python 对图像进行resize和填充<br>在图像输入神经网络之前，需要进行一定的处理，假设神经网络的图像输入是256 256然后进行了224 224的random crop。</p>
+<p>我们需要进行如下处理：</p>
+<p>读入原始图像</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">image = cv2.imread(<span class="string">&quot;img.jpg&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>截取图像中有价值的部分</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">region = image[y1:y2, x1:x2]</span><br></pre></td></tr></table></figure>
+
+<p>确定图片的长边和短边，然后把长边resize到224，保持纵横比的情况下resize短边</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">w, h = x2 - x1, y2 - y1 <span class="comment"># h, w = image.shape</span></span><br><span class="line">m = <span class="built_in">max</span>(w, h)</span><br><span class="line">ratio = <span class="number">224.0</span> / m</span><br><span class="line">new_w, new_h = <span class="built_in">int</span>(ratio * w), <span class="built_in">int</span>(ratio *h)</span><br><span class="line"><span class="keyword">assert</span> new_w &gt; <span class="number">0</span> <span class="keyword">and</span> new_h &gt; <span class="number">0</span></span><br><span class="line">resized = cv2.resize(region, (new_w, new_h))</span><br></pre></td></tr></table></figure>
+
+<p>把图片进行填充，填充到256 256</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">W, H = <span class="number">256</span>, <span class="number">256</span></span><br><span class="line">top = (H - new_h) // <span class="number">2</span></span><br><span class="line">bottom = (H - new_h) // <span class="number">2</span></span><br><span class="line"><span class="keyword">if</span> top + bottom + h &lt; H:</span><br><span class="line">    bottom += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">left = (W - new_w) // <span class="number">2</span></span><br><span class="line">right = (W - new_w) // <span class="number">2</span></span><br><span class="line"><span class="keyword">if</span> left + right + w &lt; W:</span><br><span class="line">    right += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">pad_image = cv2.copyMakeBorder(resized, top, bottom, left, right, cv2.BORDER_CONSTANT, value = <span class="variable language_">self</span>.white)</span><br></pre></td></tr></table></figure>
+
+<p>图片在输入网络之后，训练的时候进行random crop,就会发生有一部分被截取掉的情况，而这正是我们想要的图像增强<br>在test阶段，是进行centre crop,而正好把整个图像都截取出来，而这正是我们想要的<br>值得注意的是,image.shape，cv2.resize和cv2.copyMakeBorder几个函数</p>
+<p>image.shape的输出是(H, W, C)</p>
+<h2 id="三、形态变化"><a href="#三、形态变化" class="headerlink" title="三、形态变化"></a>三、形态变化</h2><ul>
+<li>形态变化是基于图像中物体的形态进行一些简单变换,通常在二值化的图像上进行,</li>
+</ul>
+<h3 id="1-侵蚀"><a href="#1-侵蚀" class="headerlink" title="1.侵蚀"></a>1.侵蚀</h3><p>侵蚀的基本思想就像土壤侵蚀一样，侵蚀着物体前景色(白色)的边界。形态学处理内核在图像窗口中滑动,只有当内核下的所有像素都为1时，原始图像中的像素(1或0)才会被视为1，否则它将被侵蚀(变为零)。<em><strong>我要说话</strong></em></p>
+<p>因此最终的表现就是，所有靠近前景色边界的像素都将而被丢弃,内核尺寸越大丢的越多,即白色的区域会减小。这种操作对于消除小的白色噪声(如我们在色彩空间一章中所看到的)、分离两个连接的对象等非常有用。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">pltShow</span>(<span class="params">img</span>):</span><br><span class="line">    dst = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)</span><br><span class="line">    plt.imshow(dst)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">testErosion</span>():</span><br><span class="line">    img = cv2.imread(<span class="string">&#x27;test.png&#x27;</span>, <span class="number">0</span>)</span><br><span class="line">    kernel = np.ones((<span class="number">5</span>, <span class="number">5</span>), np.uint8)</span><br><span class="line">    erosion = cv2.erode(img, kernel, iterations=<span class="number">1</span>)</span><br><span class="line">    plt.subplot(<span class="number">121</span>),pltShow(img),plt.title(<span class="string">&quot;Origin&quot;</span>)</span><br><span class="line">    plt.subplot(<span class="number">122</span>),pltShow(erosion),plt.title(<span class="string">&quot;Erosion&quot;</span>)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/07/16/Sub_Language/CVs/Language-cv2/2024-05-21-16-46-18-image.png"></p>
+<h3 id="2-膨胀"><a href="#2-膨胀" class="headerlink" title="2.膨胀"></a>2.膨胀</h3><p>膨胀的效果正好与侵蚀相反，如果内核下至少有一个像素为“1”，则像素元素为“1”。因此，它增加了图像中的白色区域(前景对象)的大小。<em><strong>我要说话</strong></em></p>
+<p>在去除噪音的时候，一般采用的操作是侵蚀之后再膨胀。侵蚀消除了白色的噪音，但它也缩小了物体,所以需要通过膨胀来还原。而噪音已经在侵蚀的过程中消失，膨胀的时候也不会再出现。例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">img_3 = cv2.imread(img_path, mode)</span><br><span class="line">erosion = cv2.dilate(img_3, kernel, iterations=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-开运算"><a href="#3-开运算" class="headerlink" title="3 开运算"></a>3 开运算</h3><p>开运算就是2节中讲到的先侵蚀再膨胀的操作,可以认为是个语法糖吧。(外部杂点去除)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">testOpen</span>():</span><br><span class="line">    img = cv2.imread(<span class="string">&quot;test2.png&quot;</span>, <span class="number">0</span>)</span><br><span class="line">    kernel = np.ones((<span class="number">5</span>,<span class="number">5</span>), np.uint8)</span><br><span class="line">    erosion = cv2.erode(img, kernel, iterations=<span class="number">1</span>)</span><br><span class="line">    dilateAfterErosion = cv2.dilate(erosion, kernel, iterations=<span class="number">1</span>)</span><br><span class="line">    opening = cv2.morphologyEx(img, cv2.MORPH_OPEN, kernel)</span><br><span class="line">    plt.subplot(<span class="number">131</span>), pltShow(img), plt.title(<span class="string">&quot;Origin&quot;</span>)</span><br><span class="line">    plt.subplot(<span class="number">132</span>), pltShow(dilateAfterErosion), plt.title(<span class="string">&quot;DilateAfterErosion&quot;</span>)</span><br><span class="line">    plt.subplot(<span class="number">133</span>), pltShow(opening), plt.title(<span class="string">&quot;Opening&quot;</span>)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/07/16/Sub_Language/CVs/Language-cv2/2024-05-21-16-56-16-image.png"></p>
+<h3 id="4-闭运算"><a href="#4-闭运算" class="headerlink" title="4 闭运算"></a>4 闭运算</h3><p>顾名思义,开运算与闭运算是相反的语法糖——先膨胀再侵蚀,其作用也可以想象到了,可以填充上物体内部的杂点。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">testClose</span>():</span><br><span class="line">    img = cv2.imread(<span class="string">&quot;test3.png&quot;</span>, <span class="number">0</span>)</span><br><span class="line">    kernel = np.ones((<span class="number">5</span>,<span class="number">5</span>), np.uint8)</span><br><span class="line">    dilate = cv2.dilate(img, kernel, iterations=<span class="number">1</span>)</span><br><span class="line">    erosionAfterDilate = cv2.erode(dilate, kernel, iterations=<span class="number">1</span>)</span><br><span class="line">    closing = cv2.morphologyEx(img, cv2.MORPH_CLOSE, kernel)</span><br><span class="line">    plt.subplot(<span class="number">131</span>), pltShow(img), plt.title(<span class="string">&quot;Origin&quot;</span>)</span><br><span class="line">    plt.subplot(<span class="number">132</span>), pltShow(erosionAfterDilate), plt.title(<span class="string">&quot;ErosionAfterDilate&quot;</span>)</span><br><span class="line">    plt.subplot(<span class="number">133</span>), pltShow(closing), plt.title(<span class="string">&quot;Closing&quot;</span>)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/07/16/Sub_Language/CVs/Language-cv2/2024-05-21-16-57-40-image.png"></p>
+<h3 id="5-形态梯度"><a href="#5-形态梯度" class="headerlink" title="5.形态梯度"></a>5.形态梯度</h3><p>出现梯度变化的地方前景色保留,其它的去掉,用于检测边缘</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">testGradient</span>():</span><br><span class="line">    img = cv2.imread(<span class="string">&#x27;test.png&#x27;</span>, <span class="number">0</span>)</span><br><span class="line">    kernel = np.ones((<span class="number">2</span>, <span class="number">2</span>), np.uint8)</span><br><span class="line">    gradient = cv2.morphologyEx(img, cv2.MORPH_GRADIENT, kernel)</span><br><span class="line">    plt.subplot(<span class="number">121</span>), pltShow(img), plt.title(<span class="string">&quot;Origin&quot;</span>)</span><br><span class="line">    plt.subplot(<span class="number">122</span>), pltShow(gradient), plt.title(<span class="string">&quot;Gradient&quot;</span>)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/07/16/Sub_Language/CVs/Language-cv2/2024-05-21-16-59-56-image.png"></p>
+<h3 id="6-tophat"><a href="#6-tophat" class="headerlink" title="6.tophat"></a>6.tophat</h3><p>顶帽 &#x3D; 原图 - 开运算</p>
+<p>开运算的效果是去除图像外的噪点，因此<strong>原图 - 开运算就得到了去掉的噪点</strong>。</p>
+<p>通过API — <a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=morphologyEx&spm=1001.2101.3001.7020">morphologyEx</a>（img， <strong>MORPH_TOPHAT</strong>， kernel）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">cv2.namedWindow(<span class="string">&quot;img&quot;</span>, cv2.WINDOW_NORMAL)</span><br><span class="line">cv2.resizeWindow(<span class="string">&quot;img&quot;</span>, <span class="number">640</span>, <span class="number">480</span>)</span><br><span class="line">img = cv2.imread(<span class="string">&quot;i.png&quot;</span>)</span><br><span class="line">kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (<span class="number">3</span>, <span class="number">3</span>))</span><br><span class="line">new_img = cv2.morphologyEx(img, cv2.MORPH_TOPHAT, kernel, iterations=<span class="number">1</span>)</span><br><span class="line">cv2.imshow(<span class="string">&quot;img&quot;</span>, np.hstack((img, new_img)))</span><br><span class="line">cv2.waitKey(<span class="number">0</span>)</span><br><span class="line">cv2.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/07/16/Sub_Language/CVs/Language-cv2/2024-05-21-17-07-38-image.png"></p>
+<h3 id="7-blackhat"><a href="#7-blackhat" class="headerlink" title="7. blackhat"></a>7. blackhat</h3><p>黑帽 &#x3D; 原图 - 闭运算</p>
+<p>闭运算可以将图形内部的噪声点去掉，那么<strong>原图 - 闭运算的结果就是图形内部的噪声点</strong>。</p>
+<p>通过API — morphologyEx（img， MORPH_BLACKHAT， kernel）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">cv2.namedWindow(<span class="string">&quot;img&quot;</span>, cv2.WINDOW_NORMAL)</span><br><span class="line">cv2.resizeWindow(<span class="string">&quot;img&quot;</span>, <span class="number">640</span>, <span class="number">480</span>)</span><br><span class="line">img = cv2.imread(<span class="string">&quot;is.png&quot;</span>)</span><br><span class="line">kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (<span class="number">3</span>, <span class="number">3</span>))</span><br><span class="line"><span class="comment"># 黑帽操作</span></span><br><span class="line">new_img = cv2.morphologyEx(img, cv2.MORPH_BLACKHAT, kernel, iterations=<span class="number">1</span>)</span><br><span class="line">cv2.imshow(<span class="string">&quot;img&quot;</span>, np.hstack((img, new_img)))</span><br><span class="line">cv2.waitKey(<span class="number">0</span>)</span><br><span class="line">cv2.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/07/16/Sub_Language/CVs/Language-cv2/2024-05-21-17-07-24-image.png"></p>
+<h3 id="8-自定义内核"><a href="#8-自定义内核" class="headerlink" title="8. 自定义内核"></a>8. 自定义内核</h3><h2 id="四、图像处理"><a href="#四、图像处理" class="headerlink" title="四、图像处理"></a>四、图像处理</h2><h3 id="图像金字塔"><a href="#图像金字塔" class="headerlink" title="图像金字塔"></a>图像金字塔</h3><h3 id="图像阈值操作"><a href="#图像阈值操作" class="headerlink" title="图像阈值操作"></a>图像阈值操作</h3><h2 id="五、仿射变换"><a href="#五、仿射变换" class="headerlink" title="五、仿射变换"></a>五、仿射变换</h2><ul>
+<li><p>旋转（线性）</p>
+</li>
+<li><p>平移（向量加）</p>
+</li>
+<li><p>缩放（线性变换）</p>
+</li>
+</ul>
+<h3 id="getAffineTransform"><a href="#getAffineTransform" class="headerlink" title="getAffineTransform"></a>getAffineTransform</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">warp_mat = getAffineTransform( srcTri, dstTri );</span><br><span class="line">warpAffine( src, warp_dst, warp_mat, warp_dst.size() );</span><br></pre></td></tr></table></figure>
+
+<h3 id="rotation"><a href="#rotation" class="headerlink" title="rotation"></a>rotation</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rot_mat = getRotationMatrix2D( center, angle, scale );</span><br><span class="line">warpAffine( warp_dst, warp_rotate_dst, rot_mat, warp_dst.size() );</span><br></pre></td></tr></table></figure>
+
+<h3 id="轮廓"><a href="#轮廓" class="headerlink" title="轮廓"></a>轮廓</h3><h3 id="rectangle-boundingRect"><a href="#rectangle-boundingRect" class="headerlink" title="rectangle &amp; boundingRect"></a>rectangle &amp; boundingRect</h3><p><img src="/2020/07/16/Sub_Language/CVs/Language-cv2/boundingrect.png" alt="Bounding Rectangle"></p>
+<p>然后利用<code>cv2.rectangle(img, (x,y), (x+w,y+h), (0,255,0), 2)</code>画出矩行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">参数解释</span><br><span class="line">第一个参数：img是原图</span><br><span class="line">第二个参数：（x，y）是矩阵的左上点坐标</span><br><span class="line">第三个参数：（x+w，y+h）是矩阵的右下点坐标</span><br><span class="line">第四个参数：（0,255,0）是画线对应的rgb颜色</span><br><span class="line">第五个参数：2是所画的线的宽度</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用绿色(0, 255, 0)来画出最小的矩形框架</span></span><br><span class="line">x, y, w, h = cv2.boundingRect(cnt)</span><br><span class="line">cv2.rectangle(img, (x, y), (x+w, y+h), (<span class="number">0</span>, <span class="number">255</span>, <span class="number">0</span>), <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用红色表示有旋转角度的矩形框架</span></span><br><span class="line">rect = cv2.minAreaRect(cnt)</span><br><span class="line">box = cv2.cv.BoxPoints(rect)</span><br><span class="line">box = np.int0(box)</span><br><span class="line">cv2.drawContours(img, [box], <span class="number">0</span>, (<span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>), <span class="number">2</span>)</span><br><span class="line">cv2.imwrite(<span class="string">&#x27;contours.png&#x27;</span>, img)</span><br></pre></td></tr></table></figure>
+
+<h2 id="七、Video-api"><a href="#七、Video-api" class="headerlink" title="七、Video api"></a>七、Video api</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1、表示打开笔记本的内置摄像头，</span></span><br><span class="line">cap = cv2.VideoCapture(<span class="number">0</span>) </span><br><span class="line"></span><br><span class="line"><span class="comment"># 2 视频文件路径</span></span><br><span class="line">cap = cv2.VideoCapture(“../test.avi”)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3</span></span><br><span class="line">ret,frame = cap.read()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4</span></span><br><span class="line">cap.release()</span><br></pre></td></tr></table></figure>
+
+<h2 id="八、应用"><a href="#八、应用" class="headerlink" title="八、应用"></a>八、应用</h2><h3 id="Sobel导数"><a href="#Sobel导数" class="headerlink" title="Sobel导数"></a>Sobel导数</h3><p>如何计算梯度，以及如何使用梯度来检测边缘。</p>
+<h3 id="Laplace算子"><a href="#Laplace算子" class="headerlink" title="Laplace算子"></a>Laplace算子</h3><p>边缘检测算法。</p>
+<h3 id="Canny边缘检测"><a href="#Canny边缘检测" class="headerlink" title="Canny边缘检测"></a>Canny边缘检测</h3><p>这儿是一个更高级的边缘检测算法。</p>
+<h3 id="霍夫线变换"><a href="#霍夫线变换" class="headerlink" title="霍夫线变换"></a>霍夫线变换</h3><p>霍夫变换来检测直线。</p>
+<h3 id="霍夫圆变换"><a href="#霍夫圆变换" class="headerlink" title="霍夫圆变换"></a>霍夫圆变换</h3><p>霍夫变换来检测圆。</p>
+<h3 id="Remapping重映射"><a href="#Remapping重映射" class="headerlink" title="Remapping重映射"></a>Remapping重映射</h3><p>两副图像之间建立坐标位置的映射。</p>
+<h2 id="九、CV-Face"><a href="#九、CV-Face" class="headerlink" title="九、CV Face"></a>九、CV Face</h2><h3 id="CascadeClassifier"><a href="#CascadeClassifier" class="headerlink" title="CascadeClassifier"></a>CascadeClassifier</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">haarcascade_eye.xml</span><br><span class="line">haarcascade_eye_tree_eyeglasses.xml</span><br><span class="line">haarcascade_frontalcatface.xml</span><br><span class="line">haarcascade_frontalcatface_extended.xml</span><br><span class="line">haarcascade_frontalface_alt.xml</span><br><span class="line">haarcascade_frontalface_alt2.xml</span><br><span class="line">haarcascade_frontalface_alt_tree.xml</span><br><span class="line">haarcascade_frontalface_default.xml</span><br><span class="line">haarcascade_fullbody.xml</span><br><span class="line">haarcascade_lefteye_2splits.xml</span><br><span class="line">haarcascade_licence_plate_rus_16stages.xml</span><br><span class="line">haarcascade_lowerbody.xml</span><br><span class="line">haarcascade_profileface.xml</span><br><span class="line">haarcascade_righteye_2splits.xml</span><br><span class="line">haarcascade_russian_plate_number.xml</span><br><span class="line">haarcascade_smile.xml</span><br><span class="line">haarcascade_upperbody.xml</span><br></pre></td></tr></table></figure>
+
+<h3 id="1、人脸检测"><a href="#1、人脸检测" class="headerlink" title="1、人脸检测"></a>1、人脸检测</h3><p>cv.CascadeClassifier</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 人脸检测haarcascade_frontalface_default</span><br><span class="line">faceCascade = cv2.CascadeClassifier(&quot;XML/haarcascade_frontalface_default.xml&quot;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Dlib"><a href="#Dlib" class="headerlink" title="Dlib"></a>Dlib</h2><p>人脸提取+关键点检测</p>
+<blockquote>
+<p>CNN人脸检测模型名称: mmod_human_face_detector.dat.bz2</p>
+<p>68维人脸检测模型名称: shape_predictor_68_face_landmarks.dat.bz2</p>
+</blockquote>
+<blockquote>
+<p>5维人脸检测模型名称 shape_predictor_5_face_landmarks.dat.bz2</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">detector = dlib.cnn_face_detection_model_v1(face_detector_model_path)  <span class="comment"># dlib.cnn_face_detection_model_v1</span></span><br><span class="line"><span class="comment"># detector = dlib.get_frontal_face_detector()</span></span><br><span class="line"></span><br><span class="line">predictor = dlib.shape_predictor(<span class="string">&#x27;shape_predictor_68_face_landmarks.dat&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">detections = detector(img, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># step 3. get shape of one face for example</span></span><br><span class="line">detection = detections[<span class="number">0</span>]  <span class="comment"># dlib.mmod_rectangle</span></span><br><span class="line"><span class="comment"># the mmod_rectangle contains two parts : confidence and rect</span></span><br><span class="line"></span><br><span class="line">shape = predictor(img, detection.rect)  <span class="comment"># dlib.full_object_detection</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># step 4. get all the face landmark points</span></span><br><span class="line">landmark_points = shape.parts() <span class="comment"># dlib.points</span></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/cv2/" rel="tag"># cv2</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/07/15/Sub_Language/DL_Train/Pytorch/doc-pytorch/" rel="prev" title="PyTorch Doc Detail">
+      <i class="fa fa-chevron-left"></i> PyTorch Doc Detail
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/07/23/Course/Algorithm/Algorithm-CG/" rel="next" title="Algorithm CG">
+      Algorithm CG <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#APi-Tutorials"><span class="nav-number">1.</span> <span class="nav-text">APi Tutorials</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81Image-I-O"><span class="nav-number">2.</span> <span class="nav-text">一、Image I&#x2F;O</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#imread"><span class="nav-number">2.1.</span> <span class="nav-text">imread</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#imsave"><span class="nav-number">2.2.</span> <span class="nav-text">imsave</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#imshow"><span class="nav-number">2.3.</span> <span class="nav-text">imshow()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#resize"><span class="nav-number">2.4.</span> <span class="nav-text">resize</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#copyMakeBorder"><span class="nav-number">2.5.</span> <span class="nav-text">copyMakeBorder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CV-demo-%E5%AE%9E%E7%8E%B0crop-pad"><span class="nav-number">2.6.</span> <span class="nav-text">CV demo {实现crop,pad)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%BD%A2%E6%80%81%E5%8F%98%E5%8C%96"><span class="nav-number">3.</span> <span class="nav-text">三、形态变化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%BE%B5%E8%9A%80"><span class="nav-number">3.1.</span> <span class="nav-text">1.侵蚀</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E8%86%A8%E8%83%80"><span class="nav-number">3.2.</span> <span class="nav-text">2.膨胀</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%BC%80%E8%BF%90%E7%AE%97"><span class="nav-number">3.3.</span> <span class="nav-text">3 开运算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E9%97%AD%E8%BF%90%E7%AE%97"><span class="nav-number">3.4.</span> <span class="nav-text">4 闭运算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E5%BD%A2%E6%80%81%E6%A2%AF%E5%BA%A6"><span class="nav-number">3.5.</span> <span class="nav-text">5.形态梯度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-tophat"><span class="nav-number">3.6.</span> <span class="nav-text">6.tophat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-blackhat"><span class="nav-number">3.7.</span> <span class="nav-text">7. blackhat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%86%85%E6%A0%B8"><span class="nav-number">3.8.</span> <span class="nav-text">8. 自定义内核</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text">四、图像处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E5%83%8F%E9%87%91%E5%AD%97%E5%A1%94"><span class="nav-number">4.1.</span> <span class="nav-text">图像金字塔</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E5%83%8F%E9%98%88%E5%80%BC%E6%93%8D%E4%BD%9C"><span class="nav-number">4.2.</span> <span class="nav-text">图像阈值操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E4%BB%BF%E5%B0%84%E5%8F%98%E6%8D%A2"><span class="nav-number">5.</span> <span class="nav-text">五、仿射变换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#getAffineTransform"><span class="nav-number">5.1.</span> <span class="nav-text">getAffineTransform</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rotation"><span class="nav-number">5.2.</span> <span class="nav-text">rotation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AE%E5%BB%93"><span class="nav-number">5.3.</span> <span class="nav-text">轮廓</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rectangle-boundingRect"><span class="nav-number">5.4.</span> <span class="nav-text">rectangle &amp; boundingRect</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81Video-api"><span class="nav-number">6.</span> <span class="nav-text">七、Video api</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E5%BA%94%E7%94%A8"><span class="nav-number">7.</span> <span class="nav-text">八、应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Sobel%E5%AF%BC%E6%95%B0"><span class="nav-number">7.1.</span> <span class="nav-text">Sobel导数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Laplace%E7%AE%97%E5%AD%90"><span class="nav-number">7.2.</span> <span class="nav-text">Laplace算子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Canny%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B"><span class="nav-number">7.3.</span> <span class="nav-text">Canny边缘检测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9C%8D%E5%A4%AB%E7%BA%BF%E5%8F%98%E6%8D%A2"><span class="nav-number">7.4.</span> <span class="nav-text">霍夫线变换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9C%8D%E5%A4%AB%E5%9C%86%E5%8F%98%E6%8D%A2"><span class="nav-number">7.5.</span> <span class="nav-text">霍夫圆变换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Remapping%E9%87%8D%E6%98%A0%E5%B0%84"><span class="nav-number">7.6.</span> <span class="nav-text">Remapping重映射</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%9D%E3%80%81CV-Face"><span class="nav-number">8.</span> <span class="nav-text">九、CV Face</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CascadeClassifier"><span class="nav-number">8.1.</span> <span class="nav-text">CascadeClassifier</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E4%BA%BA%E8%84%B8%E6%A3%80%E6%B5%8B"><span class="nav-number">8.2.</span> <span class="nav-text">1、人脸检测</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dlib"><span class="nav-number">9.</span> <span class="nav-text">Dlib</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

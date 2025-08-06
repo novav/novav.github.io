@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="[TOC] 王博Kings：无人驾驶系列知识入门到提高7-高精度地图 V2X HD MAP CSDN self_drive car_学习笔记–第7课：HD MAP高精地图 &amp; V2X   1. OverViewHD AMP 元素信息 点云信息 HD地图 &#x3D; 元素地图 + 点云地图     HD Map VS Navigation Map LOCALIZATION Percepti">
+<meta property="og:type" content="article">
+<meta property="og:title" content="无人驾驶（7）高精地图V2X HD MAP">
+<meta property="og:url" content="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="[TOC] 王博Kings：无人驾驶系列知识入门到提高7-高精度地图 V2X HD MAP CSDN self_drive car_学习笔记–第7课：HD MAP高精地图 &amp; V2X   1. OverViewHD AMP 元素信息 点云信息 HD地图 &#x3D; 元素地图 + 点云地图     HD Map VS Navigation Map LOCALIZATION Percepti">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424013755047.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424013818593.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424013934991.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424014057581.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424014202348.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424014247389.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424014343327.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424014507358.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424014735268.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424014834961.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424014902996.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424014933531.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424015215062.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424015514699.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424015612168.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424015634216.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424015649077.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424015719101.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424020049309.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/20210316224638465.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/20210316225542302.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/20210316225607152.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/20210316225812231.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/20210316225833502.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1NzAxNTAx,size_16,color_FFFFFF,t_70.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1NzAxNTAx,size_16,color_FFFFFF,t_70-16508174443408.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1NzAxNTAx,size_16,color_FFFFFF,t_70-16508174443409.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1NzAxNTAx,size_16,color_FFFFFF,t_70-165081744434010.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/20210316230428824.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424021237938.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424021247961.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424021307104.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424021336931.png">
+<meta property="article:published_time" content="2022-04-24T01:30:09.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:39.524Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="Autopilot">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424013755047.png">
+
+<link rel="canonical" href="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>无人驾驶（7）高精地图V2X HD MAP | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          无人驾驶（7）高精地图V2X HD MAP
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-04-24 01:30:09" itemprop="dateCreated datePublished" datetime="2022-04-24T01:30:09+00:00">2022-04-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Autopilot/" itemprop="url" rel="index"><span itemprop="name">Autopilot</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Autopilot/%E5%85%A5%E9%97%A8%E6%8F%90%E9%AB%98/" itemprop="url" rel="index"><span itemprop="name">入门提高</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>[TOC]</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/348124453">王博Kings：无人驾驶系列知识入门到提高7-高精度地图 V2X HD MAP</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45701501/article/details/114872926">CSDN self_drive car_学习笔记–第7课：HD MAP高精地图 &amp; V2X</a></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424013755047.png" alt="image-20220424013755047"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424013818593.png" alt="image-20220424013818593"></p>
+<h2 id="1-OverView"><a href="#1-OverView" class="headerlink" title="1. OverView"></a>1. OverView</h2><h3 id="HD-AMP"><a href="#HD-AMP" class="headerlink" title="HD AMP"></a>HD AMP</h3><ul>
+<li>元素信息</li>
+<li>点云信息</li>
+<li>HD地图 &#x3D; 元素地图 + 点云地图</li>
+</ul>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424013934991.png" alt="image-20220424013934991"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424014057581.png" alt="image-20220424014057581"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424014202348.png" alt="image-20220424014202348"></p>
+<h3 id="HD-Map-VS-Navigation-Map"><a href="#HD-Map-VS-Navigation-Map" class="headerlink" title="HD Map VS Navigation Map"></a>HD Map VS Navigation Map</h3><p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424014247389.png" alt="image-20220424014247389"></p>
+<h3 id="LOCALIZATION"><a href="#LOCALIZATION" class="headerlink" title="LOCALIZATION"></a>LOCALIZATION</h3><p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424014343327.png" alt="image-20220424014343327"></p>
+<h4 id="Perception-感知"><a href="#Perception-感知" class="headerlink" title="Perception 感知"></a>Perception 感知</h4><p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424014507358.png" alt="image-20220424014507358"></p>
+<h4 id="Planning"><a href="#Planning" class="headerlink" title="Planning"></a>Planning</h4><p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424014735268.png" alt="image-20220424014735268"></p>
+<h4 id="Apollo-HDMap"><a href="#Apollo-HDMap" class="headerlink" title="Apollo HDMap"></a>Apollo HDMap</h4><p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424014834961.png" alt="image-20220424014834961"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424014902996.png" alt="image-20220424014902996"></p>
+<h3 id="SLAM"><a href="#SLAM" class="headerlink" title="SLAM"></a>SLAM</h3><p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424014933531.png" alt="image-20220424014933531"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424015215062.png" alt="image-20220424015215062"></p>
+<h2 id="2-OPENDRIVE-开放协议"><a href="#2-OPENDRIVE-开放协议" class="headerlink" title="2. OPENDRIVE 开放协议"></a>2. OPENDRIVE 开放协议</h2><p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424015514699.png" alt="image-20220424015514699"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424015612168.png" alt="image-20220424015612168"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424015634216.png" alt="image-20220424015634216"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424015649077.png" alt="image-20220424015649077"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424015719101.png" alt="image-20220424015719101"></p>
+<p>制图过程和V2X</p>
+<h2 id="3-Cloud-Point-Mapping"><a href="#3-Cloud-Point-Mapping" class="headerlink" title="3. Cloud Point Mapping"></a>3. Cloud Point Mapping</h2><h2 id="3-1-Lidar-Image"><a href="#3-1-Lidar-Image" class="headerlink" title="3.1 Lidar &amp; Image"></a>3.1 Lidar &amp; Image</h2><p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424020049309.png" alt="image-20220424020049309"></p>
+<h3 id="3-2-点云匹配"><a href="#3-2-点云匹配" class="headerlink" title="3.2 点云匹配"></a>3.2 点云匹配</h3><p>1）依赖库说明<br>—-OpenCV3:目前最常用也是用途最广的图像处理依赖库，熟悉基本操作，比如cv::Mat、imread<br>—-Eigen:C++下最常用的矩阵运算库，类似于Matlab，对矩阵的描述和计算都非常方便，任何计算都是矩阵<br>—-PCL：Point Cloud Library，点云计算库，方便对点云进行操作和可视化</p>
+<p>2）安装方法：<br>—-Eigen库使用源码拷贝的方式或者apt-get安装<br>—-Opencv安装可以用ppi源来安装，也可以用源码编译安装<br>—-在Ubuntu下使用apt-get安装PCL<br><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/20210316224638465.png" alt="img"></p>
+<p>3）使用说明</p>
+<p>代码库：JointMapping<br>–cmake .<br>–make<br>–.&#x2F;joinMap<br>–pcl_viewer .&#x2F;map.pcd</p>
+<h3 id="3-3-基础概念"><a href="#3-3-基础概念" class="headerlink" title="3.3 基础概念"></a>3.3 基础概念</h3><ul>
+<li>相机内参</li>
+<li>相机外参</li>
+<li>像素坐标系</li>
+<li>刚体运动</li>
+<li>坐标系转换</li>
+<li>旋转坐标</li>
+<li>平移坐标</li>
+<li>齐次坐标系，变换矩阵</li>
+<li>欧拉角</li>
+<li>四元数</li>
+<li></li>
+</ul>
+<h3 id="3-4-相机模型"><a href="#3-4-相机模型" class="headerlink" title="3.4 相机模型"></a>3.4 相机模型</h3><p>1）相机成像的原理是针孔相机模型：</p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/20210316225542302.png" alt="在这里插入图片描述"></p>
+<p>—-P表示物理世界中的一个点；P’表示成像中模型中的位置；坐标分别为XYZ和X’Y’Z’<br>—-相似三角形关系：</p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/20210316225607152.png" alt="在这里插入图片描述"></p>
+<p>2）相机内参<br>将成像坐标P’切换到像素坐标系中，要进行两步转换：缩放和原点平移<br>假设P’的像素坐标为[u v]T（表示列矩阵），变换坐标就是：</p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/20210316225812231.png" alt="在这里插入图片描述"></p>
+<p>把这个形式切换到齐次坐标系：</p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/20210316225833502.png" alt="在这里插入图片描述"></p>
+<p>这里的K就是我们说的内参矩阵，也就是每个相机需要校准的内参</p>
+<p>3）相机外参<br>注意一下，这里的P是相机坐标系下的位置，而其世界坐标系下的坐标Pw,可以根据旋转平移来得到：<br>$$<br>ZP_{w} &#x3D; K(RP_w + t) &#x3D; KTP_{w}<br>$$</p>
+<p>—-这里有齐次变换到非齐次坐标的变换<br>—-因此，相机姿态R，T（t?是不是指的是上面公式的）又称为相机外参<br>—-外参会随着车辆移动而移动，因此我们高精地图构建过程中就是需要去估计这个外参，同时也是车辆移动轨迹</p>
+<p>4）数据结构<br>–PGM数据格式：Portable Gray Map,最简单的灰度图数据格式，这里我们拿来表示把点云压成平面的深度信息（0-65535），其中0表示没有检测到深度<br>–png:RGB信息的常用格式<br>–pose:5组7状态，txt文档，[x y z qx qy qz qw],平移向量和旋转四元数</p>
+<p>5）代码示例：<br>–根据相机内参计算RGB和点云的对应关系<br>–根据各图相机外参把点云和RGB融合进行图片融合，构成全局地图</p>
+<p>【源码是老师的，没有放到云端，下面就是部分截图，仅供参考】</p>
+<p>  todo</p>
+<p>通过该函数，可以获取得到点云图<br>【下面偷个小懒，截个图算了，哈哈哈】</p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1NzAxNTAx,size_16,color_FFFFFF,t_70.png" alt="在这里插入图片描述"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1NzAxNTAx,size_16,color_FFFFFF,t_70-16508174443408.png" alt="在这里插入图片描述"></p>
+<h3 id="OpenCV-练习"><a href="#OpenCV-练习" class="headerlink" title="OpenCV 练习"></a>OpenCV 练习</h3><p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1NzAxNTAx,size_16,color_FFFFFF,t_70-16508174443409.png" alt="在这里插入图片描述"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1NzAxNTAx,size_16,color_FFFFFF,t_70-165081744434010.png" alt="在这里插入图片描述"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/20210316230428824.png" alt="在这里插入图片描述"></p>
+<h2 id="4-V2X"><a href="#4-V2X" class="headerlink" title="4. V2X"></a>4. V2X</h2><p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424021237938.png" alt="image-20220424021237938"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424021247961.png" alt="image-20220424021247961"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424021307104.png" alt="image-20220424021307104"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424021336931.png" alt="image-20220424021336931"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Autopilot/" rel="tag"># Autopilot</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/04/21/Tools/Tools_UML/" rel="prev" title="UML">
+      <i class="fa fa-chevron-left"></i> UML
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/04/24/Course/AutomaticDrive/AutoDriver_08/" rel="next" title="无人驾驶（8）无人车定位系统(SLAM)">
+      无人驾驶（8）无人车定位系统(SLAM) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-OverView"><span class="nav-number">1.</span> <span class="nav-text">1. OverView</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HD-AMP"><span class="nav-number">1.1.</span> <span class="nav-text">HD AMP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HD-Map-VS-Navigation-Map"><span class="nav-number">1.2.</span> <span class="nav-text">HD Map VS Navigation Map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LOCALIZATION"><span class="nav-number">1.3.</span> <span class="nav-text">LOCALIZATION</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Perception-%E6%84%9F%E7%9F%A5"><span class="nav-number">1.3.1.</span> <span class="nav-text">Perception 感知</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Planning"><span class="nav-number">1.3.2.</span> <span class="nav-text">Planning</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Apollo-HDMap"><span class="nav-number">1.3.3.</span> <span class="nav-text">Apollo HDMap</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SLAM"><span class="nav-number">1.4.</span> <span class="nav-text">SLAM</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-OPENDRIVE-%E5%BC%80%E6%94%BE%E5%8D%8F%E8%AE%AE"><span class="nav-number">2.</span> <span class="nav-text">2. OPENDRIVE 开放协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Cloud-Point-Mapping"><span class="nav-number">3.</span> <span class="nav-text">3. Cloud Point Mapping</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-Lidar-Image"><span class="nav-number">4.</span> <span class="nav-text">3.1 Lidar &amp; Image</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E7%82%B9%E4%BA%91%E5%8C%B9%E9%85%8D"><span class="nav-number">4.1.</span> <span class="nav-text">3.2 点云匹配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="nav-number">4.2.</span> <span class="nav-text">3.3 基础概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-%E7%9B%B8%E6%9C%BA%E6%A8%A1%E5%9E%8B"><span class="nav-number">4.3.</span> <span class="nav-text">3.4 相机模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OpenCV-%E7%BB%83%E4%B9%A0"><span class="nav-number">4.4.</span> <span class="nav-text">OpenCV 练习</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-V2X"><span class="nav-number">5.</span> <span class="nav-text">4. V2X</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

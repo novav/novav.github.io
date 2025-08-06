@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="无人驾驶感知基础–车道线检测 [toc] 3.1无人驾驶感知系统概述Preception   Content 实战基于传统方法的车道线检测 图片分割算法综述 实战基于深度学习的图片分割算法综述  3.2 实战分割基于传统方法的车道线检测静态环境感知与分割算法 https:&#x2F;&#x2F;github.com&#x2F;andylei77&#x2F;lane-detector 对比算法： Zhihu算法集锦（8）|自动驾驶|车道检">
+<meta property="og:type" content="article">
+<meta property="og:title" content="无人驾驶（3）感知基础">
+<meta property="og:url" content="https://novav.github.io/2022/04/04/Course/AutomaticDrive/AutoDriver_03/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="无人驾驶感知基础–车道线检测 [toc] 3.1无人驾驶感知系统概述Preception   Content 实战基于传统方法的车道线检测 图片分割算法综述 实战基于深度学习的图片分割算法综述  3.2 实战分割基于传统方法的车道线检测静态环境感知与分割算法 https:&#x2F;&#x2F;github.com&#x2F;andylei77&#x2F;lane-detector 对比算法： Zhihu算法集锦（8）|自动驾驶|车道检">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2022/04/04/Course/AutomaticDrive/AutoDriver_03/v2-c50854cd258011559f25add79b3dfdbd_1440w.jpg">
+<meta property="og:image" content="https://novav.github.io/2022/04/04/Course/AutomaticDrive/AutoDriver_03/v2-d6424c5f1a5f53a18e9fb8c72a6abca5_1440w.jpg">
+<meta property="og:image" content="https://novav.github.io/2022/04/04/Course/AutomaticDrive/AutoDriver_03/image-20220412102729106.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/04/Course/AutomaticDrive/AutoDriver_03/image-20220412103304006.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/04/Course/AutomaticDrive/AutoDriver_03/image-20220412103416004.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/04/Course/AutomaticDrive/AutoDriver_03/image-20220412103957969.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/04/Course/AutomaticDrive/AutoDriver_03/v2-abda096b28d5add16946a34794fcf5cb_1440w.jpg">
+<meta property="og:image" content="https://novav.github.io/2022/04/04/Course/AutomaticDrive/AutoDriver_03/v2-898c3d3d9beed57c6cf3a951bc45e7ee_1440w.jpg">
+<meta property="og:image" content="https://novav.github.io/2022/04/04/Course/AutomaticDrive/AutoDriver_03/v2-ca4b24c6b8c091accfcaef92afcd816b_1440w.jpg">
+<meta property="og:image" content="https://novav.github.io/2022/04/04/Course/AutomaticDrive/AutoDriver_03/v2-d9e8e150581363ff640da3ef7591161f_1440w.jpg">
+<meta property="og:image" content="https://novav.github.io/2022/04/04/Course/AutomaticDrive/AutoDriver_03/v2-c722adb53921db62348f1676dc1dc20b_1440w.jpg">
+<meta property="og:image" content="https://novav.github.io/2022/04/04/Course/AutomaticDrive/AutoDriver_03/v2-f4d8777a1710a773789b0baf2e4ec101_1440w.jpg">
+<meta property="og:image" content="https://novav.github.io/2022/04/04/Course/AutomaticDrive/AutoDriver_03/v2-1f3fdd8ce00f9c4d968609aef3a215ab_1440w.jpg">
+<meta property="og:image" content="https://novav.github.io/2022/04/04/Course/AutomaticDrive/AutoDriver_03/v2-b8f27cb192ad764a8ab4115ffcf2847a_1440w.jpg">
+<meta property="og:image" content="https://novav.github.io/2022/04/04/Course/AutomaticDrive/AutoDriver_03/v2-3d0dd3adbeda6d8f05aba624dc5ac6b6_1440w.jpg">
+<meta property="og:image" content="https://novav.github.io/2022/04/04/Course/AutomaticDrive/AutoDriver_03/image-20220412171351872.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/04/Course/AutomaticDrive/AutoDriver_03/image-20220412171257608.png">
+<meta property="article:published_time" content="2022-04-04T12:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:38.904Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="Autopilot">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2022/04/04/Course/AutomaticDrive/AutoDriver_03/v2-c50854cd258011559f25add79b3dfdbd_1440w.jpg">
+
+<link rel="canonical" href="https://novav.github.io/2022/04/04/Course/AutomaticDrive/AutoDriver_03/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>无人驾驶（3）感知基础 | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/04/04/Course/AutomaticDrive/AutoDriver_03/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          无人驾驶（3）感知基础
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-04-04 12:00:00" itemprop="dateCreated datePublished" datetime="2022-04-04T12:00:00+00:00">2022-04-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Autopilot/" itemprop="url" rel="index"><span itemprop="name">Autopilot</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Autopilot/%E5%85%A5%E9%97%A8%E6%8F%90%E9%AB%98/" itemprop="url" rel="index"><span itemprop="name">入门提高</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="无人驾驶感知基础–车道线检测"><a href="#无人驾驶感知基础–车道线检测" class="headerlink" title="无人驾驶感知基础–车道线检测"></a>无人驾驶感知基础–车道线检测</h1><p> [toc]</p>
+<h2 id="3-1无人驾驶感知系统概述"><a href="#3-1无人驾驶感知系统概述" class="headerlink" title="3.1无人驾驶感知系统概述"></a>3.1无人驾驶感知系统概述</h2><p>Preception</p>
+<p><img src="/2022/04/04/Course/AutomaticDrive/AutoDriver_03/v2-c50854cd258011559f25add79b3dfdbd_1440w.jpg" alt="img"></p>
+<p><img src="/2022/04/04/Course/AutomaticDrive/AutoDriver_03/v2-d6424c5f1a5f53a18e9fb8c72a6abca5_1440w.jpg" alt="img"></p>
+<h3 id="Content"><a href="#Content" class="headerlink" title="Content"></a>Content</h3><ul>
+<li>实战基于传统方法的车道线检测</li>
+<li>图片分割算法综述</li>
+<li>实战基于深度学习的图片分割算法综述</li>
+</ul>
+<h2 id="3-2-实战分割基于传统方法的车道线检测"><a href="#3-2-实战分割基于传统方法的车道线检测" class="headerlink" title="3.2 实战分割基于传统方法的车道线检测"></a>3.2 实战分割基于传统方法的车道线检测</h2><p>静态环境感知与分割算法</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/andylei77/lane-detector">https://github.com/andylei77/lane-detector</a></p>
+<p>对比算法：</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/36847814">Zhihu算法集锦（8）|自动驾驶|车道检测实用算法</a></p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># 该算法利用了OpenCV库和Udacity自动驾驶汽车数据库的相关内容。</span></span><br><span class="line">摄像头校准，以移除镜头畸变（Lens distortion）的影响</span><br><span class="line">图像前处理，用于识别车道线</span><br><span class="line">道路视角变换（Perspective transform）</span><br><span class="line">车道线检测</span><br><span class="line">车辆定位和车道半径计算</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-2-canny边缘检测"><a href="#3-2-2-canny边缘检测" class="headerlink" title="3.2.2 canny边缘检测"></a>3.2.2 canny边缘检测</h3><p><img src="/2022/04/04/Course/AutomaticDrive/AutoDriver_03/image-20220412102729106.png" alt="image-20220412102729106"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">do_canny</span>(<span class="params">frame</span>):</span><br><span class="line">    <span class="comment"># Converts frame to grayscale because we only need the luminance channel for detecting edges - less computationally expensive</span></span><br><span class="line">    gray = cv.cvtColor(frame, cv.COLOR_RGB2GRAY)</span><br><span class="line">    <span class="comment"># Applies a 5x5 gaussian blur with deviation of 0 to frame - not mandatory since Canny will do this for us</span></span><br><span class="line">    blur = cv.GaussianBlur(gray, (<span class="number">5</span>, <span class="number">5</span>), <span class="number">0</span>)</span><br><span class="line">    <span class="comment"># Applies Canny edge detector with minVal of 50 and maxVal of 150</span></span><br><span class="line">    canny = cv.Canny(blur, <span class="number">50</span>, <span class="number">150</span>)</span><br><span class="line">    <span class="keyword">return</span> canny</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-3-手动分割路面区域"><a href="#3-2-3-手动分割路面区域" class="headerlink" title="3.2.3 手动分割路面区域"></a>3.2.3 手动分割路面区域</h3><p><img src="/2022/04/04/Course/AutomaticDrive/AutoDriver_03/image-20220412103304006.png" alt="image-20220412103304006"></p>
+<p>CV坐标系</p>
+<ul>
+<li>polygones&#x3D;[] # 手动指定三角形的三个点</li>
+<li>mask &#x3D; zeros_like() 生成mask</li>
+<li>fillpoly(mask, polygones, 255) ;  poly 范围内填充255，区域外保留原始值</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">do_segment</span>(<span class="params">frame</span>):</span><br><span class="line">    <span class="comment"># Since an image is a multi-directional array containing the relative intensities of each pixel in the image, we can use frame.shape to return a tuple: [number of rows, number of columns, number of channels] of the dimensions of the frame</span></span><br><span class="line">    <span class="comment"># frame.shape[0] give us the number of rows of pixels the frame has. Since height begins from 0 at the top, the y-coordinate of the bottom of the frame is its height</span></span><br><span class="line">    height = frame.shape[<span class="number">0</span>]</span><br><span class="line">    <span class="comment"># Creates a triangular polygon for the mask defined by three (x, y) coordinates</span></span><br><span class="line">    polygons = np.array([</span><br><span class="line">                            [(<span class="number">0</span>, height), (<span class="number">800</span>, height), (<span class="number">380</span>, <span class="number">290</span>)]</span><br><span class="line">                        ])</span><br><span class="line">    <span class="comment"># Creates an image filled with zero intensities with the same dimensions as the frame</span></span><br><span class="line">    mask = np.zeros_like(frame)</span><br><span class="line">    <span class="comment"># Allows the mask to be filled with values of 1 and the other areas to be filled with values of 0</span></span><br><span class="line">    cv.fillPoly(mask, polygons, <span class="number">255</span>)</span><br><span class="line">    <span class="comment"># A bitwise and operation between the mask and frame keeps only the triangular area of the frame</span></span><br><span class="line">    segment = cv.bitwise_and(frame, mask)</span><br><span class="line">    <span class="keyword">return</span> segment</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-4-霍夫变换得到车道线"><a href="#3-2-4-霍夫变换得到车道线" class="headerlink" title="3.2.4 霍夫变换得到车道线"></a>3.2.4 霍夫变换得到车道线</h3><ul>
+<li><p>霍夫变换</p>
+<ul>
+<li>参数和变量互换</li>
+</ul>
+</li>
+<li><p>图像中的一条线，变换到霍夫空间，就变成一个（霍夫空间的）点</p>
+</li>
+<li><p>图像中的一个点（有多条线穿过），对应霍夫空间的一条线；</p>
+</li>
+</ul>
+<p>cartesian: 笛卡尔坐标系</p>
+<p><img src="/2022/04/04/Course/AutomaticDrive/AutoDriver_03/image-20220412103416004.png" alt="image-20220412103416004"></p>
+<ul>
+<li>将笛卡尔坐标系中一系列的可能的点（连接成线），投影到霍夫空间（应该是一个点）</li>
+</ul>
+<p>另一种霍夫空间（极坐标）</p>
+<ul>
+<li><strong>极坐标法表示直线</strong></li>
+</ul>
+<p><img src="/2022/04/04/Course/AutomaticDrive/AutoDriver_03/image-20220412103957969.png" alt="image-20220412103957969"></p>
+<p>HoughLinesP函数在HoughLines的基础上末尾加了一个代表Probabilistic（概率）的P，表明它可以采用累计概率霍夫变换（PPHT）来找出二值图像中的直线。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hough = cv.HoughLinesP(segment, <span class="number">2</span>, np.pi / <span class="number">180</span>, <span class="number">100</span>, np.array([]), minLineLength = <span class="number">100</span>, maxLineGap = <span class="number">50</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-5-获取车道线并叠加到原始图像中"><a href="#3-2-5-获取车道线并叠加到原始图像中" class="headerlink" title="3.2.5 获取车道线并叠加到原始图像中"></a>3.2.5 获取车道线并叠加到原始图像中</h3><ul>
+<li>综合所有线，求两条车道线的平均斜率和截距</li>
+<li></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">calculate_lines</span>(<span class="params">frame, lines</span>):</span><br><span class="line">    <span class="keyword">return</span> [left_line, right_line]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">calculate_coordinates</span>(<span class="params">frame, parameters</span>):</span><br><span class="line">    slope, intercept = parameters</span><br><span class="line">    <span class="comment"># Sets initial y-coordinate as height from top down (bottom of the frame)</span></span><br><span class="line">    y1 = frame.shape[<span class="number">0</span>]</span><br><span class="line">    <span class="comment"># Sets final y-coordinate as 150 above the bottom of the frame</span></span><br><span class="line">    y2 = <span class="built_in">int</span>(y1 - <span class="number">150</span>)</span><br><span class="line">    <span class="comment"># Sets initial x-coordinate as (y1 - b) / m since y1 = mx1 + b</span></span><br><span class="line">    x1 = <span class="built_in">int</span>((y1 - intercept) / slope)</span><br><span class="line">    <span class="comment"># Sets final x-coordinate as (y2 - b) / m since y2 = mx2 + b</span></span><br><span class="line">    x2 = <span class="built_in">int</span>((y2 - intercept) / slope)</span><br><span class="line">    <span class="keyword">return</span> np.array([x1, y1, x2, y2])</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-3-实战基于深度学习的图片分割算法综述"><a href="#3-3-实战基于深度学习的图片分割算法综述" class="headerlink" title="3.3 实战基于深度学习的图片分割算法综述"></a>3.3 实战基于深度学习的图片分割算法综述</h2><h3 id="3-3-1-代表算法讲解"><a href="#3-3-1-代表算法讲解" class="headerlink" title="3.3.1 代表算法讲解"></a>3.3.1 代表算法讲解</h3><p><img src="/2022/04/04/Course/AutomaticDrive/AutoDriver_03/v2-abda096b28d5add16946a34794fcf5cb_1440w.jpg" alt="img"></p>
+<p><img src="/2022/04/04/Course/AutomaticDrive/AutoDriver_03/v2-898c3d3d9beed57c6cf3a951bc45e7ee_1440w.jpg" alt="img"></p>
+<p>全连接</p>
+<p>下采样上采样，池化</p>
+<p>融合，上采样的和下采样平行的融合</p>
+<p>语义地图，比如输入RGB3通道，最后输出是6个分类，那就是6张图</p>
+<p><img src="/2022/04/04/Course/AutomaticDrive/AutoDriver_03/v2-ca4b24c6b8c091accfcaef92afcd816b_1440w.jpg" alt="img"></p>
+<p><img src="/2022/04/04/Course/AutomaticDrive/AutoDriver_03/v2-d9e8e150581363ff640da3ef7591161f_1440w.jpg" alt="img"></p>
+<p><img src="/2022/04/04/Course/AutomaticDrive/AutoDriver_03/v2-c722adb53921db62348f1676dc1dc20b_1440w.jpg" alt="img"></p>
+<p><img src="/2022/04/04/Course/AutomaticDrive/AutoDriver_03/v2-f4d8777a1710a773789b0baf2e4ec101_1440w.jpg" alt="img"></p>
+<p><img src="/2022/04/04/Course/AutomaticDrive/AutoDriver_03/v2-1f3fdd8ce00f9c4d968609aef3a215ab_1440w.jpg" alt="img"></p>
+<p><img src="/2022/04/04/Course/AutomaticDrive/AutoDriver_03/v2-b8f27cb192ad764a8ab4115ffcf2847a_1440w.jpg" alt="img"></p>
+<p><img src="/2022/04/04/Course/AutomaticDrive/AutoDriver_03/v2-3d0dd3adbeda6d8f05aba624dc5ac6b6_1440w.jpg" alt="img"></p>
+<h3 id="3-3-2-基于图片分割的车道线检测"><a href="#3-3-2-基于图片分割的车道线检测" class="headerlink" title="3.3.2 基于图片分割的车道线检测"></a>3.3.2 基于图片分割的车道线检测</h3><p><img src="/2022/04/04/Course/AutomaticDrive/AutoDriver_03/image-20220412171351872.png" alt="image-20220412171351872"></p>
+<p><img src="/2022/04/04/Course/AutomaticDrive/AutoDriver_03/image-20220412171257608.png" alt="image-20220412171257608"></p>
+<ul>
+<li>语义分割，二值分类，得到车道</li>
+<li>分类车道-同向，—聚类方法  通向车道在n-dim聚类中，距离很近</li>
+<li></li>
+</ul>
+<h3 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h3><p><a href="https://link.zhihu.com/?target=https://github.com/andylei77/lanenet-lane-detection">Github lanenet-lane-detection</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># https://github.com/andylei77/lanenet-lane-detection/blob/master/tools/test_lanenet.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test_lanenet</span>(<span class="params">image_path, weights_path, use_gpu</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    :param image_path:</span></span><br><span class="line"><span class="string">    :param weights_path:</span></span><br><span class="line"><span class="string">    :param use_gpu:</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">assert</span> ops.exists(image_path), <span class="string">&#x27;&#123;:s&#125; not exist&#x27;</span>.<span class="built_in">format</span>(image_path)</span><br><span class="line"></span><br><span class="line">    log.info(<span class="string">&#x27;开始读取图像数据并进行预处理&#x27;</span>)</span><br><span class="line">    t_start = time.time()</span><br><span class="line">    image = cv2.imread(image_path, cv2.IMREAD_COLOR)</span><br><span class="line">    image_vis = image</span><br><span class="line">    image = cv2.resize(image, (<span class="number">512</span>, <span class="number">256</span>), interpolation=cv2.INTER_LINEAR)</span><br><span class="line">    image = image - VGG_MEAN</span><br><span class="line">    log.info(<span class="string">&#x27;图像读取完毕, 耗时: &#123;:.5f&#125;s&#x27;</span>.<span class="built_in">format</span>(time.time() - t_start))</span><br><span class="line"></span><br><span class="line">    input_tensor = tf.placeholder(dtype=tf.float32, shape=[<span class="number">1</span>, <span class="number">256</span>, <span class="number">512</span>, <span class="number">3</span>], name=<span class="string">&#x27;input_tensor&#x27;</span>)</span><br><span class="line">    phase_tensor = tf.constant(<span class="string">&#x27;test&#x27;</span>, tf.string)</span><br><span class="line"></span><br><span class="line">    net = lanenet_merge_model.LaneNet(phase=phase_tensor, net_flag=<span class="string">&#x27;vgg&#x27;</span>)</span><br><span class="line">    binary_seg_ret, instance_seg_ret = net.inference(input_tensor=input_tensor, name=<span class="string">&#x27;lanenet_model&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    cluster = lanenet_cluster.LaneNetCluster()</span><br><span class="line">    postprocessor = lanenet_postprocess.LaneNetPoseProcessor()</span><br><span class="line"></span><br><span class="line">    saver = tf.train.Saver()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Set sess configuration</span></span><br><span class="line">    <span class="keyword">if</span> use_gpu:</span><br><span class="line">        sess_config = tf.ConfigProto(device_count=&#123;<span class="string">&#x27;GPU&#x27;</span>: <span class="number">1</span>&#125;)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        sess_config = tf.ConfigProto(device_count=&#123;<span class="string">&#x27;CPU&#x27;</span>: <span class="number">0</span>&#125;)</span><br><span class="line">    sess_config.gpu_options.per_process_gpu_memory_fraction = CFG.TEST.GPU_MEMORY_FRACTION</span><br><span class="line">    sess_config.gpu_options.allow_growth = CFG.TRAIN.TF_ALLOW_GROWTH</span><br><span class="line">    sess_config.gpu_options.allocator_type = <span class="string">&#x27;BFC&#x27;</span></span><br><span class="line"></span><br><span class="line">    sess = tf.Session(config=sess_config)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> sess.as_default():</span><br><span class="line"></span><br><span class="line">        saver.restore(sess=sess, save_path=weights_path)</span><br><span class="line"></span><br><span class="line">        t_start = time.time()</span><br><span class="line">        binary_seg_image, instance_seg_image = sess.run([binary_seg_ret, instance_seg_ret],</span><br><span class="line">                                                        feed_dict=&#123;input_tensor: [image]&#125;)</span><br><span class="line">        t_cost = time.time() - t_start</span><br><span class="line">        log.info(<span class="string">&#x27;单张图像车道线预测耗时: &#123;:.5f&#125;s&#x27;</span>.<span class="built_in">format</span>(t_cost))</span><br><span class="line"></span><br><span class="line">        binary_seg_image[<span class="number">0</span>] = postprocessor.postprocess(binary_seg_image[<span class="number">0</span>])</span><br><span class="line">        mask_image = cluster.get_lane_mask(binary_seg_ret=binary_seg_image[<span class="number">0</span>],</span><br><span class="line">                                           instance_seg_ret=instance_seg_image[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">            instance_seg_image[<span class="number">0</span>][:, :, i] = minmax_scale(instance_seg_image[<span class="number">0</span>][:, :, i])</span><br><span class="line">        embedding_image = np.array(instance_seg_image[<span class="number">0</span>], np.uint8)</span><br><span class="line"></span><br><span class="line">        plt.figure(<span class="string">&#x27;mask_image&#x27;</span>)</span><br><span class="line">        plt.imshow(mask_image[:, :, (<span class="number">2</span>, <span class="number">1</span>, <span class="number">0</span>)])</span><br><span class="line">        plt.figure(<span class="string">&#x27;src_image&#x27;</span>)</span><br><span class="line">        plt.imshow(image_vis[:, :, (<span class="number">2</span>, <span class="number">1</span>, <span class="number">0</span>)])</span><br><span class="line">        plt.figure(<span class="string">&#x27;instance_image&#x27;</span>)</span><br><span class="line">        plt.imshow(embedding_image[:, :, (<span class="number">2</span>, <span class="number">1</span>, <span class="number">0</span>)])</span><br><span class="line">        plt.figure(<span class="string">&#x27;binary_image&#x27;</span>)</span><br><span class="line">        plt.imshow(binary_seg_image[<span class="number">0</span>] * <span class="number">255</span>, cmap=<span class="string">&#x27;gray&#x27;</span>)</span><br><span class="line">        plt.show()</span><br><span class="line"></span><br><span class="line">    sess.close()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="相关算法汇总"><a href="#相关算法汇总" class="headerlink" title="相关算法汇总"></a>相关算法汇总</h1><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/128518581">Zhihu 自动驾驶中的车道线检测算法汇总</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Autopilot/" rel="tag"># Autopilot</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/04/01/Course/AutomaticDrive/AutoDriverBack/" rel="prev" title="无人驾驶（1）概览--背景介绍">
+      <i class="fa fa-chevron-left"></i> 无人驾驶（1）概览--背景介绍
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/04/04/Sub_Language/CPlus/Cplus_CallPythonDemo/" rel="next" title="C++ python Tutorial">
+      C++ python Tutorial <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%97%A0%E4%BA%BA%E9%A9%BE%E9%A9%B6%E6%84%9F%E7%9F%A5%E5%9F%BA%E7%A1%80%E2%80%93%E8%BD%A6%E9%81%93%E7%BA%BF%E6%A3%80%E6%B5%8B"><span class="nav-number">1.</span> <span class="nav-text">无人驾驶感知基础–车道线检测</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1%E6%97%A0%E4%BA%BA%E9%A9%BE%E9%A9%B6%E6%84%9F%E7%9F%A5%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">3.1无人驾驶感知系统概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Content"><span class="nav-number">1.1.1.</span> <span class="nav-text">Content</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-%E5%AE%9E%E6%88%98%E5%88%86%E5%89%B2%E5%9F%BA%E4%BA%8E%E4%BC%A0%E7%BB%9F%E6%96%B9%E6%B3%95%E7%9A%84%E8%BD%A6%E9%81%93%E7%BA%BF%E6%A3%80%E6%B5%8B"><span class="nav-number">1.2.</span> <span class="nav-text">3.2 实战分割基于传统方法的车道线检测</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-2-canny%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B"><span class="nav-number">1.2.1.</span> <span class="nav-text">3.2.2 canny边缘检测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-3-%E6%89%8B%E5%8A%A8%E5%88%86%E5%89%B2%E8%B7%AF%E9%9D%A2%E5%8C%BA%E5%9F%9F"><span class="nav-number">1.2.2.</span> <span class="nav-text">3.2.3 手动分割路面区域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-4-%E9%9C%8D%E5%A4%AB%E5%8F%98%E6%8D%A2%E5%BE%97%E5%88%B0%E8%BD%A6%E9%81%93%E7%BA%BF"><span class="nav-number">1.2.3.</span> <span class="nav-text">3.2.4 霍夫变换得到车道线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-5-%E8%8E%B7%E5%8F%96%E8%BD%A6%E9%81%93%E7%BA%BF%E5%B9%B6%E5%8F%A0%E5%8A%A0%E5%88%B0%E5%8E%9F%E5%A7%8B%E5%9B%BE%E5%83%8F%E4%B8%AD"><span class="nav-number">1.2.4.</span> <span class="nav-text">3.2.5 获取车道线并叠加到原始图像中</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-%E5%AE%9E%E6%88%98%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%9B%BE%E7%89%87%E5%88%86%E5%89%B2%E7%AE%97%E6%B3%95%E7%BB%BC%E8%BF%B0"><span class="nav-number">1.3.</span> <span class="nav-text">3.3 实战基于深度学习的图片分割算法综述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-1-%E4%BB%A3%E8%A1%A8%E7%AE%97%E6%B3%95%E8%AE%B2%E8%A7%A3"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.3.1 代表算法讲解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-2-%E5%9F%BA%E4%BA%8E%E5%9B%BE%E7%89%87%E5%88%86%E5%89%B2%E7%9A%84%E8%BD%A6%E9%81%93%E7%BA%BF%E6%A3%80%E6%B5%8B"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.3.2 基于图片分割的车道线检测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BA%90%E7%A0%81"><span class="nav-number">1.3.3.</span> <span class="nav-text">源码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E7%AE%97%E6%B3%95%E6%B1%87%E6%80%BB"><span class="nav-number">2.</span> <span class="nav-text">相关算法汇总</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

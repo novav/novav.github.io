@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Simon Shi的小站">
+<meta property="og:url" content="https://novav.github.io/page/17/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="AI,Machine Learning, Deep Learning">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://novav.github.io/page/17/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/04/25/Course/AutomaticDrive/AutoDriver_11/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/25/Course/AutomaticDrive/AutoDriver_11/" class="post-title-link" itemprop="url">无人驾驶（11）控制理论</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-04-25 12:10:20" itemprop="dateCreated datePublished" datetime="2022-04-25T12:10:20+00:00">2022-04-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Autopilot/" itemprop="url" rel="index"><span itemprop="name">Autopilot</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Autopilot/%E5%85%A5%E9%97%A8%E6%8F%90%E9%AB%98/" itemprop="url" rel="index"><span itemprop="name">入门提高</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/04/25/Course/AutomaticDrive/AutoDriver_12/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/25/Course/AutomaticDrive/AutoDriver_12/" class="post-title-link" itemprop="url">无人驾驶（12）基于强化学习的自动驾驶系统</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-04-25 12:10:20" itemprop="dateCreated datePublished" datetime="2022-04-25T12:10:20+00:00">2022-04-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Autopilot/" itemprop="url" rel="index"><span itemprop="name">Autopilot</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Autopilot/%E5%85%A5%E9%97%A8%E6%8F%90%E9%AB%98/" itemprop="url" rel="index"><span itemprop="name">入门提高</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_08/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/24/Course/AutomaticDrive/AutoDriver_08/" class="post-title-link" itemprop="url">无人驾驶（8）无人车定位系统(SLAM)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-04-24 22:09:08" itemprop="dateCreated datePublished" datetime="2022-04-24T22:09:08+00:00">2022-04-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Content</p>
+<p>[TOC]</p>
+<h2 id="定位技术简介"><a href="#定位技术简介" class="headerlink" title="定位技术简介"></a>定位技术简介</h2><p>定位+高精度地图:提供当前位置的静态环境感知( 车道线&#x2F;交通指示牌&#x2F;红绿灯&#x2F;柱子&#x2F;建筑物&#x2F;等)<br>定位+动态物体感知:将感知到的动态物体正确放入静态环境<br>定位获取位置姿态:用于路径规划&#x2F;决策</p>
+<p>定位技术分类</p>
+<ul>
+<li>场景：室内（房间，车库，仓库等）室外（）</li>
+<li>基于感知模式<ul>
+<li>outside-in: 接收的外界信号包含位置相关信息&#x2F; GNSS UWB WIFI Lidar Hdmap Camera-marker(室外街景门牌室内 maker)磁条加marker(规划都做了)扫地机本身贴marker加顶部相机 &#x2F; (适合测量方程)</li>
+<li>inside-out：通过自身观察和感受获取位置信息 &#x2F; IMU magnetometer SLAM VR中的墙面贴marker建图 &#x2F; (适合状态方程)</li>
+</ul>
+</li>
+<li>基于计算方法<ul>
+<li>基于信号的定位: GNSS UWB WIFI&#x2F;几何关系</li>
+<li>环境特征匹配: Lidar-HDmap Camera-marker Radar &#x2F; 需要建图，观测特征与数据库的特征匹配得到当前位姿态</li>
+<li>航迹推算:IMUodometry(轮子里程计&#x2F;视觉里程计<strong>SLAM</strong>)&#x2F;根据之前的位姿推断当前的位姿</li>
+</ul>
+</li>
+</ul>
+<p>定位系统的融合</p>
+<ul>
+<li>原理：不同源传感器信息通过滤波器(KF, EKF, UKF, PF等)进行融合</li>
+<li>典型融合方式：<ul>
+<li>IMU + GNSS :高频率累积误差+低频率高精度                                          无人机&#x2F;无人车&#x2F;导弹&#x2F;室外</li>
+<li>GNSS + Lidar-HDMAP&#x2F;Camera-marker：适合开放环境+适合密集特征环境                无人车&#x2F;室内外</li>
+<li>VIO(SLAM+IMU+GNSS)                                                                     无人机&#x2F;无人车&#x2F;室内外</li>
+<li>IMU + magnetometer 矫正角度（互补滤波&#x2F;MadgwickAHRS）      无人机&#x2F;无人车&#x2F;室内外</li>
+</ul>
+</li>
+</ul>
+<h2 id="单个定位技术"><a href="#单个定位技术" class="headerlink" title="单个定位技术"></a>单个定位技术</h2><h3 id="GNSS"><a href="#GNSS" class="headerlink" title="GNSS"></a>GNSS</h3><p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_08/image-20220425004624428.png" alt="image-20220425004624428"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_08/image-20220425004929917.png" alt="image-20220425004929917"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_08/image-20220425010537078.png" alt="image-20220425010537078"></p>
+<h3 id="IMU"><a href="#IMU" class="headerlink" title="IMU"></a>IMU</h3><p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_08/image-20220425010556563.png" alt="image-20220425010556563"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_08/image-20220425010826600.png" alt="image-20220425010826600"></p>
+<h3 id="Lidar-Camera"><a href="#Lidar-Camera" class="headerlink" title="Lidar &#x2F; Camera"></a>Lidar &#x2F; Camera</h3><p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_08/image-20220425010904835.png" alt="image-20220425010904835"></p>
+<h3 id="SLAM"><a href="#SLAM" class="headerlink" title="SLAM"></a>SLAM</h3><p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_08/image-20220425011236067.png" alt="image-20220425011236067"></p>
+<h2 id="定位融合技术"><a href="#定位融合技术" class="headerlink" title="定位融合技术"></a>定位融合技术</h2><p>定位系统的融合</p>
+<ul>
+<li>原理：不同源传感器信息通过滤波器(KF, EKF, UKF, PF等)进行融合</li>
+<li>典型融合方式：<ul>
+<li>IMU + GNSS :高频率累积误差+低频率高精度                                          无人机&#x2F;无人车&#x2F;导弹&#x2F;室外</li>
+<li>GNSS + Lidar-HDMAP&#x2F;Camera-marker：适合开放环境+适合密集特征环境                无人车&#x2F;室内外</li>
+<li>VIO(SLAM+IMU+GNSS)                                                                     无人机&#x2F;无人车&#x2F;室内外</li>
+<li>IMU + magnetometer 矫正角度（互补滤波&#x2F;MadgwickAHRS）      无人机&#x2F;无人车&#x2F;室内外</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_08/image-20220425143102500.png" alt="image-20220425143102500"></p>
+<h4 id="Histogram-Filter"><a href="#Histogram-Filter" class="headerlink" title="Histogram Filter"></a>Histogram Filter</h4><p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_08/image-20220425143146195.png" alt="image-20220425143146195"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_08/image-20220425143802166.png" alt="image-20220425143802166"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_08/image-20220425143848274.png" alt="image-20220425143848274"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_08/image-20220425144543227.png" alt="image-20220425144543227"></p>
+<h2 id="Apollo定位方案"><a href="#Apollo定位方案" class="headerlink" title="Apollo定位方案"></a>Apollo定位方案</h2><p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_08/image-20220425144503852.png" alt="image-20220425144503852"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_08/image-20220425144704787.png" alt="image-20220425144704787"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_08/image-20220425144932722.png" alt="image-20220425144932722"></p>
+<h3 id="开源项目"><a href="#开源项目" class="headerlink" title="开源项目"></a>开源项目</h3><p><a target="_blank" rel="noopener" href="https://gitee.com/paopaoslam/ORB-SLAM2">https://gitee.com/paopaoslam/ORB-SLAM2</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/04/24/Course/AutomaticDrive/AutoDriver_07/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/" class="post-title-link" itemprop="url">无人驾驶（7）高精地图V2X HD MAP</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-04-24 01:30:09" itemprop="dateCreated datePublished" datetime="2022-04-24T01:30:09+00:00">2022-04-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Autopilot/" itemprop="url" rel="index"><span itemprop="name">Autopilot</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Autopilot/%E5%85%A5%E9%97%A8%E6%8F%90%E9%AB%98/" itemprop="url" rel="index"><span itemprop="name">入门提高</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[TOC]</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/348124453">王博Kings：无人驾驶系列知识入门到提高7-高精度地图 V2X HD MAP</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45701501/article/details/114872926">CSDN self_drive car_学习笔记–第7课：HD MAP高精地图 &amp; V2X</a></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424013755047.png" alt="image-20220424013755047"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424013818593.png" alt="image-20220424013818593"></p>
+<h2 id="1-OverView"><a href="#1-OverView" class="headerlink" title="1. OverView"></a>1. OverView</h2><h3 id="HD-AMP"><a href="#HD-AMP" class="headerlink" title="HD AMP"></a>HD AMP</h3><ul>
+<li>元素信息</li>
+<li>点云信息</li>
+<li>HD地图 &#x3D; 元素地图 + 点云地图</li>
+</ul>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424013934991.png" alt="image-20220424013934991"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424014057581.png" alt="image-20220424014057581"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424014202348.png" alt="image-20220424014202348"></p>
+<h3 id="HD-Map-VS-Navigation-Map"><a href="#HD-Map-VS-Navigation-Map" class="headerlink" title="HD Map VS Navigation Map"></a>HD Map VS Navigation Map</h3><p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424014247389.png" alt="image-20220424014247389"></p>
+<h3 id="LOCALIZATION"><a href="#LOCALIZATION" class="headerlink" title="LOCALIZATION"></a>LOCALIZATION</h3><p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424014343327.png" alt="image-20220424014343327"></p>
+<h4 id="Perception-感知"><a href="#Perception-感知" class="headerlink" title="Perception 感知"></a>Perception 感知</h4><p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424014507358.png" alt="image-20220424014507358"></p>
+<h4 id="Planning"><a href="#Planning" class="headerlink" title="Planning"></a>Planning</h4><p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424014735268.png" alt="image-20220424014735268"></p>
+<h4 id="Apollo-HDMap"><a href="#Apollo-HDMap" class="headerlink" title="Apollo HDMap"></a>Apollo HDMap</h4><p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424014834961.png" alt="image-20220424014834961"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424014902996.png" alt="image-20220424014902996"></p>
+<h3 id="SLAM"><a href="#SLAM" class="headerlink" title="SLAM"></a>SLAM</h3><p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424014933531.png" alt="image-20220424014933531"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424015215062.png" alt="image-20220424015215062"></p>
+<h2 id="2-OPENDRIVE-开放协议"><a href="#2-OPENDRIVE-开放协议" class="headerlink" title="2. OPENDRIVE 开放协议"></a>2. OPENDRIVE 开放协议</h2><p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424015514699.png" alt="image-20220424015514699"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424015612168.png" alt="image-20220424015612168"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424015634216.png" alt="image-20220424015634216"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424015649077.png" alt="image-20220424015649077"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424015719101.png" alt="image-20220424015719101"></p>
+<p>制图过程和V2X</p>
+<h2 id="3-Cloud-Point-Mapping"><a href="#3-Cloud-Point-Mapping" class="headerlink" title="3. Cloud Point Mapping"></a>3. Cloud Point Mapping</h2><h2 id="3-1-Lidar-Image"><a href="#3-1-Lidar-Image" class="headerlink" title="3.1 Lidar &amp; Image"></a>3.1 Lidar &amp; Image</h2><p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424020049309.png" alt="image-20220424020049309"></p>
+<h3 id="3-2-点云匹配"><a href="#3-2-点云匹配" class="headerlink" title="3.2 点云匹配"></a>3.2 点云匹配</h3><p>1）依赖库说明<br>—-OpenCV3:目前最常用也是用途最广的图像处理依赖库，熟悉基本操作，比如cv::Mat、imread<br>—-Eigen:C++下最常用的矩阵运算库，类似于Matlab，对矩阵的描述和计算都非常方便，任何计算都是矩阵<br>—-PCL：Point Cloud Library，点云计算库，方便对点云进行操作和可视化</p>
+<p>2）安装方法：<br>—-Eigen库使用源码拷贝的方式或者apt-get安装<br>—-Opencv安装可以用ppi源来安装，也可以用源码编译安装<br>—-在Ubuntu下使用apt-get安装PCL<br><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/20210316224638465.png" alt="img"></p>
+<p>3）使用说明</p>
+<p>代码库：JointMapping<br>–cmake .<br>–make<br>–.&#x2F;joinMap<br>–pcl_viewer .&#x2F;map.pcd</p>
+<h3 id="3-3-基础概念"><a href="#3-3-基础概念" class="headerlink" title="3.3 基础概念"></a>3.3 基础概念</h3><ul>
+<li>相机内参</li>
+<li>相机外参</li>
+<li>像素坐标系</li>
+<li>刚体运动</li>
+<li>坐标系转换</li>
+<li>旋转坐标</li>
+<li>平移坐标</li>
+<li>齐次坐标系，变换矩阵</li>
+<li>欧拉角</li>
+<li>四元数</li>
+<li></li>
+</ul>
+<h3 id="3-4-相机模型"><a href="#3-4-相机模型" class="headerlink" title="3.4 相机模型"></a>3.4 相机模型</h3><p>1）相机成像的原理是针孔相机模型：</p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/20210316225542302.png" alt="在这里插入图片描述"></p>
+<p>—-P表示物理世界中的一个点；P’表示成像中模型中的位置；坐标分别为XYZ和X’Y’Z’<br>—-相似三角形关系：</p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/20210316225607152.png" alt="在这里插入图片描述"></p>
+<p>2）相机内参<br>将成像坐标P’切换到像素坐标系中，要进行两步转换：缩放和原点平移<br>假设P’的像素坐标为[u v]T（表示列矩阵），变换坐标就是：</p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/20210316225812231.png" alt="在这里插入图片描述"></p>
+<p>把这个形式切换到齐次坐标系：</p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/20210316225833502.png" alt="在这里插入图片描述"></p>
+<p>这里的K就是我们说的内参矩阵，也就是每个相机需要校准的内参</p>
+<p>3）相机外参<br>注意一下，这里的P是相机坐标系下的位置，而其世界坐标系下的坐标Pw,可以根据旋转平移来得到：<br>$$<br>ZP_{w} &#x3D; K(RP_w + t) &#x3D; KTP_{w}<br>$$</p>
+<p>—-这里有齐次变换到非齐次坐标的变换<br>—-因此，相机姿态R，T（t?是不是指的是上面公式的）又称为相机外参<br>—-外参会随着车辆移动而移动，因此我们高精地图构建过程中就是需要去估计这个外参，同时也是车辆移动轨迹</p>
+<p>4）数据结构<br>–PGM数据格式：Portable Gray Map,最简单的灰度图数据格式，这里我们拿来表示把点云压成平面的深度信息（0-65535），其中0表示没有检测到深度<br>–png:RGB信息的常用格式<br>–pose:5组7状态，txt文档，[x y z qx qy qz qw],平移向量和旋转四元数</p>
+<p>5）代码示例：<br>–根据相机内参计算RGB和点云的对应关系<br>–根据各图相机外参把点云和RGB融合进行图片融合，构成全局地图</p>
+<p>【源码是老师的，没有放到云端，下面就是部分截图，仅供参考】</p>
+<p>  todo</p>
+<p>通过该函数，可以获取得到点云图<br>【下面偷个小懒，截个图算了，哈哈哈】</p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1NzAxNTAx,size_16,color_FFFFFF,t_70.png" alt="在这里插入图片描述"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1NzAxNTAx,size_16,color_FFFFFF,t_70-16508174443408.png" alt="在这里插入图片描述"></p>
+<h3 id="OpenCV-练习"><a href="#OpenCV-练习" class="headerlink" title="OpenCV 练习"></a>OpenCV 练习</h3><p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1NzAxNTAx,size_16,color_FFFFFF,t_70-16508174443409.png" alt="在这里插入图片描述"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1NzAxNTAx,size_16,color_FFFFFF,t_70-165081744434010.png" alt="在这里插入图片描述"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/20210316230428824.png" alt="在这里插入图片描述"></p>
+<h2 id="4-V2X"><a href="#4-V2X" class="headerlink" title="4. V2X"></a>4. V2X</h2><p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424021237938.png" alt="image-20220424021237938"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424021247961.png" alt="image-20220424021247961"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424021307104.png" alt="image-20220424021307104"></p>
+<p><img src="/2022/04/24/Course/AutomaticDrive/AutoDriver_07/image-20220424021336931.png" alt="image-20220424021336931"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/04/21/Tools/Tools_UML/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/21/Tools/Tools_UML/" class="post-title-link" itemprop="url">UML</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-04-21 16:15:12" itemprop="dateCreated datePublished" datetime="2022-04-21T16:15:12+00:00">2022-04-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/UML/" itemprop="url" rel="index"><span itemprop="name">UML</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="符号含义"><a href="#符号含义" class="headerlink" title="符号含义"></a>符号含义</h3><table>
+<thead>
+<tr>
+<th></th>
+<th>符号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>关联</td>
+<td><img src="/2022/04/21/Tools/Tools_UML/uml_association_1.png"></td>
+<td>关联</td>
+</tr>
+<tr>
+<td></td>
+<td><img src="/2022/04/21/Tools/Tools_UML/uml_association_2.png"></td>
+<td>关联</td>
+</tr>
+<tr>
+<td></td>
+<td><img src="/2022/04/21/Tools/Tools_UML/uml_association_3.png"></td>
+<td>关联</td>
+</tr>
+<tr>
+<td>组合</td>
+<td><img src="/2022/04/21/Tools/Tools_UML/uml_composition_1.png"></td>
+<td>组合（整体与部分，部分不可以脱离整体存在）翅膀-鸟儿</td>
+</tr>
+<tr>
+<td></td>
+<td><img src="/2022/04/21/Tools/Tools_UML/uml_composition_2.png"></td>
+<td>组合</td>
+</tr>
+<tr>
+<td>聚合</td>
+<td><img src="/2022/04/21/Tools/Tools_UML/uml_aggregation_1.png"></td>
+<td>聚合（整体与部分，部分可以脱离整体存在）手机–耳机</td>
+</tr>
+<tr>
+<td></td>
+<td><img src="/2022/04/21/Tools/Tools_UML/uml_aggregation_2.png"></td>
+<td>聚合</td>
+</tr>
+<tr>
+<td>依赖</td>
+<td><img src="/2022/04/21/Tools/Tools_UML/uml_dependency.png"></td>
+<td>依赖</td>
+</tr>
+<tr>
+<td>继承</td>
+<td><img src="/2022/04/21/Tools/Tools_UML/uml_gerneralization.png"></td>
+<td>继承</td>
+</tr>
+<tr>
+<td>继承</td>
+<td><img src="/2022/04/21/Tools/Tools_UML/uml_implementation.png"></td>
+<td>继承</td>
+</tr>
+<tr>
+<td></td>
+<td><img src="/2022/04/21/Tools/Tools_UML/uml_inner_class.png"></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td><img src="/2022/04/21/Tools/Tools_UML/uml_relation_1.png"></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td><img src="/2022/04/21/Tools/Tools_UML/uml_relation_2.png"></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td><img src="/2022/04/21/Tools/Tools_UML/uml_terminate.png"></td>
+<td></td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/" class="post-title-link" itemprop="url">无人驾驶（5）动态环境感知与3D目标检测</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-04-18 23:09:30" itemprop="dateCreated datePublished" datetime="2022-04-18T23:09:30+00:00">2022-04-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Autopilot/" itemprop="url" rel="index"><span itemprop="name">Autopilot</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Autopilot/%E5%85%A5%E9%97%A8%E6%8F%90%E9%AB%98/" itemprop="url" rel="index"><span itemprop="name">入门提高</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[TOC]</p>
+<h2 id="5-1-基于激光雷达点云的检测算法-3D检测"><a href="#5-1-基于激光雷达点云的检测算法-3D检测" class="headerlink" title="5.1 基于激光雷达点云的检测算法 (3D检测)"></a>5.1 基于激光雷达点云的检测算法 (3D检测)</h2><ul>
+<li>激光雷达点云简介</li>
+<li>Pixel-Based</li>
+<li>Voxel-Based</li>
+<li>Tree-Based</li>
+<li>Point-Based</li>
+<li>实战基于点云的目标检测</li>
+</ul>
+<h3 id="0、激光雷达点云简介"><a href="#0、激光雷达点云简介" class="headerlink" title="0、激光雷达点云简介"></a>0、激光雷达点云简介</h3><h4 id="什么是激光雷电点云？"><a href="#什么是激光雷电点云？" class="headerlink" title="什么是激光雷电点云？"></a>什么是激光雷电点云？</h4><p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220419022248517.png" alt="image-20220419022248517"></p>
+<h4 id="常用数据集"><a href="#常用数据集" class="headerlink" title="常用数据集"></a>常用数据集</h4><p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220419022639349.png" alt="image-20220419022639349"></p>
+<h4 id="KITTI-实战kitti-LIDAR点云生成鸟瞰图BEV"><a href="#KITTI-实战kitti-LIDAR点云生成鸟瞰图BEV" class="headerlink" title="KITTI    实战kitti LIDAR点云生成鸟瞰图BEV"></a><strong>KITTI    实战kitti LIDAR点云生成鸟瞰图BEV</strong></h4><p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220419022502344.png" alt="image-20220419022502344"></p>
+<h4 id="点云基础-将点云投影到图片上"><a href="#点云基础-将点云投影到图片上" class="headerlink" title="点云基础 - 将点云投影到图片上"></a><strong>点云基础 - 将点云投影到图片上</strong></h4><ul>
+<li>BEV: 俯视图<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/w1995s/article/details/114841920">https://blog.csdn.net/w1995s/article/details/114841920</a></li>
+</ul>
+</li>
+<li>Lidar Point on Image</li>
+</ul>
+<p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220419023431055.png" alt="image-20220419023431055"></p>
+<h3 id="传统VS深度学习"><a href="#传统VS深度学习" class="headerlink" title="传统VS深度学习"></a>传统VS深度学习</h3><p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420010518793.png" alt="image-20220420010518793"></p>
+<h3 id="1、基于像素的点云算法（Pixel-Based）"><a href="#1、基于像素的点云算法（Pixel-Based）" class="headerlink" title="1、基于像素的点云算法（Pixel-Based）"></a>1、基于像素的点云算法（Pixel-Based）</h3><ul>
+<li>基本思想：<ul>
+<li>3D-2D, 三维点云在不同角度的相机投影（映射）</li>
+<li>再借助2D图像处理领域成熟的深度学习框架进行分析</li>
+</ul>
+</li>
+<li>典型算法<ul>
+<li>MVCNN, MV3D, AVOD</li>
+<li>Apollo2.0 SequeezeSeg</li>
+</ul>
+</li>
+</ul>
+<h4 id="MVCNN-分类"><a href="#MVCNN-分类" class="headerlink" title="MVCNN (分类)"></a>MVCNN (分类)</h4><p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420011222644.png" alt="image-20220420011222644"></p>
+<h4 id="MV3D"><a href="#MV3D" class="headerlink" title="MV3D"></a>MV3D</h4><p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420011317865.png" alt="image-20220420011317865"></p>
+<h4 id="AVOD"><a href="#AVOD" class="headerlink" title="AVOD"></a>AVOD</h4><p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420011702183.png" alt="image-20220420011702183"></p>
+<p>Feature Extractor</p>
+<p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420011900798.png" alt="image-20220420011900798"></p>
+<p>RPN</p>
+<p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420012034009.png" alt="image-20220420012034009"></p>
+<p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420012239576.png" alt="image-20220420012239576"></p>
+<h4 id="Apollo2-0"><a href="#Apollo2-0" class="headerlink" title="Apollo2.0"></a>Apollo2.0</h4><p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420012319233.png" alt="image-20220420012319233"></p>
+<h4 id="SqueezeSeg"><a href="#SqueezeSeg" class="headerlink" title="SqueezeSeg"></a>SqueezeSeg</h4><p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420012406257.png" alt="image-20220420012406257"> </p>
+<p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420012705453.png" alt="image-20220420012705453"></p>
+<p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420012811805.png" alt="image-20220420012811805"></p>
+<h4 id="代码实战：-tolearning"><a href="#代码实战：-tolearning" class="headerlink" title="代码实战：[tolearning]"></a>代码实战：[tolearning]</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/AdamShan/article/details/83544089?spm=1001.2014.3001.5501#commentBox">无人驾驶汽车系统入门（二十六）——基于深度学习的实时激光雷达点云目标检测及ROS实现</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/lemonxiaoxiao/article/details/114000238">Ubuntu16.04运行SqueezeSeg_Ros</a></p>
+<h3 id="2、基于体素的点云算法（Voxel-Based）"><a href="#2、基于体素的点云算法（Voxel-Based）" class="headerlink" title="2、基于体素的点云算法（Voxel-Based）"></a>2、基于体素的点云算法（Voxel-Based）</h3><p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420014344009.png" alt="image-20220420014344009"></p>
+<h4 id="VoxNet"><a href="#VoxNet" class="headerlink" title="VoxNet"></a>VoxNet</h4><h4 id="VoxelNet"><a href="#VoxelNet" class="headerlink" title="VoxelNet"></a>VoxelNet</h4><p>&#x3D; Voxel-Based + Point-Based (局部+全局)</p>
+<h3 id="3、基于树的点云算法（Tree-Based）"><a href="#3、基于树的点云算法（Tree-Based）" class="headerlink" title="3、基于树的点云算法（Tree-Based）"></a>3、基于树的点云算法（Tree-Based）</h3><p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420014527963.png" alt="image-20220420014527963"></p>
+<p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420014551923.png" alt="image-20220420014551923"></p>
+<h4 id="OctNet"><a href="#OctNet" class="headerlink" title="OctNet"></a>OctNet</h4><h4 id="O-CNN"><a href="#O-CNN" class="headerlink" title="O-CNN"></a>O-CNN</h4><h4 id="Escape-from-Cells"><a href="#Escape-from-Cells" class="headerlink" title="Escape from Cells"></a>Escape from Cells</h4><h3 id="4、基于点的点云算法（Point-Based）"><a href="#4、基于点的点云算法（Point-Based）" class="headerlink" title="4、基于点的点云算法（Point-Based）"></a>4、基于点的点云算法（Point-Based）</h3><ul>
+<li>对称函数、X变换</li>
+</ul>
+<p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420014643233.png" alt="image-20220420014643233"></p>
+<h4 id="PointNet-（CVPR2017）"><a href="#PointNet-（CVPR2017）" class="headerlink" title="PointNet （CVPR2017）"></a>PointNet （CVPR2017）</h4><p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420015103222.png" alt="image-20220420015103222"></p>
+<p>1x3的卷积，实现全连接层</p>
+<p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420015801982.png" alt="image-20220420015801982"></p>
+<p>transform_net </p>
+<p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420015935771.png" alt="image-20220420015935771"></p>
+<h4 id="PointNet-NIPS2017"><a href="#PointNet-NIPS2017" class="headerlink" title="PointNet++ (NIPS2017)"></a>PointNet++ (NIPS2017)</h4><p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420020202704.png" alt="image-20220420020202704"></p>
+<p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420020408548.png" alt="image-20220420020408548"></p>
+<h4 id="PointCNN"><a href="#PointCNN" class="headerlink" title="PointCNN"></a>PointCNN</h4><p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420020528296.png" alt="image-20220420020528296"></p>
+<p>核心：X卷积</p>
+<p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420020609633.png" alt="image-20220420020609633"></p>
+<h4 id="Frustum-Pointnet"><a href="#Frustum-Pointnet" class="headerlink" title="Frustum-Pointnet"></a>Frustum-Pointnet</h4><p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420020656186.png" alt="image-20220420020656186"></p>
+<h4 id="PointRCNN"><a href="#PointRCNN" class="headerlink" title="PointRCNN"></a>PointRCNN</h4><p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420020742927.png" alt="image-20220420020742927"></p>
+<h2 id="5-2-Voxelnet"><a href="#5-2-Voxelnet" class="headerlink" title="5.2 Voxelnet"></a>5.2 Voxelnet</h2><p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420020929747.png" alt="image-20220420020929747"></p>
+<p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420021250554.png" alt="image-20220420021250554"></p>
+<p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420021404060.png" alt="image-20220420021404060"></p>
+<p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420021517598.png" alt="image-20220420021517598"></p>
+<p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420021532404.png" alt="image-20220420021532404"></p>
+<h3 id="代码结构"><a href="#代码结构" class="headerlink" title="代码结构"></a>代码结构</h3><p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420021615860.png" alt="image-20220420021615860"></p>
+<p>效果：</p>
+<p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420021151045.png" alt="image-20220420021151045"></p>
+<h2 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/346949099">zhihu 3D目标检测方法总结</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/551861727">系列零：自动驾驶相关数据集调研总结【附下载地址】(2023更新)</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/569189196?utm_id=0"># 系列一：3D目标检测框架综述(OpenPCDet|mmdetection3d|Det3D|Paddle3D)</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/591349104"># 系列二：3D Detection目标检测系列论文总结（2023年更）</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/591349481"># 系列三：3D Segmentation点云语义分割系列论文总结（2023年更）</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/04/15/Sub_Language/DL_Platform/ONNX/OnnxCplus/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/15/Sub_Language/DL_Platform/ONNX/OnnxCplus/" class="post-title-link" itemprop="url">Onnx Model inference by C++</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-04-15 11:19:08" itemprop="dateCreated datePublished" datetime="2022-04-15T11:19:08+00:00">2022-04-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/deploy/" itemprop="url" rel="index"><span itemprop="name">deploy</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/deploy/Onnx/" itemprop="url" rel="index"><span itemprop="name">Onnx</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[TOC]</p>
+<h2 id="0-onnx模型准备以及测试图"><a href="#0-onnx模型准备以及测试图" class="headerlink" title="0. onnx模型准备以及测试图"></a>0. onnx模型准备以及测试图</h2><h2 id="1-c-使用onnxruntime进行推理"><a href="#1-c-使用onnxruntime进行推理" class="headerlink" title="1. c++使用onnxruntime进行推理"></a>1. c++使用onnxruntime进行推理</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;opencv2/core.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;opencv2/imgcodecs.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;opencv2/opencv.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;opencv2/highgui.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;opencv2/core/core.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;opencv2/imgproc/imgproc_c.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;opencv2/dnn.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span>  </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;onnxruntime_cxx_api.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;assert.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fstream&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;     <span class="comment">//当定义这一行后，cv::imread可以直接写成imread</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> Ort;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv::dnn;</span><br><span class="line"></span><br><span class="line">String labels_txt_file = <span class="string">&quot;F:\\Pycharm\\PyCharm_Study\\Others\\c++_learning\\C++_Master\\Onnx\\classification\\classification_classes_ILSVRC2012.txt&quot;</span>;</span><br><span class="line"><span class="function">vector&lt;String&gt; <span class="title">readClassNames</span><span class="params">()</span></span>;                  <span class="comment">// string对象作为vector对象 </span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 图像处理  标准化处理</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">PreProcess</span><span class="params">(<span class="type">const</span> Mat&amp; image, Mat&amp; image_blob)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Mat input;</span><br><span class="line">    image.<span class="built_in">copyTo</span>(input);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//数据处理 标准化</span></span><br><span class="line">    std::vector&lt;Mat&gt; channels, channel_p;</span><br><span class="line">    <span class="built_in">split</span>(input, channels);</span><br><span class="line">    Mat R, G, B;</span><br><span class="line">    B = channels.<span class="built_in">at</span>(<span class="number">0</span>);</span><br><span class="line">    G = channels.<span class="built_in">at</span>(<span class="number">1</span>);</span><br><span class="line">    R = channels.<span class="built_in">at</span>(<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">    B = (B / <span class="number">255.</span> - <span class="number">0.406</span>) / <span class="number">0.225</span>;</span><br><span class="line">    G = (G / <span class="number">255.</span> - <span class="number">0.456</span>) / <span class="number">0.224</span>;</span><br><span class="line">    R = (R / <span class="number">255.</span> - <span class="number">0.485</span>) / <span class="number">0.229</span>;</span><br><span class="line"></span><br><span class="line">    channel_p.<span class="built_in">push_back</span>(R);</span><br><span class="line">    channel_p.<span class="built_in">push_back</span>(G);</span><br><span class="line">    channel_p.<span class="built_in">push_back</span>(B);</span><br><span class="line"></span><br><span class="line">    Mat outt;</span><br><span class="line">    <span class="built_in">merge</span>(channel_p, outt);</span><br><span class="line">    image_blob = outt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 读取txt文件</span></span><br><span class="line"><span class="function">std::vector&lt;String&gt; <span class="title">readClassNames</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    std::vector&lt;String&gt; classNames;</span><br><span class="line"></span><br><span class="line">    <span class="function">std::ifstream <span class="title">fp</span><span class="params">(labels_txt_file)</span></span>;</span><br><span class="line">    <span class="keyword">if</span> (!fp.<span class="built_in">is_open</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;could not open file...\n&quot;</span>);</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    std::string name;</span><br><span class="line">    <span class="keyword">while</span> (!fp.<span class="built_in">eof</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        std::<span class="built_in">getline</span>(fp, name);</span><br><span class="line">        <span class="keyword">if</span> (name.<span class="built_in">length</span>())</span><br><span class="line">            classNames.<span class="built_in">push_back</span>(name);</span><br><span class="line">    &#125;</span><br><span class="line">    fp.<span class="built_in">close</span>();</span><br><span class="line">    <span class="keyword">return</span> classNames;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span>         <span class="comment">// 返回值为整型带参的main函数. 函数体内使用或不使用argc和argv都可</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//environment （设置为VERBOSE（ORT_LOGGING_LEVEL_VERBOSE）时，方便控制台输出时看到是使用了cpu还是gpu执行）</span></span><br><span class="line">    <span class="function">Ort::Env <span class="title">env</span><span class="params">(ORT_LOGGING_LEVEL_WARNING, <span class="string">&quot;OnnxModel&quot;</span>)</span></span>;</span><br><span class="line">    Ort::SessionOptions session_options;</span><br><span class="line">    <span class="comment">// 使用1个线程执行op,若想提升速度，增加线程数</span></span><br><span class="line">    session_options.<span class="built_in">SetIntraOpNumThreads</span>(<span class="number">1</span>);</span><br><span class="line">    CUDA加速开启(由于onnxruntime的版本太高，无cuda_provider_factory.h的头文件，加速可以使用onnxruntime V<span class="number">1.8</span>的版本)</span><br><span class="line">    <span class="comment">//OrtSessionOptionsAppendExecutionProvider_CUDA(session_options, 0);</span></span><br><span class="line">    <span class="comment">// ORT_ENABLE_ALL: 启用所有可能的优化</span></span><br><span class="line">    session_options.<span class="built_in">SetGraphOptimizationLevel</span>(GraphOptimizationLevel::ORT_ENABLE_ALL);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//load  model and creat session</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> _WIN32</span></span><br><span class="line">    <span class="type">const</span> <span class="type">wchar_t</span>* model_path = <span class="string">L&quot;F:\\Pycharm\\PyCharm_Study\\Others\\c++_learning\\C++_Master\\Onnx\\classification\\vgg16.onnx&quot;</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line">    <span class="type">const</span> <span class="type">char</span>* model_path = <span class="string">&quot;F:\\Pycharm\\PyCharm_Study\\Others\\c++_learning\\C++_Master\\Onnx\\classification\\vgg16.onnx&quot;</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Using Onnxruntime C++ API\n&quot;</span>);</span><br><span class="line">    <span class="function">Ort::Session <span class="title">session</span><span class="params">(env, model_path, session_options)</span></span>;</span><br><span class="line">    <span class="comment">// print model input layer (node names, types, shape etc.)</span></span><br><span class="line">    Ort::AllocatorWithDefaultOptions allocator;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//model info</span></span><br><span class="line">    <span class="comment">// 获得模型又多少个输入和输出，一般是指对应网络层的数目</span></span><br><span class="line">    <span class="comment">// 一般输入只有图像的话input_nodes为1</span></span><br><span class="line">    <span class="type">size_t</span> num_input_nodes = session.<span class="built_in">GetInputCount</span>();</span><br><span class="line">    <span class="comment">// 如果是多输出网络，就会是对应输出的数目</span></span><br><span class="line">    <span class="type">size_t</span> num_output_nodes = session.<span class="built_in">GetOutputCount</span>();</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Number of inputs = %zu\n&quot;</span>, num_input_nodes);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Number of output = %zu\n&quot;</span>, num_output_nodes);</span><br><span class="line">    <span class="comment">//获取输入name</span></span><br><span class="line">    <span class="type">const</span> <span class="type">char</span>* input_name = session.<span class="built_in">GetInputName</span>(<span class="number">0</span>, allocator);               </span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;input_name:&quot;</span> &lt;&lt; input_name &lt;&lt; std::endl;</span><br><span class="line">    <span class="comment">//获取输出name</span></span><br><span class="line">    <span class="type">const</span> <span class="type">char</span>* output_name = session.<span class="built_in">GetOutputName</span>(<span class="number">0</span>, allocator);</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;output_name: &quot;</span> &lt;&lt; output_name &lt;&lt; std::endl;</span><br><span class="line">    <span class="comment">// 自动获取维度数量</span></span><br><span class="line">    <span class="keyword">auto</span> input_dims = session.<span class="built_in">GetInputTypeInfo</span>(<span class="number">0</span>).<span class="built_in">GetTensorTypeAndShapeInfo</span>().<span class="built_in">GetShape</span>();</span><br><span class="line">    <span class="keyword">auto</span> output_dims = session.<span class="built_in">GetOutputTypeInfo</span>(<span class="number">0</span>).<span class="built_in">GetTensorTypeAndShapeInfo</span>().<span class="built_in">GetShape</span>();</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;input_dims:&quot;</span> &lt;&lt; input_dims[<span class="number">0</span>] &lt;&lt; std::endl;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;output_dims:&quot;</span> &lt;&lt; output_dims[<span class="number">0</span>] &lt;&lt; std::endl;    </span><br><span class="line">    std::vector&lt;<span class="type">const</span> <span class="type">char</span>*&gt; input_names&#123; input_name &#125;;</span><br><span class="line">    std::vector&lt;<span class="type">const</span> <span class="type">char</span>*&gt; output_names = &#123; output_name &#125;;</span><br><span class="line">    std::vector&lt;<span class="type">const</span> <span class="type">char</span>*&gt; input_node_names = &#123; <span class="string">&quot;input.1&quot;</span> &#125;;</span><br><span class="line">    std::vector&lt;<span class="type">const</span> <span class="type">char</span>*&gt; output_node_names = &#123; <span class="string">&quot;70&quot;</span>&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//加载图片</span></span><br><span class="line">    Mat img = <span class="built_in">imread</span>(<span class="string">&quot;F:\\Pycharm\\PyCharm_Study\\Others\\c++_learning\\C++_Master\\Onnx\\classification\\dog.jpg&quot;</span>);</span><br><span class="line">    Mat det1, det2;</span><br><span class="line">    <span class="built_in">resize</span>(img, det1, <span class="built_in">Size</span>(<span class="number">256</span>, <span class="number">256</span>), INTER_AREA);</span><br><span class="line">    det<span class="number">1.</span><span class="built_in">convertTo</span>(det1, CV_32FC3);</span><br><span class="line">    <span class="built_in">PreProcess</span>(det1, det2);         <span class="comment">//标准化处理</span></span><br><span class="line">    Mat blob = dnn::<span class="built_in">blobFromImage</span>(det2, <span class="number">1.</span>, <span class="built_in">Size</span>(<span class="number">224</span>, <span class="number">224</span>), <span class="built_in">Scalar</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>), <span class="literal">false</span>, <span class="literal">true</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Load success!\n&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="type">clock_t</span> startTime, endTime;</span><br><span class="line">    <span class="comment">//创建输入tensor</span></span><br><span class="line">    <span class="keyword">auto</span> memory_info = Ort::MemoryInfo::<span class="built_in">CreateCpu</span>(OrtAllocatorType::OrtArenaAllocator, OrtMemType::OrtMemTypeDefault);</span><br><span class="line">    std::vector&lt;Ort::Value&gt; input_tensors;</span><br><span class="line">    input_tensors.<span class="built_in">emplace_back</span>(Ort::Value::<span class="built_in">CreateTensor</span>&lt;<span class="type">float</span>&gt;(memory_info, blob.<span class="built_in">ptr</span>&lt;<span class="type">float</span>&gt;(), blob.<span class="built_in">total</span>(), input_dims.<span class="built_in">data</span>(), input_dims.<span class="built_in">size</span>()));</span><br><span class="line">    <span class="comment">/*cout &lt;&lt; int(input_dims.size()) &lt;&lt; endl;*/</span></span><br><span class="line">    startTime = <span class="built_in">clock</span>();</span><br><span class="line"></span><br><span class="line">    推理(score model &amp; input tensor, get back output tensor)</span><br><span class="line">    <span class="keyword">auto</span> output_tensors = session.<span class="built_in">Run</span>(Ort::RunOptions&#123; <span class="literal">nullptr</span> &#125;, input_node_names.<span class="built_in">data</span>(), input_tensors.<span class="built_in">data</span>(), input_names.<span class="built_in">size</span>(), output_node_names.<span class="built_in">data</span>(), output_node_names.<span class="built_in">size</span>());</span><br><span class="line">    endTime = <span class="built_in">clock</span>();</span><br><span class="line">    <span class="built_in">assert</span>(output_tensors.<span class="built_in">size</span>() == <span class="number">1</span> &amp;&amp; output_tensors.<span class="built_in">front</span>().<span class="built_in">IsTensor</span>());</span><br><span class="line">    <span class="comment">//除了第一个节点外，其他参数与原网络对应不上程序就会无法执行</span></span><br><span class="line">    <span class="comment">//第二个参数代表输入节点的名称集合</span></span><br><span class="line">    <span class="comment">//第四个参数1代表输入层的数目</span></span><br><span class="line">    <span class="comment">//第五个参数代表输出节点的名称集合</span></span><br><span class="line">    <span class="comment">//最后一个参数代表输出节点的数目</span></span><br><span class="line">      获取输出(Get pointer to output tensor <span class="type">float</span> values)</span><br><span class="line">    <span class="type">float</span>* floatarr = output_tensors[<span class="number">0</span>].<span class="built_in">GetTensorMutableData</span>&lt;<span class="type">float</span>&gt;();     <span class="comment">// 也可以使用output_tensors.front(); 获取list中的第一个元素变量  list.pop_front(); 删除list中的第一个位置的元素</span></span><br><span class="line">    <span class="comment">// 得到最可能分类输出</span></span><br><span class="line">    Mat newarr = <span class="built_in">Mat_</span>&lt;<span class="type">double</span>&gt;(<span class="number">1</span>, <span class="number">1000</span>); <span class="comment">//定义一个1*1000的矩阵</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; newarr.rows; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; newarr.cols; j++) <span class="comment">//矩阵列数循环</span></span><br><span class="line">        &#123;</span><br><span class="line">            newarr.<span class="built_in">at</span>&lt;<span class="type">double</span>&gt;(i, j) = floatarr[j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/*cout &lt;&lt; newarr.size() &lt;&lt; endl;*/</span></span><br><span class="line"></span><br><span class="line">    vector&lt;String&gt; labels = <span class="built_in">readClassNames</span>();</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> n = <span class="number">0</span>; n &lt; newarr.rows; n++) &#123;</span><br><span class="line">        Point classNumber;</span><br><span class="line">        <span class="type">double</span> classProb;</span><br><span class="line">        Mat probMat = <span class="built_in">newarr</span>(<span class="built_in">Rect</span>(<span class="number">0</span>, n, <span class="number">1000</span>, <span class="number">1</span>)).<span class="built_in">clone</span>();</span><br><span class="line">        Mat result = probMat.<span class="built_in">reshape</span>(<span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">        <span class="built_in">minMaxLoc</span>(result, <span class="literal">NULL</span>, &amp;classProb, <span class="literal">NULL</span>, &amp;classNumber);</span><br><span class="line">        <span class="type">int</span> classidx = classNumber.x;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;\n current image classification : %s, possible : %.2f\n&quot;</span>, labels.<span class="built_in">at</span>(classidx).<span class="built_in">c_str</span>(), classProb);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 显示文本</span></span><br><span class="line">        <span class="built_in">putText</span>(img, labels.<span class="built_in">at</span>(classidx), <span class="built_in">Point</span>(<span class="number">10</span>, <span class="number">20</span>), FONT_HERSHEY_SIMPLEX, <span class="number">0.6</span>, <span class="built_in">Scalar</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>), <span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">        <span class="built_in">imshow</span>(<span class="string">&quot;Image Classification&quot;</span>, img);</span><br><span class="line">        <span class="built_in">waitKey</span>(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">     计算运行时间</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;The run time is:&quot;</span> &lt;&lt; (<span class="type">double</span>)(endTime - startTime) / CLOCKS_PER_SEC &lt;&lt; <span class="string">&quot;s&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Done!\n&quot;</span>);</span><br><span class="line">    <span class="built_in">system</span>(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://onnxruntime.ai/docs/install/">Install ONNX Runtime (ORT)</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44747572/article/details/121467657">C++使用onnxruntime&#x2F;opencv对onnx模型进行推理(附代码)</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42995327/article/details/121051991">在C++上利用onnxruntime （CUDA）和 opencv 部署模型onnx</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/04/12/Course/AutomaticDrive/AutoDriver_06/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/" class="post-title-link" itemprop="url">无人驾驶（6）动态环境感知与跟踪</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-04-12 19:03:30" itemprop="dateCreated datePublished" datetime="2022-04-12T19:03:30+00:00">2022-04-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Autopilot/" itemprop="url" rel="index"><span itemprop="name">Autopilot</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Autopilot/%E5%85%A5%E9%97%A8%E6%8F%90%E9%AB%98/" itemprop="url" rel="index"><span itemprop="name">入门提高</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[TOC]</p>
+<p>单目跟踪算法：</p>
+<ul>
+<li>产生式</li>
+<li>鉴别式</li>
+<li>基于相关滤波</li>
+<li>基于深度学习</li>
+</ul>
+<h2 id="6-1-什么是跟踪？"><a href="#6-1-什么是跟踪？" class="headerlink" title="6.1 什么是跟踪？"></a>6.1 什么是跟踪？</h2><p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422012437176.png" alt="image-20220422012437176"></p>
+<p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422012626480.png" alt="image-20220422012626480"></p>
+<h2 id="6-2-单目标跟踪"><a href="#6-2-单目标跟踪" class="headerlink" title="6.2 单目标跟踪"></a>6.2 单目标跟踪</h2><p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422012648811.png" alt="image-20220422012648811"></p>
+<h3 id="6-2-1-单目标跟踪-产生式模型"><a href="#6-2-1-单目标跟踪-产生式模型" class="headerlink" title="6.2.1 单目标跟踪-产生式模型"></a>6.2.1 单目标跟踪-产生式模型</h3><p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422012909705.png" alt="image-20220422012909705"></p>
+<h4 id="Kalman-Filter"><a href="#Kalman-Filter" class="headerlink" title="Kalman Filter"></a>Kalman Filter</h4><p>code: <a target="_blank" rel="noopener" href="https://github.com/andylei77/kalman_particle_demo">https://github.com/andylei77/kalman_particle_demo</a></p>
+<p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422013049774.png" alt="image-20220422013049774"></p>
+<p>N(均值，协方差)</p>
+<p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422013637320.png" alt="image-20220422013637320"></p>
+<p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422013857445.png" alt="image-20220422013857445"></p>
+<p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422014224130.png" alt="image-20220422014224130"></p>
+<p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422014349327.png" alt="image-20220422014349327"></p>
+<h4 id="Particle-Filter"><a href="#Particle-Filter" class="headerlink" title="Particle Filter"></a>Particle Filter</h4><p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422014550639.png" alt="image-20220422014550639"></p>
+<h3 id="6-2-2-单目标跟踪-鉴别式模型"><a href="#6-2-2-单目标跟踪-鉴别式模型" class="headerlink" title="6.2.2 单目标跟踪-鉴别式模型"></a>6.2.2 单目标跟踪-鉴别式模型</h3><p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422014625230.png" alt="image-20220422014625230"></p>
+<h4 id="Boosting"><a href="#Boosting" class="headerlink" title="Boosting"></a>Boosting</h4><h4 id="MIL"><a href="#MIL" class="headerlink" title="MIL"></a>MIL</h4><h4 id="MEDIANFLOW"><a href="#MEDIANFLOW" class="headerlink" title="MEDIANFLOW"></a>MEDIANFLOW</h4><p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422014658024.png" alt="image-20220422014658024"></p>
+<h4 id="TLD"><a href="#TLD" class="headerlink" title="TLD"></a>TLD</h4><ul>
+<li>跟踪器： 光流</li>
+<li>检测器：</li>
+</ul>
+<p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422014742417.png" alt="image-20220422014742417"></p>
+<p>OPENCV API</p>
+<p>code: <a target="_blank" rel="noopener" href="https://github.com/andylei77/learnopencv/tree/master/tracking">https://github.com/andylei77/learnopencv/tree/master/tracking</a></p>
+<h3 id="6-2-3-单目标跟踪-基于相关滤波算法"><a href="#6-2-3-单目标跟踪-基于相关滤波算法" class="headerlink" title="6.2.3 单目标跟踪-基于相关滤波算法"></a>6.2.3 单目标跟踪-基于相关滤波算法</h3><p>- </p>
+<ul>
+<li>MOSSE 评价相似性的滤波算法</li>
+</ul>
+<h4 id="CSK"><a href="#CSK" class="headerlink" title="CSK"></a>CSK</h4><ul>
+<li>CSK方法<ul>
+<li>密集采样，通过循环矩阵来实现</li>
+<li>分类器的学习通过快速傅里叶变换成频域内的计算，不受SVM或Boost等学习方法的限制(什么限制？？)。无论线性分类还是核分类，整个学习过程十分高效。</li>
+</ul>
+</li>
+<li>实时性好</li>
+</ul>
+<p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422014833974.png" alt="image-20220422014833974"></p>
+<h4 id="MOSSE"><a href="#MOSSE" class="headerlink" title="MOSSE"></a>MOSSE</h4><p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422014901835.png" alt="image-20220422014901835"></p>
+<h4 id="KCF"><a href="#KCF" class="headerlink" title="KCF"></a>KCF</h4><ul>
+<li>循环矩阵</li>
+<li>循环矩阵傅里叶对角化性质–简化计算加速分类器的学习过程</li>
+<li>基于HOG特征的分类器（DeepSRDCF：深度学习提取的特征+KCF方法）</li>
+</ul>
+<p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422014917316.png" alt="image-20220422014917316"></p>
+<h4 id="GOTURN-（深度学习）"><a href="#GOTURN-（深度学习）" class="headerlink" title="GOTURN （深度学习）"></a>GOTURN （深度学习）</h4><p><a target="_blank" rel="noopener" href="https://www.learnopencv.com/goturn-deep-learning-based-object-tracking/">https://www.learnopencv.com/goturn-deep-learning-based-object-tracking/</a></p>
+<p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422014935909.png" alt="image-20220422014935909"></p>
+<h3 id="算法综述"><a href="#算法综述" class="headerlink" title="算法综述"></a>算法综述</h3><p>数据集；深度学习CNN；CF-相关滤波；其它的</p>
+<p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422014947881.png" alt="image-20220422014947881"></p>
+<h2 id="6-3-多目标跟踪"><a href="#6-3-多目标跟踪" class="headerlink" title="6.3 多目标跟踪"></a>6.3 多目标跟踪</h2><p>分类方法</p>
+<ul>
+<li>按照轨迹形成的时间顺序<ul>
+<li>在线</li>
+<li>离线</li>
+</ul>
+</li>
+<li>按照算法机制<ul>
+<li>预测校正 &#x2F; 关联方式</li>
+</ul>
+</li>
+<li>按照算法的数学表示<ul>
+<li>概率统计最大化 &#x2F; 确定性推导</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422015001612.png" alt="image-20220422015001612"></p>
+<h4 id="Hungarian-Algorithm"><a href="#Hungarian-Algorithm" class="headerlink" title="Hungarian Algorithm"></a>Hungarian Algorithm</h4><p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422015046313.png" alt="image-20220422015046313"></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/andylei77/HungarianAlgorithm">https://github.com/andylei77/HungarianAlgorithm</a></p>
+<p><img src="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/image-20220422015113333.png" alt="image-20220422015113333"></p>
+<h4 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h4><p>发送端：<a target="_blank" rel="noopener" href="https://github.com/andylei77/object-detector/tree/ROS">https://github.com/andylei77/object-detector/tree/ROS</a></p>
+<ul>
+<li>基于二分图匹配的多目标跟踪</li>
+</ul>
+<p>接受端：<a target="_blank" rel="noopener" href="https://github.com/andylei77/object-tracker/tree/master/tracker">https://github.com/andylei77/object-tracker/tree/master/tracker</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/04/12/Sub_Language/DL_Platform/TVM/TVM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/12/Sub_Language/DL_Platform/TVM/TVM/" class="post-title-link" itemprop="url">深度学习编译器之TVM</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-04-12 12:09:29" itemprop="dateCreated datePublished" datetime="2022-04-12T12:09:29+00:00">2022-04-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/deploy/" itemprop="url" rel="index"><span itemprop="name">deploy</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/deploy/TVM/" itemprop="url" rel="index"><span itemprop="name">TVM</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>TVM</p>
+<p>[TOC]</p>
+<h2 id="训练框架"><a href="#训练框架" class="headerlink" title="训练框架"></a>训练框架</h2><p>从训练框架角度来看，Google的TensorFlow和FaceBook的Pytorch是全球主流的深度学习框架，另外亚马逊的MxNet，百度的Paddle，旷视的MegEngine，华为的Mindspore以及一流科技的OneFlow也逐渐在被更多人接受和使用。这么多训练框架，我们究竟应该选择哪个？如果追求易用性，可能你会选择Pytorch，如果追求项目部署落地，可能你会选择TensorFlow，如果追求分布式训练最快可能你会体验OneFlow。</p>
+<p>亚马逊的MxNet，</p>
+<p>百度的Paddle，</p>
+<p>旷视的MegEngine，</p>
+<p>华为的Mindspore</p>
+<p>ModelScope：阿里达摩院联手中国计算机学会（CCF）</p>
+<h2 id="推理框架"><a href="#推理框架" class="headerlink" title="推理框架"></a>推理框架</h2><p>前向推理框架，例如在Intel的CPU&#x2F;GPU上就使用OpenVINO，在Arm的CPU&#x2F;GPU上使用NCNN&#x2F;MNN等，在Nvidia GPU上使用TensorRT。</p>
+<p>科学家为编译器抽象出了编译器前端，编译器中端，编译器后端等概念，并引入IR (Intermediate Representation)的概率。解释如下：</p>
+<ul>
+<li>编译器前端：接收C&#x2F;C++&#x2F;Java等不同语言，进行代码生成，吐出IR</li>
+<li>编译器中端：接收IR，进行不同编译器后端可以共享的优化，如常量替换，死代码消除，循环优化等，吐出优化后的IR</li>
+<li>编译器后端：接收优化后的IR，进行不同硬件的平台相关优化与硬件指令生成，吐出目标文件以LLVM编译器为例子，借用蓝色（知乎ID）大佬的图：</li>
+</ul>
+<p><img src="/2022/04/12/Sub_Language/DL_Platform/TVM/TVM/54fbb2fb43166d22a12b5dc9c69c44fe9152d25c.png" alt="img"></p>
+<p>深度学习的IR其实就是计算图，所以可以直接叫作<strong>Graph IR</strong></p>
+<p><img src="/2022/04/12/Sub_Language/DL_Platform/TVM/TVM/9e3df8dcd100baa115126dbec7aff41bc9fc2ec5.png" alt="img"></p>
+<p>基于上面深度学习编译器的思想，陈天奇领衔的TVM横空出世。TVM就是一个基于编译优化的深度学习推理框架（暂且说是推理吧，训练功能似乎也开始探索和接入了），我们来看一下TVM的架构图。</p>
+<p><img src="/2022/04/12/Sub_Language/DL_Platform/TVM/TVM/7c1ed21b0ef41bd5e9aa1929d165ccc23bdb3dbe.png" alt="img"></p>
+<p>TVM架构图从这个图中我们可以看到，TVM架构的核心部分就是<strong>NNVM编译器</strong>（注意一下最新的TVM已经将NNVM升级为了Realy，所以后面提到的Relay也可以看作是NNVM）。NNVM编译器支持直接接收深度学习框架的模型，如TensorFlow&#x2F;Pytorch&#x2F;Caffe&#x2F;MxNet等，同时也支持一些模型的中间格式如ONNX、CoreML。这些模型被NNVM直接编译成Graph IR，然后这些Graph IR被再次优化，吐出优化后的Graph IR，最后对于不同的后端这些Graph IR都会被编译为特定后端可以识别的机器码完成模型推理。比如对于CPU，NNVM就吐出LLVM可以识别的IR，再通过LLVM编译器编译为机器码到CPU上执行。</p>
+<h4 id="0x04-样例展示"><a href="#0x04-样例展示" class="headerlink" title="0x04. 样例展示"></a>0x04. 样例展示</h4><p>在展示样例前说一下我的环境配置，pytorch1.7.0 &amp;&amp; TVM 0.8.dev0</p>
+<p>这里以Pytorch模型为例，展示一下TVM是如何将Pytorch模型通过Relay（可以理解为NNVM的升级版，）构建TVM中的计算图并进行图优化，最后再通过LLVM编译到Intel CPU上进行执行。最后我们还对比了一下基于TVM优化后的Relay Graph推理速度和直接使用Pytorch模型进行推理的速度。这里是以torchvision中的ResNet18为例子，结果如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Relay top-1 id: 282, classname: tiger cat       Torch top-1 id: 282, classname: tiger cat</span><br><span class="line">Relay time: 1.1846002000000027 seconds            Torch time: 2.4181047000000007 seconds</span><br></pre></td></tr></table></figure>
+
+<p>可以看到在预测结果完全一致的情况下，TVM能带来2倍左右的加速。这里简单介绍一下代码的流程。这个代码可以在这里(<a target="_blank" rel="noopener" href="https://github.com/BBuf/tvm_learn)%E6%89%BE%E5%88%B0%E3%80%82">https://github.com/BBuf/tvm_learn)找到。</a></p>
+<h5 id="0x04-1-导入TVM和Pytorch并加载ResNet18模型"><a href="#0x04-1-导入TVM和Pytorch并加载ResNet18模型" class="headerlink" title="0x04.1 导入TVM和Pytorch并加载ResNet18模型"></a>0x04.1 导入TVM和Pytorch并加载ResNet18模型</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> tvm</span><br><span class="line"><span class="keyword">from</span> tvm <span class="keyword">import</span> relay</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> tvm.contrib.download <span class="keyword">import</span> download_testdata</span><br><span class="line"><span class="comment"># PyTorch imports</span></span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torchvision</span><br><span class="line"><span class="comment">################################ Load a pretrained PyTorch model</span></span><br><span class="line"><span class="comment"># -------------------------------</span></span><br><span class="line">model_name = <span class="string">&quot;resnet18&quot;</span></span><br><span class="line">model = <span class="built_in">getattr</span>(torchvision.models, model_name)(pretrained=<span class="literal">True</span>)</span><br><span class="line">model = model.<span class="built_in">eval</span>()</span><br><span class="line"><span class="comment"># We grab the TorchScripted model via tracing</span></span><br><span class="line">input_shape = [<span class="number">1</span>, <span class="number">3</span>, <span class="number">224</span>, <span class="number">224</span>]</span><br><span class="line">input_data = torch.randn(input_shape)</span><br><span class="line">scripted_model = torch.jit.trace(model, input_data).<span class="built_in">eval</span>() </span><br><span class="line"></span><br><span class="line">需要注意的是Relay在解析Pytorch模型的时候是解析TorchScript格式的模型，所以这里使用torch.jit.trace跑一遍原始的Pytorch模型并导出TorchScript模型。</span><br></pre></td></tr></table></figure>
+
+<h5 id="0x04-2-载入测试图片"><a href="#0x04-2-载入测试图片" class="headerlink" title="0x04.2 载入测试图片"></a>0x04.2 载入测试图片</h5><p>加载一张测试图片，并执行一些后处理过程。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line">img_url = <span class="string">&quot;https://github.com/dmlc/mxnet.js/blob/main/data/cat.png?raw=true&quot;</span></span><br><span class="line">img_path = download_testdata(img_url, <span class="string">&quot;cat.png&quot;</span>, module=<span class="string">&quot;data&quot;</span>)</span><br><span class="line">img = Image.<span class="built_in">open</span>(img_path).resize((<span class="number">224</span>, <span class="number">224</span>))</span><br><span class="line"><span class="comment"># Preprocess the image and convert to tensor</span></span><br><span class="line"><span class="keyword">from</span> torchvision <span class="keyword">import</span> transforms </span><br><span class="line">my_preprocess = transforms.Compose( </span><br><span class="line">        [ transforms.Resize(<span class="number">256</span>), </span><br><span class="line">         transforms.CenterCrop(<span class="number">224</span>), </span><br><span class="line">         transforms.ToTensor(), </span><br><span class="line">         transforms.Normalize(mean=[<span class="number">0.485</span>, <span class="number">0.456</span>, <span class="number">0.406</span>], std=[<span class="number">0.229</span>, <span class="number">0.224</span>, <span class="number">0.225</span>]), ])</span><br><span class="line">img = my_preprocess(img)</span><br><span class="line"><span class="comment"># 新增Batch维度</span></span><br><span class="line">img = np.expand_dims(img, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<h5 id="0x04-3-Relay导入TorchScript模型并编译到LLVM后端"><a href="#0x04-3-Relay导入TorchScript模型并编译到LLVM后端" class="headerlink" title="0x04.3 Relay导入TorchScript模型并编译到LLVM后端"></a>0x04.3 Relay导入TorchScript模型并编译到LLVM后端</h5><p>接下来我们将PyTorch的graph导入到Relay成为Relay Graph，这里输入层的名字可以任意指定。然后将Gpath使用给定的配置编译到LLVM目标硬件上。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://baijiahao.baidu.com/s?id=1714241762167836087&wfr=spider&for=pc">「TVM系列教程一」深度学习编译器及TVM 介绍</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/04/12/AI/OCR/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/12/AI/OCR/" class="post-title-link" itemprop="url">OCR</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-04-12 12:00:00" itemprop="dateCreated datePublished" datetime="2022-04-12T12:00:00+00:00">2022-04-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:37" itemprop="dateModified" datetime="2025-08-06T08:16:37+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/OCR/" itemprop="url" rel="index"><span itemprop="name">OCR</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><a target="_blank" rel="noopener" href="https://github.com/JaidedAI/EasyOCR">GitHub - JaidedAI&#x2F;EasyOCR: Ready-to-use OCR with 80+ supported languages and all popular writing scripts including Latin, Chinese, Arabic, Devanagari, Cyrillic and etc.</a></p>
+<p>Install </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install easyocr</span><br></pre></td></tr></table></figure>
+
+<p>usage</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> easyocr</span><br><span class="line">reader = easyocr.Reader([<span class="string">&#x27;ch_sim&#x27;</span>,<span class="string">&#x27;en&#x27;</span>]) <span class="comment"># this needs to run only once to load the model into memory</span></span><br><span class="line">result = reader.readtext(<span class="string">&#x27;chinese.jpg&#x27;</span>)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/16/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><span class="page-number current">17</span><a class="page-number" href="/page/18/">18</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/18/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

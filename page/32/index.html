@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Simon Shi的小站">
+<meta property="og:url" content="https://novav.github.io/page/32/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="AI,Machine Learning, Deep Learning">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://novav.github.io/page/32/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2019/08/27/CV/CV_2DNN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/08/27/CV/CV_2DNN/" class="post-title-link" itemprop="url">Awesome - Image Classification</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-08-27 09:44:22" itemprop="dateCreated datePublished" datetime="2019-08-27T09:44:22+00:00">2019-08-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/" itemprop="url" rel="index"><span itemprop="name">CV</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/Networks/" itemprop="url" rel="index"><span itemprop="name">Networks</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[TOC]</p>
+<h1 id="Conv网络结构，任务-资源汇总"><a href="#Conv网络结构，任务-资源汇总" class="headerlink" title="Conv网络结构，任务　资源汇总"></a>Conv网络结构，任务　资源汇总</h1><p><a target="_blank" rel="noopener" href="https://github.com/weiaicunzai/awesome-image-classification">1.4k awesome-image-classification</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/amusi/awesome-object-detection">5.6k awesome-object-detection</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/hoya012/deep_learning_object_detection">8.6k deep_learning_object_detection</a> </p>
+<p><a target="_blank" rel="noopener" href="https://github.com/terryum/awesome-deep-learning-papers">21.7k awesome-deep-learning-papers</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/osmr/imgclsmob">1.4k imgclsmob - Convolutional neural networks for computer vision </a></p>
+<p>超分辨</p>
+<p>2020 Face Super-Resolution Guided by 3D Facial Priors</p>
+<h1 id="Awesome-Image-Classification"><a href="#Awesome-Image-Classification" class="headerlink" title="Awesome - Image Classification"></a>Awesome - Image Classification</h1><table>
+<thead>
+<tr>
+<th>ConvNet</th>
+<th>ImageNet top1 acc</th>
+<th>ImageNet top5 acc</th>
+<th>Published In</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>VGG</td>
+<td>76.3</td>
+<td>93.2</td>
+<td>ICLR2015</td>
+</tr>
+<tr>
+<td>GoogleNet</td>
+<td>-</td>
+<td>93.33</td>
+<td>CVPR2015</td>
+</tr>
+<tr>
+<td>PReLU-nets</td>
+<td>-</td>
+<td>95.06</td>
+<td>ICCV2015</td>
+</tr>
+<tr>
+<td>ResNet</td>
+<td>-</td>
+<td>96.43</td>
+<td>CVPR2015</td>
+</tr>
+<tr>
+<td>Inceptionv3</td>
+<td>82.8</td>
+<td>96.42</td>
+<td>CVPR2016</td>
+</tr>
+<tr>
+<td>Inceptionv4</td>
+<td>82.3</td>
+<td>96.2</td>
+<td>AAAI2016</td>
+</tr>
+<tr>
+<td>Inception-ResNet-v2</td>
+<td>82.4</td>
+<td>96.3</td>
+<td>AAAI2016</td>
+</tr>
+<tr>
+<td>Inceptionv4 + Inception-ResNet-v2</td>
+<td>83.5</td>
+<td>96.92</td>
+<td>AAAI2016</td>
+</tr>
+<tr>
+<td>ResNext</td>
+<td>-</td>
+<td>96.97</td>
+<td>CVPR2017</td>
+</tr>
+<tr>
+<td>PolyNet</td>
+<td>82.64</td>
+<td>96.55</td>
+<td>CVPR2017</td>
+</tr>
+<tr>
+<td>NasNet</td>
+<td>82.7</td>
+<td>96.2</td>
+<td>CVPR2018</td>
+</tr>
+<tr>
+<td>MobileNetV2</td>
+<td>74.7</td>
+<td>-</td>
+<td>CVPR2018</td>
+</tr>
+<tr>
+<td>PNasNet</td>
+<td>82.9</td>
+<td>96.2</td>
+<td>ECCV2018</td>
+</tr>
+<tr>
+<td>AmoebaNet</td>
+<td>83.9</td>
+<td>96.6</td>
+<td>arXiv2018</td>
+</tr>
+<tr>
+<td>SENet</td>
+<td>-</td>
+<td>97.749</td>
+<td>CVPR2018</td>
+</tr>
+</tbody></table>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/08/27/CV/CV_2DNN/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2019/08/26/CV_3D/CV_3D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/08/26/CV_3D/CV_3D/" class="post-title-link" itemprop="url">3D CNN</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-08-26 09:44:22" itemprop="dateCreated datePublished" datetime="2019-08-26T09:44:22+00:00">2019-08-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/" itemprop="url" rel="index"><span itemprop="name">CV</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/Networks/" itemprop="url" rel="index"><span itemprop="name">Networks</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[TOC]</p>
+<h2 id="3D-CNN-Method"><a href="#3D-CNN-Method" class="headerlink" title="3D-CNN Method"></a>3D-CNN Method</h2><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>iDT</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>LRCN</td>
+<td></td>
+<td>CVPR 2015</td>
+</tr>
+<tr>
+<td>LSTM composite model</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>C3D</td>
+<td></td>
+<td>2015</td>
+</tr>
+<tr>
+<td>TSN</td>
+<td></td>
+<td>ECCV 2016</td>
+</tr>
+<tr>
+<td>R3DCNN</td>
+<td>NVIDIA</td>
+<td>2016</td>
+</tr>
+<tr>
+<td>P3D</td>
+<td>MSRA</td>
+<td>ICCV 2017</td>
+</tr>
+<tr>
+<td>R3D&#x2F;2.5D</td>
+<td></td>
+<td>2017</td>
+</tr>
+<tr>
+<td>T3D</td>
+<td></td>
+<td>2017</td>
+</tr>
+<tr>
+<td>R2+1D</td>
+<td></td>
+<td>2018</td>
+</tr>
+</tbody></table>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/08/26/CV_3D/CV_3D/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2019/08/23/Sub_Language/DL_Train/Tensorflow/Uff2TensorRT/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/08/23/Sub_Language/DL_Train/Tensorflow/Uff2TensorRT/" class="post-title-link" itemprop="url">TensorFlow(pb) to TensorRT(uff)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-08-23 16:49:20" itemprop="dateCreated datePublished" datetime="2019-08-23T16:49:20+00:00">2019-08-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DNN-platform/" itemprop="url" rel="index"><span itemprop="name">DNN_platform</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[TOC]</p>
+<h3 id="Uff-To-TensorRT-Engine"><a href="#Uff-To-TensorRT-Engine" class="headerlink" title="Uff To TensorRT Engine"></a><strong>Uff To TensorRT Engine</strong></h3><p>This sample uses a UFF ResNet50 Model to create a TensorRT Inference Engine</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># This sample uses a UFF ResNet50 Model to create a TensorRT Inference Engine</span></span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> pycuda.driver <span class="keyword">as</span> cuda</span><br><span class="line"><span class="comment"># This import causes pycuda to automatically manage CUDA context creation and cleanup.</span></span><br><span class="line"><span class="keyword">import</span> pycuda.autoinit</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> tensorrt <span class="keyword">as</span> trt</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys, os</span><br><span class="line">sys.path.insert(<span class="number">1</span>, os.path.join(sys.path[<span class="number">0</span>], <span class="string">&quot;..&quot;</span>))</span><br><span class="line"><span class="keyword">import</span> common</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ModelData</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    MODEL_PATH = <span class="string">&quot;resnet50-infer-5.uff&quot;</span></span><br><span class="line">    INPUT_NAME = <span class="string">&quot;input&quot;</span></span><br><span class="line">    INPUT_SHAPE = (<span class="number">3</span>, <span class="number">224</span>, <span class="number">224</span>)</span><br><span class="line">    OUTPUT_NAME = <span class="string">&quot;GPU_0/tower_0/Softmax&quot;</span></span><br><span class="line">    <span class="comment"># We can convert TensorRT data types to numpy types with trt.nptype()</span></span><br><span class="line">    DTYPE = trt.float32</span><br><span class="line"></span><br><span class="line"><span class="comment"># You can set the logger severity higher to suppress messages (or lower to display more messages).</span></span><br><span class="line">TRT_LOGGER = trt.Logger(trt.Logger.WARNING)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Allocate host and device buffers, and create a stream.</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">allocate_buffers</span>(<span class="params">engine</span>):</span><br><span class="line">    <span class="comment"># Determine dimensions and create page-locked memory buffers (i.e. won&#x27;t be swapped to disk) to hold host inputs/outputs.</span></span><br><span class="line">    h_input = cuda.pagelocked_empty(trt.volume(engine.get_binding_shape(<span class="number">0</span>)), dtype=trt.nptype(ModelData.DTYPE))</span><br><span class="line">    h_output = cuda.pagelocked_empty(trt.volume(engine.get_binding_shape(<span class="number">1</span>)), dtype=trt.nptype(ModelData.DTYPE))</span><br><span class="line">    <span class="comment"># Allocate device memory for inputs and outputs.</span></span><br><span class="line">    d_input = cuda.mem_alloc(h_input.nbytes)</span><br><span class="line">    d_output = cuda.mem_alloc(h_output.nbytes)</span><br><span class="line">    <span class="comment"># Create a stream in which to copy inputs/outputs and run inference.</span></span><br><span class="line">    stream = cuda.Stream()</span><br><span class="line">    <span class="keyword">return</span> h_input, d_input, h_output, d_output, stream</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">do_inference</span>(<span class="params">context, h_input, d_input, h_output, d_output, stream</span>):</span><br><span class="line">    <span class="comment"># Transfer input data to the GPU.</span></span><br><span class="line">    cuda.memcpy_htod_async(d_input, h_input, stream)</span><br><span class="line">    <span class="comment"># Run inference.</span></span><br><span class="line">    context.execute_async(bindings=[<span class="built_in">int</span>(d_input), <span class="built_in">int</span>(d_output)], stream_handle=stream.handle)</span><br><span class="line">    <span class="comment"># Transfer predictions back from the GPU.</span></span><br><span class="line">    cuda.memcpy_dtoh_async(h_output, d_output, stream)</span><br><span class="line">    <span class="comment"># Synchronize the stream</span></span><br><span class="line">    stream.synchronize()</span><br><span class="line"></span><br><span class="line"><span class="comment"># The UFF path is used for TensorFlow models. You can convert a frozen TensorFlow graph to UFF using the included convert-to-uff utility.</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">build_engine_uff</span>(<span class="params">model_file</span>):</span><br><span class="line">    <span class="comment"># You can set the logger severity higher to suppress messages (or lower to display more messages).</span></span><br><span class="line">    <span class="keyword">with</span> trt.Builder(TRT_LOGGER) <span class="keyword">as</span> builder, builder.create_network() <span class="keyword">as</span> network, trt.UffParser() <span class="keyword">as</span> parser:</span><br><span class="line">        <span class="comment"># Workspace size is the maximum amount of memory available to the builder while building an engine.</span></span><br><span class="line">        <span class="comment"># It should generally be set as high as possible.</span></span><br><span class="line">        builder.max_workspace_size = common.GiB(<span class="number">1</span>)</span><br><span class="line">        <span class="comment"># We need to manually register the input and output nodes for UFF.</span></span><br><span class="line">        parser.register_input(ModelData.INPUT_NAME, ModelData.INPUT_SHAPE)</span><br><span class="line">        parser.register_output(ModelData.OUTPUT_NAME)</span><br><span class="line">        <span class="comment"># Load the UFF model and parse it in order to populate the TensorRT network.</span></span><br><span class="line">        parser.parse(model_file, network)</span><br><span class="line">        <span class="comment"># Build and return an engine.</span></span><br><span class="line">        <span class="keyword">return</span> builder.build_cuda_engine(network)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">load_normalized_test_case</span>(<span class="params">test_image, pagelocked_buffer</span>):</span><br><span class="line">    <span class="comment"># Converts the input image to a CHW Numpy array</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">normalize_image</span>(<span class="params">image</span>):</span><br><span class="line">        <span class="comment"># Resize, antialias and transpose the image to CHW.</span></span><br><span class="line">        c, h, w = ModelData.INPUT_SHAPE</span><br><span class="line">        <span class="keyword">return</span> np.asarray(image.resize((w, h), Image.ANTIALIAS)).transpose([<span class="number">2</span>, <span class="number">0</span>, <span class="number">1</span>]).astype(trt.nptype(ModelData.DTYPE)).ravel()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Normalize the image and copy to pagelocked memory.</span></span><br><span class="line">    np.copyto(pagelocked_buffer, normalize_image(Image.<span class="built_in">open</span>(test_image)))</span><br><span class="line">    <span class="keyword">return</span> test_image</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="comment"># Set the data path to the directory that contains the trained models and test images for inference.</span></span><br><span class="line">    data_path, data_files = common.find_sample_data(description=<span class="string">&quot;Runs a ResNet50 network with a TensorRT inference engine.&quot;</span>, subfolder=<span class="string">&quot;resnet50&quot;</span>, find_files=[<span class="string">&quot;binoculars.jpeg&quot;</span>, <span class="string">&quot;reflex_camera.jpeg&quot;</span>, <span class="string">&quot;tabby_tiger_cat.jpg&quot;</span>, ModelData.MODEL_PATH, <span class="string">&quot;class_labels.txt&quot;</span>])</span><br><span class="line">    <span class="comment"># Get test images, models and labels.</span></span><br><span class="line">    test_images = data_files[<span class="number">0</span>:<span class="number">3</span>]</span><br><span class="line">    uff_model_file, labels_file = data_files[<span class="number">3</span>:]</span><br><span class="line">    labels = <span class="built_in">open</span>(labels_file, <span class="string">&#x27;r&#x27;</span>).read().split(<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Build a TensorRT engine.</span></span><br><span class="line">    <span class="keyword">with</span> build_engine_uff(uff_model_file) <span class="keyword">as</span> engine:</span><br><span class="line">        <span class="comment"># Inference is the same regardless of which parser is used to build the engine, since the model architecture is the same.</span></span><br><span class="line">        <span class="comment"># Allocate buffers and create a CUDA stream.</span></span><br><span class="line">        h_input, d_input, h_output, d_output, stream = allocate_buffers(engine)</span><br><span class="line">        <span class="comment"># Contexts are used to perform inference.</span></span><br><span class="line">        <span class="keyword">with</span> engine.create_execution_context() <span class="keyword">as</span> context:</span><br><span class="line">            <span class="comment"># Load a normalized test case into the host input page-locked buffer.</span></span><br><span class="line">            test_image = random.choice(test_images)</span><br><span class="line">            test_case = load_normalized_test_case(test_image, h_input)</span><br><span class="line">            <span class="comment"># Run the engine. The output will be a 1D tensor of length 1000, where each value represents the</span></span><br><span class="line">            <span class="comment"># probability that the image corresponds to that label</span></span><br><span class="line">            do_inference(context, h_input, d_input, h_output, d_output, stream)</span><br><span class="line">            <span class="comment"># We use the highest probability as our prediction. Its index corresponds to the predicted label.</span></span><br><span class="line">            pred = labels[np.argmax(h_output)]</span><br><span class="line">            <span class="keyword">if</span> <span class="string">&quot;_&quot;</span>.join(pred.split()) <span class="keyword">in</span> os.path.splitext(os.path.basename(test_case))[<span class="number">0</span>]:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;Correctly recognized &quot;</span> + test_case + <span class="string">&quot; as &quot;</span> + pred)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;Incorrectly recognized &quot;</span> + test_case + <span class="string">&quot; as &quot;</span> + pred)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2019/08/21/Paper/Paper-CV-1-Image-Classification/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/08/21/Paper/Paper-CV-1-Image-Classification/" class="post-title-link" itemprop="url">Paper_CV_1 Image-Classification 图片分类</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-08-21 19:10:33" itemprop="dateCreated datePublished" datetime="2019-08-21T19:10:33+00:00">2019-08-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/" itemprop="url" rel="index"><span itemprop="name">CV</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/BaseWork/" itemprop="url" rel="index"><span itemprop="name">BaseWork</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/BaseWork/Classification/" itemprop="url" rel="index"><span itemprop="name">Classification</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>2021年， Transformer频频跨界视觉领域</p>
+<p>先是图像分类上被谷歌ViT突破，后来目标检测和图像分割又被微软Swin Transformer拿下。</p>
+<h3 id="ViT"><a href="#ViT" class="headerlink" title="ViT"></a>ViT</h3><p>Google</p>
+<p><img src="/2019/08/21/Paper/Paper-CV-1-Image-Classification/1000.png" alt="img"></p>
+<p>为了大规模扩展视觉模型，该研究将 ViT 架构中的一些密集前馈层 (FFN) 替换为独立 FFN 的稀疏混合（称之为专家）。可学习的路由层为每个独立的 token 选择对应的专家。也就是说，来自同一图像的不同 token 可能会被路由到不同的专家。在总共 E 位专家（E 通常为 32）中，每个 token 最多只能路由到 K（通常为 1 或 2）位专家。这允许扩展模型的大小，同时保持每个 token 计算的恒定。下图更详细地显示了 V-MoE 编码器块的结构。</p>
+<p><img src="/2019/08/21/Paper/Paper-CV-1-Image-Classification/1000-16423897522682.png" alt="img"></p>
+<p><a target="_blank" rel="noopener" href="https://new.qq.com/omn/20220116/20220116A03WQ600.html">https://new.qq.com/omn/20220116/20220116A03WQ600.html</a></p>
+<h3 id="Swin-Transformer"><a href="#Swin-Transformer" class="headerlink" title="Swin Transformer"></a>Swin Transformer</h3><p>微软</p>
+<h3 id="ConvNeXt"><a href="#ConvNeXt" class="headerlink" title="ConvNeXt"></a>ConvNeXt</h3><p>Facebook与UC伯克利</p>
+<p>该研究制定了一系列设计决策，总结为 1) 宏观设计，2) ResNeXt，3) 反转瓶颈，4) 卷积核大小，以及 5) 各种逐层微设计。</p>
+<p>Transformer 中一个重要的设计是创建了反转瓶颈，即 MLP 块的隐藏维度比输入维度宽四倍，如下图 4 所示。</p>
+<img src="/2019/08/21/Paper/Paper-CV-1-Image-Classification/1000-16423900028844.png" alt="img" style="zoom:50%;">
+
+
+
+<h3 id="EfficientNet-v2"><a href="#EfficientNet-v2" class="headerlink" title="EfficientNet v2"></a>EfficientNet v2</h3><p><img src="/2019/08/21/Paper/Paper-CV-1-Image-Classification/image-20220117095019328.png" alt="image-20220117095019328"></p>
+<h3 id="Ref"><a href="#Ref" class="headerlink" title="Ref:"></a>Ref:</h3><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/c6MRbzQE9ErFUWdWKh8PQA">https://mp.weixin.qq.com/s/c6MRbzQE9ErFUWdWKh8PQA</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2019/08/21/Paper/Paper-CV-2-Object-Localization/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/08/21/Paper/Paper-CV-2-Object-Localization/" class="post-title-link" itemprop="url">Paper_CV_2 object-localization 目标定位</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-08-21 19:08:02" itemprop="dateCreated datePublished" datetime="2019-08-21T19:08:02+00:00">2019-08-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/" itemprop="url" rel="index"><span itemprop="name">CV</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/BaseWork/" itemprop="url" rel="index"><span itemprop="name">BaseWork</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/BaseWork/Object-Localization/" itemprop="url" rel="index"><span itemprop="name">Object Localization</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[toc]</p>
+<h2 id="目标定位"><a href="#目标定位" class="headerlink" title="目标定位"></a>目标定位</h2><p>— 目标定位和目标检测，通常作为一个整体进行建模。</p>
+<ul>
+<li><p>VoxelNet</p>
+</li>
+<li><p>Frustum PointNets</p>
+</li>
+</ul>
+<p><img src="/2019/08/21/Paper/Paper-CV-2-Object-Localization/20180122200423134.png" alt="detection"></p>
+<h3 id="定位任务评估方法：Intersection-over-Union-IoU"><a href="#定位任务评估方法：Intersection-over-Union-IoU" class="headerlink" title="定位任务评估方法：Intersection over Union (IoU)"></a>定位任务评估方法：Intersection over Union (IoU)</h3><p>IoU用来衡量模型最终输出的矩形框或者测试过程中找出的候选区域（Region Proposal）与实际的矩形框（Gound Truth）的差异程度，定义为两者交集和并集的比值。通常我们将这个阈值指定为0.5，即只要模型找出来的矩形框和标签的IoU值大于0.5，就认为成功定位到了目标。</p>
+<p><img src="/2019/08/21/Paper/Paper-CV-2-Object-Localization/20180123163515832.png" alt="IoU"></p>
+<h3 id="目标定位的两种思路"><a href="#目标定位的两种思路" class="headerlink" title="目标定位的两种思路"></a>目标定位的两种思路</h3><p>**看作回归问题。*<em>对于单个目标的定位，比较简单的思想就是直接看作是关于目标矩形框位置的回归问题，也就是把刻画矩形框位置信息的4个参数作为模型的输出进行训练，采用L2损失函数。对于固定的多个目标定位，也采用类似的方法，只不过输出由4个变成4</em>C个，C为需要定位的目标的类别数。这样，完整的识别定位问题的损失函数由两部分组成：第一部分是用于识别的损失，第二部分是用于定位产生的损失。显然这种方法对于目标数量固定的定位问题比较容易，当数量不定时（比如检测任务）就不适用了。</p>
+<p>**滑动窗口法。**这种方法的一个典型代表是overFeat模型，它用不同大小的矩形框依次遍历图片中所有区域，然后在当前区域执行分类和定位任务，即每一个滑过的区域都会输出一个关于目标类别和位置信息的标签，最后再把所有输出的矩形框进行合并，得到一个置信度最高的结果。这种方法其实和我们人的思维很相似，但是这种方法需要用不同尺度的滑动框去遍历整幅图像，计算量是可想而知的。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2019/08/19/Games/MCTS_Survey/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/08/19/Games/MCTS_Survey/" class="post-title-link" itemprop="url">【Paper Read】A survey of Monte Carlo Tree Search Methods</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-08-19 08:39:31" itemprop="dateCreated datePublished" datetime="2019-08-19T08:39:31+00:00">2019-08-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Game/" itemprop="url" rel="index"><span itemprop="name">Game</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Section1 Introduction</p>
+<p>Section2 Notation and terminology </p>
+<p>Section3 MCTS detail</p>
+<p>Section4 summarises main variations MCTS</p>
+<p>Section5 enhancements to the tree policy, </p>
+<p>Section6 enhancements to Simulations, Backpropagations</p>
+<p>Section7 key applications(which MCTS has been applied)</p>
+<p>Section8 Summaries</p>
+<p>[toc]</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/08/19/Games/MCTS_Survey/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2019/08/16/Games/PokerGame_Algorithm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/08/16/Games/PokerGame_Algorithm/" class="post-title-link" itemprop="url">Poker Algorithm developer history</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-08-16 08:39:31" itemprop="dateCreated datePublished" datetime="2019-08-16T08:39:31+00:00">2019-08-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Game/" itemprop="url" rel="index"><span itemprop="name">Game</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[toc]</p>
+<h2 id="Poker-Algorithm-developer-history"><a href="#Poker-Algorithm-developer-history" class="headerlink" title="Poker Algorithm developer history"></a>Poker Algorithm developer history</h2><p>论文阅读《Regret minimization in games and the development of champion multiplayer computer poker playing agents》(游戏中的遗憾最小化与多人计算机扑克游戏冠军的发展)</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/08/16/Games/PokerGame_Algorithm/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2019/08/15/Games/MCTS_CFR/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/08/15/Games/MCTS_CFR/" class="post-title-link" itemprop="url">MCTS-CFR</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-08-15 08:39:31" itemprop="dateCreated datePublished" datetime="2019-08-15T08:39:31+00:00">2019-08-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Game/" itemprop="url" rel="index"><span itemprop="name">Game</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/RL/" itemprop="url" rel="index"><span itemprop="name">RL</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[toc]</p>
+<h1 id="CFR"><a href="#CFR" class="headerlink" title="CFR"></a>CFR</h1><p>类似强化学习的算法</p>
+<p>遗憾值（regret）	: 在一局石头剪刀布中，对手出了布，玩家出了石头，结果是玩家输了-1。这时的遗憾值为{石头：0，布：1，剪刀：2}。也就意味着如果执行其他动作会比执行当前的动作有多少优势。</p>
+<p>遗憾值匹配（regret matching)	: 遗憾匹配，通过计算出的遗憾值更新策略。最常用的是将遗憾动作值归一化为生成概率。这种方法可以通过自我对局来最小化预期的regret。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/08/15/Games/MCTS_CFR/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2019/08/15/Games/MCTS_GO/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/08/15/Games/MCTS_GO/" class="post-title-link" itemprop="url">MCTS GO</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-08-15 08:39:31" itemprop="dateCreated datePublished" datetime="2019-08-15T08:39:31+00:00">2019-08-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Game/" itemprop="url" rel="index"><span itemprop="name">Game</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/RL/" itemprop="url" rel="index"><span itemprop="name">RL</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/Game/" itemprop="url" rel="index"><span itemprop="name">Game</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[toc]</p>
+<h1 id="MCTS-Lee"><a href="#MCTS-Lee" class="headerlink" title="MCTS_Lee"></a>MCTS_Lee</h1><h2 id="apply"><a href="#apply" class="headerlink" title="apply:"></a>apply:</h2><ol>
+<li>GO	:	UCT (MCTS + UCB)</li>
+<li>Pluribus :  MCTS-CFR</li>
+<li>Dota2 :  MCTS</li>
+<li>StarCraft2 : MCTS</li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/08/15/Games/MCTS_GO/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2019/08/15/Tools/hello-world/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/08/15/Tools/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-08-15 08:39:31" itemprop="dateCreated datePublished" datetime="2019-08-15T08:39:31+00:00">2019-08-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hello/" itemprop="url" rel="index"><span itemprop="name">Hello</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/08/15/Tools/hello-world/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/31/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/31/">31</a><span class="page-number current">32</span><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/33/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

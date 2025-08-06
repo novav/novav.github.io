@@ -1,0 +1,1637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Simon Shi的小站">
+<meta property="og:url" content="https://novav.github.io/page/25/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="AI,Machine Learning, Deep Learning">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://novav.github.io/page/25/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2020/06/17/AI/Base/Math/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/06/17/AI/Base/Math/" class="post-title-link" itemprop="url">Math -- 数学基础</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-06-17 21:21:20" itemprop="dateCreated datePublished" datetime="2020-06-17T21:21:20+00:00">2020-06-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:37" itemprop="dateModified" datetime="2025-08-06T08:16:37+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Math/" itemprop="url" rel="index"><span itemprop="name">Math</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[数学体系解读](<a target="_blank" rel="noopener" href="http://gwang-cv.github.io/2015/11/15/%E6%95%B0%E5%AD%A6%E4%BD%93%E7%B3%BB%E8%A7%A3%E8%AF%BB%EF%BC%88by">http://gwang-cv.github.io/2015/11/15/数学体系解读（by</a> MIT Lin Dahua）&#x2F;)</p>
+<p>代数学、几何学、分析数学是数学的三大基础学科</p>
+<ul>
+<li><p>集合论</p>
+</li>
+<li><p>分析</p>
+</li>
+<li></li>
+<li><p>高等代数</p>
+<ul>
+<li>高等代数是代数学发展到高级阶段的总称，它包括许多分支。现在大学里开设的高等代数，一般包括两部分：<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/800">线性代数</a>、<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%A4%9A%E9%A1%B9%E5%BC%8F%E4%BB%A3%E6%95%B0">多项式代数</a>。</li>
+</ul>
+</li>
+<li><p>解析几何</p>
+<ul>
+<li>微积分</li>
+<li>实分析</li>
+<li>微分几何</li>
+</ul>
+</li>
+<li><p>代数</p>
+<ul>
+<li>线性代数<ul>
+<li>研究：向量、矩阵、行列式</li>
+<li>它的研究对象是<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%90%91%E9%87%8F/1396519">向量</a>，<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%90%91%E9%87%8F%E7%A9%BA%E9%97%B4/5936597">向量空间</a>（或称线性空间），<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%BA%BF%E6%80%A7%E5%8F%98%E6%8D%A2/5904192">线性变换</a>和有限维的<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%84/5904308">线性方程组</a>。向量空间是<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%8E%B0%E4%BB%A3%E6%95%B0%E5%AD%A6/3704792">现代数学</a>的一个重要课题；因而，线性代数被广泛地应用于<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%8A%BD%E8%B1%A1%E4%BB%A3%E6%95%B0/1537111">抽象代数</a>和<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%B3%9B%E5%87%BD%E5%88%86%E6%9E%90/4151">泛函分析</a>中；通过解析几何，线性代数得以被具体表示。线性代数的理论已被泛化为算子理论。</li>
+</ul>
+</li>
+<li>微分代数</li>
+<li>调和分析，和李代数，巴拿赫代数</li>
+</ul>
+</li>
+<li><p>几何学</p>
+</li>
+<li><p>拓扑学</p>
+</li>
+<li><p>数学分析</p>
+</li>
+<li><p>函数论</p>
+</li>
+<li><p>常微分方程</p>
+</li>
+<li><p>偏微分方程</p>
+</li>
+<li><p>泛函分析</p>
+</li>
+<li><p>计算数学</p>
+</li>
+<li><p>概率论</p>
+</li>
+<li><p>数理统计学</p>
+</li>
+<li><p>应用统计数学</p>
+</li>
+<li><p>运筹学</p>
+</li>
+<li><p>二级学科</p>
+</li>
+<li><h2 id="离散数学：-研究有限个元素；集合论，图论，代数；数理逻辑"><a href="#离散数学：-研究有限个元素；集合论，图论，代数；数理逻辑" class="headerlink" title="离散数学： 研究有限个元素；集合论，图论，代数；数理逻辑"></a>离散数学： 研究有限个元素；集合论，图论，代数；数理逻辑</h2></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2020/05/27/Graphices/Graphices-PointCloud/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/27/Graphices/Graphices-PointCloud/" class="post-title-link" itemprop="url">Graphices Point Cloud 点云对齐论文</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-05-27 17:35:21" itemprop="dateCreated datePublished" datetime="2020-05-27T17:35:21+00:00">2020-05-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV-3D/" itemprop="url" rel="index"><span itemprop="name">CV_3D</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV-3D/registration/" itemprop="url" rel="index"><span itemprop="name">registration</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Graphices/" itemprop="url" rel="index"><span itemprop="name">Graphices</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Graphices/PointCloud/" itemprop="url" rel="index"><span itemprop="name">PointCloud</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[TOC]</p>
+<h1 id="A-Survey-of-Rigid-3D-Pointcloud-Registration-Algorithms-2014"><a href="#A-Survey-of-Rigid-3D-Pointcloud-Registration-Algorithms-2014" class="headerlink" title="A Survey of Rigid 3D Pointcloud Registration Algorithms 2014"></a>A Survey of Rigid 3D Pointcloud Registration Algorithms 2014</h1><p>Principal Component Analysis(PCA) </p>
+<p>Singular Value Decomposition (SVD), </p>
+<p>Iterative Closest Point (ICP) </p>
+<p>刚性3D点云配准算法研究 2014</p>
+<p>使用深度传感器（例如飞行时间相机）获得的3D点云的几何对齐对于机器人技术和计算机视觉中的重要应用而言是一项艰巨的任务。由于便宜的深度感测设备的最新出现，文献中提出了许多不同的3D配准算法，着重于不同的领域，例如定位和映射或图像配准。在这篇调查论文中，我们回顾了最新的注册算法，并讨论了它们的通用数学基础。从简单的确定性方法（例如主成分分析（PCA）和奇异值分解（SVD））开始，对最近引入的方法（例如迭代最近点（ICP）及其变体）进行了分析和比较。</p>
+<p>从简单的确定性方法（例如主成分分析（PCA）和奇异值分解（SVD））开始，对最近引入的方法（例如迭代最近点（ICP）及其变体）</p>
+<h1 id="阅读笔记（CVPR2015）Non-Rigid-Registration-of-Images-With-Geometric-and-Photometric-Deformation……"><a href="#阅读笔记（CVPR2015）Non-Rigid-Registration-of-Images-With-Geometric-and-Photometric-Deformation……" class="headerlink" title="阅读笔记（CVPR2015）Non-Rigid Registration of Images With Geometric and Photometric Deformation……"></a>阅读笔记（CVPR2015）Non-Rigid Registration of Images With Geometric and Photometric Deformation……</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/miracle0_0/article/details/82839534">https://blog.csdn.net/miracle0_0/article/details/82839534</a></p>
+<p>傅里叶矩匹配（FMM）的加权重叠局部仿射图像配准算法[22]</p>
+<h1 id="Smooth-Shells-Multi-Scale-Shape-Registration-with-Functional-Maps"><a href="#Smooth-Shells-Multi-Scale-Shape-Registration-with-Functional-Maps" class="headerlink" title="Smooth Shells: Multi-Scale Shape Registration with Functional Maps"></a>Smooth Shells: Multi-Scale Shape Registration with Functional Maps</h1><p><a target="_blank" rel="noopener" href="https://github.com/marvin-eisenberger/smooth-shells">https://github.com/marvin-eisenberger/smooth-shells</a></p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1905.12512">https://arxiv.org/abs/1905.12512</a></p>
+<p><img src="/2020/05/27/Graphices/Graphices-PointCloud/5-Figure4-1.png" alt="figure 4"></p>
+<h1 id="Numerical-Geometry-of-Non-Rigid-Shapes"><a href="#Numerical-Geometry-of-Non-Rigid-Shapes" class="headerlink" title="Numerical Geometry of Non-Rigid Shapes"></a>Numerical Geometry of Non-Rigid Shapes</h1><p>2009 book</p>
+<p>从微观到宏观，可变形物体在我们周围的世界中无处不在。从医学到安全性的广泛应用都需要研究这种形状并对其行为进行建模。近年来，非刚性形状吸引了越来越多的兴趣，这导致了该领域的快速发展，其中最先进的技术源于截然不同的科学领域-理论和数值几何，优化，线性代数，图论，机器学习和计算机图形学（仅举几例）被用于寻找解决方案。</p>
+<h1 id="Functional-maps-a-flexible-representation-of-maps-between-shapes"><a href="#Functional-maps-a-flexible-representation-of-maps-between-shapes" class="headerlink" title="Functional maps: a flexible representation of maps between shapes"></a>Functional maps: a flexible representation of maps between shapes</h1><p>2012 </p>
+<p><img src="/2020/05/27/Graphices/Graphices-PointCloud/3-Figure2-1.png" alt="Figure 2: Two shapes with three maps between them, each rendered as a point-to-point mapping through color correspondence (top) and its functional representation (bottom) with colors proportional to matrix values. Note that the least isometric map in (d) leads to a less sparse functional matrix."></p>
+<h1 id="Shape-Analysis-via-Functional-Map-Construction-and-Bases-Pursuit"><a href="#Shape-Analysis-via-Functional-Map-Construction-and-Bases-Pursuit" class="headerlink" title="Shape Analysis via Functional Map Construction and Bases Pursuit"></a>Shape Analysis via Functional Map Construction and Bases Pursuit</h1><p>2019</p>
+<p><img src="/2020/05/27/Graphices/Graphices-PointCloud/1-Figure1-1.png" alt="Fig. 1. Given a pair of shapes and a collection of corresponding descriptors, our method produces a set of basis elements along with an associated functional map. These bases are not necessarily LB smooth and thus their aligning matrix is typically dense (left). Our machinery can be utilized in various geometry processing tasks such as non-isometric shape matching (right)."></p>
+<h2 id="Eigen-System"><a href="#Eigen-System" class="headerlink" title="Eigen-System"></a>Eigen-System</h2><p><a target="_blank" rel="noopener" href="https://www.sciencedirect.com/topics/mathematics/eigensystem">https://www.sciencedirect.com/topics/mathematics/eigensystem</a></p>
+<p> <a target="_blank" rel="noopener" href="https://www.sciencedirect.com/science/handbooks/15708659">数值分析手册</a>，2019    5.3 Laplace–Beltrami特征图方法</p>
+<p>5.3 使用LB特征图进行非刚性歧管配准</p>
+<p>拉普拉斯-贝尔特拉米算子（Laplace–Beltrami operator）</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/69351696">Riemann Surface 黎曼曲面</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2020/05/19/Graphices/Graphics-3D-Mesh/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/19/Graphices/Graphics-3D-Mesh/" class="post-title-link" itemprop="url">Computer Graphices -- Verties subdivision</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-05-19 20:35:21" itemprop="dateCreated datePublished" datetime="2020-05-19T20:35:21+00:00">2020-05-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Graphices/" itemprop="url" rel="index"><span itemprop="name">Graphices</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><a target="_blank" rel="noopener" href="https://graphics.stanford.edu/~mdfisher/subdivision.html">loop subdivision</a></p>
+<p>基于四边形的网格通常使用Catmull-Clark，而基于三角形的网格通常使用环细分</p>
+<p><img src="/2020/05/19/Graphices/Graphics-3D-Mesh/SubdivStencil1.png" alt="img"></p>
+<p><a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/matlabcentral/fileexchange/24942-loop-subdivision">https://ww2.mathworks.cn/matlabcentral/fileexchange/24942-loop-subdivision</a></p>
+<p>​	</p>
+<p><a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/matlabcentral/fileexchange/27982-wavefront-obj-toolbox?s_tid=srchtitle">https://ww2.mathworks.cn/matlabcentral/fileexchange/27982-wavefront-obj-toolbox?s_tid=srchtitle</a></p>
+<p>​	function write_wobj(OBJ,fullfilename)</p>
+<p>​	function read_wobj(fullfilename)</p>
+<p><a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/matlabcentral/fileexchange/18957-readobj?s_tid=srchtitle">https://ww2.mathworks.cn/matlabcentral/fileexchange/18957-readobj?s_tid=srchtitle</a></p>
+<p>​	function obj &#x3D; readObj(fname)</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2020/05/15/ResearchRecord/Research_ST/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/15/ResearchRecord/Research_ST/" class="post-title-link" itemprop="url">商汤AI_Research</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-05-15 23:02:54" itemprop="dateCreated datePublished" datetime="2020-05-15T23:02:54+00:00">2020-05-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI-Research/" itemprop="url" rel="index"><span itemprop="name">AI Research</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>商汤科技 SenseTime</p>
+<p>[TOC]</p>
+<h2 id="论文"><a href="#论文" class="headerlink" title="论文"></a>论文</h2><h3 id="CVPR-2020-《对人脸生成模型的隐空间可解释性分析》"><a href="#CVPR-2020-《对人脸生成模型的隐空间可解释性分析》" class="headerlink" title="CVPR 2020 《对人脸生成模型的隐空间可解释性分析》"></a>CVPR 2020 《对人脸生成模型的隐空间可解释性分析》</h3><p>入选CVPR 2020论文《对人脸生成模型的隐空间可解释性分析》提出了一种简单而通用的技术InterFaceGAN，用于在潜在空间中进行语义人脸编辑，可控制姿势以及其他面部属性，例如性别、年龄、眼镜等，还能够纠正GAN造成的伪影。</p>
+<p><img src="/2020/05/15/ResearchRecord/Research_ST/5eba4ddd26b5e.png" alt="img"></p>
+<p>这种方法对GAN的隐空间进行了深入分析，能更好理解GAN是如何将一个随机噪声转化为一张高质量图片的。</p>
+<h2 id="ICCV-2019"><a href="#ICCV-2019" class="headerlink" title="ICCV 2019"></a>ICCV 2019</h2><h4 id="面向目标检测的深度网络基础算子"><a href="#面向目标检测的深度网络基础算子" class="headerlink" title="面向目标检测的深度网络基础算子"></a><strong>面向目标检测的深度网络基础算子</strong></h4><p>《CARAFE:基于内容感知的特征重组》</p>
+<p>《CARAFE: Content-Aware ReAssembly of FEatures》</p>
+<p>特征上采样是深度神经网络结构中的一种基本的操作，例如：特征金字塔。它的设计对于需要进行密集预测的任务，例如物体检测、语义分割、实例分割，有着关键的影响。</p>
+<p>内容感知的特征重组（CARAFE），它是一种通用的，轻量的，效果显著的特征上采样操作。</p>
+<p><img src="/2020/05/15/ResearchRecord/Research_ST/5dc2bd069eeb5.png"></p>
+<p>CARAFE有这样一些引人注目的特性：1.大视野。不同于之前的上采样方法（如：双线性插值），仅使用亚像素的临近位置。CARAFE可以聚合来自大感受野的环境特征信息。2.基于特征感知的处理。不同于之前方法对于所有样本使用固定的核（如：反卷积），CARAFE可以对不同的位置进行内容感知，用生成的动态的核进行处理。3.轻量和快速计算。CARAFE仅带来很小的额外开销，可以容易地集成到现有网络结构中。我们对CARAFE在目标检测，实例分割，语义分割和图像修复的主流方法上进行广泛的测试，CARAFE在全部4种任务上都取得了一致的明显提升。CARAFE具有成为未来深度学习研究中一个有效的基础模块的潜力。</p>
+<h4 id="面向三维视觉的点云处理基础网络"><a href="#面向三维视觉的点云处理基础网络" class="headerlink" title="面向三维视觉的点云处理基础网络"></a><strong>面向三维视觉的点云处理基础网络</strong></h4><p>Interpolated Convolutional Networks for 3D Point Cloud Understanding </p>
+<p>内插卷积网络以了解3D点云</p>
+<p><em>代表性论文：《基于插值卷积的点云处理主干网络》</em></p>
+<p>点云是一种重要的三维数据类型，被广泛地运用于自动驾驶等场景中。传统方法依赖光栅化或者多视角投影，将点云转化成图像、体素其他数据类型进行处理。近年来池化和图神经元网络在点云处理中展现出良好的性能，但仍然受限于计算效率，并且算法易受物体尺度、点云密度等因素影响。</p>
+<p><img src="/2020/05/15/ResearchRecord/Research_ST/5dc2bd3b08def.png" alt="img"></p>
+<p>本文提出了一种全新的卷积方式，即插值卷积，能够从点云中高效地学习特征。插值卷积从标准图像卷积和图像插值中获取灵感，卷积核被划分成一组空间中离散的向量，每个向量拥有各自的三维坐标，当点云中的某点落在卷积向量的邻域时，参考图像插值的过程，我们将该点对应的特征向量插值到卷积向量对应的位置上，然后进行标准的卷积运算，最后通过正则化消除点云局部分布不均的影响。</p>
+<p>面向不同的任务，我们提出了基于插值卷积的点云分类和分割网络。分类网络采用多路径设计，每一条路径的插值卷积核具有不同的大小，从而网络能够同时捕获全局和细节特征。分割网络参考图像语义分割的网络设计，利用插值卷积做降采样。在<strong>三维物体识别，分割以及室内场景分割</strong>的数据集上，我们均取得了领先于其他方法的性能。</p>
+<h4 id="面向AR-VR的人体感知与生成"><a href="#面向AR-VR的人体感知与生成" class="headerlink" title="面向AR&#x2F;VR的人体感知与生成"></a>面向AR&#x2F;VR的人体感知与生成</h4><p><em>代表性论文：《深入研究用于无限制图片<strong>3D</strong>人体重建中的混合标注》</em></p>
+<p>​                        《Delving Deep into Hybrid Annotations for 3D Human Recovery in the Wild》</p>
+<p><a target="_blank" rel="noopener" href="https://penincillin.github.io/dct_iccv2019">https://penincillin.github.io/dct_iccv2019</a></p>
+<p>虽然计算机视觉研究者在<strong>单目3D人体重建</strong>方面已经取得长足进步，但对无限制图片进行3D人体重建依然是一个挑战。主要原因是在无限制图片上很难取得高质量的3D标注。为解决这个问题，之前的方法往往采用一种混合训练的策略来利用多种不同的标注，其中既包括3D标注，也包括2D标注。虽然这些方法取得了不错的效果，但是他们并没有研究不同标注对于这个任务的有效程度。</p>
+<p><img src="/2020/05/15/ResearchRecord/Research_ST/5dc2bdbc78cd9.png" alt="img"></p>
+<p>**本篇论文的目标就是详细地研究不同种类标注的投入产出比。**特别的，我们把目标定为重建给定无限制图片的3D人体。通过大量的实验，我们得到以下结论：1.3D标注非常有效，同时传统的2D标注，包括人体关键点和人体分割并不是非常有效。2.密集响应是非常有效的。当没有成对的3D标注时，利用了密集响应的模型可以达到使用3D标注训练的模型92%的效果。</p>
+<p><em>代表性论文：《基于卷积网络的人体骨骼序列生成》</em></p>
+<p>​                    《Convolutional Sequence Generation for Skeleton-Based Action Synthesis》</p>
+<p>现有的计算机视觉技术以及图形学技术已经可以生成或者渲染出栩栩如生的影像片段。在这些方法中，人体骨骼序列的驱动是不可缺少的。高质量的骨骼序列要么使用动作捕捉设备从人身上获取，要么由动作设计师手工制作。而让计算机代为完成这些动作，高效地生成丰富、生动、稳定、长时间的骨骼序列，就是这一工作的目标。</p>
+<p><img src="/2020/05/15/ResearchRecord/Research_ST/5dc2be70e2044.png" alt="img"></p>
+<p>本文使用高斯过程产生随机序列，使用对抗网络和时空图卷积网络来学习随机序列和动作序列之间的映射关系。该方法既可以产生动作序列，也可将动作序列映射到随机序列所在的空间，并利用高斯过程进行编辑、合成、补全。</p>
+<p>本方法在由真人动作捕捉得到的NTU-RGB+D数据集上，以及我们收集的虚拟歌手“初音未来”的大量舞蹈设计动作上，完成了详细的对比实验。实验表明，相对于传统的自回归模型（Autoregressive Model），本文使用的图卷积网络可以大大提高生成的质量和多样性。</p>
+<h4 id="面向全场景理解的多模态分析"><a href="#面向全场景理解的多模态分析" class="headerlink" title="面向全场景理解的多模态分析"></a><strong>面向全场景理解的多模态分析</strong></h4><p><em>代表性论文：《基于图匹配的电影视频跨模态检索框架》</em></p>
+<p>电影视频检索在日常生活中拥有极大需求。例如，人们在浏览某部电影的文字简介时，时常会被其中的精彩部分吸引而想要看相应的片段。但是，通过文字描述检索电影片段目前还存在许多挑战。相比于日常生活中普通人拍摄的短视频，电影有着极大的不同：1.电影是以小时为单位的长视频，时序结构很复杂。2.电影中角色的互动是构成故事情节的关键元素。因此，我们利用了电影的这两种内在结构设计了新的算法来匹配文本段落与电影片段，进而达到根据文本检索电影片段的目标。</p>
+<p><img src="/2020/05/15/ResearchRecord/Research_ST/5dc2be8f5efe0.png" alt="img"></p>
+<p>首先，我们提出事件流模块以建模电影的时序特性。该模块基于二分图匹配，将文本中的每一句话按照事件与电影片段的对应子片段匹配。其次，我们提出人物互动模块，该模块通过图匹配算法计算文本中解析得到的人物互动图和视频中提取的人物互动图的相似度。综合两个模块的结果，我们能得到与传统方法相比更精准的匹配结果，从而提高检索的正确率。</p>
+<p><em>代表性论文：《融合视觉信息的音频修复》</em></p>
+<p>多模态融合是交互智能发展的重要途径。在多媒体信息中，一段音频信号可能被噪声污染或在通信中丢失，从而需要进行修复。本文我们提出依据视频信息对缺失音频信息进行修复的一种融合视觉信息的音频修复方案。</p>
+<p><img src="/2020/05/15/ResearchRecord/Research_ST/5dc2beaa58a32.png" alt="img"></p>
+<p>此方案核心思想在于：1.将音频信号在频谱上进行操作，并将频谱作为二维图像信号进行处理，可以极大地利用计算机视觉领域的优势，超越传统的音频解决方案。2.为了融合视觉信息，基于音视频同步学习得到的联合子空间会发挥巨大的优势。</p>
+<p>针对此问题的研究，我们将已有的多模态乐器演奏数据集MUSIC扩大成为一个新的更全面的数据集，MUSICES。实验证明我们提出的视觉融合的音频修复系统可以在没有视频信息注入的情况下取得可观的效果，并在加入视频信息后，生成与视频和谐的音频片段。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2020/04/23/ResearchRecord/Research_MPI/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/04/23/ResearchRecord/Research_MPI/" class="post-title-link" itemprop="url">马普所 Virtual Human Research</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-04-23 15:18:54" itemprop="dateCreated datePublished" datetime="2020-04-23T15:18:54+00:00">2020-04-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI-Research/" itemprop="url" rel="index"><span itemprop="name">AI Research</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV-3D/" itemprop="url" rel="index"><span itemprop="name">CV_3D</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><a target="_blank" rel="noopener" href="https://ps.is.tuebingen.mpg.de/research_projects/virtual-humans-old">https://ps.is.tuebingen.mpg.de/research_projects/virtual-humans-old</a></p>
+<p>人体肯定对我们的生活至关重要，通常以图像和视频形式描绘。通过学习人体的形状以及如何从数据中移动出来，我们正在开发世界上最真实的人体模型。我们的目标是使人体3D模型的外观和移动方式与真实人类没有区别。这样的虚拟人可以用于特殊效果，并将在新兴的虚拟现实系统中扮演重要角色。它们还可以用于计算机视觉，以生成用于学习方法的训练数据，或者可以直接适合于传感器数据。造成这种困难的原因是，人体的关节运动非常激烈，会随着运动的变化而变形，并且在各个对象之间呈现出很大的形状变异性。 </p>
+<p>在过去的五年中，我们开发了一系列可用于图形和视觉的3D人体模型：<strong>BlendSCAPE [ ], Delta [ ], Dyna [ ] and</strong> <strong>SMPL</strong> [ ]。特别是，SMPL是一种逼真的人体模型，比以前的SCAPE模型更准确，但它基于标准的混合蒙皮和混合形状。姿势混合形状可纠正混合蒙皮伪影，并由身体部位旋转矩阵的元素驱动。形状融合形状可以捕捉人的身体形状变化情况。这些是使用4000人的姿态标准化3D扫描计算得出的。动态混合形状捕获软组织如何随着运动变形。</p>
+<p>我们公式的简单性意味着可以从大量数据中训练SMPL。这也意味着它与当前的游戏引擎和图形软件兼容，运行速度比实时速度快得多。该模型已获Body Labs Inc.商业许可，可免费用于研究目的。  </p>
+<p>马普所所有论文：<a target="_blank" rel="noopener" href="https://ps.is.mpg.de/all_publications?page=4">https://ps.is.mpg.de/all_publications?page=4</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2020/04/07/CV/CV-Appliy-face/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/04/07/CV/CV-Appliy-face/" class="post-title-link" itemprop="url">计算机视觉--人脸识别应用</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-04-07 16:36:57" itemprop="dateCreated datePublished" datetime="2020-04-07T16:36:57+00:00">2020-04-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV-Apply/" itemprop="url" rel="index"><span itemprop="name">CV_Apply</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV-Apply/Face-Recongnition/" itemprop="url" rel="index"><span itemprop="name">Face Recongnition</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Flow"><a href="#Flow" class="headerlink" title="Flow"></a>Flow</h1><p>概念理解：什么是人脸识别？</p>
+<p><img src="/2020/04/07/CV/CV-Appliy-face/image-20200714105508084.png" alt="image-20200714105508084"></p>
+<h2 id="4特点"><a href="#4特点" class="headerlink" title="4特点"></a>4特点</h2><ol>
+<li>便捷性。人脸是生物特征，不需要携带类似身份证的东西</li>
+<li>非强制性。识别的过程甚至不需要对象的配合，只要拍摄到人脸就可以进行识别，例如安防领域就是如此。</li>
+<li>非接触性。不需要跟设备进行接触，相比指纹更加安全一些。</li>
+<li>并行处理。一张照片里有多个人脸时可以一起处理，不像指纹和虹膜，需要一个一个来。</li>
+</ol>
+<h2 id="人脸识别的-4-个步骤"><a href="#人脸识别的-4-个步骤" class="headerlink" title="人脸识别的 4 个步骤"></a>人脸识别的 4 个步骤</h2><p>人脸识别的过程中有4个关键的步骤：</p>
+<ol>
+<li>人脸检测</li>
+<li>人脸对齐</li>
+<li>人脸编码</li>
+<li>人脸匹配</li>
+</ol>
+<h3 id="人脸检测"><a href="#人脸检测" class="headerlink" title="人脸检测"></a>人脸检测</h3><p>常用api:  Yolo &gt; Dlib &gt; cv2</p>
+<p>人脸检测的目的是寻找图片中人脸的位置。当发现有人脸出现在图片中时，不管这个脸是谁，都会标记出人脸的坐标信息，或者将人脸切割出来。</p>
+<p>可以使用方向梯度直方图(HOG)来检测人脸位置。先将图片灰度化，接着计算图像中像素的梯度。通过将图像转变成HOG形式，就可以获得人脸位置。</p>
+<img src="/2020/04/07/CV/CV-Appliy-face/image-20200714110004953.png" alt="image-20200714110004953" style="zoom: 33%;">
+
+<h3 id="人脸对齐"><a href="#人脸对齐" class="headerlink" title="人脸对齐"></a>人脸对齐</h3><p>人脸对齐是将不同角度的人脸图像对齐成同一种标准的形状。</p>
+<p>先定位人脸上的特征点，然后通过几何变换（仿射、旋转、缩放），使各个特征点对齐（将眼睛、嘴等部位移到相同位置）。</p>
+<img src="/2020/04/07/CV/CV-Appliy-face/image-20200714110035830.png" alt="image-20200714110035830" style="zoom:33%;">
+
+<h3 id="人脸编码"><a href="#人脸编码" class="headerlink" title="人脸编码"></a>人脸编码</h3><p>人脸图像的像素值会被转换成紧凑且可判别的特征向量，这也被称为模板（template）。理想情况下，同一个主体的所有人脸都应该映射到相似的特征向量。</p>
+<img src="/2020/04/07/CV/CV-Appliy-face/image-20200714110052133.png" alt="image-20200714110052133" style="zoom:33%;">
+
+<h3 id="人脸匹配"><a href="#人脸匹配" class="headerlink" title="人脸匹配"></a>人脸匹配</h3><p>在人脸匹配构建模块中，两个模板会进行比较，从而得到一个相似度分数，该分数给出了两者属于同一个主体的可能性。</p>
+<img src="/2020/04/07/CV/CV-Appliy-face/image-20200714110106899.png" alt="image-20200714110106899" style="zoom:33%;">
+
+<h2 id="人脸识别的-5-个难点"><a href="#人脸识别的-5-个难点" class="headerlink" title="人脸识别的 5 个难点"></a>人脸识别的 5 个难点</h2><ol>
+<li>头部姿势</li>
+<li>年龄</li>
+<li>遮挡</li>
+<li>光照条件</li>
+<li>人脸表情</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://medium.com/@pkqiang49/%E4%B8%80%E6%96%87%E7%9C%8B%E6%87%82%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB-4%E4%B8%AA%E7%89%B9%E7%82%B9-4%E4%B8%AA%E5%AE%9E%E7%8E%B0%E6%AD%A5%E9%AA%A4-5%E4%B8%AA%E9%9A%BE%E7%82%B9-%E7%AE%97%E6%B3%95%E5%8F%91%E5%B1%95%E8%BD%A8%E8%BF%B9-2661078386ad">一文看懂人脸识别-4个特点-4个实现步骤-5个难点-算法发展轨迹</a></p>
+<h1 id="人脸识别"><a href="#人脸识别" class="headerlink" title="人脸识别"></a>人脸识别</h1><h3 id="1-人脸识别的相关概念"><a href="#1-人脸识别的相关概念" class="headerlink" title="1.人脸识别的相关概念"></a>1.人脸识别的相关概念</h3><p>​    人脸识别(Facial Recognition)，即通过视频采集设备获取用户的面部图像，再利用核心的算法对其脸部的五官位置、脸型和角度进行计算分析，进而和自身数据库里已有的范本进行比对，从而判断出用户的真实身份.人脸识别算法，在检测到人脸并定位面部关键特征点之后，主要的人脸区域就可以被裁剪出来，经过预处理之后，馈入后端的识别算法。识别算法要完成人脸特征的提取，并与库存的已知人脸进行比对，完成最终的分类</p>
+<p>2、人脸验证</p>
+<p>​        人脸验证做的是1：1的比对，其身份验证模式本质上是计算机对当前人脸与人像数据库进行快速人脸比对，并得出是否匹配的过程，可以简单理解为证明你就是你。就是我们先告诉人脸识别系统，我是张三，然后用来验证站在机器面前的“我”到底是不是张三。<br>​<br>​        这种模式最常见的应用场景便是人脸解锁，终端设备(如手机)只需将用户事先注册的照片与临场采集的照片做对比，判断是否为同一人，即可完成身份验证.1：1作为一种静态比对，一般在金融、信息安全领域中应用较多。例如在高速路、机场安检时，受检人员手持身份证等证件，通过检查通道，同时对受检人员的外貌及身份证信息进行识别，此过程就是典型的1：1模式的人脸识别。<br>​    </p>
+<p>1，face++（0.9950 ）；2，DeepFace（0.9735 ）；3,FR+FCN（0.9645 ）；4，DeepID（0.9745 ）；5，FaceNet（0.9963 ）；6， baidu的方法（0.9977 ）；7,pose+shape+expression augmentation（0.9807）；8，CNN-3DMM estimation(0.9235 )</p>
+<p>第一类：face++，DeepFace，DeepID，FaceNet和baidu。他们方法的核心是搜集大数据，通过更多更全的数据集让模型学会去识别人脸的多样性。这类方法适合百度&#x2F;腾讯&#x2F;谷歌等大企业，未来可以搜集更多更全的训练数据集。数据集包扩同一个体不同年龄段的照片，不同人种的照片，不同类型（美丑等）。通过更全面的数据，提高模型对现场应用中人脸差异的适应能力。</p>
+<p>第二类：FR+FCN，pose+shape+expression augmentation和CNN-3DMM estimation。这类方法采用的是合成的思路，通过3D模型等合成不同类型的人脸，增加数据集。这类方法操作成本更低，更适合推广。其中，特别是CNN-3DMM estimation，作者做了非常出色的工作，同时提供了源码，可以进一步参考和深度研究。</p>
+<p>常规人脸识别流程是：人脸检测-对齐-表达-分类。</p>
+<h3 id="DeepFace（0-9735-）【★★★】"><a href="#DeepFace（0-9735-）【★★★】" class="headerlink" title="DeepFace（0.9735 ）【★★★】"></a>DeepFace（0.9735 ）【★★★】</h3><p>一，基于3d模型的人脸对齐方法；二，大数据训练的人工神经网络。</p>
+<p>简介：基于开源框架实现的人脸识别、脸脸检测、人脸关键点检测等任务 各个任务分别在FaceDetection, FaceAlignment, FaceRecognition 三个文件中。人脸检测 baseline: 基于基于滑动窗口的人脸检测，将训练好了的网络改为全卷积网络，然后利用全卷积网络对于任意大小的图像输入，进行获取输出HeapMap。</p>
+<p>源码网址：<a target="_blank" rel="noopener" href="https://github.com/RiweiChen/DeepFace">https://github.com/RiweiChen/DeepFace</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">detect -&gt; aligh -&gt; represent -&gt; classify</span><br></pre></td></tr></table></figure>
+
+<p><strong>DeepID和FaceNet并没有对齐，</strong></p>
+<p><strong>DeepID的解决方案是将一个人脸切成很多部分，每个部分都训练一个模型，然后模型聚合。</strong></p>
+<p><strong>FaceNet则是没有考虑这一点，直接以数据量大和特殊的目标函数取胜。</strong></p>
+<h3 id="DeepID（0-9745-）【★★★】"><a href="#DeepID（0-9745-）【★★★】" class="headerlink" title="DeepID（0.9745 ）【★★★】"></a>DeepID（0.9745 ）【★★★】</h3><h3 id="FaceNet-0-9963-【★★★★】"><a href="#FaceNet-0-9963-【★★★★】" class="headerlink" title="FaceNet(0.9963)【★★★★】"></a>FaceNet(0.9963)【★★★★】</h3><h3 id="Baidu的方法：Targeting-Ultimate-Accuracy-Face-Recognition-via-Deep-Embedding"><a href="#Baidu的方法：Targeting-Ultimate-Accuracy-Face-Recognition-via-Deep-Embedding" class="headerlink" title="Baidu的方法：Targeting Ultimate Accuracy : Face Recognition via Deep Embedding"></a>Baidu的方法：<a href="https://link.zhihu.com/?target=http://xueshu.baidu.com/s?wd=paperuri:(3932460d37f978db26e386460904a032)&filter=sc_long_sign&sc_ks_para=q=Targeting+Ultimate+Accuracy:+Face+Recognition+via+Deep+Embedding&tn=SE_baiduxueshu_c1gjeupa&ie=utf-8&sc_us=5602776512742270991">Targeting Ultimate Accuracy : Face Recognition via Deep Embedding</a></h3><h3 id="pose-shape-expression-augmentation（0-9807）"><a href="#pose-shape-expression-augmentation（0-9807）" class="headerlink" title="pose+shape+expression augmentation（0.9807）"></a>pose+shape+expression augmentation（0.9807）</h3><h3 id="CNN-3DMM-estimation-0-9235"><a href="#CNN-3DMM-estimation-0-9235" class="headerlink" title="CNN-3DMM estimation(0.9235)"></a>CNN-3DMM estimation(0.9235)</h3><h3 id="Insightface-【★★★★★】"><a href="#Insightface-【★★★★★】" class="headerlink" title="Insightface 【★★★★★】"></a>Insightface 【★★★★★】</h3><p><a target="_blank" rel="noopener" href="https://github.com/deepinsight/insightface">https://github.com/deepinsight/insightface</a></p>
+<ul>
+<li>All face images are aligned by <a target="_blank" rel="noopener" href="https://kpzhang93.github.io/MTCNN_face_detection_alignment/index.html">MTCNN</a> and cropped to 112x112:</li>
+<li></li>
+</ul>
+<h1 id="引用资源："><a href="#引用资源：" class="headerlink" title="引用资源："></a>引用资源：</h1><p><a target="_blank" rel="noopener" href="https://www.sharebook.site/2017/07/30/face-recognition-technology-trend-and-summary/">人脸识别技术开源代码及最新趋势汇总</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/24816781">基于深度学习的人脸识别技术综述</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/dongxiaodong/p/13157901.html">Python人脸识别和手势识别应用（face++）开发</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.sohu.com/a/333012550_99979179">face_recognition 史上最简单的人脸识别项目登上GitHub趋势榜 </a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Anita9002/p/7798907.html">基于机器学习人脸识别face recognition具体的算法和原理</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/27aae9ec045d">人脸识别、人脸检测、人脸对齐相关算法和论文汇总</a> <a target="_blank" rel="noopener" href="https://github.com/polarisZhao/awesome-face">https://github.com/polarisZhao/awesome-face</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/25025596">基于mtcnn和facenet的实时人脸检测与识别系统开发</a></p>
+<h2 id="OpenFace"><a href="#OpenFace" class="headerlink" title="OpenFace"></a>OpenFace</h2><p>​    <em>Free and open source face recognition with deep neural networks.</em></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/FlyAway2013/p/8184089.html">Openface 简单入门</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/hongbin_xu/article/details/80253684?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-3.nonecase&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-3.nonecase">OpenFace学习(2)：FaceNet+SVM匹配人脸</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_14845119/article/details/53994607">OpenPose 介绍</a></p>
+<p><img src="/2020/04/07/CV/CV-Appliy-face/20170103150455829" alt="img"></p>
+<h2 id="DeepFace"><a href="#DeepFace" class="headerlink" title="DeepFace"></a>DeepFace</h2><p>FaceDetection, </p>
+<p>FaceAlignment, </p>
+<p>FaceRecognition</p>
+<p>Face Detection: baseline: 基于基于滑动窗口的人脸检测，将训练好了的网络改为全卷积网络，然后利用全卷积网络对于任意大小的图像输入，进行获取输出HeapMap。</p>
+<p>人脸关键点检测: try1_1： 基于DeepID网络结构的人脸关键点检测</p>
+<p>Identifition : deepid： 基于DeepID网络结构的人脸验证</p>
+<h2 id="Facenet"><a href="#Facenet" class="headerlink" title="Facenet"></a>Facenet</h2><p>​        Face alignment using <strong>MTCNN</strong></p>
+<p>​        Face Recognition using <strong>Inception-ResNet-v1 model</strong>        </p>
+<p>​      </p>
+<h2 id="face-recognition"><a href="#face-recognition" class="headerlink" title="face_recognition"></a>face_recognition</h2><p>face_locations:     返回人脸的box</p>
+<p>face_landmarks:  返回人脸的关键点，五官，轮廓    _raw_face_landmarks</p>
+<p>face Recognition：</p>
+<p>​        face_encodings： _raw_face_landmarks</p>
+<p>​        compare_faces</p>
+<p>特点：</p>
+<ul>
+<li>流程清晰</li>
+<li>部署简单</li>
+<li>无法自定义，较难基于此架构的重新训练</li>
+</ul>
+<h1 id="猫脸识别"><a href="#猫脸识别" class="headerlink" title="猫脸识别"></a>猫脸识别</h1><p>face detection 提取</p>
+<p>face alignment 对齐</p>
+<p>face recongnition 识别</p>
+<ul>
+<li>face vertification</li>
+<li>face identification</li>
+</ul>
+<p>detection</p>
+<p>alignment</p>
+<h1 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h1><p>FaceDetection, </p>
+<p>FaceAlignment, </p>
+<p>FaceRecognition</p>
+<h2 id="目标检测："><a href="#目标检测：" class="headerlink" title="目标检测："></a>目标检测：</h2><p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1483587">盘点性能最强的One-stage目标检测算法</a></p>
+<p><img src="/2020/04/07/CV/CV-Appliy-face/image-20200708145221603.png" alt="image-20200708145221603"></p>
+<h2 id="Face-Detection相关资料："><a href="#Face-Detection相关资料：" class="headerlink" title="Face Detection相关资料："></a>Face Detection相关资料：</h2><p><strong>1.单个CNN人脸检测方法</strong><br><strong>2.级联CNN人脸检测方法</strong><br><strong>3.OpenCV人脸检测方法</strong><br><strong>4.Dlib人脸检测方法</strong><br><strong>5.libfacedetect人脸检测方法</strong><br><strong>6.Seetaface人脸检测方法</strong></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_14916279/article/details/71273892">人脸检测（一）单个CNN</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_14916279/article/details/71305094">人脸检测（二）.级联CNN</a></p>
+<p>​      《A Convolution Neural Network Cascade for Face Detection》</p>
+<p>​        <a target="_blank" rel="noopener" href="http://www.cs.stevens.edu/~ghua/publication/CVPR15b.pdf">http://www.cs.stevens.edu/~ghua/publication/CVPR15b.pdf</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/anson0910/CNN_face_detection">github开源代码</a><br><a target="_blank" rel="noopener" href="https://github.com/anson0910/CNN_face_detection_models">github开源模型</a></p>
+<p><a href></a></p>
+<p>Face Alignment</p>
+<h3 id="MTCNN"><a href="#MTCNN" class="headerlink" title="MTCNN"></a>MTCNN</h3><p>MTCNN 包含三个级联的多任务卷积神经网络，分别是 Proposal Network (P-Net)、Refine Network (R-Net)、Output Network (O-Net)，每个多任务卷积神经网络均有三个学习任务，分别是人脸分类、边框回归和关键点定位。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2020/04/07/CV/CV-Datasets-Animal/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/04/07/CV/CV-Datasets-Animal/" class="post-title-link" itemprop="url">计算机视觉--视觉数据库--The Oxford-IIIT 宠物图像数据</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-04-07 16:36:57" itemprop="dateCreated datePublished" datetime="2020-04-07T16:36:57+00:00">2020-04-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/" itemprop="url" rel="index"><span itemprop="name">CV</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Datasets/" itemprop="url" rel="index"><span itemprop="name">Datasets</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/Datasets/" itemprop="url" rel="index"><span itemprop="name">Datasets</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/Datasets/Animal/" itemprop="url" rel="index"><span itemprop="name">Animal</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="The-Oxford-IIIT-宠物图像数据"><a href="#The-Oxford-IIIT-宠物图像数据" class="headerlink" title="The Oxford-IIIT 宠物图像数据"></a><strong>The Oxford-IIIT 宠物图像数据</strong></h2><p><a target="_blank" rel="noopener" href="http://www.robots.ox.ac.uk/~vgg/data/pets/">http://www.robots.ox.ac.uk/~vgg/data/pets/</a></p>
+<p>37种宠物，每种宠物200张左右宠物图片，并同时包含宠物轮廓标注信息。</p>
+<p><img src="/2020/04/07/CV/CV-Datasets-Animal/7514abd1-4ce3-43af-8419-560987a1d593.jpg" alt="pet_annotations"></p>
+<p><img src="/2020/04/07/CV/CV-Datasets-Animal/image-20200715155738768.png" alt="image-20200715155738768"></p>
+<h3 id="品种-种类："><a href="#品种-种类：" class="headerlink" title="品种&#x2F;种类："></a>品种&#x2F;种类：</h3><p>37种 宠物</p>
+<p>1-Dog 种类：25</p>
+<p>2-Cat 种类：12</p>
+<p><img src="/2020/04/07/CV/CV-Datasets-Animal/image-20200715155816386.png" alt="image-20200715155816386"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2020/04/07/CV/CV-datasets/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/04/07/CV/CV-datasets/" class="post-title-link" itemprop="url">计算机视觉--视觉3D数据库</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-04-07 16:36:57" itemprop="dateCreated datePublished" datetime="2020-04-07T16:36:57+00:00">2020-04-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/" itemprop="url" rel="index"><span itemprop="name">CV</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Datasets/" itemprop="url" rel="index"><span itemprop="name">Datasets</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/Datasets/" itemprop="url" rel="index"><span itemprop="name">Datasets</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/Datasets/3D/" itemprop="url" rel="index"><span itemprop="name">3D</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[TOC]</p>
+<p>计算机视觉领域</p>
+<p><a target="_blank" rel="noopener" href="https://www.paperswithcode.com/area/computer-vision">https://www.paperswithcode.com/area/computer-vision</a></p>
+<h2 id="UMD-Faces-面部数据集"><a href="#UMD-Faces-面部数据集" class="headerlink" title="UMD Faces 面部数据集"></a>UMD Faces 面部数据集</h2><h3 id="UMD-Faces-Dataset"><a href="#UMD-Faces-Dataset" class="headerlink" title="UMD Faces Dataset"></a>UMD Faces Dataset</h3><p>UMD Faces Dataset 是一个面部数据集，主要用于身份鉴定研究，它拥有 8501 个主题共计 367,920 个面孔。该数据集分为静止图像和视频帧两部分，其中静止图像包含 367,888 张图，共计 8277 个主题；视频帧则包含 22,000 个主题视频，共计 370 万个带注释的视频帧。</p>
+<p><a target="_blank" rel="noopener" href="https://hyper.ai/datasets/5537">https://hyper.ai/datasets/5537</a></p>
+<h2 id="3D-Face"><a href="#3D-Face" class="headerlink" title="3D Face"></a>3D Face</h2><h3 id="300W"><a href="#300W" class="headerlink" title="300W"></a>300W</h3><p>300 Faces In-the-Wild Challenge (300-W)</p>
+<p>官网介绍：<a target="_blank" rel="noopener" href="https://ibug.doc.ic.ac.uk/resources/300-W/">https://ibug.doc.ic.ac.uk/resources/300-W/</a></p>
+<p>中文介绍：<a target="_blank" rel="noopener" href="https://blog.csdn.net/lgh0824/article/details/88536215">https://blog.csdn.net/lgh0824/article/details/88536215</a></p>
+<h3 id="3DDFA的生成数据"><a href="#3DDFA的生成数据" class="headerlink" title="3DDFA的生成数据"></a>3DDFA的生成数据</h3><p><a target="_blank" rel="noopener" href="http://www.cbsr.ia.ac.cn/users/xiangyuzhu/projects/3DDFA/main.htm">http://www.cbsr.ia.ac.cn/users/xiangyuzhu/projects/3DDFA/main.htm</a></p>
+<p>300W-3D<br>300W-3D-Face</p>
+<p>300W-LP 合成了300W的大姿态人脸图像。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[300W-3D]: https://drive.google.com/file/d/0B7OEHD3T4eCkRFRPSXdFWEhRdlE/view?usp=sharing </span><br><span class="line">[300W-3D-Face]: https://drive.google.com/file/d/0B7OEHD3T4eCkZmgzUWZfd2FVVWs/view?usp=sharing </span><br><span class="line">[300W-LP]: https://drive.google.com/file/d/0B7OEHD3T4eCkVGs0TkhUWFN6N1k/view?usp=sharing</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="http://www.cbsr.ia.ac.cn/users/xiangyuzhu/projects/3DDFA/Database/AFLW2000-3D.zip">AFLW2000-3D</a> </p>
+<ul>
+<li><p>项目：3DDFA</p>
+<p>  AFLW2000-3D由AFLW数据库的前2000张图片及其三维信息组成。三维信息由3DMM重建（Blanz et.al A morphable model for the synthesis of 3d faces, SIGGRAPH’99）得到，并且包含68个特征点的三维信息。该数据库的三维数据精准度存在争议。<br>  ————————————————</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/media/simon/新加卷1/dataset/3d_face/AFLW2000/</span><br><span class="line">image00040.jpg</span><br><span class="line">image00040.mat</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">具体包含以下内容：</span><br><span class="line"></span><br><span class="line">1）pt2d：21个二维点</span><br><span class="line">2）Illum_Para：1×10 光照参数</span><br><span class="line">3）Color_Para：1×7 颜色参数</span><br><span class="line">4）Tex_Para： 199×1 纹理参数</span><br><span class="line">5）Shape Para： 199×1 形状参数</span><br><span class="line">6）Exp_Para： 29×1 表情参数</span><br><span class="line">7）Pose： 1×7 姿态参数，分别为：pitch， yaw， roll， translation(dx，dy，dz)，scale</span><br><span class="line">8）pt3d_68： 3×68 三维特征点</span><br><span class="line">————————————————</span><br><span class="line">原文链接：https://blog.csdn.net/AuntieLee/article/details/105940291</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/04/07/CV/CV-datasets/image00040.jpg" title alt="image00040" width="196">image00040.mat</p>
+<h2 id="3D-Body"><a href="#3D-Body" class="headerlink" title="3D Body"></a>3D Body</h2><h3 id="Human-3-6M"><a href="#Human-3-6M" class="headerlink" title="Human 3.6M"></a>Human 3.6M</h3><ul>
+<li><p>常用于3D人体姿态估计</p>
+</li>
+<li><p>11个人</p>
+</li>
+</ul>
+<p>Diversity and Size</p>
+<ul>
+<li>• 3.6 million 3D human poses and corresponding images</li>
+<li>• 11 professional actors (6 male, 5 female)</li>
+<li>• 17 scenarios (discussion, smoking, taking photo, talking on the phone…)</li>
+</ul>
+<p>Accurate Capture and Synchronization</p>
+<ul>
+<li>• High-resolution 50Hz video from 4 calibrated cameras</li>
+<li>• Accurate 3D joint positions and joint angles from high-speed motion capture system</li>
+<li>• Pixel-level 24 body part labels for each configuration</li>
+<li>• Time-of-flight range data</li>
+<li>• 3D laser scans of the actors</li>
+<li>• Accurate background subtraction, person bounding boxes</li>
+</ul>
+<p>Support for Development</p>
+<ul>
+<li>• Precomputed image descriptors</li>
+<li>• Software for visualization and discriminative human pose prediction</li>
+<li>• Performance evaluation on withheld test set</li>
+</ul>
+<h3 id="FAUST-2014"><a href="#FAUST-2014" class="headerlink" title="FAUST 2014"></a>FAUST 2014</h3><ul>
+<li>300个2D扫描人体数据</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>数据库</th>
+<th>网址</th>
+<th>header 2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FAUST</td>
+<td><a target="_blank" rel="noopener" href="http://faust.is.tue.mpg.de/">http://faust.is.tue.mpg.de/</a></td>
+<td>A data set containing 300 real, high-resolution human scans, with automatically computed ground-truth correspondences. <strong>一个包含300个真实</strong>，高分辨率人体扫描的数据集，具有自动计算的地面实况对应关系（Max Planck Tubingen）</td>
+</tr>
+<tr>
+<td>Dynamic FAUST</td>
+<td></td>
+<td>3D人体动态数据库, 提供40,000个原始网格和对齐网格的数据集</td>
+</tr>
+</tbody></table>
+<h3 id="SAESAR"><a href="#SAESAR" class="headerlink" title="SAESAR"></a>SAESAR</h3><p>SMPL使用的数据集</p>
+<p>CAESAR <a target="_blank" rel="noopener" href="http://store.sae.org/caesar/">http://store.sae.org/caesar/</a> 美国和欧洲的表面人体测量资源项目<br>10,000美元，2,400名男性和女性</p>
+<h3 id="Dyma"><a href="#Dyma" class="headerlink" title="Dyma"></a>Dyma</h3><p><a target="_blank" rel="noopener" href="http://dyna.is.tue.mpg.de/">http://dyna.is.tue.mpg.de/</a></p>
+<p>使用十个对象的40,000多次扫描</p>
+<h3 id="TOSCA"><a href="#TOSCA" class="headerlink" title="TOSCA"></a>TOSCA</h3><p>dataset contains synthetic meshes of fixed topology with artist-defined deformations.</p>
+<p>数据集包含具有艺术家定义的变形的固定拓扑的合成网格。</p>
+<p> synthetic dataset that is widely used for evaluation of mesh registration methods. It provides 80 artificially created meshes of <strong>animals and people</strong> (with 3 subjects in a dozen different poses each). </p>
+<h3 id="SHREC"><a href="#SHREC" class="headerlink" title="SHREC"></a>SHREC</h3><p>为TOSCA添加了各种⼈造噪声⽹格，</p>
+<h3 id="SCAPE"><a href="#SCAPE" class="headerlink" title="SCAPE"></a>SCAPE</h3><h3 id="Buff"><a href="#Buff" class="headerlink" title="Buff"></a>Buff</h3><p><a target="_blank" rel="noopener" href="http://buff.is.tue.mpg.de/">http://buff.is.tue.mpg.de/</a></p>
+<p>Given static 3D scans or 3D scan sequences (in pink), we estimate the naked shape under clothing (beige)</p>
+<p>给定3D扫描序列，我们的模型评估不穿衣服的人体。</p>
+<p>includes high resolution 3D scan sequences of 3 males and 3 females in different clothing styles.</p>
+<p>3男3女的高分辨率的穿不同衣服的数据集。</p>
+<h2 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h2><h3 id="开源数据库统计："><a href="#开源数据库统计：" class="headerlink" title="开源数据库统计："></a>开源数据库统计：</h3><p> <a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_37570854/article/details/88736189">https://blog.csdn.net/m0_37570854/article/details/88736189</a></p>
+<h3 id="3D人体重建技术："><a href="#3D人体重建技术：" class="headerlink" title="3D人体重建技术："></a>3D人体重建技术：</h3><p><a target="_blank" rel="noopener" href="https://graphics.soe.ucsc.edu/data/BodyModels/index.html">https://graphics.soe.ucsc.edu/data/BodyModels/index.html</a></p>
+<ul>
+<li>SCAPE - (<a target="_blank" rel="noopener" href="http://ai.stanford.edu/~drago/Projects/scape/scape.html">paper website</a>) (<a target="_blank" rel="noopener" href="https://graphics.soe.ucsc.edu/private/data/SCAPE/index.html">data</a>) - The correspondence between the meshes above is identical to that in SCAPE</li>
+<li>FAUST - (<a target="_blank" rel="noopener" href="http://faust.is.tue.mpg.de/overview">website-data-code</a>) - different people in different poses</li>
+<li>BodyLabs - (<a target="_blank" rel="noopener" href="http://www.bodylabs.com/technology.html">web</a>) - Company commercializing body model tools</li>
+<li>MPI - (<a target="_blank" rel="noopener" href="http://gvvperfcapeva.mpi-inf.mpg.de/public/ScanDB/">website-data-code</a>) - different people in different poses from a different MPI lab</li>
+<li>MPII Human Shape (<a target="_blank" rel="noopener" href="http://humanshape.mpi-inf.mpg.de/">website-data-code</a>) - CAESAE dataset processed by MPI</li>
+<li><strong>CAESAR</strong> - (<a target="_blank" rel="noopener" href="http://store.sae.org/caesar/">website-data</a>) - Sells complete CAESAR dataset with more measurements and authorized to provide commercial license.</li>
+<li>other - (<a target="_blank" rel="noopener" href="https://graphics.soe.ucsc.edu/data/">web</a>) - Other data I find around my lab that might be helpful to someone</li>
+</ul>
+<h1 id="Web-Face-Recognition-Training-Datasets-Updating"><a href="#Web-Face-Recognition-Training-Datasets-Updating" class="headerlink" title="Web Face Recognition Training Datasets (Updating)"></a>Web Face Recognition Training Datasets (Updating)</h1><p><a target="_blank" rel="noopener" href="https://github.com/deepinsight/insightface/wiki/Dataset-Zoo">Github-DatasetZoo</a></p>
+<h3 id="CASIA-Webface-10K-ids-0-5M-images-1"><a href="#CASIA-Webface-10K-ids-0-5M-images-1" class="headerlink" title="CASIA-Webface (10K ids&#x2F;0.5M images) [1]"></a>CASIA-Webface (10K ids&#x2F;0.5M images) [1]</h3><p><a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1AfHdPsxJZBD8kBJeIhmq1w">baidu</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.dropbox.com/s/lfluom5ybqqln02/faces_CASIA_112x112.zip?dl=0">dropbox</a></p>
+<h3 id="CelebA-10K-ids-0-2M-images-2"><a href="#CelebA-10K-ids-0-2M-images-2" class="headerlink" title="CelebA (10K ids&#x2F;0.2M images) [2]"></a>CelebA (10K ids&#x2F;0.2M images) [2]</h3><h3 id="UMDFace-8K-ids-0-37M-images-3"><a href="#UMDFace-8K-ids-0-37M-images-3" class="headerlink" title="UMDFace (8K ids&#x2F;0.37M images) [3]"></a>UMDFace (8K ids&#x2F;0.37M images) [3]</h3><p><a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1aGutJwNWpV-lA0f_7eNsGQ">baidu</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.dropbox.com/s/fv0y30mawsejweu/faces_umd.zip?dl=0">dropbox</a></p>
+<h3 id="VGG2-9K-ids-3-31M-images-4"><a href="#VGG2-9K-ids-3-31M-images-4" class="headerlink" title="VGG2 (9K ids&#x2F;3.31M images) [4]"></a>VGG2 (9K ids&#x2F;3.31M images) [4]</h3><p><a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1c3KeLzy">baidu</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.dropbox.com/s/m9pm1it7vsw3gj0/faces_vgg2_112x112.zip?dl=0">dropbox</a></p>
+<h3 id="VGG2-Face-HD"><a href="#VGG2-Face-HD" class="headerlink" title="VGG2-Face HD()"></a>VGG2-Face HD()</h3><p>90G</p>
+<h3 id="MS1M-IBUG-85K-ids-3-8M-images-5-6"><a href="#MS1M-IBUG-85K-ids-3-8M-images-5-6" class="headerlink" title="MS1M-IBUG (85K ids&#x2F;3.8M images) [5,6]"></a>MS1M-IBUG (85K ids&#x2F;3.8M images) [5,6]</h3><p><a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1nxmSCch">baidu</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.dropbox.com/s/4de5ogqj4vargsw/faces_ms1m-refine-v1_112x112.zip?dl=0">dropbox</a></p>
+<h3 id="MS1M-ArcFace-85K-ids-5-8M-images-5-7-Recommend"><a href="#MS1M-ArcFace-85K-ids-5-8M-images-5-7-Recommend" class="headerlink" title="MS1M-ArcFace (85K ids&#x2F;5.8M images) [5,7] (Recommend)"></a>MS1M-ArcFace (85K ids&#x2F;5.8M images) [5,7] (Recommend)</h3><p><a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1S6LJZGdqcZRle1vlcMzHOQ">baidu</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.dropbox.com/s/wpx6tqjf0y5mf6r/faces_ms1m-refine-v2_112x112.zip?dl=0">dropbox</a></p>
+<h3 id="Asian-Celeb-94K-ids-2-8M-images-8-Recommend"><a href="#Asian-Celeb-94K-ids-2-8M-images-8-Recommend" class="headerlink" title="Asian-Celeb (94K ids&#x2F;2.8M images)[8] (Recommend)"></a>Asian-Celeb (94K ids&#x2F;2.8M images)[8] (Recommend)</h3><p><a target="_blank" rel="noopener" href="https://pan.baidu.com/s/12wSgofDy1flFf6lOyAxJRg">baidu</a> faces_glintasia.zip</p>
+<p><a target="_blank" rel="noopener" href="https://www.dropbox.com/s/5cd1ppfqprjluaq/faces_glintasia.zip?dl=0">dropbox</a> faces_glintasia.zip</p>
+<h3 id="DeepGlint-181K-ids-6-75M-images-8-Recommend"><a href="#DeepGlint-181K-ids-6-75M-images-8-Recommend" class="headerlink" title="DeepGlint (181K ids&#x2F;6.75M images) [8] (Recommend)"></a>DeepGlint (181K ids&#x2F;6.75M images) [8] (Recommend)</h3><p><a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1yApUbklBgRgOyOV4o3J8Eg">baidu</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.dropbox.com/s/4x39o2x40rewl5l/faces_glint.zip?dl=0">dropbox</a></p>
+<h3 id="IMDB-Face-59K-ids-1-7M-images-9"><a href="#IMDB-Face-59K-ids-1-7M-images-9" class="headerlink" title="IMDB-Face (59K ids&#x2F;1.7M images) [9]"></a>IMDB-Face (59K ids&#x2F;1.7M images) [9]</h3><h3 id="Celeb500k-500K-ids-50M-images-10"><a href="#Celeb500k-500K-ids-50M-images-10" class="headerlink" title="Celeb500k (500K ids&#x2F;50M images) [10]"></a>Celeb500k (500K ids&#x2F;50M images) [10]</h3><h3 id="MegaFace-672K-ids-4-7M-images-11"><a href="#MegaFace-672K-ids-4-7M-images-11" class="headerlink" title="MegaFace (672K ids&#x2F;4.7M images) [11]"></a>MegaFace (672K ids&#x2F;4.7M images) [11]</h3><h1 id="Face-Recognition-Validation-Datasets"><a href="#Face-Recognition-Validation-Datasets" class="headerlink" title="Face Recognition Validation Datasets"></a>Face Recognition Validation Datasets</h1><h3 id="CFP-FP-500-ids-7K-images-7K-pairs-12"><a href="#CFP-FP-500-ids-7K-images-7K-pairs-12" class="headerlink" title="CFP-FP (500 ids&#x2F;7K images&#x2F;7K pairs)[12]"></a>CFP-FP (500 ids&#x2F;7K images&#x2F;7K pairs)[12]</h3><h3 id="AgeDB-30-570-ids-12-240-images-6K-pairs-13-6"><a href="#AgeDB-30-570-ids-12-240-images-6K-pairs-13-6" class="headerlink" title="AgeDB-30 (570 ids&#x2F;12,240 images&#x2F;6K pairs)[13,6]"></a>AgeDB-30 (570 ids&#x2F;12,240 images&#x2F;6K pairs)[13,6]</h3><h3 id="LFW-5749-ids-13233-images-6K-pairs-14"><a href="#LFW-5749-ids-13233-images-6K-pairs-14" class="headerlink" title="LFW (5749 ids&#x2F;13233 images&#x2F;6K pairs)[14]"></a>LFW (5749 ids&#x2F;13233 images&#x2F;6K pairs)[14]</h3><h3 id="CALFW-5749-ids-13233-images-6K-pairs-15"><a href="#CALFW-5749-ids-13233-images-6K-pairs-15" class="headerlink" title="CALFW (5749 ids&#x2F;13233 images&#x2F;6K pairs)[15]"></a>CALFW (5749 ids&#x2F;13233 images&#x2F;6K pairs)[15]</h3><h3 id="CPLFW-5749-ids-13233-images-6K-pairs-16"><a href="#CPLFW-5749-ids-13233-images-6K-pairs-16" class="headerlink" title="CPLFW (5749 ids&#x2F;13233 images&#x2F;6K pairs)[16]"></a>CPLFW (5749 ids&#x2F;13233 images&#x2F;6K pairs)[16]</h3><h1 id="Face-Recognition-Image-Test-Datasets"><a href="#Face-Recognition-Image-Test-Datasets" class="headerlink" title="Face Recognition Image Test Datasets"></a>Face Recognition Image Test Datasets</h1><h3 id="MegaFace"><a href="#MegaFace" class="headerlink" title="MegaFace"></a>MegaFace</h3><h3 id="IJB-IJB-B-IJB-C"><a href="#IJB-IJB-B-IJB-C" class="headerlink" title="IJB (IJB-B, IJB-C)"></a>IJB (IJB-B, IJB-C)</h3><h3 id="TrillionPairs"><a href="#TrillionPairs" class="headerlink" title="TrillionPairs"></a>TrillionPairs</h3><h3 id="NIST"><a href="#NIST" class="headerlink" title="NIST"></a>NIST</h3><h1 id="Face-Recognition-Video-Test-Datasets"><a href="#Face-Recognition-Video-Test-Datasets" class="headerlink" title="Face Recognition Video Test Datasets"></a>Face Recognition Video Test Datasets</h1><h3 id="YTF"><a href="#YTF" class="headerlink" title="YTF"></a>YTF</h3><h3 id="IQIYI"><a href="#IQIYI" class="headerlink" title="IQIYI"></a>IQIYI</h3><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>[1] Dong Yi, Zhen Lei, Shengcai Liao, Stan Z. Li. Learning Face Representation from Scratch. arXiv:1411.7923, 2014.</p>
+<p>[2] Ziwei Liu, Ping Luo, Xiaogang Wang, Xiaoou Tang. Deep Learning Face Attributes in the Wild, ICCV, 2015.</p>
+<p>[3] Bansal Ankan, Nanduri Anirudh, Castillo Carlos D, Ranjan Rajeev, Chellappa, Rama. UMDFaces: An Annotated Face Dataset for Training Deep Networks, arXiv:1611.01484v2, 2016.</p>
+<p>[4] Qiong Cao, Li Shen, Weidi Xie, Omkar M. Parkhi, Andrew Zisserman. VGGFace2: A dataset for recognising faces across pose and age. FG, 2018.</p>
+<p>[5] Yandong Guo, Lei Zhang, Yuxiao Hu, Xiaodong He, Jianfeng Gao. Ms-celeb-1m: A dataset and benchmark for large-scale face recognition. ECCV, 2016.</p>
+<p>[6] Jiankang Deng, Yuxiang Zhou, Stefanos Zafeiriou. Marginal loss for deep face recognition, CVPRW, 2017.</p>
+<p>[7] Jiankang Deng, Jia Guo, Stefanos Zafeiriou. Arcface: Additive angular margin loss for deep face recognition, arXiv:1801.07698, 2018.</p>
+<p>[8] <a target="_blank" rel="noopener" href="http://trillionpairs.deepglint.com/">http://trillionpairs.deepglint.com/</a></p>
+<p>[9] Wang Fei, Chen Liren, Li Cheng, Huang Shiyao, Chen Yanjie, Qian Chen, Loy, Chen Change. The Devil of Face Recognition is in the Noise, ECCV, 2018.</p>
+<p>[10] Cao Jiajiong, Li Yingming, Zhang Zhongfei, Celeb-500K: A Large Training Dataset for Face Recognition, ICIP, 2018.</p>
+<p>[11] Nech Aaron, Kemelmacher-Shlizerman Ira, Level Playing Field For Million Scale Face Recognition, CVPR, 2017.</p>
+<p>[12] Sengupta Soumyadip, Chen Jun-Cheng, Castillo Carlos, Patel Vishal M, Chellappa Rama, Jacobs David W, Frontal to profile face verification in the wild, WACV, 2016.</p>
+<p>[13] Moschoglou, Stylianos and Papaioannou, Athanasios and Sagonas, Christos and Deng, Jiankang and Kotsia, Irene and Zafeiriou, Stefanos, Agedb: the first manually collected, in-the-wild age database, CVPRW, 2017.</p>
+<p>[14] Gary B. Huang, Manu Ramesh, Tamara Berg, and Erik Learned-Miller. Labeled Faces in the Wild: A Database for Studying Face Recognition in Unconstrained Environments, 2007.</p>
+<p>[15] Zheng Tianyue, Deng Weihong, Hu Jiani, Cross-age lfw: A database for studying cross-age face recognition in unconstrained environments, arXiv:1708.08197, 2017.</p>
+<p>[16] Zheng, Tianyue, and Weihong Deng. Cross-Pose LFW: A Database for Studying Cross-Pose Face Recognition in Unconstrained Environments, 2018.</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2020/03/26/CV_3D/CV-3D-Model-BodyClothing/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/26/CV_3D/CV-3D-Model-BodyClothing/" class="post-title-link" itemprop="url">CV-3D-Model-Apply</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-26 12:02:48" itemprop="dateCreated datePublished" datetime="2020-03-26T12:02:48+00:00">2020-03-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV-3D/" itemprop="url" rel="index"><span itemprop="name">CV_3D</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV-3D/3D-Body/" itemprop="url" rel="index"><span itemprop="name">3D Body</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Pons-Moll人体衣服估计相关论文"><a href="#Pons-Moll人体衣服估计相关论文" class="headerlink" title="Pons-Moll人体衣服估计相关论文"></a>Pons-Moll人体衣服估计相关论文</h1><p>[TOC]</p>
+<p>Gerard Pons-Moll virtualhumans.mpi-inf.mpg.de<a target="_blank" rel="noopener" href="https://virtualhumans.mpi-inf.mpg.de/people/pons-moll.html">官网</a></p>
+<p><img src="/2020/03/26/CV_3D/CV-3D-Model-BodyClothing/v2-d1dad1b56697015e66f044a1701dc1f1_180x120.jpg" alt="图标"></p>
+<h3 id="Siggraph-2017-ClothCap-Seamless-4D-Clothing-Capture-and-Retargeting"><a href="#Siggraph-2017-ClothCap-Seamless-4D-Clothing-Capture-and-Retargeting" class="headerlink" title="[Siggraph, 2017] [ClothCap: Seamless 4D Clothing Capture and Retargeting]"></a>[Siggraph, 2017] [ClothCap: Seamless 4D Clothing Capture and Retargeting]</h3><p><a target="_blank" rel="noopener" href="https://ps.is.tuebingen.mpg.de/publications/pons-moll-siggraph2017">论文网站</a></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/97712714">论文解读</a></p>
+</blockquote>
+<p><img src="/2020/03/26/CV_3D/CV-3D-Model-BodyClothing/v2-e2769ebaa85594b949e4f85a014729d5_720w.jpg" alt="img"> </p>
+<p><strong>问题：</strong> 如何对衣服进行捕捉</p>
+<p><strong>输入：</strong> 扫描获得的4D的有纹理的人体数据</p>
+<p><strong>输出：</strong> 多种衣服几何模型</p>
+<h3 id="ICCV-2017-A-Generative-Model-of-People-in-Clothing"><a href="#ICCV-2017-A-Generative-Model-of-People-in-Clothing" class="headerlink" title="[ICCV, 2017] [A Generative Model of People in Clothing]"></a>[ICCV, 2017] [A Generative Model of People in Clothing]</h3><p><a target="_blank" rel="noopener" href="http://files.is.tuebingen.mpg.de/classner/gp/">Paper</a></p>
+<p><img src="/2020/03/26/CV_3D/CV-3D-Model-BodyClothing/v2-36a309732d8c876c452b7c3286bdc20b_720w.jpg" alt="img"> </p>
+<p><strong>问题：</strong> 如何生成多种衣服外观的人体图片</p>
+<p><strong>输入：</strong> 有姿势的SMPL模型，及其分割</p>
+<p><strong>输出：</strong> 不同衣着的对应姿势的图片</p>
+<h3 id="CVPR-2018-Video-Based-Reconstruction-of-3D-People-Models"><a href="#CVPR-2018-Video-Based-Reconstruction-of-3D-People-Models" class="headerlink" title="[CVPR, 2018] [Video Based Reconstruction of 3D People Models]"></a>[CVPR, 2018] [Video Based Reconstruction of 3D People Models]</h3><p><a target="_blank" rel="noopener" href="https://virtualhumans.mpi-inf.mpg.de/papers/alldieck2018video/alldieck2018videoshapes.pdf">Paper</a></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/97690143">论文解读</a></p>
+</blockquote>
+<p><img src="/2020/03/26/CV_3D/CV-3D-Model-BodyClothing/v2-2e71c623346825e4327038443fb1dd04_720w.jpg" alt="img"> </p>
+<p><strong>问题：</strong> 如何从RGB视频中获取细致的人体模型</p>
+<p><strong>输入：</strong> 单人的单目视频+轮廓</p>
+<p><strong>输出：</strong> 基于SMPL的细致的人体模型</p>
+<h3 id="CVPR-2018-DoubleFusion-Real-time-Capture-of-Human-Performance-with-Inner-Body-Shape-from-a-Depth-Sensor"><a href="#CVPR-2018-DoubleFusion-Real-time-Capture-of-Human-Performance-with-Inner-Body-Shape-from-a-Depth-Sensor" class="headerlink" title="[CVPR, 2018] [DoubleFusion: Real-time Capture of Human Performance with Inner Body Shape from a Depth Sensor]"></a>[CVPR, 2018] [DoubleFusion: Real-time Capture of Human Performance with Inner Body Shape from a Depth Sensor]</h3><p><a target="_blank" rel="noopener" href="https://virtualhumans.mpi-inf.mpg.de/papers/DoubleFusion2018/DoubleFusion2018.pdf">Paper</a></p>
+<p><img src="/2020/03/26/CV_3D/CV-3D-Model-BodyClothing/v2-9c84806fd81ed51538f17cc8bf2c85f6_720w.jpg" alt="img"> </p>
+<p><strong>问题：</strong> 如何从RGBD数据中实时获取细致的人体模型</p>
+<p><strong>输入：</strong> 单人的实时的RGBD数据流</p>
+<p><strong>输出：</strong> 基于SMPL的细致的人体模型</p>
+<h3 id="3DV-2018-Detailed-Human-Avatars-from-Monocular-Video"><a href="#3DV-2018-Detailed-Human-Avatars-from-Monocular-Video" class="headerlink" title="[3DV, 2018] [Detailed Human Avatars from Monocular Video]"></a>[3DV, 2018] [Detailed Human Avatars from Monocular Video]</h3><p><a target="_blank" rel="noopener" href="https://virtualhumans.mpi-inf.mpg.de/papers/alldieck2018detailed/alldieck2018detailed.pdf">Paper</a></p>
+<p><img src="/2020/03/26/CV_3D/CV-3D-Model-BodyClothing/v2-e25b3e9869a93cf68fc200aad6649ed2_720w.jpg" alt="img"></p>
+<p><strong>问题：</strong> 如何从RGB视频中获取细致的人体模型</p>
+<p><strong>输入：</strong> 单人的单目视频+轮廓信息+语义分割</p>
+<p><strong>输出：</strong> 基于SMPL的更细致的人体模型</p>
+<p>和之前的区别是，</p>
+<ul>
+<li>增加shape-from-shading方法，</li>
+<li>对SMPL模型进行了划分，增加其点的数量与面片的数量</li>
+<li>贴纹理用了graph cut优化</li>
+</ul>
+<p>代码:</p>
+<p>纹理拼接代码<a target="_blank" rel="noopener" href="https://github.com/thmoa/semantic_human_texture_stitching">semantic human texture stitching</a></p>
+<p>基于SMPL的p,$\theta$新增了W(混合皮肤)</p>
+<p>skeleton joints J(β)</p>
+<p>标准T-Pose </p>
+<p>consists of N &#x3D; 110210 vertices and F &#x3D; 220416 faces.</p>
+<h3 id="CVPR-2019-SimulCap-Single-View-Human-Performance-Capture-with-Cloth-Simulation"><a href="#CVPR-2019-SimulCap-Single-View-Human-Performance-Capture-with-Cloth-Simulation" class="headerlink" title="[CVPR, 2019] [SimulCap : Single-View Human Performance Capture with Cloth Simulation]"></a>[CVPR, 2019] [SimulCap : Single-View Human Performance Capture with Cloth Simulation]</h3><p><a target="_blank" rel="noopener" href="https://virtualhumans.mpi-inf.mpg.de/papers/SimulCap19/SimulCap19.pdf">Paper</a></p>
+<p><img src="/2020/03/26/CV_3D/CV-3D-Model-BodyClothing/v2-668204e47bb6110928d33e8acc337710_720w.jpg" alt="img"></p>
+<p><strong>问题:</strong> 对人体与衣服同时进行重建</p>
+<p><strong>输入:</strong> 实时的RGBD数据</p>
+<p><strong>输出:</strong> 人体模型与多层的衣服模型</p>
+<p><strong>方法:</strong></p>
+<ol>
+<li>使用与DoubleFusion相同的方法先对人体进行重建，获得两层人体模型</li>
+<li>基于输入的图像信息对人体模型进行分割，获得多层衣服的模型</li>
+<li>分别对人体与衣服进行跟踪</li>
+</ol>
+<h3 id="CVPR-2019-Octopus-Learning-to-Reconstruct-People-in-Clothing-from-a-Single-RGB-Camera"><a href="#CVPR-2019-Octopus-Learning-to-Reconstruct-People-in-Clothing-from-a-Single-RGB-Camera" class="headerlink" title="[CVPR, 2019, Octopus] [Learning to Reconstruct People in Clothing from a Single RGB Camera]"></a>[CVPR, 2019, Octopus] [Learning to Reconstruct People in Clothing from a Single RGB Camera]</h3><p><a target="_blank" rel="noopener" href="https://virtualhumans.mpi-inf.mpg.de/papers/alldieck19cvpr/alldieck19cvpr.pdf">Paper</a></p>
+<p><img src="/2020/03/26/CV_3D/CV-3D-Model-BodyClothing/v2-ba089fba60abe3c3344b6aad053916ed_720w.jpg" alt="img"></p>
+<p><strong>问题:</strong> 如何快速地从RGB相机的图像中去重建有衣服的人体</p>
+<p><strong>输入:</strong> 同一个人的几个视角下的图片</p>
+<p><strong>输出:</strong> SMPL+D的细致的人体形状,<strong>纹理是后处理贴的</strong> (<strong>Octopus的网络输出的对象无法贴处理过的纹理,还在研究中</strong>)</p>
+<p><strong>训练:</strong> 使用合成数据训练, 渲染过程可微</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/thmoa/octopus">代码地址</a></p>
+<h3 id="3DV-2019-360-Degree-Textures-of-People-in-Clothing-from-a-Single-Image"><a href="#3DV-2019-360-Degree-Textures-of-People-in-Clothing-from-a-Single-Image" class="headerlink" title="[3DV, 2019] [360-Degree Textures of People in Clothing from a Single Image]"></a>[3DV, 2019] [360-Degree Textures of People in Clothing from a Single Image]</h3><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/write">Papaer Reader</a></p>
+<p><img src="/2020/03/26/CV_3D/CV-3D-Model-BodyClothing/v2-6418b2b61f13f0bd55b297e3e388c4d0_720w.jpg" alt="img"></p>
+<p><strong>问题:</strong> 如何从单张图片中去获取有纹理的细致的人体模型</p>
+<p><strong>输入:</strong> 单张RGB图片</p>
+<p><strong>输出:</strong> 有纹理的三维人体模型-&gt; texture map + displacement map</p>
+<p><strong>训练:</strong> 用之前扫描获得的人体数据生成UV map和displacement map</p>
+<p>这篇用了几个下载人体模型的网站,需要用的时候可以看看</p>
+<h3 id="ICCV-2019-Tex2Shape-Detailed-Full-Human-Body-Geometry-from-a-Single-Image"><a href="#ICCV-2019-Tex2Shape-Detailed-Full-Human-Body-Geometry-from-a-Single-Image" class="headerlink" title="[ICCV, 2019] [Tex2Shape: Detailed Full Human Body Geometry from a Single Image]"></a>[ICCV, 2019] [Tex2Shape: Detailed Full Human Body Geometry from a Single Image]</h3><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/write">Papaer Reader</a></p>
+<p><img src="/2020/03/26/CV_3D/CV-3D-Model-BodyClothing/v2-50768d4956cab715a67e98d771a6f727_720w.jpg" alt="img"></p>
+<p><strong>问题:</strong> 如何从单张图片中去获取有纹理的细致的人体模型</p>
+<p><strong>输入:</strong> 单张RGB图片</p>
+<p><strong>输出:</strong> 细致的人体模型-&gt;输出normal map和displacement map</p>
+<p><strong>训练:</strong> 合成,渲染</p>
+<p>文章最后还说了另一种思路的虚拟试衣功能的方法: 对于SMPL来说, 换装等价于保留其shape参数, 更换他的normal map和displacement map</p>
+<h3 id="ICCV-2019-Multi-Garment-Net-Learning-to-Dress-3D-People-from-Images"><a href="#ICCV-2019-Multi-Garment-Net-Learning-to-Dress-3D-People-from-Images" class="headerlink" title="[ICCV, 2019] [Multi-Garment Net: Learning to Dress 3D People from Images]"></a>[ICCV, 2019] [Multi-Garment Net: Learning to Dress 3D People from Images]</h3><p><a target="_blank" rel="noopener" href="http://virtualhumans.mpi-inf.mpg.de/papers/bhatnagar2019mgn/bhatnagar2019mgn.pdf">Papser</a><br><a target="_blank" rel="noopener" href="https://github.com/bharat-b7/MultiGarmentNetwork">code</a></p>
+<p><img src="/2020/03/26/CV_3D/CV-3D-Model-BodyClothing/v2-b0c367995e27516fcdf5e0544cfb3bef_720w.jpg" alt="img"></p>
+<p><strong>问题:</strong> 如何从单张图片中去获取有纹理的细致的人体模型</p>
+<p><strong>输入:</strong> 多个视角下的RGB图片-&gt;2D关键点与语义分割</p>
+<p><strong>输出:</strong> 在标准模型下的人体参数, 多片衣服参数</p>
+<p><strong>训练:</strong> 合成,渲染</p>
+<hr>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2020/03/21/CV/CV-Survery/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/21/CV/CV-Survery/" class="post-title-link" itemprop="url">CV Survery 计算机视觉综述</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-21 20:36:01" itemprop="dateCreated datePublished" datetime="2020-03-21T20:36:01+00:00">2020-03-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/" itemprop="url" rel="index"><span itemprop="name">CV</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/BaseWork/" itemprop="url" rel="index"><span itemprop="name">BaseWork</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>计算机视觉四大基本任务</p>
+<p><a href="https://novav.github.io/2019/08/21/Paper-CV-1-Image-Classification/">Paper_CV_1 Image-Classification 图片分类</a></p>
+<p><a href="https://novav.github.io/2019/08/21/Paper-CV-2-Object-Localization/">Paper_CV_2 Object-Localization 目标定位</a></p>
+<p><a href="https://novav.github.io/2019/09/18/Paper-CV-3-Object-Detection/">Paper_CV_3 目标检测</a></p>
+<p><a href="https://novav.github.io/2019/09/02/Paper-CV-4-Segment/">Paper-CV-4 语义分割、实例分割</a></p>
+<p><a href="./Paper-CV-2-Object-Localization.md">go</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/weslynn/AlphaTree-graphic-deep-neural-network">Alpha Tree -Graphic DNN</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/24/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><span class="page-number current">25</span><a class="page-number" href="/page/26/">26</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/26/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

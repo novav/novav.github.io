@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="0、文件准备 VmwarePalyer  ubuntu-desk.iso   1、硬件配置1、CPU查看是否虚拟化开启  2、开启Windows功能  Windows虚拟机监控程序平台 虚拟机平台  optionalFeatures   2、系统安装 3、快捷键Ctrl-Alt-Enter    进入全屏模式 ctrl+alt+insert      退出全屏 Ctrl-Alt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VMware">
+<meta property="og:url" content="https://novav.github.io/2022/02/01/Tools/Tools_VMware/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="0、文件准备 VmwarePalyer  ubuntu-desk.iso   1、硬件配置1、CPU查看是否虚拟化开启  2、开启Windows功能  Windows虚拟机监控程序平台 虚拟机平台  optionalFeatures   2、系统安装 3、快捷键Ctrl-Alt-Enter    进入全屏模式 ctrl+alt+insert      退出全屏 Ctrl-Alt">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2022/02/01/Tools/Tools_VMware/image-20220403143329865.png">
+<meta property="og:image" content="https://novav.github.io/2022/02/01/Tools/Tools_VMware/image-20220403143436106.png">
+<meta property="og:image" content="https://novav.github.io/2022/02/01/Tools/Tools_VMware/image-20220403143418438.png">
+<meta property="og:image" content="https://novav.github.io/2022/02/01/Tools/Tools_VMware/image-20220403144318901.png">
+<meta property="article:published_time" content="2022-02-01T13:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:40.572Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="VMWare">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2022/02/01/Tools/Tools_VMware/image-20220403143329865.png">
+
+<link rel="canonical" href="https://novav.github.io/2022/02/01/Tools/Tools_VMware/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>VMware | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/02/01/Tools/Tools_VMware/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          VMware
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-02-01 13:00:00" itemprop="dateCreated datePublished" datetime="2022-02-01T13:00:00+00:00">2022-02-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="0、文件准备"><a href="#0、文件准备" class="headerlink" title="0、文件准备"></a>0、文件准备</h2><ul>
+<li><p>VmwarePalyer</p>
+</li>
+<li><p>ubuntu-desk.iso</p>
+</li>
+</ul>
+<h2 id="1、硬件配置"><a href="#1、硬件配置" class="headerlink" title="1、硬件配置"></a>1、硬件配置</h2><p>1、CPU查看是否虚拟化开启</p>
+<p><img src="/2022/02/01/Tools/Tools_VMware/image-20220403143329865.png" alt="image-20220403143329865"></p>
+<p>2、开启Windows功能</p>
+<ul>
+<li>Windows虚拟机监控程序平台</li>
+<li>虚拟机平台</li>
+</ul>
+<p>optionalFeatures</p>
+<p><img src="/2022/02/01/Tools/Tools_VMware/image-20220403143436106.png" alt="image-20220403143436106"></p>
+<p><img src="/2022/02/01/Tools/Tools_VMware/image-20220403143418438.png" alt="image-20220403143418438"></p>
+<h2 id="2、系统安装"><a href="#2、系统安装" class="headerlink" title="2、系统安装"></a>2、系统安装</h2><p><img src="/2022/02/01/Tools/Tools_VMware/image-20220403144318901.png" alt="image-20220403144318901"></p>
+<h2 id="3、快捷键"><a href="#3、快捷键" class="headerlink" title="3、快捷键"></a>3、快捷键</h2><p>Ctrl-Alt-Enter    进入全屏模式</p>
+<p>ctrl+alt+insert      退出全屏</p>
+<p>Ctrl-Alt            返回正常（窗口）模式</p>
+<p>Ctrl-Alt-Tab      当鼠标和键盘焦点在<a target="_blank" rel="noopener" href="http://wenwen.soso.com/z/Search.e?sp=S%E8%99%9A%E6%8B%9F%E6%9C%BA&ch=w.search.yjjlink&cid=w.search.yjjlink">虚拟机</a>中时，在打开的虚拟机中切换。</p>
+<p>Ctrl-Tab           当鼠标和键盘焦点不在虚拟机中时，在打开的虚拟机中切换。VMware Workstation应用程序必须在活动应用状态上。</p>
+<p>Ctrl-Shift-Tab    当鼠标和键盘焦点不在虚拟机中时，在打开的虚拟机中切换。VMware Workstation应用程序必须在活动应用状态上。</p>
+<p>Ctrl-D               编辑虚拟机配置</p>
+<p>Ctrl-G               为虚拟机捕获鼠标和键盘焦点</p>
+<p>Ctrl-P               编辑参数</p>
+<p>Ctrl-F4              关闭所选择虚拟机的概要或者控制视图。如果虚拟机开着，一个确认对话框将出现。</p>
+<p>Ctrl-B               开机</p>
+<p>Ctrl-E               关机</p>
+<p>Ctrl-R               重启</p>
+<p>Ctrl-Z               挂起</p>
+<p>Ctrl-N               新建一个虚拟机</p>
+<p>Ctrl-O               打开一个虚拟机</p>
+<h2 id="Ubuntu使用"><a href="#Ubuntu使用" class="headerlink" title="Ubuntu使用"></a>Ubuntu使用</h2><h3 id="16-拼音安装"><a href="#16-拼音安装" class="headerlink" title="16 拼音安装"></a>16 拼音安装</h3><p>安装步骤:<br>第一步: Ctrl+Alt+T,打开Terminal,在命令行输入 sudo apt install ibus-sunpinyin ;<br>遇到选择,输入y,等待安装完成后.<br>第二步:重启电脑;<br>第三步:点击桌面右上角的En小图标,选择Text Entry Settings打开;<br>第四步:点击左下角的+按钮;在输入框输入pinyin;选择Chinese(SunPinyin)(IBus),点击右下角的Add;即可<br>第五步:点击En按钮选择SunPinyin,即可.<br>第六步:即可进行中文输入了.<br>————————————————</p>
+<h3 id="共享文件夹使用"><a href="#共享文件夹使用" class="headerlink" title="共享文件夹使用"></a>共享文件夹使用</h3><ul>
+<li><p>开机前，禁用共享文件夹</p>
+</li>
+<li><p>开机后，再设置“在下次关机或挂起前一直启用”，否则非root登录Ubuntu会有问题。</p>
+</li>
+</ul>
+<h3 id="网络-DNS解析"><a href="#网络-DNS解析" class="headerlink" title="网络-DNS解析"></a>网络-DNS解析</h3><p>方法一: &#x2F;etc&#x2F;resolvconf&#x2F;resolv.conf.d</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1.需要创建一个文件/etc/resolvconf/resolv.conf.d/tail</span><br><span class="line"><span class="built_in">sudo</span> vi /etc/resolvconf/resolv.conf.d/tail</span><br><span class="line">2.在该文件中写入自己需要的dns服务器，格式与/etc/resolv.conf相同</span><br><span class="line">nameserver 8.8.8.8  </span><br><span class="line">3.重启下resolvconf程序</span><br><span class="line"><span class="built_in">sudo</span> /etc/init.d/resolvconf restart </span><br><span class="line">再去看看/etc/resolv.conf文件,可以看到自己添加的dns服务器已经加到该文件中</span><br></pre></td></tr></table></figure>
+
+<p>方法2: 在&#x2F;etc&#x2F;network&#x2F;interfaces中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">###interfaces中#######     </span></span><br><span class="line">auto eth0     </span><br><span class="line">iface eth0 inet static     </span><br><span class="line">address 192.168.3.250     </span><br><span class="line">netmask 255.255.255.0                  <span class="comment">#子网掩码     </span></span><br><span class="line">gateway 192.168.3.1                      <span class="comment">#网关     </span></span><br><span class="line">dns-nameservers 8.8.8.8 8.8.4.4    <span class="comment">#设置dns服务器</span></span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/VMWare/" rel="tag"># VMWare</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/02/01/Course/Algorithm/c++/" rel="prev" title="C++ 数据结构与算法">
+      <i class="fa fa-chevron-left"></i> C++ 数据结构与算法
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/02/03/Sub_Language/DL_Platform/TensorRT/Env/" rel="next" title="TensorRT Ubuntu Env">
+      TensorRT Ubuntu Env <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0%E3%80%81%E6%96%87%E4%BB%B6%E5%87%86%E5%A4%87"><span class="nav-number">1.</span> <span class="nav-text">0、文件准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E7%A1%AC%E4%BB%B6%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">1、硬件配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85"><span class="nav-number">3.</span> <span class="nav-text">2、系统安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-number">4.</span> <span class="nav-text">3、快捷键</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu%E4%BD%BF%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">Ubuntu使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#16-%E6%8B%BC%E9%9F%B3%E5%AE%89%E8%A3%85"><span class="nav-number">5.1.</span> <span class="nav-text">16 拼音安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B1%E4%BA%AB%E6%96%87%E4%BB%B6%E5%A4%B9%E4%BD%BF%E7%94%A8"><span class="nav-number">5.2.</span> <span class="nav-text">共享文件夹使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C-DNS%E8%A7%A3%E6%9E%90"><span class="nav-number">5.3.</span> <span class="nav-text">网络-DNS解析</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

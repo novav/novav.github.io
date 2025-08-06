@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="[TOC] ref: 常用工作命令-shixx 快捷键12345打开一个terminalctrl+alt+t在terminal中打开多个标签ctrl+shift+t  apt12# apt 命令打印软件包下载地址 -o Debug::Acquire::http&#x3D;trueapt-get -o Debug::Acquire::http&#x3D;true install nginx  进程相关ps (kill)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux CMD">
+<meta property="og:url" content="https://novav.github.io/2022/01/28/Tools/Tools_linux/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="[TOC] ref: 常用工作命令-shixx 快捷键12345打开一个terminalctrl+alt+t在terminal中打开多个标签ctrl+shift+t  apt12# apt 命令打印软件包下载地址 -o Debug::Acquire::http&#x3D;trueapt-get -o Debug::Acquire::http&#x3D;true install nginx  进程相关ps (kill)">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-01-28T10:59:01.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:40.580Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="linux cmd">
+<meta property="article:tag" content="shell">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://novav.github.io/2022/01/28/Tools/Tools_linux/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Linux CMD | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/01/28/Tools/Tools_linux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux CMD
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-01-28 10:59:01" itemprop="dateCreated datePublished" datetime="2022-01-28T10:59:01+00:00">2022-01-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OS/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>[TOC]</p>
+<p>ref: <a target="_blank" rel="noopener" href="https://shimo.im/docs/YhHCqh9rPpwqTQKd">常用工作命令-shixx</a></p>
+<h3 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">打开一个terminal</span><br><span class="line">ctrl+alt+t</span><br><span class="line"></span><br><span class="line">在terminal中打开多个标签</span><br><span class="line">ctrl+shift+t</span><br></pre></td></tr></table></figure>
+
+<h3 id="apt"><a href="#apt" class="headerlink" title="apt"></a>apt</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">apt 命令打印软件包下载地址 -o Debug::Acquire::http=<span class="literal">true</span></span></span><br><span class="line">apt-get -o Debug::Acquire::http=true install nginx</span><br></pre></td></tr></table></figure>
+
+<h2 id="进程相关"><a href="#进程相关" class="headerlink" title="进程相关"></a>进程相关</h2><h3 id="ps-kill"><a href="#ps-kill" class="headerlink" title="ps (kill)"></a>ps (kill)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ps -ef | grep train.py | grep lianzha | grep -v grep | awk <span class="string">&#x27;&#123;print &quot;kill -9 &quot;$2&#125;&#x27;</span> | sh</span><br><span class="line">ps -ef | grep torch | grep -v grep | awk <span class="string">&#x27;&#123;print &quot;kill -9 &quot;$2&#125;&#x27;</span> | sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">watch -n 0.5  nvidia-smi</span><br><span class="line"></span><br><span class="line">nvidia-smi -l 0.3</span><br></pre></td></tr></table></figure>
+
+<h2 id="网络端口"><a href="#网络端口" class="headerlink" title="网络端口"></a>网络端口</h2><h3 id="netstat"><a href="#netstat" class="headerlink" title="netstat"></a>netstat</h3><p>netstat 查看端口占用语法格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">netstat -tunlp | grep 端口号</span><br><span class="line"></span><br><span class="line">-t (tcp) 仅显示tcp相关选项</span><br><span class="line">-u (udp)仅显示udp相关选项</span><br><span class="line">-n 拒绝显示别名，能显示数字的全部转化为数字</span><br><span class="line">-l 仅列出在Listen(监听)的服务状态</span><br><span class="line">-p 显示建立相关链接的程序名</span><br></pre></td></tr></table></figure>
+
+<h2 id="shell"><a href="#shell" class="headerlink" title="shell"></a>shell</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-eq 等于,如:if [ &quot;$a&quot; -eq &quot;$b&quot; ]</span><br><span class="line">-ne 不等于,如:if [ &quot;$a&quot; -ne &quot;$b&quot; ]</span><br><span class="line">-gt 大于,如:if [ &quot;$a&quot; -gt &quot;$b&quot; ]</span><br><span class="line">-ge 大于等于,如:if [ &quot;$a&quot; -ge &quot;$b&quot; ]</span><br><span class="line">-lt 小于,如:if [ &quot;$a&quot; -lt &quot;$b&quot; ]</span><br><span class="line">-le 小于等于,如:if [ &quot;$a&quot; -le &quot;$b&quot; ]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">if 判断式</span><br><span class="line">if [ 条件判断一 ] &amp;&amp; (||) [ 条件判断二 ]; then</span><br><span class="line">elif [ 条件判断三 ] &amp;&amp; (||) [ 条件判断四 ]; then</span><br><span class="line">else</span><br><span class="line">   执行第三段內容程式</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<h3 id="find-del"><a href="#find-del" class="headerlink" title="find del"></a>find del</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rm</span> <span class="built_in">log</span>/*</span><br><span class="line"><span class="comment"># -bash: /bin/rm: Argument list too long</span></span><br><span class="line">find . -name <span class="string">&#x27;*&#x27;</span> | xargs <span class="built_in">rm</span></span><br><span class="line"></span><br><span class="line">find /Volumes/WD/data/data/sg3d/server -<span class="built_in">type</span> d |grep .svn | xargs <span class="built_in">rm</span> -rf</span><br><span class="line"></span><br><span class="line"><span class="comment"># exe文件查找</span></span><br><span class="line">find . -name <span class="string">&#x27;*.exe&#x27;</span> -<span class="built_in">type</span> f -<span class="built_in">print</span> -<span class="built_in">exec</span> <span class="built_in">rm</span> -rf &#123;&#125; \;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 一天前的文件，都删掉</span></span><br><span class="line">find  -mtime +1 -<span class="built_in">exec</span> <span class="built_in">rm</span> -rf &#123;&#125; \; </span><br></pre></td></tr></table></figure>
+
+<p>find del loop(每隔24小时，删除（最近改动日期超过10天的）文件)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;init---auto loop-&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="keyword">time</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">true</span>; <span class="keyword">do</span></span><br><span class="line">    find  -name <span class="string">&#x27;*.log&#x27;</span> -mtime +10  -<span class="built_in">exec</span> <span class="built_in">rm</span> &#123;&#125; \;</span><br><span class="line">    <span class="built_in">sleep</span> 24h</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="大文件查找"><a href="#大文件查找" class="headerlink" title="大文件查找"></a>大文件查找</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查找文件，格式化输出</span></span><br><span class="line">find / -<span class="built_in">type</span> f -<span class="built_in">printf</span> <span class="string">&quot;%s\t%p\n&quot;</span> | <span class="built_in">sort</span> -n | <span class="built_in">tail</span> -1  </span><br><span class="line"></span><br><span class="line"><span class="comment">#显示大于100MiB</span></span><br><span class="line">find / -size +100M -<span class="built_in">ls</span> </span><br><span class="line"><span class="comment"># 查找一个区间大小的(比如 100MiB 和 200MiB )之间的文件：</span></span><br><span class="line">find / -size +100M -size -200M -<span class="built_in">ls</span> </span><br><span class="line"><span class="comment">#查找某个目录最大的5个文件：</span></span><br><span class="line">find <span class="variable">$DIRECTORY</span> -<span class="built_in">type</span> f -<span class="built_in">exec</span> <span class="built_in">ls</span> -s &#123;&#125; \; | <span class="built_in">sort</span> -n | <span class="built_in">tail</span> -n 5 </span><br></pre></td></tr></table></figure>
+
+<h3 id="shell-echo-date"><a href="#shell-echo-date" class="headerlink" title="shell echo date"></a>shell echo date</h3><p>在crontab 定时事件中， 执行过的脚本记录事件</p>
+<p>在sh 文件中</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">echo $(date)</span><br><span class="line">echo $(date &quot;+%Y-%m-%d %H:%M:%S&quot;)</span><br><span class="line"></span><br><span class="line">即可输出执行的事件， 同时记录到log中</span><br></pre></td></tr></table></figure>
+
+<p>执行结果</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Sat Jun 23 15:41:31 CST 2018</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">赋值</span></span><br><span class="line">cur_dateTime=&quot;`date +%Y-%m-%d,%H:%m:%s`&quot; </span><br></pre></td></tr></table></figure>
+
+<h3 id="shell-中的sleep命令"><a href="#shell-中的sleep命令" class="headerlink" title="shell 中的sleep命令"></a>shell 中的sleep命令</h3><p>在有的shell（比如linux中的bash）中sleep还支持睡眠（分，小时）<br>sleep 1  睡眠1秒<br>sleep 1s  睡眠1秒<br>sleep 1m  睡眠1分<br>sleep 1h  睡眠1小时 </p>
+<h3 id="shell-参数传递"><a href="#shell-参数传递" class="headerlink" title="shell 参数传递"></a>shell 参数传递</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># author:菜鸟教程</span></span><br><span class="line"><span class="comment"># url:www.runoob.com</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Shell 传递参数实例！&quot;</span>;</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;执行的文件名：<span class="variable">$0</span>&quot;</span>;</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;第一个参数为：<span class="variable">$1</span>&quot;</span>;</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;第二个参数为：<span class="variable">$2</span>&quot;</span>;</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;第三个参数为：<span class="variable">$3</span>&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ ./test.sh 1 2 3</span><br><span class="line">Shell 传递参数实例！</span><br><span class="line">执行的文件名：./test.sh</span><br><span class="line">第一个参数为：1</span><br><span class="line">第二个参数为：2</span><br><span class="line">第三个参数为：3</span><br></pre></td></tr></table></figure>
+
+<h3 id="awk"><a href="#awk" class="headerlink" title="awk"></a>awk</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$</span><span class="language-bash"><span class="built_in">echo</span> <span class="string">&quot;123456789&quot;</span> | awk <span class="string">&#x27;&#123;print substr($0, 5, 2)&#125;&#x27;</span></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="sed"><a href="#sed" class="headerlink" title="sed"></a>sed</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sed -n &#x27;100,200p&#x27; filename </span><br><span class="line"></span><br><span class="line">“;” --&gt; &quot;\n&quot;</span><br><span class="line">sed -i &quot;s/;/\\n/g&quot; test.txt</span><br></pre></td></tr></table></figure>
+
+<h3 id="rename"><a href="#rename" class="headerlink" title="rename"></a>rename</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Perl 版本 Ubuntu()</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rename -v <span class="string">&quot;s/txt/log/g&quot;</span> 1.txt 2.txt</span></span><br><span class="line">1.txt renamed as 1.log</span><br><span class="line">2.txt renamed as 2.log</span><br><span class="line"></span><br><span class="line">rename &quot;s//.html//.php/&quot; *     # 把.html 后缀的改成 .php后缀</span><br><span class="line">rename &quot;s/$//.txt/&quot; *  # 把所有的文件名都以txt结尾</span><br><span class="line">rename &quot;s//.txt//&quot; *   # 把所有以.txt结尾的文件名的.txt删掉</span><br><span class="line">rename &#x27;s/^/googluck/&#x27; *    #统一在所有文件名前添加某个字符串</span><br><span class="line">rename -v &quot;s/amsr-vector-fs-/01_amsr-vector-fs-/&quot; amsr-vector-fs-*</span><br></pre></td></tr></table></figure>
+
+<h3 id="tail"><a href="#tail" class="headerlink" title="tail"></a>tail</h3><h3 id="head"><a href="#head" class="headerlink" title="head"></a>head</h3><h3 id="history"><a href="#history" class="headerlink" title="history"></a>history</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">history</span></span><br><span class="line"><span class="comment"># delete line 9</span></span><br><span class="line"><span class="built_in">history</span> -d 9</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://www.baeldung.com/linux/delete-commands-history">https://www.baeldung.com/linux/delete-commands-history</a></p>
+<h1 id="压缩工具"><a href="#压缩工具" class="headerlink" title="压缩工具"></a>压缩工具</h1><h3 id="tar"><a href="#tar" class="headerlink" title="tar"></a>tar</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tar -cvf ***.tar Floder</span><br><span class="line">tar -xvf ***.tar </span><br><span class="line"></span><br><span class="line">tar -czvf my_folder.tar.gz my_folder</span><br><span class="line">tar -xzcf my_folder.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h3 id="zip-unzip"><a href="#zip-unzip" class="headerlink" title="zip&#x2F;unzip"></a>zip&#x2F;unzip</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将/root/mcw_test/这个目录下所有文件和文件夹打包为当前目录下的 mcw.zip：</span></span><br><span class="line">zip -q -r mcw.zip /root/mcw_test  </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">unzip test.zip              <span class="comment">#-&gt;将test.zip解压到当前文件下</span></span><br><span class="line">unzip -n test.zip -d /tmp   <span class="comment">#-&gt;将test.zip解压到/tmp目录下，并且不要覆盖已有文件</span></span><br><span class="line">unzip -v test.zip           <span class="comment">#-&gt;查看test.zip内容，但不解压</span></span><br><span class="line">unzip -o test.zip -d tmp/   <span class="comment">#-&gt;将test.zip解压到/tmp目录下，并且覆盖已有文件</span></span><br></pre></td></tr></table></figure>
+
+<p>zip 分券解压</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">先压缩成完整zip：</span></span><br><span class="line">zip -r a.zip ./somethings ;</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">再分割成分卷：</span></span><br><span class="line">zip -s 4g a.zip --out b.zip ，单位可以是m、g、t等</span><br><span class="line">-----------------------------</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">1 分卷合并成完整zip(三个方法)</span></span><br><span class="line">1.1 cat archivename.z* &gt; archivename.zip</span><br><span class="line">1.2 zip -F b.zip --out a.zip</span><br><span class="line">2.3 zip -s 0 b.zip --out a.zip</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">2 (-q 不显示任何信息)</span></span><br><span class="line">unzip -q archivename.zip -d ./dir</span><br></pre></td></tr></table></figure>
+
+<h3 id="screen"><a href="#screen" class="headerlink" title="screen"></a>screen</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">screen -S XX</span><br><span class="line">screen -ls</span><br><span class="line">screen -r XX</span><br><span class="line">screen -d xx</span><br><span class="line"></span><br><span class="line">screen -X -S sxx quit</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda config --<span class="built_in">set</span> auto_activate_base <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="lsof"><a href="#lsof" class="headerlink" title="lsof"></a>lsof</h3><p>    <code>lsof</code>命令用于查看你进程打开的文件，打开文件的进程，进程打开的端口(<code>TCP、UDP</code>)。找回&#x2F;恢复删除的文件。是十分方便的系统监视工具，因为<code>lsof</code>命令需要访问核心内存和各种文件，所以需要root<code>用户</code>执行。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">lsof (选项)</span><br><span class="line"></span><br><span class="line">lsof -i:端口号</span><br><span class="line"></span><br><span class="line">选项：</span><br><span class="line">-a：列出打开文件存在的进程；</span><br><span class="line">-c&lt;进程名&gt;：列出指定进程所打开的文件；</span><br><span class="line">-g：列出GID号进程详情；</span><br><span class="line">-d&lt;文件号&gt;：列出占用该文件号的进程；</span><br><span class="line">+d&lt;目录&gt;：列出目录下被打开的文件；</span><br><span class="line">+D&lt;目录&gt;：递归列出目录下被打开的文件；</span><br><span class="line">-n&lt;目录&gt;：列出使用NFS的文件；</span><br><span class="line">-i&lt;条件&gt;：列出符合条件的进程（协议、:端口、 @ip ）</span><br><span class="line">-p&lt;进程号&gt;：列出指定进程号所打开的文件；</span><br><span class="line">-u：列出UID号进程详情；</span><br><span class="line">-h：显示帮助信息；</span><br><span class="line">-v：显示版本信息</span><br></pre></td></tr></table></figure>
+
+<p>lsof输出各列信息的意义如下：</p>
+<ul>
+<li>COMMAND：进程的名称</li>
+<li>PID：进程标识符</li>
+<li>PPID：父进程标识符（需要指定-R参数）</li>
+<li>USER：进程所有者</li>
+<li>PGID：进程所属组</li>
+<li>FD：文件描述符，应用程序通过文件描述符识别该文件。</li>
+<li>TYPE: [DIR, REG, unknown,]</li>
+</ul>
+<p>获取端口对应的进程<code>ID=&gt;pid</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsof -<span class="attr">i</span>:<span class="number">8080</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">lsof abc.txt 显示开启文件abc.txt的进程</span><br><span class="line">lsof -c abc 显示abc进程现在打开的文件</span><br><span class="line">lsof -c -p 1234 列出进程号为1234的进程所打开的文件</span><br><span class="line">lsof -g gid 显示归属gid的进程情况</span><br><span class="line">lsof +d /usr/local/ 显示目录下被进程开启的文件</span><br><span class="line">lsof +D /usr/local/ 同上，但是会搜索目录下的目录，时间较长</span><br><span class="line">lsof -d 4 显示使用fd为4的进程</span><br><span class="line">lsof -i 用以显示符合条件的进程情况</span><br><span class="line">lsof -i[46] [protocol][@hostname|hostaddr][:service|port]</span><br><span class="line">  46 --&gt; IPv4 or IPv6</span><br><span class="line">  protocol --&gt; TCP or UDP</span><br><span class="line">  hostname --&gt; Internet host name</span><br><span class="line">  hostaddr --&gt; IPv4地址</span><br><span class="line">  service --&gt; /etc/service中的 service name (可以不止一个)</span><br><span class="line">  port --&gt; 端口号 (可以不止一个)</span><br></pre></td></tr></table></figure>
+
+<h1 id="硬件相关"><a href="#硬件相关" class="headerlink" title="硬件相关"></a>硬件相关</h1><h2 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">lsblk      # 磁盘分区查看（tree）</span><br><span class="line">fdisk -l     # 更详细的磁盘分区</span><br><span class="line">df -h         # 各个磁盘的空间</span><br></pre></td></tr></table></figure>
+
+<h3 id="cpu"><a href="#cpu" class="headerlink" title="cpu"></a>cpu</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">lscpu</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">Architecture:        x86_64</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">CPU op-mode(s):      32-bit, 64-bit</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">Byte Order:          Little Endian</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">Address sizes:       36 bits physical, 48 bits virtual</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">CPU(s):              4</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Model name:          Intel(R) Celeron(R) CPU  J1900  @ 1.99GHz</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="显卡"><a href="#显卡" class="headerlink" title="显卡"></a>显卡</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lspci -t -v</span><br></pre></td></tr></table></figure>
+
+<h3 id="网卡"><a href="#网卡" class="headerlink" title="网卡"></a>网卡</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">lspci | grep -i eth</span><br><span class="line"></span><br><span class="line">ifconfig</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ip link show</span><br></pre></td></tr></table></figure>
+
+<h3 id="端口占用"><a href="#端口占用" class="headerlink" title="端口占用"></a>端口占用</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用netstat命令：</span></span><br><span class="line">netstat -tuln | grep &lt;端口号&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用lsof命令：</span></span><br><span class="line">lsof -i :&lt;端口号&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用ss命令：</span></span><br><span class="line">ss -tuln | grep &lt;端口号&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="USB"><a href="#USB" class="headerlink" title="USB"></a>USB</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsusb -t <span class="comment"># (-t 拓扑显示)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="User管理"><a href="#User管理" class="headerlink" title="User管理"></a>User管理</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"><span class="built_in">sudo</span> usermod -aG groupname username</span></span><br></pre></td></tr></table></figure>
+
+<p>内存</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dmidecode -t memory</span><br><span class="line">dmidecode -t 17</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Physical Memory Array</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="服务管理"><a href="#服务管理" class="headerlink" title="服务管理"></a>服务管理</h1><h3 id="redis-server-自启动关闭"><a href="#redis-server-自启动关闭" class="headerlink" title="redis-server (自启动关闭)"></a>redis-server (自启动关闭)</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu8:~# systemctl is-enabled redis-server</span><br><span class="line">enabled</span><br><span class="line">root@ubuntu8:~# </span><br><span class="line">root@ubuntu8:~# systemctl disable redis-server</span><br><span class="line">Synchronizing state of redis-server.service with SysV service script with /lib/systemd/systemd-sysv-install.</span><br><span class="line">Executing: /lib/systemd/systemd-sysv-install disable redis-server</span><br><span class="line">Removed /etc/systemd/system/redis.service.</span><br><span class="line">root@ubuntu8:~# </span><br><span class="line">root@ubuntu8:~# systemctl stop redis-server</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux-cmd/" rel="tag"># linux cmd</a>
+              <a href="/tags/shell/" rel="tag"># shell</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/01/18/Tools/Tools_makefile/" rel="prev" title="Linux C++ compile">
+      <i class="fa fa-chevron-left"></i> Linux C++ compile
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/02/01/Course/Algorithm/c++/" rel="next" title="C++ 数据结构与算法">
+      C++ 数据结构与算法 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-number">1.</span> <span class="nav-text">快捷键</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#apt"><span class="nav-number">2.</span> <span class="nav-text">apt</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E7%9B%B8%E5%85%B3"><span class="nav-number"></span> <span class="nav-text">进程相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ps-kill"><span class="nav-number">1.</span> <span class="nav-text">ps (kill)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#watch"><span class="nav-number">2.</span> <span class="nav-text">watch</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E7%AB%AF%E5%8F%A3"><span class="nav-number"></span> <span class="nav-text">网络端口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#netstat"><span class="nav-number">1.</span> <span class="nav-text">netstat</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shell"><span class="nav-number"></span> <span class="nav-text">shell</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#find-del"><span class="nav-number">1.</span> <span class="nav-text">find del</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%A7%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE"><span class="nav-number">2.</span> <span class="nav-text">大文件查找</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shell-echo-date"><span class="nav-number">3.</span> <span class="nav-text">shell echo date</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shell-%E4%B8%AD%E7%9A%84sleep%E5%91%BD%E4%BB%A4"><span class="nav-number">4.</span> <span class="nav-text">shell 中的sleep命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shell-%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92"><span class="nav-number">5.</span> <span class="nav-text">shell 参数传递</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#awk"><span class="nav-number">6.</span> <span class="nav-text">awk</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sed"><span class="nav-number">7.</span> <span class="nav-text">sed</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rename"><span class="nav-number">8.</span> <span class="nav-text">rename</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tail"><span class="nav-number">9.</span> <span class="nav-text">tail</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#head"><span class="nav-number">10.</span> <span class="nav-text">head</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#history"><span class="nav-number">11.</span> <span class="nav-text">history</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8E%8B%E7%BC%A9%E5%B7%A5%E5%85%B7"><span class="nav-number"></span> <span class="nav-text">压缩工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tar"><span class="nav-number">1.</span> <span class="nav-text">tar</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zip-unzip"><span class="nav-number">2.</span> <span class="nav-text">zip&#x2F;unzip</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#screen"><span class="nav-number">3.</span> <span class="nav-text">screen</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lsof"><span class="nav-number">4.</span> <span class="nav-text">lsof</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A1%AC%E4%BB%B6%E7%9B%B8%E5%85%B3"><span class="nav-number"></span> <span class="nav-text">硬件相关</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%98%E5%82%A8"><span class="nav-number"></span> <span class="nav-text">存储</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cpu"><span class="nav-number">1.</span> <span class="nav-text">cpu</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%BE%E5%8D%A1"><span class="nav-number">2.</span> <span class="nav-text">显卡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E5%8D%A1"><span class="nav-number">3.</span> <span class="nav-text">网卡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">端口占用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#USB"><span class="nav-number">5.</span> <span class="nav-text">USB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#User%E7%AE%A1%E7%90%86"><span class="nav-number">6.</span> <span class="nav-text">User管理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86"><span class="nav-number"></span> <span class="nav-text">服务管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#redis-server-%E8%87%AA%E5%90%AF%E5%8A%A8%E5%85%B3%E9%97%AD"><span class="nav-number">1.</span> <span class="nav-text">redis-server (自启动关闭)</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="[TOC] 相关书籍         入门 C++ Primer Plus     C++ Primer    提高 深度探索C++对象模型     More Effective C++ 35     Effective C++ 55     Effective Modern C++    进阶篇 STL 源码剖析     C++标准库     GOF23 设计模式 C++     C++并发编程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ 备忘录">
+<meta property="og:url" content="https://novav.github.io/2020/10/29/Sub_Language/CPlus/Language-Cplus/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="[TOC] 相关书籍         入门 C++ Primer Plus     C++ Primer    提高 深度探索C++对象模型     More Effective C++ 35     Effective C++ 55     Effective Modern C++    进阶篇 STL 源码剖析     C++标准库     GOF23 设计模式 C++     C++并发编程">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2020/10/29/Sub_Language/CPlus/Language-Cplus/iostream.gif">
+<meta property="article:published_time" content="2020-10-29T16:00:52.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:40.532Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="c++">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2020/10/29/Sub_Language/CPlus/Language-Cplus/iostream.gif">
+
+<link rel="canonical" href="https://novav.github.io/2020/10/29/Sub_Language/CPlus/Language-Cplus/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>C++ 备忘录 | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2020/10/29/Sub_Language/CPlus/Language-Cplus/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          C++ 备忘录
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-10-29 16:00:52" itemprop="dateCreated datePublished" datetime="2020-10-29T16:00:52+00:00">2020-10-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>[TOC]</p>
+<h2 id="相关书籍"><a href="#相关书籍" class="headerlink" title="相关书籍"></a>相关书籍</h2><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>入门</td>
+<td>C++ Primer Plus</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>C++ Primer</td>
+<td></td>
+</tr>
+<tr>
+<td>提高</td>
+<td>深度探索C++对象模型</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>More Effective C++ 35</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Effective C++ 55</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Effective Modern C++</td>
+<td></td>
+</tr>
+<tr>
+<td>进阶篇</td>
+<td>STL 源码剖析</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>C++标准库</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>GOF23 设计模式 C++</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>C++并发编程实战</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>C++性能优化指南</td>
+<td></td>
+</tr>
+<tr>
+<td>网络编程</td>
+<td>Linux多线程-服务端编程-<br>使用muduo c++ 网络库</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Unix网络编程 三件套</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>TCP&#x2F;UP协议 三卷</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="APIs"><a href="#APIs" class="headerlink" title="APIs"></a>APIs</h2><h3 id="标准库"><a href="#标准库" class="headerlink" title="标准库"></a>标准库</h3><h4 id="1-int-float-to-string-array"><a href="#1-int-float-to-string-array" class="headerlink" title="1.int&#x2F;float to string&#x2F;array:"></a><strong>1.int&#x2F;float to string&#x2F;array:</strong></h4><p>C语言提供了几个标准库函数，可以将任意类型(整型、长整型、浮点型等)的数字转换为字符串，下面列举了各函数的方法及其说明。<br>● itoa()：将整型值转换为字符串<br>● ltoa()：将长整型值转换为字符串。<br>● ultoa()：将无符号长整型值转换为字符串。<br>● gcvt()：将浮点型数转换为字符串，取四舍五入。<br>● ecvt()：将双精度浮点型值转换为字符串，转换结果中不包含十进制小数点。<br>● fcvt()：指定位数为转换精度，其余同ecvt()。</p>
+<p>除此外，还可以使用<strong>sprintf</strong>系列函数把数字转换成字符串，其比itoa()系列函数运行速度慢</p>
+<h4 id="2-string-array-to-int-float"><a href="#2-string-array-to-int-float" class="headerlink" title="2. string&#x2F;array to int&#x2F;float"></a><strong>2. string&#x2F;array to int&#x2F;float</strong></h4><p>C&#x2F;C++语言提供了几个标准库函数，可以将字符串转换为任意类型(整型、长整型、浮点型等)。</p>
+<p>● atof()：将字符串转换为双精度浮点型值。<br>● atoi()：将字符串转换为整型值。<br>● atol()：将字符串转换为长整型值。<br>● strtod()：将字符串转换为双精度浮点型值，并报告不能被转换的所有剩余数字。<br>● strtol()：将字符串转换为长整值，并报告不能被转换的所有剩余数字。<br>● strtoul()：将字符串转换为无符号长整型值，并报告不能被转换的所有剩余数字。</p>
+<h3 id="数据类型-变量-常量"><a href="#数据类型-变量-常量" class="headerlink" title="数据类型&amp;变量&amp;常量"></a>数据类型&amp;变量&amp;常量</h3><h4 id="int-to-string"><a href="#int-to-string" class="headerlink" title="int to string"></a>int to string</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1.</span></span><br><span class="line"><span class="type">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="type">char</span> *intStr = <span class="built_in">itoa</span>(a);</span><br><span class="line">string str = <span class="built_in">string</span>(intStr);</span><br><span class="line"></span><br><span class="line"><span class="comment">//2</span></span><br><span class="line">stringstream ss;</span><br><span class="line">ss &lt;&lt; a;</span><br><span class="line">string str = ss.<span class="built_in">str</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">//3 c++11</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line">std::string s = std::<span class="built_in">to_string</span>(<span class="number">42</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//4 C++ 98</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SSTR(x) static_cost<span class="string">&lt;std::ostringstream &amp;&gt;</span> ((std::ostringstream() &lt;&lt; std::dec &lt;&lt; x)).str()</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//5 Boost</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;boost/lexical_cast.hpp&gt;</span></span></span><br><span class="line"><span class="type">int</span> num = <span class="number">4</span>;</span><br><span class="line">std::string str = boost::<span class="built_in">lexical_cast</span>&lt;std::string&gt;(num);</span><br></pre></td></tr></table></figure>
+
+<h4 id="rand"><a href="#rand" class="headerlink" title="rand"></a>rand</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> N = <span class="built_in">rand</span>() % <span class="number">11</span>;     <span class="comment">// 0~10的随机数</span></span><br><span class="line"><span class="type">int</span> N = <span class="built_in">rand</span>() % <span class="number">10</span>;     <span class="comment">// 0~9的随机数</span></span><br><span class="line"><span class="type">int</span> N = <span class="number">1</span> + <span class="built_in">rand</span>() % <span class="number">10</span>; <span class="comment">// 1-10</span></span><br><span class="line">a + <span class="built_in">rand</span>() % n </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>（<span class="number">1</span>==rand（）%<span class="number">10</span>）</span><br><span class="line"> <span class="comment">//10%的概率达成，这里编辑余下代码</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line"> <span class="comment">//90%的概率没达成，这里编辑余下代码</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="修饰符"><a href="#修饰符" class="headerlink" title="修饰符"></a>修饰符</h3><p>unsinge</p>
+<h3 id="存储类"><a href="#存储类" class="headerlink" title="存储类"></a>存储类</h3><ul>
+<li><p>auto</p>
+</li>
+<li><p>register</p>
+</li>
+<li><p>static  全局变量</p>
+</li>
+<li><p>extern  全局变量的引用</p>
+</li>
+<li><p>mutable</p>
+</li>
+<li><p>thread_local (C++11)</p>
+</li>
+<li><p>const (只读变量)</p>
+</li>
+<li><p>constptr (常量)</p>
+<ul>
+<li><p>C++ 11标准中，为了解决 const 关键字的双重语义问题，保留了 const 表示“只读”的语义，而将“常量”的语义划分给了新添加的 constexpr 关键字。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="http://c.biancheng.net/view/7807.html">C++11 constexpr和const的区别详解</a></p>
+</li>
+</ul>
+</li>
+</ul>
+<p>从 C++ 17 开始，auto 关键字不再是 C++ 存储类说明符，且 register 关键字被弃用。</p>
+<h3 id="运算符-循环-判断"><a href="#运算符-循环-判断" class="headerlink" title="运算符 循环 判断"></a>运算符 循环 判断</h3><h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">(Cobject* object)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">(Cobect&amp; object)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">(Cobject object)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>有什么区别呢？</p>
+<ol>
+<li><p>void func(Cobject* object)</p>
+<p>这种方式是将<strong>类指针</strong>作为参数，函数压入参数时实际上复制了指针的值（其实指针可以看作一个存放地址值的×××），实际复制的指针<strong>仍指向原对象的空间</strong>，所以func函数对该指针的操作是对原对象空间的操作。</p>
+</li>
+<li><p>void func(Cobject&amp; object)</p>
+<p>这种方式和传指针类似，但函数压入参数时实际上复制了object对象的this指针，其实this指针不是一个真正存在的指针，可以看作是每个对象的数据空间起始地址。func函数中对this指针的操作，实际上也是<strong>对原对象空间的操作</strong>。</p>
+</li>
+<li><p>void func(Cobject object)</p>
+<p>这种函数是非常不建议的，因为函数参数压栈时，对object进行了复制（还记得拷贝构造函数吗），所以函数对object的操作实际上是对新的对象空间进行的操作，不会影响原对象空间。由于不必要的拷贝对象是十分浪费时间的，也没有意义，我们完全可以用下面函数代替</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span><span class="params">(<span class="keyword">const</span> Cobject&amp; object)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>这样也能保护对象的只读性质。</p>
+</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>、值传递</span><br><span class="line">    实参是变量，表达式等值。</span><br><span class="line">    find（<span class="type">int</span> x）&#123;&#125;</span><br><span class="line">    y= <span class="built_in">find</span>(z)；</span><br><span class="line">   上面的例子中，z是实参，x是形参。x变z不变。</span><br><span class="line">   在值传递过程中，实参和形参位于内存中两个不同地址中，实参先自己复制一次拷贝，再把拷贝复制给形参。所以，在值传递过程中，形参的变化不会对实参有任何的影响。</span><br><span class="line"></span><br><span class="line"><span class="number">2</span>、地址传递（也称引用传递）</span><br><span class="line"></span><br><span class="line">   实参是指针。</span><br><span class="line">   在函数调用的时候，实参传递给你的是指针地址，地址一样也就意味着实参和形参是一样的，当你的形参发生改变时，实参也会发生改变。</span><br><span class="line"></span><br><span class="line">    find（<span class="type">int</span>  &amp;x）&#123;&#125;</span><br><span class="line">    y= <span class="built_in">find</span>(z)；</span><br><span class="line">    上面的例子中，z是实参，x是形参。z随x而改变。</span><br></pre></td></tr></table></figure>
+
+<h3 id="数字运算"><a href="#数字运算" class="headerlink" title="数字运算"></a>数字运算</h3><p>cos, sin tan, log, pow,</p>
+<p>hypot, sqrt, abs, fabs, floor</p>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p><a target="_blank" rel="noopener" href="https://dawnarc.com/2016/09/c-%E6%8C%87%E9%92%88%E6%95%B0%E7%BB%84%E4%BB%A5%E5%8F%8A%E6%95%B0%E7%BB%84%E5%88%9D%E5%A7%8B%E5%8C%96/">[C++]指针数组以及数组初始化</a></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> *pia = <span class="keyword">new</span> <span class="type">int</span>[<span class="number">10</span>]; <span class="comment">// array of 10 uninitialized ints</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="枚举enum"><a href="#枚举enum" class="headerlink" title="枚举enum"></a>枚举enum</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//    定义格式：枚举类型的定义格式为：</span></span><br><span class="line">    <span class="class"><span class="keyword">enum</span> &lt;</span>类型名&gt; &#123;&lt;枚举常量表&gt;&#125;;</span><br><span class="line">    <span class="class"><span class="keyword">enum</span> <span class="title">color_set1</span> &#123;</span>RED, BLUE, WHITE, BLACK&#125;; <span class="comment">//定义枚举类型color_set1</span></span><br><span class="line">    <span class="class"><span class="keyword">enum</span> <span class="title">week</span> &#123;</span>Sun, Mon, Tue, Wed, Thu, Fri, Sat&#125;; <span class="comment">//定义枚举类型week</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">各枚举常量的值可以重复。例如：</span><br><span class="line">    <span class="class"><span class="keyword">enum</span> <span class="title">fruit_set</span> &#123;</span>apple, orange, banana=<span class="number">1</span>, peach, grape&#125;</span><br><span class="line">    <span class="comment">//枚举常量apple=0,orange=1, banana=1,peach=2,grape=3。</span></span><br><span class="line">    <span class="keyword">enum</span> week &#123;Sun=<span class="number">7</span>, Mon=<span class="number">1</span>, Tue, Wed, Thu, Fri, Sat&#125;;</span><br><span class="line">    <span class="comment">//枚举常量Sun,Mon,Tue,Wed,Thu,Fri,Sat的值分别为7、1、2、3、4、5、6。</span></span><br><span class="line">枚举常量只能以标识符形式表示，而不能是整型、字符型等文字常量。例如，以下定义非法：</span><br><span class="line">    <span class="class"><span class="keyword">enum</span> <span class="title">letter_set</span> &#123;</span><span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;d&#x27;</span>,<span class="string">&#x27;F&#x27;</span>,<span class="string">&#x27;s&#x27;</span>,<span class="string">&#x27;T&#x27;</span>&#125;; <span class="comment">//枚举常量不能是字符常量</span></span><br><span class="line">    <span class="class"><span class="keyword">enum</span> <span class="title">year_set</span>&#123;</span><span class="number">2000</span>,<span class="number">2001</span>,<span class="number">2002</span>,<span class="number">2003</span>,<span class="number">2004</span>,<span class="number">2005</span>&#125;; <span class="comment">//枚举常量不能是整型常量</span></span><br><span class="line">可改为以下形式则定义合法：</span><br><span class="line">    <span class="class"><span class="keyword">enum</span> <span class="title">letter_set</span> &#123;</span>a, d, F, s, T&#125;;</span><br><span class="line">    <span class="class"><span class="keyword">enum</span> <span class="title">year_set</span>&#123;</span>y2000, y2001, y2002, y2003, y2004, y2005&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="字符串String"><a href="#字符串String" class="headerlink" title="字符串String"></a>字符串String</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">#<span class="meta"># string -&gt; char*</span></span><br><span class="line">###<span class="meta"># data()方法，如：</span></span><br><span class="line"><span class="number">1</span> <span class="built_in">string</span> str = <span class="string">&quot;hello&quot;</span>;</span><br><span class="line"><span class="number">2</span> <span class="type">const</span> <span class="type">char</span>* p = str.data();<span class="comment">//加const  或者用char * p=(char*)str.data();的形式</span></span><br><span class="line"></span><br><span class="line">#### c_str()方法，如：</span><br><span class="line"><span class="number">1</span> <span class="built_in">string</span> str=“world”;</span><br><span class="line"><span class="number">2</span> <span class="type">const</span> <span class="type">char</span> *p = str.c_str();<span class="comment">//同上，要加const或者等号右边用char*</span></span><br><span class="line"></span><br><span class="line">###<span class="meta"># copy()方法，如：</span></span><br><span class="line"><span class="number">1</span> <span class="built_in">string</span> str=<span class="string">&quot;hmmm&quot;</span>;</span><br><span class="line"><span class="number">2</span> <span class="type">char</span> p[<span class="number">50</span>];</span><br><span class="line"><span class="number">3</span> str.copy(p, <span class="number">5</span>, <span class="number">0</span>);<span class="comment">//这里5代表复制几个字符，0代表复制的位置，</span></span><br><span class="line"><span class="number">4</span> *(p+<span class="number">5</span>)=‘\<span class="number">0</span>’;<span class="comment">//注意手动加结束符！！！</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 二、<span class="type">char</span>* -&gt; <span class="built_in">string</span> </span><br><span class="line">#### </span><br><span class="line"><span class="number">1</span> <span class="built_in">string</span> s;</span><br><span class="line"><span class="number">2</span> <span class="type">char</span> *p = <span class="string">&quot;hello&quot;</span>;<span class="comment">//直接赋值</span></span><br><span class="line"><span class="number">3</span> s = p; </span><br><span class="line"></span><br><span class="line">## 三、<span class="built_in">string</span>转<span class="type">char</span>[]</span><br><span class="line"><span class="number">1</span>     <span class="built_in">string</span> pp = <span class="string">&quot;dagah&quot;</span>;</span><br><span class="line"><span class="number">2</span>     <span class="type">char</span> p[<span class="number">8</span>];</span><br><span class="line"><span class="number">3</span>     <span class="type">int</span> i;</span><br><span class="line"><span class="number">4</span>     <span class="keyword">for</span>( i=<span class="number">0</span>;i&lt;pp.length();i++)</span><br><span class="line"><span class="number">5</span>         p[i] = pp[i];</span><br><span class="line"><span class="number">6</span>     p[i] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line"><span class="number">7</span>     <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>,p);</span><br><span class="line"><span class="number">8</span>     <span class="built_in">cout</span>&lt;&lt;p;</span><br></pre></td></tr></table></figure>
+
+<h4 id="string-赋值"><a href="#string-赋值" class="headerlink" title="string 赋值"></a>string 赋值</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方法1 (ostringstream)</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sstream&gt;</span></span></span><br><span class="line">ostringstream buffer;</span><br><span class="line">buffer &lt;&lt; <span class="string">&quot;sss,&quot;</span> &lt;&lt; <span class="number">2015</span> &lt;&lt; <span class="string">&quot;_&quot;</span>&lt;&lt; <span class="number">1</span>;</span><br><span class="line">string str = buffer.<span class="built_in">str</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// char --(sprintf)--&gt; string</span></span><br><span class="line"><span class="type">char</span> buffer[BUFFER_SIZE];</span><br><span class="line"><span class="built_in">sprintf</span>(buffer,<span class="string">&quot;%s_%d_%d&quot;</span>,<span class="string">&quot;cplusplus&quot;</span>,<span class="number">2015</span>,<span class="number">1</span>);</span><br><span class="line">string str = buffer;</span><br></pre></td></tr></table></figure>
+
+<h4 id="string-substr-起点-length"><a href="#string-substr-起点-length" class="headerlink" title="string.substr(起点, length)"></a>string.substr(起点, length)</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// string对象.substr(起点 ， 切片长度)</span></span><br><span class="line">operate_str = initial_str.substr(<span class="number">0</span>, <span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="string-erase"><a href="#string-erase" class="headerlink" title="string.erase()"></a>string.erase()</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1.erase(pos,n);</span><br><span class="line">删除从下标pos开始的n个字符，比如erase(0,1)就是删除第一个字符</span><br><span class="line">2.erase(position);</span><br><span class="line">删除postion处的一个字符（position是一个string类型的迭代器）</span><br><span class="line">3.erase(first,last)</span><br><span class="line">删除从first到last之间的字符（first和last都是迭代器）</span><br></pre></td></tr></table></figure>
+
+<h4 id="string-对比"><a href="#string-对比" class="headerlink" title="string 对比"></a>string 对比</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::<span class="built_in">string</span> h2 = <span class="string">&quot;BUS_0001&quot;</span>;</span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">string</span> h3 = <span class="string">&quot;BUS_0001&quot;</span>;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot; h3 == h2: %d\n&quot;</span>,h3 == h2);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(h3 == h2) </span><br><span class="line"></span><br><span class="line">h3.compare(h2) == <span class="number">0</span> <span class="comment">// 相等</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="string-高级"><a href="#string-高级" class="headerlink" title="string 高级"></a>string 高级</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 1. 逆序</span></span><br><span class="line">string orderstr = <span class="string">&quot;hello world&quot;</span>;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;正序字符串：&quot;</span> &lt;&lt; <span class="string">orderstr &lt;&lt; endl;</span></span><br><span class="line"><span class="string">reverse(orderstr</span>.begin(), orderstr.end());</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;逆序字符串：&quot;</span> &lt;&lt; <span class="string">orderstr &lt;&lt; endl;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">## 2.将一个字符串按照空格划分成单词</span></span><br><span class="line"><span class="string">string str = &quot;hello world, how are you?&quot;;</span></span><br><span class="line"><span class="string">stringstream ss(str);</span></span><br><span class="line"><span class="string">string word;</span></span><br><span class="line"><span class="string">while (ss &gt;&gt; word) &#123;</span></span><br><span class="line"><span class="string">    cout &lt;&lt; word &lt;&lt; endl;</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h3><h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><h3 id="memcpy…apis"><a href="#memcpy…apis" class="headerlink" title="memcpy…apis"></a>memcpy…apis</h3><p>memset(void *str, int c, size_t n) </p>
+<p>​    <code>复制字符 c(一个无符号字符)到参数 str 所指向的字符串的前 n 个字符。</code></p>
+<p>memcpy(void *destin, void *source, unsigned n)；</p>
+<p>​    <code>从存储区 source复制n 个字节到存储区 destin。</code></p>
+<p>  <code>将地址从src开始的前count个字节的内容拷贝到地址从dst开始的内存空间中。</code></p>
+<h3 id="文件读取I-O"><a href="#文件读取I-O" class="headerlink" title="文件读取I&#x2F;O"></a>文件读取I&#x2F;O</h3><p>C++文件读写详解（ofstream,ifstream,fstream）</p>
+<p><img src="/2020/10/29/Sub_Language/CPlus/Language-Cplus/iostream.gif" alt="img"></p>
+<h4 id="1、基于控制台io"><a href="#1、基于控制台io" class="headerlink" title="1、基于控制台io"></a>1、基于控制台io</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">istream        // 流读取 （input）</span><br><span class="line">ostream        // 写入流 （output）</span><br><span class="line">iostram      // 对流读写</span><br></pre></td></tr></table></figure>
+
+<h4 id="2、基于文件IO-ifstream-ofstream"><a href="#2、基于文件IO-ifstream-ofstream" class="headerlink" title="2、基于文件IO [ifstream&#x2F;ofstream]"></a>2、基于文件IO [ifstream&#x2F;ofstream]</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fstream&gt;</span></span></span><br><span class="line">ifstream         <span class="comment">//文件读操作，存储设备读区到内存中</span></span><br><span class="line">ofstream         <span class="comment">//文件写操作 内存写入存储设备 </span></span><br><span class="line">fstream          <span class="comment">//读写操作，对打开的文件可进行读写操作</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 当 fstream/ifstream/ofstream 对象超出范围时，文件将自动关闭。</span></span><br></pre></td></tr></table></figure>
+
+<p>ref:</p>
+<p><a target="_blank" rel="noopener" href="https://www.toptip.ca/2012/11/is-it-necessary-to-manually-close.html">https://www.toptip.ca/2012/11/is-it-necessary-to-manually-close.html</a></p>
+<h4 id="3、基于字符串IO-i-ostringstream"><a href="#3、基于字符串IO-i-ostringstream" class="headerlink" title="3、基于字符串IO [i&#x2F;ostringstream]"></a>3、基于字符串IO [i&#x2F;ostringstream]</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sstream&gt;</span></span></span><br><span class="line">istringstream    <span class="comment">// 从string对象读取</span></span><br><span class="line">ostringstream     <span class="comment">// 写入到string对象</span></span><br><span class="line">stringstream    <span class="comment">// 对string对象读写</span></span><br></pre></td></tr></table></figure>
+
+<p>ref:</p>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000010266504">c++的输入输出 [一]（istream,ostream,iostream）</a></p>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000010267300?utm_source=sf-similar-article">c++的输入输出 [二]（ifstream,ofstream,fstream）</a></p>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000010262858?utm_source=sf-similar-article">c++的输入输出 [三]（istringstream,ostringstream,stringstream）</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/kingstar158/article/details/6859379">C++文件读写详解（ofstream,ifstream,fstream）</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.tkxiong.com/archives/2165">c++多进程读取同一个文件</a></p>
+<p><a target="_blank" rel="noopener" href="https://people.scs.carleton.ca/~dehne/projects/cpp-doc/tutorial/tut6-1.html">C Plus 第 6.1 节 <strong>带文件的输入&#x2F;输出</strong></a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_28114615/article/details/88367016">c++多线程：互斥锁</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u013171226/article/details/109472829">c++输入文件流ifstream用法详解_陈 洪 伟的博客-CSDN博客_ifstream用法</a></p>
+<h3 id="时间"><a href="#时间" class="headerlink" title="时间"></a>时间</h3><h4 id="1、时间戳毫秒-秒"><a href="#1、时间戳毫秒-秒" class="headerlink" title="1、时间戳毫秒&#x2F;秒"></a>1、时间戳毫秒&#x2F;秒</h4><h5 id="gettimeofday"><a href="#gettimeofday" class="headerlink" title="gettimeofday()"></a>gettimeofday()</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// linux</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/time.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> <span class="title">time</span>;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 获取时间s */</span></span><br><span class="line">    gettimeofday(&amp;time, <span class="literal">NULL</span>);</span><br><span class="line">    <span class="comment">//printf(&quot;s: %ld, ms: %ld\n&quot;, time.tv_sec, (time.tv_sec*1000 + time.tv_usec/1000));</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 获取时间us, s */</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> <span class="title">time_now</span>&#123;</span>&#125;;</span><br><span class="line">    gettimeofday(&amp;time_now, nullptr);</span><br><span class="line">    <span class="type">time_t</span> msecs_time = (time_now.tv_sec * <span class="number">1000</span>) + (time_now.tv_usec / <span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;seconds         since epoch( s): &quot;</span> &lt;&lt; time_now.tv_sec &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;milliseconds     since epoch(ms): &quot;</span> &lt;&lt; msecs_time &lt;&lt; <span class="built_in">endl</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="chrono"><a href="#chrono" class="headerlink" title="chrono"></a>chrono</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;chrono&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/time.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;ctime&gt;</span></span></span><br><span class="line"></span><br><span class="line">using <span class="built_in">std</span>::<span class="built_in">cout</span>; using <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">using <span class="built_in">std</span>::chrono::duration_cast;</span><br><span class="line">using <span class="built_in">std</span>::chrono::milliseconds;</span><br><span class="line">using <span class="built_in">std</span>::chrono::seconds;</span><br><span class="line">using <span class="built_in">std</span>::chrono::system_clock;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">auto</span> millisec_since_epoch = duration_cast&lt;milliseconds&gt;(system_clock::now().time_since_epoch()).count();</span><br><span class="line">    <span class="keyword">auto</span> sec_since_epoch = duration_cast&lt;seconds&gt;(system_clock::now().time_since_epoch()).count();</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;seconds since epoch: &quot;</span> &lt;&lt; sec_since_epoch &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;milliseconds since epoch: &quot;</span> &lt;&lt; millisec_since_epoch &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">auto</span> tp = <span class="built_in">std</span>::chrono::system_clock::now();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">auto</span> seconds = <span class="built_in">std</span>::chrono::duration_cast&lt;<span class="built_in">std</span>::chrono::seconds&gt;(tp.time_since_epoch());</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; seconds.count() &lt;&lt; <span class="string">&quot; s&quot;</span> &lt;&lt; <span class="built_in">endl</span>; <span class="comment">// seconds from 1970    1651286747</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> EXIT_SUCCESS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Demo</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstdint&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;ctime&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;chrono&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iomanip&gt;</span></span></span><br><span class="line"></span><br><span class="line">using namespace <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">time_point_to_duration</span><span class="params">()</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">duration_to_time_point</span><span class="params">()</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">format_time_point</span><span class="params">()</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">parse_from_string</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span></span><br><span class="line">&#123;</span><br><span class="line">    time_point_to_duration();</span><br><span class="line"></span><br><span class="line">    duration_to_time_point();</span><br><span class="line"></span><br><span class="line">    format_time_point();</span><br><span class="line"></span><br><span class="line">    parse_from_string();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">time_point_to_duration</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">auto</span> tp=<span class="built_in">std</span>::chrono::system_clock::now();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">auto</span> seconds=<span class="built_in">std</span>::chrono::duration_cast&lt;<span class="built_in">std</span>::chrono::seconds&gt;(tp.time_since_epoch());</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;seconds.count()&lt;&lt;<span class="string">&quot; s&quot;</span>&lt;&lt;<span class="built_in">endl</span>;<span class="comment">//seconds from 1970</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">auto</span> ms=<span class="built_in">std</span>::chrono::duration_cast&lt;<span class="built_in">std</span>::chrono::milliseconds&gt;(tp.time_since_epoch());</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;ms.count()&lt;&lt;<span class="string">&quot; ms&quot;</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">auto</span> us=<span class="built_in">std</span>::chrono::duration_cast&lt;<span class="built_in">std</span>::chrono::microseconds&gt;(tp.time_since_epoch());</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;us.count()&lt;&lt;<span class="string">&quot; us&quot;</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">auto</span> ns=<span class="built_in">std</span>::chrono::duration_cast&lt;<span class="built_in">std</span>::chrono::nanoseconds&gt;(tp.time_since_epoch());</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;ns.count()&lt;&lt;<span class="string">&quot; ns&quot;</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;tp.time_since_epoch().count()&lt;&lt;<span class="string">&quot; default is ns&quot;</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">duration_to_time_point</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="type">uint64_t</span> ticker=<span class="number">1609756793160376465</span>;</span><br><span class="line">    <span class="keyword">auto</span> ns=<span class="built_in">std</span>::chrono::nanoseconds(ticker);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">auto</span> tp1=<span class="built_in">std</span>::chrono::time_point&lt;<span class="built_in">std</span>::chrono::system_clock,<span class="built_in">std</span>::chrono::nanoseconds&gt;(ns);</span><br><span class="line">    <span class="keyword">auto</span> tp2=tp1-<span class="built_in">std</span>::chrono::hours(<span class="number">1</span>);<span class="comment">//time point before one hour</span></span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;tp1=&quot;</span>&lt;&lt;tp1.time_since_epoch().count()&lt;&lt;<span class="built_in">endl</span>&lt;&lt;<span class="string">&quot;tp2=&quot;</span>&lt;&lt;tp2.time_since_epoch().count()&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">format_time_point</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">auto</span> tp=<span class="built_in">std</span>::chrono::system_clock::now();</span><br><span class="line">    <span class="keyword">auto</span> time=<span class="built_in">std</span>::chrono::system_clock::<span class="type">to_time_t</span>(tp);</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">stringstream</span> ss;</span><br><span class="line">    ss&lt;&lt;<span class="built_in">std</span>::put_time(<span class="built_in">std</span>::localtime(&amp;time),<span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;ss.str()&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">parse_from_string</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">stringstream</span> ss;</span><br><span class="line">    ss&lt;&lt;<span class="string">&quot;2021-01-06 18:47:35&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">std</span>::tm tm&#123;&#125;;</span><br><span class="line">    ss&gt;&gt;<span class="built_in">std</span>::get_time(&amp;tm,<span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>);</span><br><span class="line">    <span class="keyword">auto</span> tp=<span class="built_in">std</span>::chrono::system_clock::<span class="type">from_time_t</span>(<span class="built_in">std</span>::mktime(&amp;tm));</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;tp.time_since_epoch().count()&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//原文链接：https://blog.csdn.net/lianshaohua/article/details/112531154</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="掩耳盗铃"><a href="#掩耳盗铃" class="headerlink" title="掩耳盗铃"></a>掩耳盗铃</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">time_t</span> now = time(nullptr);</span><br><span class="line"><span class="type">time_t</span> mnow = now * <span class="number">1000</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;seconds since epoch: &quot;</span> &lt;&lt; now &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;milliseconds since epoch: &quot;</span> &lt;&lt; mnow &lt;&lt; <span class="built_in">endl</span> &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/sea_snow/article/details/82752492">Windows&#x2F;Linux Get Millisecond</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.delftstack.com/zh/howto/cpp/how-to-get-time-in-milliseconds-cpp/">get time in millisecond </a></p>
+<h4 id="2、时间戳-s"><a href="#2、时间戳-s" class="headerlink" title="2、时间戳(s)"></a>2、时间戳(s)</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// time for int s</span></span><br><span class="line"><span class="type">time_t</span> now = time(<span class="number">0</span>);</span><br><span class="line"><span class="comment">// time to string format</span></span><br><span class="line">tm *ltm = localtime(&amp;now);</span><br><span class="line"><span class="type">char</span> s[<span class="number">100</span>]&#123;&#125;;</span><br><span class="line">strftime(s, <span class="keyword">sizeof</span>(s), <span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>, ltm);</span><br><span class="line"><span class="built_in">string</span> <span class="title function_">timestr</span><span class="params">(s)</span>;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::<span class="type">time_t</span> t = <span class="built_in">std</span>::time(<span class="literal">NULL</span>);</span><br><span class="line"><span class="built_in">std</span>::tm tm = *<span class="built_in">std</span>::localtime(&amp;t);</span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">cout</span>.imbue(<span class="built_in">std</span>::locale(<span class="string">&quot;CHS&quot;</span>));</span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="built_in">std</span>::put_time(&amp;tm,<span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>) &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3、localtime-time-t"><a href="#3、localtime-time-t" class="headerlink" title="3、localtime(time_t)"></a>3、localtime(time_t)</h4><p>C 库函数 <strong>struct tm *localtime(const time_t *timer)</strong> 使用 timer 的值来填充 <strong>tm</strong> 结构。<strong>timer</strong> 的值被分解为 <strong>tm</strong> 结构，并用本地时区表示。</p>
+<h4 id="4、strftime"><a href="#4、strftime" class="headerlink" title="4、strftime()"></a>4、strftime()</h4><p>size_t strftime(char *str, size_t count, const char *format, const struct tm *tm);</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">str, 表示返回的时间字符串</span><br><span class="line">count, 要写入的字节的最大数量</span><br><span class="line">format, 格式字符串由零个或多个转换符和普通字符(除%)</span><br><span class="line">tm, 输入时间</span><br></pre></td></tr></table></figure>
+
+<h3 id="基本的输入输出"><a href="#基本的输入输出" class="headerlink" title="基本的输入输出"></a>基本的输入输出</h3><h3 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h3><h2 id="APIs-C-11"><a href="#APIs-C-11" class="headerlink" title="APIs C++ 11"></a>APIs C++ 11</h2><h3 id="auto"><a href="#auto" class="headerlink" title="auto"></a>auto</h3><p>C++11这次的更新带来了令很多C++程序员期待已久的for range循环，每次看到javascript， lua里的for range，心想要是C++能有多好，心里别提多酸了。这次C++11不负众望，再也不用羡慕别家人的for range了。</p>
+<p>字符串 &amp; 数组</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">std::string str = “hello, world”;  </span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> ch : str) &#123;  </span><br><span class="line">     std::cout &lt;&lt; ch &lt;&lt; std::endl;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> arr[] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;;  </span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> i : arr) &#123;  </span><br><span class="line">     std::cout&lt;&lt; i &lt;&lt; std::endl;  </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p>stl 容器</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">std::vector&lt;std::string&gt; str_vec = &#123;“i”, “like”,  <span class="string">&quot;google”&#125;;  </span></span><br><span class="line"><span class="string">for(auto&amp; it : str_vec) &#123;  </span></span><br><span class="line"><span class="string">     it = “c++”;  </span></span><br><span class="line"><span class="string">&#125;  </span></span><br></pre></td></tr></table></figure>
+
+<p>遍历stl map </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">std::map&lt;<span class="type">int</span>, std::string&gt; hash_map = &#123;&#123;<span class="number">1</span>, “c++”&#125;, &#123;<span class="number">2</span>, “java”&#125;, &#123;<span class="number">3</span>, “python”&#125;&#125;;  </span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> it : hash_map) &#123;  </span><br><span class="line">     std::cout &lt;&lt; it.first &lt;&lt; “\t” &lt;&lt; it.second &lt;&lt; std::endl;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+<h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><h3 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h3><h2 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h2><h3 id="对象创建"><a href="#对象创建" class="headerlink" title="对象创建"></a>对象创建</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//隐式创建</span></span><br><span class="line">Person p1;</span><br><span class="line"><span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">Person <span class="title function_">p2</span><span class="params">(<span class="number">18</span>, <span class="string">&quot;lili&quot;</span>)</span>;</span><br><span class="line"><span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//显式创建</span></span><br><span class="line">Person p3 = Person();</span><br><span class="line"><span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">Person p4 = Person(<span class="number">16</span>, <span class="string">&quot;xx&quot;</span>);</span><br><span class="line"><span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// new 创建</span></span><br><span class="line">Person *p5 = new Person();</span><br><span class="line"><span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">Person *p6 = new Person(<span class="number">14</span>, <span class="string">&quot;yy&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="VS-快捷键"><a href="#VS-快捷键" class="headerlink" title="VS 快捷键"></a>VS 快捷键</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">多行注释：Ctrl+K+C（先按ctrl，再按K，最后按C）</span><br><span class="line">取消多行注释：Ctrl+K+U（先按ctrl，再按K，最后按U）</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/c/" rel="tag"># c++</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/09/28/Tools/Tools-Anbox/" rel="prev" title="Tools Android emulator -- Anbox">
+      <i class="fa fa-chevron-left"></i> Tools Android emulator -- Anbox
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/11/09/Games/Paper-Game-DDZ-DeltaDou/" rel="next" title="Game - DouDiZhu DeltaDou (Todo)">
+      Game - DouDiZhu DeltaDou (Todo) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E4%B9%A6%E7%B1%8D"><span class="nav-number">1.</span> <span class="nav-text">相关书籍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#APIs"><span class="nav-number">2.</span> <span class="nav-text">APIs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%87%E5%87%86%E5%BA%93"><span class="nav-number">2.1.</span> <span class="nav-text">标准库</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-int-float-to-string-array"><span class="nav-number">2.1.1.</span> <span class="nav-text">1.int&#x2F;float to string&#x2F;array:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-string-array-to-int-float"><span class="nav-number">2.1.2.</span> <span class="nav-text">2. string&#x2F;array to int&#x2F;float</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B-%E5%8F%98%E9%87%8F-%E5%B8%B8%E9%87%8F"><span class="nav-number">2.2.</span> <span class="nav-text">数据类型&amp;变量&amp;常量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#int-to-string"><span class="nav-number">2.2.1.</span> <span class="nav-text">int to string</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rand"><span class="nav-number">2.2.2.</span> <span class="nav-text">rand</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E9%A5%B0%E7%AC%A6"><span class="nav-number">2.3.</span> <span class="nav-text">修饰符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E7%B1%BB"><span class="nav-number">2.4.</span> <span class="nav-text">存储类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E7%AE%97%E7%AC%A6-%E5%BE%AA%E7%8E%AF-%E5%88%A4%E6%96%AD"><span class="nav-number">2.5.</span> <span class="nav-text">运算符 循环 判断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0"><span class="nav-number">2.6.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E5%AD%97%E8%BF%90%E7%AE%97"><span class="nav-number">2.7.</span> <span class="nav-text">数字运算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E7%BB%84"><span class="nav-number">2.8.</span> <span class="nav-text">数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%9A%E4%B8%BEenum"><span class="nav-number">2.9.</span> <span class="nav-text">枚举enum</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2String"><span class="nav-number">2.10.</span> <span class="nav-text">字符串String</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#string-%E8%B5%8B%E5%80%BC"><span class="nav-number">2.10.1.</span> <span class="nav-text">string 赋值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#string-substr-%E8%B5%B7%E7%82%B9-length"><span class="nav-number">2.10.2.</span> <span class="nav-text">string.substr(起点, length)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#string-erase"><span class="nav-number">2.10.3.</span> <span class="nav-text">string.erase()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#string-%E5%AF%B9%E6%AF%94"><span class="nav-number">2.10.4.</span> <span class="nav-text">string 对比</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#string-%E9%AB%98%E7%BA%A7"><span class="nav-number">2.10.5.</span> <span class="nav-text">string 高级</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E9%92%88"><span class="nav-number">2.11.</span> <span class="nav-text">指针</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E7%94%A8"><span class="nav-number">2.12.</span> <span class="nav-text">引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#memcpy%E2%80%A6apis"><span class="nav-number">2.13.</span> <span class="nav-text">memcpy…apis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96I-O"><span class="nav-number">2.14.</span> <span class="nav-text">文件读取I&#x2F;O</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E5%9F%BA%E4%BA%8E%E6%8E%A7%E5%88%B6%E5%8F%B0io"><span class="nav-number">2.14.1.</span> <span class="nav-text">1、基于控制台io</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E5%9F%BA%E4%BA%8E%E6%96%87%E4%BB%B6IO-ifstream-ofstream"><span class="nav-number">2.14.2.</span> <span class="nav-text">2、基于文件IO [ifstream&#x2F;ofstream]</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81%E5%9F%BA%E4%BA%8E%E5%AD%97%E7%AC%A6%E4%B8%B2IO-i-ostringstream"><span class="nav-number">2.14.3.</span> <span class="nav-text">3、基于字符串IO [i&#x2F;ostringstream]</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E9%97%B4"><span class="nav-number">2.15.</span> <span class="nav-text">时间</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E6%97%B6%E9%97%B4%E6%88%B3%E6%AF%AB%E7%A7%92-%E7%A7%92"><span class="nav-number">2.15.1.</span> <span class="nav-text">1、时间戳毫秒&#x2F;秒</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#gettimeofday"><span class="nav-number">2.15.1.1.</span> <span class="nav-text">gettimeofday()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#chrono"><span class="nav-number">2.15.1.2.</span> <span class="nav-text">chrono</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8E%A9%E8%80%B3%E7%9B%97%E9%93%83"><span class="nav-number">2.15.1.3.</span> <span class="nav-text">掩耳盗铃</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E6%97%B6%E9%97%B4%E6%88%B3-s"><span class="nav-number">2.15.2.</span> <span class="nav-text">2、时间戳(s)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81localtime-time-t"><span class="nav-number">2.15.3.</span> <span class="nav-text">3、localtime(time_t)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%E3%80%81strftime"><span class="nav-number">2.15.4.</span> <span class="nav-text">4、strftime()</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%9A%84%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA"><span class="nav-number">2.16.</span> <span class="nav-text">基本的输入输出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">2.17.</span> <span class="nav-text">数据结构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#APIs-C-11"><span class="nav-number">3.</span> <span class="nav-text">APIs C++ 11</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#auto"><span class="nav-number">3.1.</span> <span class="nav-text">auto</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95"><span class="nav-number">3.2.</span> <span class="nav-text">算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">3.3.</span> <span class="nav-text">迭代器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1"><span class="nav-number">4.</span> <span class="nav-text">对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA"><span class="nav-number">4.1.</span> <span class="nav-text">对象创建</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VS-%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-number">5.</span> <span class="nav-text">VS 快捷键</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Simon Shi的小站">
+<meta property="og:url" content="https://novav.github.io/page/12/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="AI,Machine Learning, Deep Learning">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://novav.github.io/page/12/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2023/04/26/Sub_Language/CPlus/Cplus_Experience/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/04/26/Sub_Language/CPlus/Cplus_Experience/" class="post-title-link" itemprop="url">C++ experience</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-04-26 09:00:00" itemprop="dateCreated datePublished" datetime="2023-04-26T09:00:00+00:00">2023-04-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="BUG-Analysis"><a href="#BUG-Analysis" class="headerlink" title="BUG Analysis"></a>BUG Analysis</h2><h3 id="undefined-reference-to"><a href="#undefined-reference-to" class="headerlink" title="undefined reference to"></a>undefined reference to</h3><p>编译链接错误，</p>
+<ul>
+<li><p>新增的.cpp没有加入makefile</p>
+</li>
+<li><p>没有指定对应的库（.o&#x2F;.a&#x2F;.so) </p>
+</li>
+<li><p>连接库参数的顺序不对 在默认情况下,对于-l 使用库的要求是越是基础的库越要写在后面,无论是静态还动态</p>
+</li>
+<li><p>gcc&#x2F;ld 版本不匹配 gcc&#x2F;ld的版本的兼容性问题,由于gcc2 到 gcc3大版本的兼容性存在问题(其实gcc3.2到3.4也一定程度上存在这样的问题) 当在高版本机器上使用低版本的机器就会导致这样的错误, 这个问题比较常见在32位的环境上, 另外就在32位环境不小心使用了64位的库或者反过来64位环境使用了32位的库.</p>
+</li>
+<li><p>C&#x2F;C++相互依赖和链接 gcc和g++编译结果的混用需要保证能够extern “C” 两边都可以使用的接口,在我们的64位环境中gcc链接g++的库还需要加上 -lstdc++,具体见前文对于混合编译的说明</p>
+</li>
+<li><p>运行期报错 这个问题基本上是由于程序使用了dlopen方式载入.so, 但.so没有把所有需要的库都链接上,具体参加上文中对于静态库和动态库混合使用的说明</p>
+</li>
+</ul>
+<h2 id="Linux进程分析"><a href="#Linux进程分析" class="headerlink" title="Linux进程分析"></a>Linux进程分析</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/ktigerhero3/article/details/80004315">https://blog.csdn.net/ktigerhero3/article/details/80004315</a></p>
+<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1701569">https://cloud.tencent.com/developer/article/1701569</a></p>
+<p>手动释放Linux内存<a target="_blank" rel="noopener" href="https://www.cnblogs.com/jackhub/p/3736877.html">https://www.cnblogs.com/jackhub/p/3736877.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wwd0501/article/details/100041808">https://blog.csdn.net/wwd0501/article/details/100041808</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/shuihupo/article/details/80905641">https://blog.csdn.net/shuihupo/article/details/80905641</a></p>
+<h3 id="contab定时任务"><a href="#contab定时任务" class="headerlink" title="contab定时任务"></a>contab定时任务</h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/aminxu/p/5993769.html">https://www.cnblogs.com/aminxu/p/5993769.html</a></p>
+<h2 id="coredump"><a href="#coredump" class="headerlink" title="coredump"></a>coredump</h2><h2 id="SIGNAL"><a href="#SIGNAL" class="headerlink" title="SIGNAL"></a>SIGNAL</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">man 7 signal</span><br></pre></td></tr></table></figure>
+
+<p> Linux  supports  the standard signals listed below.  Several signal numbers are architecture-dependent, as indicated in the “Value” column.  (Where three values are given, the first one is usually valid for alpha and sparc, the<br>       middle one for x86, arm, and most other architectures, and the last one for mips.  (Values for parisc are not shown; see the Linux kernel source for signal numbering on that architecture.)  A dash (-) denotes that a  signal  is<br>       absent on the corresponding architecture.</p>
+<pre><code>   First the signals described in the original POSIX.1-1990 standard.
+
+   Signal     Value     Action   Comment
+   ──────────────────────────────────────────────────────────────────────
+   SIGHUP        1       Term    Hangup detected on controlling terminal
+                                 or death of controlling process
+   SIGINT        2       Term    Interrupt from keyboard
+   SIGQUIT       3       Core    Quit from keyboard
+   SIGILL        4       Core    Illegal Instruction
+   SIGABRT       6       Core    Abort signal from abort(3)
+   SIGFPE        8       Core    Floating-point exception
+   SIGKILL       9       Term    Kill signal
+   SIGSEGV      11       Core    Invalid memory reference
+   SIGPIPE      13       Term    Broken pipe: write to pipe with no
+                                 readers; see pipe(7)
+   SIGALRM      14       Term    Timer signal from alarm(2)
+   SIGTERM      15       Term    Termination signal
+   SIGUSR1   30,10,16    Term    User-defined signal 1
+   SIGUSR2   31,12,17    Term    User-defined signal 2
+   SIGCHLD   20,17,18    Ign     Child stopped or terminated
+   SIGCONT   19,18,25    Cont    Continue if stopped
+   SIGSTOP   17,19,23    Stop    Stop process
+   SIGTSTP   18,20,24    Stop    Stop typed at terminal
+   SIGTTIN   21,21,26    Stop    Terminal input for background process
+   SIGTTOU   22,22,27    Stop    Terminal output for background process
+
+   The signals SIGKILL and SIGSTOP cannot be caught, blocked, or ignored.
+</code></pre>
+<p>ref: <a target="_blank" rel="noopener" href="https://blog.csdn.net/wanxuexiang/article/details/88382733">https://blog.csdn.net/wanxuexiang/article/details/88382733</a></p>
+<h2 id="dmesg"><a href="#dmesg" class="headerlink" title="dmesg"></a>dmesg</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dmesg</span><br><span class="line">dmesg -T</span><br></pre></td></tr></table></figure>
+
+<h2 id="gdb调试"><a href="#gdb调试" class="headerlink" title="gdb调试"></a>gdb调试</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">r</span><br><span class="line">bt</span><br><span class="line">l  // list code</span><br><span class="line">watch</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">bt</span><br><span class="line">where</span><br><span class="line"></span><br><span class="line">f 1</span><br><span class="line">disassemble</span><br><span class="line"></span><br><span class="line">shell echo free@plt |c++filt</span><br></pre></td></tr></table></figure>
+
+<h2 id="LOGS"><a href="#LOGS" class="headerlink" title="LOGS:"></a>LOGS:</h2><h3 id="问题：torch-cudnn-Destory-ini-c-138-Backtrace-stopped-frame-did-not"><a href="#问题：torch-cudnn-Destory-ini-c-138-Backtrace-stopped-frame-did-not" class="headerlink" title="问题：torch cudnn Destory ini.c:138 Backtrace stopped: frame did not"></a>问题：torch cudnn Destory ini.c:138 Backtrace stopped: frame did not</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">(gdb) bt</span><br><span class="line">#0  0x00007f8891fed9fe in ?? () from /usr/local/cuda-10.0/lib64/libcudart.so.10.0</span><br><span class="line">#1  0x00007f8891ff296b in ?? () from /usr/local/cuda-10.0/lib64/libcudart.so.10.0</span><br><span class="line">#2  0x00007f889201f8e0 in cudaStreamDestroy () from /usr/local/cuda-10.0/lib64/libcudart.so.10.0</span><br><span class="line">#3  0x00007f88a24f563d in cudnnDestroy () from /data/include/libtorch/lib/libtorch.so</span><br><span class="line">#4  0x00007f8898d8fa15 in at::cuda::(anonymous namespace)::DeviceThreadHandlePool&lt;cudnnContext*, &amp;at::native::(anonymous namespace)::createCuDNNHandle, &amp;at::native::(anonymous namespace)::destroyCuDNNHandle&gt;::~Devi</span><br><span class="line">   from /data/include/libtorch/lib/libtorch.so</span><br><span class="line">#5  0x00007f8891681735 in __cxa_finalize (d=0x7f88d7684000) at cxa_finalize.c:83</span><br><span class="line">#6  0x00007f8893de4d43 in __do_global_dtors_aux () from /data/include/libtorch/lib/libtorch.so</span><br><span class="line">#7  0x00007ffed7d4bbb0 in ?? ()</span><br><span class="line">#8  0x00007f88dc13bd13 in _dl_fini () at dl-fini.c:138</span><br><span class="line">Backtrace stopped: frame did not save the PC</span><br></pre></td></tr></table></figure>
+
+<p>解决：</p>
+<ul>
+<li><p>SO库ld加载torch.so</p>
+</li>
+<li><p>主程序不需要再次ld了，不然就会上面报错</p>
+</li>
+</ul>
+<h3 id="问题C-】symbol-lookup-error-：undefined-reference-to找不到"><a href="#问题C-】symbol-lookup-error-：undefined-reference-to找不到" class="headerlink" title="问题C++】symbol lookup error ：undefined reference to找不到"></a>问题C++】symbol lookup error ：undefined reference to找不到</h3><p>解决：</p>
+<ul>
+<li><p>1、import *.h文件 没有声明定义</p>
+</li>
+<li><p>2、声明定义的函数参数定义与cpp实现不一致，比如参数多了const的修饰（编译可以通过）</p>
+</li>
+</ul>
+<h3 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h3><p>core dump 生成</p>
+<h4 id="1-调试"><a href="#1-调试" class="headerlink" title="1 调试"></a>1 调试</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">gdb exe_file core-file</span><br><span class="line"></span><br><span class="line">(gdb) l</span><br><span class="line">46    in ../sysdeps/unix/sysv/linux/raise.c</span><br></pre></td></tr></table></figure>
+
+<h4 id="2、bt-查看"><a href="#2、bt-查看" class="headerlink" title="2、bt 查看"></a>2、bt 查看</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">(gdb) bt</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">0  __GI_raise (sig=sig@entry=6) at ../sysdeps/unix/sysv/linux/raise.c:51</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">1  0x00007f056317e801 <span class="keyword">in</span> __GI_abort () at abort.c:79</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">2  0x00007f05631c7897 <span class="keyword">in</span> __libc_message (action=action@entry=do_abort, <span class="built_in">fmt</span>=<span class="built_in">fmt</span>@entry=0x7f05632f4b9a <span class="string">&quot;%s\n&quot;</span>) at ../sysdeps/posix/libc_fatal.c:181</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">3  0x00007f05631ce90a <span class="keyword">in</span> malloc_printerr (str=str@entry=0x7f05632f2d88 <span class="string">&quot;free(): invalid pointer&quot;</span>) at malloc.c:5350</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">4  0x00007f05631d5e1c <span class="keyword">in</span> _int_free (have_lock=0, p=0x7f0400000013, av=0x7f0563529c40 &lt;main_arena&gt;) at malloc.c:4157</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">5  __GI___libc_free (mem=0x7f0400000023) at malloc.c:3124</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">6  0x00007f0562c055a0 <span class="keyword">in</span> __gnu_cxx::new_allocator&lt;int&gt;::deallocate (this=0x7f0454019258, __p=0x7f0400000023) at /usr/include/c++/7/ext/new_allocator.h:125</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">7  0x00007f0562c0531a <span class="keyword">in</span> std::allocator_traits&lt;std::allocator&lt;int&gt; &gt;::deallocate (__a=..., __p=0x7f0400000023, __n=18446709159920402432) at /usr/include/c++/7/bits/alloc_traits.h:462</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">8  0x00007f0562c04f08 <span class="keyword">in</span> std::_Vector_base&lt;int, std::allocator&lt;int&gt; &gt;::_M_deallocate (this=0x7f0454019258, __p=0x7f0400000023, __n=18446709159920402432)</span></span><br><span class="line">    at /usr/include/c++/7/bits/stl_vector.h:180</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">9  0x00007f0562c06cd5 <span class="keyword">in</span> std::_Vector_base&lt;int, std::allocator&lt;int&gt; &gt;::~_Vector_base (this=0x7f0454019258, __in_chrg=&lt;optimized out&gt;) at /usr/include/c++/7/bits/stl_vector.h:162</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">10 0x00007f0562c06b15 <span class="keyword">in</span> std::vector&lt;int, std::allocator&lt;int&gt; &gt;::~vector (this=0x7f0454019258, __in_chrg=&lt;optimized out&gt;) at /usr/include/c++/7/bits/stl_vector.h:435</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">11 0x00007f0562c4cf02 <span class="keyword">in</span> __gnu_cxx::new_allocator&lt;std::vector&lt;int, std::allocator&lt;int&gt; &gt; &gt;::destroy&lt;std::vector&lt;int, std::allocator&lt;int&gt; &gt; &gt; (this=0x7f0493fd45b0, __p=0x7f0454019258)</span></span><br><span class="line">    at /usr/include/c++/7/ext/new_allocator.h:140</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">12 0x00007f0562c4b29e <span class="keyword">in</span> std::allocator_traits&lt;std::allocator&lt;std::vector&lt;int, std::allocator&lt;int&gt; &gt; &gt; &gt;::destroy&lt;std::vector&lt;int, std::allocator&lt;int&gt; &gt; &gt; (__a=..., __p=0x7f0454019258)</span></span><br><span class="line">    at /usr/include/c++/7/bits/alloc_traits.h:487</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">13 0x00007f0562c497bb <span class="keyword">in</span> std::vector&lt;std::vector&lt;int, std::allocator&lt;int&gt; &gt;, std::allocator&lt;std::vector&lt;int, std::allocator&lt;int&gt; &gt; &gt; &gt;::pop_back (this=0x7f0493fd45b0)</span></span><br><span class="line">    at /usr/include/c++/7/bits/stl_vector.h:979</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">14 0x00007f0562c53d82 <span class="keyword">in</span> ddzmove_sg::MoveGener::gen_type_1_single (this=0x7f0493fd4710, cards=0x7f0493fd4b00, result=std::vector of length -1, capacity 1 = &#123;...&#125;, is_start=<span class="literal">true</span>)</span></span><br><span class="line">    at /data/shixx/games/DDZ-QS-Server/ai_server_sanguo_call/src/move_utils_sg.cpp:532</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">15 0x00007f0562c537cf <span class="keyword">in</span> ddzmove_sg::MoveGener::gen_moves (this=0x7f0493fd4710, cards=0x7f0493fd4b00, outed_3dai_num=2, horse=std::vector of length 1, capacity 1 = &#123;...&#125;,</span> </span><br><span class="line">    result=std::vector of length -1, capacity 1 = &#123;...&#125;) at /data/shixx/games/DDZ-QS-Server/ai_server_sanguo_call/src/move_utils_sg.cpp:465</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">16 0x00007f0562c5879e <span class="keyword">in</span> ddzmove_sg::get_legal_card_play_actions[abi:cxx11](ddzmove_sg::MoveGener, int*, int*, int, int, std::vector&lt;int, std::allocator&lt;int&gt; &gt;, std::vector&lt;std::vector&lt;int, std::allocator&lt;int&gt; &gt;, std::allocator&lt;std::vector&lt;int, std::allocator&lt;int&gt; &gt; &gt; &gt;&amp;, bool, int) (mg=..., rival_move_cards=0x7f0493fd4b50, next_hands=0x7f0493fd4b00, hero_id=106,</span> </span><br><span class="line">    outed_3dai_num=2, horse=std::vector of length 1, capacity 1 = &#123;...&#125;, avail_moves=std::vector of length -1, capacity 1 = &#123;...&#125;, ignorePass=false, round_id=973329)</span><br><span class="line">    at /data/shixx/games/DDZ-QS-Server/ai_server_sanguo_call/src/move_utils_sg.cpp:1217</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">17 0x00007f0562c5f613 <span class="keyword">in</span> TorchServer::getPTOut (this=0x2f25ec0, result=std::vector of length 0, capacity 0, heroes=0x7f045401ff50, skill=0x7f0454006590, horse=0x7f0454019290,</span> </span><br><span class="line">    all_cards=0x7f0493fd68c0, bottom=0x7f0493fd6870, mingpai=0x7f0454002b20, remain_num=0x7f04540016f0, out_history=0x7f0493fd69a0, cur_turn=21, my_seat=1, dz_seat=1, aitype=0, ailevel=5, </span><br><span class="line">    round_id=973329, topk=3, ignorePass=false) at /data/shixx/games/DDZ-QS-Server/ai_server_sanguo_call/src/torch_server.cpp:323</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">18 0x00007f0562cbbfdc <span class="keyword">in</span> getPTOut (action=0x7f0493fda410, action_num=0x7f0493fda2e0, cards=0x7f047c3332a0, remain_num=0x7f04540016f0, bottom=0x7f045400f460, bottom_num=3,</span> </span><br><span class="line">    mingpai=0x7f0454002b20, out_history=0x7f0454033990, heroes=0x7f045401ff50, skill=0x7f0454006590, horse=0x7f0454019290, call_history=0x7f045400d1c0, cur_turn=21, my_seat=1, dz_seat=1, </span><br><span class="line">    first_bid_seat=-1, aitype=0, ailevel=5, round_id=973329) at /data/shixx/games/DDZ-QS-Server/ai_server_sanguo_call/src/torch_so.cpp:114</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-查看出错的栈信息"><a href="#3-查看出错的栈信息" class="headerlink" title="3 查看出错的栈信息"></a>3 查看出错的栈信息</h4><p>frame + (gdb) info args</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">(gdb) frame</span><br><span class="line">(gdb) f 14</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">14 0x00007f0562c53d82 <span class="keyword">in</span> ddzmove_sg::MoveGener::gen_type_1_single (this=0x7f0493fd4710, cards=0x7f0493fd4b00, result=std::vector of length -1, capacity 1 = &#123;...&#125;, is_start=<span class="literal">true</span>)</span></span><br><span class="line">    at /data/shixx/games/DDZ-QS-Server/ai_server_sanguo_call/src/move_utils_sg.cpp:532</span><br><span class="line">532    /data/shixx/games/DDZ-QS-Server/ai_server_sanguo_call/src/move_utils_sg.cpp: No such file or directory.</span><br><span class="line">(gdb) info args</span><br><span class="line">this = 0x7f0493fd4710</span><br><span class="line">cards = 0x7f0493fd4b00</span><br><span class="line">result = std::vector of length -1, capacity 1 = &#123;std::vector of length 1, capacity 1 = &#123;1409472400&#125;, std::vector of length -6, capacity -1073741833 = &#123;</span><br><span class="line">    &lt;error reading variable result (Cannot access memory at address 0x25)&gt;</span><br><span class="line">is_start = true</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-查看参数数据"><a href="#4-查看参数数据" class="headerlink" title="4 查看参数数据"></a>4 查看参数数据</h4><p>已知cards是一个数组（17位）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">(gdb) print cards</span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">1 = (int *) 0x7f0493fd4b00</span></span><br><span class="line">(gdb) print cards[0]</span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">2 = 0</span></span><br><span class="line">(gdb) print cards[1]</span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">3 = 0</span></span><br><span class="line">...</span><br><span class="line">(gdb) print cards[17]</span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">18 = 2</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2023/04/20/Sub_Language/DL_Train/PT_To_TF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/04/20/Sub_Language/DL_Train/PT_To_TF/" class="post-title-link" itemprop="url">TF <--> Torch</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-04-20 12:00:00" itemprop="dateCreated datePublished" datetime="2023-04-20T12:00:00+00:00">2023-04-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Torch/" itemprop="url" rel="index"><span itemprop="name">Torch</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Torch/TF/" itemprop="url" rel="index"><span itemprop="name">TF</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="将Pytorch卷积层权重转到Tensorflow中"><a href="#将Pytorch卷积层权重转到Tensorflow中" class="headerlink" title="将Pytorch卷积层权重转到Tensorflow中"></a>将Pytorch卷积层权重转到Tensorflow中</h4><p>上面刚刚说了在Pytorch的卷积层中，kernel weights存储格式是<code>[kernel_number, kernel_channel, kernel_height, kernel_width]</code>，但在Tensorflow的卷积层中kernel weights存储格式是<code>[kernel_height, kernel_width, kernel_channel, kernel_number]</code>。还有就是在卷积层中如果使用了bias那么bias weights是不需要处理的，因为卷积的bias weights只有一个维度，所以Pytorch和Tensorflow中存储的格式是一样的（后面测试也能验证这个结论）。 在下面代码中：</p>
+<ul>
+<li>分别使用Pytorch和Tensorflow的Keras模块创建了卷积层</li>
+<li>获取Pytorch创建卷积层的kernel weight以及bias weight</li>
+<li>使用numpy对kernel weight的进行transpose处理</li>
+<li>将转换后的权重载入到tensorflow的卷积层中</li>
+<li>将之前创建的数据分别传入Pytorch和Tensorflow的卷积层中进行正向传播</li>
+<li>再使用numpy对Pytorch得到的结果进行transpose处理（保证和tensorflow输出的结果Tensor格式一致）</li>
+<li>对比两者输出的结果是否一致</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">conv_test</span>(<span class="params">torch_image, tf_image</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    测试转换权重后pytorch的卷积层和tensorflow的卷积层输出是否一致</span></span><br><span class="line"><span class="string">    :param torch_image:</span></span><br><span class="line"><span class="string">    :param tf_image:</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment"># 创建pytorch卷积层</span></span><br><span class="line">    torch_conv = nn.Conv2d(in_channels=<span class="number">3</span>, out_channels=<span class="number">32</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">    <span class="comment"># [kernel_number, kernel_channel, kernel_height, kernel_width]</span></span><br><span class="line">    <span class="comment"># 卷积层的weights</span></span><br><span class="line">    torch_conv_weight = torch_conv.weight</span><br><span class="line">    <span class="comment"># 卷积层的bias</span></span><br><span class="line">    torch_conv_bias = torch_conv.bias</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 创建tensorflow卷积层</span></span><br><span class="line">    tf_conv = tf.keras.layers.Conv2D(filters=<span class="number">32</span>, kernel_size=<span class="number">3</span>, padding=<span class="string">&#x27;same&#x27;</span>)</span><br><span class="line">    tf_conv.build([<span class="number">1</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">3</span>])</span><br><span class="line">    <span class="comment"># 将pytorch的卷积层权重进行转换并载入tf的卷积层中</span></span><br><span class="line">    <span class="comment"># to [kernel_height, kernel_width, kernel_channel, kernel_number]</span></span><br><span class="line">    value = np.transpose(torch_conv_weight.detach().numpy(), (<span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">0</span>)).astype(np.float32)</span><br><span class="line">    tf_conv.set_weights([value, torch_conv_bias.detach().numpy()])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 计算pytorch卷积层的输出</span></span><br><span class="line">    <span class="comment"># [B, C, H, W]</span></span><br><span class="line">    v1 = torch_conv(torch_image).detach().numpy()</span><br><span class="line">    v1 = np.squeeze(v1, axis=<span class="number">0</span>)</span><br><span class="line">    <span class="comment"># [H, W, C]</span></span><br><span class="line">    v1 = np.transpose(v1, (<span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 计算tensorflow卷积层的输出</span></span><br><span class="line">    <span class="comment"># [B, H, W, C]</span></span><br><span class="line">    v2 = tf_conv(tf_image).numpy()</span><br><span class="line">    <span class="comment"># [H, W, C]</span></span><br><span class="line">    v2 = np.squeeze(v2, axis=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 检查pytorch和tensorflow的输出结果是否一致</span></span><br><span class="line">    np.testing.assert_allclose(v1, v2, rtol=<span class="number">1e-03</span>, atol=<span class="number">1e-05</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;convolution layer test is great!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="将Pytorch-DW卷积层权重转到Tensorflow中"><a href="#将Pytorch-DW卷积层权重转到Tensorflow中" class="headerlink" title="将Pytorch DW卷积层权重转到Tensorflow中"></a>将Pytorch DW卷积层权重转到Tensorflow中</h4><p>在Pytorch的dw卷积层中，dw kernel weights存储格式是<code>[kernel_number, kernel_channel, kernel_height, kernel_width]</code>，但在Tensorflow的dw卷积层中dw kernel weights存储格式是<code>[kernel_height, kernel_width, kernel_number, kernel_channel]</code>（注意这里最后两个维度和卷积层有些差异）。同样在dw卷积层中如果使用了bias那么dw bias weights是不需要处理的。<br>在下面代码中：</p>
+<ul>
+<li><p>分别使用Pytorch和Tensorflow的Keras模块创建了dw卷积层</p>
+</li>
+<li><p>获取Pytorch创建dw卷积层的dw kernel weight以及dw bias weight</p>
+</li>
+<li><p>使用numpy对dw kernel weight的进行transpose处理</p>
+</li>
+<li><p>将转换后的权重载入到tensorflow的dw卷积层中</p>
+</li>
+<li><p>将之前创建的数据分别传入Pytorch和Tensorflow的dw卷积层中进行正向传播</p>
+</li>
+<li><p>再使用numpy对Pytorch得到的结果进行transpose处理（保证和tensorflow输出的结果Tensor格式一致）</p>
+</li>
+<li><p>对比两者输出的结果是否一致</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">dw_conv_test</span>(<span class="params">torch_image, tf_image</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    测试转换权重后pytorch的dw卷积层和tensorflow的dw卷积层输出是否一致</span></span><br><span class="line"><span class="string">    :param torch_image:</span></span><br><span class="line"><span class="string">    :param tf_image:</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment"># 创建pytorch的dw卷积层</span></span><br><span class="line">    torch_conv = nn.Conv2d(in_channels=<span class="number">3</span>, out_channels=<span class="number">3</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>, groups=<span class="number">3</span>)</span><br><span class="line">    <span class="comment"># [kernel_number, kernel_channel, kernel_height, kernel_width]</span></span><br><span class="line">    <span class="comment"># dw卷积层的weights</span></span><br><span class="line">    torch_conv_weight = torch_conv.weight</span><br><span class="line">    <span class="comment"># dw卷积层的bias</span></span><br><span class="line">    torch_conv_bias = torch_conv.bias</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 创建tensorflow的dw卷积层</span></span><br><span class="line">    tf_conv = tf.keras.layers.DepthwiseConv2D(kernel_size=<span class="number">3</span>, padding=<span class="string">&#x27;same&#x27;</span>)</span><br><span class="line">    tf_conv.build([<span class="number">1</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">3</span>])</span><br><span class="line">    <span class="comment"># 将pytorch的dw卷积层权重进行转换并载入tf的dw卷积层中</span></span><br><span class="line">    <span class="comment"># to [kernel_height, kernel_width, kernel_number, kernel_channel]</span></span><br><span class="line">    value = np.transpose(torch_conv_weight.detach().numpy(), (<span class="number">2</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="number">1</span>)).astype(np.float32)</span><br><span class="line">    tf_conv.set_weights([value, torch_conv_bias.detach().numpy()])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 计算pytorch卷积层的输出</span></span><br><span class="line">    <span class="comment"># [B, C, H, W]</span></span><br><span class="line">    v1 = torch_conv(torch_image).detach().numpy()</span><br><span class="line">    v1 = np.squeeze(v1, axis=<span class="number">0</span>)</span><br><span class="line">    <span class="comment"># [H, W, C]</span></span><br><span class="line">    v1 = np.transpose(v1, (<span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 计算tensorflow卷积层的输出</span></span><br><span class="line">    <span class="comment"># [B, H, W, C]</span></span><br><span class="line">    v2 = tf_conv(tf_image).numpy()</span><br><span class="line">    <span class="comment"># [H, W, C]</span></span><br><span class="line">    v2 = np.squeeze(v2, axis=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 检查pytorch和tensorflow的输出结果是否一致</span></span><br><span class="line">    np.testing.assert_allclose(v1, v2, rtol=<span class="number">1e-03</span>, atol=<span class="number">1e-05</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;depthwise convolution layer test is great!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="将Pytorch-BN层权重转到Tensorflow中"><a href="#将Pytorch-BN层权重转到Tensorflow中" class="headerlink" title="将Pytorch BN层权重转到Tensorflow中"></a>将Pytorch BN层权重转到Tensorflow中</h4><p>BatchNorm中涉及4个参数：<code>gamma，beta，mean，var</code>。由于这四个参数的shape都是一维的，所以只要找到对应权重名称关系就行了，不需要对数据进行转换。<br>在Pytorch中，这四个参数的名称分别对应<code>weight，bias，running_mean，running_var</code>。<br>在Tensorflow中，分别对应<code>gamma，beta，moving_mean，moving_variance</code>。<br>在下面代码中：</p>
+<ul>
+<li>分别使用Pytorch和Tensorflow的Keras模块创建了bn层(注意，epsilon要保持一致)</li>
+<li>随机初始化Pytorch创建bn层的权重信息（默认初始化weight都是1，bias都是0）</li>
+<li>获取Pytorch随机初始化后bn的weight，bias，running_mean以及running_var</li>
+<li>将对应的权重载入到tensorflow的bn层中</li>
+<li>将之前创建的数据分别传入Pytorch和Tensorflow的bn层中进行正向传播</li>
+<li>再使用numpy对Pytorch得到的结果进行transpose处理（保证和tensorflow输出的结果Tensor格式一致）</li>
+<li>对比两者输出的结果是否一致</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">bn_test</span>(<span class="params">torch_image, tf_image</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    测试转换权重后pytorch的bn层和tensorflow的bn层输出是否一致</span></span><br><span class="line"><span class="string">    :param torch_image:</span></span><br><span class="line"><span class="string">    :param tf_image:</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment"># 创建pytorch的bn层</span></span><br><span class="line">    torch_bn = nn.BatchNorm2d(num_features=<span class="number">3</span>, eps=<span class="number">1e-5</span>)</span><br><span class="line">    <span class="comment"># 随机初始化bn的参数</span></span><br><span class="line">    nn.init.uniform_(torch_bn.weight, a=<span class="number">1</span>, b=<span class="number">5</span>)</span><br><span class="line">    nn.init.uniform_(torch_bn.bias, a=<span class="number">0.05</span>, b=<span class="number">0.1</span>)</span><br><span class="line">    nn.init.uniform_(torch_bn.running_mean, a=<span class="number">0.05</span>, b=<span class="number">0.1</span>)</span><br><span class="line">    nn.init.uniform_(torch_bn.running_var, a=<span class="number">1</span>, b=<span class="number">5</span>)</span><br><span class="line">    <span class="comment"># bn的weights</span></span><br><span class="line">    torch_bn_weight = torch_bn.weight</span><br><span class="line">    <span class="comment"># bn的bias</span></span><br><span class="line">    torch_bn_bias = torch_bn.bias</span><br><span class="line">    <span class="comment"># bn的running_mean</span></span><br><span class="line">    torch_bn_mean = torch_bn.running_mean</span><br><span class="line">    <span class="comment"># bn的running_var</span></span><br><span class="line">    torch_bn_var = torch_bn.running_var</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 创建tensorflow的bn层</span></span><br><span class="line">    tf_bn = tf.keras.layers.BatchNormalization(epsilon=<span class="number">1e-5</span>)</span><br><span class="line">    tf_bn.build([<span class="number">1</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">3</span>])</span><br><span class="line">    <span class="comment"># 将pytorch的bn权重载入tf的bn中</span></span><br><span class="line">    tf_bn.set_weights([torch_bn_weight.detach().numpy(),</span><br><span class="line">                       torch_bn_bias.detach().numpy(),</span><br><span class="line">                       torch_bn_mean.detach().numpy(),</span><br><span class="line">                       torch_bn_var.detach().numpy()])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 计算pytorch bn的输出</span></span><br><span class="line">    <span class="comment"># [B, C, H, W]</span></span><br><span class="line">    torch_bn.<span class="built_in">eval</span>()</span><br><span class="line">    v1 = torch_bn(torch_image).detach().numpy()</span><br><span class="line">    v1 = np.squeeze(v1, axis=<span class="number">0</span>)</span><br><span class="line">    <span class="comment"># [H, W, C]</span></span><br><span class="line">    v1 = np.transpose(v1, (<span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 计算tensorflow bn的输出</span></span><br><span class="line">    <span class="comment"># [B, H, W, C]</span></span><br><span class="line">    v2 = tf_bn(tf_image, training=<span class="literal">False</span>).numpy()</span><br><span class="line">    <span class="comment"># [H, W, C]</span></span><br><span class="line">    v2 = np.squeeze(v2, axis=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 检查pytorch和tensorflow的输出结果是否一致</span></span><br><span class="line">    np.testing.assert_allclose(v1, v2, rtol=<span class="number">1e-03</span>, atol=<span class="number">1e-04</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;bn layer test is great!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="将Pytorch全连接层权重转到Tensorflow中"><a href="#将Pytorch全连接层权重转到Tensorflow中" class="headerlink" title="将Pytorch全连接层权重转到Tensorflow中"></a>将Pytorch全连接层权重转到Tensorflow中</h4><p> 在全连接层中涉及两个参数：输入节点个数，和输出节点个数。转换权重时只用转换<code>fc weight</code>即可，<code>fc bias</code>不用做任何处理。 在下面代码中：</p>
+<ul>
+<li>对输入的特征矩阵在height以及width维度上进行全局平均池化</li>
+<li>分别使用Pytorch和Tensorflow的Keras模块创建了fc层</li>
+<li>获取Pytorch创建fc层的fc weight以及fc bias</li>
+<li>使用numpy对fc weight的进行transpose处理</li>
+<li>将转换后的权重载入到tensorflow的fc层中</li>
+<li>将之前创建的数据分别传入Pytorch和Tensorflow的卷积层中进行正向传播</li>
+<li>对比两者输出的结果是否一致</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">fc_test</span>(<span class="params">torch_image, tf_image</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    测试转换权重后pytorch的fc层和tensorflow的fc层输出是否一致</span></span><br><span class="line"><span class="string">    :param torch_image:</span></span><br><span class="line"><span class="string">    :param tf_image:</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># mean height and width dim</span></span><br><span class="line">    torch_image = torch.mean(torch_image, dim=[<span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line">    tf_image = np.mean(tf_image, axis=(<span class="number">1</span>, <span class="number">2</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 创建pytorch的fc卷积层</span></span><br><span class="line">    torch_fc = nn.Linear(in_features=<span class="number">3</span>, out_features=<span class="number">5</span>)</span><br><span class="line">    <span class="comment"># [output_units, input_units]</span></span><br><span class="line">    <span class="comment"># fc层的weights</span></span><br><span class="line">    torch_fc_weight = torch_fc.weight</span><br><span class="line">    <span class="comment"># fc层的bias</span></span><br><span class="line">    torch_fc_bias = torch_fc.bias</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 创建tensorflow的fc层</span></span><br><span class="line">    tf_fc = tf.keras.layers.Dense(units=<span class="number">5</span>)</span><br><span class="line">    tf_fc.build([<span class="number">1</span>, <span class="number">3</span>])</span><br><span class="line">    <span class="comment"># 将pytorch的fc层权重进行转换并载入tf的fc层中</span></span><br><span class="line">    <span class="comment"># to [input_units, output_units]</span></span><br><span class="line">    value = np.transpose(torch_fc_weight.detach().numpy(), (<span class="number">1</span>, <span class="number">0</span>)).astype(np.float32)</span><br><span class="line">    tf_fc.set_weights([value, torch_fc_bias.detach().numpy()])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 计算pytorch fc的输出</span></span><br><span class="line">    <span class="comment"># [B, C]</span></span><br><span class="line">    v1 = torch_fc(torch_image).detach().numpy()</span><br><span class="line">    v1 = np.squeeze(v1, axis=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 计算tensorflow fc的输出</span></span><br><span class="line">    <span class="comment"># [C, B]</span></span><br><span class="line">    v2 = tf_fc(tf_image).numpy()</span><br><span class="line">    v2 = np.squeeze(v2, axis=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 检查pytorch和tensorflow的输出结果是否一致</span></span><br><span class="line">    np.testing.assert_allclose(v1, v2, rtol=<span class="number">1e-03</span>, atol=<span class="number">1e-05</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;fc layer test is great!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">conv_test</span>(<span class="params">torch_image, tf_image</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    测试转换权重后pytorch的卷积层和tensorflow的卷积层输出是否一致</span></span><br><span class="line"><span class="string">    :param torch_image:</span></span><br><span class="line"><span class="string">    :param tf_image:</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment"># 创建pytorch卷积层</span></span><br><span class="line">    torch_conv = nn.Conv2d(in_channels=<span class="number">3</span>, out_channels=<span class="number">32</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">    <span class="comment"># [kernel_number, kernel_channel, kernel_height, kernel_width]</span></span><br><span class="line">    <span class="comment"># 卷积层的weights</span></span><br><span class="line">    torch_conv_weight = torch_conv.weight</span><br><span class="line">    <span class="comment"># 卷积层的bias</span></span><br><span class="line">    torch_conv_bias = torch_conv.bias</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 创建tensorflow卷积层</span></span><br><span class="line">    tf_conv = tf.keras.layers.Conv2D(filters=<span class="number">32</span>, kernel_size=<span class="number">3</span>, padding=<span class="string">&#x27;same&#x27;</span>)</span><br><span class="line">    tf_conv.build([<span class="number">1</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">3</span>])</span><br><span class="line">    <span class="comment"># 将pytorch的卷积层权重进行转换并载入tf的卷积层中</span></span><br><span class="line">    <span class="comment"># to [kernel_height, kernel_width, kernel_channel, kernel_number]</span></span><br><span class="line">    value = np.transpose(torch_conv_weight.detach().numpy(), (<span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">0</span>)).astype(np.float32)</span><br><span class="line">    tf_conv.set_weights([value, torch_conv_bias.detach().numpy()])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 计算pytorch卷积层的输出</span></span><br><span class="line">    <span class="comment"># [B, C, H, W]</span></span><br><span class="line">    v1 = torch_conv(torch_image).detach().numpy()</span><br><span class="line">    v1 = np.squeeze(v1, axis=<span class="number">0</span>)</span><br><span class="line">    <span class="comment"># [H, W, C]</span></span><br><span class="line">    v1 = np.transpose(v1, (<span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 计算tensorflow卷积层的输出</span></span><br><span class="line">    <span class="comment"># [B, H, W, C]</span></span><br><span class="line">    v2 = tf_conv(tf_image).numpy()</span><br><span class="line">    <span class="comment"># [H, W, C]</span></span><br><span class="line">    v2 = np.squeeze(v2, axis=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 检查pytorch和tensorflow的输出结果是否一致</span></span><br><span class="line">    np.testing.assert_allclose(v1, v2, rtol=<span class="number">1e-03</span>, atol=<span class="number">1e-05</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;convolution layer test is great!&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">dw_conv_test</span>(<span class="params">torch_image, tf_image</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    测试转换权重后pytorch的dw卷积层和tensorflow的dw卷积层输出是否一致</span></span><br><span class="line"><span class="string">    :param torch_image:</span></span><br><span class="line"><span class="string">    :param tf_image:</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment"># 创建pytorch的dw卷积层</span></span><br><span class="line">    torch_conv = nn.Conv2d(in_channels=<span class="number">3</span>, out_channels=<span class="number">3</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>, groups=<span class="number">3</span>)</span><br><span class="line">    <span class="comment"># [kernel_number, kernel_channel, kernel_height, kernel_width]</span></span><br><span class="line">    <span class="comment"># dw卷积层的weights</span></span><br><span class="line">    torch_conv_weight = torch_conv.weight</span><br><span class="line">    <span class="comment"># dw卷积层的bias</span></span><br><span class="line">    torch_conv_bias = torch_conv.bias</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 创建tensorflow的dw卷积层</span></span><br><span class="line">    tf_conv = tf.keras.layers.DepthwiseConv2D(kernel_size=<span class="number">3</span>, padding=<span class="string">&#x27;same&#x27;</span>)</span><br><span class="line">    tf_conv.build([<span class="number">1</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">3</span>])</span><br><span class="line">    <span class="comment"># 将pytorch的dw卷积层权重进行转换并载入tf的dw卷积层中</span></span><br><span class="line">    <span class="comment"># to [kernel_height, kernel_width, kernel_number, kernel_channel]</span></span><br><span class="line">    value = np.transpose(torch_conv_weight.detach().numpy(), (<span class="number">2</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="number">1</span>)).astype(np.float32)</span><br><span class="line">    tf_conv.set_weights([value, torch_conv_bias.detach().numpy()])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 计算pytorch卷积层的输出</span></span><br><span class="line">    <span class="comment"># [B, C, H, W]</span></span><br><span class="line">    v1 = torch_conv(torch_image).detach().numpy()</span><br><span class="line">    v1 = np.squeeze(v1, axis=<span class="number">0</span>)</span><br><span class="line">    <span class="comment"># [H, W, C]</span></span><br><span class="line">    v1 = np.transpose(v1, (<span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 计算tensorflow卷积层的输出</span></span><br><span class="line">    <span class="comment"># [B, H, W, C]</span></span><br><span class="line">    v2 = tf_conv(tf_image).numpy()</span><br><span class="line">    <span class="comment"># [H, W, C]</span></span><br><span class="line">    v2 = np.squeeze(v2, axis=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 检查pytorch和tensorflow的输出结果是否一致</span></span><br><span class="line">    np.testing.assert_allclose(v1, v2, rtol=<span class="number">1e-03</span>, atol=<span class="number">1e-05</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;depthwise convolution layer test is great!&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">bn_test</span>(<span class="params">torch_image, tf_image</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    测试转换权重后pytorch的bn层和tensorflow的bn层输出是否一致</span></span><br><span class="line"><span class="string">    :param torch_image:</span></span><br><span class="line"><span class="string">    :param tf_image:</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment"># 创建pytorch的bn层</span></span><br><span class="line">    torch_bn = nn.BatchNorm2d(num_features=<span class="number">3</span>, eps=<span class="number">1e-5</span>)</span><br><span class="line">    <span class="comment"># 随机初始化bn的参数</span></span><br><span class="line">    nn.init.uniform_(torch_bn.weight, a=<span class="number">1</span>, b=<span class="number">5</span>)</span><br><span class="line">    nn.init.uniform_(torch_bn.bias, a=<span class="number">0.05</span>, b=<span class="number">0.1</span>)</span><br><span class="line">    nn.init.uniform_(torch_bn.running_mean, a=<span class="number">0.05</span>, b=<span class="number">0.1</span>)</span><br><span class="line">    nn.init.uniform_(torch_bn.running_var, a=<span class="number">1</span>, b=<span class="number">5</span>)</span><br><span class="line">    <span class="comment"># bn的weights</span></span><br><span class="line">    torch_bn_weight = torch_bn.weight</span><br><span class="line">    <span class="comment"># bn的bias</span></span><br><span class="line">    torch_bn_bias = torch_bn.bias</span><br><span class="line">    <span class="comment"># bn的running_mean</span></span><br><span class="line">    torch_bn_mean = torch_bn.running_mean</span><br><span class="line">    <span class="comment"># bn的running_var</span></span><br><span class="line">    torch_bn_var = torch_bn.running_var</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 创建tensorflow的bn层</span></span><br><span class="line">    tf_bn = tf.keras.layers.BatchNormalization(epsilon=<span class="number">1e-5</span>)</span><br><span class="line">    tf_bn.build([<span class="number">1</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">3</span>])</span><br><span class="line">    <span class="comment"># 将pytorch的bn权重载入tf的bn中</span></span><br><span class="line">    tf_bn.set_weights([torch_bn_weight.detach().numpy(),</span><br><span class="line">                       torch_bn_bias.detach().numpy(),</span><br><span class="line">                       torch_bn_mean.detach().numpy(),</span><br><span class="line">                       torch_bn_var.detach().numpy()])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 计算pytorch bn的输出</span></span><br><span class="line">    <span class="comment"># [B, C, H, W]</span></span><br><span class="line">    torch_bn.<span class="built_in">eval</span>()</span><br><span class="line">    v1 = torch_bn(torch_image).detach().numpy()</span><br><span class="line">    v1 = np.squeeze(v1, axis=<span class="number">0</span>)</span><br><span class="line">    <span class="comment"># [H, W, C]</span></span><br><span class="line">    v1 = np.transpose(v1, (<span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 计算tensorflow bn的输出</span></span><br><span class="line">    <span class="comment"># [B, H, W, C]</span></span><br><span class="line">    v2 = tf_bn(tf_image, training=<span class="literal">False</span>).numpy()</span><br><span class="line">    <span class="comment"># [H, W, C]</span></span><br><span class="line">    v2 = np.squeeze(v2, axis=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 检查pytorch和tensorflow的输出结果是否一致</span></span><br><span class="line">    np.testing.assert_allclose(v1, v2, rtol=<span class="number">1e-03</span>, atol=<span class="number">1e-04</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;bn layer test is great!&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">fc_test</span>(<span class="params">torch_image, tf_image</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    测试转换权重后pytorch的fc层和tensorflow的fc层输出是否一致</span></span><br><span class="line"><span class="string">    :param torch_image:</span></span><br><span class="line"><span class="string">    :param tf_image:</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># mean height and width dim</span></span><br><span class="line">    torch_image = torch.mean(torch_image, dim=[<span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line">    tf_image = np.mean(tf_image, axis=(<span class="number">1</span>, <span class="number">2</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 创建pytorch的fc卷积层</span></span><br><span class="line">    torch_fc = nn.Linear(in_features=<span class="number">3</span>, out_features=<span class="number">5</span>)</span><br><span class="line">    <span class="comment"># [output_units, input_units]</span></span><br><span class="line">    <span class="comment"># fc层的weights</span></span><br><span class="line">    torch_fc_weight = torch_fc.weight</span><br><span class="line">    <span class="comment"># fc层的bias</span></span><br><span class="line">    torch_fc_bias = torch_fc.bias</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 创建tensorflow的fc层</span></span><br><span class="line">    tf_fc = tf.keras.layers.Dense(units=<span class="number">5</span>)</span><br><span class="line">    tf_fc.build([<span class="number">1</span>, <span class="number">3</span>])</span><br><span class="line">    <span class="comment"># 将pytorch的fc层权重进行转换并载入tf的fc层中</span></span><br><span class="line">    <span class="comment"># to [input_units, output_units]</span></span><br><span class="line">    value = np.transpose(torch_fc_weight.detach().numpy(), (<span class="number">1</span>, <span class="number">0</span>)).astype(np.float32)</span><br><span class="line">    tf_fc.set_weights([value, torch_fc_bias.detach().numpy()])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 计算pytorch fc的输出</span></span><br><span class="line">    <span class="comment"># [B, C]</span></span><br><span class="line">    v1 = torch_fc(torch_image).detach().numpy()</span><br><span class="line">    v1 = np.squeeze(v1, axis=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 计算tensorflow fc的输出</span></span><br><span class="line">    <span class="comment"># [C, B]</span></span><br><span class="line">    v2 = tf_fc(tf_image).numpy()</span><br><span class="line">    v2 = np.squeeze(v2, axis=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 检查pytorch和tensorflow的输出结果是否一致</span></span><br><span class="line">    np.testing.assert_allclose(v1, v2, rtol=<span class="number">1e-03</span>, atol=<span class="number">1e-05</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;fc layer test is great!&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    image = np.random.rand(<span class="number">5</span>, <span class="number">5</span>, <span class="number">3</span>)</span><br><span class="line">    torch_image = np.transpose(image, (<span class="number">2</span>, <span class="number">0</span>, <span class="number">1</span>)).astype(np.float32)</span><br><span class="line">    <span class="comment"># [B, C, H, W]</span></span><br><span class="line">    torch_image = torch.unsqueeze(torch.as_tensor(torch_image), dim=<span class="number">0</span>)</span><br><span class="line">    <span class="comment"># [B, H, W, C]</span></span><br><span class="line">    tf_image = np.expand_dims(image, axis=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    conv_test(torch_image, tf_image)</span><br><span class="line">    dw_conv_test(torch_image, tf_image)</span><br><span class="line">    bn_test(torch_image, tf_image)</span><br><span class="line">    fc_test(torch_image, tf_image)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<h3 id="REF"><a href="#REF" class="headerlink" title="REF"></a>REF</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_37541097/article/details/113862998">Pytorch与Tensorflow权重互转_太阳花的小绿豆的博客-CSDN博客</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2023/04/13/NLP/NLP_Archs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/04/13/NLP/NLP_Archs/" class="post-title-link" itemprop="url">NLP - NN Archtecture</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-04-13 19:50:00" itemprop="dateCreated datePublished" datetime="2023-04-13T19:50:00+00:00">2023-04-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="基础架构"><a href="#基础架构" class="headerlink" title="基础架构"></a>基础架构</h2><img src="/2023/04/13/NLP/NLP_Archs/2024-03-28-13-19-46-image.png" title alt width="398">
+
+<p>纯 Encoder 模型（例如 BERT），又称自编码 (auto-encoding) Transformer 模型；适用于只需要理解输入语义的任务，例如句子分类、命名实体识别；  </p>
+<ul>
+<li><p>纯 Decoder 模型（例如 GPT），又称自回归 (auto-regressive) Transformer 模型；适用于生成式任务，例如文本生成；  </p>
+</li>
+<li><p>Encoder-Decoder 模型（例如 BART、T5），又称 Seq2Seq (sequence-to-sequence) Transformer 模型。适用于需要基于输入的生成式任务，例如翻译、摘要。</p>
+</li>
+</ul>
+<p>一个完整的AI应用包含了4个重要的环节：  </p>
+<p>第一个环节是关于大语言模型（LLM)，这是大家在AI体系中接触最多的部分；<br>第二个环节是与模型相关的Embedding；<br>第三个环节是向量数据库；<br>最后一个环节是Promote Engineer(AI提示词（Prompt）)。</p>
+<h2 id="基础模块"><a href="#基础模块" class="headerlink" title="基础模块"></a>基础模块</h2><h3 id="Embeddding"><a href="#Embeddding" class="headerlink" title="Embeddding"></a>Embeddding</h3><h3 id="Mutil-Head-Attention"><a href="#Mutil-Head-Attention" class="headerlink" title="Mutil-Head Attention"></a>Mutil-Head Attention</h3><h3 id="Feed-Forward"><a href="#Feed-Forward" class="headerlink" title="Feed Forward"></a>Feed Forward</h3><h3 id="Add-Norm"><a href="#Add-Norm" class="headerlink" title="Add &amp; Norm"></a>Add &amp; Norm</h3><h2 id="模型seq2seq"><a href="#模型seq2seq" class="headerlink" title="模型seq2seq"></a>模型seq2seq</h2><ul>
+<li><h2 id="Transformer"><a href="#Transformer" class="headerlink" title="Transformer"></a>Transformer</h2></li>
+</ul>
+<p>-<strong>输入部分、输出部分、编码器部分、解码器部分。</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/5fd5d5bb151e4d729d8acd27baf98ad5.png" title alt width="351">\</p>
+<h3 id="输入部分"><a href="#输入部分" class="headerlink" title="输入部分"></a>输入部分</h3><p><strong>文本嵌入层</strong>的作用:<br>无论是源文本嵌入还是目标文本嵌入，都是为了将文本中词汇的数字表示转变为向量表示，希望在这样的高维空间捕捉词汇间的关系。<br><strong>位置编码器</strong>的作用：<br>因为在Transformer的编码器结构中，并没有针对词汇位置信息的处理，因此需要在Embedding层后加入位置编码器，将词汇位置不同可能会产生不同语义的信息加入到词嵌入张量中，以弥补位置信息的缺失。</p>
+<h3 id="编码器部分"><a href="#编码器部分" class="headerlink" title="编码器部分"></a>编码器部分</h3><p>由N个编码器层堆叠而成<br>每个编码器层由两个子层连接结构组成<br>第一个子层连接结构包括一个<strong>多头自注意力子层</strong>和规范化层以及一个残差连接<br>第二个子层连接结构包括一个<strong>前馈全连接子层</strong>和规范化层以及一个残差连接</p>
+<h3 id="Prompt"><a href="#Prompt" class="headerlink" title="Prompt"></a>Prompt</h3><p>02Prompt基本组成部分</p>
+<p><strong>基于Prompt的格式化结果输出与正则表达式提取</strong>Prompt设计是大语言模型互动的关键，它可以显著影响模型的输出结果质量。一个合理设计的Prompt应当包含以下四个元素：</p>
+<p>**1．指令（Instruction）：**这是Prompt中最关键的部分。指令直接告诉模型用户希望执行的具体任务。</p>
+<p>**2．输入数据（Input Data）：**输入数据是模型需要处理的具体信息。</p>
+<p>**3．背景信息（Context）：**背景信息为模型提供了执行任务所需的环境信息或附加细节。</p>
+<p>**4．输出指示器（Output Indicator）：**输出指示器定义了模型输出的期望类型或格式。</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45751396/article/details/127300484">【Transformer】架构解析_transformer架构_三木今天学习了嘛的博客-CSDN博客</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/664436142?utm_id=0"># 基于向量数据库的文档语义搜索实战【Qdrant】</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2023/04/09/Sub_Language/CPlus/Cplus_CallPython/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/04/09/Sub_Language/CPlus/Cplus_CallPython/" class="post-title-link" itemprop="url">C++调用python(VS 环境)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-04-09 12:00:00" itemprop="dateCreated datePublished" datetime="2023-04-09T12:00:00+00:00">2023-04-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[TOC]</p>
+<p>参考资料：<a target="_blank" rel="noopener" href="https://www.pythonf.cn/read/143363">验证Pass</a>，其它博客都丢三落四</p>
+<h3 id="1、环境配置"><a href="#1、环境配置" class="headerlink" title="1、环境配置"></a>1、环境配置</h3><ul>
+<li>IDE工具安装(VS studio为例)</li>
+<li>MINGW g++64位版本安装<ul>
+<li>path环境配置</li>
+</ul>
+</li>
+<li>python（64位版本）环境目录</li>
+</ul>
+<p><img src="/2023/04/09/Sub_Language/CPlus/Cplus_CallPython/image-20220415182151759.png" alt="image-20220415182151759"></p>
+<p><code>include文件夹 </code>：<br>里面是一些C语言代码头文件。其中将存放着供C语言调用的函数的定义。</p>
+<p><code>libs文件夹 </code>：<br>里面是一些 <code>.lib </code>文件。<br>关于存放的内容： <code>.lib </code>可能存着函数具体的实现，也可能是存着索引 <code>dll </code>中函数实现的信息。由于这里的 <code>.lib </code>文件相对较小，而且目录里有 <code>dll </code>，所以存放的内容我想是后者。</p>
+<p><code>dll文件 </code>：<br>存着函数的具体实现</p>
+<h3 id="2、创建项目"><a href="#2、创建项目" class="headerlink" title="2、创建项目"></a>2、创建项目</h3><p>VS Studio 建立一个C++控制台应用</p>
+<h3 id="3）配置路径"><a href="#3）配置路径" class="headerlink" title="3）配置路径"></a>3）配置路径</h3><p>将 <code>include文件夹 </code>加入 :项目右键设置—&gt;【C&#x2F;C++】附加包含目录 （头文件目录）：</p>
+<img title src="/2023/04/09/Sub_Language/CPlus/Cplus_CallPython/vs_c_config.png" alt="在这里插入图片描述" style="zoom: 80%;">
+
+<p>将 <code>libs文件夹 </code>加入：链接器–常规–附加库目录 ：</p>
+<img src="/2023/04/09/Sub_Language/CPlus/Cplus_CallPython/vs_c_libpath.png" alt="在这里插入图片描述" style="zoom: 80%;">
+
+<p>将所有 <code>dll </code>拷贝到工程目录下：【其它资料都没这一步，导致花费很多时间在此问题排查上】</p>
+<img title src="/2023/04/09/Sub_Language/CPlus/Cplus_CallPython/vs_c_py_dll.png" alt="loading-ag-10331" style="zoom: 80%;">
+
+<h3 id="4、项目运行"><a href="#4、项目运行" class="headerlink" title="4、项目运行"></a>4、项目运行</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;Python.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//程序名：</span></span><br><span class="line">    <span class="built_in">Py_SetProgramName</span>(<span class="string">L&quot;TestYaksue&quot;</span>);</span><br><span class="line">    <span class="comment">//初始化</span></span><br><span class="line">    <span class="built_in">Py_Initialize</span>();</span><br><span class="line">    <span class="comment">//运行一个语句</span></span><br><span class="line">    <span class="built_in">PyRun_SimpleString</span>(<span class="string">&quot;print(&#x27;Hello World in Python!&#x27;)\n&quot;</span>);</span><br><span class="line">    <span class="built_in">Py_Finalize</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="问题解决：c-调用python，numpy报错"><a href="#问题解决：c-调用python，numpy报错" class="headerlink" title="问题解决：c++ 调用python，numpy报错"></a>问题解决：c++ 调用python，numpy报错</h3><p>Conda环境</p>
+<p><strong>现象：</strong></p>
+<p>pyCharm下python可以正常运行。</p>
+<p>c++调用python文件报错：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from numpy.core._multiarray_umath import ( ImportError: DLL load failed: 找</span><br></pre></td></tr></table></figure>
+
+<p><strong>排查</strong></p>
+<p>​    进入到conda环境，pip list 可以看到一个numpy，conda可以看到两个numpy，怀疑此问题</p>
+<p>​    pip uninstal numpy， 卸载两次，才能卸载完成。</p>
+<p>​    <strong>最终验证，c++调用python正常</strong>，🤡</p>
+<h3 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h3><p><a target="_blank" rel="noopener" href="https://wenku.baidu.com/view/536f1d2951ea551810a6f524ccbff121dd36c5c8.html">QT和cmake工程中实现c++调用python具体实现，环境配置以及常见问题</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/yuanwenzhong123/article/details/110423552">VS Code配置Python开发环境（最简单的步骤教程）</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2023/04/09/Sub_Language/CPlus/CPlus_Algorithm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/04/09/Sub_Language/CPlus/CPlus_Algorithm/" class="post-title-link" itemprop="url">C++ 算法实现</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-04-09 10:00:00" itemprop="dateCreated datePublished" datetime="2023-04-09T10:00:00+00:00">2023-04-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Contents：</p>
+<p>[TOC]</p>
+<h3 id="排列"><a href="#排列" class="headerlink" title="排列"></a>排列</h3><p><a href="/2022/05/06/Sub_Language/CPlus/CPlusVector/###%20%E6%8E%92%E5%88%97%E7%BB%84%E5%90%88">GO 排列组合</a></p>
+<h3 id="组合"><a href="#组合" class="headerlink" title="组合"></a>组合</h3><p>todo</p>
+<h3 id="lower-bound"><a href="#lower-bound" class="headerlink" title="lower_bound"></a>lower_bound</h3><p>头文件：algorithm</p>
+<p> lower_bound()返回值是一个迭代器,返回指向<strong>大于等于key</strong>的第一个值的位置；没找到就返回last位置</p>
+<p>对象：<em><strong>有序数组或容器</strong></em></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line">using namespace <span class="built_in">std</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> a[]=&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>&#125;;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,lower_bound(a,a+<span class="number">8</span>,<span class="number">6</span>) - a); <span class="comment">// a = a.begin()</span></span><br><span class="line"></span><br><span class="line"> <span class="keyword">return</span> <span class="number">0</span>;    </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p>输出为 5</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2023/04/03/Sub_Language/DL_Train/Pytorch/torch_env/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/04/03/Sub_Language/DL_Train/Pytorch/torch_env/" class="post-title-link" itemprop="url">PyTorch CUDA Conda/Pip Init</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-04-03 12:00:00" itemprop="dateCreated datePublished" datetime="2023-04-03T12:00:00+00:00">2023-04-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Conda/" itemprop="url" rel="index"><span itemprop="name">Conda</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Table</p>
+<h3 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h3><p><a target="_blank" rel="noopener" href="https://download.pytorch.org/whl/torch_stable.html">https://download.pytorch.org/whl/torch_stable.html</a></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>torch</th>
+<th>torchvision</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>cu90</td>
+<td>0.3.0, 0.3.1, 0.4.0, 0.4.1, <br>1.0.[01], 1.1.1</td>
+<td></td>
+</tr>
+<tr>
+<td>cu91</td>
+<td>0.3.1, 0.4.0</td>
+<td></td>
+</tr>
+<tr>
+<td>cu92</td>
+<td>0.4.1,<br> 1.2.0, 1.3.[01], 1.4.0, 1.5.[01], 1.6.0, 1.7.[01]</td>
+<td></td>
+</tr>
+<tr>
+<td>cu100</td>
+<td>1.3.0, 1.4.0, 1.5.0</td>
+<td>0.4.1, 0.4.2, 0.4.3<br>0.5.0<br></td>
+</tr>
+<tr>
+<td>cu101</td>
+<td>1.3.0, 1.3.1, 1.4.0, 1.5.0, 1.5.1<br>1.6.0, 1.7.0, 1.7.1, 1.8.0, 1.8.1</td>
+<td></td>
+</tr>
+<tr>
+<td>cu102</td>
+<td>1.5.0–1.12.1</td>
+<td></td>
+</tr>
+<tr>
+<td>cu110</td>
+<td>1.7.0,1.7.1</td>
+<td></td>
+</tr>
+<tr>
+<td>cu111</td>
+<td>1.8.[01], 1.9.[01] ,1.10.[012]</td>
+<td></td>
+</tr>
+<tr>
+<td>cu113</td>
+<td>1.10, 1.11, 1.12,</td>
+<td></td>
+</tr>
+<tr>
+<td>cu115</td>
+<td>1.11</td>
+<td></td>
+</tr>
+<tr>
+<td>cu116</td>
+<td>1.12, 1.13,</td>
+<td></td>
+</tr>
+<tr>
+<td>cu117</td>
+<td>1.13, 2.0.0, 2.0.1</td>
+<td></td>
+</tr>
+<tr>
+<td>cu118</td>
+<td>2.0.0, 2.0.1, 2.1.0, 2.1.1, 2.1.2, 2.2.0, 2.2.1</td>
+<td></td>
+</tr>
+<tr>
+<td>cu121</td>
+<td>2.1.[012], 2.2.[01]</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="LibTorch"><a href="#LibTorch" class="headerlink" title="LibTorch"></a>LibTorch</h3><h3 id="Conda"><a href="#Conda" class="headerlink" title="Conda"></a>Conda</h3><table>
+<thead>
+<tr>
+<th>pytorch</th>
+<th>CUDA</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1.5.1_cu92</td>
+<td>conda install pytorch&#x3D;&#x3D;1.5.1 torchvision&#x3D;&#x3D;0.6.1 cudatoolkit&#x3D;9.2 -c pytorch</td>
+<td></td>
+</tr>
+<tr>
+<td>1.5.1_cu101</td>
+<td>conda install pytorch&#x3D;&#x3D;1.5.1 torchvision&#x3D;&#x3D;0.6.1 cudatoolkit&#x3D;10.1 -c pytorch</td>
+<td></td>
+</tr>
+<tr>
+<td>1.5.1_CPU</td>
+<td>conda install pytorch&#x3D;&#x3D;1.5.1 torchvision&#x3D;&#x3D;0.6.1 cpuonly -c pytorch</td>
+<td></td>
+</tr>
+<tr>
+<td>1.10.1_cu102</td>
+<td>conda install pytorch&#x3D;&#x3D;1.10.1 torchvision&#x3D;&#x3D;0.11.2 torchaudio&#x3D;&#x3D;0.10.1 cudatoolkit&#x3D;10.2 -c pytorch</td>
+<td></td>
+</tr>
+<tr>
+<td>1.8.0_cu111_docker</td>
+<td>docker pull pytorch&#x2F;pytorch:1.8.0-cuda11.1-cudnn8-devel</td>
+<td></td>
+</tr>
+<tr>
+<td>1.8.0_cu111</td>
+<td>conda install pytorch&#x3D;&#x3D;1.8.0 torchvision&#x3D;&#x3D;0.9.0 torchaudio&#x3D;&#x3D;0.8.0 cudatoolkit&#x3D;11.1 -c pytorch -c conda-forge</td>
+<td>-</td>
+</tr>
+<tr>
+<td>2.1.2_cu118</td>
+<td>conda install pytorch&#x3D;&#x3D;2.1.2 torchvision&#x3D;&#x3D;0.16.2 torchaudio&#x3D;&#x3D;2.1.2 cudatoolkit&#x3D;11.8 -c pytorch -c nvidia</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>conda install pytorch&#x3D;&#x3D;2.1.2 torchvision&#x3D;&#x3D;0.16.2 torchaudio&#x3D;&#x3D;2.1.2 pytorch-cuda&#x3D;11.8 -c pytorch -c nvidia</td>
+<td></td>
+</tr>
+<tr>
+<td>2.2.1_cu118</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="pytorch-lightning"><a href="#pytorch-lightning" class="headerlink" title="pytorch-lightning"></a>pytorch-lightning</h4><blockquote>
+<p>安装pytorch-lightning时一定注意自己的torch是pip安装还是conda安装，pytorch_lightning 安装方式要与torch的安装方式保持一致，否则也会导致你的torch版本被替换。</p>
+</blockquote>
+<p>conda install pytorch-lightning -c conda-forge</p>
+<h3 id="Pip"><a href="#Pip" class="headerlink" title="Pip"></a>Pip</h3><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CUDA 11.8</td>
+<td>pip3 install torch torchvision torchaudio –index-url <a target="_blank" rel="noopener" href="https://download.pytorch.org/whl/cu118">https://download.pytorch.org/whl/cu118</a></td>
+<td></td>
+</tr>
+<tr>
+<td>CPU</td>
+<td>pip3 install torch torchvision torchaudio –index-url <a target="_blank" rel="noopener" href="https://download.pytorch.org/whl/cpu">https://download.pytorch.org/whl/cpu</a></td>
+<td></td>
+</tr>
+<tr>
+<td>CUDA-92</td>
+<td><a target="_blank" rel="noopener" href="https://download.pytorch.org/whl/cu92">https://download.pytorch.org/whl/cu92</a></td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="版本关系"><a href="#版本关系" class="headerlink" title="版本关系"></a>版本关系</h3><table>
+<thead>
+<tr>
+<th></th>
+<th>pytorch</th>
+<th>xformers</th>
+<th>differusers</th>
+<th>transformers</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td>torch&#x3D;&#x3D;2.2.2</td>
+<td>0.0.25.post1</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>torch&#x3D;&#x3D;2.2.1</td>
+<td>0.0.25</td>
+<td></td>
+<td>4.36.2</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2023/04/01/AI/RL/RL_impl_AC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/04/01/AI/RL/RL_impl_AC/" class="post-title-link" itemprop="url">RL Implement AC</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-04-01 00:00:00" itemprop="dateCreated datePublished" datetime="2023-04-01T00:00:00+00:00">2023-04-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/RL/" itemprop="url" rel="index"><span itemprop="name">RL</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="网络搭建"><a href="#网络搭建" class="headerlink" title="网络搭建"></a>网络搭建</h4><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Actor-Critic网络</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ActorCritic</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, input_shape, n_actions</span>):</span><br><span class="line">        <span class="built_in">super</span>(ActorCritic, <span class="variable language_">self</span>).__init__()</span><br><span class="line">        <span class="variable language_">self</span>.fc1 = nn.Linear(input_shape, <span class="number">128</span>)</span><br><span class="line">        <span class="variable language_">self</span>.fc2 = nn.Linear(<span class="number">128</span>, <span class="number">128</span>)</span><br><span class="line">        <span class="variable language_">self</span>.actor = nn.Linear(<span class="number">128</span>, n_actions)</span><br><span class="line">        <span class="variable language_">self</span>.critic = nn.Linear(<span class="number">128</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):                               <span class="comment">##服用前两层，增加稳定性</span></span><br><span class="line">        x = F.relu(<span class="variable language_">self</span>.fc1(x))             </span><br><span class="line">        x = F.relu(<span class="variable language_">self</span>.fc2(x))</span><br><span class="line">        actor_output = F.softmax(<span class="variable language_">self</span>.actor(x), dim=-<span class="number">1</span>)</span><br><span class="line">        critic_output = <span class="variable language_">self</span>.critic(x)</span><br><span class="line">        <span class="keyword">return</span> actor_output, critic_output</span><br></pre></td></tr></table></figure>
+
+<h4 id="采样过程"><a href="#采样过程" class="headerlink" title="采样过程"></a>采样过程</h4><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1000</span>):                  <span class="comment">##1000个episode</span></span><br><span class="line">    state = env.reset()</span><br><span class="line">    done = <span class="literal">False</span></span><br><span class="line">    total_reward = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">not</span> done:                    <span class="comment">##一个episode内部，我们可以看到，只采样一条就更新了</span></span><br><span class="line">        action = ac.get_action(state)</span><br><span class="line">        next_state, reward, done, info = env.step(action)</span><br><span class="line">        ac.update(state, action, reward, next_state, done)</span><br><span class="line">        state = next_state</span><br><span class="line">        total_reward += reward</span><br></pre></td></tr></table></figure>
+
+<h4 id="训练过程-Actor-Critic"><a href="#训练过程-Actor-Critic" class="headerlink" title="训练过程 Actor-Critic"></a>训练过程 Actor-Critic</h4><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">update</span>(<span class="params">self, state, action, reward, next_state, done</span>):</span><br><span class="line">    state = torch.FloatTensor(state).unsqueeze(<span class="number">0</span>)</span><br><span class="line">    next_state = torch.FloatTensor(next_state).unsqueeze(<span class="number">0</span>)</span><br><span class="line">    action = torch.LongTensor([action])</span><br><span class="line">    reward = torch.FloatTensor([reward])</span><br><span class="line">    done = torch.FloatTensor([<span class="built_in">int</span>(done)])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 计算Q值</span></span><br><span class="line">    _, next_state_value = <span class="variable language_">self</span>.actor_critic(next_state)</span><br><span class="line">    _, state_value = <span class="variable language_">self</span>.actor_critic(state)</span><br><span class="line">    q_value = reward + <span class="variable language_">self</span>.gamma * next_state_value * (<span class="number">1</span> - done)    <span class="comment">##计算Q</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 计算actor和critic的loss</span></span><br><span class="line">    log_prob, _ = <span class="variable language_">self</span>.actor_critic(state)</span><br><span class="line">    actor_loss = -(log_prob[<span class="number">0</span>][action] * q_value).mean()</span><br><span class="line">    critic_loss = F.mse_loss(state_value, q_value.detach())       <span class="comment">#拟合V，用TD</span></span><br><span class="line">    loss = actor_loss + critic_loss</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 更新actor和critic的参数</span></span><br><span class="line">    <span class="variable language_">self</span>.optimizer.zero_grad()</span><br><span class="line">    loss.backward()</span><br><span class="line">    <span class="variable language_">self</span>.optimizer.step()</span><br></pre></td></tr></table></figure>
+
+<h4 id="训练A2C-优势AC算法"><a href="#训练A2C-优势AC算法" class="headerlink" title="训练A2C (优势AC算法)"></a>训练A2C (优势AC算法)</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">update</span>(<span class="params">self, state, action, reward, next_state, done</span>):</span><br><span class="line">    state = torch.FloatTensor(state).unsqueeze(<span class="number">0</span>)</span><br><span class="line">    next_state = torch.FloatTensor(next_state).unsqueeze(<span class="number">0</span>)</span><br><span class="line">    action = torch.LongTensor([action])</span><br><span class="line">    reward = torch.FloatTensor([reward])</span><br><span class="line">    done = torch.FloatTensor([<span class="built_in">int</span>(done)])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 计算advantage</span></span><br><span class="line">    _, next_state_value = <span class="variable language_">self</span>.actor_critic(next_state)</span><br><span class="line">    _, state_value = <span class="variable language_">self</span>.actor_critic(state)</span><br><span class="line">    advantage = reward + <span class="variable language_">self</span>.gamma * next_state_value * (<span class="number">1</span> - done) - state_value</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 计算actor和critic的loss</span></span><br><span class="line">    log_prob, _ = <span class="variable language_">self</span>.actor_critic(state)</span><br><span class="line">    actor_loss = -(log_prob[<span class="number">0</span>][action] * advantage).mean()</span><br><span class="line">    critic_loss = advantage.<span class="built_in">pow</span>(<span class="number">2</span>).mean()</span><br><span class="line">    loss = actor_loss + critic_loss</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 更新actor和critic的参数</span></span><br><span class="line">    <span class="variable language_">self</span>.optimizer.zero_grad()</span><br><span class="line">    loss.backward()</span><br><span class="line">    <span class="variable language_">self</span>.optimizer.step()</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2023/03/16/Sub_Language/CPlus/CPlus_Boost/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/03/16/Sub_Language/CPlus/CPlus_Boost/" class="post-title-link" itemprop="url">C++ boost库</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-03-16 10:00:00" itemprop="dateCreated datePublished" datetime="2023-03-16T10:00:00+00:00">2023-03-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Contents：</p>
+<p>[TOC]</p>
+<p>参考：</p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/pam-sh/p/16107753.html">C++ Boost</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="http://www.manongjc.com/detail/27-rmlqbnuoelfpeoi.html">VsCode + mingw编译器下boost库的安装</a></p>
+</li>
+<li></li>
+</ul>
+<h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>Boost是一个功能强大、构造精巧、跨平台、开源并且完全免费的C++程序库，有着“C++‘准’标准库”的美誉，值得每位C++程序员学习使用。内容涵盖字符串处理、正则表达式、容器与数据结构、并发编程、函数式编程、泛型编程、设计模式实现等许多领域。</p>
+<h3 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h3><p>含有的功能类有：</p>
+<ul>
+<li>字符串和文本处理库</li>
+<li>容器库</li>
+<li>迭代器库</li>
+<li>算法库</li>
+<li>函数对象和高阶编程库</li>
+<li>泛型编程库</li>
+<li>模板元编程</li>
+<li>预处理元编程库</li>
+<li>并发编程库</li>
+<li>数学和数字库</li>
+<li>排错和测试库</li>
+<li>数据结构库</li>
+<li>图像处理库</li>
+<li>输入输出库</li>
+<li>跨语言混合编程库</li>
+<li>内存管理库</li>
+<li>解析库</li>
+<li>编程接口库</li>
+<li>综合类库</li>
+<li>编译器问题的变通方案库</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2023/03/09/CV/CV-IQA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/03/09/CV/CV-IQA/" class="post-title-link" itemprop="url">CV 图像质量评估 IQA</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-03-09 14:04:00" itemprop="dateCreated datePublished" datetime="2023-03-09T14:04:00+00:00">2023-03-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/" itemprop="url" rel="index"><span itemprop="name">CV</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/IQA/" itemprop="url" rel="index"><span itemprop="name">IQA</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>图像质量评估（Image Quality Assessment，IQA）</p>
+<p>全参考图像质量评估（Full Reference-IQA，FR-IQA）、</p>
+<p>半参考图像质量评估（Reduced Reference-IQA, RR-IQA）</p>
+<p>无参考图像质量评估（No Reference-IQA, NR-IQA），</p>
+<p>NR-IQA也称为盲参考图像质量评估（Blind IQA, BIQA）。</p>
+<h3 id="FR-IQA"><a href="#FR-IQA" class="headerlink" title="FR-IQA"></a>FR-IQA</h3><p>常用于评估编解码算法性能、图像增强算法性能等场景</p>
+<p>均方误差（MSE）、峰值信噪比（PSNR）、结构相似性（SSIM）</p>
+<p>MSE</p>
+<p>PSNR</p>
+<p>SSIM</p>
+<p>局部归一化亮度系数（MSCN）</p>
+<h3 id="RR-IQA"><a href="#RR-IQA" class="headerlink" title="RR-IQA"></a>RR-IQA</h3><p>半参考图像质量评估以原始图像的部分信息，或从原始图像中提取的特征作为参考，难度介于全参考和无参考图像质量评估之间。</p>
+<h3 id="NR-IQA"><a href="#NR-IQA" class="headerlink" title="NR-IQA"></a>NR-IQA</h3><p>自然场景统计方法（Natural Scene Statistic， NSS）</p>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><h3 id="BRISQUE-2012"><a href="#BRISQUE-2012" class="headerlink" title="BRISQUE 2012"></a>BRISQUE 2012</h3><p>《No-Reference Image Quality Assessment in the Spatial Domain》</p>
+<p>libsvm，聚类方法</p>
+<h4 id="BLNDER"><a href="#BLNDER" class="headerlink" title="BLNDER"></a>BLNDER</h4><p>BLNDER [4]考虑到了不同网络层对图像质量相关特征的敏感程度不同，从预训练好的VGG网络中提取多个网络层的特征表示来分别训练SVR并预测每层特征的质量评分，最后取各层得分的平均值作为输入图像最终的质量评分（如图4所示）。</p>
+<p><img src="/2023/03/09/CV/CV-IQA/2023-03-09-14-07-58-image.png">  </p>
+<p>图4. BLNDER从预训练网络的多个层提取特征</p>
+<p>DIQA [7]、BIECON[8]等方法结合了已有的全参考方法，在参考图像存在的情况下为图像块生成新的标签，当然这就引入了参考图像的限制。</p>
+<h4 id="RankIQA-2017"><a href="#RankIQA-2017" class="headerlink" title="RankIQA 2017"></a>RankIQA 2017</h4><p><a target="_blank" rel="noopener" href="https://github.com/xialeiliu/RankIQA">GitHub - xialeiliu&#x2F;RankIQA: ICCV 2017</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/YunanZhu/Pytorch-TestRankIQA">GitHub - YunanZhu&#x2F;Pytorch-TestRankIQA</a></p>
+<p>RankIQA [9]通过人工生成不同程度的失真图像来扩充数据集，虽然没有确定的质量得分标签，但可以根据失真程度对图像进行排序，从中抽取两张图像质量相对高低已知的图像构成图像对，来训练一个双生网络，最后取单路网络在小规模数据集上进行微调（如图5所示）。</p>
+<p>之前的模型主要都是从提取特征和网络方面做改进，并没有考虑数据集图像少的问题。而RankIQA正是从数据预处理出发，取得了NR-IQA最好效果。</p>
+<p><img src="/2023/03/09/CV/CV-IQA/2023-03-09-14-09-28-image.png"></p>
+<h4 id="HIQA"><a href="#HIQA" class="headerlink" title="HIQA"></a>HIQA</h4><p>HIQA[10]则借助GAN来扩充参考图像，让无参考图像评估跨越了没有原始图像作参照的鸿沟，如图6所示。通过GAN生成失真图像的参考图像，并与失真图像计算差值图，作为质量回归网络的输入来预测失真图像的质量，极大地提升了无参考图像质量评估模型的性能。</p>
+<h3 id="DIQA-2018"><a href="#DIQA-2018" class="headerlink" title="DIQA 2018"></a>DIQA 2018</h3><p>Deep CNN-Based Blind Image Quality Predictor</p>
+<p><img src="/2023/03/09/CV/CV-IQA/2023-03-09-15-02-35-image.png"></p>
+<h3 id="CLRIQA-2019"><a href="#CLRIQA-2019" class="headerlink" title="CLRIQA 2019"></a>CLRIQA 2019</h3><p><a target="_blank" rel="noopener" href="https://github.com/GZHU-Image-Lab/CLRIQA">GitHub - GZHU-Image-Lab&#x2F;CLRIQA: Controllable List-wise Ranking for Universal No-reference Image Quality Assessment</a></p>
+<h3 id="Contrique-2021"><a href="#Contrique-2021" class="headerlink" title="Contrique 2021"></a>Contrique 2021</h3><p><a target="_blank" rel="noopener" href="https://github.com/pavancm/contrique">GitHub - pavancm&#x2F;CONTRIQUE: Official implementation</a></p>
+<p>Image Quality Assessment using Contrastive Learning</p>
+<h3 id="task-amenability"><a href="#task-amenability" class="headerlink" title="task-amenability"></a>task-amenability</h3><Image quality assessment for machine learning tasks using meta-reinforcement>
+
+<h2 id="半监督训练方法"><a href="#半监督训练方法" class="headerlink" title="半监督训练方法"></a>半监督训练方法</h2><h3 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h3><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/32553977">https://zhuanlan.zhihu.com/p/32553977</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/HuiZeng/BIQA_Toolbox">https://github.com/HuiZeng/BIQA_Toolbox</a></p>
+<h2 id="本行业相关"><a href="#本行业相关" class="headerlink" title="本行业相关"></a>本行业相关</h2><p><a target="_blank" rel="noopener" href="https://dun.163.com/news/p/7a06953f1a2546c1aca259a9c01df7df">知物由学 | 告别挑花眼，AI算法如何筛选低质量图片？_网易易盾</a></p>
+<h2 id="开源社区"><a href="#开源社区" class="headerlink" title="开源社区"></a>开源社区</h2><p><a target="_blank" rel="noopener" href="https://www.mulanai.com/product/image_quality/">图像质量检测_CV_MulanAI实验室</a></p>
+<p><a target="_blank" rel="noopener" href="https://modelscope.cn/models/damo/cv_vgg19_facial-expression-recognition_fer/summary">https://modelscope.cn/models/damo/cv_vgg19_facial-expression-recognition_fer/summary</a></p>
+<p><a target="_blank" rel="noopener" href="https://paperswithcode.com/task/image-quality-assessment">Image Quality Assessment | Papers With Code</a></p>
+</Image>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2023/03/04/Course/SLAMs/Issuse/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/03/04/Course/SLAMs/Issuse/" class="post-title-link" itemprop="url">SLAM 基础 解惑</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-03-04 12:00:00" itemprop="dateCreated datePublished" datetime="2023-03-04T12:00:00+00:00">2023-03-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SLAM/" itemprop="url" rel="index"><span itemprop="name">SLAM</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>问题5 so(3), se(3)的区别？如何在算法中使用？</p>
+<ul>
+<li>SE(3):特殊欧式群</li>
+<li>se(3):特殊欧式群的李代数</li>
+<li>SO(3): 三维特殊正交群</li>
+<li>so(3): 三维特殊正交群的李代数</li>
+<li>T(3):三维移动群</li>
+<li><em><strong>R</strong></em>: 旋转矩阵</li>
+</ul>
+<p>李代数：李群单位元处的切空间；</p>
+<p>SO(3) 和T(3) 都是SE(3)的李子群<br>SO3——&gt;log——&gt;so3, 3×1 vector<br>SE3——&gt;log——&gt;se3, 6×1 vector<br>so3——&gt;exp——&gt;SO3, 3×3 matrix<br>se3——&gt;exp——&gt;SE3, 4×4 matrix</p>
+<p>SO(3)代表旋转运动</p>
+<p>SE3代表刚体变换运动（旋转+平移）</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_36965307/article/details/123546945">机器人学关于SE（3）、se（3）、SO（3）、so（3）的理解_OverCome-的博客-CSDN博客_se3 so3</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/422622635"># SLAM论文写作经验 | 小白、跨专业、无人指导、一年多从零到发顶会，他如何做到？</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/YunLaowang/article/details/92800367">ORB-SLAM2：(二)Monocular&#x2F;Stereo&#x2F;RGB-D数据集_南山种豆的博客-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/hltt3838/article/details/113815836">第4周课件-全网最详细的ORB-SLAM2精讲_orbslam讲解_他人是一面镜子，保持谦虚的态度的博客-CSDN博客</a></p>
+<p><strong>1. 理解地图点里成员变量的物理意义。</strong></p>
+<p><strong>2. 掌握BOW的原理及应用（重要）。</strong></p>
+<p><strong>3. 掌握关键帧跟踪原理（重要）。</strong></p>
+<p><strong>4. 理解图优化原理，理解g2o的使用方法（重要）。</strong></p>
+<p><a target="_blank" rel="noopener" href="https://cvlife.net/p/t_pc/goods_pc_detail/goods_detail/term_634260915e015_SerHfL?product_id=term_634260915e015_SerHfL">计算机视觉life的店铺 (第5期) ORB-SLAM2源码解析：视觉SLAM必备基础</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/electech6/ORB_SLAM2_detailed_comments">GitHub - electech6&#x2F;ORB_SLAM2_detailed_comments: Detailed comments for ORB-SLAM2 with trouble-shooting, key formula derivation, and diagrammatic drawing</a></p>
+<h3 id="最小二乘问题"><a href="#最小二乘问题" class="headerlink" title="最小二乘问题"></a>最小二乘问题</h3><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/113946848"># 最小二乘问题的四种解法——牛顿法，梯度下降法，高斯牛顿法和列文伯格-马夸特法的区别和联系</a></p>
+<h3 id="相机"><a href="#相机" class="headerlink" title="相机"></a>相机</h3><p>内参：</p>
+<p>如果一部相机的分辨率变为原来的两倍，而其他地方不发生变化，它的内参会如何变化？</p>
+<p>分辨率*2 &#x3D;&#x3D;&#x3D;&#x3D;&gt; (u,v)*2 &#x3D;&#x3D;&#x3D;&#x3D;&gt; (fx，fy，cx，cy)*2</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

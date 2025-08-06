@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="[TOC] 开源算法库          OpenSpiel 框架 DeepMind    SpriteWorld &amp; Bsuite 框架 DeepMind    Acme 分布式强化学习算法框架 DeepMind    PPO  facebook-OpenAI    gym 框架工具包 facebook-OpenAI    Baselines 框架，Demo facebook-OpenA">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RL Algorithm Survey">
+<meta property="og:url" content="https://novav.github.io/2022/03/31/AI/RL/RL_Algorithms/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="[TOC] 开源算法库          OpenSpiel 框架 DeepMind    SpriteWorld &amp; Bsuite 框架 DeepMind    Acme 分布式强化学习算法框架 DeepMind    PPO  facebook-OpenAI    gym 框架工具包 facebook-OpenAI    Baselines 框架，Demo facebook-OpenA">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2022/03/31/AI/RL/RL_Algorithms/2025-03-19-20-32-49-%7BDBA57A20-F83A-491A-8996-C48DEB8B955B%7D.png">
+<meta property="og:image" content="https://novav.github.io/2022/03/31/AI/RL/RL_Algorithms/2023-08-31-14-50-49-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/03/31/AI/RL/RL_Algorithms/2024-02-02-17-27-47-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/03/31/AI/RL/RL_Algorithms/2024-02-04-10-03-02-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/03/31/AI/RL/RL_Algorithms/2024-02-04-14-55-42-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/03/31/AI/RL/RL_Algorithms/2023-08-01-14-42-31-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/03/31/AI/RL/RL_Algorithms/2023-08-31-14-51-13-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/03/31/AI/RL/RL_Algorithms/2023-08-01-14-45-57-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/03/31/AI/RL/RL_Algorithms/2023-08-31-14-51-29-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/03/31/AI/RL/RL_Algorithms/2023-08-01-15-10-26-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/03/31/AI/RL/RL_Algorithms/2023-08-01-15-11-55-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/03/31/AI/RL/RL_Algorithms/2023-08-01-15-12-42-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/03/31/AI/RL/RL_Algorithms/2024-02-02-11-36-14-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/03/31/AI/RL/RL_Algorithms/2024-02-02-11-35-34-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/03/31/AI/RL/RL_Algorithms/2024-01-12-17-44-28-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/03/31/AI/RL/RL_Algorithms/2024-01-12-17-49-37-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/03/31/AI/RL/RL_Algorithms/2024-02-02-11-32-46-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/03/31/AI/RL/RL_Algorithms/2024-02-02-11-31-45-image.png">
+<meta property="article:published_time" content="2022-03-31T21:31:09.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:38.005Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="RL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2022/03/31/AI/RL/RL_Algorithms/2025-03-19-20-32-49-%7BDBA57A20-F83A-491A-8996-C48DEB8B955B%7D.png">
+
+<link rel="canonical" href="https://novav.github.io/2022/03/31/AI/RL/RL_Algorithms/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>RL Algorithm Survey | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/03/31/AI/RL/RL_Algorithms/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          RL Algorithm Survey
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-03-31 21:31:09" itemprop="dateCreated datePublished" datetime="2022-03-31T21:31:09+00:00">2022-03-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/RL/" itemprop="url" rel="index"><span itemprop="name">RL</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>[TOC]</p>
+<h2 id="开源算法库"><a href="#开源算法库" class="headerlink" title="开源算法库"></a>开源算法库</h2><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>OpenSpiel</td>
+<td>框架</td>
+<td>DeepMind</td>
+<td></td>
+</tr>
+<tr>
+<td>SpriteWorld &amp; Bsuite</td>
+<td>框架</td>
+<td>DeepMind</td>
+<td></td>
+</tr>
+<tr>
+<td>Acme</td>
+<td>分布式强化学习算法框架</td>
+<td>DeepMind</td>
+<td></td>
+</tr>
+<tr>
+<td>PPO</td>
+<td></td>
+<td>facebook-OpenAI</td>
+<td></td>
+</tr>
+<tr>
+<td>gym</td>
+<td>框架工具包</td>
+<td>facebook-OpenAI</td>
+<td></td>
+</tr>
+<tr>
+<td>Baselines</td>
+<td>框架，Demo</td>
+<td>facebook-OpenAI</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="游戏平台"><a href="#游戏平台" class="headerlink" title="游戏平台"></a>游戏平台</h2><p>RLCard</p>
+<p>Atari</p>
+<h2 id="RL-算法"><a href="#RL-算法" class="headerlink" title="RL 算法"></a>RL 算法</h2><p><img src="/2022/03/31/AI/RL/RL_Algorithms/2025-03-19-20-32-49-%7BDBA57A20-F83A-491A-8996-C48DEB8B955B%7D.png"></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Value-Base</th>
+<th>Policy Gradient</th>
+<th>AC</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>TD3</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>DQN</td>
+<td>Y</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>AC</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>A2C</td>
+<td></td>
+<td>Y</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>A3C</td>
+<td></td>
+<td>Y</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>REINFORCE</td>
+<td></td>
+<td>Y</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>DDPG</td>
+<td></td>
+<td>Y</td>
+<td>Y</td>
+<td></td>
+</tr>
+<tr>
+<td>TRPG</td>
+<td></td>
+<td>Y</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>PPO</td>
+<td></td>
+<td>on-policy</td>
+<td>Y</td>
+<td></td>
+</tr>
+<tr>
+<td>SAC</td>
+<td></td>
+<td>off-policy</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>IMPALA</td>
+<td></td>
+<td>Y</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="带着问题去学习"><a href="#带着问题去学习" class="headerlink" title="带着问题去学习"></a>带着问题去学习</h3><ul>
+<li><p><input disabled type="checkbox"> 
+Advance函数是什么？为什么这样设计？</p>
+</li>
+<li><p><input disabled type="checkbox"> 
+PPO算法的改进点有几个？</p>
+</li>
+</ul>
+<h3 id="分布式强化学习"><a href="#分布式强化学习" class="headerlink" title="分布式强化学习"></a>分布式强化学习</h3><ol>
+<li>分布式强化学习（Distributed Reinforcement Learning）：分布式算法，如IMPALA（Importance Weighted Actor-Learner Architecture）和R2D2（Recurrent Replay Distributed DQN），是近年来的重要发展。这些算法允许大规模分布式训练和数据并行化，从而提高了学习效率和可扩展性。</li>
+<li></li>
+</ol>
+<h3 id="DQN"><a href="#DQN" class="headerlink" title="DQN"></a>DQN</h3><ul>
+<li><p>两个神经网络，一个延迟更新权重，一个实时训练中进行参数更新。 </p>
+</li>
+<li></li>
+</ul>
+<img title src="/2022/03/31/AI/RL/RL_Algorithms/2023-08-31-14-50-49-image.png" alt width="517">
+
+<p>我们从公式中也能看出，DQN不能用于连续控制问题原因，是因为maxQ(s’,a’)函数只能处理离散型的。那怎么办？</p>
+<p>我们知道DQN用magic函数，也就是神经网络解决了Qlearning不能解决的连续状态空间问题。那我们同样的DDPG就是用magic解决DQN不能解决的连续控制型问题就好了。</p>
+<p>也就是说，用一个magic函数，直接替代maxQ(s’,a’)的功能。也就是说，我们期待我们输入状态s，magic函数返回我们动作action的取值，这个取值能够让q值最大。这个就是DDPG中的Actor的功能。</p>
+<img src="/2022/03/31/AI/RL/RL_Algorithms/2024-02-02-17-27-47-image.png" title alt width="481">
+
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/110338833">[理论篇]怎样直观理解Qlearning算法？zhihu</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv28921903/"># DQN（Double&#x2F; Duel&#x2F; D3DQN）bilibili</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44732379/article/details/127821138">深度强化学习——DQN算法原理-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xoslh/p/17609512.html">深度 Q 网络（deep Q network，DQN）原理&amp;实现 - 缙云山车神 - 博客园</a></p>
+<h3 id="Noisy-DQN"><a href="#Noisy-DQN" class="headerlink" title="Noisy DQN"></a>Noisy DQN</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fc1 = relu(fc(X))</span><br><span class="line">fc2 = relu(fc(fc1))</span><br><span class="line">fc3 = relu(fc(fc2))</span><br><span class="line">y = noisyLinear(fc3)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Double-DQN"><a href="#Double-DQN" class="headerlink" title="Double DQN"></a>Double DQN</h3><p>Q学习是基于贪心策略的，这会导致最大化偏差问题，和双Q学习思想一致。下面是双Q学习的伪代码，可以借鉴一下。 </p>
+<img src="/2022/03/31/AI/RL/RL_Algorithms/2024-02-04-10-03-02-image.png" title alt width="520">
+
+<h3 id="Dueling-DQN"><a href="#Dueling-DQN" class="headerlink" title="Dueling DQN"></a>Dueling DQN</h3><p>对偶网络(duel network) </p>
+<p><img src="/2022/03/31/AI/RL/RL_Algorithms/2024-02-04-14-55-42-image.png"></p>
+<h3 id="D3QN"><a href="#D3QN" class="headerlink" title="D3QN"></a>D3QN</h3><p>D3QN(Dueling Double Deep Q Network)</p>
+<p>&#x2F;todo</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_46133643/article/details/121915135">深度强化学习-D3QN算法原理与代码-CSDN博客</a></p>
+<h3 id="Rainbow"><a href="#Rainbow" class="headerlink" title="Rainbow"></a>Rainbow</h3><ul>
+<li>Double Q-learning</li>
+<li>Prioritized replay</li>
+<li>Dueling networks</li>
+<li>Multi-step learning</li>
+<li>Distributional RL</li>
+<li>Noisy Nets</li>
+</ul>
+<p>集合了在此之前的六大卓有成效的DQN变体，将其训练技巧有机的组合到一起</p>
+<h3 id="Policy-Gradient"><a href="#Policy-Gradient" class="headerlink" title="Policy Gradient"></a>Policy Gradient</h3><p>有两个缺陷：方差大，离线学习</p>
+<p><img src="/2022/03/31/AI/RL/RL_Algorithms/2023-08-01-14-42-31-image.png"></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/628406958"># 强化学习从零到RLHF（五）Actor-Critic,A2C,A3C zhihu</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/141269134"># 强化学习基础 Ⅷ: Vanilla Policy Gradient 策略梯度原理与实战 zhihu</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/110881517"># 如何理解策略梯度（Policy Gradient）算法？（附代码及代码解释）zhihu</a></p>
+<h3 id="Reinforce-MC-PG"><a href="#Reinforce-MC-PG" class="headerlink" title="Reinforce(MC-PG)"></a>Reinforce(MC-PG)</h3><img src="/2022/03/31/AI/RL/RL_Algorithms/2023-08-31-14-51-13-image.png" title alt width="495">
+
+<h3 id="AC"><a href="#AC" class="headerlink" title="AC"></a>AC</h3><p>（解决高方差问题）</p>
+<p><img src="/2022/03/31/AI/RL/RL_Algorithms/2023-08-01-14-45-57-image.png"> 策略梯度的Gt(轨迹t时刻的实际后续累计回报，变成了t时刻采取动作a的期望后续累计回报)&#x3D;等效于Qt(a,s)   ; Q指动作值函数；</p>
+<p>需要维护两套可训练参数 $\theta$ 、$w$ ：</p>
+<ul>
+<li><p>actor，$\theta$ 控制策略</p>
+</li>
+<li><p>Critic， w评估动作，输出Q value 用于策略梯度的计算。</p>
+</li>
+</ul>
+<img src="/2022/03/31/AI/RL/RL_Algorithms/2023-08-31-14-51-29-image.png" title alt width="575">
+
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/110998399"># 理解Actor-Critic的关键是什么？(附代码及代码分析) 知乎</a></p>
+<h3 id="A2C-（引入优势函数-Advantage-Actor-Critic）"><a href="#A2C-（引入优势函数-Advantage-Actor-Critic）" class="headerlink" title="A2C （引入优势函数 Advantage Actor-Critic）"></a>A2C （引入优势函数 Advantage Actor-Critic）</h3><p>我们也可以使用优势函数作为Critic来进一步稳定学习，实际上A2C才是Actor-Critic 架构更多被使用的做法。</p>
+<p>这个想法是，优势函数计算一个操作与某个状态下可能的其他操作相比的相对优势：与状态的平均值相比，在某个状态执行该操作如何更好。它从状态-动作对中减去状态的期望值。</p>
+<p><img src="/2022/03/31/AI/RL/RL_Algorithms/2023-08-01-15-10-26-image.png"></p>
+<p>换句话说，此函数计算我们在该状态下执行此操作时获得的额外奖励，与在该状态获得的期望奖励相比。</p>
+<p>额外的奖励是超出该状态的预期值。</p>
+<p>我们的actor损失函数为 <img src="/2022/03/31/AI/RL/RL_Algorithms/2023-08-01-15-11-55-image.png"></p>
+<ul>
+<li>如果  A(s,a)&gt; 0：我们的梯度被推向那个方向。</li>
+<li>如果  A(s,a)&lt; 0：我们的梯度被推向相反的方向。</li>
+</ul>
+<p><img src="/2022/03/31/AI/RL/RL_Algorithms/2023-08-01-15-12-42-image.png"></p>
+<h3 id="A3C-zhihu"><a href="#A3C-zhihu" class="headerlink" title="A3C zhihu"></a>A3C <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/628406958">zhihu</a></h3><p>A3C全称为Asynchronous advantage actor-critic。<br>前文讲到，神经网络训练时，需要的数据是独立同分布的，为了打破数据之间的相关性，DQN等方法都采用了经验回放的技巧。然而经验回放需要大量的内存，打破数据的相关性，经验回放并非是唯一的方法。另外一种是异步的方法，所谓异步的方法是指数据并非同时产生，A3C的方法便是其中表现非常优异的异步强化学习算法。<br>A3C模型如下图所示，每个Worker直接从Global Network中拿参数，自己与环境互动输出行为。利用每个Worker的梯度，对Global Network的参数进行更新。每一个Worker都是一个A2C。</p>
+<img src="/2022/03/31/AI/RL/RL_Algorithms/2024-02-02-11-36-14-image.png" title alt width="469">
+
+<h3 id="SAC-soft-Actor-Critic"><a href="#SAC-soft-Actor-Critic" class="headerlink" title="SAC (soft Actor-Critic)"></a>SAC (soft Actor-Critic)</h3><p> SAC即<strong>S</strong>oft <strong>A</strong>ctor-<strong>C</strong>ritic（柔性致动&#x2F;评价），它是一种基于off-policy和最大熵的<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0&spm=1001.2101.3001.7020">深度强化学习</a>算法，其由伯克利和谷歌大脑的研究人员提出。</p>
+<p>SAC算法是强化学习中的一种off-policy算法，全称为Soft Actor-Critic，它属于最大熵强化学习范畴。</p>
+<p>SAC算法的网络结构类似于TD3算法，都有一个Actor网络和两个Critic网络，但SAC算法的目标网络只有两个Critic网络，没有Actor网络。</p>
+<p>SAC算法解决的问题是离散动作空间和连续动作空间的强化学习问题，它学习一个随机性策略，在不少标准环境中取得了领先的成绩，是一个非常高效的算法。</p>
+<p>在SAC算法中，每次用Critic网络时会挑选一个值小的网络，从而缓解值过高估计的问题，进而提高算法的稳定性和收敛速度。</p>
+<img src="/2022/03/31/AI/RL/RL_Algorithms/2024-02-02-11-35-34-image.png" title alt width="503">
+
+<h3 id="DDPG"><a href="#DDPG" class="headerlink" title="DDPG"></a>DDPG</h3><p>deep deterministic policy gradient，深度确定性策略梯度算法。</p>
+<ul>
+<li>PPO输出的是一个策略，也就是一个概率分布，而DDPG输出的直接是一个动作。</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/111257402">【Zhihu】一文带你理清DDPG算法（附代码及代码解释）</a></p>
+<p><a target="_blank" rel="noopener" href="https://mofanpy.com/tutorials/machine-learning/reinforcement-learning/DDPG#%E7%AE%97%E6%B3%95">Deep Deterministic Policy Gradient (DDPG) | 莫烦Python</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/MorvanZhou/Reinforcement-learning-with-tensorflow/blob/master/contents/9_Deep_Deterministic_Policy_Gradient_DDPG/DDPG_update2.py">TF DDPG_update2.py</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/sherlocksy/article/details/120455110">Pytorch实现DDPG算法_ddpg pytorch-CSDN博客</a></p>
+<img src="/2022/03/31/AI/RL/RL_Algorithms/2024-01-12-17-44-28-image.png" title alt width="381">
+
+<img src="/2022/03/31/AI/RL/RL_Algorithms/2024-01-12-17-49-37-image.png" title alt width="426">
+
+<img title src="/2022/03/31/AI/RL/RL_Algorithms/2024-02-02-11-32-46-image.png" alt width="508">
+
+<h3 id="TD3"><a href="#TD3" class="headerlink" title="TD3"></a>TD3</h3><p>TD3算法主要解决了DDPG算法的高估问题。在DDPG算法的基础上，TD3算法提出了三个关键技术：</p>
+<ol>
+<li>双重网络（Double network）：采用两套Critic网络，计算目标值时取二者中的较小值，从而抑制网络过估计问题。</li>
+<li>目标策略平滑正则化（Target policy smoothing regularization）：计算目标值时，在下一个状态的动作上加入扰动，从而使得价值评估更准确。</li>
+<li>延迟更新（Delayed update）：Critic网络更新多次后，再更新Actor网络，从而保证Actor网络的训练更加稳定。</li>
+</ol>
+<p>TD3算法在许多连续控制任务上都取得了不错的表现。</p>
+<p><img src="/2022/03/31/AI/RL/RL_Algorithms/2024-02-02-11-31-45-image.png"></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/409536699">【附代码】大白话讲TD3算法 zhihu</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_51602120/article/details/129169504">TD3算法（Twin Delayed Deep Deterministic policy gradient）-CSDN博客</a></p>
+<h3 id="TRPO-置信域策略优化算法"><a href="#TRPO-置信域策略优化算法" class="headerlink" title="TRPO 置信域策略优化算法"></a>TRPO 置信域策略优化算法</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zuzhiang/article/details/103650805">强化学习 TRPO， PPO，DPPO</a></p>
+<h3 id="PPO（Proximal-Policy-Optimization）"><a href="#PPO（Proximal-Policy-Optimization）" class="headerlink" title="PPO（Proximal Policy Optimization）"></a>PPO（Proximal Policy Optimization）</h3><p>        TRPO优化效率上一个改进，其通过修改TRPO算法，使其可以使用SGD算法来做置信域更新，并且用clipping的方法方法来限制策略的过大更新，保证优化在置信域中进行。</p>
+<p>PPO 算法利用新策略和旧策略的比例，从而限制了新策略的更新幅度。</p>
+<p>PPO-Max</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/jinzhuojun/article/details/80417179">https://blog.csdn.net/jinzhuojun/article/details/80417179</a></p>
+<p>PPO算法是一种用于强化学习的策略优化算法，全称为Proximal Policy Optimization。</p>
+<p>PPO算法基于策略梯度方法，通过约束优化的方式来保证每次迭代的更新幅度不会过大，从而提高算法的稳定性和收敛速度。</p>
+<p>PPO算法通过两个不同的目标函数来更新策略函数，分别是Clipped Surrogate Objective和Trust Region Policy Optimization。其中，PPO-Penalty类似于TRPO算法，将KL散度作为目标函数的一个惩罚项，并自动调整惩罚系数，使其适应数据的规模；而PPO-Clip则没有KL散度项，也没有约束条件，使用一种特殊的裁剪技术，在目标函数中消除了新策略远离旧策略的动机。</p>
+<p>PPO算法还使用了Generalized Advantage Estimation（GAE）的技术来估计策略函数的价值函数，从而提高了算法的性能和收敛速度。</p>
+<p>PPO算法的应用范围非常广泛，可以用于各种强化学习任务，如机器人控制、游戏玩法、自然语言处理等方面。在OpenAl的研究中，PPO算法被用于训练人工智能玩Atari游戏，以及AlphaGo Zero等强化学习任务中，取得了优秀的表现。</p>
+<p>总的来说，PPO算法是一种稳定、高效的强化学习算法，具有广泛的应用价值。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45590357/article/details/122759507">PPO算法实现gym连续动作空间任务Pendulum（pytorch）</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.yingsoo.com/news/devops/42398.html">Python强化练习之PyTorch opp算法实现月球登陆器(得分观察)</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/512327050"> 影响PPO算法性能的10个关键技巧（附PPO算法简洁Pytorch实现</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.deeprlhub.com/d/745-ppo37implementation">PPO算法的37个Implementation细节</a></p>
+<p><a target="_blank" rel="noopener" href="https://aitechtogether.com/python/76185.html">【深度强化学习】(6) PPO 模型解析，附Pytorch完整代码</a>[【运行过】</p>
+<p><a target="_blank" rel="noopener" href="https://medium.com/analytics-vidhya/coding-ppo-from-scratch-with-pytorch-part-1-4-613dfc1b14c8">Coding PPO from Scratch with PyTorch (Part 1&#x2F;4)</a>[专业详细]</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/jinzhuojun/article/details/80417179">深度增强学习PPO（Proximal Policy Optimization）算法源码走读_ppo算法-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zuzhiang/article/details/103650805">强化学习（9）：TRPO、PPO以及DPPO算法-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/598627430">强化学习笔记（1）- PPO的前世今生</a></p>
+<h3 id="DPPO（多进程PPO）"><a href="#DPPO（多进程PPO）" class="headerlink" title="DPPO（多进程PPO）"></a>DPPO（多进程PPO）</h3><h3 id="Rainbow-1"><a href="#Rainbow-1" class="headerlink" title="Rainbow"></a>Rainbow</h3><p>组成Rainbow的这六大变体如下:</p>
+<ul>
+<li>Double Q-learning</li>
+<li>Prioritized replay</li>
+<li>Dueling networks</li>
+<li>Multi-step learning</li>
+<li>Distributional RL</li>
+<li>Noisy Nets</li>
+</ul>
+<h3 id="Apex"><a href="#Apex" class="headerlink" title="Apex"></a>Apex</h3><p>​    soft actor-critic</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/44792834">zhihu-清华博士【强化学习算法 11】SAC</a></p>
+<h2 id="反向强化学习（IRL）"><a href="#反向强化学习（IRL）" class="headerlink" title="反向强化学习（IRL）"></a>反向强化学习（IRL）</h2><h2 id="模仿学习"><a href="#模仿学习" class="headerlink" title="模仿学习"></a>模仿学习</h2><p>在经典的强化学习中，智能体通过与环境交互和最大化reward期望来学习策略。</p>
+<p>在模仿学习中没有显式的reward，因而只能从专家示例中学习。</p>
+<h3 id="GAIL"><a href="#GAIL" class="headerlink" title="GAIL"></a>GAIL</h3><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/475388215"># 模仿学习GAIL框架与pytorch实现</a></p>
+<p>**GAIL的核心思想：**策略生成器G和判别器D的一代代博弈</p>
+<p><strong>策略生成器</strong>：策略网络，以state为输入，以action为输出</p>
+<p><strong>判别器</strong>：二分类网络，将策略网络生成的 (s, a) pair对为负样本，专家的(s,a)为正样本</p>
+<p><strong>learn 判别器D：</strong></p>
+<p>给定G，在与环境交互中通过G生成完整或不完整的episode(但过程中G要保持不变)作为负样本，专家样本作为正样本来训练D</p>
+<p><strong>learn 生成器G：</strong></p>
+<p>给定D，通过常规的强化学习算法(如PPO)来学习策略网络，其中reward通过D得出，<strong>即该样本与专家样本的相似程度</strong></p>
+<p>G和D的训练过程交替进行，这个对抗的过程使得G生成的策略在与环境的交互中得到的reward越来越大，D“打假”的能力也越来越强。</p>
+<h3 id="AIRL"><a href="#AIRL" class="headerlink" title="AIRL"></a>AIRL</h3><p> Learning Robust Rewards with Adversarial Inverse Reinforcement learning</p>
+<h2 id="RL-Apply"><a href="#RL-Apply" class="headerlink" title="RL Apply"></a>RL Apply</h2><table>
+<thead>
+<tr>
+<th></th>
+<th>info</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DouZero</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>DanZero</td>
+<td>Distribute Q-learning</td>
+<td></td>
+</tr>
+<tr>
+<td>MuZero</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="DeepMind"><a href="#DeepMind" class="headerlink" title="DeepMind"></a>DeepMind</h2><h3 id="AlphaZero"><a href="#AlphaZero" class="headerlink" title="AlphaZero"></a>AlphaZero</h3><p>启发式搜索（MCTS）+强化学习+自博弈的方法，</p>
+<h3 id="MuZero-model-based专题三–MuZero系列"><a href="#MuZero-model-based专题三–MuZero系列" class="headerlink" title="MuZero # model based专题三–MuZero系列"></a>MuZero <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/546482610"># model based专题三–MuZero系列</a></h3><p>Muzero的贡献在AlphaZero强大的搜索和策略迭代算法的基础上加入了模型学习的过程，使其能够在<strong>不了解状态转移规则的情况</strong>下，达到了当时的SOTA效果。</p>
+<p><strong>Muzero的模型有三部分</strong>：</p>
+<ul>
+<li><p>representation：表征编码，使用历史观测序列编码为隐空间的  </p>
+</li>
+<li><p>dynamics:动态模型，这个就是MBRL经典的Dynamic Model  </p>
+</li>
+<li><p>prediction：值模型。输入输出策略和价值函数</p>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/441321632"># MuZero及核心伪码分析</a></p>
+<h3 id="EfficientZero-detail"><a href="#EfficientZero-detail" class="headerlink" title="EfficientZero detail"></a>EfficientZero <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/546482610">detail</a></h3><p>接下来是NIPS2021的EfficientZero，这篇文章强调的是sample-efficiency，使用limited data，在仅有两小时实时游戏经验的情况下，在Atari 100K基准上实现了190.4%的平均人类性能和116%的中位数人类性能，并且在DMC Control 100K基准超过了state SAC（oracle），性能接近2亿帧的DQN，而消耗的数据少500倍。</p>
+<p>EfficientZero基于MuZero，做了如下三点改进：</p>
+<p>(1)使用自监督的方式来学习temporally consistent environment model</p>
+<p>(2)端到端的学习value prefix，预测时间段内奖励值之和，降低预测reward不准导致的误差</p>
+<p>(3)改变Multi-step reward的算法，使用一个自适应的展开长度来纠正off-policy target</p>
+<h3 id="SpriteWorld-Bsuite-DeepMind"><a href="#SpriteWorld-Bsuite-DeepMind" class="headerlink" title="SpriteWorld &amp; Bsuite (DeepMind)"></a>SpriteWorld &amp; Bsuite (DeepMind)</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_31351409/article/details/101189820">https://blog.csdn.net/weixin_31351409/article/details/101189820</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/deepmind/spriteworld">https://github.com/deepmind/spriteworld</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/deepmind/bsuite">https://github.com/deepmind/bsuite</a></p>
+<h3 id="Acme"><a href="#Acme" class="headerlink" title="Acme"></a>Acme</h3><p><a target="_blank" rel="noopener" href="https://www.sohu.com/a/400058213_473283">https://www.sohu.com/a/400058213_473283</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/deepmind/acme">https://github.com/deepmind/acme</a></p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2006.00979v1.pdf">https://arxiv.org/pdf/2006.00979v1.pdf</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.deepmind.com/research?tag=Reinforcement+learning">https://www.deepmind.com/research?tag=Reinforcement+learning</a></p>
+<h3 id="OpenSpiel"><a href="#OpenSpiel" class="headerlink" title="OpenSpiel"></a>OpenSpiel</h3><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/80526746">https://zhuanlan.zhihu.com/p/80526746</a></p>
+<p>极小化极大（Alpha-beta剪枝）搜索、蒙特卡洛树搜索、序列形式线性规划、虚拟遗憾最小化（CFR）、Exploitability<br>外部抽样蒙特卡洛CFR、结果抽样蒙特卡洛CFR、Q-learning、价值迭代、优势动作评论算法(Advantage Actor Critic，A2C)、Deep Q-networks (DQN)<br>短期价值调整（EVA）、Deep CFR、Exploitability 下降(ED) 、（扩展形式）虚拟博弈（XFP）、神经虚拟自博弈(NFSP)、Neural Replicator Dynamics（NeuRD）<br>遗憾策略梯度（RPG, RMPG）、策略空间回应oracle（PSRO）、基于Q的所有行动策略梯度（QPG）、回归CFR (RCFR)、PSROrN、α-Rank、复制&#x2F;演化动力学。</p>
+<h2 id="OpenAI"><a href="#OpenAI" class="headerlink" title="OpenAI"></a>OpenAI</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/kittyzc/article/details/83006403">https://blog.csdn.net/kittyzc/article/details/83006403</a></p>
+<h3 id="Baselines"><a href="#Baselines" class="headerlink" title="Baselines"></a>Baselines</h3><p><a target="_blank" rel="noopener" href="https://github.com/openai/baselines">https://github.com/openai/baselines</a></p>
+<ul>
+<li>A2C</li>
+<li>ACER</li>
+<li>ACKTR</li>
+<li>DDPG</li>
+<li>DQN</li>
+<li>GAIL</li>
+<li>HER</li>
+<li>PPO1</li>
+<li>PPO2</li>
+<li>TRPO</li>
+</ul>
+<h3 id="Spinning-Up"><a href="#Spinning-Up" class="headerlink" title="Spinning Up"></a>Spinning Up</h3><p>spinning up是一个深度强化学习的很好的资源</p>
+<p><a target="_blank" rel="noopener" href="https://spinningup.openai.com/en/latest/">https://spinningup.openai.com/en/latest/</a></p>
+<p>根据官方文档，spinning up实现的算法包括：</p>
+<p>Vanilla Policy Gradient (VPG)<br>Trust Region Policy Optimization (TRPO)<br>Proximal Policy Optimization (PPO)<br>Deep Deterministic Policy Gradient (DDPG)<br>Twin Delayed DDPG (TD3)<br>Soft Actor-Critic (SAC)</p>
+<h2 id="学习路线"><a href="#学习路线" class="headerlink" title="学习路线"></a>学习路线</h2><p><a target="_blank" rel="noopener" href="https://rl.qiwihui.com/zh_CN/latest/chapter1/introduction.html">⭐⭐⭐增强学习-第二版-中文</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.leiphone.com/category/academic/HqsCFcYIbVWRM5oV.html">上海交大ACM班俞勇团队推出强化学习入门宝典！附作者对话</a></p>
+<p>**张伟楠：**我在上海交通大学给致远学院ACM班和电院AI试点班的同学讲授强化学习，由于学生的专业和本课程内容很贴合，因此学生对强化学习的原理部分关注较多。在夏令营中获得学生的反馈更多来自如何在各种各样的领域用好强化学习技术，当然也有不少本专业的学生对强化学习本身的研究十分了解。对于来我们APEX实验室的强化学习初学者，我建议的学习路线是：</p>
+<p>\1.  先学习UCL David Silver的强化学习课程：<a target="_blank" rel="noopener" href="https://www.davidsilver.uk/teaching/">https://www.davidsilver.uk/teaching/</a></p>
+<p>这是强化学习的基础知识，不太包含深度强化学习的部分，但对后续深入理解深度强化学习十分重要。</p>
+<p>\2.  然后学习UC Berkeley的深度强化学习课程：<a target="_blank" rel="noopener" href="http://rail.eecs.berkeley.edu/deeprlcourse/">http://rail.eecs.berkeley.edu/deeprlcourse/</a></p>
+<p>\3.  最后可以可以挑着看OpenAI 的夏令营内容：<a target="_blank" rel="noopener" href="https://sites.google.com/view/deep-rl-bootcamp/lectures">https://sites.google.com/view/deep-rl-bootcamp/lectures</a></p>
+<p>当然，如果希望学习中文的课程，我推荐的是：</p>
+<p>\1.  我本人在上海交通大学的强化学习课程： <a target="_blank" rel="noopener" href="https://www.boyuai.com/rl">https://www.boyuai.com/rl</a></p>
+<p>\2.  周博磊老师的强化学习课程：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1LE411G7Xj">https://www.bilibili.com/video/BV1LE411G7Xj</a></p>
+<h3 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h3><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/386783468">zhihu Actor-critic和A3C</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/386783468"># 置信域策略优化算法——TRPO</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/624639496"># 强化学习6-DDPG</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/gsww404/article/details/96709643">深度强化学习系列(15): TRPO算法原理及Tensorflow实现-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u012864339/article/details/129272810">Pytorch实现强化学习DQN玩迷宫游戏(莫凡强化学习DQN章节pytorch版本)_莫烦迷宫 强化学习 pytorch实现-CSDN博客</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/RL/" rel="tag"># RL</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/31/Course/AutomaticDrive/Auto/" rel="prev" title="无人驾驶（1）概览">
+      <i class="fa fa-chevron-left"></i> 无人驾驶（1）概览
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/04/01/Tools/Tools-Ubuntu-ProcessAnalysis/" rel="next" title="Ubuntu Process Analysis">
+      Ubuntu Process Analysis <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E6%BA%90%E7%AE%97%E6%B3%95%E5%BA%93"><span class="nav-number">1.</span> <span class="nav-text">开源算法库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%B8%E6%88%8F%E5%B9%B3%E5%8F%B0"><span class="nav-number">2.</span> <span class="nav-text">游戏平台</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RL-%E7%AE%97%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">RL 算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%A6%E7%9D%80%E9%97%AE%E9%A2%98%E5%8E%BB%E5%AD%A6%E4%B9%A0"><span class="nav-number">3.1.</span> <span class="nav-text">带着问题去学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0"><span class="nav-number">3.2.</span> <span class="nav-text">分布式强化学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DQN"><span class="nav-number">3.3.</span> <span class="nav-text">DQN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Noisy-DQN"><span class="nav-number">3.4.</span> <span class="nav-text">Noisy DQN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Double-DQN"><span class="nav-number">3.5.</span> <span class="nav-text">Double DQN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dueling-DQN"><span class="nav-number">3.6.</span> <span class="nav-text">Dueling DQN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#D3QN"><span class="nav-number">3.7.</span> <span class="nav-text">D3QN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Rainbow"><span class="nav-number">3.8.</span> <span class="nav-text">Rainbow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Policy-Gradient"><span class="nav-number">3.9.</span> <span class="nav-text">Policy Gradient</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reinforce-MC-PG"><span class="nav-number">3.10.</span> <span class="nav-text">Reinforce(MC-PG)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AC"><span class="nav-number">3.11.</span> <span class="nav-text">AC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#A2C-%EF%BC%88%E5%BC%95%E5%85%A5%E4%BC%98%E5%8A%BF%E5%87%BD%E6%95%B0-Advantage-Actor-Critic%EF%BC%89"><span class="nav-number">3.12.</span> <span class="nav-text">A2C （引入优势函数 Advantage Actor-Critic）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#A3C-zhihu"><span class="nav-number">3.13.</span> <span class="nav-text">A3C zhihu</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SAC-soft-Actor-Critic"><span class="nav-number">3.14.</span> <span class="nav-text">SAC (soft Actor-Critic)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DDPG"><span class="nav-number">3.15.</span> <span class="nav-text">DDPG</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TD3"><span class="nav-number">3.16.</span> <span class="nav-text">TD3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TRPO-%E7%BD%AE%E4%BF%A1%E5%9F%9F%E7%AD%96%E7%95%A5%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95"><span class="nav-number">3.17.</span> <span class="nav-text">TRPO 置信域策略优化算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PPO%EF%BC%88Proximal-Policy-Optimization%EF%BC%89"><span class="nav-number">3.18.</span> <span class="nav-text">PPO（Proximal Policy Optimization）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DPPO%EF%BC%88%E5%A4%9A%E8%BF%9B%E7%A8%8BPPO%EF%BC%89"><span class="nav-number">3.19.</span> <span class="nav-text">DPPO（多进程PPO）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Rainbow-1"><span class="nav-number">3.20.</span> <span class="nav-text">Rainbow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Apex"><span class="nav-number">3.21.</span> <span class="nav-text">Apex</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8D%E5%90%91%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%EF%BC%88IRL%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">反向强化学习（IRL）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E4%BB%BF%E5%AD%A6%E4%B9%A0"><span class="nav-number">5.</span> <span class="nav-text">模仿学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GAIL"><span class="nav-number">5.1.</span> <span class="nav-text">GAIL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AIRL"><span class="nav-number">5.2.</span> <span class="nav-text">AIRL</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RL-Apply"><span class="nav-number">6.</span> <span class="nav-text">RL Apply</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DeepMind"><span class="nav-number">7.</span> <span class="nav-text">DeepMind</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AlphaZero"><span class="nav-number">7.1.</span> <span class="nav-text">AlphaZero</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MuZero-model-based%E4%B8%93%E9%A2%98%E4%B8%89%E2%80%93MuZero%E7%B3%BB%E5%88%97"><span class="nav-number">7.2.</span> <span class="nav-text">MuZero # model based专题三–MuZero系列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EfficientZero-detail"><span class="nav-number">7.3.</span> <span class="nav-text">EfficientZero detail</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SpriteWorld-Bsuite-DeepMind"><span class="nav-number">7.4.</span> <span class="nav-text">SpriteWorld &amp; Bsuite (DeepMind)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Acme"><span class="nav-number">7.5.</span> <span class="nav-text">Acme</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OpenSpiel"><span class="nav-number">7.6.</span> <span class="nav-text">OpenSpiel</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenAI"><span class="nav-number">8.</span> <span class="nav-text">OpenAI</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Baselines"><span class="nav-number">8.1.</span> <span class="nav-text">Baselines</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spinning-Up"><span class="nav-number">8.2.</span> <span class="nav-text">Spinning Up</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF"><span class="nav-number">9.</span> <span class="nav-text">学习路线</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Ref"><span class="nav-number">9.1.</span> <span class="nav-text">Ref</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

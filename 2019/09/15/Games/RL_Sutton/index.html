@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="[toc] 强化学习样本利用率研究(一)-爱代码爱编程 on-policy: off-policy: 基于模型：动态规划 无模型解决方案：TD, MC, 概率模型：  贝叶斯强化学习  部分可观察马尔可夫决策过程(POMDP)   PAC-MDP ( 马尔可夫决策过程学习 ) SEED RL: Scalable, EfficientDeep-RL，每秒处理数百万张图片的分布式强化学习框架。 概念解">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RL强化学习">
+<meta property="og:url" content="https://novav.github.io/2019/09/15/Games/RL_Sutton/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="[toc] 强化学习样本利用率研究(一)-爱代码爱编程 on-policy: off-policy: 基于模型：动态规划 无模型解决方案：TD, MC, 概率模型：  贝叶斯强化学习  部分可观察马尔可夫决策过程(POMDP)   PAC-MDP ( 马尔可夫决策过程学习 ) SEED RL: Scalable, EfficientDeep-RL，每秒处理数百万张图片的分布式强化学习框架。 概念解">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?%25u03C0%5E%7B*%7D">
+<meta property="og:image" content="https://novav.github.io/2019/09/15/Games/RL_Sutton/pi%7D.gif">
+<meta property="og:image" content="https://novav.github.io/2019/09/15/Games/RL_Sutton/c995d143ad4bd113f27bcde5d9ca3e094afb051a.jpeg">
+<meta property="og:image" content="https://novav.github.io/2019/09/15/Games/RL_Sutton/e850352ac65c10381bd885ba64dc5615b17e897c.jpeg">
+<meta property="og:image" content="https://novav.github.io/2019/09/15/Games/RL_Sutton/8601a18b87d6277f4bea9c5dc9f5da36e824fc34.jpeg">
+<meta property="article:published_time" content="2019-09-15T15:56:06.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:39.948Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="Reinforcement Learning">
+<meta property="article:tag" content="RL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://private.codecogs.com/gif.latex?%25u03C0%5E%7B*%7D">
+
+<link rel="canonical" href="https://novav.github.io/2019/09/15/Games/RL_Sutton/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>RL强化学习 | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2019/09/15/Games/RL_Sutton/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          RL强化学习
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-09-15 15:56:06" itemprop="dateCreated datePublished" datetime="2019-09-15T15:56:06+00:00">2019-09-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/RL/" itemprop="url" rel="index"><span itemprop="name">RL</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>[toc]</p>
+<p><a target="_blank" rel="noopener" href="https://icode.best/i/83824430986897">强化学习样本利用率研究(一)-爱代码爱编程</a></p>
+<p>on-policy:</p>
+<p>off-policy:</p>
+<p>基于模型：动态规划</p>
+<p>无模型解决方案：TD, MC,</p>
+<p>概率模型：</p>
+<ul>
+<li><p>贝叶斯强化学习</p>
+</li>
+<li><p>部分可观察马尔可夫决策过程(POMDP)</p>
+</li>
+</ul>
+<p>PAC-MDP ( 马尔可夫决策过程学习 )</p>
+<p>SEED RL: <strong>S</strong>calable, <strong>E</strong>ffici<strong>e</strong>nt<strong>D</strong>eep-RL，每秒处理数百万张图片的分布式强化学习框架。</p>
+<h2 id="概念解析"><a href="#概念解析" class="headerlink" title="概念解析"></a>概念解析</h2><h3 id="人工智能"><a href="#人工智能" class="headerlink" title="人工智能"></a>人工智能</h3><ul>
+<li>学派<ul>
+<li>符号主义：逻辑推断，贝叶斯学习</li>
+<li>连结主义：神经网络</li>
+<li>行为主义：控制论和强化学习</li>
+</ul>
+</li>
+<li>机器学习-广义分类<ul>
+<li>监督学习</li>
+<li>无监督学习</li>
+<li>强化学习</li>
+</ul>
+</li>
+<li></li>
+</ul>
+<h3 id="on-policy-off-policy"><a href="#on-policy-off-policy" class="headerlink" title="on-policy off-policy"></a>on-policy off-policy</h3><p>on-policy 与 off-policy的本质区别在于：更新Q值时所使用的方法是沿用既定的策略（on-policy）还是使用新策略（off-policy）。</p>
+<p>在Sarsa中更新Q函数时用的A就是贪婪策略得出来的，下一回合也用的是这个A去进行step。两个A一定相同就是（同策略）on-policy。</p>
+<p>但是在Q_learning中，更新时的a时Qmax得到的，而下一回合的A是用贪婪策略（在更新后的Qmax基础上有探索）得到的，这时的a和A就有可能不一样，就是（异策略）off-policy。</p>
+<h2 id="算法Survey"><a href="#算法Survey" class="headerlink" title="算法Survey"></a>算法Survey</h2><h3 id="马尔可夫决策过程MDP"><a href="#马尔可夫决策过程MDP" class="headerlink" title="马尔可夫决策过程MDP"></a>马尔可夫决策过程MDP</h3><p>​		一个马尔科夫决策过程MDP由可能的状态集合S、动作集合A、状态转移函数P和即时回报函数R组成一个四元组M&#x3D;(S,A,P,R)；给定一个MDP，强化学习的任务是找到一个策略（确定性或非确定性），能够获得最大的期望累计回报，为了使回报有界，通常引入一个衰减因子(Discount Favtor) γ∈(0,1)或决策深度(Horizon) T&gt;0，此时学习目标可以表示为找到最优控制策略<img src="https://private.codecogs.com/gif.latex?%25u03C0%5E%7B*%7D" alt="π^{*}"><img src="/2019/09/15/Games/RL_Sutton/pi%7D.gif" alt="\pi ^{*}&#x3D;argmax_{\pi}V_{t}^{\pi}">。</p>
+<p>​		</p>
+<h3 id="更高样本效率的探索策略"><a href="#更高样本效率的探索策略" class="headerlink" title="更高样本效率的探索策略"></a>更高样本效率的探索策略</h3><h4 id="随机探索策略"><a href="#随机探索策略" class="headerlink" title="随机探索策略"></a>随机探索策略</h4><p>在agent选择动作时故意加入随机性，例如ꜫ-greedy，以1-ꜫ选择当前估值最高动作，以ꜫ概率从可能动作中按照均匀分布随机选择。Boltzmann selection探索策略也是按照一定概率分布选择动作，当前估计价值越高的动作被选中的机会越多。</p>
+<h4 id="系统性探索策略"><a href="#系统性探索策略" class="headerlink" title="系统性探索策略"></a>系统性探索策略</h4><p>尝试评估当前信息匮乏程度以及这种匮乏导致的价值估计的不确定性大小，综合考虑当前估计价值与不确定性来进行选择。一些系统性探索策略遵循“乐观策略”，即在对价值进行估计时，如果当前相关数据较少而信息不足，那就故意将此价值高估，让智能体相信相应决策会带来良好效果，促使它去选择这些具有较高不确定性的动作，随着数据量增加，信息变得充分，这种高估程度也就逐渐降低。当算法最终认定一个动作不具有高度价值而决定不再选择该动作时，由于已经有了足够多的数据，算法因错误判断价值而失去找出更好策略机会的可能性较小，这就保证了算法在最坏情况下也具有较好的样本效率。例如R-MAX、MBIE、UCRL。</p>
+<p>PAC(Probably Approximately Correct，高度近似正确)学习理论是比较成熟的样本效率分析理论体系，PAC理论又称<strong>PAC-MDP理论</strong>，主要分析在一个无限长的学习过程中学习算法选择非最优动作的次数，称为该算法的样本复杂度。如果一个算法的样本复杂度有上界，那就说明该算法无论面对如何困难的学习问题，都能在无限长的学习过程中只犯有限次的“失误”，从而间接说明算法的样本效率较高。除PAC外，还要Regret分析、KWIK分析、平均损失分析等，从不同指标分析了一些系统性探索策略的样本效率，指出了它们的有效性。</p>
+<h3 id="A3C"><a href="#A3C" class="headerlink" title="A3C"></a>A3C</h3><h3 id="GA3C"><a href="#GA3C" class="headerlink" title="GA3C"></a>GA3C</h3><p><strong>G</strong>PU-based Asynchronous Advantage Actor-Critic是A3C的GPU实现。</p>
+<p>A3C的内容可见并行强化学习算法：A2C&#x2F;A3C，A3C的每一个Worker都需要采样、训练，需要充足的CPU资源。GPU有很强的并行计算优势；直觉上，将学习计算部分挪到GPU，收集数据环境交互部分放到CPU，会使系统更紧凑高效，同时也能匹配其他深度学习任务的硬件架构。</p>
+<h4 id="学习过程"><a href="#学习过程" class="headerlink" title="学习过程"></a>学习过程</h4><p>1，整体采用的是<strong>批处理</strong>策略，即缓存到达batch size后统一处理；2，每个<strong>Agent</strong>(Worker)负责<strong>收集数据</strong>(s, a, r, s’)，注册到队列Training Queue，由Trainer管理供以后训练使用；3，但Agent不负责采样本身π(a|s)，而是将需求注册到队列Prediction Queue，由Predictor管理；4，<strong>Predictor</strong>是个While True Thread，当缓存到达其batch size后，调用GPU上的策略预测网络π(a|s)进行<strong>采样</strong>；5，类似地，<strong>Trainer</strong>也是个While True Thread，满足batch size后调用GPU进行<strong>训练</strong>。</p>
+<img src="/2019/09/15/Games/RL_Sutton/c995d143ad4bd113f27bcde5d9ca3e094afb051a.jpeg" alt="img" style="zoom:70%;">
+
+<p><strong>注意点</strong></p>
+<p>1，模型网络<strong>只有一套</strong>，存储在GPU上；2，就是说，每一次采样，都使用<strong>即时</strong>的网络参数；3，模型训练期间，也<strong>同时</strong>在采样，难免会出现采样时的policy网络参数与最后学习时的参数不一致，所以GA3C部分数据有一定的<strong>延迟</strong>，不是严格的on-policy；4，具体得看训练的batch size及当时GPU状态，GPU算力资源充足、batch size合理的情况下，受影响的数据应该是很少的。</p>
+<h3 id="SEED-RL"><a href="#SEED-RL" class="headerlink" title="SEED RL"></a>SEED RL</h3><p>基本架构：</p>
+<p>​	Actor</p>
+<p>​	Learner</p>
+<p>​	基本结构与GA3C相似</p>
+<p><img src="/2019/09/15/Games/RL_Sutton/e850352ac65c10381bd885ba64dc5615b17e897c.jpeg" alt="img"></p>
+<p><strong>学习过程</strong></p>
+<ul>
+<li>整体采用<strong>批处理</strong>机制，批量采样、批量学习。</li>
+<li><strong>Inference</strong> thread是<strong>While True Thread</strong>，负责生成π(a|s)并保存trajectories (s, a, r, s’)。</li>
+<li><strong>Data prefetching</strong>也是<strong>While True Thread</strong>，当trajectories完成时，通过quene存入replay buffer。</li>
+<li><strong>Training</strong> thead也是<strong>While True Thread</strong>，通过Device Buffer进行批量学习。</li>
+</ul>
+<p><img src="/2019/09/15/Games/RL_Sutton/8601a18b87d6277f4bea9c5dc9f5da36e824fc34.jpeg" alt="img"></p>
+<p><strong>总结</strong></p>
+<ul>
+<li>与<strong>GA3C</strong>相比，直接支持<strong>off-policy</strong>，而不是不时的数据延迟lag。</li>
+<li>与<strong>IMPALA</strong>相比，<strong>Actor只专注环境交互</strong>，不再进行动作采样；网络参数<strong>只有一套</strong>，推理采样及学习都在Learner上。</li>
+<li>与<strong>R2D2</strong>相比，<strong>Replay Buffer直接在Learner上</strong>，取消分布式优先经验回放机制。</li>
+<li>Actor与Learner采用<strong>gRPC</strong>通信，有效降低采样<strong>延迟</strong>。</li>
+<li>每个<strong>Actor</strong>拥有<strong>多个环境</strong>Environments，提高吞吐量，高效利用CPUs和GPU。Actor与Learner不需要传输完整的Experience，<strong>降低带宽</strong>，有利于更大规模扩展。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Reinforcement-Learning/" rel="tag"># Reinforcement Learning</a>
+              <a href="/tags/RL/" rel="tag"># RL</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/09/11/Sub_Language/DL_Train/Tensorflow/TF-PB-Inference-by-c/" rel="prev" title="TF_pb_Inference_by_c++">
+      <i class="fa fa-chevron-left"></i> TF_pb_Inference_by_c++
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/09/18/Paper/Paper-CV-3-Object-Detection/" rel="next" title="Paper_CV_3 目标检测">
+      Paper_CV_3 目标检测 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5%E8%A7%A3%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">概念解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD"><span class="nav-number">1.1.</span> <span class="nav-text">人工智能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#on-policy-off-policy"><span class="nav-number">1.2.</span> <span class="nav-text">on-policy off-policy</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95Survey"><span class="nav-number">2.</span> <span class="nav-text">算法Survey</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8BMDP"><span class="nav-number">2.1.</span> <span class="nav-text">马尔可夫决策过程MDP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E9%AB%98%E6%A0%B7%E6%9C%AC%E6%95%88%E7%8E%87%E7%9A%84%E6%8E%A2%E7%B4%A2%E7%AD%96%E7%95%A5"><span class="nav-number">2.2.</span> <span class="nav-text">更高样本效率的探索策略</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%8E%A2%E7%B4%A2%E7%AD%96%E7%95%A5"><span class="nav-number">2.2.1.</span> <span class="nav-text">随机探索策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E6%80%A7%E6%8E%A2%E7%B4%A2%E7%AD%96%E7%95%A5"><span class="nav-number">2.2.2.</span> <span class="nav-text">系统性探索策略</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#A3C"><span class="nav-number">2.3.</span> <span class="nav-text">A3C</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GA3C"><span class="nav-number">2.4.</span> <span class="nav-text">GA3C</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E8%BF%87%E7%A8%8B"><span class="nav-number">2.4.1.</span> <span class="nav-text">学习过程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SEED-RL"><span class="nav-number">2.5.</span> <span class="nav-text">SEED RL</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

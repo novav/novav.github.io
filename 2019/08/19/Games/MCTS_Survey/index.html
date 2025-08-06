@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Section1 Introduction Section2 Notation and terminology  Section3 MCTS detail Section4 summarises main variations MCTS Section5 enhancements to the tree policy,  Section6 enhancements to Simulations,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Paper Read】A survey of Monte Carlo Tree Search Methods">
+<meta property="og:url" content="https://novav.github.io/2019/08/19/Games/MCTS_Survey/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="Section1 Introduction Section2 Notation and terminology  Section3 MCTS detail Section4 summarises main variations MCTS Section5 enhancements to the tree policy,  Section6 enhancements to Simulations,">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2019/08/19/Games/MCTS_Survey/1566203336329.png">
+<meta property="og:image" content="https://novav.github.io/2019/08/19/Games/MCTS_Survey/1566203353989.png">
+<meta property="og:image" content="https://novav.github.io/2019/08/19/Games/MCTS_Survey/1566995714010.png">
+<meta property="og:image" content="https://novav.github.io/2019/08/19/Games/MCTS_Survey/1566998472269.png">
+<meta property="article:published_time" content="2019-08-19T08:39:31.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:39.872Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="CFR">
+<meta property="article:tag" content="MCTS">
+<meta property="article:tag" content="UCT">
+<meta property="article:tag" content="Papers">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2019/08/19/Games/MCTS_Survey/1566203336329.png">
+
+<link rel="canonical" href="https://novav.github.io/2019/08/19/Games/MCTS_Survey/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>【Paper Read】A survey of Monte Carlo Tree Search Methods | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2019/08/19/Games/MCTS_Survey/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【Paper Read】A survey of Monte Carlo Tree Search Methods
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-08-19 08:39:31" itemprop="dateCreated datePublished" datetime="2019-08-19T08:39:31+00:00">2019-08-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Game/" itemprop="url" rel="index"><span itemprop="name">Game</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Section1 Introduction</p>
+<p>Section2 Notation and terminology </p>
+<p>Section3 MCTS detail</p>
+<p>Section4 summarises main variations MCTS</p>
+<p>Section5 enhancements to the tree policy, </p>
+<p>Section6 enhancements to Simulations, Backpropagations</p>
+<p>Section7 key applications(which MCTS has been applied)</p>
+<p>Section8 Summaries</p>
+<p>[toc]</p>
+<span id="more"></span>
+
+<h2 id="Section-1-Introduce"><a href="#Section-1-Introduce" class="headerlink" title="Section 1 Introduce"></a>Section 1 Introduce</h2><h2 id="Section-2-Background"><a href="#Section-2-Background" class="headerlink" title="Section 2 Background"></a>Section 2 Background</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">2.1 Decision Theory: MDPs; POMDPs</span><br><span class="line">2.2 Game Theory: Combinatorial Games; AI in Games</span><br><span class="line">2.3 Monte Carlo Methods</span><br><span class="line">2.4 Bandit-Based Methods: Regret; UCB</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-1-1、MDPs"><a href="#2-1-1、MDPs" class="headerlink" title="2.1.1、MDPs"></a>2.1.1、MDPs</h3><ul>
+<li>S: A set of states, with s0 being the initial state.</li>
+<li>A: A set of actions.</li>
+<li>T (s; a; s0): A transition model that determines the probability of reaching state s0 if action a is applied to state s.</li>
+<li>R(s): A reward function.</li>
+</ul>
+<h3 id="2-1-2、POMDPs"><a href="#2-1-2、POMDPs" class="headerlink" title="2.1.2、POMDPs"></a>2.1.2、POMDPs</h3><ul>
+<li>O(s; o): An observation model that specifies the probability of perceiving observation o in state s.</li>
+</ul>
+<p>许多MDP和POMDP方法超出了本综述的范围，但在所有情况下，最优策略π都是确定性的，因为每个状态都映射到单个动作，而不是动作上的概率分布。</p>
+<h3 id="2-2、Game-Theory"><a href="#2-2、Game-Theory" class="headerlink" title="2.2、Game Theory"></a>2.2、Game Theory</h3><p>A game may be described by the following components:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">• S: The set of states, where s0 is the initial state.</span><br><span class="line">• ST ⊆ S: The set of terminal states.</span><br><span class="line">• n 2 N: The number of players.</span><br><span class="line">• A: The set of actions.</span><br><span class="line">• f : S × A ! S: The state transition function.</span><br><span class="line">• R : S ! Rk: The utility function.</span><br><span class="line">• ρ : S ! (0; 1; : : : ; n): Player about to act in each state. </span><br></pre></td></tr></table></figure>
+
+
+
+<p>Combinatorial Games :</p>
+<p>按照特性分类：</p>
+<ul>
+<li><p>Zero-sum：所有玩家的奖励是否等于零？</p>
+</li>
+<li><p>Information： 部分可观察还是全部</p>
+</li>
+<li><p>Determinism：偶然因素是否起到了作用（也称为完整性，即对奖励的不确定性）。</p>
+</li>
+<li><p>Sequential：行动是顺序的，还是同时的。</p>
+</li>
+<li><p>Discrete：动作是离散的还是实时的？</p>
+</li>
+</ul>
+<p>In real game:</p>
+<ul>
+<li><p><em><strong>Minimax</strong></em>试图在每个州最小化对手的最大奖励，这是两人组合游戏的传统搜索方法。</p>
+</li>
+<li><p><em><strong>Expectimax</strong></em> 期望值将极大极小推广到随机博弈，其中从状态到状态的转换是概率的。</p>
+</li>
+<li><p><em><strong>Miximax</strong></em>类似于单玩家期望值，主要用于不完全信息的游戏中。它采用预定义的对手策略将对手决策节点作为机会节点来处理。</p>
+</li>
+</ul>
+<h3 id="2-3-Monte-Carlo-Methods"><a href="#2-3-Monte-Carlo-Methods" class="headerlink" title="2.3 Monte Carlo Methods"></a>2.3 Monte Carlo Methods</h3><p>however it is simple to construct degenerate cases in which flat monte carlo fails, as it does not allow for an opponent model</p>
+<p>Flat Monte Carlo 适用于对手模型。</p>
+<h3 id="2-4-Bandit-Based-Methods"><a href="#2-4-Bandit-Based-Methods" class="headerlink" title="2.4 Bandit-Based Methods"></a>2.4 Bandit-Based Methods</h3><p>Bandit problem 是一个经典的序列决策问题。为了最大限度的累计收益，不断采取最优行动。</p>
+<p>难点：行动的选择，因为潜在的报酬分布是未知的。</p>
+<p>而潜在的回报必须根据过去的观察来估计。</p>
+<p>也就引申到了exploitation exploration dilemma 开发探索困境：</p>
+<ul>
+<li>我们需要平衡开发目前被认为是最优的行动，并探索目前看来不太理想但最终可能优于其他行动的行动。</li>
+</ul>
+<p>The K-armed bandit problem may be approached using a policy that determines which bandit to play, <strong>based on past rewards</strong>. </p>
+<p>Regret</p>
+<p>最小化玩家遗憾<br>$$<br>R_n &#x3D; µ^<em>n -  µ_j \sum_{j&#x3D;1}^{K}E[T_j(n)]<br>$$<br>u</em>: 最好的期望回报</p>
+<p>$E[T_j(n)] $ : 在第一个 n 次试验中，手臂 j 的预期播放次数。</p>
+<p>遗憾是由于没有选择最好的action而造成的预期损失。</p>
+<p>重要的是要强调在任何时候对所有手臂附加非零概率的必要性，以确保最优手臂不会因为一个次优手臂的临时回报而错过。因此，重要的是，在迄今为止观察到的奖励上建立一个上限的信心，以确保这一点。</p>
+<p>如果遗憾的增长在不变的范围内，随后的政策将被视为解决勘探开采问题。</p>
+<p>Lai和Robbins利用较高的置信度指数(upper confidence indices)，让政策在计算出某bandit的index后，便可估计其预期回报.</p>
+<p>Auer et al. [13] 提出,  任意报酬分布的有限时间后悔对数界。UCB1是其中之一</p>
+<p>UCB<br>$$<br>UCB1 &#x3D; \widetilde{X_j} + \sqrt[2]{ \frac{2ln n }{n_j }}<br>$$</p>
+<p>$\widetilde{X_j}$ 开发利用（Exploitation）：选择利用较高收益的节点</p>
+<p>$\sqrt{2lnn&#x2F;n_j}$ 探索(Exploration)：探索较少访问次数的节点</p>
+<h2 id="Section-3-vanilla-MCTS"><a href="#Section-3-vanilla-MCTS" class="headerlink" title="Section 3 vanilla MCTS"></a>Section 3 vanilla MCTS</h2><p>MCTS的建立于两个基础概念：</p>
+<ul>
+<li>[一个动作的真值可以用随机模拟来近似。](the true value of an action may be approximated using random simulation; )</li>
+<li>[这些值可以有效地用于调整策略，使其符合最佳优先策略。](and that these values may be used efficiently to adjust the policy towards a best-first strategy.  )</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">3.1 Algorithm</span><br><span class="line">3.2 Development</span><br><span class="line">3.3 UCT: Algorithm; Convergence to Minimax</span><br><span class="line">3.4 Characteristics: Aheuristic; Anytime; Asymmetric</span><br><span class="line">3.5 Comparison with Other Algorithms</span><br><span class="line">3.6 Terminology</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-1-Algorithm"><a href="#3-1-Algorithm" class="headerlink" title="3.1 Algorithm"></a>3.1 Algorithm</h3><p>computational budge: 迭代建树计算预算，用于决定建树结束，一般达到time，memory，iteration constraint的预设值</p>
+<p><img src="/2019/08/19/Games/MCTS_Survey/1566203336329.png" alt="1566203336329"></p>
+<p><img src="/2019/08/19/Games/MCTS_Survey/1566203353989.png" alt="1566203353989"></p>
+<p>选择胜利动作的四种标准</p>
+<ul>
+<li><p>Max child:  选择最高奖励的子节点</p>
+</li>
+<li><p>Robust Child: 选择访问次数最多的child</p>
+</li>
+<li><p>Max-Robust child: 根据highest visit count和highest reward 都是最大的情况</p>
+</li>
+<li><p>Secure child:  最大化下限置信值，maximises a lower confidence bound</p>
+</li>
+</ul>
+<h3 id="3-2-Development"><a href="#3-2-Development" class="headerlink" title="3.2 Development"></a>3.2 Development</h3><p>​	MCTS的发展史，Table1</p>
+<p>​	</p>
+<h3 id="3-3-UCT-Algorithm-Convergence-to-Minimax"><a href="#3-3-UCT-Algorithm-Convergence-to-Minimax" class="headerlink" title="3.3 UCT: Algorithm; Convergence to Minimax"></a>3.3 UCT: Algorithm; Convergence to Minimax</h3><p>$$<br>UCT &#x3D; \widetilde{X_j} + 2C_p\sqrt[]{ \frac{2ln n }{n_j }}<br>$$</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">n is the number of times the current (parent) node has been visited, </span><br><span class="line">nj the number of times child j has been visited</span><br><span class="line">Cp &gt; 0 is a constant. </span><br><span class="line">If more than one child node has the same maximal value, the tie is usually broken randomly [120].</span><br><span class="line">The values of X_&#123;i,t&#125; and thus of X_j are understood to be within [0; 1] </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>当每个节点被访问时，勘探术语的分母增加，从而减少了它的贡献。</p>
+<p>如果访问父节点的另一个子节点，则分子增加，因此未访问的兄弟姐妹的探测值增加。</p>
+<p>探索术语确保每个孩子有一个非零的选择概率。</p>
+<p>这也给算法带来了一种固有的重新启动特性，因为即使是低回报的孩子也会最终被选择(给出足够的时间)，从而探索不同的游戏路线。</p>
+<h4 id="UCT-algorithm"><a href="#UCT-algorithm" class="headerlink" title="UCT algorithm"></a>UCT algorithm</h4><p><img src="/2019/08/19/Games/MCTS_Survey/1566995714010.png" alt="1566995714010"></p>
+<p><img src="/2019/08/19/Games/MCTS_Survey/1566998472269.png" alt="1566998472269"></p>
+<h5 id="convergence-to-minimax-收敛到极小极大"><a href="#convergence-to-minimax-收敛到极小极大" class="headerlink" title="convergence to minimax(收敛到极小极大)"></a>convergence to minimax(收敛到极小极大)</h5><p>Kocsis和szepesvari[119]，[120]的主要贡献是表明，在非平稳报酬分布情况下，ucb 1的遗憾约束仍然有效。</p>
+<p>kocsis and szepesvari then show that the failure probability at the ´ root of the tree (i.e. the probability of selecting a suboptimal action) converges to zero at a polynomial rate as the number of games simulated grows to infinity. this proof implies that, given enough time (and memory), uct allows mcts to converge to the minimax tree and is thus optimal.</p>
+<p>然后Kocsis和szepesvari表明，树根部的故障概率（选择次最佳动作的概率）即当模拟的游戏数量增长到无限时，以多项式速率收敛到零。这个证明意味着，给定足够的时间（和内存），uct允许mcts收敛到MiniMax Tree，因此是最佳的。</p>
+<h3 id="3-4-Characteristics-Aheuristic-Anytime-Asymmetric"><a href="#3-4-Characteristics-Aheuristic-Anytime-Asymmetric" class="headerlink" title="3.4 Characteristics: Aheuristic; Anytime; Asymmetric"></a>3.4 Characteristics: Aheuristic; Anytime; Asymmetric</h3><p>使MCTS成为各种域的流行算法选择的一些特性，并且常常取得了显著的成功。</p>
+<p>Aheuristic  启发式</p>
+<p>Anytime 任何时候</p>
+<p>Asymmetic 非对称的</p>
+<h3 id="3-5-Comparison-with-Other-Algorithms"><a href="#3-5-Comparison-with-Other-Algorithms" class="headerlink" title="3.5 Comparison with Other Algorithms"></a>3.5 Comparison with Other Algorithms</h3><p>however, as pointed out by Ramanujan et al. [164], mcts approaches to games such as chess are not as successful as for games such as go.They consider a class of synthetic spaces in which UCT significantly outperforms minimax.  </p>
+<p>然而，正如Ramanujan[164]等人所指出的。MCT对国际象棋等游戏的处理方法不如围棋这样的游戏成功。他们考虑了一类合成空间，其中UCT的性能明显优于Minimax。</p>
+<p>Ramanujan et al. [162] </p>
+<p>uct performs poorly in domains with many trap states (states that lead to losses within a small number of moves)</p>
+<p>UCT在具有多个陷阱状态的域中表现不佳。（在少数移动范围内移动导致损失的States）。MiniMax表现更好。</p>
+<p>trap states are common in chess but relatively uncommon in go</p>
+<p>陷阱状态在国际象棋中很常见，但在围棋中相对少见。</p>
+<h3 id="3-6-Terminology"><a href="#3-6-Terminology" class="headerlink" title="3.6 Terminology"></a>3.6 Terminology</h3><ul>
+<li><strong>Flat Monte Carlo</strong>: A Monte Carlo method with uniform move selection and no tree growth.</li>
+<li><strong>Flat UCB</strong>: A Monte Carlo method with bandit-based move selection (2.4) but no tree growth.</li>
+<li><strong>MCTS</strong>: A Monte Carlo method that builds a tree to inform its policy online.</li>
+<li><strong>UCT</strong>: MCTS with any UCB tree selection policy.</li>
+<li><strong>Plain UCT</strong>: MCTS with UCB1 as proposed by Kocsis and Szepesvari [119], [120].</li>
+</ul>
+<h2 id="Section-4-Variations-of-MCTS"><a href="#Section-4-Variations-of-MCTS" class="headerlink" title="Section 4 Variations of MCTS"></a>Section 4 Variations of MCTS</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">4.1 Flat UCB</span><br><span class="line">4.2 Bandit Algorithm for Smooth Trees</span><br><span class="line">4.3 Learning in MCTS: TDL; TDMC(λ); BAAL</span><br><span class="line">4.4 Single-Player MCTS: FUSE</span><br><span class="line">4.5 Multi-player MCTS: Coalition Reduction</span><br><span class="line">4.6 Multi-agent MCTS: Ensemble UCT</span><br><span class="line">4.7 Real-time MCTS</span><br><span class="line">4.8 Nondeterministic MCTS: Determinization; HOP; Sparse UCT; ISUCT; Multiple MCTS; UCT+; MCαβ;	MCCFR; Modelling; Simultaneous Moves</span><br><span class="line">4.9 Recursive Approaches: Reflexive MC; Nested MC;NRPA; Meta-MCTS; HGSTS</span><br><span class="line">4.10 Sample-Based Planners: FSSS; TAG; RRTs; UNLEO; UCTSAT; ρUCT; MRW; MHSP </span><br></pre></td></tr></table></figure>
+
+<h3 id="4-1-Flat-UCB"><a href="#4-1-Flat-UCB" class="headerlink" title="4.1 Flat UCB"></a>4.1 Flat UCB</h3><p>Coquelin and Munos [68] propose flat UCB </p>
+<p>effectively treats the leaves of the search tree as a single multiarmed bandit problem.</p>
+<p>有效地将搜索树(叶子)问题作为一个单一的多臂赌博机问题来处理。</p>
+<p>in which the actions for a given state are uniformly sampled and no tree is built. </p>
+<p>在其中对给定状态的操作进行统一采样，<strong>并且不建立树。</strong></p>
+<p>Flat UCB retains the adaptivity of standard uct while improving its regret bounds in certain worst cases where uct is overly optimistic.</p>
+<p>Flat UCB 保留了标准UCT的适应性，同时在某些最坏的情况下，在UCT过于乐观的情况下，改进了它的后悔范围。</p>
+<h3 id="4-2-Bandit-Algorithm-for-Smooth-Trees"><a href="#4-2-Bandit-Algorithm-for-Smooth-Trees" class="headerlink" title="4.2 Bandit Algorithm for Smooth Trees"></a>4.2 Bandit Algorithm for Smooth Trees</h3><p>Apply Bandit Algorithm for Smooth Trees (BAST) </p>
+<p>which uses assumptions on the smoothness of rewards to identify and ignore branches that are suboptimal with high confidence</p>
+<p>它使用关于报酬平滑性的假设来识别和忽略具有高度置信度的次优分支。</p>
+<p>they applied bast to lipschitz function approximation and showed that when allowed to run for infinite time, the only branches that are expanded indefinitely are the optimal branches.</p>
+<p>将其应用于Lipschitz函数逼近，证明了当允许无限时间运行时，唯一无限期扩展的分支是最优分支。</p>
+<p>this is in contrast to <strong>plain uct</strong>, which expands all branches indefinitely</p>
+<p>这与无限期扩展所有分支的plain UCT形成鲜明对比。</p>
+<h3 id="4-3-Learning-in-MCTS-TDL-TDMC-λ-BAAL"><a href="#4-3-Learning-in-MCTS-TDL-TDMC-λ-BAAL" class="headerlink" title="4.3 Learning in MCTS: TDL; TDMC(λ); BAAL"></a>4.3 Learning in MCTS: TDL; TDMC(λ); BAAL</h3><p>MCTS can be seen as a type of Reinforcement Learning (RL) algorithm </p>
+<p>relationship with temporal difference learning (TD_Learning 标准的增强学习算法)</p>
+<h4 id="4-3-1-TDL"><a href="#4-3-1-TDL" class="headerlink" title="4.3.1 TDL"></a>4.3.1 TDL</h4><p>​	</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>TD &amp; MCTS</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>相同点</td>
+<td>base on value of state or state-action pair</td>
+</tr>
+<tr>
+<td>不同点</td>
+<td>1. TDL算法通常不构建树，只有当所有状态值都可以直接存储在表中时，这种等价性才成立(两只一致); <br>2. mcts estimates temporary state values in order to decide the next move, whereas TDL learns the long-term value of each state that then guides future behaviour<br> MCTS估计临时状态值以决定下一步，而TDL则了解每个状态的长期值，然后指导未来的行为。<br>3. tdl can learn heuristic value functions to inform the tree policy or the simulation (playout) policy<br>TDL可以学习启发式值函数来通知树策略或模拟(播放)策略。</td>
+</tr>
+</tbody></table>
+<h4 id="4-3-2-TDMC-λ"><a href="#4-3-2-TDMC-λ" class="headerlink" title="4.3.2 TDMC(λ)"></a>4.3.2 TDMC(λ)</h4><p>“a new method of reinforcement learning using winning probability as substitute rewards in non-terminal positions”  </p>
+<p>一个新的增强学习方法,: 非终端位置的基于胜率的替代奖励算法</p>
+<p>report superior performance over standard TD learning for the board game Othello .</p>
+<p>在Othell游戏上,性能优于TDL</p>
+<h4 id="4-3-3-BAAL-Bandit-Based-Active-Learner"><a href="#4-3-3-BAAL-Bandit-Based-Active-Learner" class="headerlink" title="4.3.3 BAAL(Bandit-Based Active Learner )"></a>4.3.3 BAAL(Bandit-Based Active Learner )</h4><p>Active Learning主动学习</p>
+<p>将主动学习看作是一种单人博弈，最优策略由UCT和billiard算法相结合来近似。</p>
+<p>progressive widening (5.5.1) is employed to limit the degree of exploration by ucb1 to give promising empirical results</p>
+<p>采用渐进式加宽(5.5.1)来限制ucb 1的勘探程度，从而给出了有希望的经验结果。</p>
+<h3 id="4-4-Single-Player-MCTS-FUSE"><a href="#4-4-Single-Player-MCTS-FUSE" class="headerlink" title="4.4 Single-Player MCTS, FUSE"></a>4.4 Single-Player MCTS, FUSE</h3><h4 id="4-4-1-SP-MCTS"><a href="#4-4-1-SP-MCTS" class="headerlink" title="4.4.1 SP-MCTS"></a>4.4.1 SP-MCTS</h4><p>Single-Player Monte Carlo Tree Search (SP-MCTS),<br>$$<br>\sqrt{\sigma^2 + \frac{D}{n_i}}<br>$$</p>
+<p>where $σ_2$ is the variance of the node’s simulation results,</p>
+<p>$n_i$ is the number of visits to the node, and D is a constant </p>
+<p>$D&#x2F;n_i$ term can be seen as artificially inflating the standard deviation for infrequently visited nodes</p>
+<p>$D&#x2F;n_i$ 术语可以被看作是人为地增大了很少访问的节点的标准差。</p>
+<h4 id="4-4-2-FUSE-Feature-UCT-Selection"><a href="#4-4-2-FUSE-Feature-UCT-Selection" class="headerlink" title="4.4.2 FUSE (Feature UCT Selection )"></a>4.4.2 FUSE (Feature UCT Selection )</h4><p>解决特征选择的组合优化问题</p>
+<p>here, the problem of choosing a subset of the available features is cast as a single-player game whose states are all possible subsets of features and whose actions consist of choosing a feature and adding it to the subset.</p>
+<p>在这里，选择可用功能的子集的问题被转换为一个单人游戏，其状态都是所有可能的功能子集，其操作包括选择一个特性并将其添加到子集中。</p>
+<p>FUSE uses UCB1-Tuned (5.1.1) and RAVE (5.3.5) </p>
+<h3 id="4-5-Multi-player-MCTS-Coalition-Reduction"><a href="#4-5-Multi-player-MCTS-Coalition-Reduction" class="headerlink" title="4.5 Multi-player MCTS: Coalition Reduction"></a>4.5 Multi-player MCTS: Coalition Reduction</h3><p>the simplest way to apply mcts to multi-player games is to adopt the $max^n$ idea:</p>
+<p>将MCT应用于多人游戏的最简单方法是采用$max^n$思想：</p>
+<p>​	each node stores a vector of rewards, and the selection procedure seeks to maximise the UCB value calculated using the appropriate component of the reward vector. </p>
+<p>可以解决多玩家Game的UCT算法有:</p>
+<p>Paranoid UCT(偏执UCT):</p>
+<ul>
+<li>player认为所有其他球员都在联合对抗他。</li>
+</ul>
+<p>UCT with Allinances:</p>
+<ul>
+<li>将联盟显式地提供给算法。</li>
+</ul>
+<p>Confident UCT:</p>
+<ul>
+<li><p>independent searches are conducted for each possible coalition of the searching player with one other player, and the move chosen according to whichever of these coalitions appears most favourable.</p>
+<p>对搜索玩家与其他玩家的每个可能联盟进行独立的搜索，并且根据这些联盟中的哪一个看起来最有利的选择移动。</p>
+</li>
+</ul>
+<h4 id="Coalition-Reduction"><a href="#Coalition-Reduction" class="headerlink" title="Coalition Reduction"></a>Coalition Reduction</h4><p>对于诸如苏格兰场（7.7）这样的游戏，其中多个合作对手可以被减少为单个有效对手的联盟减少方法[156]。</p>
+<h3 id="4-6-Multi-agent-MCTS-Ensemble-UCT"><a href="#4-6-Multi-agent-MCTS-Ensemble-UCT" class="headerlink" title="4.6 Multi-agent MCTS: Ensemble UCT"></a>4.6 Multi-agent MCTS: Ensemble UCT</h3><p>UCT的模拟阶段是以一个单独的代理来对抗自身，而不是考虑多个代理的作用。</p>
+<h4 id="Ensemble-UCT"><a href="#Ensemble-UCT" class="headerlink" title="Ensemble UCT"></a>Ensemble UCT</h4><p>fern and lewis [82] investigate an ensemble uct approach, in which multiple instances of uct are run independently and their root statistics combined to yield the final result. this approach is closely related to root parallelisation (6.3.2) and also to determinization (4.8.1).</p>
+<p>Fern和Lewis[82]研究了一种集合UCT方法，其中UCT的多个实例独立运行，它们的根统计量相结合得到最终结果。这种方法与根并行化(6.3.2)和确定性(4.8.1)密切相关。</p>
+<p>chaslot et al. [59] provide some evidence that, for go, ensemble uct with n instances of m iterations each outperforms plain uct with mn iterations, i.e. that ensemble uct outperforms plain uct given the same total number of iterations.</p>
+<p>Chaslot等人[59]提供一些证据证明，对于Go，n个m迭代实例的集合UCT的性能都优于Mn迭代的简单UCT，也就是说，在相同的迭代总数下，集合UCT的性能优于普通UCT。(目前只能证明对GO有效)</p>
+<h3 id="4-7-Real-time-MCTS"><a href="#4-7-Real-time-MCTS" class="headerlink" title="4.7 Real-time MCTS"></a>4.7 Real-time MCTS</h3><p>the largest class of real-time games are video games, which – in addition to the real-time element – are usually also characterised by uncertainty (4.8), massive branching factors, simultaneous moves (4.8.10) and open-endedness.</p>
+<p>最大的实时游戏类是电子游戏，除了实时元素外，游戏的特点通常还包括不确定性(4.8)、巨大的分支因素、同步移动(4.8.10)和开放性。</p>
+<p>simulation-based (anytime) algorithms such as mcts are well suited to domains in which time per move is strictly limited</p>
+<p>基于仿真的(任何时候)算法(如mct)非常适合于每次移动时间都受到严格限制的领域。</p>
+<p>例如: Tron, PacMan, a variety of real-time strategy games skin, Starcraft</p>
+<h3 id="4-8-Nondeterministic-MCTS-Determinization-HOP-Sparse-UCT-ISUCT-Multiple-MCTS-UCT-MCαβ-MCCFR-Modelling-Simultaneous-Moves"><a href="#4-8-Nondeterministic-MCTS-Determinization-HOP-Sparse-UCT-ISUCT-Multiple-MCTS-UCT-MCαβ-MCCFR-Modelling-Simultaneous-Moves" class="headerlink" title="4.8 Nondeterministic MCTS: Determinization; HOP; Sparse UCT; ISUCT; Multiple MCTS; UCT+;  MCαβ;	MCCFR; Modelling; Simultaneous Moves"></a>4.8 Nondeterministic MCTS: Determinization; HOP; Sparse UCT; ISUCT; Multiple MCTS; UCT+;  MCαβ;	MCCFR; Modelling; Simultaneous Moves</h3><p>Traditional game Ai search 通常专注于确定性，完备信息游戏；没有chance events， 游戏状态对所有玩家全部可见。</p>
+<p>以下算法，用于处理 stochasticity（chance events）， imperfect information(Partial observability of states)</p>
+<p>Opponent modelling  (对手建模)在不完全信息博弈中比完全信息博弈更重要。</p>
+<h4 id="4-8-1-Determinization"><a href="#4-8-1-Determinization" class="headerlink" title="4.8.1 Determinization;"></a>4.8.1 Determinization;</h4><h4 id="4-8-2-HOP（Hindsight-optimisation-）"><a href="#4-8-2-HOP（Hindsight-optimisation-）" class="headerlink" title="4.8.2 HOP（Hindsight optimisation ）;"></a>4.8.2 HOP（Hindsight optimisation ）;</h4><p>事后优化</p>
+<p>provides a more formal basis to determinization for single-player stochastic games of perfect information.</p>
+<p>为完全信息的单玩家随机博弈的确定提供了更为形式化的依据.</p>
+<p>the idea is to obtain an upper bound on the expected reward for each move by assuming the ability to optimise one’s subsequent strategy with “hindsight” knowledge of future chance outcomes.</p>
+<p>这样做的目的是通过假设有能力通过未来的机会结果的“事后”知识来优化自己的后续策略，从而获得对每一步行动的预期回报的上限。</p>
+<h4 id="4-8-3-Sparse-UCT"><a href="#4-8-3-Sparse-UCT" class="headerlink" title="4.8.3 Sparse UCT;"></a>4.8.3 Sparse UCT;</h4><p>是HOP-UCT的一个推广</p>
+<p>late random guessing significantly outperforms early probabilistic guessing</p>
+<p>晚随机猜测明显优于早期概率猜测</p>
+<h4 id="4-8-4-ISUCT"><a href="#4-8-4-ISUCT" class="headerlink" title="4.8.4 ISUCT;"></a>4.8.4 ISUCT;</h4><p>Information Set UCT  （ISUCT）</p>
+<p>Strategy fusion 策略融合是确定技术的一个问题，它涉及到错误的假设，不同的移动可以从相同的信息集中的不同状态选择。</p>
+<p>To address the problem of strategy fusion in determinized UCT , Whitehouse et al. [230] propose information set UCT (ISUCT) </p>
+<p>All information sets are from the point of view of the root player. Each iteration samples a determinization (a state from the root information set) and restricts selection, expansion and simulation to those parts of the tree compatible with the determinization.  </p>
+<p>在[230]的实验领域，ISUCT性能不如确定性UCT，然而，isuct在那些获取隐藏信息对游戏结果影响最大的情况下表现得很好。</p>
+<h4 id="4-8-5-Multiple-MCTS（MMCTS-）"><a href="#4-8-5-Multiple-MCTS（MMCTS-）" class="headerlink" title="4.8.5 Multiple MCTS（MMCTS ）"></a>4.8.5 Multiple MCTS（MMCTS ）</h4><p>multiple trees are searched simultaneously（同时搜索多棵树）</p>
+<p>MMCTS uses EXP3 (5.1.3) for selection. </p>
+<p>specifically, there is a tree for each player, and the search descends and updates all of these trees simultaneously, using statistics in the tree for the relevant player at each stage of selection.</p>
+<p>具体地，存在用于每个玩家的树，并且搜索同时使用在每个选择阶段的相关玩家的树中的统计来同时下降和更新所有这些树。</p>
+<p>This more accurately models the differences in information available to each player than searching a single tree. </p>
+<p>Auger[16]通过离线使用mmcts，绕过了在游戏中非初始点计算正确信念分布的困难。MMCTS用大量模拟(例如5000万)，以构建根植于游戏初始状态的部分游戏树，并且玩家的策略在游戏过程中直接从这个预先构建的树中读取。</p>
+<h4 id="4-8-6-UCT"><a href="#4-8-6-UCT" class="headerlink" title="4.8.6 UCT+;"></a>4.8.6 UCT+;</h4><p>opponent decision nodes are treated as chance nodes with probabilities determined by an opponent model.（对手决策节点被视为机会节点，其概率由对手模型决定。)</p>
+<p>不适用UCB，而是使用最大化动作<br>$$<br>\overline{X_j} + c\sigma_{\overline{X_j}}<br>$$<br>$\overline{X_j}$ average reward form action j</p>
+<p>$\sigma_{\overline{X_j}}$ standard error on $\overline{X_j}$</p>
+<p>c constant</p>
+<p>values  are updated according to their children; at opponent nodes and chance nodes, the calculations are weighted by the probabilities of the actions leading to each child.</p>
+<p>node值根据他们的子节点；在opponent 和change node， calculations are weighted by probability</p>
+<h4 id="4-8-7-MCαβ（Monte-Carlo-α-β）"><a href="#4-8-7-MCαβ（Monte-Carlo-α-β）" class="headerlink" title="4.8.7 MCαβ（Monte Carlo α-β）"></a>4.8.7 MCαβ（Monte Carlo α-β）</h4><p>default policy 被替换为 shallow α-β search</p>
+<p>an obvious consideration in choosing mcαβ for a domain is that a reliable heuristic function must be known in order to drive the α-β component of the search, which ties the implementation closely with the domain</p>
+<p>在为域选择$mc_{αβ}$时，一个明显的考虑因素是，要驱动搜索的α-β组件，必须知道一个可靠的启发式函数，该函数将实现与域紧密联系在一起。</p>
+<h4 id="4-8-8-MCCFR"><a href="#4-8-8-MCCFR" class="headerlink" title="4.8.8 MCCFR;"></a>4.8.8 MCCFR;</h4><p>与CFR一样，mccfr可以用来最大限度地减少总体后悔的可能性。</p>
+<p>CFR还可被用来创建能够利用UCT代理所使用的non-Nash策略的代理。</p>
+<h4 id="4-8-9-Inference-and-Opponent-Modelling"><a href="#4-8-9-Inference-and-Opponent-Modelling" class="headerlink" title="4.8.9 Inference and Opponent Modelling;"></a>4.8.9 Inference and Opponent Modelling;</h4><p>in a game of imperfect information, it is often possible to infer hidden information from opponent actions, such as learning opponent policies directly using Bayesian inference and relational probability tree learning</p>
+<p>在信息不完全的博弈中，往往可以从对手的行为中推断出隐藏的信息，例如利用贝叶斯推理和关系概率树学习直接学习对手策略。</p>
+<p>opponent 有两个部分：</p>
+<ul>
+<li><p>a prior model of a general opponent （一般对手的先验模型）</p>
+</li>
+<li><p>a corrective function for the specific opponent（针对特定对手的纠正功能）</p>
+</li>
+</ul>
+<p>when the mcts selection phase reaches an opponent decision node, it uses the mixed policy induced by the opponent model instead of bandit-based selection.</p>
+<p>当MCTS选择阶段到达对手决策节点时，它使用由对手模型诱导的混合策略而不是基于 bandit-based的选择。</p>
+<h4 id="4-8-10-Simultaneous-Moves-同时移动"><a href="#4-8-10-Simultaneous-Moves-同时移动" class="headerlink" title="4.8.10 Simultaneous Moves(同时移动)"></a>4.8.10 Simultaneous Moves(同时移动)</h4><p>simultaneous moves can be considered a special case of hidden information: one player chooses a move but conceals it, then the other player chooses a move and both are revealed.</p>
+<p>同时移动可以被认为是隐藏信息的一个特例：一个玩家选择一个移动，但隐藏它，然后另一个玩家选择一个移动，两者都被揭示。</p>
+<h3 id="4-9-Recursive-Approaches-Reflexive-MC-Nested-MC-NRPA-Meta-MCTS-HGSTS"><a href="#4-9-Recursive-Approaches-Reflexive-MC-Nested-MC-NRPA-Meta-MCTS-HGSTS" class="headerlink" title="4.9 Recursive Approaches: Reflexive MC; Nested MC;NRPA; Meta-MCTS; HGSTS"></a>4.9 Recursive Approaches: Reflexive MC; Nested MC;NRPA; Meta-MCTS; HGSTS</h3><p>递归的方法应用于MCTS</p>
+<p>通常在单机游戏和类似的优化任务中获得成功。</p>
+<h4 id="4-9-1-Reflexive-MC"><a href="#4-9-1-Reflexive-MC" class="headerlink" title="4.9.1 Reflexive MC;"></a>4.9.1 Reflexive MC;</h4><p>进行几个蒙特卡罗模拟的递归层，每一层都由下面的一层通知。</p>
+<h4 id="4-9-2-Nested-MC-NMCS"><a href="#4-9-2-Nested-MC-NMCS" class="headerlink" title="4.9.2 Nested MC (NMCS)"></a>4.9.2 Nested MC (NMCS)</h4><p>嵌套的MonteCarlo搜索存储在每个搜索级别找到的最佳移动序列。</p>
+<p>Rimmel et al. [168] apply a version of nested Monte Carlo search to the Travelling Salesman Problem (TSP) with time windows (7.8.1). </p>
+<h4 id="4-9-3-NRPA-Nested-Rollout-Policy-Adaptation"><a href="#4-9-3-NRPA-Nested-Rollout-Policy-Adaptation" class="headerlink" title="4.9.3 NRPA(Nested Rollout Policy Adaptation )"></a>4.9.3 NRPA(Nested Rollout Policy Adaptation )</h4><p>extension of nested monte carlo search in which a domain-specific policy is associated with the action leading to each child[176]</p>
+<p>嵌套蒙特卡罗搜索的扩展，在该搜索中，特定于域的策略与导致每个子级的操作相关联。</p>
+<p>NRPA has achieved superior results in puzzle optimisation tasks, including beating the human world record for morpion solitaire (7.4).</p>
+<p>NRPA在拼图优化任务方面已经取得了卓越的成果，包括打破了Morpion纸牌(7.4)的人类世界纪录。</p>
+<h4 id="4-9-4-Meta-MCTS"><a href="#4-9-4-Meta-MCTS" class="headerlink" title="4.9.4 Meta-MCTS"></a>4.9.4 Meta-MCTS</h4><p>chaslot et al. [56] replace the default policy with a nested mcts program that plays a simulated sub-game in their meta-mcts algorithm. they describe two versions of meta-mcts: quasi best-first (which favours exploitation) and beta distribution sampling (which favours exploration). both variants improved the playing strength of the program mogo for 9 × 9 go when used for generating opening books.</p>
+<p>Chaslot等人[56]将Defaulf policy替换为嵌套的MCTS程序，该程序在其元MCT算法中扮演模拟子游戏。他们描述了Meta-MCT的两个版本：准最佳优先(有利于开发)和β分布抽样(有利于勘探)。两种变体都提高了9×9 Go程序的播放强度，用于生成打开的书籍。</p>
+<h4 id="4-9-5-HGSTS-Heuristically-Guided-Swarm-Tree-Search-启发式引导的群树搜索"><a href="#4-9-5-HGSTS-Heuristically-Guided-Swarm-Tree-Search-启发式引导的群树搜索" class="headerlink" title="4.9.5 HGSTS(Heuristically Guided Swarm Tree Search 启发式引导的群树搜索)"></a>4.9.5 HGSTS(Heuristically Guided Swarm Tree Search 启发式引导的群树搜索)</h4><h3 id="4-10-Sample-Based-Planners-FSSS-TAG-RRTs-UNLEO-UCTSAT-ρUCT-MRW-MHSP"><a href="#4-10-Sample-Based-Planners-FSSS-TAG-RRTs-UNLEO-UCTSAT-ρUCT-MRW-MHSP" class="headerlink" title="4.10 Sample-Based Planners: FSSS; TAG; RRTs; UNLEO; UCTSAT; ρUCT; MRW; MHSP"></a>4.10 Sample-Based Planners: FSSS; TAG; RRTs; UNLEO; UCTSAT; ρUCT; MRW; MHSP</h3><p>对于许多复杂结构域的规划者，如果知道接近最优的策略，就可以用易于处理的样本复杂性来学习。这些技术通常类似于单玩家MCTS技术，但<strong>倾向于应用于游戏以外的领域</strong>。</p>
+<h4 id="4-10-1-FSSS-Forward-Search-Sparse-Sampling"><a href="#4-10-1-FSSS-Forward-Search-Sparse-Sampling" class="headerlink" title="4.10.1 FSSS (Forward Search Sparse Sampling )"></a>4.10.1 FSSS (Forward Search Sparse Sampling )</h4><p>FSSS</p>
+<p>how to replace known policies with sample-based planners in concert with sampleefficient learners in a method called forward search sparse sampling (fsss)</p>
+<p>如何将已知的策略替换为基于样本的规划者，并以一种名为前向搜索稀疏抽样(Fsss)的方法与高效样本学习器相配合。</p>
+<p>Bayesian FSSS (BFS3) </p>
+<h4 id="4-10-2-TAG-Threshold-Ascent-for-Graphs"><a href="#4-10-2-TAG-Threshold-Ascent-for-Graphs" class="headerlink" title="4.10.2 TAG (Threshold Ascent for Graphs  )"></a>4.10.2 TAG (Threshold Ascent for Graphs  )</h4><p>extends the mcts paradigm by maximizing an objective function over the sinks of directed acyclic graphs</p>
+<p>通过使有向无环图的汇点，最大化目标函数来扩展MCTS范式</p>
+<p>the algorithm evaluates nodes through random simulation and grows the subgraph in the most promising directions by considering local maximum k-armed bandits. tag has demonstrated superior performance over standard optimisation methods for automatic performance tuning using dft and fft linear transforms in adaptive libraries.</p>
+<p>该算法通过随机模拟对节点进行评估，并考虑到当地最大的k-武装匪徒，在最有希望的方向上进行子图的生长。通过在自适应库中使用DFT和FFT线性变换，标签已证明优于标准优化方法的卓越性能。</p>
+<h4 id="4-10-3-RRTs-（Rapidly-exploring-Random-Trees-）快速探索随机树"><a href="#4-10-3-RRTs-（Rapidly-exploring-Random-Trees-）快速探索随机树" class="headerlink" title="4.10.3 RRTs （Rapidly-exploring Random Trees ）快速探索随机树"></a>4.10.3 RRTs （Rapidly-exploring Random Trees ）快速探索随机树</h4><p>a special case of Rapidly-exploring Dense Trees (RTDs) </p>
+<p>rrts的基本思想是将探索工作推向搜索空间中未探索的部分，逐步将搜索树拉向它们。</p>
+<h4 id="4-10-4-UNLEO"><a href="#4-10-4-UNLEO" class="headerlink" title="4.10.4 UNLEO"></a>4.10.4 UNLEO</h4><p>基于置信树的最优优化算法的启发式逼近</p>
+<p>UNLEO is based on the No Free Lunch (NFL) and Continuous Free Lunch (CFL)  </p>
+<p>受到已知的贝叶斯推断的最优性的启发，用于在现有分布可用时进行监督学习。</p>
+<h4 id="4-10-5-UCTSAT"><a href="#4-10-5-UCTSAT" class="headerlink" title="4.10.5 UCTSAT"></a>4.10.5 UCTSAT</h4><p>Previti et al. [160] introduce the UCTSAT class of algorithms to investigate the application of UCT approaches to the satisfiability of conjunctive normal form (CNF) problems (7.8.2).</p>
+<p>Previti等人[160]引入UCTSAT 类算法，研究UCT方法应用于联合范式(CNF)可满足性问题(7.8.2)。</p>
+<ul>
+<li><p>UCTSAT_cp generates a random assignment of variables for each playout. </p>
+</li>
+<li><p>UCTSAT_sbs assigns variables one-by-one with random legal (satisfying) values. </p>
+</li>
+<li><p>UCTSAT_h replaces playouts with a simple heuristic based on the fraction of satisfied clauses.</p>
+</li>
+</ul>
+<p>在CP处的UCPTSAT产生用于每个播放的变量的随机分配。</p>
+<p>UCTSATSB将变量逐个分配给随机的合法(满足)值。</p>
+<p>在UCSATH中，基于the fraction of satisfied clauses，用简单的启发式代替playout。</p>
+<h4 id="4-10-6-ρUCT"><a href="#4-10-6-ρUCT" class="headerlink" title="4.10.6 ρUCT"></a>4.10.6 ρUCT</h4><p>a generalisation of UCT that approximates a finite horizon expectimax operation given an environment model ρ.</p>
+<p>UCT的一个推广，它近似于有限水平的期望最大运算，给出了一个环境模型ρ。</p>
+<p>ρUCT builds a sparse search tree composed of interleaved decision and chance nodes to extend UCT to a wider class of problem domains.</p>
+<p>ρUCT建立了一个由交叉决策和机会节点组成的稀疏搜索树，将UCT扩展到一个更广泛的问题领域。</p>
+<h4 id="4-10-7-MRW（Monte-Carlo-Random-Walks-）"><a href="#4-10-7-MRW（Monte-Carlo-Random-Walks-）" class="headerlink" title="4.10.7 MRW（Monte Carlo Random Walks ）"></a>4.10.7 MRW（Monte Carlo Random Walks ）</h4><p>Monte Carlo Random Walks (MRW) selectively build the search tree using random walks [238] </p>
+<p>Xie et al. describe the Monte Carlo Random Walk-based Local Tree Search (MRW-LTS) method which extends MCRW to concentrate on local search more than standard MCTS methods, allowing good performance in some difficult planning problems [238]. </p>
+<h4 id="4-10-8-MHSP-（Mean-based-Heuristic-Search-for-Anytime-Planning-）"><a href="#4-10-8-MHSP-（Mean-based-Heuristic-Search-for-Anytime-Planning-）" class="headerlink" title="4.10.8 MHSP （Mean-based Heuristic Search for Anytime Planning  ）"></a>4.10.8 MHSP （Mean-based Heuristic Search for Anytime Planning  ）</h4><p>基于均值的任何时间规划的启发式搜索</p>
+<p>与MCTS的差异：</p>
+<ul>
+<li><p>mhsp用一个启发式的评估函数完全取代了MCT的随机模拟：</p>
+</li>
+<li><p>Mhsp的选择过程只是使用平均奖励而没有勘探条件，但使用“optimistic”平均值初始化节点。</p>
+</li>
+</ul>
+<p>与许多规划算法不同，mhsp可以在任何时候以真正的方式运行：即使在找到解决方案之前，mhsp也可以生成一个好的部分计划。</p>
+<h2 id="Section-5-Tree-policy-enhancements"><a href="#Section-5-Tree-policy-enhancements" class="headerlink" title="Section 5 Tree policy enhancements"></a>Section 5 Tree policy enhancements</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">5.1 Bandit-Based: UCB1-Tuned; Bayesian UCT; EXP3; HOOT; Other</span><br><span class="line">5.2 Selection: FPU; Decisive Moves; Move Groups; Transpositions; Progressive Bias; Opening Books; MCPG; Search Seeding; Parameter Tuning; History Heuristic; Progressive History</span><br><span class="line">5.3 AMAF: Permutation; α-AMAF Some-First; Cutoff; RAVE; Killer RAVE; RAVE-max; PoolRAVE</span><br><span class="line">5.4 Game-Theoretic: MCTS-Solver; MC-PNS; Score Bounded MCTS</span><br><span class="line">5.5 Pruning: Absolute; Relative; Domain Knowledge</span><br><span class="line">5.6 Expansion</span><br></pre></td></tr></table></figure>
+
+<p>Domain Independent ：</p>
+<ul>
+<li>这些增强可以应用于任何领域，而无需事先了解它。</li>
+<li>它们通常提供一些小的改进，或者更适合于特定类型的域。</li>
+</ul>
+<p>Domain dependent ：</p>
+<ul>
+<li>这些都是针对特定域的增强。这种增强可能使用有关域的先验知识，或者以其他方式利用域的某些独特方面。</li>
+</ul>
+<p><strong>本节介绍了特定于树策略的增强，即选择和扩展步骤。</strong></p>
+<h3 id="5-1-Bandit-Based-UCB1-Tuned-Bayesian-UCT-EXP3-HOOT-Other"><a href="#5-1-Bandit-Based-UCB1-Tuned-Bayesian-UCT-EXP3-HOOT-Other" class="headerlink" title="5.1 Bandit-Based: UCB1-Tuned; Bayesian UCT; EXP3; HOOT; Other"></a>5.1 Bandit-Based: UCB1-Tuned; Bayesian UCT; EXP3; HOOT; Other</h3><h4 id="5-1-1-UCB1-Tuned"><a href="#5-1-1-UCB1-Tuned" class="headerlink" title="5.1.1 UCB1-Tuned;"></a>5.1.1 UCB1-Tuned;</h4><p>$$<br>\sqrt{\frac{\ln n}{n_j} \min{\frac14, V_j(n_j)}} \<br>V_j(s) &#x3D; (1&#x2F;2\sum_{\tau&#x3D;1}^{s}X_{j, \tau}^2) - {\overline{X}}<br>^2_{j,s} + \sqrt{\frac{2\ln t}{s}}<br>$$</p>
+<p>$V_j(s)$ 表示 machine j， 在第t次访问轮次中，被选择了s次，方差是大多数样本的方差加 $\sqrt{2\ln t &#x2F;s}$ </p>
+<h4 id="5-1-2-Bayesian-UCT"><a href="#5-1-2-Bayesian-UCT" class="headerlink" title="5.1.2 Bayesian UCT;"></a>5.1.2 Bayesian UCT;</h4><p>Bayesian Framework potentially 允许从有限的模拟试验中更准确地估计节点值和节点不确定性。</p>
+<p>两种Byesian MCTS 形式：<br>$$<br>maximise B_i &#x3D; µ_i + \sqrt{2 \ln n &#x2F;n_i } \<br>maximise B_i &#x3D; µ_i + \sqrt{ \frac{2 \ln n}{n_i}} σ_i<br>$$<br>$µ_i $ 用极值(极小极大)分布Pi(假设独立随机变量)的平均值替换average reward</p>
+<p>$σ_i$ is Pi 方差的平方根</p>
+<p>first equation is a strict improvement over UCT if the independence assumption and leaf node priors are correct </p>
+<p>second equation is motivated by the central limit theorem </p>
+<p>结果表明，第二个方程优于第一个方程，两者都优于标准的UCT方法。</p>
+<h4 id="5-1-3-EXP3"><a href="#5-1-3-EXP3" class="headerlink" title="5.1.3 EXP3;"></a>5.1.3 EXP3;</h4><p><em>Exploration-exploitation with exponential weights</em>(具有指数权重的勘探开发)</p>
+<p>The EXP3 policy operates as follows:</p>
+<ul>
+<li>Draw an arm It from the probability distribution pt 从概率分布上选一条手臂</li>
+<li>Compute the estimated gain for each arm. 计算每个臂的估计增益</li>
+<li>Update the cumulative gain. 更新累积收益</li>
+</ul>
+<p>Exp3与UCT一起用于解决部分可观察性和同时移动的游戏。</p>
+<h4 id="5-1-4-HOOT-（Hierarchical-Optimistic-Optimisation-for-Trees-）"><a href="#5-1-4-HOOT-（Hierarchical-Optimistic-Optimisation-for-Trees-）" class="headerlink" title="5.1.4 HOOT;（Hierarchical Optimistic Optimisation for Trees ）"></a>5.1.4 HOOT;（Hierarchical Optimistic Optimisation for Trees ）</h4><p>Hierarchical Optimistic Optimisation (HOO) algorithm ：</p>
+<ul>
+<li>a generalisation of stochastic bandits [32], [33], [34]  随机赌博问题概括</li>
+<li>Hoo构成了一个手臂选择政策，与以前的结果相比，针对大分类问题，具有改进的后悔界限。</li>
+</ul>
+<p>The approach is similar to UCT, except that using HOO for action selection allows the algorithm to overcome the discrete action limitation of UCT. </p>
+<p>5.1.5 Other</p>
+<p>UCB-V, PAC-UCB, Gaussian UCB, Meta-Bandits, Hierarchical Bandits, UCB(α),<br>and so on. See also the bandit-based active learner (4.3.3). </p>
+<h3 id="5-2-Selection"><a href="#5-2-Selection" class="headerlink" title="5.2 Selection:"></a>5.2 Selection:</h3><p>许多增强改变了树策略，以改变MCT探索搜索树的方式。通常，选择为每个动作分配一些数值分数，以平衡探索和利用，例如在UCT中使用UCB进行节点选择。在许多领域中，使用领域知识影响每个动作的得分，偏向于某些行为的搜索和使用其他形式的奖励估计都是有益的。</p>
+<h4 id="5-2-1-FPU"><a href="#5-2-1-FPU" class="headerlink" title="5.2.1 FPU;"></a>5.2.1 FPU;</h4><p>First Play Urgency </p>
+<p>MCTS算法没有指定访问未探索节点的顺序。在典型的实现中，UCT以随机顺序访问每个未访问的操作，然后使用ucb1公式重新访问。这意味着，对于具有大分支因子的问题，树中很少会有更深层次的开发。</p>
+<p>改进：通过调整这个固定值，鼓励早期开发。</p>
+<p>具体操作：为未访问的节点分配一个固定值，并使用ucb1公式对访问节点进行评分。</p>
+<h4 id="5-2-2-Decisive-Moves"><a href="#5-2-2-Decisive-Moves" class="headerlink" title="5.2.2  Decisive Moves;"></a>5.2.2  Decisive Moves;</h4><p>决定性、反对决定性的行动（Decisive and Anti-Decisive Moves ）</p>
+<p>Havannah. here, a decisive move is one that leads immediately to a win, and an anti-decisive move is one that prevents the opponent from making a decisive move on their next turn.</p>
+<p>Havannah。在这里，决定性的一步是立即导致胜利，而反决定性的一步是阻止对手在下一回合采取决定性的行动。</p>
+<p>Policy:  如果任一玩家有决定性的移动，那么就使用它；否则，恢复到标准策略。</p>
+<h4 id="5-2-3-Move-Groups"><a href="#5-2-3-Move-Groups" class="headerlink" title="5.2.3 Move Groups;"></a>5.2.3 Move Groups;</h4><p>在一些游戏中，分支因素太大，但是很多又很相似（eg: Texas, GO ），MCTS需要很多次的模拟去区分这些高度相关性的Reward，降低分支因子以允许利用相关操作的一种方法是使用移动组。</p>
+<p>这将创建一个额外的决策层，在该层中，所有可能的操作都被收集到组中，并且使用ucb 1来选择要从哪个组中选择移动。</p>
+<h4 id="5-2-4-Transpositions"><a href="#5-2-4-Transpositions" class="headerlink" title="5.2.4 Transpositions;"></a>5.2.4 Transpositions;</h4><p>mcts naturally builds a search tree, but in many cases the underlying games can be represented as directed acyclic graphs (dags), since similar states can be reached through different sequences of move.</p>
+<p>MCTS自然构建搜索树，但是在许多情况下，底层游戏可以被表示为有向非循环图(DAG)，因为可以通过不同的移动序列来达到类似的状态。</p>
+<p>hence extra information can be extracted from each simulation by storing the statistics for each edge in the dag and looking these up during action selection.</p>
+<p>因此，可以从每个模拟中提取额外的信息，方法是将每个边缘的统计信息存储在进程中，并在操作选择期间查找这些信息。</p>
+<p>MCTS appear identical state&#x2F;action pair &gt; transposition</p>
+<p>选择和backup的enhancement</p>
+<h4 id="5-2-5-Progressive-Bias"><a href="#5-2-5-Progressive-Bias" class="headerlink" title="5.2.5 Progressive Bias;"></a>5.2.5 Progressive Bias;</h4><p>渐进偏倚： adding domain specific heuristic knowledge to MCTS </p>
+<p>new term added to MCTS selection formula of the form:<br>$$<br>f(n_j) &#x3D; \frac{H_i}{n_j + 1}<br>$$<br>$H_i$:  heuristic value  Hi</p>
+<p>$n_i$ : node of index has been visited ni times</p>
+<ul>
+<li>随着对此节点的访问次数的增加，对此节点的影响也随之减小。</li>
+</ul>
+<p>[60]和[232]中使用的另一个修改是等到节点被访问固定次数后再计算Hi。这是因为一些启发式函数的计算速度很慢，因此存储结果和限制使用启发式函数的节点数会提高改进的MCT算法的速度。</p>
+<h4 id="5-2-6-Opening-Books"><a href="#5-2-6-Opening-Books" class="headerlink" title="5.2.6 Opening Books;"></a>5.2.6 Opening Books;</h4><h4 id="5-2-7-MCPG-Monte-Carlo-Paraphrase-Generation"><a href="#5-2-7-MCPG-Monte-Carlo-Paraphrase-Generation" class="headerlink" title="5.2.7 MCPG; (Monte Carlo Paraphrase Generation  )"></a>5.2.7 MCPG; (Monte Carlo Paraphrase Generation  )</h4><p>monte carlo paraphrase generation (mcpg) is similar to plain uct except that the maximum reachable score for each state is used for selection rather than the (average) score expectation for that state</p>
+<p>蒙特卡洛解释生成(MCPG)与普通UCT相似，只不过每个状态的最大可达分数用于选择，而不是对该状态的(平均)分数期望。</p>
+<p>application in 自然语言语句的产生</p>
+<h4 id="5-2-8-Search-Seeding"><a href="#5-2-8-Search-Seeding" class="headerlink" title="5.2.8 Search Seeding;"></a>5.2.8 Search Seeding;</h4><p>seeding or “warming up” the search tree involves initialising the statistics at each node according to some heuristic knowledge.</p>
+<p>seeding或“warming up”搜索树包括根据一些启发式知识在每个节点初始化统计信息。</p>
+<p>有点类似NN或其他方法得到a function approximation, 从而可以得到启发式的statistical</p>
+<h4 id="5-2-9-Parameter-Tuning"><a href="#5-2-9-Parameter-Tuning" class="headerlink" title="5.2.9 Parameter Tuning;"></a>5.2.9 Parameter Tuning;</h4><p>许多MCTS增强要求对某些参数进行优化，例如UCT勘探常数$C_p$或RAVE常数V。</p>
+<p>通常是手动调节，（尽管有一些自动化的调节尝试）</p>
+<p>zero&#x2F;non-zero&#x2F;auto-tune</p>
+<p>given a large set of enhancement parameters there are several approaches to finding optimal values, or improving hand-tuned values</p>
+<p>考虑到大量增强参数，有几种方法来寻找最优值，或改进手调谐值</p>
+<p>Cross-Entropy Method to fine tune parameters for the Go playing program MANGO </p>
+<p>Cross Entropy Methods were also used in combination with hand-tuning  【MOGO 】</p>
+<p>neural networks have been used to  tune the parameters of MOGO </p>
+<p><em>dynamic exploration</em> </p>
+<h4 id="5-2-10-History-Heuristic"><a href="#5-2-10-History-Heuristic" class="headerlink" title="5.2.10 History Heuristic;"></a>5.2.10 History Heuristic;</h4><p>There have been numerous attempts to improve MCTS using information about moves previously played .</p>
+<p>being used on two levels :</p>
+<ul>
+<li>Tree-tree level: Using history information to improve action selection in the MCTS tree.</li>
+<li>Tree-playout level: Using history information to improve the simulation policy (6.1)</li>
+</ul>
+<p>Tree-tree : 1.grandfather heuristic approach suggested :历史信息用于初始化新节点的操作值估计。(效果一般) 2. 对在动作选择期间计算的bandit得分，更新action的score，无论何时它被选择独立于深度，给予一个重大的改进。</p>
+<p>Finnsson [83] describes the benefits of the history heuristic for seeding node values in his world champion general game player CADIAPLAYER (7.5). </p>
+<h4 id="5-2-11-Progressive-History"><a href="#5-2-11-Progressive-History" class="headerlink" title="5.2.11 Progressive History"></a>5.2.11 Progressive History</h4><p>combines progressive bias (5.2.5) with the history heuristic by replacing the heuristic value hi in the progressive bias calculation for each node i with that node’s history score, during node selection.</p>
+<p>在节点选择期间，通过用该节点的历史得分替换每个节点i的渐进偏置计算中的启发式值Hi，将渐进偏置(5.2.5)与历史启发相组合。</p>
+<h3 id="5-3-AMAF-Permutation-α-AMAF-Some-First-Cutoff-RAVE-Killer-RAVE-RAVE-max-PoolRAVE"><a href="#5-3-AMAF-Permutation-α-AMAF-Some-First-Cutoff-RAVE-Killer-RAVE-RAVE-max-PoolRAVE" class="headerlink" title="5.3 AMAF: Permutation; α-AMAF Some-First; Cutoff; RAVE; Killer RAVE; RAVE-max; PoolRAVE"></a>5.3 AMAF: Permutation; α-AMAF Some-First; Cutoff; RAVE; Killer RAVE; RAVE-max; PoolRAVE</h3><p>ALL Moves as First(AMAF)基本思想是更新在模拟过程中选择的所有操作的统计信息，就好像它们是应用的第一个操作一样。</p>
+<p>the amaf algorithm treats all moves played during selection and simulation as if they were played on a previous selection step.</p>
+<p>AMAF算法处理所有在选择和模拟过程中执行的动作，就好像它们是在前面的选择步骤上进行的一样。</p>
+<h4 id="5-3-1-Permutation"><a href="#5-3-1-Permutation" class="headerlink" title="5.3.1 Permutation;"></a>5.3.1 Permutation;</h4><p>this algorithm is the same as amaf but also updates nodes that can be reached by permutations of moves in the simulation that preserve the eventual state reached [101].</p>
+<p>该算法与AMAF算法相同，但也更新了可以通过模拟中的移动排列来达到的节点，以保持最终达到的状态[101]。</p>
+<p> for example, it may be possible to permute the actions played by each player during a simulation and reach an identical terminal position. therefore there may be other leaf nodes in the tree from which the same terminal position could have been reached by playing the same moves but in a different order. permutation amaf would also update these nodes</p>
+<p>例如，可以改变每个玩家在模拟期间所玩的动作，并达到相同的终端位置。因此，在树中可能有其他叶节点，可以通过播放相同的动作，但按不同的顺序到达相同的终端位置。permutation AMAF也会更新这些节点。</p>
+<p>同一终点，不同history order（同样移动action）上的node， 也会更新。</p>
+<h4 id="5-3-2-α-AMAF"><a href="#5-3-2-α-AMAF" class="headerlink" title="5.3.2 α-AMAF"></a>5.3.2 α-AMAF</h4><p>the total score for an action is:<br>$$<br>\alpha A + (1 - \alpha) U<br>$$<br>U: UCT score; </p>
+<p>A: AMAF score;</p>
+<h4 id="5-3-3-Some-First"><a href="#5-3-3-Some-First" class="headerlink" title="5.3.3 Some-First;"></a>5.3.3 Some-First;</h4><p>This approach is the same as the standard AMAF algorithm except that the history used to update nodes is  truncated after the first m random moves in the simulation stage [101]. </p>
+<p>该方法与标准的AMAF算法相同，只不过用于更新节点的历史在模拟阶段的第一次m随机移动之后被截断。</p>
+<p>If m &#x3D; 0 then only actions selected in the tree are used to update nodes,</p>
+<p>if m is larger than the number of moves in the simulation, this is equivalent to the AMAF algorithm </p>
+<h4 id="5-3-4-Cutoff"><a href="#5-3-4-Cutoff" class="headerlink" title="5.3.4  Cutoff;"></a>5.3.4  Cutoff;</h4><p>in cutoff amaf, the amaf algorithm is used to update statistics for the first k simulations</p>
+<p>在截断Amaf中，使用Amaf算法更新第一个k次模拟的统计量。之后使用标准UCT算法</p>
+<p>截断Amaf的目的是用Amaf数据对树进行热身，然后在以后的搜索中使用更精确的udt数据。</p>
+<h4 id="5-3-5-RAVE"><a href="#5-3-5-RAVE" class="headerlink" title="5.3.5 RAVE;"></a>5.3.5 RAVE;</h4><p>Rapid Action Value Estimation (RAVE)  （快速动作值估计）</p>
+<p>it is similar to α-amaf, except that the α value used at each node decreases with each visit. instead of supplying a fixed α value, a fixed positive integer v &gt; 0 is supplied instead.</p>
+<p>它类似于α-Amaf，只不过每个节点上使用的α值随着每次访问而减少。而不是提供一个固定的α值，而是提供一个固定的正整数V&gt;0。<br>$$<br>max{0, \frac{V-v(n)}{V} }<br>$$</p>
+<p>V 表示访问节点的次数。</p>
+<p>RAVE是一种比截止Amaf更软的方法，因为树中被开发的区域比未开发的区域更多地使用精确的统计数据。</p>
+<h4 id="5-3-6-Killer-RAVE"><a href="#5-3-6-Killer-RAVE" class="headerlink" title="5.3.6 Killer RAVE;"></a>5.3.6 Killer RAVE;</h4><p>在每次迭代中，只有最重要的步骤被用于rave更新。</p>
+<h4 id="5-3-7-RAVE-max"><a href="#5-3-7-RAVE-max" class="headerlink" title="5.3.7 RAVE-max;"></a>5.3.7 RAVE-max;</h4><h4 id="5-3-8-PoolRAVE"><a href="#5-3-8-PoolRAVE" class="headerlink" title="5.3.8 PoolRAVE"></a>5.3.8 PoolRAVE</h4><p>which modifies the MCTS simulation step as follows:</p>
+<ul>
+<li>Build a pool of the k best moves according to RAVE.</li>
+<li>Choose one move m from the pool.</li>
+<li>Play m with a probability p, else the default policy</li>
+</ul>
+<h4 id="conclude"><a href="#conclude" class="headerlink" title="conclude:"></a>conclude:</h4><p>Helmbold and Parker-Wood [101] compare the main<br>AMAF variants and conclude that: </p>
+<ul>
+<li><p>Random playouts provide more evidence about the goodness of moves made earlier in the playout than moves made later.</p>
+</li>
+<li><p>AMAF updates are not just a way to quickly initialise counts, they are useful after every playout.</p>
+</li>
+<li><p>Updates even more aggressive than AMAF can be even more beneficial.</p>
+</li>
+<li><p>Combined heuristics can be more powerful than individual heuristics.</p>
+</li>
+</ul>
+<h3 id="5-4-Game-Theoretic"><a href="#5-4-Game-Theoretic" class="headerlink" title="5.4 Game-Theoretic:"></a>5.4 Game-Theoretic:</h3><p> MCTS-Solver;  MC-PNS; Score Bounded MCTS</p>
+<h3 id="5-5-Pruning"><a href="#5-5-Pruning" class="headerlink" title="5.5 Pruning:"></a>5.5 Pruning:</h3><p>Absolute; Relative; Domain Knowledge</p>
+<h3 id="5-6-Expansion"><a href="#5-6-Expansion" class="headerlink" title="5.6 Expansion"></a>5.6 Expansion</h3><h2 id="Section-6-Enhance-for-simulation-backpropagation"><a href="#Section-6-Enhance-for-simulation-backpropagation" class="headerlink" title="Section 6 Enhance for simulation, backpropagation"></a>Section 6 Enhance for simulation, backpropagation</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">6.1 Simulation: Rule-Based; Contextual; Fill the Board; Learning; MAST; PAST; FAST; History Heuristics; Evaluation; Balancing; Last Good Reply; Patterns</span><br><span class="line">6.2 Backpropagation: Weighting; Score Bonus; Decay; Transposition Table Updates</span><br><span class="line">6.3 Parallelisation: Leaf; Root; Tree; UCT-Treesplit; Threading and Synchronisation</span><br><span class="line">6.4 Considerations: Consistency; Parameterisation; Comparing Enhancements</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Section-7-Applications"><a href="#Section-7-Applications" class="headerlink" title="Section 7 Applications"></a>Section 7 Applications</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">7.1 Go: Evaluation; Agents; Approaches; Domain Knowledge; Variants; Future Work</span><br><span class="line">7.2 Connection Games</span><br><span class="line">7.3 Other Combinatorial Games</span><br><span class="line">7.4 Single-Player Games</span><br><span class="line">7.5 General Game Playing</span><br><span class="line">7.6 Real-time Games</span><br><span class="line">7.7 Nondeterministic Games</span><br><span class="line">7.8 Non-Game: Optimisation; Satisfaction; Scheduling; Planning; PCG</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Section-8-Summary"><a href="#Section-8-Summary" class="headerlink" title="Section 8 Summary"></a>Section 8 Summary</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Impact; Strengths; Weaknesses; Research Directions</span><br></pre></td></tr></table></figure>
+
+
+
+<p>in section 8, we summarise the paper to give a snapshot of the state of the art in MCTS research, the strengths and weaknesses of the approach, and open questions for future research.</p>
+<p>在第8节中，我们总结了本文以给出McTS研究中的现有技术的快照、该方法的优势和弱点以及未来研究的开放性问题</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CFR/" rel="tag"># CFR</a>
+              <a href="/tags/MCTS/" rel="tag"># MCTS</a>
+              <a href="/tags/UCT/" rel="tag"># UCT</a>
+              <a href="/tags/Papers/" rel="tag"># Papers</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/08/16/Games/PokerGame_Algorithm/" rel="prev" title="Poker Algorithm developer history">
+      <i class="fa fa-chevron-left"></i> Poker Algorithm developer history
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/08/21/Paper/Paper-CV-2-Object-Localization/" rel="next" title="Paper_CV_2 object-localization 目标定位">
+      Paper_CV_2 object-localization 目标定位 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Section-1-Introduce"><span class="nav-number">1.</span> <span class="nav-text">Section 1 Introduce</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Section-2-Background"><span class="nav-number">2.</span> <span class="nav-text">Section 2 Background</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-1%E3%80%81MDPs"><span class="nav-number">2.1.</span> <span class="nav-text">2.1.1、MDPs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-2%E3%80%81POMDPs"><span class="nav-number">2.2.</span> <span class="nav-text">2.1.2、POMDPs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2%E3%80%81Game-Theory"><span class="nav-number">2.3.</span> <span class="nav-text">2.2、Game Theory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-Monte-Carlo-Methods"><span class="nav-number">2.4.</span> <span class="nav-text">2.3 Monte Carlo Methods</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-Bandit-Based-Methods"><span class="nav-number">2.5.</span> <span class="nav-text">2.4 Bandit-Based Methods</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Section-3-vanilla-MCTS"><span class="nav-number">3.</span> <span class="nav-text">Section 3 vanilla MCTS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-Algorithm"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 Algorithm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-Development"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 Development</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-UCT-Algorithm-Convergence-to-Minimax"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 UCT: Algorithm; Convergence to Minimax</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#UCT-algorithm"><span class="nav-number">3.3.1.</span> <span class="nav-text">UCT algorithm</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#convergence-to-minimax-%E6%94%B6%E6%95%9B%E5%88%B0%E6%9E%81%E5%B0%8F%E6%9E%81%E5%A4%A7"><span class="nav-number">3.3.1.1.</span> <span class="nav-text">convergence to minimax(收敛到极小极大)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-Characteristics-Aheuristic-Anytime-Asymmetric"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 Characteristics: Aheuristic; Anytime; Asymmetric</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-Comparison-with-Other-Algorithms"><span class="nav-number">3.5.</span> <span class="nav-text">3.5 Comparison with Other Algorithms</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-Terminology"><span class="nav-number">3.6.</span> <span class="nav-text">3.6 Terminology</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Section-4-Variations-of-MCTS"><span class="nav-number">4.</span> <span class="nav-text">Section 4 Variations of MCTS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-Flat-UCB"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 Flat UCB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-Bandit-Algorithm-for-Smooth-Trees"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 Bandit Algorithm for Smooth Trees</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-Learning-in-MCTS-TDL-TDMC-%CE%BB-BAAL"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 Learning in MCTS: TDL; TDMC(λ); BAAL</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-1-TDL"><span class="nav-number">4.3.1.</span> <span class="nav-text">4.3.1 TDL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-2-TDMC-%CE%BB"><span class="nav-number">4.3.2.</span> <span class="nav-text">4.3.2 TDMC(λ)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-3-BAAL-Bandit-Based-Active-Learner"><span class="nav-number">4.3.3.</span> <span class="nav-text">4.3.3 BAAL(Bandit-Based Active Learner )</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-Single-Player-MCTS-FUSE"><span class="nav-number">4.4.</span> <span class="nav-text">4.4 Single-Player MCTS, FUSE</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-4-1-SP-MCTS"><span class="nav-number">4.4.1.</span> <span class="nav-text">4.4.1 SP-MCTS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-4-2-FUSE-Feature-UCT-Selection"><span class="nav-number">4.4.2.</span> <span class="nav-text">4.4.2 FUSE (Feature UCT Selection )</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-Multi-player-MCTS-Coalition-Reduction"><span class="nav-number">4.5.</span> <span class="nav-text">4.5 Multi-player MCTS: Coalition Reduction</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Coalition-Reduction"><span class="nav-number">4.5.1.</span> <span class="nav-text">Coalition Reduction</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-6-Multi-agent-MCTS-Ensemble-UCT"><span class="nav-number">4.6.</span> <span class="nav-text">4.6 Multi-agent MCTS: Ensemble UCT</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Ensemble-UCT"><span class="nav-number">4.6.1.</span> <span class="nav-text">Ensemble UCT</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-7-Real-time-MCTS"><span class="nav-number">4.7.</span> <span class="nav-text">4.7 Real-time MCTS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-8-Nondeterministic-MCTS-Determinization-HOP-Sparse-UCT-ISUCT-Multiple-MCTS-UCT-MC%CE%B1%CE%B2-MCCFR-Modelling-Simultaneous-Moves"><span class="nav-number">4.8.</span> <span class="nav-text">4.8 Nondeterministic MCTS: Determinization; HOP; Sparse UCT; ISUCT; Multiple MCTS; UCT+;  MCαβ;	MCCFR; Modelling; Simultaneous Moves</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-8-1-Determinization"><span class="nav-number">4.8.1.</span> <span class="nav-text">4.8.1 Determinization;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-8-2-HOP%EF%BC%88Hindsight-optimisation-%EF%BC%89"><span class="nav-number">4.8.2.</span> <span class="nav-text">4.8.2 HOP（Hindsight optimisation ）;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-8-3-Sparse-UCT"><span class="nav-number">4.8.3.</span> <span class="nav-text">4.8.3 Sparse UCT;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-8-4-ISUCT"><span class="nav-number">4.8.4.</span> <span class="nav-text">4.8.4 ISUCT;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-8-5-Multiple-MCTS%EF%BC%88MMCTS-%EF%BC%89"><span class="nav-number">4.8.5.</span> <span class="nav-text">4.8.5 Multiple MCTS（MMCTS ）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-8-6-UCT"><span class="nav-number">4.8.6.</span> <span class="nav-text">4.8.6 UCT+;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-8-7-MC%CE%B1%CE%B2%EF%BC%88Monte-Carlo-%CE%B1-%CE%B2%EF%BC%89"><span class="nav-number">4.8.7.</span> <span class="nav-text">4.8.7 MCαβ（Monte Carlo α-β）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-8-8-MCCFR"><span class="nav-number">4.8.8.</span> <span class="nav-text">4.8.8 MCCFR;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-8-9-Inference-and-Opponent-Modelling"><span class="nav-number">4.8.9.</span> <span class="nav-text">4.8.9 Inference and Opponent Modelling;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-8-10-Simultaneous-Moves-%E5%90%8C%E6%97%B6%E7%A7%BB%E5%8A%A8"><span class="nav-number">4.8.10.</span> <span class="nav-text">4.8.10 Simultaneous Moves(同时移动)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-9-Recursive-Approaches-Reflexive-MC-Nested-MC-NRPA-Meta-MCTS-HGSTS"><span class="nav-number">4.9.</span> <span class="nav-text">4.9 Recursive Approaches: Reflexive MC; Nested MC;NRPA; Meta-MCTS; HGSTS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-9-1-Reflexive-MC"><span class="nav-number">4.9.1.</span> <span class="nav-text">4.9.1 Reflexive MC;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-9-2-Nested-MC-NMCS"><span class="nav-number">4.9.2.</span> <span class="nav-text">4.9.2 Nested MC (NMCS)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-9-3-NRPA-Nested-Rollout-Policy-Adaptation"><span class="nav-number">4.9.3.</span> <span class="nav-text">4.9.3 NRPA(Nested Rollout Policy Adaptation )</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-9-4-Meta-MCTS"><span class="nav-number">4.9.4.</span> <span class="nav-text">4.9.4 Meta-MCTS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-9-5-HGSTS-Heuristically-Guided-Swarm-Tree-Search-%E5%90%AF%E5%8F%91%E5%BC%8F%E5%BC%95%E5%AF%BC%E7%9A%84%E7%BE%A4%E6%A0%91%E6%90%9C%E7%B4%A2"><span class="nav-number">4.9.5.</span> <span class="nav-text">4.9.5 HGSTS(Heuristically Guided Swarm Tree Search 启发式引导的群树搜索)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-10-Sample-Based-Planners-FSSS-TAG-RRTs-UNLEO-UCTSAT-%CF%81UCT-MRW-MHSP"><span class="nav-number">4.10.</span> <span class="nav-text">4.10 Sample-Based Planners: FSSS; TAG; RRTs; UNLEO; UCTSAT; ρUCT; MRW; MHSP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-10-1-FSSS-Forward-Search-Sparse-Sampling"><span class="nav-number">4.10.1.</span> <span class="nav-text">4.10.1 FSSS (Forward Search Sparse Sampling )</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-10-2-TAG-Threshold-Ascent-for-Graphs"><span class="nav-number">4.10.2.</span> <span class="nav-text">4.10.2 TAG (Threshold Ascent for Graphs  )</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-10-3-RRTs-%EF%BC%88Rapidly-exploring-Random-Trees-%EF%BC%89%E5%BF%AB%E9%80%9F%E6%8E%A2%E7%B4%A2%E9%9A%8F%E6%9C%BA%E6%A0%91"><span class="nav-number">4.10.3.</span> <span class="nav-text">4.10.3 RRTs （Rapidly-exploring Random Trees ）快速探索随机树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-10-4-UNLEO"><span class="nav-number">4.10.4.</span> <span class="nav-text">4.10.4 UNLEO</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-10-5-UCTSAT"><span class="nav-number">4.10.5.</span> <span class="nav-text">4.10.5 UCTSAT</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-10-6-%CF%81UCT"><span class="nav-number">4.10.6.</span> <span class="nav-text">4.10.6 ρUCT</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-10-7-MRW%EF%BC%88Monte-Carlo-Random-Walks-%EF%BC%89"><span class="nav-number">4.10.7.</span> <span class="nav-text">4.10.7 MRW（Monte Carlo Random Walks ）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-10-8-MHSP-%EF%BC%88Mean-based-Heuristic-Search-for-Anytime-Planning-%EF%BC%89"><span class="nav-number">4.10.8.</span> <span class="nav-text">4.10.8 MHSP （Mean-based Heuristic Search for Anytime Planning  ）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Section-5-Tree-policy-enhancements"><span class="nav-number">5.</span> <span class="nav-text">Section 5 Tree policy enhancements</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-Bandit-Based-UCB1-Tuned-Bayesian-UCT-EXP3-HOOT-Other"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 Bandit-Based: UCB1-Tuned; Bayesian UCT; EXP3; HOOT; Other</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-1-UCB1-Tuned"><span class="nav-number">5.1.1.</span> <span class="nav-text">5.1.1 UCB1-Tuned;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-2-Bayesian-UCT"><span class="nav-number">5.1.2.</span> <span class="nav-text">5.1.2 Bayesian UCT;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-3-EXP3"><span class="nav-number">5.1.3.</span> <span class="nav-text">5.1.3 EXP3;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-4-HOOT-%EF%BC%88Hierarchical-Optimistic-Optimisation-for-Trees-%EF%BC%89"><span class="nav-number">5.1.4.</span> <span class="nav-text">5.1.4 HOOT;（Hierarchical Optimistic Optimisation for Trees ）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-Selection"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 Selection:</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-1-FPU"><span class="nav-number">5.2.1.</span> <span class="nav-text">5.2.1 FPU;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-2-Decisive-Moves"><span class="nav-number">5.2.2.</span> <span class="nav-text">5.2.2  Decisive Moves;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-3-Move-Groups"><span class="nav-number">5.2.3.</span> <span class="nav-text">5.2.3 Move Groups;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-4-Transpositions"><span class="nav-number">5.2.4.</span> <span class="nav-text">5.2.4 Transpositions;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-5-Progressive-Bias"><span class="nav-number">5.2.5.</span> <span class="nav-text">5.2.5 Progressive Bias;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-6-Opening-Books"><span class="nav-number">5.2.6.</span> <span class="nav-text">5.2.6 Opening Books;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-7-MCPG-Monte-Carlo-Paraphrase-Generation"><span class="nav-number">5.2.7.</span> <span class="nav-text">5.2.7 MCPG; (Monte Carlo Paraphrase Generation  )</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-8-Search-Seeding"><span class="nav-number">5.2.8.</span> <span class="nav-text">5.2.8 Search Seeding;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-9-Parameter-Tuning"><span class="nav-number">5.2.9.</span> <span class="nav-text">5.2.9 Parameter Tuning;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-10-History-Heuristic"><span class="nav-number">5.2.10.</span> <span class="nav-text">5.2.10 History Heuristic;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-11-Progressive-History"><span class="nav-number">5.2.11.</span> <span class="nav-text">5.2.11 Progressive History</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-AMAF-Permutation-%CE%B1-AMAF-Some-First-Cutoff-RAVE-Killer-RAVE-RAVE-max-PoolRAVE"><span class="nav-number">5.3.</span> <span class="nav-text">5.3 AMAF: Permutation; α-AMAF Some-First; Cutoff; RAVE; Killer RAVE; RAVE-max; PoolRAVE</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-1-Permutation"><span class="nav-number">5.3.1.</span> <span class="nav-text">5.3.1 Permutation;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-2-%CE%B1-AMAF"><span class="nav-number">5.3.2.</span> <span class="nav-text">5.3.2 α-AMAF</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-3-Some-First"><span class="nav-number">5.3.3.</span> <span class="nav-text">5.3.3 Some-First;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-4-Cutoff"><span class="nav-number">5.3.4.</span> <span class="nav-text">5.3.4  Cutoff;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-5-RAVE"><span class="nav-number">5.3.5.</span> <span class="nav-text">5.3.5 RAVE;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-6-Killer-RAVE"><span class="nav-number">5.3.6.</span> <span class="nav-text">5.3.6 Killer RAVE;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-7-RAVE-max"><span class="nav-number">5.3.7.</span> <span class="nav-text">5.3.7 RAVE-max;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-8-PoolRAVE"><span class="nav-number">5.3.8.</span> <span class="nav-text">5.3.8 PoolRAVE</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#conclude"><span class="nav-number">5.3.9.</span> <span class="nav-text">conclude:</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-Game-Theoretic"><span class="nav-number">5.4.</span> <span class="nav-text">5.4 Game-Theoretic:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-5-Pruning"><span class="nav-number">5.5.</span> <span class="nav-text">5.5 Pruning:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-6-Expansion"><span class="nav-number">5.6.</span> <span class="nav-text">5.6 Expansion</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Section-6-Enhance-for-simulation-backpropagation"><span class="nav-number">6.</span> <span class="nav-text">Section 6 Enhance for simulation, backpropagation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Section-7-Applications"><span class="nav-number">7.</span> <span class="nav-text">Section 7 Applications</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Section-8-Summary"><span class="nav-number">8.</span> <span class="nav-text">Section 8 Summary</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

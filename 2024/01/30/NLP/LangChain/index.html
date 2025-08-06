@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="1、LangChain介绍LangChain 就是一个 LLM 编程框架，你想开发一个基于 LLM 应用，需要什么组件它都有，直接使用就行；甚至针对常规的应用流程，它利用链(LangChain中Chain的由来)这个概念已经内置标准化方案了。下面我们从新兴的大语言模型（LLM）技术栈的角度来看看为何它的理念这么受欢迎。 借助 Langchain，可以创建聊天机器人、问答系统和其他人工智能代理。 其">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LLM 编程框架-LangChain">
+<meta property="og:url" content="https://novav.github.io/2024/01/30/NLP/LangChain/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="1、LangChain介绍LangChain 就是一个 LLM 编程框架，你想开发一个基于 LLM 应用，需要什么组件它都有，直接使用就行；甚至针对常规的应用流程，它利用链(LangChain中Chain的由来)这个概念已经内置标准化方案了。下面我们从新兴的大语言模型（LLM）技术栈的角度来看看为何它的理念这么受欢迎。 借助 Langchain，可以创建聊天机器人、问答系统和其他人工智能代理。 其">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2024/01/30/NLP/LangChain/2024-01-30-16-58-12-image.png">
+<meta property="og:image" content="https://novav.github.io/2024/01/30/NLP/LangChain/2024-01-30-16-58-26-image.png">
+<meta property="og:image" content="https://novav.github.io/2024/01/30/NLP/LangChain/2024-01-30-17-00-00-image.png">
+<meta property="og:image" content="https://novav.github.io/2024/01/30/NLP/LangChain/2024-01-30-17-00-26-image.png">
+<meta property="article:published_time" content="2024-01-30T12:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:39.972Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="LLM">
+<meta property="article:tag" content="LangChain">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2024/01/30/NLP/LangChain/2024-01-30-16-58-12-image.png">
+
+<link rel="canonical" href="https://novav.github.io/2024/01/30/NLP/LangChain/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>LLM 编程框架-LangChain | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2024/01/30/NLP/LangChain/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          LLM 编程框架-LangChain
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-01-30 12:00:00" itemprop="dateCreated datePublished" datetime="2024-01-30T12:00:00+00:00">2024-01-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="1、LangChain介绍"><a href="#1、LangChain介绍" class="headerlink" title="1、LangChain介绍"></a>1、LangChain介绍</h2><p>LangChain 就是一个 LLM 编程框架，你想开发一个基于 LLM 应用，需要什么组件它都有，直接使用就行；甚至针对常规的应用流程，它利用链(LangChain中Chain的由来)这个概念已经内置标准化方案了。下面我们从新兴的大语言模型（LLM）技术栈的角度来看看为何它的理念这么受欢迎。</p>
+<p>借助 Langchain，可以创建聊天机器人、问答系统和其他人工智能代理。</p>
+<p>其官方的定义</p>
+<blockquote>
+<p>LangChain是一个基于语言模型开发应用程序的框架。它可以实现以下应用程序：</p>
+</blockquote>
+<ul>
+<li>数据感知：将语言模型连接到其他数据源</li>
+<li>自主性：允许语言模型与其环境进行交互</li>
+</ul>
+<p>LangChain的主要价值在于：</p>
+<ul>
+<li>组件化：为使用语言模型提供抽象层，以及每个抽象层的一组实现。组件是模块化且易于使用的，无论您是否使用LangChain框架的其余部分。</li>
+<li>现成的链：结构化的组件集合，用于完成特定的高级任务</li>
+</ul>
+<p>现成的链使得入门变得容易。对于更复杂的应用程序和微妙的用例，组件化使得定制现有链或构建新链变得更容易。</p>
+<img title src="/2024/01/30/NLP/LangChain/2024-01-30-16-58-12-image.png" alt width="629">
+
+<h3 id="新兴-LLM-技术栈"><a href="#新兴-LLM-技术栈" class="headerlink" title="新兴 LLM 技术栈"></a><strong>新兴 <mark>LLM 技术栈</mark></strong></h3><p>大语言模型技术栈由四个主要部分组成：</p>
+<ul>
+<li>数据预处理流程（data preprocessing pipeline）</li>
+<li>嵌入端点（embeddings endpoint ）+向量存储（vector store）</li>
+<li>LLM 终端（LLM endpoints）</li>
+<li>LLM 编程框架（LLM programming framework）</li>
+</ul>
+<p><img src="/2024/01/30/NLP/LangChain/2024-01-30-16-58-26-image.png"></p>
+<span id="more"></span>
+
+<h3 id="数据预处理流程"><a href="#数据预处理流程" class="headerlink" title="数据预处理流程"></a><strong>数据预处理流程</strong></h3><p>该步骤包括与数据源连接的连接器（例如S3存储桶或CRM）、数据转换层以及下游连接器（例如向矢量数据库）。通常，输入到LLM中的最有价值的信息也是最难处理的（如PDF、PPTX、HTML等），但同时，易于访问文本的文档（例如.DOCX）中也包含用户不希望发送到推理终端的信息（例如广告、法律条款等）。</p>
+<p>因为涉及的数据源繁杂（数千个PDF、PPTX、聊天记录、抓取的HTML等），这步也存在大量的 dirty work，使用OCR模型、Python脚本和正则表达式等方式来自动提取、清理和转换关键文档元素（例如标题、正文、页眉&#x2F;页脚、列表等），最终向外部以API的方式提供JSON数据，以便嵌入终端和存储在向量数据库中。</p>
+<h3 id="嵌入端点和向量存储"><a href="#嵌入端点和向量存储" class="headerlink" title="嵌入端点和向量存储"></a><strong>嵌入端点和向量存储</strong></h3><p>使用嵌入端点（用于生成和返回诸如词向量、文档向量等嵌入向量的 API 端点）和向量存储（用于存储和检索向量的数据库或数据存储系统）代表了数据存储和访问方式的重大演变。以前，嵌入主要用于诸如文档聚类之类的特定任务，在新的架构中，将文档及其嵌入存储在向量数据库中，可以通过LLM端点实现关键的交互模式。直接存储原始嵌入，意味着数据可以以其自然格式存储，从而实现更快的处理时间和更高效的数据检索。此外，这种方法可以更容易地处理大型数据集，因为它可以减少训练和推理过程中需要处理的数据量。</p>
+<h3 id="LLM终端"><a href="#LLM终端" class="headerlink" title="LLM终端"></a><strong>LLM终端</strong></h3><p>LLM终端是接收输入数据并生成LLM输出的终端。LLM终端负责管理模型的资源，包括内存和计算资源，并提供可扩展和容错的接口，用于向下游应用程序提供LLM输出。</p>
+<h3 id="LLM编程框架"><a href="#LLM编程框架" class="headerlink" title="LLM编程框架"></a><strong>LLM编程框架</strong></h3><p>LLM编程框架提供了一套工具和抽象，用于使用语言模型构建应用程序。在现代技术栈中出现了各种类型的组件，包括：LLM提供商、嵌入模型、向量存储、文档加载器、其他外部工具（谷歌搜索等），这些框架的一个重要功能是协调各种组件。</p>
+<h3 id="关键组件解释"><a href="#关键组件解释" class="headerlink" title="关键组件解释"></a><strong>关键组件解释</strong></h3><p><strong>Prompts</strong></p>
+<p>Prompts用来管理 LLM 输入的工具，在从 LLM 获得所需的输出之前需要对提示进行相当多的调整，最终的Promps可以是单个句子或多个句子的组合，它们可以包含变量和条件语句。</p>
+<p><strong>Chains</strong></p>
+<p>是一种将LLM和其他多个组件连接在一起的工具，以实现复杂的任务。</p>
+<p><strong>Agents</strong></p>
+<p>是一种使用LLM做出决策的工具，它们可以执行特定的任务并生成文本输出。Agents通常由三个部分组成：Action、Observation和Decision。Action是代理执行的操作，Observation是代理接收到的信息，Decision是代理基于Action和Observation做出的决策。</p>
+<p><strong>Memory</strong></p>
+<p>是一种用于存储数据的工具，由于LLM 没有任何长期记忆，它有助于在多次调用之间保持状态。</p>
+<h3 id="典型应用场景"><a href="#典型应用场景" class="headerlink" title="典型应用场景"></a><strong>典型应用场景</strong></h3><ul>
+<li><a href="https://link.zhihu.com/?target=https://python.langchain.com/docs/use_cases/question_answering.html">特定文档的问答</a>：从Notion数据库中提取信息并回答用户的问题。</li>
+<li><a href="https://link.zhihu.com/?target=https://python.langchain.com/docs/use_cases/chatbots/">聊天机器人</a>：使用Chat-LangChain模块创建一个与用户交流的机器人。</li>
+<li><a href="https://link.zhihu.com/?target=https://python.langchain.com/docs/use_cases/agents/">代理</a>：使用GPT和WolframAlpha结合，创建一个能够执行数学计算和其他任务的代理。</li>
+<li><a href="https://link.zhihu.com/?target=https://python.langchain.com/docs/use_cases/summarization">文本摘要</a>：使用外部数据源来生成特定文档的摘要。</li>
+</ul>
+<h3 id="Langchain-竞品"><a href="#Langchain-竞品" class="headerlink" title="Langchain 竞品"></a><strong>Langchain 竞品</strong></h3><p>（个人认为）在商业化上，基于大模型业务分为三个层次：</p>
+<ul>
+<li>基础设施层：通用的大模型底座</li>
+<li>垂直领域层：基于大模型底座+领域场景数据微调形成更强垂直能力</li>
+<li>应用层：基于前两者，瘦前端的方式提供多样化应用体验</li>
+</ul>
+<p>类似 LangChain 这种工具框架可以做到整合各个层能力，具备加速应用开发和落地验证的优势，因此也出现了很多竞争者。</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>语言</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>LangChain</td>
+<td>Python&#x2F;JS</td>
+<td>优点：提供了标准的内存接口和内存实现，支持自定义大模型的封装。<br>缺点：评估生成模型的性能比较困难。</td>
+</tr>
+<tr>
+<td>Dust.tt</td>
+<td>Rust&#x2F;TS</td>
+<td>优点：提供了简单易用的API，可以让开发者快速构建自己的LLM应用程序。<br>缺点：文档不够完善。</td>
+</tr>
+<tr>
+<td>Semantic-kernel</td>
+<td>TypeScript</td>
+<td>优点：轻量级SDK，可将AI大型语言模型（LLMs）与传统编程语言集成在一起。<br>缺点：文档不够完善。</td>
+</tr>
+<tr>
+<td>Fixie.ai</td>
+<td>Python</td>
+<td>优点：开放、免费、简单，多模态（images, audio, video…）<br>缺点：PaaS平台，需要在平台部署</td>
+</tr>
+<tr>
+<td>Brancher AI</td>
+<td>Python&#x2F;JS</td>
+<td>优点：链接所有大模型，无代码快速生成应用, Langchain产品）<br>缺点：-</td>
+</tr>
+</tbody></table>
+<hr>
+<h1 id="六大模块"><a href="#六大模块" class="headerlink" title="六大模块"></a>六大模块</h1><p>LangChain 主体分为 6 个模块，分别是对（大语言）模型输入输出的管理、外部数据接入、链(Chains)的概念、（上下文记忆）存储管理、智能代理(Agent)以及回调系统，通过文档的组织结构，你可以清晰了解到 LangChain的侧重点，以及在大语言模型开发生态中对自己的定位。</p>
+<h2 id="1、LLM输入输出管理"><a href="#1、LLM输入输出管理" class="headerlink" title="1、LLM输入输出管理"></a>1、LLM输入输出管理</h2><p><img src="/2024/01/30/NLP/LangChain/2024-01-30-17-00-00-image.png"></p>
+<h3 id="Models"><a href="#Models" class="headerlink" title="Models"></a>Models</h3><p>LangChain 中提供了多种不同的语言模型，按功能划分，主要有两种。</p>
+<ul>
+<li>语言模型（LLMs）：我们通常说的语言模型，给定输入的一个文本，会返回一个相应的文本。常见的语言模型有 GPT3.5，chatglm，GPT4All 等。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> langchain.llms <span class="keyword">import</span> OpenAI</span><br><span class="line">llm = OpenAI(openai_api_key=<span class="string">&quot;...&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>聊天模型（Chat model）：可以看做是封装好的拥有对话能力的 LLM，这些模型允许你使用对话的形式和其进行交互，能够支持将聊天信息作为输入，并返回聊天信息。这些聊天信息都是封装好的结构体，而非一个简单的文本字符串。常见的聊天模型有 GPT4、Llama 和 Llama2，以及微软云 Azure 相关的 GPT 模型。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> langchain.chat_models <span class="keyword">import</span> ChatOpenAI</span><br><span class="line">chat = ChatOpenAI(openai_api_key=<span class="string">&quot;...&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Prompts"><a href="#Prompts" class="headerlink" title="Prompts"></a>Prompts</h3><p>提示词是模型的输入，通过编写提示词可以和模型进行交互。LangChain 中提供了许多模板和函数用于模块化构建提示词，这些模板可以提供更灵活的方法去生成提示词，具有更好的复用性。根据调用的模型方式不同，提示词模板主要分为普通模板以及聊天提示词模板。</p>
+<h4 id="提示模板（PromptTemplate）"><a href="#提示模板（PromptTemplate）" class="headerlink" title="提示模板（PromptTemplate）"></a>提示模板（<strong>PromptTemplate</strong>）</h4><ul>
+<li>提示模板是一种生成提示的方式，包含一个带有可替换内容的模板，从用户那获取一组参数并生成提示</li>
+<li>提示模板用来生成 LLMs 的提示，最简单的使用场景，比如“我希望你扮演一个代码专家的角色，告诉我这个方法的原理 {code}”。</li>
+<li>类似于 python 中用字典的方式格式化字符串，但在 langchain 中都被封装成了对象</li>
+</ul>
+<p>一个简单的调用样例如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> langchain <span class="keyword">import</span> PromptTemplate</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">template = <span class="string">&quot;&quot;&quot;\</span></span><br><span class="line"><span class="string">You are a naming consultant for new companies.</span></span><br><span class="line"><span class="string">What is a good name for a company that makes &#123;product&#125;?</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">prompt = PromptTemplate.from_template(template)</span><br><span class="line">prompt.<span class="built_in">format</span>(product=<span class="string">&quot;colorful socks&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 实际输出</span><br><span class="line">You are a naming consultant for new companies.</span><br><span class="line">What is a good name for a company that makes colorful socks?</span><br></pre></td></tr></table></figure>
+
+<h4 id="聊天提示模板（ChatPromptTemplate）"><a href="#聊天提示模板（ChatPromptTemplate）" class="headerlink" title="聊天提示模板（ChatPromptTemplate）"></a>聊天提示模板（<strong>ChatPromptTemplate</strong>）</h4><ul>
+<li>聊天模型接收聊天消息作为输入，这些聊天消息通常称为 Message，和原始的提示模板不一样的是，这些消息都会和一个角色进行关联。</li>
+<li>在使用聊天模型时，建议使用聊天提示词模板，这样可以充分发挥聊天模型的潜力。</li>
+</ul>
+<p>一个简单的使用示例如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> langchain.prompts <span class="keyword">import</span> (</span><br><span class="line">    ChatPromptTemplate,</span><br><span class="line">    PromptTemplate,</span><br><span class="line">    SystemMessagePromptTemplate,</span><br><span class="line">    AIMessagePromptTemplate,</span><br><span class="line">    HumanMessagePromptTemplate,</span><br><span class="line">)</span><br><span class="line"><span class="keyword">from</span> langchain.schema <span class="keyword">import</span> (</span><br><span class="line">    AIMessage,</span><br><span class="line">    HumanMessage,</span><br><span class="line">    SystemMessage</span><br><span class="line">)</span><br><span class="line">template=<span class="string">&quot;You are a helpful assistant that translates &#123;input_language&#125; to &#123;output_language&#125;.&quot;</span></span><br><span class="line">system_message_prompt = SystemMessagePromptTemplate.from_template(template)</span><br><span class="line">human_template=<span class="string">&quot;&#123;text&#125;&quot;</span></span><br><span class="line">human_message_prompt = HumanMessagePromptTemplate.from_template(human_template)</span><br><span class="line">chat_prompt = ChatPromptTemplate.from_messages([system_message_prompt, human_message_prompt])</span><br><span class="line"></span><br><span class="line"><span class="comment"># get a chat completion from the formatted messages</span></span><br><span class="line">chat_prompt.format_prompt(input_language=<span class="string">&quot;English&quot;</span>, output_language=<span class="string">&quot;French&quot;</span>, text=<span class="string">&quot;I love programming.&quot;</span>).to_messages()</span><br></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[SystemMessage(content=<span class="string">&#x27;You are a helpful assistant that translates English to French.&#x27;</span>, additional_kwargs=&#123;&#125;),</span><br><span class="line">     HumanMessage(content=<span class="string">&#x27;I love programming.&#x27;</span>, additional_kwargs=&#123;&#125;)]</span><br></pre></td></tr></table></figure>
+
+<h3 id="Output-Parsers"><a href="#Output-Parsers" class="headerlink" title="Output Parsers"></a>Output Parsers</h3><p>语言模型输出的是普通的字符串，有的时候我们可能想得到结构化的表示，比如 JSON 或者 CSV，一个有效的方法就是使用输出解析器。</p>
+<p>输出解析器是帮助构建语言模型输出的类，主要实现了两个功能：</p>
+<ol>
+<li>获取格式指令，是一个文本字符串需要指明语言模型的输出应该如何被格式化</li>
+<li>解析，一种接受字符串并将其解析成固定结构的方法，可以自定义解析字符串的方式</li>
+</ol>
+<p>一个简单的使用示例如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> langchain.prompts <span class="keyword">import</span> PromptTemplate, ChatPromptTemplate, HumanMessagePromptTemplate</span><br><span class="line"><span class="keyword">from</span> langchain.llms <span class="keyword">import</span> OpenAI</span><br><span class="line"><span class="keyword">from</span> langchain.chat_models <span class="keyword">import</span> ChatOpenAI</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> langchain.output_parsers <span class="keyword">import</span> PydanticOutputParser</span><br><span class="line"><span class="keyword">from</span> pydantic <span class="keyword">import</span> BaseModel, Field, validator</span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">List</span></span><br><span class="line"></span><br><span class="line">model_name = <span class="string">&#x27;text-davinci-003&#x27;</span></span><br><span class="line">temperature = <span class="number">0.0</span></span><br><span class="line">model = OpenAI(model_name=model_name, temperature=temperature)</span><br><span class="line"><span class="comment"># Define your desired data structure.</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Joke</span>(<span class="title class_ inherited__">BaseModel</span>):</span><br><span class="line">    setup: <span class="built_in">str</span> = Field(description=<span class="string">&quot;question to set up a joke&quot;</span>)</span><br><span class="line">    punchline: <span class="built_in">str</span> = Field(description=<span class="string">&quot;answer to resolve the joke&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># You can add custom validation logic easily with Pydantic.</span></span><br><span class="line"><span class="meta">    @validator(<span class="params"><span class="string">&#x27;setup&#x27;</span></span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">question_ends_with_question_mark</span>(<span class="params">cls, field</span>):</span><br><span class="line">        <span class="keyword">if</span> field[-<span class="number">1</span>] != <span class="string">&#x27;?&#x27;</span>:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">&quot;Badly formed question!&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> field</span><br><span class="line"> <span class="comment"># Set up a parser + inject instructions into the prompt template.</span></span><br><span class="line">parser = PydanticOutputParser(pydantic_object=Joke)</span><br><span class="line">prompt = PromptTemplate(</span><br><span class="line">    template=<span class="string">&quot;Answer the user query.\n&#123;format_instructions&#125;\n&#123;query&#125;\n&quot;</span>,</span><br><span class="line">    input_variables=[<span class="string">&quot;query&quot;</span>],</span><br><span class="line">    partial_variables=&#123;<span class="string">&quot;format_instructions&quot;</span>: parser.get_format_instructions()&#125;</span><br><span class="line">)</span><br><span class="line"><span class="comment"># And a query intended to prompt a language model to populate the data structure.</span></span><br><span class="line">joke_query = <span class="string">&quot;Tell me a joke.&quot;</span></span><br><span class="line">_<span class="built_in">input</span> = prompt.format_prompt(query=joke_query)</span><br><span class="line">output = model(_<span class="built_in">input</span>.to_string())</span><br><span class="line">parser.parse(output)</span><br></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Joke(setup=<span class="string">&#x27;Why did the chicken cross the road?&#x27;</span>, </span><br><span class="line">       punchline=<span class="string">&#x27;To get to the other side!&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="2、数据接入层"><a href="#2、数据接入层" class="headerlink" title="2、数据接入层"></a>2、数据接入层</h2><p><img src="/2024/01/30/NLP/LangChain/2024-01-30-17-00-26-image.png"></p>
+<p>有的时候，我们希望语言模型可以从自己的数据中进行查询，而不是仅依靠自己本身输出一个结果。数据连接器的组件就允许你使用内置的方法去读取、修改，存储和查询自己的数据，主要有下面几个组件组成。</p>
+<ul>
+<li>文档加载器（Document loaders）：连接不同的数据源，加载文档。</li>
+<li>文档转换器（Document transformers）：定义了常见的一些对文档加工的操作，比如切分文档，丢弃无用的数据</li>
+<li>文本向量模型（Text embedding models）：将非结构化的文本数据转换成一个固定维度的浮点数向量</li>
+<li>向量数据库（Vector stores）：存储和检索你的向量数据</li>
+<li>检索器（Retrievers）：用于检索你的数据</li>
+</ul>
+<h2 id="3、Embedding专题"><a href="#3、Embedding专题" class="headerlink" title="3、Embedding专题"></a>3、Embedding专题</h2><p>在机器学习中，向量通常用于表示数据的特征。</p>
+<p>而文本嵌入是一种将文本这种离散数据映射到连续向量空间的方法，嵌入技术可以将高维的离散数据降维到低维的连续空间中，并保留数据之间的语义关系，从而方便进行机器学习和深度学习的任务。</p>
+<h3 id="文本嵌入算法"><a href="#文本嵌入算法" class="headerlink" title="文本嵌入算法"></a><strong>文本嵌入算法</strong></h3><p>文本嵌入算法是指将文本数据转化为向量表示的具体算法，通常包括以下几个步骤：</p>
+<ul>
+<li>分词：将文本划分成一个个单词或短语。</li>
+<li>构建词汇表：将分词后的单词或短语建立词汇表，并为每个单词或短语赋予一个唯一的编号。</li>
+<li>计算词嵌入：使用预训练的模型或自行训练的模型，将每个单词或短语映射到向量空间中。</li>
+<li>计算文本嵌入：将文本中每个单词或短语的向量表示取平均或加权平均，得到整个文本的向量表示。</li>
+</ul>
+<p>常见的文本嵌入算法包括 Word2Vec、GloVe、FastText 等。这些算法通过预训练或自行训练的方式，将单词或短语映射到低维向量空间中，从而能够在计算机中方便地处理文本数据。</p>
+<h3 id="文本嵌入用途"><a href="#文本嵌入用途" class="headerlink" title="文本嵌入用途"></a><strong>文本嵌入用途</strong></h3><p>文本嵌入用于测量文本字符串的相关性，通常用于：</p>
+<ul>
+<li>搜索（结果按与查询字符串的相关性排序）</li>
+<li>聚类（其中文本字符串按相似性分组）</li>
+<li>推荐（推荐具有相关文本字符串的项目）</li>
+<li>异常检测（识别出相关性很小的异常值）</li>
+<li>多样性测量（分析相似性分布）</li>
+<li>分类（其中文本字符串按其最相似的标签分类）</li>
+</ul>
+<h3 id="使用文本嵌入模型"><a href="#使用文本嵌入模型" class="headerlink" title="使用文本嵌入模型"></a><strong>使用文本嵌入模型</strong></h3><ul>
+<li><p>可以使用 HuggingFace上能够处理文本嵌入的开源模型，例如：<a href="https://link.zhihu.com/?target=https://huggingface.co/uer/sbert-base-chinese-nli">uer&#x2F;sbert-base-chinese-nli</a></p>
+</li>
+<li><p>使用之前介绍的 <a href="https://link.zhihu.com/?target=https://aitutor.liduos.com/01-llm/01-3.html%23embeddings">OpenAI 文本嵌入API</a> 可以将文本转换为向量，OpenAI API提供了多个文本嵌入模型，<a href="https://link.zhihu.com/?target=https://openai.com/blog/new-and-improved-embedding-mode">这篇博客</a>对它们的性能进行了比较，这里是性能最好的<code>text-embedding-ada-002</code>说明：</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>模型名称</th>
+<th>价格</th>
+<th>分词器</th>
+<th>最大输入 token</th>
+<th>输出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>text-embedding-ada-002</td>
+<td>$0.000&#x2F;1k tokens</td>
+<td>cl100k_base</td>
+<td>8191</td>
+<td>1536</td>
+</tr>
+</tbody></table>
+<h3 id="支持文本嵌入的其他模型"><a href="#支持文本嵌入的其他模型" class="headerlink" title="支持文本嵌入的其他模型"></a>支持文本嵌入的其他模型</h3><ul>
+<li><a href="https://link.zhihu.com/?target=https://huggingface.co/nghuyong/ernie-3.0-nano-zh">nghuyong&#x2F;ernie-3.0-nano-zh</a></li>
+<li><a href="https://link.zhihu.com/?target=https://huggingface.co/shibing624/text2vec-base-chinese">shibing624&#x2F;text2vec-base-chinese</a></li>
+<li><a href="https://link.zhihu.com/?target=https://huggingface.co/GanymedeNil/text2vec-large-chinese">GanymedeNil&#x2F;text2vec-large-chinese</a></li>
+<li><a href="https://link.zhihu.com/?target=https://huggingface.co/moka-ai/m3e-base">moka-ai&#x2F;m3e-base</a></li>
+<li><a href="https://link.zhihu.com/?target=https://github.com/UKPLab/sentence-transformers">用于句子、文本和图像嵌入的Python库</a></li>
+</ul>
+<h3 id="矢量数据库"><a href="#矢量数据库" class="headerlink" title="矢量数据库"></a><strong>矢量数据库</strong></h3><ul>
+<li><p>为了快速搜索多个矢量，建议使用矢量数据库，下面是一些可选的矢量数据库：</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/openai/openai-cookbook/tree/main/examples/vector_databases/pinecone">Pinecone</a>，一个完全托管的矢量数据库</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/openai/openai-cookbook/tree/main/examples/vector_databases/weaviate">Weaviate</a>，一个开源的矢量搜索引擎</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/openai/openai-cookbook/tree/main/examples/vector_databases/redis">Redis</a>作为矢量数据库</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/openai/openai-cookbook/tree/main/examples/vector_databases/qdrant">Qdrant</a>，一个矢量搜索引擎（开源免费）</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/openai/openai-cookbook/blob/main/examples/vector_databases/Using_vector_databases_for_embeddings_search.ipynb">Milvus</a>，一个为可扩展的相似性搜索而构建的矢量数据库</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/chroma-core/chroma">Chroma</a>，一个开源嵌入式商店</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://typesense.org/docs/0.24.0/api/vector-search.html">Typesense</a>，快速的开源矢量搜索引擎</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/openai/openai-cookbook/tree/main/examples/vector_databases/zilliz">Zilliz</a>，数据基础设施，由Milvus提供技术支持</p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https://github.com/facebookresearch/faiss">FAISS</a> 是Meta开源的用于高效搜索大规模矢量数据集的库</p>
+</li>
+</ul>
+<h2 id="5、Chains模块"><a href="#5、Chains模块" class="headerlink" title="5、Chains模块"></a>5、Chains模块</h2><p>链定义为对组件的一系列调用</p>
+<p>在 LangChain 中有许多实现好的 chain，以最基础的 LLMChain 为例，它主要实现的就是接收一个提示词模板，然后对用户输入进行格式化，然后输入到一个 LLM，最终返回 LLM 的输出。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> langchain.llms <span class="keyword">import</span> OpenAI</span><br><span class="line"><span class="keyword">from</span> langchain.prompts <span class="keyword">import</span> PromptTemplate</span><br><span class="line"></span><br><span class="line">llm = OpenAI(temperature=<span class="number">0.9</span>)</span><br><span class="line">prompt = PromptTemplate(</span><br><span class="line">    input_variables=[<span class="string">&quot;product&quot;</span>],</span><br><span class="line">    template=<span class="string">&quot;What is a good name for a company that makes &#123;product&#125;?&quot;</span>,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> langchain.chains <span class="keyword">import</span> LLMChain</span><br><span class="line">chain = LLMChain(llm=llm, prompt=prompt)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Run the chain only specifying the input variable.</span></span><br><span class="line"><span class="built_in">print</span>(chain.run(<span class="string">&quot;colorful socks&quot;</span>))</span><br></pre></td></tr></table></figure>
+
+<p>LLMChain 不仅支持 llm，同样也支持 chat llm，下面是一个调用示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> langchain.chat_models <span class="keyword">import</span> ChatOpenAI</span><br><span class="line"><span class="keyword">from</span> langchain.prompts.chat <span class="keyword">import</span> (</span><br><span class="line">    ChatPromptTemplate,</span><br><span class="line">    HumanMessagePromptTemplate,</span><br><span class="line">)</span><br><span class="line">human_message_prompt = HumanMessagePromptTemplate(</span><br><span class="line">        prompt=PromptTemplate(</span><br><span class="line">            template=<span class="string">&quot;What is a good name for a company that makes &#123;product&#125;?&quot;</span>,</span><br><span class="line">            input_variables=[<span class="string">&quot;product&quot;</span>],</span><br><span class="line">        )</span><br><span class="line">    )</span><br><span class="line">chat_prompt_template = ChatPromptTemplate.from_messages([human_message_prompt])</span><br><span class="line">chat = ChatOpenAI(temperature=<span class="number">0.9</span>)</span><br><span class="line">chain = LLMChain(llm=chat, prompt=chat_prompt_template)</span><br><span class="line"><span class="built_in">print</span>(chain.run(<span class="string">&quot;colorful socks&quot;</span>))</span><br></pre></td></tr></table></figure>
+
+<h2 id="4、存储管理Memory"><a href="#4、存储管理Memory" class="headerlink" title="4、存储管理Memory"></a>4、存储管理Memory</h2><p>支持LLM 进行多轮的对话</p>
+<p>在 LangChain 中，提供这个功能的模块就称为 Memory，用于存储用户和模型交互的历史信息。在 LangChain 中根据功能和返回值的不同，会有多种不同的 Memory 类型，主要可以分为以下几个类别：</p>
+<ol>
+<li>对话缓冲区内存（ConversationBufferMemory），最基础的内存模块，用于存储历史的信息</li>
+<li>对话缓冲器窗口内存（ConversationBufferWindowMemory），只保存最后的 K 轮对话的信息，因此这种内存空间使用会相对较少</li>
+<li>对话摘要内存（ConversationSummaryMemory），这种模式会对历史的所有信息进行抽取，生成摘要信息，然后将摘要信息作为历史信息进行保存。</li>
+<li>对话摘要缓存内存（ConversationSummaryBufferMemory），这个和上面的作用基本一致，但是有最大 token 数的限制，达到这个最大 token 数的时候就会进行合并历史信息生成摘要</li>
+</ol>
+<p>值得注意的是，对话摘要内存的设计出发点就是<strong>语言模型能支持的上下文长度是有限的（一般是 2048），超过了这个长度的数据天然的就被截断了</strong>。<strong>这个类会根据对话的轮次进行合并，默认值是 2，也就是每 2 轮就开启一次调用 LLM 去合并历史信息。</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> langchain.memory <span class="keyword">import</span> ConversationBufferMemory</span><br><span class="line">memory = ConversationBufferMemory(memory_key=<span class="string">&quot;chat_history&quot;</span>)</span><br><span class="line">memory.chat_memory.add_user_message(<span class="string">&quot;hi!&quot;</span>)</span><br><span class="line">memory.chat_memory.add_ai_message(<span class="string">&quot;whats up?&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>参考官方的教程，Memory 同时支持 LLM 和 Chat model。</p>
+<h3 id="llm"><a href="#llm" class="headerlink" title="llm"></a>llm</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> langchain.llms <span class="keyword">import</span> OpenAI</span><br><span class="line"><span class="keyword">from</span> langchain.prompts <span class="keyword">import</span> PromptTemplate</span><br><span class="line"><span class="keyword">from</span> langchain.chains <span class="keyword">import</span> LLMChain</span><br><span class="line"><span class="keyword">from</span> langchain.memory <span class="keyword">import</span> ConversationBufferMemory</span><br><span class="line"></span><br><span class="line"><span class="comment"># llm </span></span><br><span class="line">llm = OpenAI(temperature=<span class="number">0</span>)</span><br><span class="line"><span class="comment"># Notice that &quot;chat_history&quot; is present in the prompt template</span></span><br><span class="line">template = <span class="string">&quot;&quot;&quot;You are a nice chatbot having a conversation with a human.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Previous conversation:</span></span><br><span class="line"><span class="string">&#123;chat_history&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">New human question: &#123;question&#125;</span></span><br><span class="line"><span class="string">Response:&quot;&quot;&quot;</span></span><br><span class="line">prompt = PromptTemplate.from_template(template)</span><br><span class="line"><span class="comment"># Notice that we need to align the `memory_key`</span></span><br><span class="line">memory = ConversationBufferMemory(memory_key=<span class="string">&quot;chat_history&quot;</span>)</span><br><span class="line">conversation = LLMChain(</span><br><span class="line">    llm=llm,</span><br><span class="line">    prompt=prompt,</span><br><span class="line">    verbose=<span class="literal">True</span>,</span><br><span class="line">    memory=memory</span><br><span class="line">)</span><br><span class="line">conversation(&#123;<span class="string">&quot;question&quot;</span>: <span class="string">&quot;hi&quot;</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="chat-llm"><a href="#chat-llm" class="headerlink" title="chat-llm"></a>chat-llm</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> langchain.chat_models <span class="keyword">import</span> ChatOpenAI</span><br><span class="line"><span class="keyword">from</span> langchain.prompts <span class="keyword">import</span> (</span><br><span class="line">    ChatPromptTemplate,</span><br><span class="line">    MessagesPlaceholder,</span><br><span class="line">    SystemMessagePromptTemplate,</span><br><span class="line">    HumanMessagePromptTemplate,</span><br><span class="line">)</span><br><span class="line"><span class="keyword">from</span> langchain.chains <span class="keyword">import</span> LLMChain</span><br><span class="line"><span class="keyword">from</span> langchain.memory <span class="keyword">import</span> ConversationBufferMemory</span><br><span class="line"></span><br><span class="line"><span class="comment"># chatllm</span></span><br><span class="line">llm = ChatOpenAI()</span><br><span class="line">prompt = ChatPromptTemplate(</span><br><span class="line">    messages=[</span><br><span class="line">        SystemMessagePromptTemplate.from_template(</span><br><span class="line">            <span class="string">&quot;You are a nice chatbot having a conversation with a human.&quot;</span></span><br><span class="line">        ),</span><br><span class="line">        <span class="comment"># The `variable_name` here is what must align with memory</span></span><br><span class="line">        MessagesPlaceholder(variable_name=<span class="string">&quot;chat_history&quot;</span>),</span><br><span class="line">        HumanMessagePromptTemplate.from_template(<span class="string">&quot;&#123;question&#125;&quot;</span>)</span><br><span class="line">    ]</span><br><span class="line">)</span><br><span class="line"><span class="comment"># Notice that we `return_messages=True` to fit into the MessagesPlaceholder</span></span><br><span class="line"><span class="comment"># Notice that `&quot;chat_history&quot;` aligns with the MessagesPlaceholder name.</span></span><br><span class="line">memory = ConversationBufferMemory(memory_key=<span class="string">&quot;chat_history&quot;</span>, return_messages=<span class="literal">True</span>)</span><br><span class="line">conversation = LLMChain(</span><br><span class="line">    llm=llm,</span><br><span class="line">    prompt=prompt,</span><br><span class="line">    verbose=<span class="literal">True</span>,</span><br><span class="line">    memory=memory</span><br><span class="line">)</span><br><span class="line">conversation(&#123;<span class="string">&quot;question&quot;</span>: <span class="string">&quot;hi&quot;</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="5、代理模块Agent"><a href="#5、代理模块Agent" class="headerlink" title="5、代理模块Agent"></a>5、代理模块Agent</h2><p>某些应用程序需要基于用户输入的对LLM和其他工具的灵活调用链。Agents为此类应用程序提供了灵活性。代理可以访问单一工具，并根据用户输入确定要使用的工具。代理可以使用多个工具，并使用一个工具的输出作为下一个工具的输入。</p>
+<p>代理的核心思想就是使用 LLM 去选择对用户的输入，应该使用哪个特定的工具去进行操作。这里的工具可以是另外的一个 LLM，也可以是一个函数或者一个 chain。在代理模块中，有三个核心的概念。</p>
+<p>1、<strong>Agent</strong> </p>
+<p>        依托于强力的语言模型和提示词，代理是用来决定下一步要做什么，其核心也是构建一个优秀的提示词。这个提示词大致有下面几个作用：</p>
+<ul>
+<li>角色定义，给代理设定一个符合自己的身份</li>
+<li>上下文信息，提供给他更多的信息来要求他可以执行什么任务</li>
+<li>丰富的提示策略，增加代理的推理能力</li>
+</ul>
+<p>2、<strong>Tools</strong>： </p>
+<p>        代理会选择不同的工具去执行不同的任务。工具主要给代理提供调用自己的方法，并且会描述自己如何被使用。工具的这两点都十分重要，如果你没有提供可以调用工具的方法，那么代理就永远完不成自己的任务；同时如果没有正确的描述工具，代理就不知道如何去使用工具。</p>
+<p>3、<strong>Toolkits</strong>： LangChain 提供了工具包的使用，在一个工具包里通常包含 3-5 个工具。</p>
+<p>Agent 技术是目前大语言模型研究的一个前沿和热点方向，但是目前受限于大模型的实际效果，仅 GPT 4.0 可以有效的开展 Agent 相关的研究。我们相信在未来，随着大模型性能的优化和迭代，Agent 技术应该能有更好的发展和前景。</p>
+<h2 id="6、Callback模块"><a href="#6、Callback模块" class="headerlink" title="6、Callback模块"></a>6、Callback模块</h2><p>回调模块允许接到LLM应用程序的各个阶段，鉴于LLM的幻觉问题，这对于日志记录、监视、流式处理和其他任务非常有用，现在也有专用的工具Helicone，Arize AI等产品可用，下面我们开始看代码：</p>
+<h2 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h2><p><a target="_blank" rel="noopener" href="https://www.zhihu.com/tardis/bd/art/656646499?source_id=1001">小白入门大模型：LangChain</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/LLM/" rel="tag"># LLM</a>
+              <a href="/tags/LangChain/" rel="tag"># LangChain</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/01/10/AI/RL/RL_DRL/" rel="prev" title="DRL">
+      <i class="fa fa-chevron-left"></i> DRL
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/01/30/CV/activation_function/" rel="next" title="CNN 激活函数">
+      CNN 激活函数 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81LangChain%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">1、LangChain介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E5%85%B4-LLM-%E6%8A%80%E6%9C%AF%E6%A0%88"><span class="nav-number">1.1.</span> <span class="nav-text">新兴 LLM 技术栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%A2%84%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B"><span class="nav-number">1.2.</span> <span class="nav-text">数据预处理流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B5%8C%E5%85%A5%E7%AB%AF%E7%82%B9%E5%92%8C%E5%90%91%E9%87%8F%E5%AD%98%E5%82%A8"><span class="nav-number">1.3.</span> <span class="nav-text">嵌入端点和向量存储</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LLM%E7%BB%88%E7%AB%AF"><span class="nav-number">1.4.</span> <span class="nav-text">LLM终端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LLM%E7%BC%96%E7%A8%8B%E6%A1%86%E6%9E%B6"><span class="nav-number">1.5.</span> <span class="nav-text">LLM编程框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E7%BB%84%E4%BB%B6%E8%A7%A3%E9%87%8A"><span class="nav-number">1.6.</span> <span class="nav-text">关键组件解释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B8%E5%9E%8B%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">1.7.</span> <span class="nav-text">典型应用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Langchain-%E7%AB%9E%E5%93%81"><span class="nav-number">1.8.</span> <span class="nav-text">Langchain 竞品</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AD%E5%A4%A7%E6%A8%A1%E5%9D%97"><span class="nav-number"></span> <span class="nav-text">六大模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81LLM%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%AE%A1%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">1、LLM输入输出管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Models"><span class="nav-number">1.1.</span> <span class="nav-text">Models</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Prompts"><span class="nav-number">1.2.</span> <span class="nav-text">Prompts</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8F%90%E7%A4%BA%E6%A8%A1%E6%9D%BF%EF%BC%88PromptTemplate%EF%BC%89"><span class="nav-number">1.2.1.</span> <span class="nav-text">提示模板（PromptTemplate）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%81%8A%E5%A4%A9%E6%8F%90%E7%A4%BA%E6%A8%A1%E6%9D%BF%EF%BC%88ChatPromptTemplate%EF%BC%89"><span class="nav-number">1.2.2.</span> <span class="nav-text">聊天提示模板（ChatPromptTemplate）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Output-Parsers"><span class="nav-number">1.3.</span> <span class="nav-text">Output Parsers</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E6%95%B0%E6%8D%AE%E6%8E%A5%E5%85%A5%E5%B1%82"><span class="nav-number">2.</span> <span class="nav-text">2、数据接入层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81Embedding%E4%B8%93%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">3、Embedding专题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E5%B5%8C%E5%85%A5%E7%AE%97%E6%B3%95"><span class="nav-number">3.1.</span> <span class="nav-text">文本嵌入算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E5%B5%8C%E5%85%A5%E7%94%A8%E9%80%94"><span class="nav-number">3.2.</span> <span class="nav-text">文本嵌入用途</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%87%E6%9C%AC%E5%B5%8C%E5%85%A5%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.3.</span> <span class="nav-text">使用文本嵌入模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%AF%E6%8C%81%E6%96%87%E6%9C%AC%E5%B5%8C%E5%85%A5%E7%9A%84%E5%85%B6%E4%BB%96%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.4.</span> <span class="nav-text">支持文本嵌入的其他模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9F%A2%E9%87%8F%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">3.5.</span> <span class="nav-text">矢量数据库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5%E3%80%81Chains%E6%A8%A1%E5%9D%97"><span class="nav-number">4.</span> <span class="nav-text">5、Chains模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E3%80%81%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86Memory"><span class="nav-number">5.</span> <span class="nav-text">4、存储管理Memory</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#llm"><span class="nav-number">5.1.</span> <span class="nav-text">llm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chat-llm"><span class="nav-number">5.2.</span> <span class="nav-text">chat-llm</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5%E3%80%81%E4%BB%A3%E7%90%86%E6%A8%A1%E5%9D%97Agent"><span class="nav-number">6.</span> <span class="nav-text">5、代理模块Agent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6%E3%80%81Callback%E6%A8%A1%E5%9D%97"><span class="nav-number">7.</span> <span class="nav-text">6、Callback模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99%EF%BC%9A"><span class="nav-number">8.</span> <span class="nav-text">参考资料：</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

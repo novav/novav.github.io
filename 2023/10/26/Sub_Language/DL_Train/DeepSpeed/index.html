@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="deepspeed入门教程DeepSpeed是微软推出的大规模模型分布式训练的工具，主要实现了ZeRO并行训练算法。 本文是huggingface的DeepSpeed文档的笔记，做查询和备忘，初次学习建议结合原始文档食用。原始文档链接： deepSpeed入门教程 https:&#x2F;&#x2F;huggingface.co&#x2F;docs&#x2F;transformers&#x2F;main&#x2F;main_classes&#x2F;deepspee">
+<meta property="og:type" content="article">
+<meta property="og:title" content="deepspeed入门教程">
+<meta property="og:url" content="https://novav.github.io/2023/10/26/Sub_Language/DL_Train/DeepSpeed/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="deepspeed入门教程DeepSpeed是微软推出的大规模模型分布式训练的工具，主要实现了ZeRO并行训练算法。 本文是huggingface的DeepSpeed文档的笔记，做查询和备忘，初次学习建议结合原始文档食用。原始文档链接： deepSpeed入门教程 https:&#x2F;&#x2F;huggingface.co&#x2F;docs&#x2F;transformers&#x2F;main&#x2F;main_classes&#x2F;deepspee">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2023/10/26/Sub_Language/DL_Train/DeepSpeed/2025-08-06-16-05-09-image.png">
+<meta property="og:image" content="https://novav.github.io/2023/10/26/Sub_Language/DL_Train/DeepSpeed/2025-08-06-16-05-32-image.png">
+<meta property="og:image" content="https://novav.github.io/2023/10/26/Sub_Language/DL_Train/DeepSpeed/2025-08-06-16-05-47-image.png">
+<meta property="article:published_time" content="2023-10-26T16:50:00.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:40.540Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="deepspeed">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2023/10/26/Sub_Language/DL_Train/DeepSpeed/2025-08-06-16-05-09-image.png">
+
+<link rel="canonical" href="https://novav.github.io/2023/10/26/Sub_Language/DL_Train/DeepSpeed/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>deepspeed入门教程 | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2023/10/26/Sub_Language/DL_Train/DeepSpeed/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          deepspeed入门教程
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-10-26 16:50:00" itemprop="dateCreated datePublished" datetime="2023-10-26T16:50:00+00:00">2023-10-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DNN-Platform/" itemprop="url" rel="index"><span itemprop="name">DNN_Platform</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DNN-Platform/deepspeed/" itemprop="url" rel="index"><span itemprop="name">deepspeed</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="deepspeed入门教程"><a href="#deepspeed入门教程" class="headerlink" title="deepspeed入门教程"></a>deepspeed入门教程</h1><p>DeepSpeed是微软推出的大规模模型分布式训练的工具，主要实现了ZeRO并行训练算法。</p>
+<p>本文是huggingface的DeepSpeed文档的笔记，做查询和备忘，初次学习建议结合原始文档食用。原始文档链接：</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/630734624">deepSpeed入门教程</a></p>
+<p><a target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/main/main_classes/deepspeed">https://huggingface.co/docs/transformers/main/main_classes/deepspeed</a></p>
+<h2 id="分布式训练"><a href="#分布式训练" class="headerlink" title="分布式训练"></a>分布式训练</h2><p>目前主流的大模型分布式训练主要包括两种：</p>
+<ul>
+<li><p>数据并行训练</p>
+</li>
+<li><p>模型并行训练</p>
+</li>
+</ul>
+<span id="more"></span>
+
+<h2 id="Deep-Speed"><a href="#Deep-Speed" class="headerlink" title="Deep Speed"></a>Deep Speed</h2><h3 id="1-基础组件"><a href="#1-基础组件" class="headerlink" title="1 基础组件"></a>1 基础组件</h3><p>分布式训练需要掌握分布式环境中的基础配置，包括节点变化、全局进程编号、局部进程编号、全局总进程数、主节点等。这些组件都跟分布式训练紧密相关，同时组件之间也有非常大的联系，例如通信联系等。</p>
+<h3 id="2-通讯策略"><a href="#2-通讯策略" class="headerlink" title="2 通讯策略"></a>2 通讯策略</h3><table>
+<thead>
+<tr>
+<th>通信策略</th>
+<th>通信作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>mpi</td>
+<td>它是一种跨界点的通信库，经常用于CPU集群的分布式训练</td>
+</tr>
+<tr>
+<td>gloo</td>
+<td>它是一种高性能的分布式训练框架，可以支持CPU或者GPU的分布式训练</td>
+</tr>
+<tr>
+<td>nccl</td>
+<td>它是nvidia提供的GPU专用通信库，广泛用于GPU上的分布式训练</td>
+</tr>
+</tbody></table>
+<p>我们在使用DeepSpeed进行分布式训练的时候，可以根据自身的情况选择合适的通信库，通常情况下，如果是GPU进行分布式训练，可以选择nccl。</p>
+<h3 id="3-Zero（零冗余优化器）"><a href="#3-Zero（零冗余优化器）" class="headerlink" title="3 Zero（零冗余优化器）"></a>3 Zero（零冗余优化器）</h3><p>Microsoft开发的Zero可以解决分布式训练过程中<mark>数据并行</mark>和<mark>模型并行</mark>的限制。</p>
+<p>Zero通过在数据并行过程中划分模型状态（优化器、梯度、参数），来解决数据并行成可能出现内存冗余的情况（正常数据并行训练，模型全部参数是复制在各个机器上的）；同时可以在训练期间使用动态通信计划，在分布式设备之间共享重要的状态变量，这样保持计算粒度和数据并行的通信量。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>措施</th>
+<th>目的</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>数据并行</td>
+<td>模型状态划分（优化器，梯度，参数）</td>
+<td>减少内存冗余（原本是参数复制在各个机器上）</td>
+</tr>
+<tr>
+<td></td>
+<td>动态通讯计划</td>
+<td>共享重要的状态变量</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>Zero是用于大规模模型训练优化的技术，它的主要目的是减少模型的内存占用，让模型可以在显卡上训练，内存占用主要分为Model States和Activation两个部分，Zero主要解决的是Model States的内存占用问题。</p>
+<p>Zero将模型参数分成三个部分：</p>
+<table>
+<thead>
+<tr>
+<th>状态</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Optimizer States</td>
+<td>优化器在进行梯度更新的时候需要用到的数据</td>
+</tr>
+<tr>
+<td>Gradient</td>
+<td>在反向转播过程中产生的数据，其决定参数的更新方向</td>
+</tr>
+<tr>
+<td>Model Parameter</td>
+<td>模型参数，在模型训练过程中通过数据“学习”的信息</td>
+</tr>
+</tbody></table>
+<p>Zero的级别如下：</p>
+<table>
+<thead>
+<tr>
+<th>级别</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Zero-0</td>
+<td>不使用所有类型的分片，仅使用DeepSpeed作为DDP</td>
+</tr>
+<tr>
+<td>Zero-1</td>
+<td>分割Optimizer States， 减少4倍内存，通信容量和数据并行性相同</td>
+</tr>
+<tr>
+<td>Zero-2</td>
+<td>分割Optimizer States和Gradients，减少8倍内存，通信容量和数据并行性相同</td>
+</tr>
+<tr>
+<td>Zero-3</td>
+<td>分割Optimizer States、gradients、Parametes，内存减少与数据并行度呈线性关系。例如，在64个GPU（Nd&#x3D;64）之间进行拆分将产生64倍的内存缩减。通信量有50%的适度增长</td>
+</tr>
+<tr>
+<td>Zero-Infinity</td>
+<td>Zero-Infinity是Zero-3的扩展，它允许通过使用 NVMe 固态硬盘扩展 GPU 和 CPU 内存来训练大型模型</td>
+</tr>
+</tbody></table>
+<h3 id="2-4-Zero-Offload："><a href="#2-4-Zero-Offload：" class="headerlink" title="2.4 Zero-Offload："></a>2.4 Zero-Offload：</h3><p>相比GPU，CPU就相对比较廉价，所以Zero-Offload思想是将训练阶段的某些模型状态放（offload）到内存以及CPU计算。</p>
+<p><img src="/2023/10/26/Sub_Language/DL_Train/DeepSpeed/2025-08-06-16-05-09-image.png"></p>
+<p>Zero-Offload不希望为了最小化显存占用而让系统计算效率下降，但如果使用CPU也需要考虑通信和计算的问题（通信：GPU和CPU的通信；计算：CPU占用过多计算就会导致效率降低）。</p>
+<p>Zero-Offload想做的是把计算节点和数据节点分布在GPU和CPU上，计算节点落到哪个设备上，哪个设备就执行计算，数据节点落到哪个设备上，哪个设备就负责存储。</p>
+<h4 id="Zero-Offload切分思路："><a href="#Zero-Offload切分思路：" class="headerlink" title="Zero-Offload切分思路："></a>Zero-Offload切分思路：</h4><p>下图中有四个计算类节点：FWD、BWD、Param update和float2half，前两个计算复杂度大致是 O(MB)， B是batch size，后两个计算复杂度是 O(M)。为了不降低计算效率，将前两个节点放在GPU，后两个节点不但计算量小还需要和Adam状态打交道，所以放在CPU上，Adam状态自然也放在内存中，为了简化数据图，将前两个节点融合成一个节点FWD-BWD Super Node，将后两个节点融合成一个节点Update Super Node。如下图右边所示，沿着gradient 16和parameter 16两条边切分。</p>
+<p><img src="/2023/10/26/Sub_Language/DL_Train/DeepSpeed/2025-08-06-16-05-32-image.png"></p>
+<h4 id="Zero-Offload计算思路："><a href="#Zero-Offload计算思路：" class="headerlink" title="Zero-Offload计算思路："></a>Zero-Offload计算思路：</h4><p>在GPU上面进行前向和后向计算，将梯度传给CPU，进行参数更新，再将更新后的参数传给GPU。为了提高效率，可以将计算和通信并行起来，GPU在反向传播阶段，可以待梯度值填满bucket后，一遍计算新的梯度一遍将bucket传输给CPU，当反向传播结束，CPU基本上已经有最新的梯度值了，同样的，CPU在参数更新时也同步将已经计算好的参数传给GPU，如下图所示。</p>
+<p><img src="/2023/10/26/Sub_Language/DL_Train/DeepSpeed/2025-08-06-16-05-47-image.png"></p>
+<h3 id="2-5-混合精度："><a href="#2-5-混合精度：" class="headerlink" title="2.5 混合精度："></a>2.5 混合精度：</h3><p>混合精度训练是指在训练过程中同时使用FP16（半精度浮点数）和FP32（单精度浮点数）两种精度的技术。使用FP16可以大大减少内存占用，从而可以训练更大规模的模型。但是，由于FP16的精度较低，训练过程中可能会出现梯度消失和模型坍塌等问题。</p>
+<p>DeepSpeed支持混合精度的训练，可以在config.json配置文件中设置来启动混合精度（”fp16.enabled”:true）。在训练的过程中，DeepSpeed会自动将一部分操作转化为FP16格式，并根据需要动态调整精度缩放因子，来保证训练的稳定性和精度。</p>
+<p>在使用混合精度训练时，需要注意一些问题，例如梯度裁剪（Gradient Clipping）和学习率调整（Learning Rate Schedule）等。梯度裁剪可以防止梯度爆炸，学习率调整可以帮助模型更好地收敛。</p>
+<h2 id="三、总结"><a href="#三、总结" class="headerlink" title="三、总结"></a>三、总结</h2><p>DeepSpeed方便了我们在机器有限的情况下来训练、微调大模型，同时它也有很多优秀的性能来使用，后期可以继续挖掘。</p>
+<p>目前主流的达模型训练方式：GPU + PyTorch + Megatron-LM + DeepSpeed</p>
+<h2 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h2><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/qvhzagFFgNdtb3sSymhAdA"># 大模型训练框架 DeepSpeed 详解</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/624412809?utm_id=0"># DeepSpeed介绍–使用Demo</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/deepspeed/" rel="tag"># deepspeed</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/10/03/AI/RL/RL_envs/" rel="prev" title="RL Env Tools">
+      <i class="fa fa-chevron-left"></i> RL Env Tools
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/12/08/Course/ADAS/ADAS/" rel="next" title="ADAS 技术需求">
+      ADAS 技术需求 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#deepspeed%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">deepspeed入门教程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83"><span class="nav-number">1.1.</span> <span class="nav-text">分布式训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Deep-Speed"><span class="nav-number">1.2.</span> <span class="nav-text">Deep Speed</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%9F%BA%E7%A1%80%E7%BB%84%E4%BB%B6"><span class="nav-number">1.2.1.</span> <span class="nav-text">1 基础组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E9%80%9A%E8%AE%AF%E7%AD%96%E7%95%A5"><span class="nav-number">1.2.2.</span> <span class="nav-text">2 通讯策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Zero%EF%BC%88%E9%9B%B6%E5%86%97%E4%BD%99%E4%BC%98%E5%8C%96%E5%99%A8%EF%BC%89"><span class="nav-number">1.2.3.</span> <span class="nav-text">3 Zero（零冗余优化器）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-Zero-Offload%EF%BC%9A"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.4 Zero-Offload：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Zero-Offload%E5%88%87%E5%88%86%E6%80%9D%E8%B7%AF%EF%BC%9A"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">Zero-Offload切分思路：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Zero-Offload%E8%AE%A1%E7%AE%97%E6%80%9D%E8%B7%AF%EF%BC%9A"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">Zero-Offload计算思路：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-%E6%B7%B7%E5%90%88%E7%B2%BE%E5%BA%A6%EF%BC%9A"><span class="nav-number">1.2.5.</span> <span class="nav-text">2.5 混合精度：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%80%BB%E7%BB%93"><span class="nav-number">1.3.</span> <span class="nav-text">三、总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ref"><span class="nav-number">1.4.</span> <span class="nav-text">Ref</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

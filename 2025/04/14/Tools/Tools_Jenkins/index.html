@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="运行方式1、Jenkins 安装docker，使用三方docker  付费  2、jenkins安装docker客户端，  docker in docker，特权模式  3、直接使用宿主机的docker服务  优点：方便，简单，直观  确定：Jenkins可以全权管理所有的容器，包括自己，   docker如何运行：  docker-cli  docker.sock  docker-server">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jenkins 使用">
+<meta property="og:url" content="https://novav.github.io/2025/04/14/Tools/Tools_Jenkins/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="运行方式1、Jenkins 安装docker，使用三方docker  付费  2、jenkins安装docker客户端，  docker in docker，特权模式  3、直接使用宿主机的docker服务  优点：方便，简单，直观  确定：Jenkins可以全权管理所有的容器，包括自己，   docker如何运行：  docker-cli  docker.sock  docker-server">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2025/04/14/Tools/Tools_Jenkins/2025-04-14-15-08-56-image.png">
+<meta property="og:image" content="https://novav.github.io/2025/04/14/Tools/Tools_Jenkins/2025-04-14-15-44-37-image.png">
+<meta property="article:published_time" content="2025-04-14T12:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:40.568Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="Jenkins">
+<meta property="article:tag" content="CI&#x2F;CD">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2025/04/14/Tools/Tools_Jenkins/2025-04-14-15-08-56-image.png">
+
+<link rel="canonical" href="https://novav.github.io/2025/04/14/Tools/Tools_Jenkins/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Jenkins 使用 | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2025/04/14/Tools/Tools_Jenkins/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Jenkins 使用
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-04-14 12:00:00" itemprop="dateCreated datePublished" datetime="2025-04-14T12:00:00+00:00">2025-04-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="运行方式"><a href="#运行方式" class="headerlink" title="运行方式"></a>运行方式</h2><p>1、Jenkins 安装docker，使用三方docker</p>
+<ul>
+<li>付费</li>
+</ul>
+<p>2、jenkins安装docker客户端，</p>
+<ul>
+<li>docker in docker，特权模式</li>
+</ul>
+<p>3、直接使用宿主机的docker服务</p>
+<ul>
+<li><p>优点：方便，简单，直观</p>
+</li>
+<li><p>确定：Jenkins可以全权管理所有的容器，包括自己，</p>
+</li>
+</ul>
+<p>docker如何运行：</p>
+<ul>
+<li><p>docker-cli</p>
+</li>
+<li><p>docker.sock</p>
+</li>
+<li><p>docker-server</p>
+</li>
+</ul>
+<h3 id="Jenkins挂载运行-docker"><a href="#Jenkins挂载运行-docker" class="headerlink" title="Jenkins挂载运行+docker"></a>Jenkins挂载运行+docker</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker run \n </span><br><span class="line">    -v /usr/bin/docker:/usr/bin/docker</span><br><span class="line">    -v /var/run/docker.sock:/var/run/docker.sock</span><br><span class="line">    -u root</span><br><span class="line">    -d --name jenkins</span><br><span class="line">    -p 8120:8080\</span><br><span class="line">    jenkins/jenkins:jdk17</span><br></pre></td></tr></table></figure>
+
+<h2 id="Demo1-Web自动化"><a href="#Demo1-Web自动化" class="headerlink" title="Demo1-Web自动化"></a>Demo1-Web自动化</h2><h3 id="基于docker的web部署"><a href="#基于docker的web部署" class="headerlink" title="基于docker的web部署"></a>基于docker的web部署</h3><p>python + Git + Jenkins + Docker + Allure</p>
+<p>pytest + selenium + Allure Web自动化测试</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --shm-size 2G ccr.ccs.tencentyun.com/beifang/ui_framework:v1 </span><br></pre></td></tr></table></figure>
+
+<h3 id="生成报告（下载）"><a href="#生成报告（下载）" class="headerlink" title="生成报告（下载）"></a>生成报告（下载）</h3><p>1、不知都 生成的结果在那</p>
+<p>2、不知道 结果的权限？</p>
+<p>docker –&gt; host –&gt; jenkins</p>
+<h3 id="A-Jenkins，挂载host目录"><a href="#A-Jenkins，挂载host目录" class="headerlink" title="A. Jenkins，挂载host目录"></a>A. Jenkins，挂载host目录</h3><blockquote>
+<p> 共享文件夹 777 jenkins_home&#x2F;workspace</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">docker run \n </span><br><span class="line">    -v /usr/bin/docker:/usr/bin/docker</span><br><span class="line">    -v /var/run/docker.sock:/var/run/docker.sock</span><br><span class="line">    -v ./jenkins_home:/var/jenins_home</span><br><span class="line">    -u root</span><br><span class="line">    -d --name jenkins</span><br><span class="line">    -p 8120:8080\</span><br><span class="line">    jenkins/jenkins:jdk17</span><br></pre></td></tr></table></figure>
+
+<h3 id="B-任务docker，挂在共享文件夹"><a href="#B-任务docker，挂在共享文件夹" class="headerlink" title="B. 任务docker，挂在共享文件夹"></a>B. 任务docker，挂在共享文件夹</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p allure_results &amp;&amp; chown 777 allure_results</span><br><span class="line"></span><br><span class="line">docker run -v /path/jenkins_home/workspace/$JOB_NAME/allure-results:/app/.allure_results \</span><br><span class="line">     --shm-size 2G image:v2</span><br></pre></td></tr></table></figure>
+
+<p>权限不足：</p>
+<h2 id="Demo2-前端部署"><a href="#Demo2-前端部署" class="headerlink" title="Demo2-前端部署"></a>Demo2-前端部署</h2><h3 id="A-docker-容器部署"><a href="#A-docker-容器部署" class="headerlink" title="A.docker 容器部署"></a>A.docker 容器部署</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">version: &#x27;3&#x27;</span><br><span class="line">services:                                      </span><br><span class="line">  docker_jenkins:</span><br><span class="line">    user: root                                </span><br><span class="line">    restart: always                            </span><br><span class="line">    image: jenkins/jenkins:lts                 # 指定服务所使用的镜像 </span><br><span class="line">    container_name: jenkins                    # 容器名称</span><br><span class="line">    ports:                                     # 对外暴露的端口定义</span><br><span class="line">      - 8080:8080</span><br><span class="line">      - 50000:50000</span><br><span class="line">    volumes:                                   # 卷挂载路径</span><br><span class="line">      - /root/jenkins/jenkins_home/:/var/jenkins_home  #冒号前为刚刚创建的路径，这里要写绝对路径</span><br><span class="line">      - /var/run/docker.sock:/var/run/docker.sock</span><br><span class="line">      - /usr/bin/docker:/usr/bin/docker                </span><br><span class="line">      - /usr/local/bin/docker-compose:/usr/local/bin/docker-compose</span><br><span class="line">  docker_nginx:</span><br><span class="line">    restart: always</span><br><span class="line">    image: nginx</span><br><span class="line">    container_name: nginx</span><br><span class="line">    ports:</span><br><span class="line">      - 8090:80</span><br><span class="line">      - 80:80</span><br><span class="line">      - 433:433</span><br><span class="line">    volumes:</span><br><span class="line">      - /root/nginxcfg:/etc/nginx/conf.d  #用我们创建的Nginx配置去替换容器中的默认配置，冒号前为我们创建的目录的路径</span><br><span class="line">      - /root/nginxcfg/logs:/var/log/nginx  #nginx日志位置</span><br><span class="line">      - /root/xxx/xxx/xxx:/usr/share/nginx/html</span><br></pre></td></tr></table></figure>
+
+<p>nginx config</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">error_log  /var/log/nginx/error.log notice;</span><br><span class="line">server&#123; # 简单的监听80端口，指定index位置</span><br><span class="line">  listen  80;</span><br><span class="line">  root /usr/share/nginx/html;</span><br><span class="line">  index index.html index.htm;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="B-配置"><a href="#B-配置" class="headerlink" title="B. 配置"></a>B. 配置</h3><ol>
+<li>根据提示找到密码复制粘贴<br>通过这个命令可以获取，&#x2F;root&#x2F;jenkins&#x2F;jenkins_home为挂载目录<br>cat &#x2F;root&#x2F;jenkins&#x2F;jenkins_home&#x2F;secrets&#x2F;initialAdminPassword</li>
+<li>安装推荐的插件</li>
+<li>设置管理员账号</li>
+</ol>
+<p>然后就可以愉快的使用Jenkins了</p>
+<p>接着点击系统管理-&gt;插件管理，需要在Jenkins安装两个插件：</p>
+<ol>
+<li>安装 Publish Over SSH 作用: 将构建后的编译产出发布到服务器</li>
+<li>安装Generic Webhook Trigger Plugin作用：通用 Webhook 触发器构建</li>
+</ol>
+<h3 id="C-新建一个Jenkins构建任务"><a href="#C-新建一个Jenkins构建任务" class="headerlink" title="C. 新建一个Jenkins构建任务"></a>C. 新建一个Jenkins构建任务</h3><ul>
+<li><p>关联的git仓库有了推送事件之后触发的构建</p>
+</li>
+<li><p>系统管理-&gt;全局工具配置，安装nodejs</p>
+</li>
+<li><p>构建shell</p>
+</li>
+<li><pre><code class="language-shell">node -v  #查看node，npm 版本
+npm -v 
+npm i  #npm安装项目所需依赖
+npm install hexo-cli -g  #npm安装hexo
+hexo clean  #hexo清除缓存文件和静态文件
+hexo g  #hexo生成静态文件
+tar -zcvf public.tar ./public  #压缩生成的静态文件目录
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 发布</span><br><span class="line"></span><br><span class="line">```shell</span><br><span class="line">cd /root/yarbei/apps  #进入文件所在目录</span><br><span class="line">mv yarbeiweb yarbeiweb-$(date +%Y%m%d-%H%M) #将旧的文件夹更名备份</span><br><span class="line">tar zxvf public.tar  #解压public.tar</span><br><span class="line">mv public yarbeiweb  #将解压后的文件夹改名</span><br><span class="line">rm -rf public.tar  #删除压缩包</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ul>
+<h2 id="实践-hexo-编译发布"><a href="#实践-hexo-编译发布" class="headerlink" title="实践 hexo 编译发布"></a>实践 hexo 编译发布</h2><h3 id="hexo编译环境打包"><a href="#hexo编译环境打包" class="headerlink" title="hexo编译环境打包"></a>hexo编译环境打包</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/dataraid/apps/webs/DockerFile</span><br><span class="line"></span><br><span class="line">FROM docker.gh-proxy.com/jenkins/jenkins:lts-jdk17</span><br><span class="line">USER root </span><br><span class="line">RUN apt-get update &amp;&amp; \</span><br><span class="line">    curl -sL https://deb.nodesource.com/setup_18.x | bash - &amp;&amp; \</span><br><span class="line">    apt-get install -y nodejs &amp;&amp; \</span><br><span class="line">    npm install -g hexo-cli hexo-deployer-git</span><br><span class="line"></span><br><span class="line">USER jenkins</span><br></pre></td></tr></table></figure>
+
+<p>打包</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/dataraid/apps/webs/DockerFile</span><br><span class="line">docker build -t jenkins-hexo:latest -f DockerFile .</span><br></pre></td></tr></table></figure>
+
+<h3 id="启动Jenkins容器"><a href="#启动Jenkins容器" class="headerlink" title="启动Jenkins容器"></a>启动Jenkins容器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">docker run \</span><br><span class="line">    -v /usr/bin/docker:/usr/bin/docker \</span><br><span class="line">    -v /var/run/docker.sock:/var/run/docker.sock \ </span><br><span class="line">    -v ./jenkins_home:/var/jenins_home \</span><br><span class="line">    -u root \</span><br><span class="line">    -d --name jenkins \</span><br><span class="line">    -p 8120:8080 \</span><br><span class="line">    jenkins/jenkins:jdk17</span><br></pre></td></tr></table></figure>
+
+<h3 id="启动Hexo-编译容器（本地测试）"><a href="#启动Hexo-编译容器（本地测试）" class="headerlink" title="启动Hexo 编译容器（本地测试）"></a>启动Hexo 编译容器（本地测试）</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker run  \</span><br><span class="line">    -v /dataraid/apps/docker_runs/jenkins/jenkins_home/workspace/blogs:/workspace/blogs \</span><br><span class="line">    -w /workspace/blogs \</span><br><span class="line">    jenkins-hexo:latest \</span><br><span class="line">    /bin/sh -c &quot;npm install &amp;&amp; hexo clean &amp;&amp; hexo generate &quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Jenkins-job配置"><a href="#Jenkins-job配置" class="headerlink" title="Jenkins job配置"></a>Jenkins job配置</h3><p>略</p>
+<h3 id="webhook-触发器"><a href="#webhook-触发器" class="headerlink" title="webhook 触发器"></a>webhook 触发器</h3><p>1 Jenkins安装General Web Hook插件</p>
+<p>2、Jenkins job配置 trigger</p>
+<p>3、Jenkins 系统配置白名单</p>
+<p>4、gitea 工程，配置hook</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://ip:port/generic-webhook-trigger/invoke?token=blog_hexo_auto&quot;</span><br></pre></td></tr></table></figure>
+
+<p>5、gitea 配置app.ini (同机器部署，网络不通)</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[webhook]</span></span><br><span class="line"><span class="attr">ALLOWED_HOST_LIST</span> = *</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/misakivv/p/18075229#tid-bCF35D">Gitlab+Jenkins+Docker+Harbor+K8s集群搭建CICD平台(持续集成部署Hexo博客Demo) - misakivv - 博客园</a></p>
+<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1915574">docker+Jenkins+nginx实现前端自动部署详细教程-腾讯云开发者社区-腾讯云</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/518199661">从0到1体验Jenkins+Docker+Git+Registry实现CI自动化发布</a></p>
+<p><img src="/2025/04/14/Tools/Tools_Jenkins/2025-04-14-15-08-56-image.png"></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/sxy-blog/p/17911535.html">自动化发布静态页面 - Mrterrific - 博客园</a></p>
+<ul>
+<li>git pull -&gt; push to Host-A…</li>
+</ul>
+<p><img src="/2025/04/14/Tools/Tools_Jenkins/2025-04-14-15-44-37-image.png"></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_46532941/article/details/129888026">Gitea+K8s-Jenkins-master-slave(webhook钩子)_gitea web钩子-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/718902261">docker+nginx+jenkins将hexo博客部署至云服务器</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Jenkins/" rel="tag"># Jenkins</a>
+              <a href="/tags/CI-CD/" rel="tag"># CI/CD</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/04/08/Sub_Language/API_Web/FlaskRESTful/" rel="prev" title="API开发--Flask-RESTFul">
+      <i class="fa fa-chevron-left"></i> API开发--Flask-RESTFul
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/04/15/Sub_Language/PythonDoc/Language-flask/" rel="next" title="Flask API">
+      Flask API <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E6%96%B9%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">运行方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Jenkins%E6%8C%82%E8%BD%BD%E8%BF%90%E8%A1%8C-docker"><span class="nav-number">1.1.</span> <span class="nav-text">Jenkins挂载运行+docker</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Demo1-Web%E8%87%AA%E5%8A%A8%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">Demo1-Web自动化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8Edocker%E7%9A%84web%E9%83%A8%E7%BD%B2"><span class="nav-number">2.1.</span> <span class="nav-text">基于docker的web部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E6%8A%A5%E5%91%8A%EF%BC%88%E4%B8%8B%E8%BD%BD%EF%BC%89"><span class="nav-number">2.2.</span> <span class="nav-text">生成报告（下载）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#A-Jenkins%EF%BC%8C%E6%8C%82%E8%BD%BDhost%E7%9B%AE%E5%BD%95"><span class="nav-number">2.3.</span> <span class="nav-text">A. Jenkins，挂载host目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#B-%E4%BB%BB%E5%8A%A1docker%EF%BC%8C%E6%8C%82%E5%9C%A8%E5%85%B1%E4%BA%AB%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">2.4.</span> <span class="nav-text">B. 任务docker，挂在共享文件夹</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Demo2-%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2"><span class="nav-number">3.</span> <span class="nav-text">Demo2-前端部署</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#A-docker-%E5%AE%B9%E5%99%A8%E9%83%A8%E7%BD%B2"><span class="nav-number">3.1.</span> <span class="nav-text">A.docker 容器部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#B-%E9%85%8D%E7%BD%AE"><span class="nav-number">3.2.</span> <span class="nav-text">B. 配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-%E6%96%B0%E5%BB%BA%E4%B8%80%E4%B8%AAJenkins%E6%9E%84%E5%BB%BA%E4%BB%BB%E5%8A%A1"><span class="nav-number">3.3.</span> <span class="nav-text">C. 新建一个Jenkins构建任务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E8%B7%B5-hexo-%E7%BC%96%E8%AF%91%E5%8F%91%E5%B8%83"><span class="nav-number">4.</span> <span class="nav-text">实践 hexo 编译发布</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#hexo%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83%E6%89%93%E5%8C%85"><span class="nav-number">4.1.</span> <span class="nav-text">hexo编译环境打包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8Jenkins%E5%AE%B9%E5%99%A8"><span class="nav-number">4.2.</span> <span class="nav-text">启动Jenkins容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8Hexo-%E7%BC%96%E8%AF%91%E5%AE%B9%E5%99%A8%EF%BC%88%E6%9C%AC%E5%9C%B0%E6%B5%8B%E8%AF%95%EF%BC%89"><span class="nav-number">4.3.</span> <span class="nav-text">启动Hexo 编译容器（本地测试）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Jenkins-job%E9%85%8D%E7%BD%AE"><span class="nav-number">4.4.</span> <span class="nav-text">Jenkins job配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webhook-%E8%A7%A6%E5%8F%91%E5%99%A8"><span class="nav-number">4.5.</span> <span class="nav-text">webhook 触发器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

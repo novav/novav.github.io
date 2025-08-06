@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Contents: [TOC] Naikai RL1、基本原理，概念依赖模型：  基于模型的强化学习算法：用数据先学习系统模型，然后基于模型得到最优策略  无模型的强化学习算法：直接通过交互数据得到最优策略   策略更新方法：  基于值函数的强化学习，  基于直接策略搜索的强化学习， Actor-Critic的方法。  根据回报函数是否已知分为：正向强化学习和逆向强化学习  正向强化学习：从回报(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RL 概念 + RL算法">
+<meta property="og:url" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="Contents: [TOC] Naikai RL1、基本原理，概念依赖模型：  基于模型的强化学习算法：用数据先学习系统模型，然后基于模型得到最优策略  无模型的强化学习算法：直接通过交互数据得到最优策略   策略更新方法：  基于值函数的强化学习，  基于直接策略搜索的强化学习， Actor-Critic的方法。  根据回报函数是否已知分为：正向强化学习和逆向强化学习  正向强化学习：从回报(">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/image-20220514220120535.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/image-20220514220139656.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/image-20220514222618432.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/image-20220514230945730.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/image-20220514231308060.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/image-20220515011248768.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/image-20220515011317445.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/image-20220515011413638.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/image-20220515011510658.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-08-10-18-50-52-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/image-20220515011034529.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-08-10-18-51-45-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/image-20220515011639271.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2024-02-07-16-27-57-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2024-02-07-16-29-31-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2024-02-07-16-45-28-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2024-02-07-16-46-22-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-08-31-14-17-07-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-08-31-14-16-52-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-08-31-14-17-27-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-08-31-14-17-42-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-09-06-10-07-17-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-08-31-14-18-05-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-08-31-14-28-14-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-08-31-14-44-11-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-08-31-14-58-23-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-09-05-17-22-34-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-09-05-17-23-04-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-09-05-17-25-04-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-09-05-17-18-14-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-09-05-17-18-28-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2024-02-08-16-42-37-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2024-02-08-16-48-45-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-09-05-17-30-34-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-09-05-19-52-35-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-09-05-19-52-11-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-09-05-20-08-10-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-09-05-20-07-20-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-09-05-20-23-02-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-09-05-20-23-29-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-09-05-21-10-10-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-09-05-21-11-39-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-09-06-11-23-48-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-09-06-15-14-32-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-09-06-15-14-47-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-09-06-15-18-41-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-09-06-15-16-40-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-09-06-15-21-14-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-09-06-15-22-40-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-08-11-09-56-50-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-08-14-20-39-30-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-09-07-15-08-17-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-08-14-20-39-06-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-08-14-20-39-18-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-08-14-20-40-45-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-08-14-20-55-12-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-08-14-20-55-20-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-08-15-12-02-14-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-09-07-16-04-04-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-08-14-20-56-18-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-08-15-15-31-44-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-08-15-15-33-44-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-08-15-16-03-46-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-08-15-16-05-34-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-08-15-16-17-41-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-08-15-16-24-41-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-08-15-16-48-48-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/2023-08-15-16-52-07-image.png">
+<meta property="article:published_time" content="2022-05-14T21:29:00.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:38.037Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="RL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2022/05/14/AI/RL/RL_info/image-20220514220120535.png">
+
+<link rel="canonical" href="https://novav.github.io/2022/05/14/AI/RL/RL_info/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>RL 概念 + RL算法 | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/05/14/AI/RL/RL_info/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          RL 概念 + RL算法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-05-14 21:29:00" itemprop="dateCreated datePublished" datetime="2022-05-14T21:29:00+00:00">2022-05-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/RL/" itemprop="url" rel="index"><span itemprop="name">RL</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Contents:</p>
+<p>[TOC]</p>
+<h1 id="Naikai-RL"><a href="#Naikai-RL" class="headerlink" title="Naikai RL"></a>Naikai RL</h1><h2 id="1、基本原理，概念"><a href="#1、基本原理，概念" class="headerlink" title="1、基本原理，概念"></a>1、基本原理，概念</h2><p><strong>依赖模型：</strong></p>
+<ul>
+<li><p><strong>基于模型</strong>的强化学习算法：用数据先学习系统模型，然后基于模型得到最优策略</p>
+</li>
+<li><p><strong>无模型</strong>的强化学习算法：直接通过交互数据得到最优策略</p>
+</li>
+</ul>
+<p><strong>策略更新方法：</strong></p>
+<ul>
+<li>基于值函数的强化学习， </li>
+<li>基于直接策略搜索的强化学习，</li>
+<li>Actor-Critic的方法。</li>
+</ul>
+<p>根据<strong>回报函数</strong>是否已知分为：正向强化学习和逆向强化学习</p>
+<ul>
+<li><p>正向强化学习：从回报(reward)学到最优策略</p>
+</li>
+<li><p>逆向强化学习：从专家示例中学到回报函数</p>
+</li>
+</ul>
+<p>根据任务大小和多少分为：分层强化学习、元强化学习、多智能体强化学习、迁移学习等</p>
+<h3 id="发展趋势"><a href="#发展趋势" class="headerlink" title="发展趋势"></a>发展趋势</h3><p>\1. 贝叶斯强化学习</p>
+<p>​        融合推理能力，可解决POMDP问题</p>
+<p>\2. 分层强化学习</p>
+<p>​        解决大规模学习问题</p>
+<p>\3. 元强化学习</p>
+<p>​        解决对任务学习</p>
+<p>\4. 多智能体强化学习</p>
+<p>​        博弈：合作，竞争，混合</p>
+<h3 id="路线图"><a href="#路线图" class="headerlink" title="路线图"></a>路线图</h3><p>强化学习课程的路线图</p>
+<p>\1. 搞清楚<strong>马尔科夫决策过程</strong>的概念</p>
+<p>\2. 抓住强化学习的基本迭代过程：策略评估和策略改善</p>
+<p>\3. 掌握强化学习最常用的两种方法：基于值函数的方法和基于直接策略搜索的方法</p>
+<p>\4. 强化学习的其他方法：AC框架，基于模型的强化学习，基于记忆的强化学习等等</p>
+<h3 id="置信度算法"><a href="#置信度算法" class="headerlink" title="置信度算法"></a>置信度算法</h3><p>多臂赌博机：UCB <a target="_blank" rel="noopener" href="https://blog.csdn.net/chenxy_bwave/article/details/121715210">https://blog.csdn.net/chenxy_bwave/article/details/121715210</a></p>
+<h2 id="2、马尔可夫决策过程"><a href="#2、马尔可夫决策过程" class="headerlink" title="2、马尔可夫决策过程"></a>2、马尔可夫决策过程</h2><p>有限马尔可夫决策问题的三种基本方法：</p>
+<ul>
+<li>动态规划，</li>
+<li>蒙特卡洛方法</li>
+<li>时序差分学习。</li>
+</ul>
+<h3 id="马尔科夫性"><a href="#马尔科夫性" class="headerlink" title="马尔科夫性"></a>马尔科夫性</h3><p>马尔科夫性： 系统的下一个状态只与当前状态有关，与以前状态无关。<br>定义：一个状态St是马尔科夫的，当且仅当：</p>
+<p>$$<br>𝑃 [𝑆_{𝑡+1 }| 𝑆_𝑡] &#x3D; 𝑃 [𝑆{𝑡+1}|𝑆_1, ⋯ , 𝑆_𝑡]<br>$$</p>
+<ol>
+<li>当前状态蕴含所有相关的历史信息</li>
+<li>一旦当前状态已知，历史信息将会被抛弃</li>
+</ol>
+<h3 id="马尔可夫决策过程（MDP"><a href="#马尔可夫决策过程（MDP" class="headerlink" title="马尔可夫决策过程（MDP)"></a>马尔可夫决策过程（MDP)</h3><p>MDP：带有决策和回报的马尔科夫过程：<br>定义：马尔科夫决策过程由元组： $(𝑆, 𝐴, 𝑃, 𝑅, \gamma)$ 描述S为有限的状态集,A为有限的行为集,P为状态转<br>移概率,R为回报函数,𝛾为折扣因子 ;</p>
+<p>随机变量 s’,r的分布由条件概率定义：</p>
+<p>$$<br>p(s’, r| s,a) &#x3D; Pr{ S_t&#x3D;s’, R&#x3D;r|S_{t-1}&#x3D;s, A_{t-1} &#x3D; a }<br>$$</p>
+<h3 id="值函数与策略"><a href="#值函数与策略" class="headerlink" title="值函数与策略"></a>值函数与策略</h3><p>状态s的好坏：值函数 V(s ) （状态的函数）。  </p>
+<p>值函数跟策略有关，不同的策略对应不同的值函数  </p>
+<p>策略的定义：  </p>
+<p>一个策略 𝜋是给定状态s时，动作集上的一个分布：</p>
+<p>$$<br>\pi(𝑎|𝑠) &#x3D; 𝑝[𝐴_𝑡 &#x3D; 𝑎 | 𝑆_𝑡 &#x3D; 𝑠]<br>$$</p>
+<h3 id="策略的定义"><a href="#策略的定义" class="headerlink" title="策略的定义"></a>策略的定义</h3><img src="/2022/05/14/AI/RL/RL_info/image-20220514220120535.png" title alt="image-20220514220120535" width="296">
+
+<img title src="/2022/05/14/AI/RL/RL_info/image-20220514220139656.png" alt="image-20220514220139656" style="zoom: 80%;" width="333">
+
+<h3 id="值函数的定义"><a href="#值函数的定义" class="headerlink" title="值函数的定义"></a>值函数的定义</h3><img src="/2022/05/14/AI/RL/RL_info/image-20220514222618432.png" title alt="image-20220514222618432" width="586">
+
+<h3 id="马尔科夫决策过程：贝尔曼方程"><a href="#马尔科夫决策过程：贝尔曼方程" class="headerlink" title="马尔科夫决策过程：贝尔曼方程"></a>马尔科夫决策过程：贝尔曼方程</h3><p>$$<br>v_{\pi}(s) &#x3D; \sum_{a\in A} \pi(a|s)(R_s^a + r\sum_{s’\in S} P_{ss’}^a v_{\pi}(s’) )<br>$$</p>
+<img title src="/2022/05/14/AI/RL/RL_info/image-20220514230945730.png" alt="image-20220514230945730" style="zoom: 67%;" width="484">
+
+<h3 id="最优价值函数和最优状态-动作值函数"><a href="#最优价值函数和最优状态-动作值函数" class="headerlink" title="最优价值函数和最优状态-动作值函数"></a>最优价值函数和最优状态-动作值函数</h3><p><img src="/2022/05/14/AI/RL/RL_info/image-20220514231308060.png" alt="image-20220514231308060"></p>
+<h2 id="3、动态规划到强化学习"><a href="#3、动态规划到强化学习" class="headerlink" title="3、动态规划到强化学习"></a>3、动态规划到强化学习</h2><p>单阶段决策：数学规划</p>
+<p>多阶段决策：动态规划</p>
+<p>动态规划的本质：将多阶段决策问题通过贝尔曼方程转化为多个单阶段的决策问题  </p>
+<p>离散贝尔曼方程：</p>
+<p>连续贝尔曼方程：</p>
+<p>微分动态规划方法</p>
+<h3 id="DP-RL"><a href="#DP-RL" class="headerlink" title="DP -&gt; RL"></a>DP -&gt; RL</h3><p><strong>控制领域集中于连续高维问题</strong></p>
+<p>最优控制：模型已知，立即回报解析地给出，状态空间小。</p>
+<p>近似动态规划：利用机器学习方法学习值函数，解决维数灾难  </p>
+<p>计算机领域：<strong>集中于离散大规模问题</strong></p>
+<p>以马尔科夫决策过程为基础，强化学习  无模型，回报函数不解，状态空间无穷</p>
+<p>动态规划： <strong>策略评估（估计值函数）</strong> ，策略改进</p>
+<p>所有强化学习算法都可以看成是动态规划算法，只是用更少的计算，并且没有假设完美模型  </p>
+<h3 id="策略评估-Prediction"><a href="#策略评估-Prediction" class="headerlink" title="策略评估(Prediction)"></a>策略评估(Prediction)</h3><img src="/2022/05/14/AI/RL/RL_info/image-20220515011248768.png" title alt="image-20220515011248768" width="515">
+
+<img src="/2022/05/14/AI/RL/RL_info/image-20220515011317445.png" title alt="image-20220515011317445" width="516">
+
+<h3 id="策略改进"><a href="#策略改进" class="headerlink" title="策略改进"></a>策略改进</h3><img src="/2022/05/14/AI/RL/RL_info/image-20220515011413638.png" title alt="image-20220515011413638" width="404">
+
+<img src="/2022/05/14/AI/RL/RL_info/image-20220515011510658.png" title alt="image-20220515011510658" width="527">
+
+<p><img src="/2022/05/14/AI/RL/RL_info/2023-08-10-18-50-52-image.png"></p>
+<h3 id="值函数迭代"><a href="#值函数迭代" class="headerlink" title="值函数迭代"></a>值函数迭代</h3><img title src="/2022/05/14/AI/RL/RL_info/image-20220515011034529.png" alt="image-20220515011034529" width="588">
+
+<img title src="/2022/05/14/AI/RL/RL_info/2023-08-10-18-51-45-image.png" alt width="587">
+
+<h2 id="4、MC-TD"><a href="#4、MC-TD" class="headerlink" title="4、MC &amp; TD"></a>4、MC &amp; TD</h2><img src="/2022/05/14/AI/RL/RL_info/image-20220515011639271.png" title alt="image-20220515011639271" width="543">
+
+<p><strong>值函数：</strong></p>
+<p>$$<br>v_{\pi}(s) &#x3D; E_{\pi} [G_t|S_t&#x3D;s]&#x3D; E_{\pi}[\sum_{k&#x3D;0}^{\infty} r^kR_{t+k+1} | S_t&#x3D;s]<br>$$</p>
+<p><strong>状态-行为值函数：</strong></p>
+<p>$$<br>q_{\pi} &#x3D; \sum_{a\in A} \pi(a|s)\Big(R_s^a + r\sum_{s’ \in S} P_{ss’}^a v_{\pi}(s’)\Big)<br>$$</p>
+<h1 id="RL-Sutton"><a href="#RL-Sutton" class="headerlink" title="RL_Sutton"></a>RL_Sutton</h1><h2 id="2、Multi-armed-Bandits"><a href="#2、Multi-armed-Bandits" class="headerlink" title="2、Multi-armed Bandits"></a>2、Multi-armed Bandits</h2><h2 id="3、Finite-Markov-Decision-Processes"><a href="#3、Finite-Markov-Decision-Processes" class="headerlink" title="3、Finite Markov Decision Processes"></a>3、Finite Markov Decision Processes</h2><h2 id="4、DP"><a href="#4、DP" class="headerlink" title="4、DP"></a>4、DP</h2><h2 id="5、MC"><a href="#5、MC" class="headerlink" title="5、MC"></a>5、MC</h2><p><img src="/2022/05/14/AI/RL/RL_info/2024-02-07-16-27-57-image.png"></p>
+<h3 id="5-3-MC-ES"><a href="#5-3-MC-ES" class="headerlink" title="5.3 MC (ES)"></a>5.3 MC (ES)</h3><ul>
+<li>On-Policy</li>
+</ul>
+<p><img src="/2022/05/14/AI/RL/RL_info/2024-02-07-16-29-31-image.png"></p>
+<h3 id="5-4-On-Policy"><a href="#5-4-On-Policy" class="headerlink" title="5.4  On-Policy"></a>5.4  On-Policy</h3><p>On-policy methods attempt to evaluate or improve the policy that is used to make decisions;</p>
+<p>off-policy methods evaluate or improve a policy different from that used to generate the data.</p>
+<p>基于experience replay的方法基本上都是off-policy的。</p>
+<p><img src="/2022/05/14/AI/RL/RL_info/2024-02-07-16-45-28-image.png"></p>
+<h3 id="5-5-Off-policy"><a href="#5-5-Off-policy" class="headerlink" title="5.5 Off-policy"></a>5.5 Off-policy</h3><p><strong>target policy</strong> : to learned</p>
+<p><strong>behavior policy</strong> : to generate behavior</p>
+<ul>
+<li>行为策略(behavior policy):agent与environment交互使用的策略，用来产生数据来改进agent的行为。因为需要有探索性，这个策略是随机的。</li>
+<li>目标策略(target policy): 学成以后用于应用的策略。这个时候agent根据这个策略来采取行动。</li>
+</ul>
+<p>on-policy 是Off-policy的一种特例（same）</p>
+<h3 id="5-6-Incremental-Implementation"><a href="#5-6-Incremental-Implementation" class="headerlink" title="5.6 Incremental Implementation"></a>5.6 Incremental Implementation</h3><p><img src="/2022/05/14/AI/RL/RL_info/2024-02-07-16-46-22-image.png"></p>
+<ul>
+<li><p>b : is the behavior policy</p>
+</li>
+<li><p>$\pi$ : target policy</p>
+</li>
+<li><p>state-transition概率p&#x3D;$\frac{\pi}{b}$</p>
+</li>
+</ul>
+<h2 id="6、TD"><a href="#6、TD" class="headerlink" title="6、TD"></a>6、TD</h2><h3 id="TD-0"><a href="#TD-0" class="headerlink" title="TD(0)"></a>TD(0)</h3><p><img src="/2022/05/14/AI/RL/RL_info/2023-08-31-14-17-07-image.png"></p>
+<h3 id="Sarsa-on-policy-TD"><a href="#Sarsa-on-policy-TD" class="headerlink" title="Sarsa(on-policy TD)"></a>Sarsa(on-policy TD)</h3><p>TD(0)学习的是状态价值函数V(s)，这里因为（），所以需要学习动作价值函数Q(s,a)；</p>
+<p>五元组$（S_t, A_t, R_{t+1}, S_{t+1}, A_{t+1}）$</p>
+<p><img src="/2022/05/14/AI/RL/RL_info/2023-08-31-14-16-52-image.png"></p>
+<h3 id="Q-learning-off-policy-TD"><a href="#Q-learning-off-policy-TD" class="headerlink" title="Q-learning (off-policy TD)"></a>Q-learning (off-policy TD)</h3><p><img src="/2022/05/14/AI/RL/RL_info/2023-08-31-14-17-27-image.png"></p>
+<h3 id="Double-Q-learning"><a href="#Double-Q-learning" class="headerlink" title="Double Q-learning"></a>Double Q-learning</h3><p><img src="/2022/05/14/AI/RL/RL_info/2023-08-31-14-17-42-image.png"></p>
+<h2 id="7、n-step-Bootstrapping"><a href="#7、n-step-Bootstrapping" class="headerlink" title="7、n-step Bootstrapping"></a>7、n-step Bootstrapping</h2><h3 id="7-1-n-step-TD"><a href="#7-1-n-step-TD" class="headerlink" title="7.1 n-step TD"></a>7.1 n-step TD</h3><img title src="/2022/05/14/AI/RL/RL_info/2023-09-06-10-07-17-image.png" alt width="478"> 
+
+<p>各个算法的更新目标（回报）</p>
+<p>$$<br>\begin{align*}<br>&amp; MC: G_t &#x3D; R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + … + \gamma^{T-t-1} R_T \</p>
+<p>&amp; TD(0): G_{t:t+1} &#x3D;  R_{t+1} + \gamma V(S_{t+1}) \<br>&amp; \gamma V(S_{t+1})&#x3D;  \gamma R_{t+2} + \gamma^2 R_{t+3} + … + \gamma^{T-t-1} R_T\</p>
+<p>&amp; TD(2): G_{t:t+1} &#x3D;  R_{t+1} + \gamma R_{t+2}+ \gamma^2 V(S_{t+2})  \</p>
+<p>&amp; TD(n): G_{t:t+n} &#x3D;  R_{t+1} + \gamma R_{t+2}+ …<br>      + \gamma^{n-1} R_{t+n} + \gamma^{n} V_{t+n-1}(S_{t+n})  \tag{7.1}<br>\end{align*}<br>$$</p>
+<p><img src="/2022/05/14/AI/RL/RL_info/2023-08-31-14-18-05-image.png"></p>
+<h3 id="n-step-Sarsa"><a href="#n-step-Sarsa" class="headerlink" title="n-step Sarsa"></a>n-step Sarsa</h3><p><img src="/2022/05/14/AI/RL/RL_info/2023-08-31-14-28-14-image.png"></p>
+<h3 id="n-step-Sarsa-Off-policy"><a href="#n-step-Sarsa-Off-policy" class="headerlink" title="n-step Sarsa(Off-policy)"></a>n-step Sarsa(Off-policy)</h3><img title src="/2022/05/14/AI/RL/RL_info/2023-08-31-14-44-11-image.png" alt data-align="inline">
+
+<h3 id="n-step-Tree-Backup"><a href="#n-step-Tree-Backup" class="headerlink" title="n-step Tree Backup"></a>n-step Tree Backup</h3><p><img src="/2022/05/14/AI/RL/RL_info/2023-08-31-14-58-23-image.png"></p>
+<h2 id="8、-Planning-and-Learning-with-Tabular-Methods"><a href="#8、-Planning-and-Learning-with-Tabular-Methods" class="headerlink" title="8、 Planning and Learning with Tabular Methods"></a>8、 Planning and Learning with Tabular Methods</h2><h2 id="9-On-Policy-Prediction"><a href="#9-On-Policy-Prediction" class="headerlink" title="9 On-Policy Prediction"></a>9 On-Policy Prediction</h2><h3 id="9-1-Value-function-Approximation"><a href="#9-1-Value-function-Approximation" class="headerlink" title="9.1 Value-function Approximation"></a>9.1 Value-function Approximation</h3><p>$$<br>\begin{align*}<br>&amp; MC: S_t \rightarrow G_t \<br>&amp; TD(0): S_t \rightarrow R_{t+1} + \gamma\hat{v}(S_{t+1}, W_t) \<br>&amp; TD: S_t \rightarrow G_{t:t+n} \<br>&amp; DP: S_t \rightarrow E_\pi[R_{t+1} + \gamma\hat{v}(S_{t+1}, W_t) | S_t &#x3D; s]<br>\end{align*}<br>% &amp; 左对齐<br>$$</p>
+<h3 id="9-2-The-Prediction-Objective"><a href="#9-2-The-Prediction-Objective" class="headerlink" title="9.2 The Prediction Objective"></a>9.2 The Prediction Objective</h3><p>预测目标： Mean Squared  Value Error 均方差</p>
+<p><img src="/2022/05/14/AI/RL/RL_info/2023-09-05-17-22-34-image.png"></p>
+<h3 id="9-3-Stochastic-gradient-and-Semi-gradient-TD-0-Methods"><a href="#9-3-Stochastic-gradient-and-Semi-gradient-TD-0-Methods" class="headerlink" title="9.3 Stochastic-gradient and Semi-gradient TD(0) Methods"></a>9.3 Stochastic-gradient and Semi-gradient TD(0) Methods</h3><p>随机梯度与半梯度方法</p>
+<p><img src="/2022/05/14/AI/RL/RL_info/2023-09-05-17-23-04-image.png"></p>
+<p><img src="/2022/05/14/AI/RL/RL_info/2023-09-05-17-25-04-image.png"></p>
+<h3 id="9-4-Linear-Methods-n-step-Semi-Graditent-TD"><a href="#9-4-Linear-Methods-n-step-Semi-Graditent-TD" class="headerlink" title="9.4 Linear Methods(n-step Semi-Graditent TD)"></a>9.4 Linear Methods(n-step Semi-Graditent TD)</h3><p>n-step Semi-Graditent TD</p>
+<p><img src="/2022/05/14/AI/RL/RL_info/2023-09-05-17-18-14-image.png"></p>
+<img title src="/2022/05/14/AI/RL/RL_info/2023-09-05-17-18-28-image.png" alt width="607" data-align="inline"> 
+
+<h3 id="9-5-Feature-Construction-for-Linear-Methods"><a href="#9-5-Feature-Construction-for-Linear-Methods" class="headerlink" title="9.5 Feature Construction for Linear Methods"></a>9.5 Feature Construction for Linear Methods</h3><p>Polynomials 多项式</p>
+<p>Radial Basis Functions 径向基函数 </p>
+<p>    与其说 ，特征0，1；不如说是区间[0，1]之间的任何东西，反应特征存在的不同程度；</p>
+<p>RBF特征采用高斯表示，当前状态s和中心(原型)状态ci之间的举例表示；</p>
+<p><img src="/2022/05/14/AI/RL/RL_info/2024-02-08-16-42-37-image.png"></p>
+<h3 id="9-7-ANN-非线性函数逼近"><a href="#9-7-ANN-非线性函数逼近" class="headerlink" title="9.7 ANN (非线性函数逼近)"></a>9.7 ANN (非线性函数逼近)</h3><h3 id="9-8-LSTD"><a href="#9-8-LSTD" class="headerlink" title="9.8 LSTD"></a>9.8 LSTD</h3><p>Least-Squares TD</p>
+<p><img src="/2022/05/14/AI/RL/RL_info/2024-02-08-16-48-45-image.png"></p>
+<h3 id="9-11-Looking-Deeper-at-On-Policy-Learning-Interest-and-Emphasis"><a href="#9-11-Looking-Deeper-at-On-Policy-Learning-Interest-and-Emphasis" class="headerlink" title="9.11 Looking Deeper at On-Policy  Learning : Interest and Emphasis"></a>9.11 Looking Deeper at On-Policy  Learning : Interest and Emphasis</h3><p>(9.15)引入强调值Mt</p>
+<p><img src="/2022/05/14/AI/RL/RL_info/2023-09-05-17-30-34-image.png"></p>
+<h2 id="10-On-Policy-Control"><a href="#10-On-Policy-Control" class="headerlink" title="10 On-Policy Control"></a>10 On-Policy Control</h2><h3 id="10-1-Episodic-Semi-gradient-Control"><a href="#10-1-Episodic-Semi-gradient-Control" class="headerlink" title="10.1 Episodic Semi-gradient Control"></a>10.1 Episodic Semi-gradient Control</h3><p><img src="/2022/05/14/AI/RL/RL_info/2023-09-05-19-52-35-image.png"></p>
+<p><img src="/2022/05/14/AI/RL/RL_info/2023-09-05-19-52-11-image.png"></p>
+<h3 id="10-2-Semi-gradient-n-step-Sarsa"><a href="#10-2-Semi-gradient-n-step-Sarsa" class="headerlink" title="10.2 Semi-gradient n-step Sarsa"></a>10.2 Semi-gradient n-step Sarsa</h3><p><img src="/2022/05/14/AI/RL/RL_info/2023-09-05-20-08-10-image.png"></p>
+<p><img src="/2022/05/14/AI/RL/RL_info/2023-09-05-20-07-20-image.png"></p>
+<h3 id="10-3-Average-Reward-A-New-Problem-Setting-for-Continuing-Tasks"><a href="#10-3-Average-Reward-A-New-Problem-Setting-for-Continuing-Tasks" class="headerlink" title="10.3 Average Reward: A New Problem Setting for  Continuing Tasks"></a>10.3 Average Reward: A New Problem Setting for  Continuing Tasks</h3><p><img src="/2022/05/14/AI/RL/RL_info/2023-09-05-20-23-02-image.png"></p>
+<img title src="/2022/05/14/AI/RL/RL_info/2023-09-05-20-23-29-image.png" alt width="588">
+
+<p><img src="/2022/05/14/AI/RL/RL_info/2023-09-05-21-10-10-image.png"></p>
+<h3 id="10-4-Deprecating-the-Discounted-Setting"><a href="#10-4-Deprecating-the-Discounted-Setting" class="headerlink" title="10.4 Deprecating the Discounted Setting"></a>10.4 Deprecating the Discounted Setting</h3><h3 id="10-5-Differential-Semi-gradient-n-step-Sarsa"><a href="#10-5-Differential-Semi-gradient-n-step-Sarsa" class="headerlink" title="10.5 Differential Semi-gradient n-step Sarsa"></a>10.5 Differential Semi-gradient n-step Sarsa</h3><p><img src="/2022/05/14/AI/RL/RL_info/2023-09-05-21-11-39-image.png"></p>
+<h2 id="11-Off-Policy-Methods"><a href="#11-Off-Policy-Methods" class="headerlink" title="11 Off-Policy Methods"></a>11 Off-Policy Methods</h2><h2 id="12-Eligibility-Traces-资格迹"><a href="#12-Eligibility-Traces-资格迹" class="headerlink" title="12 Eligibility Traces 资格迹"></a>12 Eligibility Traces 资格迹</h2><h3 id="12-1-gamma-回报"><a href="#12-1-gamma-回报" class="headerlink" title="12.1 $\gamma 回报$"></a>12.1 $\gamma 回报$</h3><p>参数化的函数逼近：</p>
+<p>$$<br>G_{t:t+n} &#x3D;  R_{t+1} + \gamma R_{t+2}+ …<br>      + \gamma^{n-1} R_{t+n} + \gamma^{n} V_{t+n-1}(S_{t+n}, W_{t+n-1}) \tag{12.1}<br>$$</p>
+<p>$\lambda$ 回报:</p>
+<p>$$<br>G_t^{\lambda} &#x3D; (1- \lambda) \sum_{n&#x3D;1}^{\infty} \lambda^{n-1}G_{t:t+n} \tag{12.2}<br>$$</p>
+<p>提取终止项：</p>
+<p>$$<br>G_t^{\lambda} &#x3D; (1- \lambda) \sum_{n&#x3D;1}^{T-t-1} \lambda^{n-1}G_{t:t+n}<br>    + \lambda^{T-t-1}G_{t} \tag{12.3}<br>$$</p>
+<p>更新目标：</p>
+<p>$$<br>w_{t+1} &#x3D; w_{t} + \alpha[ G_{t}^{\lambda} - \hat{v}(S_t, w_t)]<br>    \nabla \hat{v}(S_t, w_t),     t&#x3D;0,…,T-1  \tag{12.4}<br>$$</p>
+<h3 id="12-2-TD-lambda"><a href="#12-2-TD-lambda" class="headerlink" title="12.2 TD($\lambda$)"></a>12.2 TD($\lambda$)</h3><ul>
+<li><p>每一步都更新权重向量（原本是结束时更新）</p>
+</li>
+<li><p>计算平均分布在整个时间轴，而不是结束时</p>
+</li>
+<li><p>也适用于持续性问题，（episode更不用说了）</p>
+</li>
+</ul>
+<p>资格迹$z_t$，短期记忆；是一个和权值向量w_t同维度的向量；</p>
+<ul>
+<li>唯一作用：影响权值向量，进而权值向量影响估计值v；</li>
+</ul>
+<p>权值向量$w_t$：长期的记忆</p>
+<p>$$<br>\begin{align*}<br>&amp; z_{-1} &#x3D; 0,\<br>&amp; z_t &#x3D; \gamma \lambda z_{t-1} + \nabla \hat{v}(S_t, w_t), 0 \leqslant t \leqslant T<br>\tag{12.5}<br>\end{align*}<br>$$</p>
+<p>$$<br>\begin{align*}<br>&amp; \delta_t &#x3D; R_{t+1} + \gamma \hat{v}(S_{t+1}, w_t) - \hat{v}(S_t, w_t) \tag{12.6}    \</p>
+<p>&amp; w_{t+1} &#x3D; w + \alpha \delta_t z_t  \tag{12.7}<br>\end{align*}<br>$$</p>
+<p><img src="/2022/05/14/AI/RL/RL_info/2023-09-06-11-23-48-image.png"></p>
+<h3 id="12-3-n-step-Truncated-lambda-return-Methods"><a href="#12-3-n-step-Truncated-lambda-return-Methods" class="headerlink" title="12.3 n-step Truncated $\lambda$-return Methods"></a>12.3 n-step Truncated $\lambda$-return Methods</h3><h3 id="12-7-Sarsa"><a href="#12-7-Sarsa" class="headerlink" title="12.7 Sarsa()"></a>12.7 Sarsa()</h3><p>Sarsa: TD metod for action values;</p>
+<p>extend eligibility-traces to action-value methods.</p>
+<p>learn approximate action values,  qˆ(s, a, w), rather than approximate state values, vˆ(s,w)</p>
+<p><img src="/2022/05/14/AI/RL/RL_info/2023-09-06-15-14-32-image.png"></p>
+<img title src="/2022/05/14/AI/RL/RL_info/2023-09-06-15-14-47-image.png" alt width="536">
+
+<p><img src="/2022/05/14/AI/RL/RL_info/2023-09-06-15-18-41-image.png"></p>
+<p><img src="/2022/05/14/AI/RL/RL_info/2023-09-06-15-16-40-image.png"></p>
+<p><img src="/2022/05/14/AI/RL/RL_info/2023-09-06-15-21-14-image.png"></p>
+<p><img src="/2022/05/14/AI/RL/RL_info/2023-09-06-15-22-40-image.png"></p>
+<h3 id="12-8-Variable-lambda-and-gamma"><a href="#12-8-Variable-lambda-and-gamma" class="headerlink" title="12.8 Variable  $\lambda$ and $\gamma$"></a>12.8 Variable  $\lambda$ and $\gamma$</h3><h2 id="13-Policy-Gradient-Methods"><a href="#13-Policy-Gradient-Methods" class="headerlink" title="13 Policy Gradient Methods"></a>13 Policy Gradient Methods</h2><p>参数化的策略方法；价值函数仍可用于学习策略的参数，但是对于动作选择而言，就不是必须了。</p>
+<p>梯度上升：gradient  ascent in J。</p>
+<p>$$<br>\theta_{t+1} &#x3D; \theta_t + \alpha \widehat{ \nabla J(\theta_t) } \tag{13.1}<br>$$</p>
+<p>同时学习策略和值函数的近似值的方法通常称为 <mark>演员-评论家</mark>方法，其中“演员”是指所学策略，而“评论家”是指所学习的值函数，通常是状态价值函数。</p>
+<h3 id="1-Policy-Approximation-and-its-Advantages"><a href="#1-Policy-Approximation-and-its-Advantages" class="headerlink" title="1. Policy Approximation and its Advantages"></a>1. Policy Approximation and its Advantages</h3><p><em>动作偏好soft-max</em> （soft-max in action preferences）</p>
+<p>例如在扑克中诈(bluffing)。 动作值方法没有找到随机最优策略的自然方法，而策略逼近方法却可以，如示例13.1所示。</p>
+<p>相比于动作值参数化，策略参数化可能具有的最简单的优势是策略可能是一种做近似更简单的函数。 问题的策略和行动价值函数的复杂性各不相同。</p>
+<ul>
+<li><p>对于某些来说，动作值函数更简单，因此更容易近似。</p>
+</li>
+<li><p>对于其他，策略更简单。 在后一种情况下，基于策略的方法通常将学习得更快， 并产生更好的渐近策略 （如俄罗斯方块；请参见Şimşek, Algórta和Kothiyal，2016年）。</p>
+</li>
+</ul>
+<p>优势1：近似策略接近于一个确定策略；</p>
+<p>优势2：可以以任意概率选择动作；</p>
+<ul>
+<li>例如，在信息不完美的纸牌游戏中，最佳玩法通常是用特定的概率做两件不同的事情，比如在扑克中虚张声势。</li>
+</ul>
+<h3 id="2-The-Policy-Gradient-Theorem-定理"><a href="#2-The-Policy-Gradient-Theorem-定理" class="headerlink" title="2. The Policy Gradient Theorem(定理)"></a>2. The Policy Gradient Theorem(定理)</h3><p>策略参数化选择动作的概率会平滑的变化，这很大程度上导致了其更强的收敛保证。</p>
+<p>特定（非随机）状态下开始:</p>
+<p>$$<br>J(\theta) &#x3D; v_{\pi_\theta}(s_0)<br>$$</p>
+<p><img src="/2022/05/14/AI/RL/RL_info/2023-08-11-09-56-50-image.png"></p>
+<h3 id="3-REINFORCE-Monte-Carlo-Policy-Gradient"><a href="#3-REINFORCE-Monte-Carlo-Policy-Gradient" class="headerlink" title="3. REINFORCE: Monte Carlo Policy Gradient"></a>3. REINFORCE: Monte Carlo Policy Gradient</h3><p>回想我们前几节提到的梯度上升，我们只需要一种获取样本的获取方法，让采样样本的梯度近似或者等于策略梯度：</p>
+<ul>
+<li>样本梯度的期望 正比于 实际梯度（作为参数的函数的性能度量）</li>
+</ul>
+<p>策略梯度定理公式：</p>
+<img title src="/2022/05/14/AI/RL/RL_info/2023-08-14-20-39-30-image.png" alt width="320">
+
+<p>这时我们可以应用梯度上升算法（13.1）：</p>
+<p><img src="/2022/05/14/AI/RL/RL_info/2023-09-07-15-08-17-image.png"></p>
+<p>由于更新涉及了所有的动作，因此被称为<strong>全部动作算法</strong>，不过，我们更关注在时刻t被采样的动作，因此需要用策略对动作进行期望加权： </p>
+<p><img src="/2022/05/14/AI/RL/RL_info/2023-08-14-20-39-06-image.png"></p>
+<p>使用这个算法进行梯度上升，就可以得到我们想要的Reinforce算法：</p>
+<p><img src="/2022/05/14/AI/RL/RL_info/2023-08-14-20-39-18-image.png">（13.8）</p>
+<p>综合起来，就可以写出算法伪代码：</p>
+<p><img src="/2022/05/14/AI/RL/RL_info/2023-08-14-20-40-45-image.png"></p>
+<p>$$<br>\nabla ln(x) &#x3D; \frac{\nabla x}{x}<br>$$</p>
+<h3 id="4、带有baseline的Reinforce"><a href="#4、带有baseline的Reinforce" class="headerlink" title="4、带有baseline的Reinforce"></a>4、带有baseline的Reinforce</h3><p>可以在动作价值函数后加一个对比的baseline（v(s)）以推广策略梯度定理，只要不随动作a变化就行：</p>
+<p><img src="/2022/05/14/AI/RL/RL_info/2023-08-14-20-55-12-image.png"></p>
+<p>为什么可以这么做呢？因为对策略求和的梯度为0：</p>
+<img title src="/2022/05/14/AI/RL/RL_info/2023-08-14-20-55-20-image.png" alt width="402">
+
+<p><img src="/2022/05/14/AI/RL/RL_info/2023-08-15-12-02-14-image.png"></p>
+<p>比较自然的一个baseline就是状态价值函数了。这样做的好处在于，在不改变期望的前提下，大大降低了方差。</p>
+<p><img src="/2022/05/14/AI/RL/RL_info/2023-09-07-16-04-04-image.png"></p>
+<h3 id="5-Actor–Critic-Methods"><a href="#5-Actor–Critic-Methods" class="headerlink" title="5. Actor–Critic Methods"></a>5. Actor–Critic Methods</h3><p>尽管带baseline的强化学习方法学习了一个状态价值函数，我们也不能说它是演员评论家（actor critic）方法，因为状态价值函数仅仅当做baseline，而不是Critic。<mark>没有被用作自举</mark>（bootstrapping，根据后续状态的估计值更新状态的值估计）。</p>
+<p>然而，和所有MC方法一样，这种方法收敛很慢，而且难以在线实现。</p>
+<p>use actor–critic methods with  a bootstrapping critic.</p>
+<p>为了解决这个问题，我们引入TD（0）方法与演员评论家方法：</p>
+<p><img src="/2022/05/14/AI/RL/RL_info/2023-08-14-20-56-18-image.png"></p>
+<p>这是一个online、增量式的算法，所有收集到的数据只会在第一次使用，之后就弃用：</p>
+<p><img src="/2022/05/14/AI/RL/RL_info/2023-08-15-15-31-44-image.png"></p>
+<p> n-step (+资格迹)<img src="/2022/05/14/AI/RL/RL_info/2023-08-15-15-33-44-image.png"></p>
+<h3 id="6、持续性问题的策略梯度"><a href="#6、持续性问题的策略梯度" class="headerlink" title="6、持续性问题的策略梯度"></a>6、持续性问题的策略梯度</h3><p>Policy Gradient for Continuing Problems</p>
+<p><img src="/2022/05/14/AI/RL/RL_info/2023-08-15-16-03-46-image.png"></p>
+<p><img src="/2022/05/14/AI/RL/RL_info/2023-08-15-16-05-34-image.png"></p>
+<p><img src="/2022/05/14/AI/RL/RL_info/2023-08-15-16-17-41-image.png"></p>
+<h3 id="7、Policy-Parameterization-for-Continuous-Actions"><a href="#7、Policy-Parameterization-for-Continuous-Actions" class="headerlink" title="7、Policy Parameterization for Continuous Actions"></a>7、Policy Parameterization for Continuous Actions</h3><p>通过学习概率分布的统计量，而不是每一个动作的概率，我们能够解决连续动作空间的任务正态分布的概率密度函数：<img src="/2022/05/14/AI/RL/RL_info/2023-08-15-16-24-41-image.png"></p>
+<p>为了得到参数化的策略函数，我们不如把策略定义为正态分布的概率密度：</p>
+<p><img src="/2022/05/14/AI/RL/RL_info/2023-08-15-16-48-48-image.png"></p>
+<p>我们分别用均值和标准差来近似策略参数向量，由于标准差为正数，所以得用指数形式：</p>
+<p><img src="/2022/05/14/AI/RL/RL_info/2023-08-15-16-52-07-image.png"></p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>《南开大学–强化学习课程PPT》</p>
+<p>《强化学习 Sutton》</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/543356115">★★★★十二、Policy Gradient Methods 策略梯度方法</a></p>
+<p><a target="_blank" rel="noopener" href="https://mofanpy.com/tutorials/machine-learning/reinforcement-learning/">强化学习 (Reinforcement Learning) | 莫烦Python</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/RL/" rel="tag"># RL</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/05/10/Sub_Language/CPlus/CPlus_Performance/" rel="prev" title="C++ 性能优化">
+      <i class="fa fa-chevron-left"></i> C++ 性能优化
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/05/20/Sub_Language/DL_Train/Pytorch/inference_demo/" rel="next" title="C++ 调用 Torch pt文件">
+      C++ 调用 Torch pt文件 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Naikai-RL"><span class="nav-number">1.</span> <span class="nav-text">Naikai RL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86%EF%BC%8C%E6%A6%82%E5%BF%B5"><span class="nav-number">1.1.</span> <span class="nav-text">1、基本原理，概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%91%E5%B1%95%E8%B6%8B%E5%8A%BF"><span class="nav-number">1.1.1.</span> <span class="nav-text">发展趋势</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%AF%E7%BA%BF%E5%9B%BE"><span class="nav-number">1.1.2.</span> <span class="nav-text">路线图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%AE%E4%BF%A1%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="nav-number">1.1.3.</span> <span class="nav-text">置信度算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B"><span class="nav-number">1.2.</span> <span class="nav-text">2、马尔可夫决策过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A9%AC%E5%B0%94%E7%A7%91%E5%A4%AB%E6%80%A7"><span class="nav-number">1.2.1.</span> <span class="nav-text">马尔科夫性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B%EF%BC%88MDP"><span class="nav-number">1.2.2.</span> <span class="nav-text">马尔可夫决策过程（MDP)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%80%BC%E5%87%BD%E6%95%B0%E4%B8%8E%E7%AD%96%E7%95%A5"><span class="nav-number">1.2.3.</span> <span class="nav-text">值函数与策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">1.2.4.</span> <span class="nav-text">策略的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%80%BC%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">1.2.5.</span> <span class="nav-text">值函数的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A9%AC%E5%B0%94%E7%A7%91%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B%EF%BC%9A%E8%B4%9D%E5%B0%94%E6%9B%BC%E6%96%B9%E7%A8%8B"><span class="nav-number">1.2.6.</span> <span class="nav-text">马尔科夫决策过程：贝尔曼方程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E4%BC%98%E4%BB%B7%E5%80%BC%E5%87%BD%E6%95%B0%E5%92%8C%E6%9C%80%E4%BC%98%E7%8A%B6%E6%80%81-%E5%8A%A8%E4%BD%9C%E5%80%BC%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.7.</span> <span class="nav-text">最优价值函数和最优状态-动作值函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%88%B0%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0"><span class="nav-number">1.3.</span> <span class="nav-text">3、动态规划到强化学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DP-RL"><span class="nav-number">1.3.1.</span> <span class="nav-text">DP -&gt; RL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E8%AF%84%E4%BC%B0-Prediction"><span class="nav-number">1.3.2.</span> <span class="nav-text">策略评估(Prediction)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E6%94%B9%E8%BF%9B"><span class="nav-number">1.3.3.</span> <span class="nav-text">策略改进</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%80%BC%E5%87%BD%E6%95%B0%E8%BF%AD%E4%BB%A3"><span class="nav-number">1.3.4.</span> <span class="nav-text">值函数迭代</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E3%80%81MC-TD"><span class="nav-number">1.4.</span> <span class="nav-text">4、MC &amp; TD</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RL-Sutton"><span class="nav-number">2.</span> <span class="nav-text">RL_Sutton</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81Multi-armed-Bandits"><span class="nav-number">2.1.</span> <span class="nav-text">2、Multi-armed Bandits</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81Finite-Markov-Decision-Processes"><span class="nav-number">2.2.</span> <span class="nav-text">3、Finite Markov Decision Processes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E3%80%81DP"><span class="nav-number">2.3.</span> <span class="nav-text">4、DP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5%E3%80%81MC"><span class="nav-number">2.4.</span> <span class="nav-text">5、MC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-MC-ES"><span class="nav-number">2.4.1.</span> <span class="nav-text">5.3 MC (ES)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-On-Policy"><span class="nav-number">2.4.2.</span> <span class="nav-text">5.4  On-Policy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-5-Off-policy"><span class="nav-number">2.4.3.</span> <span class="nav-text">5.5 Off-policy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-6-Incremental-Implementation"><span class="nav-number">2.4.4.</span> <span class="nav-text">5.6 Incremental Implementation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6%E3%80%81TD"><span class="nav-number">2.5.</span> <span class="nav-text">6、TD</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TD-0"><span class="nav-number">2.5.1.</span> <span class="nav-text">TD(0)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sarsa-on-policy-TD"><span class="nav-number">2.5.2.</span> <span class="nav-text">Sarsa(on-policy TD)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q-learning-off-policy-TD"><span class="nav-number">2.5.3.</span> <span class="nav-text">Q-learning (off-policy TD)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Double-Q-learning"><span class="nav-number">2.5.4.</span> <span class="nav-text">Double Q-learning</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7%E3%80%81n-step-Bootstrapping"><span class="nav-number">2.6.</span> <span class="nav-text">7、n-step Bootstrapping</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-n-step-TD"><span class="nav-number">2.6.1.</span> <span class="nav-text">7.1 n-step TD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#n-step-Sarsa"><span class="nav-number">2.6.2.</span> <span class="nav-text">n-step Sarsa</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#n-step-Sarsa-Off-policy"><span class="nav-number">2.6.3.</span> <span class="nav-text">n-step Sarsa(Off-policy)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#n-step-Tree-Backup"><span class="nav-number">2.6.4.</span> <span class="nav-text">n-step Tree Backup</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8%E3%80%81-Planning-and-Learning-with-Tabular-Methods"><span class="nav-number">2.7.</span> <span class="nav-text">8、 Planning and Learning with Tabular Methods</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-On-Policy-Prediction"><span class="nav-number">2.8.</span> <span class="nav-text">9 On-Policy Prediction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#9-1-Value-function-Approximation"><span class="nav-number">2.8.1.</span> <span class="nav-text">9.1 Value-function Approximation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-2-The-Prediction-Objective"><span class="nav-number">2.8.2.</span> <span class="nav-text">9.2 The Prediction Objective</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-3-Stochastic-gradient-and-Semi-gradient-TD-0-Methods"><span class="nav-number">2.8.3.</span> <span class="nav-text">9.3 Stochastic-gradient and Semi-gradient TD(0) Methods</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-4-Linear-Methods-n-step-Semi-Graditent-TD"><span class="nav-number">2.8.4.</span> <span class="nav-text">9.4 Linear Methods(n-step Semi-Graditent TD)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-5-Feature-Construction-for-Linear-Methods"><span class="nav-number">2.8.5.</span> <span class="nav-text">9.5 Feature Construction for Linear Methods</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-7-ANN-%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%87%BD%E6%95%B0%E9%80%BC%E8%BF%91"><span class="nav-number">2.8.6.</span> <span class="nav-text">9.7 ANN (非线性函数逼近)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-8-LSTD"><span class="nav-number">2.8.7.</span> <span class="nav-text">9.8 LSTD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-11-Looking-Deeper-at-On-Policy-Learning-Interest-and-Emphasis"><span class="nav-number">2.8.8.</span> <span class="nav-text">9.11 Looking Deeper at On-Policy  Learning : Interest and Emphasis</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-On-Policy-Control"><span class="nav-number">2.9.</span> <span class="nav-text">10 On-Policy Control</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#10-1-Episodic-Semi-gradient-Control"><span class="nav-number">2.9.1.</span> <span class="nav-text">10.1 Episodic Semi-gradient Control</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-2-Semi-gradient-n-step-Sarsa"><span class="nav-number">2.9.2.</span> <span class="nav-text">10.2 Semi-gradient n-step Sarsa</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-3-Average-Reward-A-New-Problem-Setting-for-Continuing-Tasks"><span class="nav-number">2.9.3.</span> <span class="nav-text">10.3 Average Reward: A New Problem Setting for  Continuing Tasks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-4-Deprecating-the-Discounted-Setting"><span class="nav-number">2.9.4.</span> <span class="nav-text">10.4 Deprecating the Discounted Setting</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-5-Differential-Semi-gradient-n-step-Sarsa"><span class="nav-number">2.9.5.</span> <span class="nav-text">10.5 Differential Semi-gradient n-step Sarsa</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-Off-Policy-Methods"><span class="nav-number">2.10.</span> <span class="nav-text">11 Off-Policy Methods</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-Eligibility-Traces-%E8%B5%84%E6%A0%BC%E8%BF%B9"><span class="nav-number">2.11.</span> <span class="nav-text">12 Eligibility Traces 资格迹</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#12-1-gamma-%E5%9B%9E%E6%8A%A5"><span class="nav-number">2.11.1.</span> <span class="nav-text">12.1 $\gamma 回报$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-2-TD-lambda"><span class="nav-number">2.11.2.</span> <span class="nav-text">12.2 TD($\lambda$)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-3-n-step-Truncated-lambda-return-Methods"><span class="nav-number">2.11.3.</span> <span class="nav-text">12.3 n-step Truncated $\lambda$-return Methods</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-7-Sarsa"><span class="nav-number">2.11.4.</span> <span class="nav-text">12.7 Sarsa()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-8-Variable-lambda-and-gamma"><span class="nav-number">2.11.5.</span> <span class="nav-text">12.8 Variable  $\lambda$ and $\gamma$</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-Policy-Gradient-Methods"><span class="nav-number">2.12.</span> <span class="nav-text">13 Policy Gradient Methods</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Policy-Approximation-and-its-Advantages"><span class="nav-number">2.12.1.</span> <span class="nav-text">1. Policy Approximation and its Advantages</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-The-Policy-Gradient-Theorem-%E5%AE%9A%E7%90%86"><span class="nav-number">2.12.2.</span> <span class="nav-text">2. The Policy Gradient Theorem(定理)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-REINFORCE-Monte-Carlo-Policy-Gradient"><span class="nav-number">2.12.3.</span> <span class="nav-text">3. REINFORCE: Monte Carlo Policy Gradient</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81%E5%B8%A6%E6%9C%89baseline%E7%9A%84Reinforce"><span class="nav-number">2.12.4.</span> <span class="nav-text">4、带有baseline的Reinforce</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Actor%E2%80%93Critic-Methods"><span class="nav-number">2.12.5.</span> <span class="nav-text">5. Actor–Critic Methods</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6%E3%80%81%E6%8C%81%E7%BB%AD%E6%80%A7%E9%97%AE%E9%A2%98%E7%9A%84%E7%AD%96%E7%95%A5%E6%A2%AF%E5%BA%A6"><span class="nav-number">2.12.6.</span> <span class="nav-text">6、持续性问题的策略梯度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7%E3%80%81Policy-Parameterization-for-Continuous-Actions"><span class="nav-number">2.12.7.</span> <span class="nav-text">7、Policy Parameterization for Continuous Actions</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">2.13.</span> <span class="nav-text">参考资料</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

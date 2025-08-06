@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="[TOC] np初始化np.arange()np.random1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859# random.randn(x1, x2, x3, ...)# 返回一个满足正态分布的数组# 参数：x1:第一维大小#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tools_np Doc">
+<meta property="og:url" content="https://novav.github.io/2020/07/03/Sub_Language/PythonDoc/Language-np/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="[TOC] np初始化np.arange()np.random1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859# random.randn(x1, x2, x3, ...)# 返回一个满足正态分布的数组# 参数：x1:第一维大小#">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2020/07/03/Sub_Language/PythonDoc/Language-np/image-20200826164113328.png">
+<meta property="og:image" content="https://novav.github.io/2020/07/03/Sub_Language/PythonDoc/Language-np/image-20200826164056372.png">
+<meta property="og:image" content="https://novav.github.io/2020/07/03/Sub_Language/PythonDoc/Language-np/20180115105515186">
+<meta property="article:published_time" content="2020-07-03T20:20:52.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:40.556Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2020/07/03/Sub_Language/PythonDoc/Language-np/image-20200826164113328.png">
+
+<link rel="canonical" href="https://novav.github.io/2020/07/03/Sub_Language/PythonDoc/Language-np/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>tools_np Doc | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2020/07/03/Sub_Language/PythonDoc/Language-np/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          tools_np Doc
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-07-03 20:20:52" itemprop="dateCreated datePublished" datetime="2020-07-03T20:20:52+00:00">2020-07-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/python/numpy/" itemprop="url" rel="index"><span itemprop="name">numpy</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>[TOC]</p>
+<h2 id="np初始化"><a href="#np初始化" class="headerlink" title="np初始化"></a>np初始化</h2><h3 id="np-arange"><a href="#np-arange" class="headerlink" title="np.arange()"></a>np.arange()</h3><h3 id="np-random"><a href="#np-random" class="headerlink" title="np.random"></a>np.random</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># random.randn(x1, x2, x3, ...)</span></span><br><span class="line"><span class="comment"># 返回一个满足正态分布的数组</span></span><br><span class="line"><span class="comment"># 参数：x1:第一维大小</span></span><br><span class="line"><span class="comment">#      x2:第二维大小</span></span><br><span class="line"><span class="comment">#      …</span></span><br><span class="line"></span><br><span class="line">x=np.random.randn(<span class="number">3</span>,<span class="number">5</span>)    <span class="comment"># shape (3,5)</span></span><br><span class="line"><span class="built_in">print</span>(x) </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#random.randn(x1, x2, x3, ...)</span></span><br><span class="line"><span class="comment"># 返回一个值在[0,1)之间的数组</span></span><br><span class="line"><span class="comment"># 参数：x1:第一维大小</span></span><br><span class="line"><span class="comment">#      x2:第二维大小</span></span><br><span class="line"><span class="comment">#      …</span></span><br><span class="line"></span><br><span class="line">x=np.random.rand(<span class="number">2</span>,<span class="number">4</span>)</span><br><span class="line"><span class="built_in">print</span>(x)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#numpy.random.randint(low,high=None,size=None,dtype=‘l’)</span></span><br><span class="line"><span class="comment">#返回一个数组</span></span><br><span class="line"><span class="comment">#参数：low:数组最小值</span></span><br><span class="line"><span class="comment">#   high:数组最大值</span></span><br><span class="line"><span class="comment">#   size:数组维度大小</span></span><br><span class="line"><span class="comment">#   dtype:数据类型，默认为int</span></span><br><span class="line"><span class="comment">#   high为空时，默认生成随机数为[0,low)</span></span><br><span class="line"></span><br><span class="line">x=np.random.randint(<span class="number">1</span>,<span class="number">11</span>,(<span class="number">3</span>,<span class="number">4</span>))</span><br><span class="line">y=np.random.randint(<span class="number">10</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;x:&quot;</span>,x)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;y:&quot;</span>,y)</span><br><span class="line"><span class="comment">#输出：</span></span><br><span class="line">x: [[<span class="number">9</span> <span class="number">2</span> <span class="number">4</span> <span class="number">6</span>]</span><br><span class="line">    [<span class="number">1</span> <span class="number">3</span> <span class="number">7</span> <span class="number">7</span>]</span><br><span class="line">    [<span class="number">8</span> <span class="number">5</span> <span class="number">5</span> <span class="number">5</span>]]</span><br><span class="line">y: <span class="number">3</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># np.random.choice(a,size=None,replace=True,p=None)</span></span><br><span class="line"><span class="comment"># 返回一个数组</span></span><br><span class="line"><span class="comment"># 参数：a:一维数组类似数据或整数，整数时对应一维数组为np.arange(a)</span></span><br><span class="line"><span class="comment">#   size:数组维度大小</span></span><br><span class="line"><span class="comment">#   replace:抽样后是否将该数放回数组，若True则放回，False则不放回，所有数不相同</span></span><br><span class="line"><span class="comment">#   p:数组中的数出现的概率</span></span><br><span class="line"><span class="comment"># 举例：</span></span><br><span class="line">x=np.random.choice(<span class="number">5</span>, <span class="number">3</span>, replace=<span class="literal">False</span>, p=[<span class="number">0.1</span>, <span class="number">0</span>, <span class="number">0.3</span>, <span class="number">0.6</span>, <span class="number">0</span>])</span><br><span class="line"><span class="comment">#输出：[0 2 3]</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 随机数[0,1]之间</span></span><br><span class="line">np.random.random()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># seed( ) 用于指定随机数生成时所用算法开始的整数值，如果使用相同的seed( )值，则每次生成的随即数都相同，如果不设置这个值，则系统根据时间来自己选择这个值，此时每次生成的随机数因时间差异而不同。</span></span><br><span class="line">np.random.seed()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 是 NumPy 库中的一个函数，用于从正态分布（也称为高斯分布）中随机抽取样本。</span></span><br><span class="line">np.random.normal </span><br></pre></td></tr></table></figure>
+
+<h3 id="np-meshgrid"><a href="#np-meshgrid" class="headerlink" title="np.meshgrid()"></a>np.meshgrid()</h3><p>生成<strong>网格点坐标矩阵</strong></p>
+<h3 id="np-eye"><a href="#np-eye" class="headerlink" title="np.eye()"></a>np.eye()</h3><p>函数的原型：numpy.eye(N,M&#x3D;None,k&#x3D;0,dtype&#x3D;&lt;class ‘float’&gt;,order&#x3D;’C)</p>
+<p>返回的是一个二维2的数组(N,M)，对角线的地方为1，其余的地方为0.</p>
+<p>参数介绍：</p>
+<p>（1）N:int型，表示的是输出的行数</p>
+<p>（2）M：int型，可选项，输出的列数，如果没有就默认为N</p>
+<p>（3）k：int型，可选项，对角线的下标，默认为0表示的是主对角线，负数表示的是低对角，正数表示的是高对角。</p>
+<p>（4）dtype：数据的类型，可选项，返回的数据的数据类型</p>
+<p>（5）order：{‘C’，‘F’}，可选项，也就是输出的数组的形式是按照C语言的行优先’C’，还是按照Fortran形式的列优先‘F’存储在内存中</p>
+<p>案例：（普通的用法）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">a=np.eye(<span class="number">3</span>)</span><br><span class="line"><span class="built_in">print</span>(a)</span><br><span class="line"></span><br><span class="line">a=np.eye(<span class="number">4</span>,k=<span class="number">1</span>)</span><br><span class="line"><span class="built_in">print</span>(a)</span><br><span class="line"></span><br><span class="line">a=np.eye(<span class="number">4</span>,k=-<span class="number">1</span>)</span><br><span class="line"><span class="built_in">print</span>(a)</span><br><span class="line"></span><br><span class="line">a=np.eye(<span class="number">4</span>,k=-<span class="number">3</span>)</span><br><span class="line"><span class="built_in">print</span>(a)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[[1. 0. 0.]</span><br><span class="line"> [0. 1. 0.]</span><br><span class="line"> [0. 0. 1.]]</span><br><span class="line"></span><br><span class="line">[[0. 1. 0. 0.]</span><br><span class="line"> [0. 0. 1. 0.]</span><br><span class="line"> [0. 0. 0. 1.]</span><br><span class="line"> [0. 0. 0. 0.]]</span><br><span class="line"></span><br><span class="line">[[0. 0. 0. 0.]</span><br><span class="line"> [1. 0. 0. 0.]</span><br><span class="line"> [0. 1. 0. 0.]</span><br><span class="line"> [0. 0. 1. 0.]]</span><br><span class="line"></span><br><span class="line">[[0. 0. 0. 0.]</span><br><span class="line"> [0. 0. 0. 0.]</span><br><span class="line"> [0. 0. 0. 0.]</span><br><span class="line"> [1. 0. 0. 0.]]</span><br></pre></td></tr></table></figure>
+
+<p>高级用法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">labels=np.array([[<span class="number">1</span>],[<span class="number">2</span>],[<span class="number">0</span>],[<span class="number">1</span>]])</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;labels的大小：&quot;</span>,labels.shape,<span class="string">&quot;\n&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#因为我们的类别是从0-2，所以这里是3个类</span></span><br><span class="line">a=np.eye(<span class="number">3</span>)[<span class="number">1</span>]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;如果对应的类别号是1，那么转成one-hot的形式&quot;</span>,a,<span class="string">&quot;\n&quot;</span>)</span><br><span class="line"></span><br><span class="line">a=np.eye(<span class="number">3</span>)[<span class="number">2</span>]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;如果对应的类别号是2，那么转成one-hot的形式&quot;</span>,a,<span class="string">&quot;\n&quot;</span>)</span><br><span class="line"></span><br><span class="line">a=np.eye(<span class="number">3</span>)[<span class="number">1</span>,<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;1转成one-hot的数组的第一个数字是：&quot;</span>,a,<span class="string">&quot;\n&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#这里和上面的结果的区别，注意!!!</span></span><br><span class="line">a=np.eye(<span class="number">3</span>)[[<span class="number">1</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">1</span>]]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;如果对应的类别号是1,2,0,1，那么转成one-hot的形式\n&quot;</span>,a)</span><br><span class="line"></span><br><span class="line">res=np.eye(<span class="number">3</span>)[labels.reshape(-<span class="number">1</span>)]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;labels转成one-hot形式的结果：\n&quot;</span>,res,<span class="string">&quot;\n&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;labels转化成one-hot后的大小：&quot;</span>,res.shape)</span><br><span class="line"></span><br><span class="line">labels的大小： (<span class="number">4</span>, <span class="number">1</span>) </span><br><span class="line"></span><br><span class="line">如果对应的类别号是<span class="number">1</span>，那么转成one-hot的形式 [<span class="number">0.</span> <span class="number">1.</span> <span class="number">0.</span>] </span><br><span class="line"></span><br><span class="line">如果对应的类别号是<span class="number">2</span>，那么转成one-hot的形式 [<span class="number">0.</span> <span class="number">0.</span> <span class="number">1.</span>] </span><br><span class="line"></span><br><span class="line"><span class="number">1</span>转成one-hot的数组的第一个数字是： <span class="number">0.0</span> </span><br><span class="line"></span><br><span class="line">如果对应的类别号是<span class="number">1</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">1</span>，那么转成one-hot的形式</span><br><span class="line"> [[<span class="number">0.</span> <span class="number">1.</span> <span class="number">0.</span>]</span><br><span class="line"> [<span class="number">0.</span> <span class="number">0.</span> <span class="number">1.</span>]</span><br><span class="line"> [<span class="number">1.</span> <span class="number">0.</span> <span class="number">0.</span>]</span><br><span class="line"> [<span class="number">0.</span> <span class="number">1.</span> <span class="number">0.</span>]]</span><br><span class="line">labels转成one-hot形式的结果：</span><br><span class="line"> [[<span class="number">0.</span> <span class="number">1.</span> <span class="number">0.</span>]</span><br><span class="line"> [<span class="number">0.</span> <span class="number">0.</span> <span class="number">1.</span>]</span><br><span class="line"> [<span class="number">1.</span> <span class="number">0.</span> <span class="number">0.</span>]</span><br><span class="line"> [<span class="number">0.</span> <span class="number">1.</span> <span class="number">0.</span>]] </span><br><span class="line"></span><br><span class="line">labels转化成one-hot后的大小： (<span class="number">4</span>, <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="np-identity"><a href="#np-identity" class="headerlink" title="np.identity()"></a>np.identity()</h3><p>这个函数和之前的区别在于，这个只能创建方阵，也就是N&#x3D;M</p>
+<p>函数的原型：np.identity(n,dtype&#x3D;None)</p>
+<p>参数：n，int型表示的是输出的矩阵的行数和列数都是n</p>
+<p>dtype：表示的是输出的类型，默认是float</p>
+<p>返回的是nxn的主对角线为1，其余地方为0的数组</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">a=np.identity(<span class="number">3</span>)</span><br><span class="line"><span class="built_in">print</span>(a)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[[<span class="number">1.</span> <span class="number">0.</span> <span class="number">0.</span>]</span><br><span class="line"> [<span class="number">0.</span> <span class="number">1.</span> <span class="number">0.</span>]</span><br><span class="line"> [<span class="number">0.</span> <span class="number">0.</span> <span class="number">1.</span>]]</span><br></pre></td></tr></table></figure>
+
+<h3 id="np-ravel"><a href="#np-ravel" class="headerlink" title="np.ravel()"></a>np.ravel()</h3><h3 id="np-expand-dims"><a href="#np-expand-dims" class="headerlink" title="np.expand_dims()"></a>np.expand_dims()</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">a = np.zeros((<span class="number">32</span>,<span class="number">32</span>))</span><br><span class="line"><span class="built_in">print</span>(a.shape)</span><br><span class="line">a1 = np.expand_dims(a,<span class="number">0</span>)</span><br><span class="line"><span class="built_in">print</span>(a1.shape)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>(<span class="number">32</span>,<span class="number">32</span>) (<span class="number">1</span>,<span class="number">32</span>,<span class="number">32</span>)</span><br></pre></td></tr></table></figure>
+
+<p>方式2</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">a = np.zeros((<span class="number">32</span>,<span class="number">32</span>))</span><br><span class="line"><span class="built_in">print</span>(a.shape)</span><br><span class="line">a1 = a[<span class="literal">None</span>,:,:]</span><br><span class="line"><span class="built_in">print</span>(a1.shape)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>(<span class="number">32</span>,<span class="number">32</span>) (<span class="number">1</span>,<span class="number">32</span>,<span class="number">32</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="np-sequeeze"><a href="#np-sequeeze" class="headerlink" title="np.sequeeze()"></a>np.sequeeze()</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">a = np.zeros((<span class="number">1</span>,<span class="number">32</span>,<span class="number">32</span>))</span><br><span class="line"><span class="built_in">print</span>(a.shape)</span><br><span class="line">a1 = a.squeeze()</span><br><span class="line"><span class="built_in">print</span>(a1.shape)</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>(<span class="number">1</span>,<span class="number">32</span>,<span class="number">32</span>) (<span class="number">32</span>,<span class="number">32</span>)</span><br></pre></td></tr></table></figure>
+
+<p>另一种方式</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">a = np.zeros((<span class="number">3</span>,<span class="number">32</span>,<span class="number">32</span>))</span><br><span class="line"><span class="built_in">print</span>(a.shape)</span><br><span class="line">a1 = a[<span class="number">0</span>,:,:]</span><br><span class="line"><span class="built_in">print</span>(a1.shape)</span><br></pre></td></tr></table></figure>
+
+<h3 id="np-flatten"><a href="#np-flatten" class="headerlink" title="np.flatten()"></a>np.flatten()</h3><p>两者的功能是一致的，将多维数组降为一维，但是两者的区别是返回拷贝还是返回视图</p>
+<p>np.flatten()返回一份拷贝，对拷贝所做修改不会影响原始矩阵，</p>
+<p>np.ravel()返回的是视图，修改时会影响原始矩阵</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">a = np.array([[<span class="number">1</span> , <span class="number">2</span>] , [<span class="number">3</span> , <span class="number">4</span>]])</span><br><span class="line">b = a.flatten()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;b:&#x27;</span> , b)</span><br><span class="line">c = a.ravel()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;c:&#x27;</span> , c)</span><br><span class="line">d = a.ravel(<span class="string">&#x27;F&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;d:&#x27;</span> , d)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 二者的区别</span></span><br><span class="line">b[<span class="number">0</span>] = <span class="number">10</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;a:&#x27;</span> , a)</span><br><span class="line">c[<span class="number">0</span>] = <span class="number">10</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;a:&#x27;</span> , a)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">b: [1 2 3 4]</span><br><span class="line">c: [1 2 3 4]</span><br><span class="line">d: [1 3 2 4]</span><br><span class="line">a: [[1 2]</span><br><span class="line">[3 4]]</span><br><span class="line">a: [[10 2]</span><br><span class="line">[ 3 4]]</span><br></pre></td></tr></table></figure>
+
+<h3 id="allclose"><a href="#allclose" class="headerlink" title="allclose"></a>allclose</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">numpy.allclose(a, b, rtol=<span class="number">1e-05</span>, atol=<span class="number">1e-08</span>, equal_nan=<span class="literal">False</span>)[source]</span><br><span class="line"></span><br><span class="line">absolute(a - b) &lt;= (atol + rtol * absolute(b))</span><br></pre></td></tr></table></figure>
+
+<p>eg: 判断两个数据的误差小于2：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">np.allclose(a, b, atol=<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这两个数据，可以是相同维度的，例如 </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a = [<span class="number">149.820974</span> <span class="number">188.13338026</span> <span class="number">145.44900513</span>] </span><br><span class="line">b = [<span class="number">151.086161</span> <span class="number">186.89028926</span> <span class="number">144.17222595</span>]</span><br></pre></td></tr></table></figure>
+
+<h3 id="diag"><a href="#diag" class="headerlink" title="diag"></a>diag</h3><h3 id="np-argmax"><a href="#np-argmax" class="headerlink" title="np.argmax()"></a>np.argmax()</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">a = np.array([<span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">1</span>])</span><br><span class="line">b=np.argmax(a)<span class="comment">#取出a中元素最大值所对应的索引，此时最大值位6，其对应的位置索引值为4，（索引值默认从0开始）</span></span><br><span class="line"><span class="built_in">print</span>(b)<span class="comment">#4</span></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://wenku.baidu.com/view/1d3dbe48ac1ffc4ffe4733687e21af45b307fe78.html">https://wenku.baidu.com/view/1d3dbe48ac1ffc4ffe4733687e21af45b307fe78.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_38145317/article/details/79650188">https://blog.csdn.net/weixin_38145317/article/details/79650188</a></p>
+<h3 id="np-where"><a href="#np-where" class="headerlink" title="np.where()"></a>np.where()</h3><h4 id="np-where-condition-x-y"><a href="#np-where-condition-x-y" class="headerlink" title="np.where(condition, x, y)"></a>np.where(condition, x, y)</h4><p>满足条件(condition)，输出x，不满足输出y。</p>
+<p>如果是一维数组，相当于<code>[xv if c else yv for (c,xv,yv) in zip(condition,x,y)]</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; aa = np.arange(10)</span><br><span class="line">&gt;&gt;&gt; np.where(aa,1,-1)</span><br><span class="line">array([-1,  1,  1,  1,  1,  1,  1,  1,  1,  1])  # 0为False，所以第一个输出-1</span><br><span class="line">&gt;&gt;&gt; np.where(aa &gt; 5,1,-1)</span><br><span class="line">array([-1, -1, -1, -1, -1, -1,  1,  1,  1,  1])</span><br></pre></td></tr></table></figure>
+
+<h4 id="np-where-condition"><a href="#np-where-condition" class="headerlink" title="np.where(condition)"></a>np.where(condition)</h4><p>只有条件 (condition)，没有x和y，则输出满足条件 (即非0) 元素的坐标 (等价于<a target="_blank" rel="noopener" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.nonzero.html#numpy.nonzero">numpy.nonzero</a>)。这里的坐标以tuple的形式给出，通常原数组有多少维，输出的tuple中就包含几个数组，分别对应符合条件元素的各维坐标。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = np.array([<span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>,<span class="number">10</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>np.where(a &gt; <span class="number">5</span>)                <span class="comment"># 返回索引</span></span><br><span class="line">(array([<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]),)   </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bid_history = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">2</span>]</span><br><span class="line">np.argwhere(bid_history==<span class="built_in">max</span>(bid_history))</span><br><span class="line">&gt;&gt;&gt;array([[<span class="number">2</span>],</span><br><span class="line">       [<span class="number">4</span>]], dtype=int64)</span><br></pre></td></tr></table></figure>
+
+<h3 id="np-repeat"><a href="#np-repeat" class="headerlink" title="np.repeat"></a>np.repeat</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = np.zeros(<span class="number">54</span>, dtype=np.int8)</span><br><span class="line">batch_num =  <span class="number">4</span></span><br><span class="line">batch_a = np.repeat(a[np.newaxis,:], batch_num, axis=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Slice"><a href="#Slice" class="headerlink" title="Slice"></a>Slice</h2><h3 id="（逆向序列）"><a href="#（逆向序列）" class="headerlink" title=":: （逆向序列）"></a>:: （逆向序列）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = np.arange(<span class="number">10</span>)</span><br><span class="line"><span class="built_in">print</span>(a)</span><br><span class="line"><span class="built_in">print</span>(a[-<span class="number">3</span>:][::])</span><br><span class="line"><span class="built_in">print</span>(a[-<span class="number">3</span>:][::-<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[0 1 2 3 4 5 6 7 8 9]</span><br><span class="line">[7 8 9]</span><br><span class="line">[9 8 7]</span><br></pre></td></tr></table></figure>
+
+<h2 id="statck相关"><a href="#statck相关" class="headerlink" title="statck相关"></a>statck相关</h2><p>stack()    Join a sequence of arrays along a new axis.</p>
+<p>vstack()    Stack along first axis.                                        &#x3D;&#x3D; np.concatenate(tup, axis&#x3D;0）</p>
+<p>hstack()    Stack along second axis.  (column wise).      &#x3D;&#x3D; np.concatenate(tup, axis&#x3D;1)</p>
+<p>dstack()    Stack arrays in sequence depth wise (along third dimension).&#x3D;&#x3D;np.concatenate(tup, axis&#x3D;2)</p>
+<p>concatenate()     Join a sequence of arrays along an existing axis.</p>
+<h3 id="np-stack"><a href="#np-stack" class="headerlink" title="np.stack()"></a>np.stack()</h3><h3 id="np-hstack"><a href="#np-hstack" class="headerlink" title="np.hstack()"></a>np.hstack()</h3><h3 id="np-vstack"><a href="#np-vstack" class="headerlink" title="np.vstack()"></a>np.vstack()</h3><h3 id="np-dstack"><a href="#np-dstack" class="headerlink" title="np.dstack()"></a>np.dstack()</h3><h3 id="np-concatenate"><a href="#np-concatenate" class="headerlink" title="np.concatenate()"></a>np.concatenate()</h3><h3 id="np-split"><a href="#np-split" class="headerlink" title="np.split()"></a>np.split()</h3><h3 id="np-hsplit"><a href="#np-hsplit" class="headerlink" title="np.hsplit"></a>np.hsplit</h3><h3 id="np-vsplit"><a href="#np-vsplit" class="headerlink" title="np.vsplit"></a>np.vsplit</h3><h3 id="np-dsplit"><a href="#np-dsplit" class="headerlink" title="np.dsplit"></a>np.dsplit</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">split  :  1D; indices_or_sections ``[2, 3]`` would, for ``axis=0``, result in</span><br><span class="line">          - ary[:2]</span><br><span class="line">          - ary[2:3]</span><br><span class="line">          - ary[3:]</span><br><span class="line">hsplit : Split array into multiple sub-arrays horizontally (column-wise).</span><br><span class="line">vsplit : Split array into multiple sub-arrays vertically (row wise).</span><br><span class="line">dsplit : Split array into multiple sub-arrays along the 3rd axis (depth).</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">a = np.zeros((<span class="number">4</span>, <span class="number">3</span>))</span><br><span class="line">b = np.ones((<span class="number">4</span>, <span class="number">1</span>))</span><br><span class="line"><span class="built_in">print</span>(a.shape)</span><br><span class="line"><span class="built_in">print</span>(a)</span><br><span class="line"><span class="built_in">print</span>(b)</span><br><span class="line"></span><br><span class="line">c = np.hstack((a, b))</span><br><span class="line"><span class="built_in">print</span>(c)</span><br><span class="line"></span><br><span class="line">d = np.ones((<span class="number">1</span>, <span class="number">3</span>))</span><br><span class="line"><span class="built_in">print</span>(d)</span><br><span class="line">c = np.vstack((a, d))</span><br><span class="line"><span class="built_in">print</span>(c)</span><br></pre></td></tr></table></figure>
+
+<p>Out:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">(<span class="number">4</span>, <span class="number">3</span>)</span><br><span class="line">[[<span class="number">0.</span> <span class="number">0.</span> <span class="number">0.</span>]</span><br><span class="line"> [<span class="number">0.</span> <span class="number">0.</span> <span class="number">0.</span>]</span><br><span class="line"> [<span class="number">0.</span> <span class="number">0.</span> <span class="number">0.</span>]</span><br><span class="line"> [<span class="number">0.</span> <span class="number">0.</span> <span class="number">0.</span>]]</span><br><span class="line">[[<span class="number">1.</span>]</span><br><span class="line"> [<span class="number">1.</span>]</span><br><span class="line"> [<span class="number">1.</span>]</span><br><span class="line"> [<span class="number">1.</span>]]</span><br><span class="line">[[<span class="number">0.</span> <span class="number">0.</span> <span class="number">0.</span> <span class="number">1.</span>]</span><br><span class="line"> [<span class="number">0.</span> <span class="number">0.</span> <span class="number">0.</span> <span class="number">1.</span>]</span><br><span class="line"> [<span class="number">0.</span> <span class="number">0.</span> <span class="number">0.</span> <span class="number">1.</span>]</span><br><span class="line"> [<span class="number">0.</span> <span class="number">0.</span> <span class="number">0.</span> <span class="number">1.</span>]]</span><br><span class="line">[[<span class="number">1.</span> <span class="number">1.</span> <span class="number">1.</span>]]</span><br><span class="line">[[<span class="number">0.</span> <span class="number">0.</span> <span class="number">0.</span>]</span><br><span class="line"> [<span class="number">0.</span> <span class="number">0.</span> <span class="number">0.</span>]</span><br><span class="line"> [<span class="number">0.</span> <span class="number">0.</span> <span class="number">0.</span>]</span><br><span class="line"> [<span class="number">0.</span> <span class="number">0.</span> <span class="number">0.</span>]</span><br><span class="line"> [<span class="number">1.</span> <span class="number">1.</span> <span class="number">1.</span>]]</span><br><span class="line"></span><br><span class="line">Process finished <span class="keyword">with</span> exit code <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="np矩阵运算"><a href="#np矩阵运算" class="headerlink" title="np矩阵运算:"></a>np矩阵运算:</h2><h3 id="mean-均值"><a href="#mean-均值" class="headerlink" title="mean 均值"></a>mean 均值</h3><h3 id="var-方差"><a href="#var-方差" class="headerlink" title="var 方差"></a>var 方差</h3><h3 id="item"><a href="#item" class="headerlink" title="item"></a>item</h3><h3 id="dot"><a href="#dot" class="headerlink" title="dot"></a>dot</h3><p><strong>数量积</strong>又称内积（Kronecker product）、点积（Dot product），对应元素相乘相加，结果是一个标量（即一个数）。</p>
+<p><img src="/2020/07/03/Sub_Language/PythonDoc/Language-np/image-20200826164113328.png" alt="image-20200826164113328"></p>
+<h3 id="cross"><a href="#cross" class="headerlink" title="cross"></a>cross</h3><p><strong>向量积</strong>又称外积、叉积（Cross product）</p>
+<p><img src="/2020/07/03/Sub_Language/PythonDoc/Language-np/image-20200826164056372.png" alt="image-20200826164056372"></p>
+<h3 id="multiply或"><a href="#multiply或" class="headerlink" title="multiply或*"></a>multiply<code>或</code>*</h3><p><strong>普通乘积</strong>：对应元素相乘，结果还是向量。</p>
+<h2 id="np-linalg"><a href="#np-linalg" class="headerlink" title="np.linalg"></a>np.linalg</h2><h3 id="np-linalg-norm-求范数"><a href="#np-linalg-norm-求范数" class="headerlink" title="np.linalg.norm 求范数"></a>np.linalg.norm 求范数</h3><p><img src="/2020/07/03/Sub_Language/PythonDoc/Language-np/20180115105515186" alt="img"></p>
+<h1 id="序列化NP"><a href="#序列化NP" class="headerlink" title="序列化NP"></a>序列化NP</h1><h2 id="bcolz"><a href="#bcolz" class="headerlink" title="bcolz"></a>bcolz</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Write:</span><br><span class="line">    carr=bcolz.carray(arr, rootdir=fname, mode=<span class="string">&#x27;w&#x27;</span>); </span><br><span class="line">    carr.flush() </span><br><span class="line"></span><br><span class="line">Read:</span><br><span class="line">    carr=bcolz.carray(arr, rootdir=fname, mode=<span class="string">&#x27;r&#x27;</span>); </span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://vimsky.com/zh-tw/examples/detail/python-method-bcolz.carray.html">https://vimsky.com/zh-tw/examples/detail/python-method-bcolz.carray.html</a></p>
+<h2 id="pickle"><a href="#pickle" class="headerlink" title="pickle"></a>pickle</h2><h2 id="path相关"><a href="#path相关" class="headerlink" title="path相关"></a>path相关</h2><p>glob模块是最简单的模块之一，内容非常少。用它可以查找符合特定规则的文件路径名。跟使用windows下的文件搜索差不多。查找文件只用到三个匹配符：”<em>”, “?”, “[]”。”</em>”匹配0个或多个字符；”?”匹配单个字符；”[]”匹配指定范围内的字符，如：[0-9]匹配数字。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> glob</span><br><span class="line"></span><br><span class="line"><span class="comment">#获取指定目录下的所有图片</span></span><br><span class="line"><span class="built_in">print</span> (glob.glob(<span class="string">r&quot;/home/qiaoyunhao/*/*.png&quot;</span>),<span class="string">&quot;\n&quot;</span>)<span class="comment">#加上r让字符串不转义</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#获取上级目录的所有.py文件</span></span><br><span class="line"><span class="built_in">print</span> (glob.glob(<span class="string">r&#x27;../*.py&#x27;</span>)) <span class="comment">#相对路径</span></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/06/17/Graphices/Graphices-Benchmark/" rel="prev" title="Point Set Matching/Registration Benchmark">
+      <i class="fa fa-chevron-left"></i> Point Set Matching/Registration Benchmark
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/07/12/Improve/2020-Plan/" rel="next" title="2020_PLAN">
+      2020_PLAN <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#np%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">1.</span> <span class="nav-text">np初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#np-arange"><span class="nav-number">1.1.</span> <span class="nav-text">np.arange()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-random"><span class="nav-number">1.2.</span> <span class="nav-text">np.random</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-meshgrid"><span class="nav-number">1.3.</span> <span class="nav-text">np.meshgrid()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-eye"><span class="nav-number">1.4.</span> <span class="nav-text">np.eye()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-identity"><span class="nav-number">1.5.</span> <span class="nav-text">np.identity()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-ravel"><span class="nav-number">1.6.</span> <span class="nav-text">np.ravel()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-expand-dims"><span class="nav-number">1.7.</span> <span class="nav-text">np.expand_dims()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-sequeeze"><span class="nav-number">1.8.</span> <span class="nav-text">np.sequeeze()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-flatten"><span class="nav-number">1.9.</span> <span class="nav-text">np.flatten()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#allclose"><span class="nav-number">1.10.</span> <span class="nav-text">allclose</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#diag"><span class="nav-number">1.11.</span> <span class="nav-text">diag</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-argmax"><span class="nav-number">1.12.</span> <span class="nav-text">np.argmax()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-where"><span class="nav-number">1.13.</span> <span class="nav-text">np.where()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#np-where-condition-x-y"><span class="nav-number">1.13.1.</span> <span class="nav-text">np.where(condition, x, y)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#np-where-condition"><span class="nav-number">1.13.2.</span> <span class="nav-text">np.where(condition)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-repeat"><span class="nav-number">1.14.</span> <span class="nav-text">np.repeat</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Slice"><span class="nav-number">2.</span> <span class="nav-text">Slice</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%88%E9%80%86%E5%90%91%E5%BA%8F%E5%88%97%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">:: （逆向序列）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#statck%E7%9B%B8%E5%85%B3"><span class="nav-number">3.</span> <span class="nav-text">statck相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#np-stack"><span class="nav-number">3.1.</span> <span class="nav-text">np.stack()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-hstack"><span class="nav-number">3.2.</span> <span class="nav-text">np.hstack()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-vstack"><span class="nav-number">3.3.</span> <span class="nav-text">np.vstack()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-dstack"><span class="nav-number">3.4.</span> <span class="nav-text">np.dstack()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-concatenate"><span class="nav-number">3.5.</span> <span class="nav-text">np.concatenate()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-split"><span class="nav-number">3.6.</span> <span class="nav-text">np.split()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-hsplit"><span class="nav-number">3.7.</span> <span class="nav-text">np.hsplit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-vsplit"><span class="nav-number">3.8.</span> <span class="nav-text">np.vsplit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#np-dsplit"><span class="nav-number">3.9.</span> <span class="nav-text">np.dsplit</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#np%E7%9F%A9%E9%98%B5%E8%BF%90%E7%AE%97"><span class="nav-number">4.</span> <span class="nav-text">np矩阵运算:</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mean-%E5%9D%87%E5%80%BC"><span class="nav-number">4.1.</span> <span class="nav-text">mean 均值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#var-%E6%96%B9%E5%B7%AE"><span class="nav-number">4.2.</span> <span class="nav-text">var 方差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#item"><span class="nav-number">4.3.</span> <span class="nav-text">item</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dot"><span class="nav-number">4.4.</span> <span class="nav-text">dot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cross"><span class="nav-number">4.5.</span> <span class="nav-text">cross</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#multiply%E6%88%96"><span class="nav-number">4.6.</span> <span class="nav-text">multiply或*</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#np-linalg"><span class="nav-number">5.</span> <span class="nav-text">np.linalg</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#np-linalg-norm-%E6%B1%82%E8%8C%83%E6%95%B0"><span class="nav-number">5.1.</span> <span class="nav-text">np.linalg.norm 求范数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E5%8C%96NP"><span class="nav-number"></span> <span class="nav-text">序列化NP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#bcolz"><span class="nav-number">1.</span> <span class="nav-text">bcolz</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pickle"><span class="nav-number">2.</span> <span class="nav-text">pickle</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#path%E7%9B%B8%E5%85%B3"><span class="nav-number">3.</span> <span class="nav-text">path相关</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="[TOC] 5.1 基于激光雷达点云的检测算法 (3D检测) 激光雷达点云简介 Pixel-Based Voxel-Based Tree-Based Point-Based 实战基于点云的目标检测  0、激光雷达点云简介什么是激光雷电点云？ 常用数据集 KITTI    实战kitti LIDAR点云生成鸟瞰图BEV 点云基础 - 将点云投影到图片上 BEV: 俯视图 https:&#x2F;&#x2F;blog.c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="无人驾驶（5）动态环境感知与3D目标检测">
+<meta property="og:url" content="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="[TOC] 5.1 基于激光雷达点云的检测算法 (3D检测) 激光雷达点云简介 Pixel-Based Voxel-Based Tree-Based Point-Based 实战基于点云的目标检测  0、激光雷达点云简介什么是激光雷电点云？ 常用数据集 KITTI    实战kitti LIDAR点云生成鸟瞰图BEV 点云基础 - 将点云投影到图片上 BEV: 俯视图 https:&#x2F;&#x2F;blog.c">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220419022248517.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220419022639349.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220419022502344.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220419023431055.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420010518793.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420011222644.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420011317865.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420011702183.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420011900798.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420012034009.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420012239576.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420012319233.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420012406257.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420012705453.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420012811805.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420014344009.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420014527963.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420014551923.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420014643233.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420015103222.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420015801982.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420015935771.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420020202704.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420020408548.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420020528296.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420020609633.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420020656186.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420020742927.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420020929747.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420021250554.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420021404060.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420021517598.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420021532404.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420021615860.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420021151045.png">
+<meta property="article:published_time" content="2022-04-18T23:09:30.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:39.000Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="Autopilot">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220419022248517.png">
+
+<link rel="canonical" href="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>无人驾驶（5）动态环境感知与3D目标检测 | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/04/18/Course/AutomaticDrive/AutoDriver_05/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          无人驾驶（5）动态环境感知与3D目标检测
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-04-18 23:09:30" itemprop="dateCreated datePublished" datetime="2022-04-18T23:09:30+00:00">2022-04-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Autopilot/" itemprop="url" rel="index"><span itemprop="name">Autopilot</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Autopilot/%E5%85%A5%E9%97%A8%E6%8F%90%E9%AB%98/" itemprop="url" rel="index"><span itemprop="name">入门提高</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>[TOC]</p>
+<h2 id="5-1-基于激光雷达点云的检测算法-3D检测"><a href="#5-1-基于激光雷达点云的检测算法-3D检测" class="headerlink" title="5.1 基于激光雷达点云的检测算法 (3D检测)"></a>5.1 基于激光雷达点云的检测算法 (3D检测)</h2><ul>
+<li>激光雷达点云简介</li>
+<li>Pixel-Based</li>
+<li>Voxel-Based</li>
+<li>Tree-Based</li>
+<li>Point-Based</li>
+<li>实战基于点云的目标检测</li>
+</ul>
+<h3 id="0、激光雷达点云简介"><a href="#0、激光雷达点云简介" class="headerlink" title="0、激光雷达点云简介"></a>0、激光雷达点云简介</h3><h4 id="什么是激光雷电点云？"><a href="#什么是激光雷电点云？" class="headerlink" title="什么是激光雷电点云？"></a>什么是激光雷电点云？</h4><p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220419022248517.png" alt="image-20220419022248517"></p>
+<h4 id="常用数据集"><a href="#常用数据集" class="headerlink" title="常用数据集"></a>常用数据集</h4><p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220419022639349.png" alt="image-20220419022639349"></p>
+<h4 id="KITTI-实战kitti-LIDAR点云生成鸟瞰图BEV"><a href="#KITTI-实战kitti-LIDAR点云生成鸟瞰图BEV" class="headerlink" title="KITTI    实战kitti LIDAR点云生成鸟瞰图BEV"></a><strong>KITTI    实战kitti LIDAR点云生成鸟瞰图BEV</strong></h4><p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220419022502344.png" alt="image-20220419022502344"></p>
+<h4 id="点云基础-将点云投影到图片上"><a href="#点云基础-将点云投影到图片上" class="headerlink" title="点云基础 - 将点云投影到图片上"></a><strong>点云基础 - 将点云投影到图片上</strong></h4><ul>
+<li>BEV: 俯视图<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/w1995s/article/details/114841920">https://blog.csdn.net/w1995s/article/details/114841920</a></li>
+</ul>
+</li>
+<li>Lidar Point on Image</li>
+</ul>
+<p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220419023431055.png" alt="image-20220419023431055"></p>
+<h3 id="传统VS深度学习"><a href="#传统VS深度学习" class="headerlink" title="传统VS深度学习"></a>传统VS深度学习</h3><p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420010518793.png" alt="image-20220420010518793"></p>
+<h3 id="1、基于像素的点云算法（Pixel-Based）"><a href="#1、基于像素的点云算法（Pixel-Based）" class="headerlink" title="1、基于像素的点云算法（Pixel-Based）"></a>1、基于像素的点云算法（Pixel-Based）</h3><ul>
+<li>基本思想：<ul>
+<li>3D-2D, 三维点云在不同角度的相机投影（映射）</li>
+<li>再借助2D图像处理领域成熟的深度学习框架进行分析</li>
+</ul>
+</li>
+<li>典型算法<ul>
+<li>MVCNN, MV3D, AVOD</li>
+<li>Apollo2.0 SequeezeSeg</li>
+</ul>
+</li>
+</ul>
+<h4 id="MVCNN-分类"><a href="#MVCNN-分类" class="headerlink" title="MVCNN (分类)"></a>MVCNN (分类)</h4><p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420011222644.png" alt="image-20220420011222644"></p>
+<h4 id="MV3D"><a href="#MV3D" class="headerlink" title="MV3D"></a>MV3D</h4><p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420011317865.png" alt="image-20220420011317865"></p>
+<h4 id="AVOD"><a href="#AVOD" class="headerlink" title="AVOD"></a>AVOD</h4><p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420011702183.png" alt="image-20220420011702183"></p>
+<p>Feature Extractor</p>
+<p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420011900798.png" alt="image-20220420011900798"></p>
+<p>RPN</p>
+<p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420012034009.png" alt="image-20220420012034009"></p>
+<p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420012239576.png" alt="image-20220420012239576"></p>
+<h4 id="Apollo2-0"><a href="#Apollo2-0" class="headerlink" title="Apollo2.0"></a>Apollo2.0</h4><p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420012319233.png" alt="image-20220420012319233"></p>
+<h4 id="SqueezeSeg"><a href="#SqueezeSeg" class="headerlink" title="SqueezeSeg"></a>SqueezeSeg</h4><p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420012406257.png" alt="image-20220420012406257"> </p>
+<p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420012705453.png" alt="image-20220420012705453"></p>
+<p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420012811805.png" alt="image-20220420012811805"></p>
+<h4 id="代码实战：-tolearning"><a href="#代码实战：-tolearning" class="headerlink" title="代码实战：[tolearning]"></a>代码实战：[tolearning]</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/AdamShan/article/details/83544089?spm=1001.2014.3001.5501#commentBox">无人驾驶汽车系统入门（二十六）——基于深度学习的实时激光雷达点云目标检测及ROS实现</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/lemonxiaoxiao/article/details/114000238">Ubuntu16.04运行SqueezeSeg_Ros</a></p>
+<h3 id="2、基于体素的点云算法（Voxel-Based）"><a href="#2、基于体素的点云算法（Voxel-Based）" class="headerlink" title="2、基于体素的点云算法（Voxel-Based）"></a>2、基于体素的点云算法（Voxel-Based）</h3><p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420014344009.png" alt="image-20220420014344009"></p>
+<h4 id="VoxNet"><a href="#VoxNet" class="headerlink" title="VoxNet"></a>VoxNet</h4><h4 id="VoxelNet"><a href="#VoxelNet" class="headerlink" title="VoxelNet"></a>VoxelNet</h4><p>&#x3D; Voxel-Based + Point-Based (局部+全局)</p>
+<h3 id="3、基于树的点云算法（Tree-Based）"><a href="#3、基于树的点云算法（Tree-Based）" class="headerlink" title="3、基于树的点云算法（Tree-Based）"></a>3、基于树的点云算法（Tree-Based）</h3><p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420014527963.png" alt="image-20220420014527963"></p>
+<p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420014551923.png" alt="image-20220420014551923"></p>
+<h4 id="OctNet"><a href="#OctNet" class="headerlink" title="OctNet"></a>OctNet</h4><h4 id="O-CNN"><a href="#O-CNN" class="headerlink" title="O-CNN"></a>O-CNN</h4><h4 id="Escape-from-Cells"><a href="#Escape-from-Cells" class="headerlink" title="Escape from Cells"></a>Escape from Cells</h4><h3 id="4、基于点的点云算法（Point-Based）"><a href="#4、基于点的点云算法（Point-Based）" class="headerlink" title="4、基于点的点云算法（Point-Based）"></a>4、基于点的点云算法（Point-Based）</h3><ul>
+<li>对称函数、X变换</li>
+</ul>
+<p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420014643233.png" alt="image-20220420014643233"></p>
+<h4 id="PointNet-（CVPR2017）"><a href="#PointNet-（CVPR2017）" class="headerlink" title="PointNet （CVPR2017）"></a>PointNet （CVPR2017）</h4><p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420015103222.png" alt="image-20220420015103222"></p>
+<p>1x3的卷积，实现全连接层</p>
+<p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420015801982.png" alt="image-20220420015801982"></p>
+<p>transform_net </p>
+<p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420015935771.png" alt="image-20220420015935771"></p>
+<h4 id="PointNet-NIPS2017"><a href="#PointNet-NIPS2017" class="headerlink" title="PointNet++ (NIPS2017)"></a>PointNet++ (NIPS2017)</h4><p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420020202704.png" alt="image-20220420020202704"></p>
+<p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420020408548.png" alt="image-20220420020408548"></p>
+<h4 id="PointCNN"><a href="#PointCNN" class="headerlink" title="PointCNN"></a>PointCNN</h4><p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420020528296.png" alt="image-20220420020528296"></p>
+<p>核心：X卷积</p>
+<p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420020609633.png" alt="image-20220420020609633"></p>
+<h4 id="Frustum-Pointnet"><a href="#Frustum-Pointnet" class="headerlink" title="Frustum-Pointnet"></a>Frustum-Pointnet</h4><p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420020656186.png" alt="image-20220420020656186"></p>
+<h4 id="PointRCNN"><a href="#PointRCNN" class="headerlink" title="PointRCNN"></a>PointRCNN</h4><p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420020742927.png" alt="image-20220420020742927"></p>
+<h2 id="5-2-Voxelnet"><a href="#5-2-Voxelnet" class="headerlink" title="5.2 Voxelnet"></a>5.2 Voxelnet</h2><p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420020929747.png" alt="image-20220420020929747"></p>
+<p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420021250554.png" alt="image-20220420021250554"></p>
+<p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420021404060.png" alt="image-20220420021404060"></p>
+<p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420021517598.png" alt="image-20220420021517598"></p>
+<p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420021532404.png" alt="image-20220420021532404"></p>
+<h3 id="代码结构"><a href="#代码结构" class="headerlink" title="代码结构"></a>代码结构</h3><p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420021615860.png" alt="image-20220420021615860"></p>
+<p>效果：</p>
+<p><img src="/2022/04/18/Course/AutomaticDrive/AutoDriver_05/image-20220420021151045.png" alt="image-20220420021151045"></p>
+<h2 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/346949099">zhihu 3D目标检测方法总结</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/551861727">系列零：自动驾驶相关数据集调研总结【附下载地址】(2023更新)</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/569189196?utm_id=0"># 系列一：3D目标检测框架综述(OpenPCDet|mmdetection3d|Det3D|Paddle3D)</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/591349104"># 系列二：3D Detection目标检测系列论文总结（2023年更）</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/591349481"># 系列三：3D Segmentation点云语义分割系列论文总结（2023年更）</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Autopilot/" rel="tag"># Autopilot</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/04/15/Sub_Language/DL_Platform/ONNX/OnnxCplus/" rel="prev" title="Onnx Model inference by C++">
+      <i class="fa fa-chevron-left"></i> Onnx Model inference by C++
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/04/21/Tools/Tools_UML/" rel="next" title="UML">
+      UML <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-%E5%9F%BA%E4%BA%8E%E6%BF%80%E5%85%89%E9%9B%B7%E8%BE%BE%E7%82%B9%E4%BA%91%E7%9A%84%E6%A3%80%E6%B5%8B%E7%AE%97%E6%B3%95-3D%E6%A3%80%E6%B5%8B"><span class="nav-number">1.</span> <span class="nav-text">5.1 基于激光雷达点云的检测算法 (3D检测)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0%E3%80%81%E6%BF%80%E5%85%89%E9%9B%B7%E8%BE%BE%E7%82%B9%E4%BA%91%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.</span> <span class="nav-text">0、激光雷达点云简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%BF%80%E5%85%89%E9%9B%B7%E7%94%B5%E7%82%B9%E4%BA%91%EF%BC%9F"><span class="nav-number">1.1.1.</span> <span class="nav-text">什么是激光雷电点云？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="nav-number">1.1.2.</span> <span class="nav-text">常用数据集</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#KITTI-%E5%AE%9E%E6%88%98kitti-LIDAR%E7%82%B9%E4%BA%91%E7%94%9F%E6%88%90%E9%B8%9F%E7%9E%B0%E5%9B%BEBEV"><span class="nav-number">1.1.3.</span> <span class="nav-text">KITTI    实战kitti LIDAR点云生成鸟瞰图BEV</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%82%B9%E4%BA%91%E5%9F%BA%E7%A1%80-%E5%B0%86%E7%82%B9%E4%BA%91%E6%8A%95%E5%BD%B1%E5%88%B0%E5%9B%BE%E7%89%87%E4%B8%8A"><span class="nav-number">1.1.4.</span> <span class="nav-text">点云基础 - 将点云投影到图片上</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%A0%E7%BB%9FVS%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0"><span class="nav-number">1.2.</span> <span class="nav-text">传统VS深度学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E5%9F%BA%E4%BA%8E%E5%83%8F%E7%B4%A0%E7%9A%84%E7%82%B9%E4%BA%91%E7%AE%97%E6%B3%95%EF%BC%88Pixel-Based%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">1、基于像素的点云算法（Pixel-Based）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MVCNN-%E5%88%86%E7%B1%BB"><span class="nav-number">1.3.1.</span> <span class="nav-text">MVCNN (分类)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MV3D"><span class="nav-number">1.3.2.</span> <span class="nav-text">MV3D</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AVOD"><span class="nav-number">1.3.3.</span> <span class="nav-text">AVOD</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Apollo2-0"><span class="nav-number">1.3.4.</span> <span class="nav-text">Apollo2.0</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SqueezeSeg"><span class="nav-number">1.3.5.</span> <span class="nav-text">SqueezeSeg</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E6%88%98%EF%BC%9A-tolearning"><span class="nav-number">1.3.6.</span> <span class="nav-text">代码实战：[tolearning]</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E5%9F%BA%E4%BA%8E%E4%BD%93%E7%B4%A0%E7%9A%84%E7%82%B9%E4%BA%91%E7%AE%97%E6%B3%95%EF%BC%88Voxel-Based%EF%BC%89"><span class="nav-number">1.4.</span> <span class="nav-text">2、基于体素的点云算法（Voxel-Based）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#VoxNet"><span class="nav-number">1.4.1.</span> <span class="nav-text">VoxNet</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#VoxelNet"><span class="nav-number">1.4.2.</span> <span class="nav-text">VoxelNet</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E5%9F%BA%E4%BA%8E%E6%A0%91%E7%9A%84%E7%82%B9%E4%BA%91%E7%AE%97%E6%B3%95%EF%BC%88Tree-Based%EF%BC%89"><span class="nav-number">1.5.</span> <span class="nav-text">3、基于树的点云算法（Tree-Based）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#OctNet"><span class="nav-number">1.5.1.</span> <span class="nav-text">OctNet</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#O-CNN"><span class="nav-number">1.5.2.</span> <span class="nav-text">O-CNN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Escape-from-Cells"><span class="nav-number">1.5.3.</span> <span class="nav-text">Escape from Cells</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81%E5%9F%BA%E4%BA%8E%E7%82%B9%E7%9A%84%E7%82%B9%E4%BA%91%E7%AE%97%E6%B3%95%EF%BC%88Point-Based%EF%BC%89"><span class="nav-number">1.6.</span> <span class="nav-text">4、基于点的点云算法（Point-Based）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#PointNet-%EF%BC%88CVPR2017%EF%BC%89"><span class="nav-number">1.6.1.</span> <span class="nav-text">PointNet （CVPR2017）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PointNet-NIPS2017"><span class="nav-number">1.6.2.</span> <span class="nav-text">PointNet++ (NIPS2017)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PointCNN"><span class="nav-number">1.6.3.</span> <span class="nav-text">PointCNN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Frustum-Pointnet"><span class="nav-number">1.6.4.</span> <span class="nav-text">Frustum-Pointnet</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PointRCNN"><span class="nav-number">1.6.5.</span> <span class="nav-text">PointRCNN</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-Voxelnet"><span class="nav-number">2.</span> <span class="nav-text">5.2 Voxelnet</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84"><span class="nav-number">2.1.</span> <span class="nav-text">代码结构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E8%B5%84%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">相关资料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Transform[TOC] angle2matrix1234567891011121314151617181920212223242526def angle2matrix(angles):    &#x27;&#x27;&#x27; get rotation matrix from three rotation angles(degree). right-handed.    Args:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Algorithm Impl CV&#x2F;CG Transform">
+<meta property="og:url" content="https://novav.github.io/2020/07/23/Course/Algorithm/Algorithm-impl-SRT/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="Transform[TOC] angle2matrix1234567891011121314151617181920212223242526def angle2matrix(angles):    &#x27;&#x27;&#x27; get rotation matrix from three rotation angles(degree). right-handed.    Args:">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-07-23T16:06:00.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:38.836Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="Algorithm">
+<meta property="article:tag" content="Transform">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://novav.github.io/2020/07/23/Course/Algorithm/Algorithm-impl-SRT/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Algorithm Impl CV/CG Transform | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2020/07/23/Course/Algorithm/Algorithm-impl-SRT/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Algorithm Impl CV/CG Transform
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-07-23 16:06:00" itemprop="dateCreated datePublished" datetime="2020-07-23T16:06:00+00:00">2020-07-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithm/CG/" itemprop="url" rel="index"><span itemprop="name">CG</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="Transform"><a href="#Transform" class="headerlink" title="Transform"></a>Transform</h2><p>[TOC]</p>
+<h3 id="angle2matrix"><a href="#angle2matrix" class="headerlink" title="angle2matrix"></a>angle2matrix</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">angle2matrix</span>(<span class="params">angles</span>):</span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27; get rotation matrix from three rotation angles(degree). right-handed.</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        angles: [3,]. x, y, z angles</span></span><br><span class="line"><span class="string">        x: pitch. positive for looking down.</span></span><br><span class="line"><span class="string">        y: yaw. positive for looking left. </span></span><br><span class="line"><span class="string">        z: roll. positive for tilting head right. </span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        R: [3, 3]. rotation matrix.</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    x, y, z = np.deg2rad(angles[<span class="number">0</span>]), np.deg2rad(angles[<span class="number">1</span>]), np.deg2rad(angles[<span class="number">2</span>])</span><br><span class="line">    <span class="comment"># x</span></span><br><span class="line">    Rx=np.array([[<span class="number">1</span>,      <span class="number">0</span>,       <span class="number">0</span>],</span><br><span class="line">                 [<span class="number">0</span>, cos(x),  -sin(x)],</span><br><span class="line">                 [<span class="number">0</span>, sin(x),   cos(x)]])</span><br><span class="line">    <span class="comment"># y</span></span><br><span class="line">    Ry=np.array([[ cos(y), <span class="number">0</span>, sin(y)],</span><br><span class="line">                 [      <span class="number">0</span>, <span class="number">1</span>,      <span class="number">0</span>],</span><br><span class="line">                 [-sin(y), <span class="number">0</span>, cos(y)]])</span><br><span class="line">    <span class="comment"># z</span></span><br><span class="line">    Rz=np.array([[cos(z), -sin(z), <span class="number">0</span>],</span><br><span class="line">                 [sin(z),  cos(z), <span class="number">0</span>],</span><br><span class="line">                 [     <span class="number">0</span>,       <span class="number">0</span>, <span class="number">1</span>]])</span><br><span class="line"></span><br><span class="line">    R=Rz.dot(Ry.dot(Rx))</span><br><span class="line">    <span class="keyword">return</span> R.astype(np.float32)</span><br></pre></td></tr></table></figure>
+
+<h3 id="angle2matrix-3ddfa"><a href="#angle2matrix-3ddfa" class="headerlink" title="angle2matrix_3ddfa"></a>angle2matrix_3ddfa</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">angle2matrix_3ddfa</span>(<span class="params">angles</span>):</span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27; get rotation matrix from three rotation angles(radian). The same as in 3DDFA.</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        angles: [3,]. x, y, z angles</span></span><br><span class="line"><span class="string">        x: pitch.</span></span><br><span class="line"><span class="string">        y: yaw. </span></span><br><span class="line"><span class="string">        z: roll. </span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        R: 3x3. rotation matrix.</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    <span class="comment"># x, y, z = np.deg2rad(angles[0]), np.deg2rad(angles[1]), np.deg2rad(angles[2])</span></span><br><span class="line">    x, y, z = angles[<span class="number">0</span>], angles[<span class="number">1</span>], angles[<span class="number">2</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># x</span></span><br><span class="line">    Rx=np.array([[<span class="number">1</span>,      <span class="number">0</span>,       <span class="number">0</span>],</span><br><span class="line">                 [<span class="number">0</span>, cos(x),  sin(x)],</span><br><span class="line">                 [<span class="number">0</span>, -sin(x),   cos(x)]])</span><br><span class="line">    <span class="comment"># y</span></span><br><span class="line">    Ry=np.array([[ cos(y), <span class="number">0</span>, -sin(y)],</span><br><span class="line">                 [      <span class="number">0</span>, <span class="number">1</span>,      <span class="number">0</span>],</span><br><span class="line">                 [sin(y), <span class="number">0</span>, cos(y)]])</span><br><span class="line">    <span class="comment"># z</span></span><br><span class="line">    Rz=np.array([[cos(z), sin(z), <span class="number">0</span>],</span><br><span class="line">                 [-sin(z),  cos(z), <span class="number">0</span>],</span><br><span class="line">                 [     <span class="number">0</span>,       <span class="number">0</span>, <span class="number">1</span>]])</span><br><span class="line">    R = Rx.dot(Ry).dot(Rz)</span><br><span class="line">    <span class="keyword">return</span> R.astype(np.float32)</span><br></pre></td></tr></table></figure>
+
+<p>—————————————— 1. transform(transform, project, camera).</p>
+<p>———- 3d-3d transform. Transform obj in world space</p>
+<h3 id="rotate"><a href="#rotate" class="headerlink" title="rotate"></a>rotate</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">rotate</span>(<span class="params">vertices, angles</span>):</span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27; rotate vertices. </span></span><br><span class="line"><span class="string">    X_new = R.dot(X). X: 3 x 1   </span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        vertices: [nver, 3]. </span></span><br><span class="line"><span class="string">        rx, ry, rz: degree angles</span></span><br><span class="line"><span class="string">        rx: pitch. positive for looking down </span></span><br><span class="line"><span class="string">        ry: yaw. positive for looking left</span></span><br><span class="line"><span class="string">        rz: roll. positive for tilting head right</span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        rotated vertices: [nver, 3]</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    R = angle2matrix(angles)</span><br><span class="line">    rotated_vertices = vertices.dot(R.T)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> rotated_vertices</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">similarity_transform</span>(<span class="params">vertices, s, R, t3d</span>):</span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27; similarity transform. dof = 7.</span></span><br><span class="line"><span class="string">    3D: s*R.dot(X) + t</span></span><br><span class="line"><span class="string">    Homo: M = [[sR, t],[0^T, 1]].  M.dot(X)</span></span><br><span class="line"><span class="string">    Args:(float32)</span></span><br><span class="line"><span class="string">        vertices: [nver, 3]. </span></span><br><span class="line"><span class="string">        s: [1,]. scale factor.</span></span><br><span class="line"><span class="string">        R: [3,3]. rotation matrix.</span></span><br><span class="line"><span class="string">        t3d: [3,]. 3d translation vector.</span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        transformed vertices: [nver, 3]</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    t3d = np.squeeze(np.array(t3d, dtype = np.float32))</span><br><span class="line">    transformed_vertices = s * vertices.dot(R.T) + t3d[np.newaxis, :]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> transformed_vertices</span><br></pre></td></tr></table></figure>
+
+<h3 id="normalize"><a href="#normalize" class="headerlink" title="normalize"></a>normalize</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">## -------------- Camera. from world space to camera space</span><br><span class="line"># Ref: https://cs184.eecs.berkeley.edu/lecture/transforms-2</span><br><span class="line">def normalize(x):</span><br><span class="line">    epsilon = 1e-12</span><br><span class="line">    norm = np.sqrt(np.sum(x**2, axis = 0))</span><br><span class="line">    norm = np.maximum(norm, epsilon)</span><br><span class="line">    return x/norm</span><br></pre></td></tr></table></figure>
+
+<h3 id="lookat-camera"><a href="#lookat-camera" class="headerlink" title="lookat camera"></a>lookat camera</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">lookat_camera</span>(<span class="params">vertices, eye, at = <span class="literal">None</span>, up = <span class="literal">None</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot; &#x27;look at&#x27; transformation: from world space to camera space</span></span><br><span class="line"><span class="string">    standard camera space: </span></span><br><span class="line"><span class="string">        camera located at the origin. </span></span><br><span class="line"><span class="string">        looking down negative z-axis. </span></span><br><span class="line"><span class="string">        vertical vector is y-axis.</span></span><br><span class="line"><span class="string">    Xcam = R(X - C)</span></span><br><span class="line"><span class="string">    Homo: [[R, -RC], [0, 1]]</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">      vertices: [nver, 3] </span></span><br><span class="line"><span class="string">      eye: [3,] the XYZ world space position of the camera.</span></span><br><span class="line"><span class="string">      at: [3,] a position along the center of the camera&#x27;s gaze.</span></span><br><span class="line"><span class="string">      up: [3,] up direction </span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">      transformed_vertices: [nver, 3]</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">if</span> at <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">      at = np.array([<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>], np.float32)</span><br><span class="line">    <span class="keyword">if</span> up <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">      up = np.array([<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>], np.float32)</span><br><span class="line"></span><br><span class="line">    eye = np.array(eye).astype(np.float32)</span><br><span class="line">    at = np.array(at).astype(np.float32)</span><br><span class="line">    z_aixs = -normalize(at - eye) <span class="comment"># look forward</span></span><br><span class="line">    x_aixs = normalize(np.cross(up, z_aixs)) <span class="comment"># look right</span></span><br><span class="line">    y_axis = np.cross(z_aixs, x_aixs) <span class="comment"># look up</span></span><br><span class="line"></span><br><span class="line">    R = np.stack((x_aixs, y_axis, z_aixs))<span class="comment">#, axis = 0) # 3 x 3</span></span><br><span class="line">    transformed_vertices = vertices - eye <span class="comment"># translation</span></span><br><span class="line">    transformed_vertices = transformed_vertices.dot(R.T) <span class="comment"># rotation</span></span><br><span class="line">    <span class="keyword">return</span> transformed_vertices</span><br></pre></td></tr></table></figure>
+
+<h3 id="orthographic-project-正交投影"><a href="#orthographic-project-正交投影" class="headerlink" title="orthographic_project 正交投影"></a>orthographic_project 正交投影</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">## --------- 3d-2d project. from camera space to image plane</span><br><span class="line"># generally, image plane only keeps x,y channels, here reserve z channel for calculating z-buffer.</span><br><span class="line">def orthographic_project(vertices):</span><br><span class="line">    &#x27;&#x27;&#x27; scaled orthographic projection(just delete z)</span><br><span class="line">        assumes: variations in depth over the object is small relative to the mean distance from camera to object</span><br><span class="line">        x -&gt; x*f/z, y -&gt; x*f/z, z -&gt; f.</span><br><span class="line">        for point i,j. zi~=zj. so just delete z</span><br><span class="line">        ** often used in face</span><br><span class="line">        Homo: P = [[1,0,0,0], [0,1,0,0], [0,0,1,0]]</span><br><span class="line">    Args:</span><br><span class="line">        vertices: [nver, 3]</span><br><span class="line">    Returns:</span><br><span class="line">        projected_vertices: [nver, 3] if isKeepZ=True. [nver, 2] if isKeepZ=False.</span><br><span class="line">    &#x27;&#x27;&#x27;</span><br><span class="line">    return vertices.copy()</span><br></pre></td></tr></table></figure>
+
+<h3 id="perspective-project-透视投影"><a href="#perspective-project-透视投影" class="headerlink" title="perspective_project 透视投影"></a>perspective_project 透视投影</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">perspective_project</span>(<span class="params">vertices, fovy, aspect_ratio = <span class="number">1.</span>, near = <span class="number">0.1</span>, far = <span class="number">1000.</span></span>):</span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27; perspective projection.</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        vertices: [nver, 3]</span></span><br><span class="line"><span class="string">        fovy: vertical angular field of view. degree.</span></span><br><span class="line"><span class="string">        aspect_ratio : width / height of field of view</span></span><br><span class="line"><span class="string">        near : depth of near clipping plane</span></span><br><span class="line"><span class="string">        far : depth of far clipping plane</span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        projected_vertices: [nver, 3] </span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    fovy = np.deg2rad(fovy)</span><br><span class="line">    top = near*np.tan(fovy)</span><br><span class="line">    bottom = -top </span><br><span class="line">    right = top*aspect_ratio</span><br><span class="line">    left = -right</span><br><span class="line"></span><br><span class="line">    <span class="comment">#-- homo</span></span><br><span class="line">    P = np.array([[near/right, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>],</span><br><span class="line">                 [<span class="number">0</span>, near/top, <span class="number">0</span>, <span class="number">0</span>],</span><br><span class="line">                 [<span class="number">0</span>, <span class="number">0</span>, -(far+near)/(far-near), -<span class="number">2</span>*far*near/(far-near)],</span><br><span class="line">                 [<span class="number">0</span>, <span class="number">0</span>, -<span class="number">1</span>, <span class="number">0</span>]])</span><br><span class="line">    vertices_homo = np.hstack((vertices, np.ones((vertices.shape[<span class="number">0</span>], <span class="number">1</span>)))) <span class="comment"># [nver, 4]</span></span><br><span class="line">    projected_vertices = vertices_homo.dot(P.T)</span><br><span class="line">    projected_vertices = projected_vertices/projected_vertices[:,<span class="number">3</span>:]</span><br><span class="line">    projected_vertices = projected_vertices[:,:<span class="number">3</span>]</span><br><span class="line">    projected_vertices[:,<span class="number">2</span>] = -projected_vertices[:,<span class="number">2</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment">#-- non homo. only fovy</span></span><br><span class="line">    <span class="comment"># projected_vertices = vertices.copy()</span></span><br><span class="line">    <span class="comment"># projected_vertices[:,0] = -(near/right)*vertices[:,0]/vertices[:,2]</span></span><br><span class="line">    <span class="comment"># projected_vertices[:,1] = -(near/top)*vertices[:,1]/vertices[:,2]</span></span><br><span class="line">    <span class="keyword">return</span> projected_vertices</span><br></pre></td></tr></table></figure>
+
+<h3 id="to-image"><a href="#to-image" class="headerlink" title="to_image"></a>to_image</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">to_image</span>(<span class="params">vertices, h, w, is_perspective = <span class="literal">False</span></span>):</span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27; change vertices to image coord system</span></span><br><span class="line"><span class="string">    3d system: XYZ, center(0, 0, 0)</span></span><br><span class="line"><span class="string">    2d image: x(u), y(v). center(w/2, h/2), flip y-axis. </span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        vertices: [nver, 3]</span></span><br><span class="line"><span class="string">        h: height of the rendering</span></span><br><span class="line"><span class="string">        w : width of the rendering</span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        projected_vertices: [nver, 3]  </span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    image_vertices = vertices.copy()</span><br><span class="line">    <span class="keyword">if</span> is_perspective:</span><br><span class="line">        <span class="comment"># if perspective, the projected vertices are normalized to [-1, 1]. so change it to image size first.</span></span><br><span class="line">        image_vertices[:,<span class="number">0</span>] = image_vertices[:,<span class="number">0</span>]*w/<span class="number">2</span></span><br><span class="line">        image_vertices[:,<span class="number">1</span>] = image_vertices[:,<span class="number">1</span>]*h/<span class="number">2</span></span><br><span class="line">    <span class="comment"># move to center of image</span></span><br><span class="line">    image_vertices[:,<span class="number">0</span>] = image_vertices[:,<span class="number">0</span>] + w/<span class="number">2</span></span><br><span class="line">    image_vertices[:,<span class="number">1</span>] = image_vertices[:,<span class="number">1</span>] + h/<span class="number">2</span></span><br><span class="line">    <span class="comment"># flip vertices along y-axis.</span></span><br><span class="line">    image_vertices[:,<span class="number">1</span>] = h - image_vertices[:,<span class="number">1</span>] - <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> image_vertices</span><br></pre></td></tr></table></figure>
+
+<h3 id="estimate-affine-matrix-3d23d"><a href="#estimate-affine-matrix-3d23d" class="headerlink" title="estimate_affine_matrix_3d23d"></a>estimate_affine_matrix_3d23d</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#### -------------------------------------------2. estimate transform matrix from correspondences.</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">estimate_affine_matrix_3d23d</span>(<span class="params">X, Y</span>):</span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27; Using least-squares solution </span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        X: [n, 3]. 3d points(fixed)</span></span><br><span class="line"><span class="string">        Y: [n, 3]. corresponding 3d points(moving). Y = PX</span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        P_Affine: (3, 4). Affine camera matrix (the third row is [0, 0, 0, 1]).</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    X_homo = np.hstack((X, np.ones([X.shape[<span class="number">1</span>],<span class="number">1</span>]))) <span class="comment">#n x 4</span></span><br><span class="line">    P = np.linalg.lstsq(X_homo, Y)[<span class="number">0</span>].T <span class="comment"># Affine matrix. 3 x 4</span></span><br><span class="line">    <span class="keyword">return</span> P</span><br></pre></td></tr></table></figure>
+
+<h3 id="estimate-affine-matrix-3d22d"><a href="#estimate-affine-matrix-3d22d" class="headerlink" title="estimate_affine_matrix_3d22d"></a>estimate_affine_matrix_3d22d</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">estimate_affine_matrix_3d22d</span>(<span class="params">X, x</span>):</span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27; Using Golden Standard Algorithm for estimating an affine camera</span></span><br><span class="line"><span class="string">        matrix P from world to image correspondences.</span></span><br><span class="line"><span class="string">        See Alg.7.2. in MVGCV </span></span><br><span class="line"><span class="string">        Code Ref: https://github.com/patrikhuber/eos/blob/master/include/eos/fitting/affine_camera_estimation.hpp</span></span><br><span class="line"><span class="string">        x_homo = X_homo.dot(P_Affine)</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        X: [n, 3]. corresponding 3d points(fixed)</span></span><br><span class="line"><span class="string">        x: [n, 2]. n&gt;=4. 2d points(moving). x = PX</span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        P_Affine: [3, 4]. Affine camera matrix</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    X = X.T; x = x.T</span><br><span class="line">    <span class="keyword">assert</span>(x.shape[<span class="number">1</span>] == X.shape[<span class="number">1</span>])</span><br><span class="line">    n = x.shape[<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">assert</span>(n &gt;= <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">#--- 1. normalization</span></span><br><span class="line">    <span class="comment"># 2d points</span></span><br><span class="line">    mean = np.mean(x, <span class="number">1</span>) <span class="comment"># (2,)</span></span><br><span class="line">    x = x - np.tile(mean[:, np.newaxis], [<span class="number">1</span>, n])</span><br><span class="line">    average_norm = np.mean(np.sqrt(np.<span class="built_in">sum</span>(x**<span class="number">2</span>, <span class="number">0</span>)))</span><br><span class="line">    scale = np.sqrt(<span class="number">2</span>) / average_norm</span><br><span class="line">    x = scale * x</span><br><span class="line"></span><br><span class="line">    T = np.zeros((<span class="number">3</span>,<span class="number">3</span>), dtype = np.float32)</span><br><span class="line">    T[<span class="number">0</span>, <span class="number">0</span>] = T[<span class="number">1</span>, <span class="number">1</span>] = scale</span><br><span class="line">    T[:<span class="number">2</span>, <span class="number">2</span>] = -mean*scale</span><br><span class="line">    T[<span class="number">2</span>, <span class="number">2</span>] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 3d points</span></span><br><span class="line">    X_homo = np.vstack((X, np.ones((<span class="number">1</span>, n))))</span><br><span class="line">    mean = np.mean(X, <span class="number">1</span>) <span class="comment"># (3,)</span></span><br><span class="line">    X = X - np.tile(mean[:, np.newaxis], [<span class="number">1</span>, n])</span><br><span class="line">    m = X_homo[:<span class="number">3</span>,:] - X</span><br><span class="line">    average_norm = np.mean(np.sqrt(np.<span class="built_in">sum</span>(X**<span class="number">2</span>, <span class="number">0</span>)))</span><br><span class="line">    scale = np.sqrt(<span class="number">3</span>) / average_norm</span><br><span class="line">    X = scale * X</span><br><span class="line"></span><br><span class="line">    U = np.zeros((<span class="number">4</span>,<span class="number">4</span>), dtype = np.float32)</span><br><span class="line">    U[<span class="number">0</span>, <span class="number">0</span>] = U[<span class="number">1</span>, <span class="number">1</span>] = U[<span class="number">2</span>, <span class="number">2</span>] = scale</span><br><span class="line">    U[:<span class="number">3</span>, <span class="number">3</span>] = -mean*scale</span><br><span class="line">    U[<span class="number">3</span>, <span class="number">3</span>] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># --- 2. equations</span></span><br><span class="line">    A = np.zeros((n*<span class="number">2</span>, <span class="number">8</span>), dtype = np.float32);</span><br><span class="line">    X_homo = np.vstack((X, np.ones((<span class="number">1</span>, n)))).T</span><br><span class="line">    A[:n, :<span class="number">4</span>] = X_homo</span><br><span class="line">    A[n:, <span class="number">4</span>:] = X_homo</span><br><span class="line">    b = np.reshape(x, [-<span class="number">1</span>, <span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># --- 3. solution</span></span><br><span class="line">    p_8 = np.linalg.pinv(A).dot(b)</span><br><span class="line">    P = np.zeros((<span class="number">3</span>, <span class="number">4</span>), dtype = np.float32)</span><br><span class="line">    P[<span class="number">0</span>, :] = p_8[:<span class="number">4</span>, <span class="number">0</span>]</span><br><span class="line">    P[<span class="number">1</span>, :] = p_8[<span class="number">4</span>:, <span class="number">0</span>]</span><br><span class="line">    P[-<span class="number">1</span>, -<span class="number">1</span>] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># --- 4. denormalization</span></span><br><span class="line">    P_Affine = np.linalg.inv(T).dot(P.dot(U))</span><br><span class="line">    <span class="keyword">return</span> P_Affine</span><br></pre></td></tr></table></figure>
+
+<h3 id="P2sRt"><a href="#P2sRt" class="headerlink" title="P2sRt"></a>P2sRt</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">P2sRt</span>(<span class="params">P</span>):</span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27; decompositing camera matrix P</span></span><br><span class="line"><span class="string">    Args: </span></span><br><span class="line"><span class="string">        P: (3, 4). Affine Camera Matrix.</span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        s: scale factor.</span></span><br><span class="line"><span class="string">        R: (3, 3). rotation matrix.</span></span><br><span class="line"><span class="string">        t: (3,). translation. </span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    t = P[:, <span class="number">3</span>]</span><br><span class="line">    R1 = P[<span class="number">0</span>:<span class="number">1</span>, :<span class="number">3</span>]</span><br><span class="line">    R2 = P[<span class="number">1</span>:<span class="number">2</span>, :<span class="number">3</span>]</span><br><span class="line">    s = (np.linalg.norm(R1) + np.linalg.norm(R2))/<span class="number">2.0</span></span><br><span class="line">    r1 = R1/np.linalg.norm(R1)</span><br><span class="line">    r2 = R2/np.linalg.norm(R2)</span><br><span class="line">    r3 = np.cross(r1, r2)</span><br><span class="line"></span><br><span class="line">    R = np.concatenate((r1, r2, r3), <span class="number">0</span>)</span><br><span class="line">    <span class="keyword">return</span> s, R, t</span><br></pre></td></tr></table></figure>
+
+<h3 id="isRotationMatrix"><a href="#isRotationMatrix" class="headerlink" title="isRotationMatrix"></a>isRotationMatrix</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Ref: https://www.learnopencv.com/rotation-matrix-to-euler-angles/</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">isRotationMatrix</span>(<span class="params">R</span>):</span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27; checks if a matrix is a valid rotation matrix(whether orthogonal or not)</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    Rt = np.transpose(R)</span><br><span class="line">    shouldBeIdentity = np.dot(Rt, R)</span><br><span class="line">    I = np.identity(<span class="number">3</span>, dtype = R.dtype)</span><br><span class="line">    n = np.linalg.norm(I - shouldBeIdentity)</span><br><span class="line">    <span class="keyword">return</span> n &lt; <span class="number">1e-6</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="matrox2angle"><a href="#matrox2angle" class="headerlink" title="matrox2angle"></a>matrox2angle</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">matrix2angle</span>(<span class="params">R</span>):</span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27; get three Euler angles from Rotation Matrix</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        R: (3,3). rotation matrix</span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        x: pitch</span></span><br><span class="line"><span class="string">        y: yaw</span></span><br><span class="line"><span class="string">        z: roll</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">assert</span>(isRotationMatrix)</span><br><span class="line">    sy = math.sqrt(R[<span class="number">0</span>,<span class="number">0</span>] * R[<span class="number">0</span>,<span class="number">0</span>] +  R[<span class="number">1</span>,<span class="number">0</span>] * R[<span class="number">1</span>,<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line">    singular = sy &lt; <span class="number">1e-6</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>  <span class="keyword">not</span> singular :</span><br><span class="line">        x = math.atan2(R[<span class="number">2</span>,<span class="number">1</span>] , R[<span class="number">2</span>,<span class="number">2</span>])</span><br><span class="line">        y = math.atan2(-R[<span class="number">2</span>,<span class="number">0</span>], sy)</span><br><span class="line">        z = math.atan2(R[<span class="number">1</span>,<span class="number">0</span>], R[<span class="number">0</span>,<span class="number">0</span>])</span><br><span class="line">    <span class="keyword">else</span> :</span><br><span class="line">        x = math.atan2(-R[<span class="number">1</span>,<span class="number">2</span>], R[<span class="number">1</span>,<span class="number">1</span>])</span><br><span class="line">        y = math.atan2(-R[<span class="number">2</span>,<span class="number">0</span>], sy)</span><br><span class="line">        z = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># rx, ry, rz = np.rad2deg(x), np.rad2deg(y), np.rad2deg(z)</span></span><br><span class="line">    rx, ry, rz = x*<span class="number">180</span>/np.pi, y*<span class="number">180</span>/np.pi, z*<span class="number">180</span>/np.pi</span><br><span class="line">    <span class="keyword">return</span> rx, ry, rz</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Algorithm/" rel="tag"># Algorithm</a>
+              <a href="/tags/Transform/" rel="tag"># Transform</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/07/23/Course/Algorithm/Algorithm-survey/" rel="prev" title="Algorithm Survey">
+      <i class="fa fa-chevron-left"></i> Algorithm Survey
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/07/23/Course/Algorithm/Algorithm-impl-Render/" rel="next" title="Algorithm Impl Render">
+      Algorithm Impl Render <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Transform"><span class="nav-number">1.</span> <span class="nav-text">Transform</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#angle2matrix"><span class="nav-number">1.1.</span> <span class="nav-text">angle2matrix</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#angle2matrix-3ddfa"><span class="nav-number">1.2.</span> <span class="nav-text">angle2matrix_3ddfa</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rotate"><span class="nav-number">1.3.</span> <span class="nav-text">rotate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#normalize"><span class="nav-number">1.4.</span> <span class="nav-text">normalize</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lookat-camera"><span class="nav-number">1.5.</span> <span class="nav-text">lookat camera</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#orthographic-project-%E6%AD%A3%E4%BA%A4%E6%8A%95%E5%BD%B1"><span class="nav-number">1.6.</span> <span class="nav-text">orthographic_project 正交投影</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#perspective-project-%E9%80%8F%E8%A7%86%E6%8A%95%E5%BD%B1"><span class="nav-number">1.7.</span> <span class="nav-text">perspective_project 透视投影</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#to-image"><span class="nav-number">1.8.</span> <span class="nav-text">to_image</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#estimate-affine-matrix-3d23d"><span class="nav-number">1.9.</span> <span class="nav-text">estimate_affine_matrix_3d23d</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#estimate-affine-matrix-3d22d"><span class="nav-number">1.10.</span> <span class="nav-text">estimate_affine_matrix_3d22d</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#P2sRt"><span class="nav-number">1.11.</span> <span class="nav-text">P2sRt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#isRotationMatrix"><span class="nav-number">1.12.</span> <span class="nav-text">isRotationMatrix</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#matrox2angle"><span class="nav-number">1.13.</span> <span class="nav-text">matrox2angle</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

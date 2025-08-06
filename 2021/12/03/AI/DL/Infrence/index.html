@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="[toc] 深度学习模型加速与压缩常用方法-总体介绍深度学习模型加速方向大致分为两种： 一、轻量化网络结构设计  分组卷积（group convolution，典型的如ShuffleNet和MobileNet等） 分解卷积（inception结构等） Bottleneck结构（通过1x1卷积进行降维和升维等操作） 神经网络结构搜索（Neural Architecture Search，简称NAS）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Inference">
+<meta property="og:url" content="https://novav.github.io/2021/12/03/AI/DL/Infrence/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="[toc] 深度学习模型加速与压缩常用方法-总体介绍深度学习模型加速方向大致分为两种： 一、轻量化网络结构设计  分组卷积（group convolution，典型的如ShuffleNet和MobileNet等） 分解卷积（inception结构等） Bottleneck结构（通过1x1卷积进行降维和升维等操作） 神经网络结构搜索（Neural Architecture Search，简称NAS）">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2021/12/03/AI/DL/Infrence/v2-904e822bbfb2b1ad4945394d3a491bc1_720w.jpg">
+<meta property="og:image" content="https://novav.github.io/2021/12/03/AI/DL/Infrence/image-20220407145114395.png">
+<meta property="og:image" content="https://novav.github.io/2021/12/03/AI/DL/Infrence/v2-5801686de6f3e3de839d0785b6435cdd_720w.jpg">
+<meta property="og:image" content="https://novav.github.io/2021/12/03/AI/DL/Infrence/v2-894b664cd7aea311d502ed340bd9cef0_b.jpg">
+<meta property="og:image" content="https://novav.github.io/2021/12/03/AI/DL/Infrence/v2-61d85ecc9d443f5e93c130a0a476918f_b.jpg">
+<meta property="og:image" content="https://novav.github.io/2021/12/03/AI/DL/Infrence/%7D.svg+xml">
+<meta property="og:image" content="https://novav.github.io/2021/12/03/AI/DL/Infrence/oslash.svg+xml">
+<meta property="og:image" content="https://novav.github.io/2021/12/03/AI/DL/Infrence/v2-16f711b33e4b6b241b29f2520d20bbd9_b.jpg">
+<meta property="og:image" content="https://novav.github.io/2021/12/03/AI/DL/Infrence/v2-df68fd36a28b739dda501a5b56a689c7_b.jpg">
+<meta property="og:image" content="https://novav.github.io/2021/12/03/AI/DL/Infrence/v2-02374da3b40bef79428306923216fffe_b.jpg">
+<meta property="og:image" content="https://novav.github.io/2021/12/03/AI/DL/Infrence/v2-ee7858f78ed4a81f7346afeb6df485d9_b.jpg">
+<meta property="og:image" content="https://novav.github.io/2021/12/03/AI/DL/Infrence/v2-ef1fd51b3b3ea595f47f3461c1888d10_b.jpg">
+<meta property="og:image" content="https://novav.github.io/2021/12/03/AI/DL/Infrence/v2-ecd4502ac7f3c4b78e05065980a1b508_b.jpg">
+<meta property="og:image" content="https://novav.github.io/2021/12/03/AI/DL/Infrence/v2-12d7ee9daae85f9a9c99b4953972f1e5_b.jpg">
+<meta property="article:published_time" content="2021-12-03T21:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:37.961Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="DeepLearning">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2021/12/03/AI/DL/Infrence/v2-904e822bbfb2b1ad4945394d3a491bc1_720w.jpg">
+
+<link rel="canonical" href="https://novav.github.io/2021/12/03/AI/DL/Infrence/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Inference | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2021/12/03/AI/DL/Infrence/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Inference
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-12-03 21:00:00" itemprop="dateCreated datePublished" datetime="2021-12-03T21:00:00+00:00">2021-12-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:37" itemprop="dateModified" datetime="2025-08-06T08:16:37+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/DeepLearning/" itemprop="url" rel="index"><span itemprop="name">DeepLearning</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>[toc]</p>
+<h1 id="深度学习模型加速与压缩常用方法-总体介绍"><a href="#深度学习模型加速与压缩常用方法-总体介绍" class="headerlink" title="深度学习模型加速与压缩常用方法-总体介绍"></a>深度学习模型加速与压缩常用方法-总体介绍</h1><p>深度学习模型加速方向大致分为两种：</p>
+<p>一、轻量化网络结构设计</p>
+<ul>
+<li>分组卷积（group convolution，典型的如ShuffleNet和MobileNet等）</li>
+<li>分解卷积（inception结构等）</li>
+<li>Bottleneck结构（通过1x1卷积进行降维和升维等操作）</li>
+<li>神经网络结构搜索（Neural Architecture Search，简称NAS）</li>
+<li>硬件适配</li>
+</ul>
+<p>二、模型压缩相关技术</p>
+<ul>
+<li>网络剪枝</li>
+<li>知识蒸馏</li>
+<li>参数量化</li>
+</ul>
+<p><img src="/2021/12/03/AI/DL/Infrence/v2-904e822bbfb2b1ad4945394d3a491bc1_720w.jpg" alt="img"></p>
+<p>按照压缩过程对网络结构的破坏程度， 我们将模型压缩技术分为“前端压缩”与“后端缩”两部分。</p>
+<p>所谓“前端压缩”，是指不改变原网络结构的压缩技术，主要包括知识蒸馏、紧凑的模型结构设计以及滤波器层面的剪枝等；而“后端压缩”则包括低秩近似、未加限制的剪枝、参数量化以及二值网络等，其目标在于尽可能地减少模型大小，因而会对原始网络结构造成极大程度的改造。</p>
+<p>其中，由于“前端压缩”未改变原有的网络结构，仅仅只是在原模型的基础上减少了网络的层数或者滤波器的个数，其最终的模型可完美适配现有的深度学习库，如caffe等。相比之下，“后端压缩”为了追求极致的压缩比，不得不对原有的网络结构进行改造，如对参数进行量化表示等，而这样的改造往往是不可逆的。同时，为了获得理想的压缩效果，必须开发相配套的运行库，甚至是专门的硬件设备，其最终的结果往往是一种压缩技术对应于一套运行库，从而带来了巨大的维护成本。</p>
+<p>ref: 	<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/150212141">https://zhuanlan.zhihu.com/p/150212141</a></p>
+<h1 id="深度学习模型加速与压缩常用方法–剪枝"><a href="#深度学习模型加速与压缩常用方法–剪枝" class="headerlink" title="深度学习模型加速与压缩常用方法–剪枝"></a>深度学习模型加速与压缩常用方法–剪枝</h1><p>剪枝，模型量化，压缩，加速</p>
+<h2 id="网络剪枝"><a href="#网络剪枝" class="headerlink" title="网络剪枝"></a>网络剪枝</h2><ul>
+<li>unstructured pruning（非结构化剪枝）</li>
+<li>structured pruning（<strong>结构化剪枝</strong>）</li>
+</ul>
+<p>unstructured pruning是指对于individual weights进行prune；structured pruning是指对于filter&#x2F;channel&#x2F;layer的prune。其中非结构化修剪方法（直接修剪权重）的一个缺点是所得到的权重矩阵是稀疏的，<strong>如果没有专用硬件&#x2F;库，则不能达到压缩和加速的效果</strong>。相反，结构化修剪方法在通道或层的层次上进行修剪。由于原始卷积结构仍然保留，因此<strong>不需要专用的硬件&#x2F;库来实现</strong>。在结构化修剪方法中，通道修剪是最受欢迎的，因为它在最细粒度的水平上运行，同时仍然适合传统的深度学习框架。</p>
+<p>修建算法三阶段流程</p>
+<img src="/2021/12/03/AI/DL/Infrence/image-20220407145114395.png" alt="image-20220407145114395" style="zoom:50%;">
+
+
+
+<p><strong>训练</strong>：训练大型的过度参数化的模型，得到最佳网络性能，以此为基准；<strong>修剪</strong>：根据特定标准修剪训练的大模型，即重新调整网络结构中的通道或层数等，来得到一个精简的网络结构；<strong>微调</strong>：微调修剪的模型以重新获得丢失的性能，这里一般做法是将修剪后的大网络中的保留的（视为重要的）参数用来初始化修剪后的网络，即继承大网络学习到的重要参数，再在训练集上finetune几轮。</p>
+<p>然而，在《Rethinking the value of network pruning》（ICLR 2019）这篇论文里，作者做出了几个与常见观点相矛盾的结论，通过测试目前六种最先进的剪枝算法得出以下结论：</p>
+<ol>
+<li>训练过度参数化的模型不是获得有效的最终模型所必需的; </li>
+<li>学习的大型模型的“重要”权重不一定有助于修剪后的小型模型；</li>
+<li>修剪的本质是网络体系结构本身，而不是一组继承的“重要”权重，来主导最终模型的效率优势，这表明一些修剪算法可以被视为表征网络架构探索。</li>
+</ol>
+<p>作者选择了三个数据集和三个标准的网络结构（数据集：CIFAR-10， CIFAR-100，ImageNet，网络结构：VGG， ResNet，DenseNet），并验证了6个网络裁剪方法，接下来分别介绍这几种当下流行的剪枝算法：</p>
+<ul>
+<li>L1-norm based Channel Pruning (Li et al., 2017)</li>
+<li>ThiNet (Luo et al., 2017)</li>
+<li>Regression based Feature Reconstruction (He et al., 2017b)</li>
+<li>Network Slimming (Liu et al., 2017)</li>
+<li>Sparse Structure Selection (Huang &amp; Wang, 2018) </li>
+<li>Non-structured Weight Pruning (Han et al., 2015)</li>
+</ul>
+<p>作者：Alex Tian<br>链接：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/157562088">https://zhuanlan.zhihu.com/p/157562088</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<h3 id="（一）L1-norm-based-Channel-Pruning"><a href="#（一）L1-norm-based-Channel-Pruning" class="headerlink" title="（一）L1-norm based Channel Pruning"></a>（一）L1-norm based Channel Pruning</h3><p>本方法出自论文《Pruning Filters For Efficient ConvNets》，论文提出了对卷积层（对Filters进行剪枝，以及Feature maps）进行剪枝操作，移除对于CNN精度影响很小的卷积核，然后进行retrain，不会造成稀疏连接（稀疏矩阵操作需要特殊的库等来处理）。</p>
+<img src="/2021/12/03/AI/DL/Infrence/v2-5801686de6f3e3de839d0785b6435cdd_720w.jpg" alt="img" style="zoom:50%;">
+
+<p>卷积核剪枝原则：（即应该去掉哪些卷积核）</p>
+<ol>
+<li>对每个卷积核 $ Fi,j $  ,计算它的权重绝对值（L1正则)之和 $Sj&#x3D;\sum_{l&#x3D;1}^{ni}\sum_{}^{}{\left| Kl \right|}$ ;</li>
+<li>根据 $$ Sj $$ 排序；</li>
+<li>将m个权重绝对值之和最小的卷积核以及对应的feature maps剪掉。下一个卷积层中与剪掉的feature maps相关的核也要移除；</li>
+<li>一个对于第i层和第i+1层的新的权重矩阵被创建，并且剩下的权重参数被复制到新模型中；</li>
+</ol>
+<p>相比于基于其他的标准来衡量卷积核的重要性（比如基于激活值的feature map剪枝），l1-norm是一个很好的选择卷积核的方法，认为如果一个filter的绝对值和比较小，说明该filter并不重要。之后的步骤就是retrain，论文指出对剪枝后的网络结构从头训练要比对重新训练剪枝后的网络（利用了未剪枝之前的权重）的结果差。</p>
+<h3 id="（二）ThiNet"><a href="#（二）ThiNet" class="headerlink" title="（二）ThiNet"></a>（二）ThiNet</h3><p>本方法出自论文《ThiNet: A Filter Level Pruning Method for Deep Neural Network Compression》，主要贡献：1）基于贪心策略与最小化重建误差，设计了ThiNet剪枝方法，并且是规整的通道剪枝方法；2）将网络剪枝视作优化问题，并利用下一层的输入输出关系获取统计信息，以决定当前层的剪枝；3）在ImageNet数据集上，获得了良好的剪枝效果（主要是Resnet50与VGG-16），并在其他任务上取得了良好的迁移效果。</p>
+<img src="/2021/12/03/AI/DL/Infrence/v2-894b664cd7aea311d502ed340bd9cef0_b.jpg" alt="img" style="zoom:50%;">
+
+<p>ThiNet的剪枝步骤如上图所示，对于给定的预训练模型以及固定的剪枝率，逐层裁剪冗余的滤波器（3D filters或2D kernels），总体包括通道选择、通道剪枝与fine-tuning三个阶段：</p>
+<ol>
+<li>Channel Selection：利用第i+1 层的统计信息指导第i 层的剪枝，即从第i+1 层的输入特征中提取最优子集，用于估计第i+1的输出特征，而其余输入特征以及相对应的3D filters均可被删除；</li>
+<li>Pruning：根据第一步通道选择的结果，剪除第i 层对应的3D filters以及第i+1 层的2D kernels，从而获得结构紧凑、纤瘦的模型（Thin-Net）；</li>
+<li>Fine-tuning：完成第i 层的剪枝之后，在训练集上微调1~2个epochs，以恢复因剪枝丢失的精度。在完成整个模型的剪枝之后，通常需要微调更多的epochs；</li>
+<li>回到第一步，完成第i+1 层的剪枝；</li>
+</ol>
+<p>通道选择原则：</p>
+<p>寻找通道最优子集用于估计输出特征的Channel Selection，可表示为如下优化问题：</p>
+<img src="/2021/12/03/AI/DL/Infrence/v2-61d85ecc9d443f5e93c130a0a476918f_b.jpg" alt="img" style="zoom:33%;">
+
+<p>等价而言，定义T 为需要移除的通道子集，其满足 <img src="/2021/12/03/AI/DL/Infrence/%7D.svg+xml" alt="[公式]"> and <img src="/2021/12/03/AI/DL/Infrence/oslash.svg+xml" alt="[公式]"> ，则最优化问题可重新写成：</p>
+<img src="/2021/12/03/AI/DL/Infrence/v2-16f711b33e4b6b241b29f2520d20bbd9_b.jpg" alt="img" style="zoom:33%;">
+
+<p>上式亦可理解为，所构建的集合T , 其所包含元素的L2 norm最小。由于集合T 通常比集合S 小，因此求解上述等价问题，具有更高的实现效率。下图是采用贪心策略(Greedy Method)求解集合T 的描述，每次迭代往T 中所添加的元素，需要确保目标函数最小。从而确保完成样本集遍历、并达成目标剪枝率之后，能够删除最不重要的输入特征，最终完成Channel Selection。</p>
+<img src="/2021/12/03/AI/DL/Infrence/v2-df68fd36a28b739dda501a5b56a689c7_b.jpg" alt="img" style="zoom:50%;">
+
+<p>以上为应用贪心策略选取需要删除的通道集合。</p>
+<p>（三）Regression based Feature Reconstruction</p>
+<p>本方法出自论文《Channel Pruning for Accelerating Very Deep Neural Networks》，本文采用了通道剪枝方法，同上一种方法思路一致，考虑减少输入feature maps中的若干channels信息，然后通过调整weights使整体output feature map的信息不会丢失太多。</p>
+<img src="/2021/12/03/AI/DL/Infrence/v2-02374da3b40bef79428306923216fffe_b.jpg" alt="img" style="zoom:50%;">
+
+<p>如图所示，目标就是减少B 的feature map, 那么B中的channel被剪掉，会同时使得上游对应的卷积核个数减少，以及下游对应卷积核的通道数减少。关键在于通道选择，如何选择通道而不影响信息的传递很重要。为了进行channel selection ，作者引入了β作为mask ，目标变为 ：</p>
+<img src="/2021/12/03/AI/DL/Infrence/v2-ee7858f78ed4a81f7346afeb6df485d9_b.jpg" alt="img" style="zoom:33%;">
+
+<p>β是一个列向量，如果βi&#x3D;0 则代表对应的通道被剪除，c ‘代表经过选择后的通道个数 c’&lt;&#x3D;c，因此作者分两步来优化，首先固定W，优化β ；然后固定β，优化W。而且为了增加β的稀疏度，将β的L1正则项加入优化函数；另外则增加了W的范数为1的强约束以让我们得到的W解不过于简单，原优化函数变为：</p>
+<img src="/2021/12/03/AI/DL/Infrence/v2-ef1fd51b3b3ea595f47f3461c1888d10_b.jpg" alt="img" style="zoom: 50%;">
+
+<p>进而我们再将它变为两个分步骤的子优化问题：</p>
+<p>(1).求参数β的子优化问题</p>
+<p>首先，我们可固定W不变，寻求参数β的组合，即决定输入feature map的哪些input channels可以舍弃。这显然是个NP-hard的组合优化问题，作者使用了经典的启发式LASSO方式来迭代寻找最优的β值，如下公式所示:</p>
+<img src="/2021/12/03/AI/DL/Infrence/v2-ecd4502ac7f3c4b78e05065980a1b508_b.jpg" alt="img" style="zoom:50%;">
+
+<p>(2).求参数W的子优化问题</p>
+<p>然后我们再固定上面得到的β不变，再求解最优的W参数值，本质上就是求解如下的MSE问题:</p>
+<img src="/2021/12/03/AI/DL/Infrence/v2-12d7ee9daae85f9a9c99b4953972f1e5_b.jpg" alt="img" style="zoom: 25%;">
+
+<p>以上所介绍的方法为单个conv层pruning所使用的方法。而在将此方法应用于整个CNN model时，方法也类似，只需要sequentially将此它应用于每个层即可（当然某些特殊的多分支层需要稍稍特殊对待）。</p>
+<h2 id="知识蒸馏"><a href="#知识蒸馏" class="headerlink" title="知识蒸馏"></a>知识蒸馏</h2><h2 id="量化（float-int）"><a href="#量化（float-int）" class="headerlink" title="量化（float-&gt;int）"></a>量化（float-&gt;int）</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/349678095">zhihu-量化</a></p>
+<p>1、量化映射方法，也就是将float-32映射到Int数据类型，每个间隔是相等的还是不相等的，这里就是均匀量化(uniform quantization)和非均匀量化(non-uniform quantization)，也可以叫作线性量化和非线性量化</p>
+<p>2、关于映射到整数是数值范围是有正负数，还是都是正数，这里就是对称量化(有正负数)和非对称量化(全是正数)，非对称量化就有zero-point，zero-point的主要作用是用于做padding。</p>
+<p>3、原精度即浮float-32，量化到什么样的数据类型，这里就有float和int；到底要选择量化后的是多少个bit，这里就有1-bit(二值网络)、2-bit(三值网络)、3-bit、4-bit、5-bit、6-bit、7-bit、8-bit，这几种量化后的数值类型是整型。</p>
+<p>4、是固定所有网络都是相同的bit-width，还是不同的，这里就有混合精度量化(Mixed precision)</p>
+<p>5、是从一个已经训练好的模型再进行量化，还是有fine tune的过程或者直接是从头开始训练一个量化的模型，这里就有Post-training quantization(后量化，即将已经训练完的模型参数进行量化)、quantization-aware training(量化感知训练，即在从头开始训练中加入量化)和quantization-aware fine tune(在fine tune训练中加入量化)。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/DeepLearning/" rel="tag"># DeepLearning</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/09/10/Sub_Language/DL_Train/Tensorflow/Language-tf-slim/" rel="prev" title="Tensorflow Slim">
+      <i class="fa fa-chevron-left"></i> Tensorflow Slim
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/12/06/Tools/Tools_sum/" rel="next" title="Tools 常用工具解密">
+      Tools 常用工具解密 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A8%A1%E5%9E%8B%E5%8A%A0%E9%80%9F%E4%B8%8E%E5%8E%8B%E7%BC%A9%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95-%E6%80%BB%E4%BD%93%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">深度学习模型加速与压缩常用方法-总体介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A8%A1%E5%9E%8B%E5%8A%A0%E9%80%9F%E4%B8%8E%E5%8E%8B%E7%BC%A9%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E2%80%93%E5%89%AA%E6%9E%9D"><span class="nav-number">2.</span> <span class="nav-text">深度学习模型加速与压缩常用方法–剪枝</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%89%AA%E6%9E%9D"><span class="nav-number">2.1.</span> <span class="nav-text">网络剪枝</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%88%E4%B8%80%EF%BC%89L1-norm-based-Channel-Pruning"><span class="nav-number">2.1.1.</span> <span class="nav-text">（一）L1-norm based Channel Pruning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%88%E4%BA%8C%EF%BC%89ThiNet"><span class="nav-number">2.1.2.</span> <span class="nav-text">（二）ThiNet</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9F%A5%E8%AF%86%E8%92%B8%E9%A6%8F"><span class="nav-number">2.2.</span> <span class="nav-text">知识蒸馏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8F%E5%8C%96%EF%BC%88float-int%EF%BC%89"><span class="nav-number">2.3.</span> <span class="nav-text">量化（float-&gt;int）</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

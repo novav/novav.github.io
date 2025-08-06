@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="安装123456789cd nginx-1.25.1    .&#x2F;configure --prefix&#x3D;&#x2F;usr&#x2F;local&#x2F;nginx_1.25.1 \    --with-stream \    --with-http_ssl_module \    --with-pcre \    --with-http_gzip_static_module    --user&#x3D;nginx \    --gr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nginx">
+<meta property="og:url" content="https://novav.github.io/2024/08/08/Sub_Language/API_Web/nginx/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="安装123456789cd nginx-1.25.1    .&#x2F;configure --prefix&#x3D;&#x2F;usr&#x2F;local&#x2F;nginx_1.25.1 \    --with-stream \    --with-http_ssl_module \    --with-pcre \    --with-http_gzip_static_module    --user&#x3D;nginx \    --gr">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-08-08T15:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:40.520Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="nginx">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://novav.github.io/2024/08/08/Sub_Language/API_Web/nginx/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Nginx | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2024/08/08/Sub_Language/API_Web/nginx/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Nginx
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-08-08 15:00:00" itemprop="dateCreated datePublished" datetime="2024-08-08T15:00:00+00:00">2024-08-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/nginx/" itemprop="url" rel="index"><span itemprop="name">nginx</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cd nginx-1.25.1</span><br><span class="line">    ./configure --prefix=/usr/local/nginx_1.25.1 \</span><br><span class="line">    --with-stream \</span><br><span class="line">    --with-http_ssl_module \</span><br><span class="line">    --with-pcre \</span><br><span class="line">    --with-http_gzip_static_module</span><br><span class="line"></span><br><span class="line">    --user=nginx \</span><br><span class="line">    --group=nginx \</span><br></pre></td></tr></table></figure>
+
+<p>  nginx path prefix: “&#x2F;usr&#x2F;local&#x2F;nginx_1.25.1”<br>  nginx binary file: “&#x2F;usr&#x2F;local&#x2F;nginx_1.25.1&#x2F;sbin&#x2F;nginx”<br>  nginx modules path: “&#x2F;usr&#x2F;local&#x2F;nginx_1.25.1&#x2F;modules”<br>  nginx configuration prefix: “&#x2F;usr&#x2F;local&#x2F;nginx_1.25.1&#x2F;conf”<br>  nginx configuration file: “&#x2F;usr&#x2F;local&#x2F;nginx_1.25.1&#x2F;conf&#x2F;nginx.conf”<br>  nginx pid file: “&#x2F;usr&#x2F;local&#x2F;nginx_1.25.1&#x2F;logs&#x2F;nginx.pid”<br>  nginx error log file: “&#x2F;usr&#x2F;local&#x2F;nginx_1.25.1&#x2F;logs&#x2F;error.log”<br>  nginx http access log file: “&#x2F;usr&#x2F;local&#x2F;nginx_1.25.1&#x2F;logs&#x2F;access.log”<br>  nginx http client request body temporary files: “client_body_temp”<br>  nginx http proxy temporary files: “proxy_temp”<br>  nginx http fastcgi temporary files: “fastcgi_temp”<br>  nginx http uwsgi temporary files: “uwsgi_temp”<br>  nginx http scgi temporary files: “scgi_temp”</p>
+<span id="more"></span>
+
+<h3 id="nginx-config"><a href="#nginx-config" class="headerlink" title="nginx config"></a>nginx config</h3><p><code>cat /etc/nginx/nginx.conf</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line">user www-data;</span><br><span class="line">worker_processes auto;</span><br><span class="line">pid /run/nginx.pid;</span><br><span class="line">include /etc/nginx/modules-enabled/*.conf;</span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections 768;</span><br><span class="line">    # multi_accept on;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line"></span><br><span class="line">    ##</span><br><span class="line">    # Basic Settings</span><br><span class="line">    ##</span><br><span class="line"></span><br><span class="line">    sendfile on;</span><br><span class="line">    tcp_nopush on;</span><br><span class="line">    tcp_nodelay on;</span><br><span class="line"></span><br><span class="line">    keepalive_timeout 1800s;</span><br><span class="line">    client_header_timeout 1800;</span><br><span class="line">    client_body_timeout 1800;</span><br><span class="line">    send_timeout 1800; </span><br><span class="line"></span><br><span class="line">    types_hash_max_size 2048;</span><br><span class="line">    # server_tokens off;</span><br><span class="line"></span><br><span class="line">    client_max_body_size 10m;</span><br><span class="line"></span><br><span class="line">    # server_names_hash_bucket_size 64;</span><br><span class="line">    # server_name_in_redirect off;</span><br><span class="line"></span><br><span class="line">    include /etc/nginx/mime.types;</span><br><span class="line">    default_type application/octet-stream;</span><br><span class="line"></span><br><span class="line">    ##</span><br><span class="line">    # SSL Settings</span><br><span class="line">    ##</span><br><span class="line"></span><br><span class="line">    ssl_protocols TLSv1 TLSv1.1 TLSv1.2; # Dropping SSLv3, ref: POODLE</span><br><span class="line">    ssl_prefer_server_ciphers on;</span><br><span class="line"></span><br><span class="line">    ##</span><br><span class="line">    # Logging Settings</span><br><span class="line">    ##</span><br><span class="line"></span><br><span class="line">    access_log /var/log/nginx/access.log;</span><br><span class="line">    error_log /var/log/nginx/error.log;</span><br><span class="line"></span><br><span class="line">    ##</span><br><span class="line">    # Gzip Settings</span><br><span class="line">    ##</span><br><span class="line"></span><br><span class="line">    gzip on;</span><br><span class="line"></span><br><span class="line">    # gzip_vary on;</span><br><span class="line">    # gzip_proxied any;</span><br><span class="line">    # gzip_comp_level 6;</span><br><span class="line">    # gzip_buffers 16 8k;</span><br><span class="line">    # gzip_http_version 1.1;</span><br><span class="line">    # gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;</span><br><span class="line"></span><br><span class="line">    ##</span><br><span class="line">    # Virtual Host Configs</span><br><span class="line">    ##</span><br><span class="line"></span><br><span class="line">    include /etc/nginx/conf.d/*.conf;</span><br><span class="line">    include /etc/nginx/sites-enabled/*;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#mail &#123;</span><br><span class="line">#    # See sample authentication script at:</span><br><span class="line">#    # http://wiki.nginx.org/ImapAuthenticateWithApachePhpScript</span><br><span class="line"># </span><br><span class="line">#    # auth_http localhost/auth.php;</span><br><span class="line">#    # pop3_capabilities &quot;TOP&quot; &quot;USER&quot;;</span><br><span class="line">#    # imap_capabilities &quot;IMAP4rev1&quot; &quot;UIDPLUS&quot;;</span><br><span class="line"># </span><br><span class="line">#    server &#123;</span><br><span class="line">#        listen     localhost:110;</span><br><span class="line">#        protocol   pop3;</span><br><span class="line">#        proxy      on;</span><br><span class="line">#    &#125;</span><br><span class="line"># </span><br><span class="line">#    server &#123;</span><br><span class="line">#        listen     localhost:143;</span><br><span class="line">#        protocol   imap;</span><br><span class="line">#        proxy      on;</span><br><span class="line">#    &#125;</span><br><span class="line">#&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="自定义config"><a href="#自定义config" class="headerlink" title="自定义config"></a>自定义config</h3><blockquote>
+<p>&#x2F;etc&#x2F;nginx&#x2F;conf.d&#x2F;nginx_s.conf</p>
+</blockquote>
+<p><code>cat /data/ai+/CartoonBody/confgs/nginx_s.conf</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line">upstream cuda2 &#123;</span><br><span class="line">    server 127.0.0.1:9000;</span><br><span class="line">    #server 127.0.0.1:9001 weight=10;</span><br><span class="line">    #server 127.0.0.1:9002 weight=10;</span><br><span class="line">    #server 127.0.0.1:9003 weight=8;</span><br><span class="line">&#125;</span><br><span class="line">upstream cuda_sxx &#123;</span><br><span class="line">    server 127.0.0.1:9010;</span><br><span class="line">&#125;</span><br><span class="line">upstream cuda_xp &#123;</span><br><span class="line">    server 127.0.0.1:9030;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">    # listen 5000 ssl;</span><br><span class="line">    listen 5000;</span><br><span class="line">    #include agent_deny.conf;</span><br><span class="line">    server_name 127.0.0.1; # 这是HOST机器的外部域名，用地址也行</span><br><span class="line">    add_header Access-Control-Allow-Origin *;</span><br><span class="line">    add_header Access-Control-Allow-Headers X-Requested-With;</span><br><span class="line">    add_header Access-Control-Allow-Methods GET,POST,OPTIONS;</span><br><span class="line">    charset &#x27;utf-8&#x27;;</span><br><span class="line">    # ssl_certificate cert/service.deepgaming.cn.pem;  #需要将cert-file-name.pem替换成已上传的证书文件的名称。</span><br><span class="line">    # ssl_certificate_key cert/service.deepgaming.cn.key; #需要将cert-file-name.key替换成已上传的证书密钥文件的名称。</span><br><span class="line">    # ssl_session_timeout 5m;</span><br><span class="line">    # ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;</span><br><span class="line">    #表示使用的加密套件的类型。</span><br><span class="line">    # ssl_protocols TLSv1 TLSv1.1 TLSv1.2; #表示使用的TLS协议的类型。</span><br><span class="line">    # ssl_prefer_server_ciphers on;</span><br><span class="line">    # rewrite ^(.*)$ https://$host$1; #将所有HTTP请求通过rewrite指令重定向到HTTPS。</span><br><span class="line"></span><br><span class="line">    #limit_req zone=one burst=5 nodelay;   #执行的动作,通过zone名字对应</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_pass http://cuda2;    # 这里是指向 gunicorn host 的服务地址</span><br><span class="line">        proxy_set_header Host $host:5000;#保留代理之前的host</span><br><span class="line">        proxy_set_header X-Real-IP $remote_addr;#保留代理之前的真实客户端ip</span><br><span class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">        proxy_set_header HTTP_X_FORWARDED_FOR $remote_addr;</span><br><span class="line">        proxy_redirect default;</span><br><span class="line">        proxy_buffer_size       128k;</span><br><span class="line">        proxy_buffers           32 128k;</span><br><span class="line">        proxy_busy_buffers_size 128k;</span><br><span class="line">        #用于tomcat反向代理,解决nginx 504错误</span><br><span class="line">        proxy_connect_timeout 300; #单位秒</span><br><span class="line">        proxy_send_timeout 300; #单位秒</span><br><span class="line">        proxy_read_timeout 300; #单位秒</span><br><span class="line">        proxy_temp_file_write_size 128k;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    # 重写 URL 中带有 /cycle/ 前缀的请求路径。</span><br><span class="line">        # location: 定义一个匹配规则来捕获请求路径。</span><br><span class="line">        # ~*: 表示使用正则表达式进行匹配，并且是大小写不敏感的。</span><br><span class="line">        # /cycle/: 匹配所有以 /cycle/ 开头的请求路径。</span><br><span class="line">    location ~* /cycle/&#123;</span><br><span class="line"></span><br><span class="line">        rewrite  ^/cycle/(.*)$ /$1 break;</span><br><span class="line">            # ^/cycle/(.*)$: 这是一个正则表达式，用于匹配以 /cycle/ 开头的路径，并捕获 /cycle/ 之后的所有字符（. 表示任意字符，* 表示前面的字符可以出现任意次数，^ 和 $ 分别表示字符串的开头和结尾）。</span><br><span class="line">            # /$1: $1 是正则表达式中的第一个捕获组（即 (.*) 中括号内的部分）</span><br><span class="line">        proxy_pass http://cuda_sxx/ ;</span><br><span class="line">        proxy_set_header Host $host:5000;#保留代理之前的host</span><br><span class="line">        proxy_set_header X-Real-IP $remote_addr;#保留代理之前的真实客户端ip</span><br><span class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">        proxy_set_header HTTP_X_FORWARDED_FOR $remote_addr;</span><br><span class="line">        proxy_redirect default;</span><br><span class="line">        proxy_buffer_size       128k;</span><br><span class="line">        proxy_buffers           32 128k;</span><br><span class="line">        proxy_busy_buffers_size 128k;</span><br><span class="line">        #用于tomcat反向代理,解决nginx 504错误</span><br><span class="line">        proxy_connect_timeout 300; #单位秒</span><br><span class="line">        proxy_send_timeout 300; #单位秒</span><br><span class="line">        proxy_read_timeout 300; #单位秒</span><br><span class="line">        proxy_temp_file_write_size 128k;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location ~* /pix2pix/&#123;</span><br><span class="line">        rewrite  ^/pix2pix/(.*)$ /$1 break;</span><br><span class="line">        proxy_pass http://cuda_xp;</span><br><span class="line">        proxy_set_header Host $host:5000; #保留代理之前的host</span><br><span class="line">        proxy_set_header X-Real-IP $remote_addr; #保留代理之前的真实客户端ip</span><br><span class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">        proxy_set_header HTTP_X_FORWARDED_FOR $remote_addr;</span><br><span class="line">        proxy_redirect default;</span><br><span class="line">        proxy_buffer_size       128k;</span><br><span class="line">        proxy_buffers           32 128k;</span><br><span class="line">        proxy_busy_buffers_size 128k;</span><br><span class="line">        #用于tomcat反向代理,解决nginx 504错误</span><br><span class="line">        proxy_connect_timeout 300; #单位秒</span><br><span class="line">        proxy_send_timeout 300; #单位秒</span><br><span class="line">        proxy_read_timeout 300; #单位秒</span><br><span class="line">        proxy_temp_file_write_size 128k;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置示例2"><a href="#配置示例2" class="headerlink" title="配置示例2"></a>配置示例2</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line">upstream glm &#123;</span><br><span class="line">    server 127.0.0.1:6090;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">upstream sd1 &#123;</span><br><span class="line">    server 127.0.0.1:6081;</span><br><span class="line">&#125;</span><br><span class="line">upstream site_sd2 &#123;</span><br><span class="line">    server 127.0.0.1:6082;</span><br><span class="line">&#125;</span><br><span class="line">upstream sd3 &#123;</span><br><span class="line">    server 127.0.0.1:6083;</span><br><span class="line">&#125;</span><br><span class="line">upstream sd4 &#123;</span><br><span class="line">    server 127.0.0.1:6084;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">    listen 6080;</span><br><span class="line">    #include agent_deny.conf;</span><br><span class="line">    server_name 127.0.0.1; # 这是HOST机器的外部域名，用地址也行</span><br><span class="line">    add_header Access-Control-Allow-Origin *;</span><br><span class="line">    add_header Access-Control-Allow-Headers X-Requested-With;</span><br><span class="line">    add_header Access-Control-Allow-Methods GET,POST,OPTIONS;</span><br><span class="line">    charset &#x27;utf-8&#x27;;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_pass http://sd1;    # 这里是指向 gunicorn host 的服务地址</span><br><span class="line">        proxy_set_header Host $host:6080;#保留代理之前的host</span><br><span class="line">        proxy_set_header X-Real-IP $remote_addr;#保留代理之前的真实客户端ip</span><br><span class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">        proxy_set_header HTTP_X_FORWARDED_FOR $remote_addr;</span><br><span class="line">        proxy_redirect default;</span><br><span class="line">        proxy_buffer_size       128k;</span><br><span class="line">        proxy_buffers           32 128k;</span><br><span class="line">        proxy_busy_buffers_size 128k;</span><br><span class="line">        #用于tomcat反向代理,解决nginx 504错误</span><br><span class="line">        proxy_connect_timeout 300; #单位秒</span><br><span class="line">        proxy_send_timeout 300; #单位秒</span><br><span class="line">        proxy_read_timeout 300; #单位秒</span><br><span class="line">        proxy_temp_file_write_size 128k;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location /sd1/ &#123;</span><br><span class="line">        proxy_pass http://sd1/ ;</span><br><span class="line">        proxy_set_header Host $host:6080; #保留代理之前的host</span><br><span class="line">        proxy_set_header X-Real-IP $remote_addr; #保留代理之前的真实客户端ip</span><br><span class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">        proxy_set_header HTTP_X_FORWARDED_FOR $remote_addr;</span><br><span class="line">        proxy_redirect default;</span><br><span class="line">        proxy_buffer_size       128k;</span><br><span class="line">        proxy_buffers           32 128k;</span><br><span class="line">        proxy_busy_buffers_size 128k;</span><br><span class="line">        #用于tomcat反向代理,解决nginx 504错误</span><br><span class="line">        proxy_connect_timeout 300; #单位秒</span><br><span class="line">        proxy_send_timeout 300; #单位秒</span><br><span class="line">        proxy_read_timeout 300; #单位秒</span><br><span class="line">        proxy_temp_file_write_size 128k;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location /sd2/ &#123;</span><br><span class="line">        proxy_pass http://site_sd2/ ;</span><br><span class="line">        proxy_set_header Host $host:6080; #保留代理之前的host</span><br><span class="line">        proxy_set_header X-Real-IP $remote_addr; #保留代理之前的真实客户端ip</span><br><span class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">        proxy_set_header HTTP_X_FORWARDED_FOR $remote_addr;</span><br><span class="line">        proxy_redirect default;</span><br><span class="line">        proxy_buffer_size       128k;</span><br><span class="line">        proxy_buffers           32 128k;</span><br><span class="line">        proxy_busy_buffers_size 128k;</span><br><span class="line">        #用于tomcat反向代理,解决nginx 504错误</span><br><span class="line">        proxy_connect_timeout 300; #单位秒</span><br><span class="line">        proxy_send_timeout 300; #单位秒</span><br><span class="line">        proxy_read_timeout 300; #单位秒</span><br><span class="line">        proxy_temp_file_write_size 128k;</span><br><span class="line">    &#125;</span><br><span class="line">    location /sd3/ &#123;</span><br><span class="line">        proxy_pass http://sd3/ ;</span><br><span class="line">        proxy_set_header Host $host:6080; #保留代理之前的host</span><br><span class="line">        proxy_set_header X-Real-IP $remote_addr; #保留代理之前的真实客户端ip</span><br><span class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">        proxy_set_header HTTP_X_FORWARDED_FOR $remote_addr;</span><br><span class="line">        proxy_redirect default;</span><br><span class="line">        proxy_buffer_size       128k;</span><br><span class="line">        proxy_buffers           32 128k;</span><br><span class="line">        proxy_busy_buffers_size 128k;</span><br><span class="line">        #用于tomcat反向代理,解决nginx 504错误</span><br><span class="line">        proxy_connect_timeout 300; #单位秒</span><br><span class="line">        proxy_send_timeout 300; #单位秒</span><br><span class="line">        proxy_read_timeout 300; #单位秒</span><br><span class="line">        proxy_temp_file_write_size 128k;</span><br><span class="line">    &#125;</span><br><span class="line">    location /sd4/ &#123;</span><br><span class="line">        proxy_pass http://sd4/ ;</span><br><span class="line">        proxy_set_header Host $host:6080; #保留代理之前的host</span><br><span class="line">        proxy_set_header X-Real-IP $remote_addr; #保留代理之前的真实客户端ip</span><br><span class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">        proxy_set_header HTTP_X_FORWARDED_FOR $remote_addr;</span><br><span class="line">        proxy_redirect default;</span><br><span class="line">        proxy_buffer_size       128k;</span><br><span class="line">        proxy_buffers           32 128k;</span><br><span class="line">        proxy_busy_buffers_size 128k;</span><br><span class="line">        #用于tomcat反向代理,解决nginx 504错误</span><br><span class="line">        proxy_connect_timeout 300; #单位秒</span><br><span class="line">        proxy_send_timeout 300; #单位秒</span><br><span class="line">        proxy_read_timeout 300; #单位秒</span><br><span class="line">        proxy_temp_file_write_size 128k;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="run"><a href="#run" class="headerlink" title="run"></a>run</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/nginx_1.25.1</span><br><span class="line">./sbin/nginx -s reload</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/nginx/" rel="tag"># nginx</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/08/06/CV_Face/Diffusions/" rel="prev" title="Stable Diffusion 介绍">
+      <i class="fa fa-chevron-left"></i> Stable Diffusion 介绍
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/08/19/Sub_Language/API_Web/Gradio/" rel="next" title="WEB Dev - Gradio">
+      WEB Dev - Gradio <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nginx-config"><span class="nav-number">2.</span> <span class="nav-text">nginx config</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89config"><span class="nav-number">3.</span> <span class="nav-text">自定义config</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%A4%BA%E4%BE%8B2"><span class="nav-number">4.</span> <span class="nav-text">配置示例2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#run"><span class="nav-number">5.</span> <span class="nav-text">run</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="目标1.理解针孔相机的模型、内参与径向畸变参数。 2.理解一个空间点如何投影到相机成像平面。 3.掌握 OpenCV 的图像存储与表达方式。 4.学会基本的摄像头标定方法。 在以相机为主的视觉SLAM中，观测主要是指相机成像的过程。 三维世界中的一个物体反射或发出的光线，穿过相机光心后，投影在相机的成像平面上。相机的感光器件接收到光线后，产生测量值，就得到了像素，形成了我们见到的照片。 1、相机模">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SLAM 第五讲 相机模型">
+<meta property="og:url" content="https://novav.github.io/2022/07/08/Course/SLAM/ch05_camera/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="目标1.理解针孔相机的模型、内参与径向畸变参数。 2.理解一个空间点如何投影到相机成像平面。 3.掌握 OpenCV 的图像存储与表达方式。 4.学会基本的摄像头标定方法。 在以相机为主的视觉SLAM中，观测主要是指相机成像的过程。 三维世界中的一个物体反射或发出的光线，穿过相机光心后，投影在相机的成像平面上。相机的感光器件接收到光线后，产生测量值，就得到了像素，形成了我们见到的照片。 1、相机模">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2022/07/08/Course/SLAM/ch05_camera/2022-07-28-12-01-56-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/07/08/Course/SLAM/ch05_camera/2022-07-28-12-00-50-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/07/08/Course/SLAM/ch05_camera/2022-07-28-12-01-08-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/07/08/Course/SLAM/ch05_camera/2022-07-28-12-02-30-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/07/08/Course/SLAM/ch05_camera/2022-07-28-12-02-57-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/07/08/Course/SLAM/ch05_camera/2022-07-28-12-03-50-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/07/08/Course/SLAM/ch05_camera/2022-07-28-12-03-45-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/07/08/Course/SLAM/ch05_camera/2022-07-28-12-03-38-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/07/08/Course/SLAM/ch05_camera/2022-07-28-12-03-32-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/07/08/Course/SLAM/ch05_camera/2022-07-28-12-03-26-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/07/08/Course/SLAM/ch05_camera/2022-07-28-12-05-19-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/07/08/Course/SLAM/ch05_camera/2022-07-28-12-05-08-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/07/08/Course/SLAM/ch05_camera/2022-07-28-12-05-40-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/07/08/Course/SLAM/ch05_camera/2022-07-28-15-21-46-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/07/08/Course/SLAM/ch05_camera/2022-07-28-16-34-20-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/07/08/Course/SLAM/ch05_camera/2022-07-28-19-58-47-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/07/08/Course/SLAM/ch05_camera/2022-07-28-19-59-04-image.png">
+<meta property="og:image" content="https://novav.github.io/2022/07/08/Course/SLAM/ch05_camera/2022-07-28-15-26-02-image.png">
+<meta property="article:published_time" content="2022-07-08T12:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:39.784Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="SLAM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2022/07/08/Course/SLAM/ch05_camera/2022-07-28-12-01-56-image.png">
+
+<link rel="canonical" href="https://novav.github.io/2022/07/08/Course/SLAM/ch05_camera/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>SLAM 第五讲 相机模型 | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/07/08/Course/SLAM/ch05_camera/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SLAM 第五讲 相机模型
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-07-08 12:00:00" itemprop="dateCreated datePublished" datetime="2022-07-08T12:00:00+00:00">2022-07-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SLAM/" itemprop="url" rel="index"><span itemprop="name">SLAM</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>1.理解针孔相机的模型、内参与径向畸变参数。</p>
+<p>2.理解一个空间点如何投影到相机成像平面。</p>
+<p>3.掌握 OpenCV 的图像存储与表达方式。</p>
+<p>4.学会基本的摄像头标定方法。</p>
+<p>在以相机为主的视觉SLAM中，观测主要是指相机成像的过程。</p>
+<p>三维世界中的一个物体反射或发出的光线，穿过相机光心后，投影在相机的成像平面上。相机的感光器件接收到光线后，产生测量值，就得到了像素，形成了我们见到的照片。</p>
+<h2 id="1、相机模型"><a href="#1、相机模型" class="headerlink" title="1、相机模型"></a>1、相机模型</h2><p>相机将三维世界中的坐标点（单位为米）映射到二维图像平面（单位为像素）的过程能够用一个几何模型进行描述，称为针孔模型，它描述了一束光线通过针孔之后，在针孔背面投影成像的关系。同时，由于相机镜头上的透镜的存在，使得光线投影到成像平面的过程中会产生畸变。因此，我们使用针孔和畸变两个模型来描述整个投影过程。这两个模型能够把外部的三维点投影到相机内部成像平面，构成相机的内参数（Intrinsics）。</p>
+<h3 id="1-1-针孔相机模型"><a href="#1-1-针孔相机模型" class="headerlink" title="1.1 针孔相机模型"></a>1.1 针孔相机模型</h3><p>初中物理的蜡烛投影实验：在一个暗箱的前方放着一支点燃的蜡烛，蜡烛的光透过暗箱上的一个小孔投影在暗箱的后方平面上，并在这个平面上形成一个倒立的蜡烛图像。小孔模型能够把三维世界中的蜡烛投影到一个二维成像平面。同理，可以用这个简单的模型来解释相机的成像过程。对这个简单的针孔模型进行几何建模。设 O − x − y − z 为相机坐标系，z 轴指向相机前方，x 向右，y 向下。O为摄像机的光心，也是针孔模型中的针孔。现实世界的空间点P，经过小孔O投影之后，落在物理成像平面 O′ − x′ − y′ 上，成像点为 P′。设 P 的坐标为 [X,Y,Z]T，P′ 为 [X′,Y′,Z′]T，设物理成像平面到小孔的距离为f（焦距）。那么，根据三角形相似关系，有：</p>
+<img src="/2022/07/08/Course/SLAM/ch05_camera/2022-07-28-12-01-56-image.png" title alt data-align="center">
+
+<p><img src="/2022/07/08/Course/SLAM/ch05_camera/2022-07-28-12-00-50-image.png"></p>
+<p>其中负号表示成的像是倒立的。不过，实际相机得到的图像并不是倒像，可以等价地把成像平面对称地放到相机前方，和三维空间点一起放在摄像机坐标系的同一侧，如图所示。</p>
+<p><img src="/2022/07/08/Course/SLAM/ch05_camera/2022-07-28-12-01-08-image.png"></p>
+<p>把公式中的负号去掉，X′,Y′ 放到等式左侧，整理得：</p>
+<img src="/2022/07/08/Course/SLAM/ch05_camera/2022-07-28-12-02-30-image.png" title alt data-align="center">
+
+<p>这描述了点 P和它的像之间的空间关系。不过，在相机中最终获得的是一个个的像素，这还需要在成像平面上对像进行采样和量化。为了描述传感器将感受到的光线转换成图像像素的过程，设在物理成像平面上固定着一个像素平面 o − u − v，在像素平面有P′的像素坐标：[u,v]T。</p>
+<p>像素坐标系通常的定义方式是：原点o′位于图像的左上角，u 轴向右与 x 轴平行，v 轴向下与 y 轴平行。像素坐标系与成像平面之间，相差了一个缩放和一个原点的平移。设像素坐标在 u 轴上缩放了 α 倍，在 v 上缩放了 β 倍。同时，原点平移了 [cx,cy]T。那么，P′ 的坐标与像素坐标[u,v]T 的关系为：</p>
+<img src="/2022/07/08/Course/SLAM/ch05_camera/2022-07-28-12-02-57-image.png" title alt data-align="center">
+
+<p>代入式</p>
+<img src="/2022/07/08/Course/SLAM/ch05_camera/2022-07-28-12-03-50-image.png" title alt data-align="center">
+
+<p>把 αf 合并成 fx，把 βf 合并成 fy，得：</p>
+<img src="/2022/07/08/Course/SLAM/ch05_camera/2022-07-28-12-03-45-image.png" title alt data-align="center">
+
+<p>其中，f 的单位为米，α,β 的单位为像素&#x2F;米，所以 fx,fy 和 cx,cy 的单位为像素。写成矩阵形式：</p>
+<img src="/2022/07/08/Course/SLAM/ch05_camera/2022-07-28-12-03-38-image.png" title alt data-align="center">
+
+<p>K矩阵称为相机的内参数矩阵（Camera Intrinsics）。通常相机的内参在出厂之后是固定的，不会在使用过程中发生变化。但有时需要自己确定相机的内参，也就是所谓的标定。</p>
+<p>（单目棋盘格张正友标定法[25]Z. Zhang, “Flexible camera calibration by viewing a plane from unknown orientations,” in Computer Vision, 1999. The Proceedings of the Seventh IEEE International Conference on, vol. 1, pp. 666–673, Ieee, 1999.）</p>
+<p>前面内参公式中的P是在相机坐标系下的坐标。由于相机在运动，所以P是相机的世界坐标（记为Pw）根据相机的当前位姿变换到相机坐标系下的结果。相机的位姿由它的旋转矩阵R和平移向量t来描述。那么有：</p>
+<img src="/2022/07/08/Course/SLAM/ch05_camera/2022-07-28-12-03-32-image.png" title alt data-align="center">
+
+<p>后一个式子隐含了一次齐次坐标到非齐次坐标的转换。它描述了P的世界坐标到像素坐标的投影关系。相机的位姿R,t称为相机的外参数（Camera Extrinsics） 。 相比于不变的内参，外参会随着相机运动发生改变，同时也是 SLAM 中待估计的目标，代表着机器人的轨迹。 式子表明，可以把一个世界坐标点先转换到相机坐标系，再除掉它最后一维（Z）的数值（即该点距离相机成像平面的深度），这相当于把最后一维进行归一化处理，得到点 P 在相机归一化平面上的投影：</p>
+<img src="/2022/07/08/Course/SLAM/ch05_camera/2022-07-28-12-03-26-image.png" title alt data-align="center">
+
+<p>归一化坐标可看成相机前方z&#x3D;1处的平面上的一个点，这个 z &#x3D; 1 平面也称为归一化平面。归一化坐标再左乘内参就得到了像素坐标，所以可以把像素坐标 [u,v]T 看成对归一化平面上的点进行量化测量的结果。从这个模型中可以看出，对相机坐标同时乘以任意非零常数，归一化坐标都是一样的，这说明点的深度在投影过程中被丢失了，所以单目视觉中没法得到像素点的深度值。</p>
+<p>**注：**1. 相机输出的图像并不是倒像，但相机自身会翻转这张图像，所以实际得到的是正像，也就是对称的成像平面上的像。尽管从物理原理来说，小孔成像应该是倒像。</p>
+<p>2.在机器人或自动驾驶车辆中，外参也可以解释成相机坐标系到机器人本体坐标系之间的变换。</p>
+<h3 id="1-2-畸变"><a href="#1-2-畸变" class="headerlink" title="1.2 畸变"></a>1.2 畸变</h3><p>为了获得好的成像效果，在相机的前方加了透镜。透镜的加入对成像过程中光线的传播会产生新的影响：一是透镜自身的形状对光线传播的影响，引起的畸变（Distortion，也叫失真）称为径向畸变。在针孔模型中，一条直线投影到像素平面上还是一条直线。可是，在实际拍摄的照片中，摄像机的透镜往往使得真实环境中的一条直线在图片中变成了曲线 。越靠近图像的边缘，这种现象越明显。由于实际加工制作的透镜往往是中心对称的，这使得不规则的畸变通常径向对称。它们主要分为两大类：桶形畸变和枕形畸变。</p>
+<p>桶形畸变是由于图像放大率随着与光轴之间的距离增加而减小，而枕形畸变则恰好相反。在这两种畸变中，穿过图像中心和光轴有交点的直线还能保持形状不变。</p>
+<p>二是在机械组装过程中，透镜和成像平面不可能完全平行，这也会使得光线穿过透镜投影到成像面时的位置发生变化，这引入切向畸变。</p>
+<p>用数学形式对两者进行描述。省略具体过程，</p>
+<p>对于相机坐标系中的一点P，能够通过 5 个畸变系数找到这个点在像素平面上的正确位置：</p>
+<ol>
+<li>将三维空间点投影到归一化图像平面。设它的归一化坐标为 [x,y]T。</li>
+<li>对归一化平面上的点计算径向畸变和切向畸变。</li>
+<li>将畸变后的点通过内参数矩阵投影到像素平面，得到该点在图像上的正确位置。</li>
+</ol>
+<p>在实际应用中，可以灵活选择纠正模型，比如只选择 k1,p1,p2 这 3 项等。</p>
+<p>实际的图像系统中，学者们提出了很多其他的模型，比如相机的仿射模型和透视模型等，同时也存在很多其他类型的畸变。视觉 SLAM 中一般都使用普通的摄像头，针孔模型及径向畸变和切向畸变模型已经足够。 当一个图像去畸变之后，我们就可以直接用针孔模型建立投影关系，不用考虑畸变了。</p>
+<p>小结单目相机的成像过程：</p>
+<ol>
+<li>首先，世界坐标系下有一个固定的点 P，世界坐标为Pw。</li>
+<li>由于相机在运动，它的运动由 R,t 或变换矩阵T∈SE(3) 描述。P 的相机坐标为 P˜c &#x3D;RPw + t。</li>
+<li>这时的 P˜c 的分量为 X,Y,Z，把它们投影到归一化平面 Z &#x3D; 1 上，得到 P 的归一化坐标：Pc &#x3D; [X&#x2F;Z,Y &#x2F;Z,1]T 。</li>
+<li>有畸变时，根据畸变参数计算Pc 发生畸变后的坐标。</li>
+<li>最后，P 的归一化坐标经过内参后，对应到它的像素坐标：Puv &#x3D; KPc。 一共有四种坐标：世界坐标、相机坐标、归一化坐标和像素坐标。</li>
+</ol>
+<h3 id="1-3-双目相机模型"><a href="#1-3-双目相机模型" class="headerlink" title="1.3 双目相机模型"></a>1.3 双目相机模型</h3><p>对于单目相机而言，仅根据一个像素，我们无法确定这个空间点的具体位置。这是因为，从相机光心到归一化平面连线上的所有点，都可以投影至该像素上（相当于没有了Z轴维度）。只有当P的深度确定时（比如通过双目或 RGB-D 相机），我们才能确切地知道它的空间位置。如图所示。</p>
+<p><img src="/2022/07/08/Course/SLAM/ch05_camera/2022-07-28-12-05-19-image.png"></p>
+<p>测量像素距离（或深度）的方式有很多种，比如人眼可以根据左右眼看到的景物差异（视差）来判断物体离我们的距离。双目相机的原理一样：通过同步采集左右相机的图像，计算图像间视差，来估计每一个像素的深度。</p>
+<p>双目相机一般由左眼相机和右眼相机两个水平放置的相机组成。在左右双目相机中，我们可以把两个相机都看作针孔相机。它们是水平放置的，意味着两个相机的光圈中心都位于 <em>x</em> 轴上。两者之间的距离称为双目相机的基线（Baseline，记作 <em>b</em>），是双目相机的重要参数。</p>
+<p>考虑一个空间点 <em>P</em>，它在左眼相机和右眼相机各成一像，记作 <em>PL,PR</em>。由于相机基线的存在，这两个成像位置是不同的。理想情况下，由于左右相机只在 <em>x</em> 轴上有位移，因此 <em>P</em> 的像也只在 <em>x</em> 轴（对应图像的u轴）上有差异。记它的左侧坐标为 <em>uL</em>，右侧坐标为 <em>uR</em>，几何关系如图所示。</p>
+<p><img src="/2022/07/08/Course/SLAM/ch05_camera/2022-07-28-12-05-08-image.png"></p>
+<p>根据 △<em>PPLPR</em> 和 △<em>POLOR</em> 的相似关系，整理得：</p>
+<img src="/2022/07/08/Course/SLAM/ch05_camera/2022-07-28-12-05-40-image.png" title alt data-align="center">
+
+<p>双目相机的成像模型：<em>OL,OR</em> 为左右光圈中心，方框为成像平面，<em>f</em> 为焦距。<em>uL</em> 和 <em>uR</em> 为成像平面的坐标。注意，按照图中坐标定义，<em>uR</em> 应该是负数，所以图中标出的距离为 −<em>uR</em>。</p>
+<p>其中 <em>d</em> 定义为左右图的横坐标之差，称为视差（Disparity）。根据视差，我们可以估计一个像素与相机之间的距离。视差与距离成反比：视差越大，距离越近。同时，由于视差最小为一个像素，于是双目的深度存在一个理论上的最大值，由 <em>fb</em> 确定。可以看到，当基线越长时，双目能测到的最大距离就会越远。类似人眼在看非常远的物体时（如很远的飞机），通常不能准确判断它的距离。</p>
+<p>视差 <em>d</em> 的计算比较困难，需要确切地知道左眼图像某个像素出现在右眼图像的哪一个位置（即对应关系）。当想计算每个像素的深度时，其计算量与精度都将成为问题，而且只有在图像纹理变化丰富的地方才能计算视差。由于计算量的原因，双目深度估计仍需要使用 GPU 或FPGA 来实时计算。</p>
+<h3 id="1-4-RGB-D相机模型"><a href="#1-4-RGB-D相机模型" class="headerlink" title="1.4 RGB-D相机模型"></a>1.4 RGB-D相机模型</h3><p>RGB-D 相机是主动测量每个像素的深度。目前的 RGB-D 相机按原理可分为两大类：</p>
+<ol>
+<li>红外结构光（Structured Light）： Kinect 1 代、Project Tango 1 代、Intel RealSense 等。</li>
+<li>通过飞行时间法（Time-of-flight，ToF）：Kinect 2 代和一些现有的 ToF 传感器等。</li>
+</ol>
+<p>无论是哪种类型，RGB-D 相机都需要向探测目标发射一束光线（通常是红外光）。在结构光原理中，相机根据返回的结构光图案，计算物体与自身之间的距离。而在 ToF 原理中，相机向目标发射脉冲光，然后根据发送到返回之间的光束飞行时间，确定物体与自身之间的距离。ToF原理的相机和激光雷达十分相似，只不过激光雷达是通过逐点扫描来获取这个物体的距离，而ToF相机则可以获得整个图像的像素深度。</p>
+<p>在测量深度之后，RGB-D 相机通常按照生产时的相机摆放位置，自己完成深度与彩色图像素之间的配对，输出一一对应的彩色图和深度图。可以在同一个图像位置，读取到色彩信息和距离信息，计算像素的 3D 相机坐标，生成点云（Point Cloud）。对 RGB-D 数据，既可以在图像层面进行处理，也可在点云层面处理。</p>
+<p>RGB-D 相机能够实时地测量每个像素点的距离。但用红外光进行深度值测量的 RGB-D 相机，容易受到日光或其他传感器发射的红外光干扰，因此不能在室外使用。在没有调制的情况下，同时使用多个 RGB-D 相机时也会相互干扰。对于透射材质的物体，因为接收不到反射光，所以无法测量这些点的位置。</p>
+<h2 id="2、图像"><a href="#2、图像" class="headerlink" title="2、图像"></a>2、图像</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">st=&gt;start: 现实世界</span><br><span class="line">e=&gt;end: 照片</span><br><span class="line">op1=&gt;operation: 相机-拍照|past</span><br><span class="line"></span><br><span class="line">st(right)-&gt;op1(right)-&gt;e</span><br></pre></td></tr></table></figure>
+
+<p>相机把三维世界中的信息转换成了一张由像素组成的照片，存储在计算机中，作为后续处理的数据来源。在数学中，图像可以用一个矩阵来描述；而在计算机中，它们占据一段连续的磁盘或内存空间，可以用二维数组来表示。</p>
+<p>最简单的图像——灰度图：每个像素位置 (<em>x,y</em>) 对应一个灰度值 <em>I</em>，一张宽度为 <em>w</em>、高度为 <em>h</em> 的图像，数学上可以记为一个函数：</p>
+<p>$$<br>I(x,y) : R^2 \to R<br>$$</p>
+<p>其中 (<em>x,y</em>) 是像素的坐标。然而，计算机并不能表达实数空间，所以需要对下标和图像读数在某个范围内进行量化（类似于模拟到数字的概念）。在常见的灰度图中，用 0~255 的整数（一个 unsigned char或1 个字节）来表达图像的灰度读数。那么，一张宽度为 640 像素、高度为 480 像素分辨率的灰度图就可以表示为：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> <span class="type">char</span> image[<span class="number">480</span>][<span class="number">640</span>] <span class="comment">//二维数组表达图像</span></span><br></pre></td></tr></table></figure>
+
+<p>在程序中，图像以二维数组形式存储。它的第一个下标是指数组的行，而第二个下标则是列。在图像中，数组的行数对应图像的高度，而列数对应图像的宽度。</p>
+<p>当访问某一个像素时，需要指明它所处的坐标。像素坐标系原点位于图像的左上角，<em>X</em> 轴向右，<em>Y</em> 轴向下（也就是u,v* 坐标）。如果还有第三个轴—<em>Z</em> 轴，根据右手法则，<em>Z</em> 轴向前。这种定义方式是与相机坐标系一致的。图像的宽度或列数，对应着 <em>X</em> 轴；而图像的行数或高度，则对应着它的 <em>Y</em> 轴。</p>
+<p>根据这种定义方式，访问一个位于 <em>x,y</em> 处的像素，那么在程序中应该是：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> <span class="type">char</span> pixel = image[y][x];  <span class="comment">//访问图像像素</span></span><br></pre></td></tr></table></figure>
+
+<p>它对应着灰度值 <em>I</em>(<em>x,y</em>) 的读数。</p>
+<p><img src="/2022/07/08/Course/SLAM/ch05_camera/2022-07-28-15-21-46-image.png"></p>
+<p>在 RGB-D 相机的深度图中，记录了各个像素与相机之间的距离。这个距离通常是以毫米为单位，而 RGB-D 相机的量程通常在十几米左右，超过了 255。这时会采用 16 位整数（unsigned short）来记录深度图的信息，也就是位于 0~65535 的值。换算成米的话，最大可以表示 65 米，足够 RGB-D 相机使用。</p>
+<p>彩色图像的表示则需要通道（channel）的概念。在计算机中，用红色、绿色和蓝色这三种颜色的组合来表达任意一种色彩。于是对于每一个像素，就要记录其 R、G、B 三个数值，每一个数值就称为一个通道。最常见的彩色图像有三个通道，每个通道都由 8 位整数表示。在这种规定下，一个像素占据 24 位空间。通道的数量、顺序都是可以自由定义的。在 OpenCV 的彩色图像中，通道的默认顺序是 B、G、R。也就是说，当得到一个 24 位的像素时，前 8 位表示蓝色数值，中间 8 位为绿色，最后 8 位为红色。如果还想表达图像的透明度，就使用 R、G、B、A 四个通道。</p>
+<h2 id="3-实践：计算机中的图像-OpenCV"><a href="#3-实践：计算机中的图像-OpenCV" class="headerlink" title="3 实践：计算机中的图像(OpenCV)"></a>3 实践：计算机中的图像(OpenCV)</h2><h3 id="3-1-OpenCV-的基础使用方法"><a href="#3-1-OpenCV-的基础使用方法" class="headerlink" title="3.1 OpenCV 的基础使用方法"></a>3.1 OpenCV 的基础使用方法</h3><p>OpenCV提供了大量的开源图像算法，是计算机视觉中使用极广的图像处理算法库。</p>
+<p>在Ubuntu下，有两种安装方式：</p>
+<ol>
+<li>从源代码安装，指从OpenCV网站下载所有的OpenCV源代码，并在机器上编译安装，以便使用。好处是可以选择的版本比较丰富，而且能看到源代码，不过需要编译。还可以调整一些编译选项，匹配编程环境（例如，需不需要GPU加速等），还可以使用一些额外的功能。 源代码安装OpenCV 目前维护了两个主要版本，分为 OpenCV2.4系列和 OpenCV3系列。</li>
+<li>只安装库文件，指通过Ubuntu来安装由Ubuntu社区人员已经编译好的库文件，这样无须编译。</li>
+</ol>
+<p>源代码安装，安装依赖项：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt−get install build−essential libgtk2.0−dev libvtk5−dev libjpeg−dev libtiff4−dev libjasper−dev libopenexr−dev libtbb−dev</span><br></pre></td></tr></table></figure>
+
+<p>OpenCV 的依赖项很多，缺少某些编译项会影响它的部分功能，但可能不会用上。OpenCV 会在 cmake 阶段检查依赖项是否会安装，并调整自己的功能。如果电脑上有GPU并且安装了相关依赖项，OpenCV也会把GPU加速打开。</p>
+<p>安装：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cmake ..</span><br><span class="line">make -j8</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+
+<p>安装后，OpenCV 默认存储在&#x2F;usr&#x2F;local 目录下</p>
+<h3 id="操作-OpenCV-图像"><a href="#操作-OpenCV-图像" class="headerlink" title="操作 OpenCV 图像"></a><strong>操作 OpenCV 图像</strong></h3><blockquote>
+<p>slambook&#x2F;ch5&#x2F;imageBasics&#x2F;imageBasics.cpp</p>
+</blockquote>
+<p>在该例程中操作有：图像读取、显示、像素遍历、复制、赋值等。编译该程序时，需要在CMakeLists.txt中添加 OpenCV的头文件，然后把程序链接到库文件上，还使用了C++11标准（如 nullptr 和 chrono）。</p>
+<p>编译运行：</p>
+<p>报错：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CMakeFiles/joinMap.dir/joinMap.cpp.o：在函数‘fmt::v7::detail::compile_parse_context&lt;char, fmt::v7::detail::error_handler&gt;::char_type const* fmt::v7::detail::parse_format_specs&lt;Eigen::Transpose&lt;Eigen::Matrix&lt;double, 4, 1, 0, 4, 1&gt; &gt;, fmt::v7::detail::compile_parse_context&lt;char, fmt::v7::detail::error_handler&gt; &gt;(fmt::v7::detail::compile_parse_context&lt;char, fmt::v7::detail::error_handler&gt;&amp;)’中：</span><br><span class="line">joinMap.cpp:(.text._ZN3fmt2v76detail18parse_format_specsIN5Eigen9TransposeINS3_6MatrixIdLi4ELi1ELi0ELi4ELi1EEEEENS1_21compile_parse_contextIcNS1_13error_handlerEEEEEPKNT0_9char_typeERSB_[_ZN3fmt2v76detail18parse_format_specsIN5Eigen9TransposeINS3_6MatrixIdLi4ELi1ELi0ELi4ELi1EEEEENS1_21compile_parse_contextIcNS1_13error_handlerEEEEEPKNT0_9char_typeERSB_]+0x247)：对‘fmt::v7::detail::error_handler::on_error(char const*)’未定义的引用</span><br></pre></td></tr></table></figure>
+
+<p>需要将之前安装的fmt库链接joinMap.cpp，rgbd文件夹中的cmakelists如下：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">find_package</span>(Sophus REQUIRED)</span><br><span class="line"><span class="keyword">include_directories</span>(<span class="variable">$&#123;Sophus_INCLUDE_DIRS&#125;</span>)</span><br><span class="line"><span class="keyword">find_package</span>(Pangolin REQUIRED)</span><br><span class="line"><span class="keyword">find_package</span>(FMT REQUIRED)</span><br><span class="line"><span class="keyword">add_executable</span>(joinMap joinMap.cpp)</span><br><span class="line"><span class="keyword">target_link_libraries</span>(joinMap fmt::fmt <span class="variable">$&#123;OpenCV_LIBS&#125;</span> <span class="variable">$&#123;Pangolin_LIBRARIES&#125;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>在图像中，鼠标点击图像中的每个点都能在左下角得到UV坐标值和RGB三通道值。</p>
+<p>函数解析如下：</p>
+<ol>
+<li>cv::imread：函数读取图像，并把图像和基本信息显示出来。</li>
+<li>OpenCV 提供了迭代器，可以通过迭代器遍历图像的像素。cv::Mat::data 提供了指向图像数据开头的指针，可以直接通过该指针自行计算偏移量，然后得到像素的实际内存位置。</li>
+<li>复制图像中直接赋值是浅拷贝，并不会拷贝数据，而clone方法是深拷贝，会拷贝数据，这在图像存取中会经常用到。</li>
+<li>在编程过程中碰到图像的旋转、插值等操作，自行查阅函数对应的文档，以了解它们的原理与使用方式。</li>
+</ol>
+<p>注：1. cv::Mat 亦是矩阵类，除了表示图像之外，我们也可以用它来存储位姿等矩阵数据，但一般还是使用eigen，更快一些。</p>
+<ol>
+<li>cmake默认编译的是debug模式，如果使用release模式会快很多。</li>
+</ol>
+<h3 id="3-2-图像去畸变"><a href="#3-2-图像去畸变" class="headerlink" title="3.2 图像去畸变"></a>3.2 图像去畸变</h3><p>OpenCV 提供了去畸变函数 cv::Undistort()，这个例程从公式出发计算了畸变前后的图像坐标（代码中有内参数据）。</p>
+<blockquote>
+<p>slambook&#x2F;ch5&#x2F;imageBasics&#x2F;undistortImage.cpp</p>
+</blockquote>
+<p><img src="/2022/07/08/Course/SLAM/ch05_camera/2022-07-28-16-34-20-image.png"></p>
+<p>可以看到去畸变前后图像差别还是蛮大的。</p>
+<h2 id="4-实践：3D-视觉"><a href="#4-实践：3D-视觉" class="headerlink" title="4 实践：3D 视觉"></a>4 实践：3D 视觉</h2><h3 id="4-1-双目视觉-slam2"><a href="#4-1-双目视觉-slam2" class="headerlink" title="4.1 双目视觉(slam2)"></a>4.1 双目视觉(slam2)</h3><p>在stereo文件夹中，有左右目的图像和对应代码。其中代码计算图像对应的视差图，然后再计算各像素在相机坐标系下的坐标，它们共同构成点云。</p>
+<blockquote>
+<p>slambook&#x2F;ch5&#x2F;stereoVision&#x2F;stereoVision.cpp</p>
+</blockquote>
+<p>运行如下：（下面的第二个图片是视差图）</p>
+<p><img src="/2022/07/08/Course/SLAM/ch05_camera/2022-07-28-19-58-47-image.png"></p>
+<p><img src="/2022/07/08/Course/SLAM/ch05_camera/2022-07-28-19-59-04-image.png"></p>
+<p>例程中调用了OpenCV实现的SGBM算法（Semi-global Batch Matching）[26] H. Hirschmuller, “Stereo processing by semiglobal matching and mutual information,” IEEE Transactions on pattern analysis and machine intelligence, vol. 30, no. 2, pp. 328–341, 2008.</p>
+<p>计算左右图像的视差，然后通过双目相机的几何模型把它变换到相机的3D空间中。SGBM 使用了来自网络的经典参数配置，主要调整了最大和最小视差。视差数据结合相机的内参、基线，即能确定各点在三维空间中的位置。感兴趣可以阅读相关的参考文献[27, 28]。</p>
+<p>[27] D. Scharstein and R. Szeliski, “A taxonomy and evaluation of dense two-frame stereo correspondence algorithms,” International journal of computer vision, vol. 47, no. 1-3, pp. 7–42, 2002.</p>
+<p>[28] S. M. Seitz, B. Curless, J. Diebel, D. Scharstein, and R. Szeliski, “A comparison and evaluation of multi-view stereo reconstruction algorithms,” in null, pp. 519–528, IEEE, 2006.</p>
+<h3 id="4-2-RGB-D-视觉"><a href="#4-2-RGB-D-视觉" class="headerlink" title="4.2 RGB-D 视觉"></a>4.2 RGB-D 视觉</h3><p>RGB-D相机能通过物理方法获得像素深度信息。如果已知相机的内外参，可以计算任何一个像素在世界坐标系下的位置，从而建立一张点云地图。</p>
+<p>位于 slambook&#x2F;ch5&#x2F;rgbd 文件夹中有5对图像。在 color&#x2F;下有 1.png 到 5.png 共 5 张 RGB 图，而在 depth&#x2F;下有 5 张对应的深度图。同时，pose.txt 文件给出了5张图像的相机外参位姿。位姿记录的形式为平移向量加旋转四元数： [x, y, z, qx, qy, qz, qw], 其中 qw 是四元数的实部。</p>
+<p>这一段程序，完成了两件事：(1). 根据内参计算一对 RGB-D图像对应的点云；(2). 根据各张图的相机位姿（也就是外参），把点云加起来，组成地图。</p>
+<p>slambook&#x2F;ch5&#x2F;rgbd&#x2F;jointMap.cpp</p>
+<p>运行程序如下：</p>
+<img title src="/2022/07/08/Course/SLAM/ch05_camera/2022-07-28-15-26-02-image.png" alt data-align="center">
+
+<h3 id="习题"><a href="#习题" class="headerlink" title="习题"></a><strong>习题</strong></h3><ol>
+<li><p>寻找一部相机，标定它的内参。可能会用到标定板， 或者棋盘格。</p>
+<p>参考答案<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/388821535?utm_id=0"># 视觉SLAM十四讲（第二版）第5讲习题解答</a></p>
+</li>
+<li><p>相机内参的物理意义。如果一部相机的分辨率变为原来的两倍而其他地方不变，它的内参如何变化？</p>
+</li>
+<li><p>搜索特殊相机（鱼眼或全景相机）的标定方法。它们与普通的针孔模型有何不同？</p>
+</li>
+<li><p>调研全局快门相机（global shutter）和卷帘快门相机（rolling shutter）的异同。它们在SLAM中有何优缺点？</p>
+</li>
+<li><p>RGB-D 相机是如何标定的？以 Kinect 为例，需要标定哪些参数？（参照<a href="https://link.zhihu.com/?target=https://github.com/code-iai/iai_kinect2">https://github.com/code-iai/iai_kinect2</a>）</p>
+</li>
+<li><p>除了示例程序演示的遍历图像的方式，还能举出哪些遍历图像的方法？</p>
+</li>
+<li><p>阅读 OpenCV 官方教程，学习它的基本用法。</p>
+</li>
+</ol>
+<p>习题有代码学习和工程应用的知识，后面实际开发中会很有帮助。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/SLAM/" rel="tag"># SLAM</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/07/06/Course/SLAM/ch04_Sophus/" rel="prev" title="Sophus 基本用法">
+      <i class="fa fa-chevron-left"></i> Sophus 基本用法
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/07/10/Sub_Language/CPlus/Language-C/" rel="next" title="C/C++ Doc">
+      C/C++ Doc <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87"><span class="nav-number">1.</span> <span class="nav-text">目标</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E7%9B%B8%E6%9C%BA%E6%A8%A1%E5%9E%8B"><span class="nav-number"></span> <span class="nav-text">1、相机模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E9%92%88%E5%AD%94%E7%9B%B8%E6%9C%BA%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">1.1 针孔相机模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E7%95%B8%E5%8F%98"><span class="nav-number">2.</span> <span class="nav-text">1.2 畸变</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E5%8F%8C%E7%9B%AE%E7%9B%B8%E6%9C%BA%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">1.3 双目相机模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-RGB-D%E7%9B%B8%E6%9C%BA%E6%A8%A1%E5%9E%8B"><span class="nav-number">4.</span> <span class="nav-text">1.4 RGB-D相机模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E5%9B%BE%E5%83%8F"><span class="nav-number"></span> <span class="nav-text">2、图像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%AE%9E%E8%B7%B5%EF%BC%9A%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%AD%E7%9A%84%E5%9B%BE%E5%83%8F-OpenCV"><span class="nav-number"></span> <span class="nav-text">3 实践：计算机中的图像(OpenCV)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-OpenCV-%E7%9A%84%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">3.1 OpenCV 的基础使用方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C-OpenCV-%E5%9B%BE%E5%83%8F"><span class="nav-number">2.</span> <span class="nav-text">操作 OpenCV 图像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E5%9B%BE%E5%83%8F%E5%8E%BB%E7%95%B8%E5%8F%98"><span class="nav-number">3.</span> <span class="nav-text">3.2 图像去畸变</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%AE%9E%E8%B7%B5%EF%BC%9A3D-%E8%A7%86%E8%A7%89"><span class="nav-number"></span> <span class="nav-text">4 实践：3D 视觉</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E5%8F%8C%E7%9B%AE%E8%A7%86%E8%A7%89-slam2"><span class="nav-number">1.</span> <span class="nav-text">4.1 双目视觉(slam2)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-RGB-D-%E8%A7%86%E8%A7%89"><span class="nav-number">2.</span> <span class="nav-text">4.2 RGB-D 视觉</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B9%A0%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">习题</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

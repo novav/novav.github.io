@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="1、Flexgenhttps:&#x2F;&#x2F;arxiv.org&#x2F;abs&#x2F;2303.06865 Flexgen LLM推理计算环节的量化分析 主要优化点为offload CPU 、CPU和GPU的并行计算、模型量化和多GPU并行 2、DeepSpeedGitHub - microsoft&#x2F;DeepSpeed: DeepSpeed is a deep learning optimization lib">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LLM 推理">
+<meta property="og:url" content="https://novav.github.io/2024/04/02/NLP/vLLM/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="1、Flexgenhttps:&#x2F;&#x2F;arxiv.org&#x2F;abs&#x2F;2303.06865 Flexgen LLM推理计算环节的量化分析 主要优化点为offload CPU 、CPU和GPU的并行计算、模型量化和多GPU并行 2、DeepSpeedGitHub - microsoft&#x2F;DeepSpeed: DeepSpeed is a deep learning optimization lib">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-04-02T12:00:01.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:40.008Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="vLLM">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://novav.github.io/2024/04/02/NLP/vLLM/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>LLM 推理 | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2024/04/02/NLP/vLLM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          LLM 推理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-04-02 12:00:01" itemprop="dateCreated datePublished" datetime="2024-04-02T12:00:01+00:00">2024-04-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LLM/" itemprop="url" rel="index"><span itemprop="name">LLM</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LLM/vLLM/" itemprop="url" rel="index"><span itemprop="name">vLLM</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="1、Flexgen"><a href="#1、Flexgen" class="headerlink" title="1、Flexgen"></a>1、Flexgen</h2><p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2303.06865">https://arxiv.org/abs/2303.06865</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/615327112">Flexgen LLM推理计算环节的量化分析</a></p>
+<p>主要优化点为offload CPU 、CPU和GPU的并行计算、模型量化和多GPU并行</p>
+<h2 id="2、DeepSpeed"><a href="#2、DeepSpeed" class="headerlink" title="2、DeepSpeed"></a>2、DeepSpeed</h2><p><a target="_blank" rel="noopener" href="https://github.com/microsoft/DeepSpeed/">GitHub - microsoft&#x2F;DeepSpeed: DeepSpeed is a deep learning optimization library that makes distributed training and inference easy, efficient, and effective.</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/microsoft/DeepSpeedExamples">GitHub - microsoft&#x2F;DeepSpeedExamples: Example models using DeepSpeed</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/629644249">DeepSpeed 通过系统优化加速大模型推理</a></p>
+<p>针对现有问题：</p>
+<ol>
+<li>对大规模模型缺乏多 GPU 支持并满足延迟要求；</li>
+<li>在小批量（small batch size）推理时，GPU 内核性能有限；</li>
+<li>难以利用量化，既包括量化模型来减少模型大小，以及支持量化模型的高性能推理且无需专门硬件来减少延迟。</li>
+</ol>
+<p>提出解决方案：</p>
+<ol>
+<li>推理自适应并行性（<code>Inference-adapted parallelism</code>）：允许用户通过适应多 GPU 推理的最佳并行策略来有效地服务大型模型，同时考虑推理延迟和成本。</li>
+<li>针对推理优化的 CUDA 内核（<code>Inference-optimized CUDA kernels</code>）：通过深度融合和新颖的内核调度充分利用 GPU 资源，从而提高每个 GPU 的效率。</li>
+<li>有效的量化感知训练（<code>Effective quantize-aware training</code>）：支持量化后的模型推理，如 INT8 推理，模型量化可以节省内存（memory）和减少延迟（latency），同时不损害准确性。</li>
+</ol>
+<h4 id="运行代码"><a href="#运行代码" class="headerlink" title="运行代码"></a>运行代码</h4><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> argparse <span class="keyword">import</span> ArgumentParser</span><br><span class="line"><span class="keyword">from</span> transformers <span class="keyword">import</span> AutoModelForCausalLM, AutoTokenizer, AutoConfig</span><br><span class="line"><span class="keyword">import</span> deepspeed</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> utils <span class="keyword">import</span> DSPipeline</span><br><span class="line"></span><br><span class="line">inputs = [</span><br><span class="line">         <span class="string">&quot;DeepSpeed is a machine learning framework&quot;</span>,</span><br><span class="line">         <span class="string">&quot;He is working on&quot;</span>,</span><br><span class="line">         <span class="string">&quot;He has a&quot;</span>,</span><br><span class="line">         <span class="string">&quot;He got all&quot;</span>,</span><br><span class="line">         <span class="string">&quot;Everyone is happy and I can&quot;</span>,</span><br><span class="line">         <span class="string">&quot;The new movie that got Oscar this year&quot;</span>,</span><br><span class="line">         <span class="string">&quot;In the far far distance from our galaxy,&quot;</span>,</span><br><span class="line">         <span class="string">&quot;Peace is the only way&quot;</span></span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">pipe = DSPipeline(model_name=args.name,</span><br><span class="line">                  dtype=torch.float16,</span><br><span class="line">                  is_meta=args.use_meta_tensor,</span><br><span class="line">                  device=args.local_rank,</span><br><span class="line">                  checkpoint_path=args.checkpoint_path)</span><br><span class="line"></span><br><span class="line">ds_kwargs = <span class="built_in">dict</span>()</span><br><span class="line"></span><br><span class="line">pipe.model = deepspeed.init_inference(pipe.model,</span><br><span class="line">                                dtype=torch.int8,</span><br><span class="line">                                mp_size=args.world_size,</span><br><span class="line">                                replace_with_kernel_inject=args.use_kernel,</span><br><span class="line">                                replace_method=args.replace_method,</span><br><span class="line">                                max_tokens=args.max_tokens,</span><br><span class="line">                                save_mp_checkpoint_path=args.save_mp_checkpoint_path,</span><br><span class="line">                                **ds_kwargs</span><br><span class="line">                                )</span><br><span class="line"></span><br><span class="line">torch.cuda.synchronize()</span><br><span class="line">outputs = pipe(inputs, num_tokens=args.max_new_tokens, do_sample=(<span class="keyword">not</span> args.greedy))</span><br><span class="line">torch.cuda.synchronize()</span><br></pre></td></tr></table></figure>
+
+<h3 id="3、FasterTransformer"><a href="#3、FasterTransformer" class="headerlink" title="3、FasterTransformer"></a>3、FasterTransformer</h3><p><a href="https://link.zhihu.com/?target=https://github.com/NVIDIA/FasterTransformer">https://github.com/NVIDIA/FasterTransformer</a><br><a href="https://link.zhihu.com/?target=https://github.com/cameronfr/FasterTransformer">https://github.com/cameronfr/FasterTransformer</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/626008090">https://zhuanlan.zhihu.com/p/626008090</a>  </p>
+<ol>
+<li>为了减少kernel调用次数，将除了矩阵乘法的kernel都尽可能合并</li>
+<li>针对大batch单独进行了kernel优化</li>
+<li>支持选择最优的矩阵乘法</li>
+<li>在使用FP16时使用half2类型，达到half两倍的访存带宽和计算吞吐</li>
+<li>优化gelu、softmax、layernorm的实现以及选用rsqrt等</li>
+</ol>
+<p>FT框架是用C++&#x2F;CUDA编写的，依赖于高度优化的 cuBLAS、cuBLASLt 和 cuSPARSELt 库，这样可以在 GPU 上进行快速的 Transformer 推理。<br>调用较为繁琐，只跑通了LLaMA的C++版本demo，修改起来较为困难。</p>
+<h2 id="4、exllama学习"><a href="#4、exllama学习" class="headerlink" title="4、exllama学习"></a>4、exllama学习</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/642852847">ZhiHu LLM推理1：exllama学习</a></p>
+<p>通过Python&#x2F;C++&#x2F;CUDA 实现，与 4 位 GPTQ 权重一起使用，旨在在现代 GPU 上实现快速且内存高效。</p>
+<h2 id="5、vLLM"><a href="#5、vLLM" class="headerlink" title="5、vLLM"></a>5、vLLM</h2><p><a href="https://link.zhihu.com/?target=https://github.com/vllm-project/vllm">https://github.com/vllm-project/vllm</a><br><a target="_blank" rel="noopener" href="https://vllm.ai/">https://vllm.ai/</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/643336063">LLM推理2：vLLM源码学习</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/W7GSN5tmIzXpWXiCSTvGBQ"># 从理论到实践，深入理解 FlashAttention</a></p>
+<p>vLLM 是在加州大学伯克利分校开发，配备了PagedAttention的vLLM重新定义了 LLM 服务的最新技术水平：它的吞吐量比 HuggingFace Transformers 高出 24 倍，且无需更改任何模型架构</p>
+<p>通过Python&#x2F;C++&#x2F;CUDA 实现。</p>
+<h3 id="运行代码-1"><a href="#运行代码-1" class="headerlink" title="运行代码"></a>运行代码</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> vllm <span class="keyword">import</span> LLM, SamplingParams</span><br><span class="line"></span><br><span class="line"><span class="comment"># Sample prompts.</span></span><br><span class="line">prompts = [</span><br><span class="line">    <span class="string">&quot;Hello, my name is&quot;</span>,</span><br><span class="line">    <span class="string">&quot;The president of the United States is&quot;</span>,</span><br><span class="line">    <span class="string">&quot;The capital of France is&quot;</span>,</span><br><span class="line">    <span class="string">&quot;The future of AI is&quot;</span>,</span><br><span class="line">]</span><br><span class="line"><span class="comment"># Create a sampling params object.</span></span><br><span class="line">sampling_params = SamplingParams(temperature=<span class="number">0.8</span>, top_p=<span class="number">0.95</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create an LLM.</span></span><br><span class="line">llm = LLM(model=<span class="string">&quot;facebook/opt-125m&quot;</span>)</span><br><span class="line"><span class="comment"># Generate texts from the prompts. The output is a list of RequestOutput objects</span></span><br><span class="line"><span class="comment"># that contain the prompt, generated text, and other information.</span></span><br><span class="line">outputs = llm.generate(prompts, sampling_params)</span><br><span class="line"><span class="comment"># Print the outputs.</span></span><br><span class="line"><span class="keyword">for</span> output <span class="keyword">in</span> outputs:</span><br><span class="line">    prompt = output.prompt</span><br><span class="line">    generated_text = output.outputs[<span class="number">0</span>].text</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Prompt: <span class="subst">&#123;prompt!r&#125;</span>, Generated text: <span class="subst">&#123;generated_text!r&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="6、llama-cpp-koboldcpp"><a href="#6、llama-cpp-koboldcpp" class="headerlink" title="6、llama.cpp&#x2F;koboldcpp"></a>6、llama.cpp&#x2F;koboldcpp</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/649052223">呵呵哒：LLM推理框架3：llama.cpp&#x2F;koboldcpp学习</a></p>
+<p>基于 GGML 模型的推理框架，采用了纯 C&#x2F;C++代码，优势如下：</p>
+<ul>
+<li>无需任何额外依赖，相比 Python 代码对 PyTorch 等库的要求，C&#x2F;C++ 直接编译出<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:2987333822%7D">可执行文件</a>，跳过不同硬件的繁杂准备；</li>
+<li>支持 Apple Silicon 芯片的 ARM NEON 加速，x86 平台则以 AVX2 替代；</li>
+<li>具有 F16 和 F32 的混合精度；</li>
+<li><strong>支持 4-bit 量化；</strong></li>
+<li><strong>无需 GPU，可只用 CPU 运行；</strong></li>
+</ul>
+<h2 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/657169287"> LLM推理框架总结</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/643336063">LLM推理2：vLLM源码学习</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/vLLM/" rel="tag"># vLLM</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/04/01/NLP/LLM_RAG/" rel="prev" title="LLM RAG">
+      <i class="fa fa-chevron-left"></i> LLM RAG
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/04/03/NLP/KnowledgeGraph/" rel="next" title="Knowledge Graph">
+      Knowledge Graph <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81Flexgen"><span class="nav-number">1.</span> <span class="nav-text">1、Flexgen</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81DeepSpeed"><span class="nav-number">2.</span> <span class="nav-text">2、DeepSpeed</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E4%BB%A3%E7%A0%81"><span class="nav-number">2.0.1.</span> <span class="nav-text">运行代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81FasterTransformer"><span class="nav-number">2.1.</span> <span class="nav-text">3、FasterTransformer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E3%80%81exllama%E5%AD%A6%E4%B9%A0"><span class="nav-number">3.</span> <span class="nav-text">4、exllama学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5%E3%80%81vLLM"><span class="nav-number">4.</span> <span class="nav-text">5、vLLM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E4%BB%A3%E7%A0%81-1"><span class="nav-number">4.1.</span> <span class="nav-text">运行代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6%E3%80%81llama-cpp-koboldcpp"><span class="nav-number">5.</span> <span class="nav-text">6、llama.cpp&#x2F;koboldcpp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ref"><span class="nav-number">6.</span> <span class="nav-text">Ref</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

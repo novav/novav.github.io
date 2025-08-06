@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="多标签机器学习[toc] 《A Tutorial on Multilabel Learning 》 download pdf EVA GIBAJA， SEBASTIAN VENTURA  西班牙 科多巴大学 this article presents an up-to-date tutorial about multilabel learning that introduces the parad">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Paper Read】ML_mutil-lable 问题综述">
+<meta property="og:url" content="https://novav.github.io/2019/10/09/AI/ML/ML-mutil-lable/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="多标签机器学习[toc] 《A Tutorial on Multilabel Learning 》 download pdf EVA GIBAJA， SEBASTIAN VENTURA  西班牙 科多巴大学 this article presents an up-to-date tutorial about multilabel learning that introduces the parad">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2019/10/09/AI/ML/ML-mutil-lable/1570712616245.png">
+<meta property="og:image" content="https://novav.github.io/2019/10/09/AI/ML/ML-mutil-lable/1570678847518.png">
+<meta property="article:published_time" content="2019-10-09T16:41:00.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:37.989Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="Paper Reading">
+<meta property="article:tag" content="Multilabel learning">
+<meta property="article:tag" content="ranking">
+<meta property="article:tag" content="classification">
+<meta property="article:tag" content="machine learning">
+<meta property="article:tag" content="data mining">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2019/10/09/AI/ML/ML-mutil-lable/1570712616245.png">
+
+<link rel="canonical" href="https://novav.github.io/2019/10/09/AI/ML/ML-mutil-lable/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>【Paper Read】ML_mutil-lable 问题综述 | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2019/10/09/AI/ML/ML-mutil-lable/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【Paper Read】ML_mutil-lable 问题综述
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-10-09 16:41:00" itemprop="dateCreated datePublished" datetime="2019-10-09T16:41:00+00:00">2019-10-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:37" itemprop="dateModified" datetime="2025-08-06T08:16:37+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/ML/" itemprop="url" rel="index"><span itemprop="name">ML</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="多标签机器学习"><a href="#多标签机器学习" class="headerlink" title="多标签机器学习"></a>多标签机器学习</h1><p>[toc]</p>
+<p>《A Tutorial on Multilabel Learning 》 <a target="_blank" rel="noopener" href="http://dx.doi.org/10.1145/2716262">download pdf</a></p>
+<p>EVA GIBAJA， SEBASTIAN VENTURA </p>
+<p>西班牙 科多巴大学</p>
+<p>this article presents an up-to-date tutorial about multilabel learning that introduces the paradigm and describes the main contributions developed. evaluation measures, fields of application, trending topics, and resources are also presented.</p>
+<p>本文介绍了一个关于多标签学习的最新教程，介绍了该范例，并描述了已开发的主要贡献。还介绍了评估措施、应用领域、趋势主题和资源。</p>
+<p>categories and subject descriptors: h.2.8 [database management]: database applications—data mining; h.3.3 [information storage and retrieval]: information search and retrieval—retrieval models; i.2.6 [artificial intelligence]: learning—concept learning, connectionism and neural nets, induction; i.7.5 [document and text processing]: document capture—document analysis; i.4.8 [image processing and computer vision]: scene analysis—object recognition; i.5.2 [pattern recognition]: design methodology—classifier design and evaluation; i.5.4 [pattern recognition]: applications—computer vision, text processing</p>
+<p>类别和主题描述符：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">H.2.8[数据库管理]：数据库应用-数据挖掘；</span><br><span class="line">H.3.3[信息存储和检索]：信息搜索和检索-检索模型；</span><br><span class="line">i.2.6[人工智能]：学习-概念学习、连接论和神经网络，归纳；</span><br><span class="line">I.7.5[文件和文本处理]：文件捕获-文档分析；</span><br><span class="line">I.4.8[图像处理和计算机视觉]：场景分析-目标识别；</span><br><span class="line">I.5.2[模式识别]：设计方法-分类器设计和评价；</span><br><span class="line">I.5.4[模式识别]：应用-计算机视觉、文本处理</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-introduction"><a href="#1-introduction" class="headerlink" title="1 introduction"></a>1 introduction</h2><p>分类是数据挖掘的主要任务之一。</p>
+<p>一组特征，一个相关类的识别。</p>
+<p>如今，人们正在考虑越来越多的分类问题，例如文本和声音分类、语义场景分类、医学诊断或基因和蛋白质功能分类，其中一个模式可以同时具有多个标签。</p>
+<p>single-label (classical supervised learning （经典监督学习）)</p>
+<p>multilable ( Multilabel Learning (MML))</p>
+<p>除其他问题外，本文的目的是包括问题的正式定义、适用MLL的领域、最近几年提出的主要建议的最新摘要、评估措施和资源。</p>
+<p>outline</p>
+<p>Section 2, the MLL problem is formally defined. </p>
+<p>Section 3, some aspects related to the development and <strong>evaluation</strong> of MLL models are described. </p>
+<p>Section 4, The main approaches developed in the literature are presented</p>
+<p>Section 5 describes findings on empirical comparisons between MLL algorithms. </p>
+<p>Section 6 describes the maindomains where MLL has been applied, </p>
+<p>finally, new trends in MLL (Section 7) and a set of conclusions are presented. </p>
+<p>The article also includes an Appendix with resources<br>(software, datasets, etc.) for MLL. </p>
+<h2 id="2-MML"><a href="#2-MML" class="headerlink" title="2.MML"></a>2.MML</h2><p>MLL includes two main tasks: </p>
+<p>​	Multilabel Classification (MLC) </p>
+<p>​	Label Ranking (LR). </p>
+<p>​	Multilabel Ranking  </p>
+<p><img src="/2019/10/09/AI/ML/ML-mutil-lable/1570712616245.png" alt="1570712616245"></p>
+<h2 id="3-EVALUATION-OF-MULTILABEL-MODELS-ML-models-评估"><a href="#3-EVALUATION-OF-MULTILABEL-MODELS-ML-models-评估" class="headerlink" title="3. EVALUATION OF MULTILABEL MODELS (ML models 评估)"></a>3. EVALUATION OF MULTILABEL MODELS (ML models 评估)</h2><h3 id="3-1-evaluation-metrics（评价指标）"><a href="#3-1-evaluation-metrics（评价指标）" class="headerlink" title="3.1 evaluation metrics（评价指标）"></a>3.1 evaluation metrics（评价指标）</h3><p>​	3.1.1 metrics to evalute bipartitions 评估双分区的指标</p>
+<p>​		two approches:</p>
+<p>​			lebel-based (macro, micro)</p>
+<p>​			example-based (<em>0&#x2F;1 subset accuracy</em>&#x3D;<em>classifification accuracy</em> or <em>exact match ratio</em> )<br>$$<br>B_{macro}&#x3D;1&#x2F;q \sum_{i&#x3D;1}^{q}B(tp_i, fp_i, tn_i, fn_i)<br>$$</p>
+<p>$$<br>B_{micro} &#x3D; B(\sum_{i&#x3D;1}^{q}tp_i, \sum_{i&#x3D;1}^{q}fp_i, \sum_{i&#x3D;1}^{q}tn_i, \sum_{i&#x3D;1}^{q}fn_i)<br>$$</p>
+<p>$$<br>0&#x2F;1 -subset- accuracy &#x3D; 1&#x2F;t \sum_{i&#x3D;1}^{t}[Z_i&#x3D; Y_i]<br>$$</p>
+<p>$$<br>Hamming loss &#x3D; 1&#x2F;t \sum^{t}_{i&#x3D;1} 1&#x2F;q|Z_i \Delta Y_i|.<br>$$</p>
+<p>​	3.1.2 metrics to evaluate rankings评估排名的指标</p>
+<p>​		One-error</p>
+<p>​		Coverage</p>
+<p>​		Ranking loss</p>
+<p>​		Average precision</p>
+<p>​		Margin loss</p>
+<p>​		IsError</p>
+<p>​		Ranking error</p>
+<h3 id="3-2-Partitioning-Datasets（分区数据集）"><a href="#3-2-Partitioning-Datasets（分区数据集）" class="headerlink" title="3.2 Partitioning Datasets（分区数据集）"></a>3.2 Partitioning Datasets（分区数据集）</h3><p>第一个通过考虑标签的不同组合来分割分区。</p>
+<p>第二项建议是一项宽松的解释，其目的是维持每个标签的正面和负面例子的分布。</p>
+<p>两种方法，都优于随机采样。</p>
+<h3 id="3-3-Statistical-Tests"><a href="#3-3-Statistical-Tests" class="headerlink" title="3.3 Statistical Tests"></a>3.3 Statistical Tests</h3><h3 id="3-4-Complexity"><a href="#3-4-Complexity" class="headerlink" title="3.4 Complexity"></a>3.4 Complexity</h3><p>标签空间的高纬度，从两种方式挑战MLL方法的效率。</p>
+<p>1-训练的计算成本受标签数目影响</p>
+<p>2-分类阶段也会受到分类器数量的影响，而且会花费相当长的时间。</p>
+<p>内存需求也是要考虑的</p>
+<h2 id="4-MULTILABEL-LEARNING-METHODS-（MLL方法）"><a href="#4-MULTILABEL-LEARNING-METHODS-（MLL方法）" class="headerlink" title="4. MULTILABEL LEARNING METHODS （MLL方法）"></a>4. MULTILABEL LEARNING METHODS （MLL方法）</h2><ul>
+<li><p>problem transformation methods ： 将多标签问题转化为一个或多个单标签问题</p>
+</li>
+<li><p>algorithm adaptation methods ：扩展SingleLabel算法以直接处理多标签数据</p>
+</li>
+</ul>
+<p><img src="/2019/10/09/AI/ML/ML-mutil-lable/1570678847518.png" alt="1570678847518"></p>
+<h3 id="4-1-Problem-Transformation-Methods"><a href="#4-1-Problem-Transformation-Methods" class="headerlink" title="4.1. Problem Transformation Methods"></a>4.1. Problem Transformation Methods</h3><p>问题转换方法: 把多标签问题，转换成单独的单标签问题。</p>
+<p>ranking via single-label learning (SLR )</p>
+<p>Binary Relevance (BR) method </p>
+<p>Label Powerset Methods </p>
+<p>Pairwise Methods (PW). </p>
+<p>Transformations for Identifying Label Dependences.  </p>
+<h3 id="4-2-Algorithm-Adaptation-Methods"><a href="#4-2-Algorithm-Adaptation-Methods" class="headerlink" title="4.2. Algorithm Adaptation Methods"></a>4.2. Algorithm Adaptation Methods</h3><p>4.2.1 Decision Tree</p>
+<p>q classes,<br>$$<br>entropyML(S)&#x3D;\sum^{q}_{i&#x3D;1}P(\lambda_i)log(P(\lambda_i)) + (1-P(\lambda_i))log(1-P(\lambda_i))<br>$$<br>4.2.2 SVM (Rank-SVM)</p>
+<p>A set of q linear classifiers,  $ {h_j(X) &#x3D; &lt;w_j, X&gt; + b_j &#x3D; w^T_j · X + b_j | 1 \leq j \leq q }$ </p>
+<p>$$<br>\frac{min}{(x_i, Y_i) \in S} \frac{min}{(y_i, y_k)\in Y_i \times \overline{Y_i}}   \frac{&lt;w_j - w_k, X_i&gt; + b_j-b_k}{||w_j - w_k||}<br>$$<br>4.2.3 Instance Based<br>$$<br>y_j &#x3D; \begin{cases}<br>1 &amp; \text{if} &amp; P(c_j|y_j &#x3D; 1)P(y_j &#x3D; 1) \geq P(c_j|y_j &#x3D; 0)P(y_j &#x3D; 0) \<br>0<br>\end{cases}<br>$$</p>
+<p>4.2.4 Neural Network<br>$$<br>E &#x3D; \sum_{i&#x3D;1}^{m} \frac{1}{|Y_i||\overline{Y_i}|} \sum_{(j,k)\in Y_i \times \overline{Y_i}} exp(-(o_j^i - o_k^i ))<br>$$<br>4.2.5. generative and probabilistic models 生成和概率模型<br>$$<br>Z &#x3D; argmax_{Y\subseteq L}P(Y) \Pi_{w\in X} \sum_{\lambda \in Y} \gamma_{\lambda}^Y P(w|\lambda)<br>$$</p>
+<h3 id="4-3-Ensemble-of-MLL-Method"><a href="#4-3-Ensemble-of-MLL-Method" class="headerlink" title="4.3 Ensemble of MLL Method"></a>4.3 Ensemble of MLL Method</h3><h3 id="4-4-Thresholding-Strategies-策略阈值"><a href="#4-4-Thresholding-Strategies-策略阈值" class="headerlink" title="4.4 Thresholding Strategies (策略阈值)"></a>4.4 Thresholding Strategies (策略阈值)</h3><ol>
+<li>One Threshold (OT): 指定一个threshold，例如0.5，或者根据验证集tune一个</li>
+<li>RCUT： 根据top k ranking，选择top-k作为预测值。（直接指定，或根据验证集tune，有误差）</li>
+</ol>
+<p>More thresholding approaches can be found in Tang et al. [2009]. </p>
+<h2 id="5-EXPERIMENTAL-COMPARISONS-OF-MLL-METHODS-（MLL方法实验对比）"><a href="#5-EXPERIMENTAL-COMPARISONS-OF-MLL-METHODS-（MLL方法实验对比）" class="headerlink" title="5. EXPERIMENTAL COMPARISONS OF MLL METHODS （MLL方法实验对比）"></a>5. EXPERIMENTAL COMPARISONS OF MLL METHODS （MLL方法实验对比）</h2><p>Madjarov et al. 2012 ，12 MLL methods, 16 evaluation measures, and 11 benchmark datasets 。</p>
+<p>SVM在大量特征，较小数据集上表现更好。而基于树的方法在较大的数据集中表现得更好。ML-kNN性能在各个领域均比较差。</p>
+<p>Chekina et al. 2011  研究了11个算法，12个数据集，18种评估方法。HOMER, BR, ECC, and EPS obtained the best predictive performance results.  </p>
+<p>这些研究的结果说明了在开发新算法时应该选择哪种算法或必须考虑哪些算法。最终的决策将取决于所面临的问题和必须满足的要求：效率、灵活性、预测性能、模型的可解释性等。</p>
+<h2 id="6-APPLICATIONS-OF-MLL-（应用）"><a href="#6-APPLICATIONS-OF-MLL-（应用）" class="headerlink" title="6.APPLICATIONS OF MLL （应用）"></a>6.APPLICATIONS OF MLL （应用）</h2><p><strong>Text Categorization</strong></p>
+<ul>
+<li>Detection of emotions in music </li>
+<li>Tag suggestion </li>
+<li>Medical coding</li>
+<li>IR from narrative clinical text </li>
+<li>Economic activities classification </li>
+<li>Patent classification </li>
+<li>E-mail filtering </li>
+<li>Classifying news sentences into multiple emotion categories </li>
+<li>Aeronautics reports</li>
+<li>Query categorization</li>
+</ul>
+<p><strong>Multimedia</strong></p>
+<ul>
+<li>Automatic image and video annotation </li>
+<li>Face verification consists of determining </li>
+<li>Object recognition </li>
+<li>Detection of emotions in music </li>
+<li>Speech emotion classification</li>
+</ul>
+<p><strong>Biology</strong></p>
+<p><strong>Chemical Analysis</strong></p>
+<p>Drug discovery.  </p>
+<p>Vision-Based Metal Spectral Analysis.  </p>
+<p>Adverse Drug Reactions (ADRs) </p>
+<p><strong>Social Network Mining</strong></p>
+<p>Collective behavior learning. </p>
+<p>Social networking advertising </p>
+<p>Automatic annotation. </p>
+<p><strong>Other Applications</strong></p>
+<p>Automatic annotation. </p>
+<p>Direct Marketing </p>
+<p>Medical Diagnosis </p>
+<h2 id="7-TRENDING-CHALLENGES-趋势挑战"><a href="#7-TRENDING-CHALLENGES-趋势挑战" class="headerlink" title="7. TRENDING CHALLENGES (趋势挑战)"></a>7. TRENDING CHALLENGES (趋势挑战)</h2><p>Dimensionality Reduction </p>
+<p>Label Dependence </p>
+<p>Active learning </p>
+<p>Multi-instance multilabel learning （MIML）</p>
+<p>Multiview learning </p>
+<p>Multitask learning (MTL) </p>
+<p>Hierarchical multilabel classification (HMC)</p>
+<h1 id="Think"><a href="#Think" class="headerlink" title="Think"></a>Think</h1><p>训练方法 + 损失函数</p>
+<p>评估方法</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Paper-Reading/" rel="tag"># Paper Reading</a>
+              <a href="/tags/Multilabel-learning/" rel="tag"># Multilabel learning</a>
+              <a href="/tags/ranking/" rel="tag"># ranking</a>
+              <a href="/tags/classification/" rel="tag"># classification</a>
+              <a href="/tags/machine-learning/" rel="tag"># machine learning</a>
+              <a href="/tags/data-mining/" rel="tag"># data mining</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/09/20/Paper/Paper-CV-Survey/" rel="prev" title="Paper-CV-Survey">
+      <i class="fa fa-chevron-left"></i> Paper-CV-Survey
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/10/11/AI/ML/ML-entropy/" rel="next" title="ML_entropy 信息伦与概率统计">
+      ML_entropy 信息伦与概率统计 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E6%A0%87%E7%AD%BE%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0"><span class="nav-number">1.</span> <span class="nav-text">多标签机器学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-introduction"><span class="nav-number">1.1.</span> <span class="nav-text">1 introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-MML"><span class="nav-number">1.2.</span> <span class="nav-text">2.MML</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-EVALUATION-OF-MULTILABEL-MODELS-ML-models-%E8%AF%84%E4%BC%B0"><span class="nav-number">1.3.</span> <span class="nav-text">3. EVALUATION OF MULTILABEL MODELS (ML models 评估)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-evaluation-metrics%EF%BC%88%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87%EF%BC%89"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 evaluation metrics（评价指标）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-Partitioning-Datasets%EF%BC%88%E5%88%86%E5%8C%BA%E6%95%B0%E6%8D%AE%E9%9B%86%EF%BC%89"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 Partitioning Datasets（分区数据集）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-Statistical-Tests"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3 Statistical Tests</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-Complexity"><span class="nav-number">1.3.4.</span> <span class="nav-text">3.4 Complexity</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-MULTILABEL-LEARNING-METHODS-%EF%BC%88MLL%E6%96%B9%E6%B3%95%EF%BC%89"><span class="nav-number">1.4.</span> <span class="nav-text">4. MULTILABEL LEARNING METHODS （MLL方法）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-Problem-Transformation-Methods"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1. Problem Transformation Methods</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-Algorithm-Adaptation-Methods"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2. Algorithm Adaptation Methods</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-Ensemble-of-MLL-Method"><span class="nav-number">1.4.3.</span> <span class="nav-text">4.3 Ensemble of MLL Method</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-Thresholding-Strategies-%E7%AD%96%E7%95%A5%E9%98%88%E5%80%BC"><span class="nav-number">1.4.4.</span> <span class="nav-text">4.4 Thresholding Strategies (策略阈值)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-EXPERIMENTAL-COMPARISONS-OF-MLL-METHODS-%EF%BC%88MLL%E6%96%B9%E6%B3%95%E5%AE%9E%E9%AA%8C%E5%AF%B9%E6%AF%94%EF%BC%89"><span class="nav-number">1.5.</span> <span class="nav-text">5. EXPERIMENTAL COMPARISONS OF MLL METHODS （MLL方法实验对比）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-APPLICATIONS-OF-MLL-%EF%BC%88%E5%BA%94%E7%94%A8%EF%BC%89"><span class="nav-number">1.6.</span> <span class="nav-text">6.APPLICATIONS OF MLL （应用）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-TRENDING-CHALLENGES-%E8%B6%8B%E5%8A%BF%E6%8C%91%E6%88%98"><span class="nav-number">1.7.</span> <span class="nav-text">7. TRENDING CHALLENGES (趋势挑战)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Think"><span class="nav-number">2.</span> <span class="nav-text">Think</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="图像质量评估（Image Quality Assessment，IQA） 全参考图像质量评估（Full Reference-IQA，FR-IQA）、 半参考图像质量评估（Reduced Reference-IQA, RR-IQA） 无参考图像质量评估（No Reference-IQA, NR-IQA）， NR-IQA也称为盲参考图像质量评估（Blind IQA, BIQA）。 FR-IQA常用于评">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CV 图像质量评估 IQA">
+<meta property="og:url" content="https://novav.github.io/2023/03/09/CV/CV-IQA/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="图像质量评估（Image Quality Assessment，IQA） 全参考图像质量评估（Full Reference-IQA，FR-IQA）、 半参考图像质量评估（Reduced Reference-IQA, RR-IQA） 无参考图像质量评估（No Reference-IQA, NR-IQA）， NR-IQA也称为盲参考图像质量评估（Blind IQA, BIQA）。 FR-IQA常用于评">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2023/03/09/CV/CV-IQA/2023-03-09-14-07-58-image.png">
+<meta property="og:image" content="https://novav.github.io/2023/03/09/CV/CV-IQA/2023-03-09-14-09-28-image.png">
+<meta property="og:image" content="https://novav.github.io/2023/03/09/CV/CV-IQA/2023-03-09-15-02-35-image.png">
+<meta property="article:published_time" content="2023-03-09T14:04:00.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:38.265Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="IQA">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2023/03/09/CV/CV-IQA/2023-03-09-14-07-58-image.png">
+
+<link rel="canonical" href="https://novav.github.io/2023/03/09/CV/CV-IQA/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>CV 图像质量评估 IQA | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2023/03/09/CV/CV-IQA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CV 图像质量评估 IQA
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-03-09 14:04:00" itemprop="dateCreated datePublished" datetime="2023-03-09T14:04:00+00:00">2023-03-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/" itemprop="url" rel="index"><span itemprop="name">CV</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/IQA/" itemprop="url" rel="index"><span itemprop="name">IQA</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>图像质量评估（Image Quality Assessment，IQA）</p>
+<p>全参考图像质量评估（Full Reference-IQA，FR-IQA）、</p>
+<p>半参考图像质量评估（Reduced Reference-IQA, RR-IQA）</p>
+<p>无参考图像质量评估（No Reference-IQA, NR-IQA），</p>
+<p>NR-IQA也称为盲参考图像质量评估（Blind IQA, BIQA）。</p>
+<h3 id="FR-IQA"><a href="#FR-IQA" class="headerlink" title="FR-IQA"></a>FR-IQA</h3><p>常用于评估编解码算法性能、图像增强算法性能等场景</p>
+<p>均方误差（MSE）、峰值信噪比（PSNR）、结构相似性（SSIM）</p>
+<p>MSE</p>
+<p>PSNR</p>
+<p>SSIM</p>
+<p>局部归一化亮度系数（MSCN）</p>
+<h3 id="RR-IQA"><a href="#RR-IQA" class="headerlink" title="RR-IQA"></a>RR-IQA</h3><p>半参考图像质量评估以原始图像的部分信息，或从原始图像中提取的特征作为参考，难度介于全参考和无参考图像质量评估之间。</p>
+<h3 id="NR-IQA"><a href="#NR-IQA" class="headerlink" title="NR-IQA"></a>NR-IQA</h3><p>自然场景统计方法（Natural Scene Statistic， NSS）</p>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><h3 id="BRISQUE-2012"><a href="#BRISQUE-2012" class="headerlink" title="BRISQUE 2012"></a>BRISQUE 2012</h3><p>《No-Reference Image Quality Assessment in the Spatial Domain》</p>
+<p>libsvm，聚类方法</p>
+<h4 id="BLNDER"><a href="#BLNDER" class="headerlink" title="BLNDER"></a>BLNDER</h4><p>BLNDER [4]考虑到了不同网络层对图像质量相关特征的敏感程度不同，从预训练好的VGG网络中提取多个网络层的特征表示来分别训练SVR并预测每层特征的质量评分，最后取各层得分的平均值作为输入图像最终的质量评分（如图4所示）。</p>
+<p><img src="/2023/03/09/CV/CV-IQA/2023-03-09-14-07-58-image.png">  </p>
+<p>图4. BLNDER从预训练网络的多个层提取特征</p>
+<p>DIQA [7]、BIECON[8]等方法结合了已有的全参考方法，在参考图像存在的情况下为图像块生成新的标签，当然这就引入了参考图像的限制。</p>
+<h4 id="RankIQA-2017"><a href="#RankIQA-2017" class="headerlink" title="RankIQA 2017"></a>RankIQA 2017</h4><p><a target="_blank" rel="noopener" href="https://github.com/xialeiliu/RankIQA">GitHub - xialeiliu&#x2F;RankIQA: ICCV 2017</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/YunanZhu/Pytorch-TestRankIQA">GitHub - YunanZhu&#x2F;Pytorch-TestRankIQA</a></p>
+<p>RankIQA [9]通过人工生成不同程度的失真图像来扩充数据集，虽然没有确定的质量得分标签，但可以根据失真程度对图像进行排序，从中抽取两张图像质量相对高低已知的图像构成图像对，来训练一个双生网络，最后取单路网络在小规模数据集上进行微调（如图5所示）。</p>
+<p>之前的模型主要都是从提取特征和网络方面做改进，并没有考虑数据集图像少的问题。而RankIQA正是从数据预处理出发，取得了NR-IQA最好效果。</p>
+<p><img src="/2023/03/09/CV/CV-IQA/2023-03-09-14-09-28-image.png"></p>
+<h4 id="HIQA"><a href="#HIQA" class="headerlink" title="HIQA"></a>HIQA</h4><p>HIQA[10]则借助GAN来扩充参考图像，让无参考图像评估跨越了没有原始图像作参照的鸿沟，如图6所示。通过GAN生成失真图像的参考图像，并与失真图像计算差值图，作为质量回归网络的输入来预测失真图像的质量，极大地提升了无参考图像质量评估模型的性能。</p>
+<h3 id="DIQA-2018"><a href="#DIQA-2018" class="headerlink" title="DIQA 2018"></a>DIQA 2018</h3><p>Deep CNN-Based Blind Image Quality Predictor</p>
+<p><img src="/2023/03/09/CV/CV-IQA/2023-03-09-15-02-35-image.png"></p>
+<h3 id="CLRIQA-2019"><a href="#CLRIQA-2019" class="headerlink" title="CLRIQA 2019"></a>CLRIQA 2019</h3><p><a target="_blank" rel="noopener" href="https://github.com/GZHU-Image-Lab/CLRIQA">GitHub - GZHU-Image-Lab&#x2F;CLRIQA: Controllable List-wise Ranking for Universal No-reference Image Quality Assessment</a></p>
+<h3 id="Contrique-2021"><a href="#Contrique-2021" class="headerlink" title="Contrique 2021"></a>Contrique 2021</h3><p><a target="_blank" rel="noopener" href="https://github.com/pavancm/contrique">GitHub - pavancm&#x2F;CONTRIQUE: Official implementation</a></p>
+<p>Image Quality Assessment using Contrastive Learning</p>
+<h3 id="task-amenability"><a href="#task-amenability" class="headerlink" title="task-amenability"></a>task-amenability</h3><Image quality assessment for machine learning tasks using meta-reinforcement>
+
+<h2 id="半监督训练方法"><a href="#半监督训练方法" class="headerlink" title="半监督训练方法"></a>半监督训练方法</h2><h3 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h3><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/32553977">https://zhuanlan.zhihu.com/p/32553977</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/HuiZeng/BIQA_Toolbox">https://github.com/HuiZeng/BIQA_Toolbox</a></p>
+<h2 id="本行业相关"><a href="#本行业相关" class="headerlink" title="本行业相关"></a>本行业相关</h2><p><a target="_blank" rel="noopener" href="https://dun.163.com/news/p/7a06953f1a2546c1aca259a9c01df7df">知物由学 | 告别挑花眼，AI算法如何筛选低质量图片？_网易易盾</a></p>
+<h2 id="开源社区"><a href="#开源社区" class="headerlink" title="开源社区"></a>开源社区</h2><p><a target="_blank" rel="noopener" href="https://www.mulanai.com/product/image_quality/">图像质量检测_CV_MulanAI实验室</a></p>
+<p><a target="_blank" rel="noopener" href="https://modelscope.cn/models/damo/cv_vgg19_facial-expression-recognition_fer/summary">https://modelscope.cn/models/damo/cv_vgg19_facial-expression-recognition_fer/summary</a></p>
+<p><a target="_blank" rel="noopener" href="https://paperswithcode.com/task/image-quality-assessment">Image Quality Assessment | Papers With Code</a></p>
+</Image>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/IQA/" rel="tag"># IQA</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/03/04/Course/SLAMs/Issuse/" rel="prev" title="SLAM 基础 解惑">
+      <i class="fa fa-chevron-left"></i> SLAM 基础 解惑
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/03/16/Sub_Language/CPlus/CPlus_Boost/" rel="next" title="C++ boost库">
+      C++ boost库 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#FR-IQA"><span class="nav-number">1.</span> <span class="nav-text">FR-IQA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RR-IQA"><span class="nav-number">2.</span> <span class="nav-text">RR-IQA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NR-IQA"><span class="nav-number">3.</span> <span class="nav-text">NR-IQA</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95"><span class="nav-number"></span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BRISQUE-2012"><span class="nav-number">1.</span> <span class="nav-text">BRISQUE 2012</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#BLNDER"><span class="nav-number">1.1.</span> <span class="nav-text">BLNDER</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RankIQA-2017"><span class="nav-number">1.2.</span> <span class="nav-text">RankIQA 2017</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HIQA"><span class="nav-number">1.3.</span> <span class="nav-text">HIQA</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DIQA-2018"><span class="nav-number">2.</span> <span class="nav-text">DIQA 2018</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CLRIQA-2019"><span class="nav-number">3.</span> <span class="nav-text">CLRIQA 2019</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Contrique-2021"><span class="nav-number">4.</span> <span class="nav-text">Contrique 2021</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#task-amenability"><span class="nav-number">5.</span> <span class="nav-text">task-amenability</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%8A%E7%9B%91%E7%9D%A3%E8%AE%AD%E7%BB%83%E6%96%B9%E6%B3%95"><span class="nav-number"></span> <span class="nav-text">半监督训练方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">参考资料：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E8%A1%8C%E4%B8%9A%E7%9B%B8%E5%85%B3"><span class="nav-number"></span> <span class="nav-text">本行业相关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E6%BA%90%E7%A4%BE%E5%8C%BA"><span class="nav-number"></span> <span class="nav-text">开源社区</span></a></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

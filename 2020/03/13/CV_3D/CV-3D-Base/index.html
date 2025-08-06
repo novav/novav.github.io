@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Computer Vision Algorithm [TOC] Point set registration1.1Rigid registration刚性注册：给定两个点集，刚性配准产生一个刚性变换，该变换将一个点集映射到另一个点集。刚性变换定义为不改变任何两点之间距离的变换。通常，这种转换包括平移和旋转。[12]在极少数情况下，点集也可能会被镜像。在机器人技术和计算机视觉中，刚性配准应用最多。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机视觉--点云对齐">
+<meta property="og:url" content="https://novav.github.io/2020/03/13/CV_3D/CV-3D-Base/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="Computer Vision Algorithm [TOC] Point set registration1.1Rigid registration刚性注册：给定两个点集，刚性配准产生一个刚性变换，该变换将一个点集映射到另一个点集。刚性变换定义为不改变任何两点之间距离的变换。通常，这种转换包括平移和旋转。[12]在极少数情况下，点集也可能会被镜像。在机器人技术和计算机视觉中，刚性配准应用最多。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2020/03/13/CV_3D/CV-3D-Base/image-20200313130556659.png">
+<meta property="article:published_time" content="2020-03-13T12:33:43.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:38.341Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="3D Registration">
+<meta property="article:tag" content="Surface Matching">
+<meta property="article:tag" content="PPF">
+<meta property="article:tag" content="ICP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2020/03/13/CV_3D/CV-3D-Base/image-20200313130556659.png">
+
+<link rel="canonical" href="https://novav.github.io/2020/03/13/CV_3D/CV-3D-Base/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>计算机视觉--点云对齐 | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2020/03/13/CV_3D/CV-3D-Base/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          计算机视觉--点云对齐
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-13 12:33:43" itemprop="dateCreated datePublished" datetime="2020-03-13T12:33:43+00:00">2020-03-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV-3D/" itemprop="url" rel="index"><span itemprop="name">CV_3D</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV-3D/registration/" itemprop="url" rel="index"><span itemprop="name">registration</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Computer Vision Algorithm</p>
+<p>[TOC]</p>
+<h1 id="Point-set-registration"><a href="#Point-set-registration" class="headerlink" title="Point set registration"></a>Point set registration</h1><h2 id="1-1Rigid-registration"><a href="#1-1Rigid-registration" class="headerlink" title="1.1Rigid registration"></a><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Point_set_registration#Rigid_registration">1.1Rigid registration</a></h2><p>刚性注册：给定两个点集，刚性配准产生一个<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Rigid_transformation">刚性变换</a>，该<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Rigid_transformation">变换</a>将一个点集映射到另一个点集。刚性变换定义为不改变任何两点之间距离的变换。通常，这种转换包括<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Translation_(geometry)">平移</a>和<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Rotation">旋转</a>。[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Point_set_registration#cite_note-lmfitzgibbon-12">12]</a>在极少数情况下，点集也可能会被镜像。在机器人技术和计算机视觉中，刚性配准应用最多。</p>
+<h2 id="1-2Non-rigid-registration"><a href="#1-2Non-rigid-registration" class="headerlink" title="1.2Non-rigid registration"></a><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Point_set_registration#Non-rigid_registration">1.2Non-rigid registration</a></h2><p>给定两个点集，非刚性配准产生一个非刚性转换，该转换将一个点集映射到另一个点集。非刚性变换包括<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Affine_transformations">affine仿射变换，</a>例如<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Scaling_(geometry)">缩放</a>和<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Shear_mapping">剪切贴图</a>。但是，在点集配准的情况下，非刚性配准通常涉及非线性变换。如果已知点集<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Eigenmode">变化</a>的<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Eigenmode">本征模式，</a>则可以通过特征值对非线性变换进行参数化。[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Point_set_registration#cite_note-cpdmyronenko2-13">13]</a>非线性变换也可以参数化为<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Thin_plate_spline">(TPS)薄板样条</a>。[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Point_set_registration#cite_note-tpsrpmchui-14">14] </a>[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Point_set_registration#cite_note-cpdmyronenko2-13">13]</a></p>
+<h1 id="Registration-algorithm"><a href="#Registration-algorithm" class="headerlink" title="Registration algorithm"></a>Registration algorithm</h1><p>三维点集拟合</p>
+<h2 id="PPF-–2010"><a href="#PPF-–2010" class="headerlink" title="PPF –2010"></a>PPF –2010</h2><p>算法的精髓：“整体建模，局部匹配”</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/94952276?utm_source=wechat_session">【6D位姿估计】Point Pair Feature (PPF)</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/KYJL888/article/details/83057116">(学习opencv)Surface Matching之PPF Point Pair Feature 点对特征</a></p>
+<h2 id="Others"><a href="#Others" class="headerlink" title="Others"></a>Others</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/yin52133/archive/2012/07/21/2602562.html">机器视觉之 ICP算法和RANSAC算法</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wishchin/article/details/17505555">三维点集拟合：平面拟合、RANSAC、ICP算法</a></p>
+<h2 id="平面拟合"><a href="#平面拟合" class="headerlink" title="平面拟合"></a>平面拟合</h2><ul>
+<li><p>SVD ：</p>
+<ul>
+<li>根据协方差矩阵的SVD变换，最小奇异值对应的<strong>奇异向量</strong>就是平面的方向。</li>
+<li>注意：这个方法是直接的计算方法，没办法解决数值计算遇到的病态矩阵问题.在公式转化代码之前必须对空间点坐标进行近似归一化！</li>
+</ul>
+</li>
+<li><p>使用法线方法</p>
+<ul>
+<li><p>使用合适的方法剔除离群点，计算点云的形心P；</p>
+</li>
+<li><p>若在已经获得法线的点云中，可以对法线进行剔除离散点之后，求取最小方差的均值，直接求得法线方向N( alpha, beta, theta )；</p>
+</li>
+<li><p>使用点法式描述三维平面；或者根据形心P和法线方向，计算出平面方程的一般式。</p>
+</li>
+</ul>
+</li>
+<li><p>空间向量的旋转</p>
+</li>
+</ul>
+<h2 id="Ransac-1981"><a href="#Ransac-1981" class="headerlink" title="Ransac 1981"></a>Ransac 1981</h2><p>“RANdom SAmple Consensus（随机抽样一致）”</p>
+<h2 id="ICP-ptp-Point-to-Point-–1992"><a href="#ICP-ptp-Point-to-Point-–1992" class="headerlink" title="[ICP-ptp] Point-to-Point  –1992"></a>[ICP-ptp] Point-to-Point  –1992</h2><p>点云匹配：ICP（Iterative Closest Point迭代最近点）</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/fb_941219/article/details/89792422">ICP_SVD</a></p>
+<p>matlab: <a target="_blank" rel="noopener" href="https://github.com/ToughStoneX/3D_ICP">https://github.com/ToughStoneX/3D_ICP</a></p>
+<p>open3d-python: <a target="_blank" rel="noopener" href="http://www.open3d.org/docs/release/tutorial/Basic/icp_registration.html">http://www.open3d.org/docs/release/tutorial/Basic/icp_registration.html</a></p>
+<h2 id="ICP-ptl-Point-to-Plane-ICP-–2001"><a href="#ICP-ptl-Point-to-Plane-ICP-–2001" class="headerlink" title="[ICP-ptl] Point-to-Plane ICP –2001"></a>[ICP-ptl] Point-to-Plane ICP –2001</h2><p>Efficient variants of the ICP algorithm. In 3-D Digital Imaging and Modeling, 2001.</p>
+<p>Rusinkiewicz和M.Levoy。ICP算法的高效变体。在3D数字成像和建模中，2001年</p>
+<h2 id="GMMREG-2010"><a href="#GMMREG-2010" class="headerlink" title="GMMREG 2010"></a>GMMREG 2010</h2><p>《A Robust Algorithm for Point Set Registration Using Mixture of Gaussians 2005》 <a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/author/37294404600">Bing Jian</a></p>
+<p>《Robust Point Set Registration Using Gaussian Mixture Models 2010》<a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/author/37294404600">Bing Jian</a></p>
+<h2 id="Colored-Point-Cloud-Registration-2017"><a href="#Colored-Point-Cloud-Registration-2017" class="headerlink" title="Colored Point Cloud Registration 2017"></a><strong>Colored Point Cloud Registration 2017</strong></h2><p>Colored Point Cloud Registration Revisited, ICCV, 2017.     J.Park, Q.-Y. Zhou, and V. Koltun</p>
+<p>该算法比以前的点云配准算法更准确，更健壮，而运行速度与ICP配准的运行速度相当。</p>
+<h2 id="Global-Registration"><a href="#Global-Registration" class="headerlink" title="Global Registration"></a>Global Registration</h2><p><a target="_blank" rel="noopener" href="http://www.open3d.org/docs/release/tutorial/Basic/icp_registration.html#icp-registration">ICP</a>和<a target="_blank" rel="noopener" href="http://www.open3d.org/docs/release/tutorial/Advanced/colored_pointcloud_registration.html#colored-point-registration">彩色点云登记</a>被称为<strong>当地的</strong>，因为它们依赖于一个粗略的排列为初始登记的方法。本教程介绍了另一类注册方法，称为<strong>全局</strong>注册。该算法系列不需要对齐即可进行初始化。它们通常产生不太严格的对齐结果，并用作局部方法的初始化。</p>
+<h2 id="Fast-global-registration-–2016"><a href="#Fast-global-registration-–2016" class="headerlink" title="Fast global registration –2016"></a>Fast global registration –2016</h2><p>RANSAC 《Fast Global Registration, ECCV》, 2016. Q.-Y. Zhou, J. Park, and V. Koltun</p>
+<p>基于RANSAC的<a target="_blank" rel="noopener" href="http://www.open3d.org/docs/release/tutorial/Advanced/global_registration.html#global-registration">Fast global registration</a>解决方案可能需要很长时间，这是因为有无数的模型建议和评估。 [<a target="_blank" rel="noopener" href="http://www.open3d.org/docs/release/tutorial/reference.html#zhou2016">Zhou2016]</a>引入了一种更快的方法，该方法可以快速优化几乎没有对应关系的行处理权重。由于每次迭代都没有模型建议和评估，[<a target="_blank" rel="noopener" href="http://www.open3d.org/docs/release/tutorial/reference.html#zhou2016">Zhou2016]中</a>提出的方法可以节省大量的计算时间。</p>
+<p>该脚本比较了基于RANSAC的<a target="_blank" rel="noopener" href="http://www.open3d.org/docs/release/tutorial/Advanced/global_registration.html#global-registration">全局注册</a>和[<a target="_blank" rel="noopener" href="http://www.open3d.org/docs/release/tutorial/reference.html#zhou2016">Zhou2016]的</a>实现的运行时间。</p>
+<h2 id="Multiway-registration"><a href="#Multiway-registration" class="headerlink" title="Multiway registration"></a>Multiway registration</h2><p>Robust Reconstruction of Indoor Scenes, CVPR, 2015. S.Choi, Q.-Y. Zhou, and V. Koltun</p>
+<p>Multiway registration is the process to align multiple pieces of geometry in a global space. Typically, the input is a set of geometries (e.g., point clouds or RGBD images) $ {𝐏_𝑖} $. The output is a set of rigid transformations ${𝐓_𝑖}$, so that the transformed point clouds ${𝐓_𝑖 P_i} $ are aligned in the global space.</p>
+<h1 id="Supply"><a href="#Supply" class="headerlink" title="Supply"></a>Supply</h1><h2 id="《Alignment-of-3D-models》"><a href="#《Alignment-of-3D-models》" class="headerlink" title="《Alignment of 3D models》"></a>《Alignment of 3D models》</h2><h2 id="《A-3D-Model-Alignment-and-Retrieval-System》"><a href="#《A-3D-Model-Alignment-and-Retrieval-System》" class="headerlink" title="《A 3D Model Alignment and Retrieval System》"></a>《A 3D Model Alignment and Retrieval System》</h2><p>$TS -&gt; R_c -&gt; TS -&gt; R_r -&gt; TS$</p>
+<p><img src="/2020/03/13/CV_3D/CV-3D-Base/image-20200313130556659.png" alt="image-20200313130556659"></p>
+<h2 id="AlignNet-3D"><a href="#AlignNet-3D" class="headerlink" title="AlignNet-3D"></a>AlignNet-3D</h2><p>引言<br>       Align(register) point clouds 即对齐(配准)点云，意思是将一个点云匹配到另一个点云上面，主要用来将从一个物体的不同角度得到的局部点云拼接起来，由此得到一个完整的3D模型，对点云做Alignment或Registration从本意上来说并没有什么本质的区别，尤其是在阅读学术论文的时候。</p>
+<pre><code>  但是我在工作中所了解到的是Alignment是把几个3D相机固定起来，然后计算出这几台3D相机点云之间相对位置的转换矩阵，一般情况下以第一个相机的坐标系为基准，把其他相机的点云通过转换与平移移到相同的坐标系下，然后可以实时捕捉完整的3D点云。而Registration则指的是只用一台3D相机，连续从各个角度对一个物体进行扫描，然后把把得到的点云一帧一帧的拼接起来，由此而得到完整的3D模型。所以从这个角度来说，Alignment得到完整模型是实时的，是多个相机同一时间从多个角度得到的点云拼接起来，每一帧都是完整模型，Registration则是一台相机从不同时间不同角度的到点云拼接，完整3D模型不是实时的，需要通过离线处理得到。但其本质均是通过得到点云之间的转换矩阵来实现匹配。
+</code></pre>
+<p>常见的Alignment或Registration算法<br>       最常见的Alignment算法即**ICP(Iterative Closest Point)**及其各种变体,如其名字所示，此方法是通过先对点云进行初配准，然后迭代最近点使相对应的点距离最小而得到一个转换矩阵。以下对Point-to-point ICP和Point-to-plane ICP这两种ICP方法做简要介绍：</p>
+<p>Point-to-point &amp; Point-to-plane ICP</p>
+<p>一般来说，此ICP算法会迭代两个步骤：</p>
+<p>（1）找到目标点云P和源点云Q中相对应的点集K&#x3D;{(p,q)}，定义p与q的目标函数E(T)和q到p的转换矩阵T,不同的ICP变体使用不同的目标函数E(T)。<br>（2）通过最小化目标函数E(T)来更新变换T。<br> point-to-point ICP使用的目标函数如下所示</p>
+<p>而point-to-plane ICP使用了一个不同的目标函数</p>
+<p>AlignNet-3D介绍<br>       AlignNet-3D是论文AlignNet-3D: Fast Point Cloud Registration of Partially Observed Objects里研究的一种align点云的方法，论文主要研究了智能汽车的精确3D跟踪状态估计，提出了一个以学习为基础的方法AlignNet-3D来对不同时间捕获的汽车点云做Alignment，以此来估计汽车近距离内的精确运动，作者的评估表明AlignNet-3D在计算上优于global 3D registration，同时显著提高了效率。</p>
+<p>论文创新点，参考论文所使用的方法都是直接通过优化计算转换的算法，而此论文是通过学习的方式来Align点云，因此，它可以受益于额外的训练数据，并对遮挡和截断具有鲁棒性。</p>
+<p>方法简述，论文的方法可以概述为给定一个物体在不同时间捕获的两个点云，然后通过对观测到的点云做Alignment来精确地估计物体的相对运动，如下图所示：<br>————————————————<br>版权声明：本文为CSDN博主「Asher_zheng」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Asher_zheng/article/details/103094927">https://blog.csdn.net/Asher_zheng/article/details/103094927</a></p>
+<h2 id="Aligning-3D-Data"><a href="#Aligning-3D-Data" class="headerlink" title="Aligning 3D Data"></a>Aligning 3D Data</h2><p>动机：</p>
+<ul>
+<li><p>形状检查</p>
+</li>
+<li><p>运动估计</p>
+</li>
+<li><p>外观分析（我们所做的）</p>
+</li>
+<li><p>纹理映射 (Texture mapping) 一般应用于2D到3D的UV Map</p>
+</li>
+<li><p>跟踪</p>
+</li>
+</ul>
+<p>How to find correspondences:  User input? Feature detection?  Signatures?（ 用户输入？特征检测？签名？）</p>
+<p>Alternative(备选方案): assume closest points correspond 假设最接近的点</p>
+<h1 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h1><p><a target="_blank" rel="noopener" href="http://www.open3d.org/docs/release/tutorial/Advanced/rgbd_integration.html">Open3D官网</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45930823/article/details/103532771">open3d ply文件 表面体素（voxel）、点云（point cloud）</a></p>
+<h1 id="基础知识："><a href="#基础知识：" class="headerlink" title="基础知识："></a>基础知识：</h1><h2 id="霍夫的投票方案"><a href="#霍夫的投票方案" class="headerlink" title="霍夫的投票方案"></a>霍夫的投票方案</h2><h2 id="SVD"><a href="#SVD" class="headerlink" title="SVD"></a>SVD</h2><h2 id="PnP"><a href="#PnP" class="headerlink" title="PnP"></a>PnP</h2>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/3D-Registration/" rel="tag"># 3D Registration</a>
+              <a href="/tags/Surface-Matching/" rel="tag"># Surface Matching</a>
+              <a href="/tags/PPF/" rel="tag"># PPF</a>
+              <a href="/tags/ICP/" rel="tag"># ICP</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/12/Tools/Tools-proxy/" rel="prev" title="Tools Proxy">
+      <i class="fa fa-chevron-left"></i> Tools Proxy
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/03/16/CV/CV-GAN/" rel="next" title="计算机视觉--GAN">
+      计算机视觉--GAN <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Point-set-registration"><span class="nav-number">1.</span> <span class="nav-text">Point set registration</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1Rigid-registration"><span class="nav-number">1.1.</span> <span class="nav-text">1.1Rigid registration</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2Non-rigid-registration"><span class="nav-number">1.2.</span> <span class="nav-text">1.2Non-rigid registration</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Registration-algorithm"><span class="nav-number">2.</span> <span class="nav-text">Registration algorithm</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PPF-%E2%80%932010"><span class="nav-number">2.1.</span> <span class="nav-text">PPF –2010</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Others"><span class="nav-number">2.2.</span> <span class="nav-text">Others</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B3%E9%9D%A2%E6%8B%9F%E5%90%88"><span class="nav-number">2.3.</span> <span class="nav-text">平面拟合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ransac-1981"><span class="nav-number">2.4.</span> <span class="nav-text">Ransac 1981</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ICP-ptp-Point-to-Point-%E2%80%931992"><span class="nav-number">2.5.</span> <span class="nav-text">[ICP-ptp] Point-to-Point  –1992</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ICP-ptl-Point-to-Plane-ICP-%E2%80%932001"><span class="nav-number">2.6.</span> <span class="nav-text">[ICP-ptl] Point-to-Plane ICP –2001</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GMMREG-2010"><span class="nav-number">2.7.</span> <span class="nav-text">GMMREG 2010</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Colored-Point-Cloud-Registration-2017"><span class="nav-number">2.8.</span> <span class="nav-text">Colored Point Cloud Registration 2017</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Global-Registration"><span class="nav-number">2.9.</span> <span class="nav-text">Global Registration</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fast-global-registration-%E2%80%932016"><span class="nav-number">2.10.</span> <span class="nav-text">Fast global registration –2016</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multiway-registration"><span class="nav-number">2.11.</span> <span class="nav-text">Multiway registration</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Supply"><span class="nav-number">3.</span> <span class="nav-text">Supply</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%8AAlignment-of-3D-models%E3%80%8B"><span class="nav-number">3.1.</span> <span class="nav-text">《Alignment of 3D models》</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%8AA-3D-Model-Alignment-and-Retrieval-System%E3%80%8B"><span class="nav-number">3.2.</span> <span class="nav-text">《A 3D Model Alignment and Retrieval System》</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AlignNet-3D"><span class="nav-number">3.3.</span> <span class="nav-text">AlignNet-3D</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Aligning-3D-Data"><span class="nav-number">3.4.</span> <span class="nav-text">Aligning 3D Data</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99%EF%BC%9A"><span class="nav-number">4.</span> <span class="nav-text">参考资料：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%EF%BC%9A"><span class="nav-number">5.</span> <span class="nav-text">基础知识：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9C%8D%E5%A4%AB%E7%9A%84%E6%8A%95%E7%A5%A8%E6%96%B9%E6%A1%88"><span class="nav-number">5.1.</span> <span class="nav-text">霍夫的投票方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SVD"><span class="nav-number">5.2.</span> <span class="nav-text">SVD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PnP"><span class="nav-number">5.3.</span> <span class="nav-text">PnP</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

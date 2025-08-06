@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="[TOC] TensorRT IN TF主题思想：Tensorflow-&gt;TensorRT（pb-&gt;uff） TensorRT-Int8Int8 calibration in Pythonmnist_demostep: 1 create a INT8 calibrator  build and calibrate an engine for INT8 mode  run interen">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TensorRT int8">
+<meta property="og:url" content="https://novav.github.io/2019/09/02/Sub_Language/DL_Train/Tensorflow/TensorRT_int8/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="[TOC] TensorRT IN TF主题思想：Tensorflow-&gt;TensorRT（pb-&gt;uff） TensorRT-Int8Int8 calibration in Pythonmnist_demostep: 1 create a INT8 calibrator  build and calibrate an engine for INT8 mode  run interen">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-09-02T15:56:06.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:40.552Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="TF">
+<meta property="article:tag" content="TensorRT">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://novav.github.io/2019/09/02/Sub_Language/DL_Train/Tensorflow/TensorRT_int8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>TensorRT int8 | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2019/09/02/Sub_Language/DL_Train/Tensorflow/TensorRT_int8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          TensorRT int8
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-09-02 15:56:06" itemprop="dateCreated datePublished" datetime="2019-09-02T15:56:06+00:00">2019-09-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DNN-platform/" itemprop="url" rel="index"><span itemprop="name">DNN_platform</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DNN-platform/tensorflow/" itemprop="url" rel="index"><span itemprop="name">tensorflow</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>[TOC]</p>
+<h2 id="TensorRT-IN-TF"><a href="#TensorRT-IN-TF" class="headerlink" title="TensorRT IN TF"></a>TensorRT IN TF</h2><p>主题思想：Tensorflow-&gt;TensorRT（pb-&gt;uff）</p>
+<h2 id="TensorRT-Int8"><a href="#TensorRT-Int8" class="headerlink" title="TensorRT-Int8"></a>TensorRT-Int8</h2><h3 id="Int8-calibration-in-Pythonmnist-demo"><a href="#Int8-calibration-in-Pythonmnist-demo" class="headerlink" title="Int8 calibration in Pythonmnist_demo"></a>Int8 calibration in Python<a target="_blank" rel="noopener" href="https://docs.nvidia.com/deeplearning/sdk/tensorrt-sample-support-guide/index.html#int8_caffe_mnist">mnist_demo</a></h3><h3 id="step"><a href="#step" class="headerlink" title="step:"></a>step:</h3><ul>
+<li><p>1 create a INT8 calibrator</p>
+</li>
+<li><p>build and calibrate an engine for INT8 mode</p>
+</li>
+<li><p>run interence in INT8 mode</p>
+</li>
+</ul>
+<span id="more"></span>
+
+<h3 id="Guide"><a href="#Guide" class="headerlink" title="Guide"></a>Guide</h3><p><a target="_blank" rel="noopener" href="https://docs.nvidia.com/deeplearning/sdk/tensorrt-developer-guide/index.html#unique_204330530">CFG_tourist</a></p>
+<h4 id="Mode-setting"><a href="#Mode-setting" class="headerlink" title="Mode_setting"></a>Mode_setting</h4><p>Enable INT8 mode by setting the builder flag:</p>
+<p>builder.int8_mode &#x3D; True</p>
+<p>INT8 calibration can be used along with the dynamic range APIs. Setting the dynamic range manually will override the dynamic range generated from INT8 calibration.</p>
+<p>与C ++ API类似，您可以选择每个激活张量使用动态范围 动态范围 或使用INT8校准。</p>
+<p>INT8校准可与动态范围API一起使用。<strong>手动设置动态范围将覆盖INT8校准生成的动态范围</strong>。</p>
+<h4 id="Setting-Per-Tensor-Dynamic-Range-Using-Python"><a href="#Setting-Per-Tensor-Dynamic-Range-Using-Python" class="headerlink" title="Setting Per-Tensor Dynamic Range Using Python"></a>Setting Per-Tensor Dynamic Range Using Python</h4><p>TensorRT需要网络中每个张量的动态范围。有两种方法可以为网络提供动态范围：</p>
+<ul>
+<li><p>使用手动设置每个网络张量的动态范围 setDynamicRange API</p>
+</li>
+<li><p>使用INT8校准使用校准数据集生成每张量动态范围。</p>
+</li>
+</ul>
+<p>动态范围API也可以与INT8校准一起使用，这样手动设置范围将优先于校准生成的动态范围。如果INT8校准不能为某些张量产生令人满意的动态范围，则可能出现这种情况。</p>
+<p>you must set the <em>dynamic range</em> for <strong>each network tensor</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">layer = network[layer_index]</span><br><span class="line">tensor = layer.get_output(output_index)</span><br><span class="line">tensor.dynamic_range = (min_float, max_float)</span><br></pre></td></tr></table></figure>
+
+<p>You also need to set the dynamic range for the <strong>network input</strong>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">input_tensor = network.get_input(input_index)</span><br><span class="line">input_tensor.dynamic_range = (min_float, max_float)</span><br></pre></td></tr></table></figure>
+
+<h4 id="INT8-Calibration-Using-Python"><a href="#INT8-Calibration-Using-Python" class="headerlink" title="INT8 Calibration Using Python"></a>INT8 Calibration Using Python</h4><p>​    The following steps illustrate how to create an INT8 calibrator object using the Python API. By default, TensorRT supports INT8 calibration.</p>
+<ol>
+<li><p>Import TensorRT:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import tensorrt as trt</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Similar to test&#x2F;validation files, use set of input files as calibration files dataset. Make sure the calibration files are representative of the overall inference data files. For TensorRT to use the calibration files, we need to create batchstream object. Batchstream object will be used to configure the calibrator.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NUM_IMAGES_PER_BATCH = 5</span><br><span class="line">batchstream = ImageBatchStream(NUM_IMAGES_PER_BATCH, calibration_files)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Create an Int8_calibrator object with input nodes names and batch stream:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Int8_calibrator = EntropyCalibrator([&quot;input_node_name&quot;], batchstream)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Set INT8 mode and INT8 calibrator:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">trt_builder.int8_calibrator = Int8_calibrator</span><br></pre></td></tr></table></figure>
+
+<p>余下的引擎的创建推理类似于<a target="_blank" rel="noopener" href="https://docs.nvidia.com/deeplearning/sdk/tensorrt-developer-guide/index.html#import_onnx_python">Importing From ONNX Using Python</a>.</p>
+</li>
+</ol>
+<h2 id="Question："><a href="#Question：" class="headerlink" title="Question："></a>Question：</h2><ol>
+<li><p>校准执行，多少批次，如何feed数据方式，生成的校准文件格式（内容）</p>
+<ul>
+<li>大约500个图像足以校准ImageNet分类网络。</li>
+<li>构建器调用校准器如下：首先，它调用getBatchSize（）来确定期望的输入批处理的大小然后，它反复呼叫 getBatch（）获得批量输入。批次应该与批次大小完全相同getBatchSize（）。当没有批次时，getBatch（）应该回来 False。</li>
+</ul>
+</li>
+<li><p>校准器的选择</p>
+<ul>
+<li><p>IEntropyCalibratorV2 :  这是首选校准器，是DLA所必需的，因为它支持每个激活张量缩放。</p>
+</li>
+<li><p>IEntropyCalibrator :  这是传统的熵校准器，支持每通道缩放。这比传统校准器简单并且产生更好的结果。</p>
+</li>
+<li><p>ILegacyCalibrator :  该校准器用于与2.0EA兼容。它已弃用，不应使用。</p>
+</li>
+</ul>
+</li>
+<li><p>构建器的执行流程</p>
+<ul>
+<li>构建INT8引擎时，构建器执行以下步骤：</li>
+<li>1-构建一个32位引擎，在校准集上运行它，并记录激活值分布的每个张量的直方图。</li>
+<li>2-根据直方图构建校准表。</li>
+<li>3-从校准表和网络定义构建INT8引擎。</li>
+</ul>
+</li>
+<li><p>校准文件再加载inference流程，</p>
+<ul>
+<li>校准表可以缓存。在多次构建同一网络时（例如，在多个平台上），缓存非常有用。它捕获从网络和校准集中获得的数据。参数记录在表中。如果网络或校准集发生更改，则应用程序负责使缓存无效。</li>
+<li>缓存使用如下：<ul>
+<li>如果找到校准表，则跳过校准，</li>
+<li>否则：校准表由直方图和参数构建</li>
+<li>然后INT8网络由网络定义和校准表构建。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>如何查看校准差异</p>
+</li>
+</ol>
+<h3 id="demo-official"><a href="#demo-official" class="headerlink" title="demo : official"></a>demo : <a target="_blank" rel="noopener" href="https://docs.nvidia.com/deeplearning/sdk/tensorrt-sample-support-guide/index.html">official</a></h3><h2 id="8-Performing-Inference-In-INT8-Using-Custom-Calibration"><a href="#8-Performing-Inference-In-INT8-Using-Custom-Calibration" class="headerlink" title="8. Performing Inference In INT8 Using Custom Calibration"></a><a target="_blank" rel="noopener" href="https://docs.nvidia.com/deeplearning/sdk/tensorrt-sample-support-guide/index.html#int8_sample">8. Performing Inference In INT8 Using Custom Calibration</a></h2><p>示例INT8执行INT8校准和推理。</p>
+<p>此示例演示了如何以8位整数（INT8）执行推理。</p>
+<p>INT8推断仅适用于计算能力为6.1或7.x的GPU。在校准网络以便在INT8中执行之后，缓存校准的输出以避免重复该过程。</p>
+<p>&#x2F;usr&#x2F;src&#x2F;tensorrt&#x2F;samples&#x2F;sampleINT8&#x2F;</p>
+<h3 id="为非Caffe用户生成批处理文件"><a href="#为非Caffe用户生成批处理文件" class="headerlink" title="为非Caffe用户生成批处理文件"></a>为非Caffe用户生成批处理文件</h3><p>对于未使用Caffe或无法轻松转换为Caffe的开发人员，可以通过输入训练数据上的以下一系列步骤生成批处理文件。</p>
+<ul>
+<li>从数据集中减去标准化均值。</li>
+<li>将所有输入数据裁剪为相同的尺寸。</li>
+<li>将数据拆分为每个批处理文件所在的批处理文件 ñ 预处理的图像和标签。</li>
+<li>根据批处理文件中指定的格式生成批处理文件以进行校准。</li>
+</ul>
+<p>以下示例描述了要运行的命令序列 .&#x2F;sample_int8 mnist 没有Caffe。</p>
+<ul>
+<li><p>导航到samples数据目录并创建INT8 MNIST 目录：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd &lt;TensorRT&gt;/samples/data  </span><br><span class="line">mkdir -p int8/mnist/batches  </span><br><span class="line">cd int8/mnist  </span><br><span class="line">ln -s &lt;TensorRT&gt;/samples/mnist/mnist.caffemodel .  </span><br><span class="line">ln -s &lt;TensorRT&gt;/samples/mnist/mnist.prototxt .  </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将生成的批处理文件复制到 INT8 &#x2F; MNIST &#x2F;批次&#x2F; 目录。</p>
+</li>
+<li><p>从中执行sampleINT8 箱子 使用以下命令构建后的目录： .&#x2F;sample_int8 mnist</p>
+</li>
+</ul>
+<h2 id="9-Performing-Inference-In-INT8-Precision"><a href="#9-Performing-Inference-In-INT8-Precision" class="headerlink" title="9. Performing Inference In INT8 Precision"></a><a target="_blank" rel="noopener" href="https://docs.nvidia.com/deeplearning/sdk/tensorrt-sample-support-guide/index.html#int8_api_sample">9. Performing Inference In INT8 Precision</a></h2><p>示例sampleINT8API在<strong>不使用INT8校准器</strong>的情况下执行INT8推理; <strong>使用用户提供的每个激活张量动态范围</strong>。INT8推断仅适用于计算能力为6.1或7.x的GPU，并支持图像分类ONNX模型，如ResNet-50，VGG19和MobileNet。</p>
+<p>&#x2F;usr&#x2F;src&#x2F;tensorrt&#x2F;samples&#x2F;sampleINT8API&#x2F;</p>
+<h2 id="24-INT8-Calibration-In-Python"><a href="#24-INT8-Calibration-In-Python" class="headerlink" title="24. INT8 Calibration In Python"></a><a target="_blank" rel="noopener" href="https://docs.nvidia.com/deeplearning/sdk/tensorrt-sample-support-guide/index.html#int8_caffe_mnist">24. INT8 Calibration In Python</a></h2><p>&#x2F;usr&#x2F;src&#x2F;tensorrt&#x2F;samples&#x2F;python&#x2F;int8_caffe_mnist</p>
+<p>During calibration: total 1003 barches, 100 each</p>
+<p>​    calibrator.py: 简化了read write 校准的过程</p>
+<p>1、RUN sample </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 sample.py [-d DATA_DIR]</span><br></pre></td></tr></table></figure>
+
+<p>2、 Verify ran successfully </p>
+<ol>
+<li><pre><code>Expected Predictions:
+[1. 6. 5. 0. 2. 8. 1. 5. 6. 2. 3. 0. 2. 2. 6. 4. 3. 5. 5. 1. 7. 2. 1. 6.
+9. 1. 9. 9. 5. 5. 1. 6. 2. 2. 8. 6. 7. 1. 4. 6. 0. 4. 0. 3. 3. 2. 2. 3.
+6. 8. 9. 8. 5. 3. 8. 5. 4. 5. 2. 0. 5. 6. 3. 2. 8. 3. 9. 9. 5. 7. 9. 4.
+6. 7. 1. 3. 7. 3. 6. 6. 0. 9. 0. 1. 9. 9. 2. 8. 8. 0. 1. 6. 9. 7. 5. 3.
+4. 7. 4. 9.]
+Actual Predictions:
+[1 6 5 0 2 8 1 5 6 2 3 0 2 2 6 4 3 5 5 1 7 2 1 6 9 1 9 9 5 5 1 6 2 2 8 6 7
+1 4 6 0 4 0 3 3 2 2 3 6 8 9 8 5 3 8 5 4 5 2 0 5 6 3 2 8 3 9 9 5 7 9 4 6 7
+1 3 7 3 6 6 0 9 0 1 9 4 2 8 8 0 1 6 9 7 5 3 4 7 4 9]
+Accuracy: 99.0%
+</code></pre>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/TF/" rel="tag"># TF</a>
+              <a href="/tags/TensorRT/" rel="tag"># TensorRT</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/08/30/Sub_Language/DL_Train/Tensorflow/TF-TRAIN-LR/" rel="prev" title="Tensorflow Learning rate">
+      <i class="fa fa-chevron-left"></i> Tensorflow Learning rate
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/09/02/Paper/Paper-CV-4-Segment/" rel="next" title="Paper_CV_4 语义分割、实例分割">
+      Paper_CV_4 语义分割、实例分割 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#TensorRT-IN-TF"><span class="nav-number">1.</span> <span class="nav-text">TensorRT IN TF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TensorRT-Int8"><span class="nav-number">2.</span> <span class="nav-text">TensorRT-Int8</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Int8-calibration-in-Pythonmnist-demo"><span class="nav-number">2.1.</span> <span class="nav-text">Int8 calibration in Pythonmnist_demo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step"><span class="nav-number">2.2.</span> <span class="nav-text">step:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Guide"><span class="nav-number">2.3.</span> <span class="nav-text">Guide</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Mode-setting"><span class="nav-number">2.3.1.</span> <span class="nav-text">Mode_setting</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Setting-Per-Tensor-Dynamic-Range-Using-Python"><span class="nav-number">2.3.2.</span> <span class="nav-text">Setting Per-Tensor Dynamic Range Using Python</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#INT8-Calibration-Using-Python"><span class="nav-number">2.3.3.</span> <span class="nav-text">INT8 Calibration Using Python</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Question%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">Question：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#demo-official"><span class="nav-number">3.1.</span> <span class="nav-text">demo : official</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-Performing-Inference-In-INT8-Using-Custom-Calibration"><span class="nav-number">4.</span> <span class="nav-text">8. Performing Inference In INT8 Using Custom Calibration</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E9%9D%9ECaffe%E7%94%A8%E6%88%B7%E7%94%9F%E6%88%90%E6%89%B9%E5%A4%84%E7%90%86%E6%96%87%E4%BB%B6"><span class="nav-number">4.1.</span> <span class="nav-text">为非Caffe用户生成批处理文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-Performing-Inference-In-INT8-Precision"><span class="nav-number">5.</span> <span class="nav-text">9. Performing Inference In INT8 Precision</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#24-INT8-Calibration-In-Python"><span class="nav-number">6.</span> <span class="nav-text">24. INT8 Calibration In Python</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

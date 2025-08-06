@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="[TOC] 1、李群李代数基础2、指数与对数映射3、李代数与对数映射4、Sophus的基本使用方法1、简介Sophus 库是Strasdat 维护的 。Sophus 库支持SO(3) 和 SE(3)，此外还含有二维运动 SO(2),SE(2) 以及相似变换 Sim(3) 的内容。它是直接在 Eigen 基础上开发的，不需要安装额外的依赖库。可以直接从 GitHub 上获取 Sophus，在代码目录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sophus 基本用法">
+<meta property="og:url" content="https://novav.github.io/2022/07/06/Course/SLAM/ch04_Sophus/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="[TOC] 1、李群李代数基础2、指数与对数映射3、李代数与对数映射4、Sophus的基本使用方法1、简介Sophus 库是Strasdat 维护的 。Sophus 库支持SO(3) 和 SE(3)，此外还含有二维运动 SO(2),SE(2) 以及相似变换 Sim(3) 的内容。它是直接在 Eigen 基础上开发的，不需要安装额外的依赖库。可以直接从 GitHub 上获取 Sophus，在代码目录">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2022/07/06/Course/SLAM/ch04_Sophus/image-20220708021937910.png">
+<meta property="article:published_time" content="2022-07-06T23:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:39.784Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="Sophus">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2022/07/06/Course/SLAM/ch04_Sophus/image-20220708021937910.png">
+
+<link rel="canonical" href="https://novav.github.io/2022/07/06/Course/SLAM/ch04_Sophus/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Sophus 基本用法 | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/07/06/Course/SLAM/ch04_Sophus/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Sophus 基本用法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-07-06 23:00:00" itemprop="dateCreated datePublished" datetime="2022-07-06T23:00:00+00:00">2022-07-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SLAM/" itemprop="url" rel="index"><span itemprop="name">SLAM</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SLAM/Sophus/" itemprop="url" rel="index"><span itemprop="name">Sophus</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>[TOC]</p>
+<h2 id="1、李群李代数基础"><a href="#1、李群李代数基础" class="headerlink" title="1、李群李代数基础"></a>1、李群李代数基础</h2><h2 id="2、指数与对数映射"><a href="#2、指数与对数映射" class="headerlink" title="2、指数与对数映射"></a>2、指数与对数映射</h2><h2 id="3、李代数与对数映射"><a href="#3、李代数与对数映射" class="headerlink" title="3、李代数与对数映射"></a>3、李代数与对数映射</h2><h2 id="4、Sophus的基本使用方法"><a href="#4、Sophus的基本使用方法" class="headerlink" title="4、Sophus的基本使用方法"></a>4、Sophus的基本使用方法</h2><h3 id="1、简介"><a href="#1、简介" class="headerlink" title="1、简介"></a>1、简介</h3><p>Sophus 库是Strasdat 维护的 。Sophus 库支持SO(3) 和 SE(3)，此外还含有二维运动 SO(2),SE(2) 以及相似变换 Sim(3) 的内容。它是直接在 Eigen 基础上开发的，不需要安装额外的依赖库。可以直接从 GitHub 上获取 Sophus，在代码目录 slambook&#x2F;3rdparty 下也提供了 Sophus 源代码。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Eigen::Matrix3d和Sophus::Matrix3d</span><br><span class="line">Eigen::Vector3d和Sophus::Vector3d</span><br></pre></td></tr></table></figure>
+
+<p>此外，为了方便说明SE(4)和se(4)，Sophus库还typedef了Vector4d、Matrix4d、Vector6d和Matrix6d等，即：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Sophus::Vector4d</span><br><span class="line">Sophus::Matrix4d</span><br><span class="line">Sophus::Vector6d</span><br><span class="line">Sophus::Matrix6d</span><br></pre></td></tr></table></figure>
+
+<h3 id="2、安装"><a href="#2、安装" class="headerlink" title="2、安装"></a>2、安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/strasdat/Sophus.git</span><br><span class="line"><span class="built_in">cd</span> Sophus</span><br><span class="line">git checkout a621ff</span><br><span class="line"><span class="built_in">mkdir</span> build</span><br><span class="line"><span class="built_in">cd</span> build</span><br><span class="line">cmake ..</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>李代数so(3)：Sophus::Vector3d &#x2F;&#x2F;因为so(3)仅仅只是一个普通的3维向量</p>
+<p>李代数se(3)：Sophus::Vector6d &#x2F;&#x2F;因为se(3)仅仅只是一个普通的6维向量</p>
+<h3 id="SO3构造函数"><a href="#SO3构造函数" class="headerlink" title="SO3构造函数"></a>SO3构造函数</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">SO3</span> ();</span><br><span class="line"><span class="built_in">SO3</span> (<span class="type">const</span> SO3 &amp; other);</span><br><span class="line"><span class="function"><span class="keyword">explicit</span> <span class="title">SO3</span> <span class="params">(<span class="type">const</span> Matrix3d &amp; _R)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">explicit</span> <span class="title">SO3</span> <span class="params">(<span class="type">const</span> Quaterniond &amp; unit_quaternion)</span></span>;</span><br><span class="line"><span class="built_in">SO3</span> (<span class="type">double</span> rot_x, <span class="type">double</span> rot_y, <span class="type">double</span> rot_z);</span><br></pre></td></tr></table></figure>
+
+<h3 id="SE3的构造函数"><a href="#SE3的构造函数" class="headerlink" title="SE3的构造函数"></a>SE3的构造函数</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">SE3</span> ();</span><br><span class="line"><span class="built_in">SE3</span> (<span class="type">const</span> SO3 &amp; so3,<span class="type">const</span> Vector3d &amp; translation);</span><br><span class="line"><span class="built_in">SE3</span> (<span class="type">const</span> Matrix3d &amp; rotation_matrix,<span class="type">const</span> Vector3d &amp; translation);</span><br><span class="line"><span class="built_in">SE3</span> (<span class="type">const</span> Quaterniond &amp; unit_quaternion,<span class="type">const</span> Vector3d &amp; translation_);</span><br><span class="line"><span class="built_in">SE3</span> (<span class="type">const</span> SE3 &amp; other);</span><br></pre></td></tr></table></figure>
+
+<h3 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h3><p>尽管SO3对应于矩阵群，但是SO3在使用cout时是以so3形式输出的，输出的是一个3维向量</p>
+<p>  SE3在使用cout输出时输出的是一个6维向量，<strong>其中前3维为对应的so3的值，后3维为实际的平移向量t</strong></p>
+<p>  se3在使用cout输出时输出的也是一个6维向量，但是其前3维为平移值ρ</p>
+<p>（注意此时的ρ与SE3输出的t是不同的，t&#x3D;Jρ,其中J是雅克比矩阵），后3维为其对应的so3.</p>
+<h2 id="SO3-so3-SE3-se3初始化和相互转化关系"><a href="#SO3-so3-SE3-se3初始化和相互转化关系" class="headerlink" title="SO3,so3,SE3,se3初始化和相互转化关系"></a>SO3,so3,SE3,se3初始化和相互转化关系</h2><h3 id="1、转换关系图"><a href="#1、转换关系图" class="headerlink" title="1、转换关系图"></a>1、转换关系图</h3><img title src="/2022/07/06/Course/SLAM/ch04_Sophus/image-20220708021937910.png" alt="image-20220708021937910" data-align="inline">
+
+<p>关于旋转矩阵，旋转向量和四元数的初始化和相互转换关系可以参考另一篇博文：<a target="_blank" rel="noopener" href="http://blog.csdn.net/u011092188/article/details/77430988">http://blog.csdn.net/u011092188/article/details/77430988</a></p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://www.freesion.com/article/2140799438/">【SOPHUS库 学习笔记 1】 SOPHUS的安装与使用</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzU0NjgzMDIxMQ==&mid=2247487439&idx=1&sn=da8c277d40911b114038a415f5873ac9&chksm=fb56ed23cc216435c3bac0429620492e6b4380a63f30f026c8377f37bd81577a320188e1a404&scene=27"># 一文详解四元数、欧拉角、旋转矩阵、轴角如何相互转换 wexin</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Sophus/" rel="tag"># Sophus</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/07/01/Course/SLAM/ch00_env/" rel="prev" title="SLAM 依赖环境配置">
+      <i class="fa fa-chevron-left"></i> SLAM 依赖环境配置
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/07/08/Course/SLAM/ch05_camera/" rel="next" title="SLAM 第五讲 相机模型">
+      SLAM 第五讲 相机模型 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E6%9D%8E%E7%BE%A4%E6%9D%8E%E4%BB%A3%E6%95%B0%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">1、李群李代数基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E6%8C%87%E6%95%B0%E4%B8%8E%E5%AF%B9%E6%95%B0%E6%98%A0%E5%B0%84"><span class="nav-number">2.</span> <span class="nav-text">2、指数与对数映射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81%E6%9D%8E%E4%BB%A3%E6%95%B0%E4%B8%8E%E5%AF%B9%E6%95%B0%E6%98%A0%E5%B0%84"><span class="nav-number">3.</span> <span class="nav-text">3、李代数与对数映射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E3%80%81Sophus%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">4、Sophus的基本使用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E7%AE%80%E4%BB%8B"><span class="nav-number">4.1.</span> <span class="nav-text">1、简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E5%AE%89%E8%A3%85"><span class="nav-number">4.2.</span> <span class="nav-text">2、安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SO3%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-number">5.1.</span> <span class="nav-text">SO3构造函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SE3%E7%9A%84%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-number">5.2.</span> <span class="nav-text">SE3的构造函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%93%E5%87%BA"><span class="nav-number">5.3.</span> <span class="nav-text">输出</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SO3-so3-SE3-se3%E5%88%9D%E5%A7%8B%E5%8C%96%E5%92%8C%E7%9B%B8%E4%BA%92%E8%BD%AC%E5%8C%96%E5%85%B3%E7%B3%BB"><span class="nav-number">6.</span> <span class="nav-text">SO3,so3,SE3,se3初始化和相互转化关系</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E8%BD%AC%E6%8D%A2%E5%85%B3%E7%B3%BB%E5%9B%BE"><span class="nav-number">6.1.</span> <span class="nav-text">1、转换关系图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">7.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

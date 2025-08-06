@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="[TOC] c++ STL  容器 序列容器  vector  array  queue  deque  list  forward_list    关联容器  map  set  unordered_map  multimap  unordered_multimap  multiset  unordered_multiset     1. vector初始化 12345678910    vec">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ 容器">
+<meta property="og:url" content="https://novav.github.io/2022/05/06/Sub_Language/CPlus/CPlus_Vector/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="[TOC] c++ STL  容器 序列容器  vector  array  queue  deque  list  forward_list    关联容器  map  set  unordered_map  multimap  unordered_multimap  multiset  unordered_multiset     1. vector初始化 12345678910    vec">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2022/05/06/Sub_Language/CPlus/CPlus_Vector/image-20220507112024363.png">
+<meta property="article:published_time" content="2022-05-06T12:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:40.520Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="C++">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2022/05/06/Sub_Language/CPlus/CPlus_Vector/image-20220507112024363.png">
+
+<link rel="canonical" href="https://novav.github.io/2022/05/06/Sub_Language/CPlus/CPlus_Vector/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>C++ 容器 | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/05/06/Sub_Language/CPlus/CPlus_Vector/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          C++ 容器
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-05-06 12:00:00" itemprop="dateCreated datePublished" datetime="2022-05-06T12:00:00+00:00">2022-05-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>[TOC]</p>
+<p>c++ STL </p>
+<h3 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h3><ul>
+<li><p>序列容器</p>
+<ul>
+<li><p>vector</p>
+</li>
+<li><p>array</p>
+</li>
+<li><p>queue</p>
+</li>
+<li><p>deque</p>
+</li>
+<li><p>list</p>
+</li>
+<li><p>forward_list</p>
+</li>
+</ul>
+</li>
+<li><p>关联容器</p>
+<ul>
+<li><p>map</p>
+</li>
+<li><p>set</p>
+</li>
+<li><p>unordered_map</p>
+</li>
+<li><p>multimap</p>
+</li>
+<li><p>unordered_multimap</p>
+</li>
+<li><p>multiset</p>
+</li>
+<li><p>unordered_multiset</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-vector"><a href="#1-vector" class="headerlink" title="1. vector"></a>1. vector</h3><p>初始化</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">    vector&lt;<span class="type">int</span>&gt; vec1;</span><br><span class="line">    <span class="function">vector&lt;<span class="type">float</span>&gt; <span class="title">vec2</span><span class="params">(<span class="number">3</span>)</span></span>;</span><br><span class="line">    <span class="function">vector&lt;<span class="type">char</span>&gt; <span class="title">vec3</span><span class="params">(<span class="number">3</span>,<span class="string">&#x27;a&#x27;</span>)</span></span>;</span><br><span class="line">    <span class="function">vector&lt;<span class="type">char</span>&gt; <span class="title">vec4</span><span class="params">(vec3)</span></span>;</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">vecNN</span>(<span class="number">5</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//&lt;1&gt; 第一个是空的整形vector，我们没有给他添加任何元素。</span></span><br><span class="line"><span class="comment">//&lt;2&gt;第二个初始化了一个有3个元素的vector，由于并没有指定初始 值，将会使用编译器默认的初始值。</span></span><br><span class="line"><span class="comment">//&lt;3&gt;第三个初始化了含有3个a的字符vector，括号中第二个值代表着所有元素的指定值。</span></span><br><span class="line"><span class="comment">//&lt;4&gt;第四个vector通过拷贝vec3中的元素初始化vec4，它们的元素会一模一样。</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="push-back"><a href="#push-back" class="headerlink" title="push_back()"></a>push_back()</h4><p>insert()</p>
+<p>size()</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line">vector&lt;<span class="type">int</span>&gt; vect1,vect2;</span><br><span class="line"></span><br><span class="line"><span class="comment">//# push_back</span></span><br><span class="line">vect<span class="number">1.</span><span class="built_in">push_back</span>(<span class="number">1</span>);</span><br><span class="line">vect<span class="number">1.</span><span class="built_in">push_back</span>(<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">vect<span class="number">2.</span><span class="built_in">push_back</span>(<span class="number">8</span>);</span><br><span class="line">vect<span class="number">2.</span><span class="built_in">push_back</span>(<span class="number">9</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//# insert</span></span><br><span class="line">vect<span class="number">2.</span><span class="built_in">insert</span>(vect<span class="number">2.</span><span class="built_in">end</span>(),vect<span class="number">1.</span><span class="built_in">begin</span>(),vect<span class="number">1.</span><span class="built_in">end</span>());</span><br><span class="line"></span><br><span class="line"><span class="comment">//# size</span></span><br><span class="line">vect<span class="number">2.</span><span class="built_in">size</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; vect<span class="number">2.</span><span class="built_in">size</span>(); i++)</span><br><span class="line">&#123;</span><br><span class="line">    cout&lt;&lt;vect2[i]&lt;&lt;endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Delete ~ ~Erase()</p>
+<ol>
+<li><code>erase</code>返回一个迭代器，指向被删除元素之后的位置。</li>
+<li>如果尝试删除超出向量范围的索引，<code>erase</code>将抛出<code>std::out_of_range</code>异常。</li>
+<li>在删除元素后，所有后续元素的索引都会减少。例如，如果你删除了索引为2的元素，索引为3的元素会变成索引为2的元素。</li>
+<li><code>erase</code>会释放被删除元素占用的内存。</li>
+<li>使用<code>erase</code>后，向量的长度会减少。</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">    std::vector&lt;<span class="type">int</span>&gt; vec = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;  </span><br><span class="line"></span><br><span class="line">    <span class="comment">// 删除索引为2的元素（即数字3）  </span></span><br><span class="line">    vec.<span class="built_in">erase</span>(vec.<span class="built_in">begin</span>() + <span class="number">2</span>);  </span><br><span class="line"></span><br><span class="line">    <span class="comment">// 输出修改后的向量  </span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> num : vec) &#123;  </span><br><span class="line">        std::cout &lt;&lt; num &lt;&lt; <span class="string">&quot; &quot;</span>;  </span><br><span class="line">    &#125;  </span><br><span class="line">    std::cout &lt;&lt; std::endl;  </span><br><span class="line"></span><br><span class="line">vect.<span class="built_in">erase</span>(std::<span class="built_in">remove</span>(vect.<span class="built_in">begin</span>(), vect.<span class="built_in">end</span>(), id), vect.<span class="built_in">end</span>());</span><br></pre></td></tr></table></figure>
+
+<h4 id="find"><a href="#find" class="headerlink" title="find"></a>find</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//# find</span></span><br><span class="line"><span class="keyword">auto</span> iter = <span class="built_in">find</span>(vec<span class="number">2.</span><span class="built_in">begin</span>(), vec<span class="number">2.</span><span class="built_in">end</span>(), <span class="number">9</span>);</span><br><span class="line"><span class="keyword">if</span> (iter != vec<span class="number">2.</span><span class="built_in">end</span>())</span><br><span class="line">&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Find IT!&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>replace</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">std::vector&lt;<span class="type">int</span>&gt; vec = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;  </span><br><span class="line">vec[<span class="number">2</span>] = <span class="number">10</span>; <span class="comment">// 将索引为2的元素替换为10</span></span><br></pre></td></tr></table></figure>
+
+<p>find + delete (删除找到的第一个元素)</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;<span class="type">int</span>&gt; vec = &#123;<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">4</span>&#125;;</span><br><span class="line"><span class="keyword">auto</span> iter = <span class="built_in">find</span>(vec.<span class="built_in">begin</span>(), vec.<span class="built_in">end</span>(), <span class="number">4</span>);</span><br><span class="line">vec.<span class="built_in">erase</span>(iter);</span><br></pre></td></tr></table></figure>
+
+<p>find + replace</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">std::vector&lt;<span class="type">int</span>&gt; vec = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;  </span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span>&amp; num : vec) &#123;  </span><br><span class="line">    <span class="keyword">if</span> (num == <span class="number">3</span>) &#123;  </span><br><span class="line">        num = <span class="number">10</span>; <span class="comment">// 将值为3的元素替换为10  </span></span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="max"><a href="#max" class="headerlink" title="max"></a>max</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; a = &#123; <span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">6</span>,<span class="number">3</span>,<span class="number">2</span> &#125;;</span><br><span class="line"><span class="keyword">auto</span> maxPosition = max_element(a.begin(), a.end());</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; *maxPosition &lt;&lt; <span class="string">&quot; at the postion of &quot;</span> &lt;&lt; maxPosition - a.begin() &lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line"><span class="comment">//cout &lt;&lt; a[maxPosition - a.begin()] &lt;&lt; &quot; at the postion of &quot; &lt;&lt; distance(a.begin(), maxPosition) &lt;&lt; endl;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="vector-TO-数组"><a href="#vector-TO-数组" class="headerlink" title="vector TO 数组"></a>vector TO 数组</h4><h5 id="1：memcpy"><a href="#1：memcpy" class="headerlink" title="1：memcpy"></a>1：memcpy</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1 vector to arr</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="type">char</span>&gt; <span class="title function_">vec</span><span class="params">(<span class="number">10</span>, <span class="string">&#x27;c&#x27;</span>)</span>; <span class="comment">// 10个c字符</span></span><br><span class="line"><span class="type">char</span> charray[<span class="number">10</span>];</span><br><span class="line"><span class="built_in">memcpy</span>(charray, &amp;vec[<span class="number">0</span>], vec.size()*<span class="keyword">sizeof</span>(vec[<span class="number">0</span>])); <span class="comment">// 注意数组越界--数据超长</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. arr to vector</span></span><br><span class="line"><span class="comment">// 2.1 直接赋值-init</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="type">char</span>&gt; <span class="title function_">v</span><span class="params">(arr, arr+<span class="keyword">sizeof</span>(arr))</span></span><br><span class="line"><span class="comment">// 2.2 copy    </span></span><br><span class="line"><span class="title function_">memcpy</span><span class="params">(&amp;vec[<span class="number">0</span>], arr, <span class="keyword">sizeof</span>(arr))</span>;</span><br></pre></td></tr></table></figure>
+
+<p>ref <a target="_blank" rel="noopener" href="https://wenku.baidu.com/view/d54c10d3740bf78a6529647d27284b73f24236c1.html">baidu wenku</a></p>
+<h5 id="2：-std-copy-vector-to-arr"><a href="#2：-std-copy-vector-to-arr" class="headerlink" title="2： std::copy  vector to arr"></a>2： std::copy  vector to arr</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; <span class="title function_">input</span><span class="params">(&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;)</span>;</span><br><span class="line"><span class="type">int</span> arr[input.size()];</span><br><span class="line"><span class="comment">//Copies the range [first,last) into result.</span></span><br><span class="line"><span class="built_in">std</span>::copy(input.begin(), input.end(), arr);</span><br></pre></td></tr></table></figure>
+
+<p>ref:: <a target="_blank" rel="noopener" href="https://www.techiedelight.com/convert-vector-to-array-cpp/">https://www.techiedelight.com/convert-vector-to-array-cpp/</a></p>
+<h4 id="max-1"><a href="#max-1" class="headerlink" title="max"></a>max</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; a = &#123; <span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">6</span>,<span class="number">3</span>,<span class="number">2</span> &#125;;</span><br><span class="line"><span class="keyword">auto</span> maxPosition = max_element(a.begin(), a.end());</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; *maxPosition &lt;&lt; <span class="string">&quot; at the postion of &quot;</span> &lt;&lt; maxPosition - a.begin() &lt;&lt;<span class="built_in">endl</span>;##<span class="meta"># map</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="vector-切片"><a href="#vector-切片" class="headerlink" title="vector 切片"></a>vector 切片</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方法1</span></span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; <span class="built_in">vector</span>&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>&#125;;</span><br><span class="line"><span class="comment">// 截取[0,4]</span></span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;::const_iterator first1 = <span class="built_in">vector</span>.begin();</span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;::const_iterator last1  = <span class="built_in">vector</span>.begin() + <span class="number">4</span>;</span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; <span class="title function_">cut1_vector</span><span class="params">(first1, last1)</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 截取[-4,]</span></span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;::const_iterator first2 = <span class="built_in">vector</span>.end() - <span class="number">4</span>;</span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;::const_iterator last2  = <span class="built_in">vector</span>.end();</span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; <span class="title function_">cut2_vector</span><span class="params">(first2, last2)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方法2</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; Arrs &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>&#125;; <span class="comment">// 假设有这么个数组,要截取中间第二个元素到第四个元素：2，3，4</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;::const_iterator Fist = Arrs.begin() + <span class="number">1</span>; <span class="comment">// 找到第二个迭代器</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;::const_iterator Second = Arrs.begin() + <span class="number">2</span>; <span class="comment">// 找到第三个迭代器</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; Arr2;</span><br><span class="line">Arr2.assign(First,Second); <span class="comment">//使用assign() 成员函数将Arrs对应位置的值存入Arrs2数组中</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="去重"><a href="#去重" class="headerlink" title="去重"></a>去重</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; vec = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">1</span>&#125;;</span><br><span class="line"><span class="built_in">set</span>&lt;<span class="type">int</span>&gt; <span class="title function_">s</span><span class="params">(vec.begin(), vec.end())</span>;</span><br><span class="line">vec.assign(s.begin(), s.end());</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; vec = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">1</span>&#125;;</span><br><span class="line">sort(vec.begin(), vec.end());</span><br><span class="line">vec.erase(unique(vec.begin(), vec.end()), vec.end());</span><br><span class="line"><span class="comment">// unique函数将重复的元素放到 vector 的尾部，然后返回指向第一个重复元素的迭代器</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 3 remove 删除所有的7</span></span><br><span class="line"><span class="keyword">auto</span> ret = <span class="built_in">std</span>::remove(vec.begin(), vec.end(), <span class="number">7</span>);</span><br><span class="line">vec.erase(ret, vec.end());</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-Map"><a href="#2-Map" class="headerlink" title="2. Map"></a>2. Map</h3><p>存放的元素都是K-V键值对，并且Key是不能重复的。</p>
+<h4 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">map</span>&lt;<span class="type">int</span>, <span class="built_in">string</span>&gt; mapStudent;  </span><br></pre></td></tr></table></figure>
+
+<h4 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mapStudent.<span class="built_in">insert</span>(<span class="built_in">pair</span>&lt;<span class="type">int</span>, string&gt;(<span class="number">1</span>, <span class="string">&quot;student_one&quot;</span>));             <span class="comment">//pair&lt;&gt;()函数</span></span><br><span class="line">mapStudent.<span class="built_in">insert</span>(map&lt;<span class="type">int</span>, string&gt;::<span class="built_in">value_type</span> (<span class="number">1</span>, <span class="string">&quot;student_one&quot;</span>)); <span class="comment">//map&lt;&gt;::value_type</span></span><br><span class="line">mapStudent.<span class="built_in">insert</span>(<span class="built_in">make_pair</span>(<span class="number">1</span>, <span class="string">&quot;student_one&quot;</span>));                     <span class="comment">//make_pair()函数</span></span><br><span class="line">mapStudent[<span class="number">1</span>] = <span class="string">&quot;student_one&quot;</span>;                                      <span class="comment">//数组方式</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">iter = mapStudent.<span class="built_in">find</span>(<span class="number">1</span>); <span class="comment">// find(key)</span></span><br><span class="line"><span class="keyword">if</span> (iter != mapStudent.<span class="built_in">end</span>())</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Find &quot;</span> &lt;&lt; iter-&gt;second ;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Dont not find&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">map&lt;<span class="type">int</span>, CString&gt;  maps;      <span class="comment">// 或者map &lt; int, 结构体名&gt;   maps;</span></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i =<span class="number">0</span>; i &lt; maps.<span class="built_in">size</span>(); i++)</span><br><span class="line">&#123;</span><br><span class="line">     CString s=maps[ i ];</span><br><span class="line">&#125;   </span><br><span class="line"></span><br><span class="line">map&lt;CString, 结构体名&gt; maps;</span><br><span class="line">map&lt;CString, 结构体名&gt;::iterator iter;   <span class="comment">//迭代器遍历 如vector 也可使用</span></span><br><span class="line"><span class="keyword">for</span>(  iter=maps.<span class="built_in">begin</span>();     iter!=maps.<span class="built_in">end</span>();   iter++)</span><br><span class="line">&#123;</span><br><span class="line">    CString a = iter - &gt; first;</span><br><span class="line">    结构体名 p = iter - &gt; second;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="删除与清空元素"><a href="#删除与清空元素" class="headerlink" title="删除与清空元素"></a>删除与清空元素</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 迭代器删除</span></span><br><span class="line">iter = mapStudent.<span class="built_in">find</span>(<span class="string">&quot;123&quot;</span>);</span><br><span class="line">mapStudent.<span class="built_in">erase</span>(iter);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 关键字删除</span></span><br><span class="line"><span class="type">int</span> n = mapStudent.<span class="built_in">erase</span>(<span class="string">&quot;123&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 清空map</span></span><br><span class="line">mapStudent.<span class="built_in">erase</span>(mapStudent.<span class="built_in">begin</span>(), mapStudent.<span class="built_in">end</span>())</span><br></pre></td></tr></table></figure>
+
+<h4 id="大小"><a href="#大小" class="headerlink" title="大小"></a>大小</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> mSize = mapStudent.<span class="built_in">size</span>();</span><br></pre></td></tr></table></figure>
+
+<p>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/bandaoyu/article/details/87775533">https://blog.csdn.net/bandaoyu/article/details/87775533</a></p>
+<h3 id="3-unordered-map"><a href="#3-unordered-map" class="headerlink" title="3. unordered_map"></a>3. unordered_map</h3><p>存放的元素都是K-V键值对，并且Key是不能重复的。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unordered_map&gt;</span></span></span><br><span class="line"><span class="comment">// 如果C++的版本低于C++11,则会报错：[Error] ‘unordered_map’ was not declared in this scope</span></span><br><span class="line"><span class="comment">// 则需要将头文件改为</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;tr1/unordered_map&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std::tr1;</span><br></pre></td></tr></table></figure>
+
+<h4 id="建立Hashmap"><a href="#建立Hashmap" class="headerlink" title="建立Hashmap"></a><strong>建立Hashmap</strong></h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">unordered_map&lt;<span class="type">int</span>,<span class="type">int</span>&gt; Hashmap;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// **建立迭代器**</span></span><br><span class="line">unordered_map&lt;<span class="type">int</span>,<span class="type">int</span>&gt;::iterator it;</span><br><span class="line"></span><br><span class="line"><span class="comment">//插入键值对</span></span><br><span class="line"><span class="comment">// insert函数</span></span><br><span class="line">Hashmap.<span class="built_in">insert</span>(<span class="built_in">make_pair</span>&lt;<span class="type">int</span>,<span class="type">int</span>&gt;(<span class="number">1</span>,<span class="number">3</span>));</span><br><span class="line">Hashmap.<span class="built_in">insert</span>(<span class="built_in">make_pair</span>(<span class="number">1</span>,<span class="number">3</span>));</span><br><span class="line"><span class="comment">// 通过键添加</span></span><br><span class="line">Hashmap[<span class="number">3</span>]=<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//其他函数</span></span><br><span class="line">it = Hashmap.<span class="built_in">begin</span>() <span class="comment">//指向哈希表的第一个容器</span></span><br><span class="line">it = Hashmap.<span class="built_in">end</span>() <span class="comment">//指向哈希表的最后一个容器，实则超出了哈希表的范围，为空</span></span><br><span class="line">Hashmap.<span class="built_in">size</span>() <span class="comment">//返回哈希表的大小</span></span><br><span class="line">Hashmap.<span class="built_in">empty</span>() <span class="comment">//判断哈希表是否为空，返回值为true/false</span></span><br><span class="line">Hashmap.<span class="built_in">clear</span>() <span class="comment">//清空哈希表</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过key值查找键值对</span></span><br><span class="line">it = Hashmap.<span class="built_in">find</span>(<span class="number">2</span>) <span class="comment">//查找key为2的键值对是否存在 ,若没找到则返回Hashmap.end()</span></span><br><span class="line"><span class="keyword">if</span>(Hashmap.<span class="built_in">find</span>(<span class="number">2</span>)!=Hashmap.<span class="built_in">end</span>()) <span class="comment">//判断找到了key为2的键值对</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//通过key值查找该key值下的键值对对数</span></span><br><span class="line">Hashmap.<span class="built_in">count</span>(<span class="number">1</span>) <span class="comment">//返回 1</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//swap交换两个Hashmap的键值对</span></span><br><span class="line">Hashmap<span class="number">1.</span><span class="built_in">swap</span>(Hashmap2);</span><br><span class="line"><span class="built_in">swap</span>(Hashmap1,Hashmap2);</span><br></pre></td></tr></table></figure>
+
+<h4 id="遍历Map"><a href="#遍历Map" class="headerlink" title="遍历Map"></a>遍历Map</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//第一种</span></span><br><span class="line">unordered_map&lt;<span class="type">int</span>, <span class="type">int</span>&gt; Hashmap;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span> p : Hashmap) &#123;</span><br><span class="line">    <span class="type">int</span> front = p.first;   <span class="comment">//key</span></span><br><span class="line">    <span class="type">int</span> end = p.second;   <span class="comment">//value</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//第二种</span></span><br><span class="line">unordered_map&lt;<span class="type">int</span>, <span class="type">int</span>&gt; Hashmap;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> it=Hashmap.<span class="built_in">begin</span>();it!=Hashmap.<span class="built_in">end</span>();it++)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> front = it-&gt;first;   <span class="comment">//key</span></span><br><span class="line">    <span class="type">int</span> end = it-&gt;second;   <span class="comment">//value</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//第三种</span></span><br><span class="line">unordered_map&lt;<span class="type">int</span>,<span class="type">int</span>&gt; hash;</span><br><span class="line">unordered_map&lt;<span class="type">int</span>,<span class="type">int</span>&gt;::iterator it;</span><br><span class="line">it = hash.<span class="built_in">begin</span>();</span><br><span class="line"><span class="keyword">while</span>(it != hash.<span class="built_in">end</span>())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> front= it-&gt;first;   <span class="comment">//key</span></span><br><span class="line">    <span class="type">int</span> end = it-&gt;second;   <span class="comment">//value</span></span><br><span class="line">    it++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="辨析-map-VS-unordered-map"><a href="#辨析-map-VS-unordered-map" class="headerlink" title="辨析.map VS unordered_map"></a>辨析.map VS unordered_map</h3><p>内部实现机理不同<br><strong>map</strong>： map内部实现了⼀个红⿊树（红⿊树是⾮严格平衡⼆叉搜索树，⽽AVL是严格平衡⼆叉搜索树），红⿊树具有⾃动排序的功能，因此map内部的所有元素都是有序的，红⿊树的每⼀个节点都代表着map的⼀个元素。因此，对于map进⾏的查找，删除，添加等⼀系列的操作都相当于是对红⿊树进⾏的操作。map中的元素是按照⼆叉搜索树（⼜名⼆叉查找树、⼆叉排序树，特点就是左⼦树上所有节点的键值都⼩于根节点的键值，右⼦树所有节点的键值都⼤于根节点的键值）存储的，使⽤中序遍历可将键值按照从⼩到⼤遍历出来。</p>
+<p><strong>unordered_map</strong>: 内部实现了⼀个哈希表（也叫散列表，通过把关键码值映射到Hash表中⼀个位置来访问记录，查找的时间复杂度可达到O(1)，其在海量数据处理中有着⼴泛应⽤）。因此，其元素的排列顺序是⽆序的。</p>
+<p>map</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>特点</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>map</td>
+<td>有序性，这是map结构最⼤的优点，其元素的有序性在很多应⽤中都会简化很多的操作<br>红⿊树，内部实现⼀个红⿊书使得map的很多操作在lgn的时间复杂度下就可以实现，因此效率⾮常的⾼<br>缺点： 空间占⽤率⾼，因为map内部实现了红⿊树，虽然提⾼了运⾏效率，但是因为每⼀个节点都需要额外保存⽗节点、孩⼦节点和红&#x2F;⿊<br>性质，使得每⼀个节点都占⽤⼤量的空间<br>适⽤处：对于那些有顺序要求的问题，⽤map会更⾼效⼀些<br></td>
+<td></td>
+</tr>
+<tr>
+<td>unorder_map</td>
+<td>优点： 因为内部实现了哈希表，因此其查找速度⾮常的快<br>缺点： 哈希表的建⽴⽐较耗费时间<br>适⽤处：对于查找问题，unordered_map会更加⾼效⼀些，因此遇到查找问题，常会考虑⼀下⽤unordered_map<br></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h4><p><strong>内存占有率的问题</strong>就转化成红⿊树 VS hash表 , 还是unorder_map占⽤的内存要⾼。</p>
+<ul>
+<li>但是unordered_map执⾏效率要⽐map⾼很多</li>
+<li>对于unordered_map或unordered_set容器，其遍历顺序与创建该容器时输⼊的顺序不⼀定相同，因为遍历是按照哈希表从前往后依次遍历的</li>
+</ul>
+<p><strong>map和unordered_map的使⽤</strong></p>
+<ul>
+<li>unordered_map的⽤法和map是⼀样的，提供了 insert，size，count等操作，并且⾥⾯的元素也是以pair类型来存贮的。</li>
+<li>其底层实现是完全不同的，上⽅已经解释了，但是就外部使⽤来说却是⼀致的。</li>
+</ul>
+<h3 id="4-set"><a href="#4-set" class="headerlink" title="4. set"></a>4. set</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// init</span></span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">set</span>&lt;<span class="type">int</span>&gt; myset&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line"><span class="comment">// init 2</span></span><br><span class="line"><span class="type">int</span> arr[] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">set</span>&lt;<span class="type">int</span>&gt; <span class="title function_">myset</span><span class="params">(arr, arr+<span class="number">5</span>)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// insert</span></span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">set</span>&lt;<span class="type">int</span>&gt; myset;</span><br><span class="line">myset.insert(<span class="number">1</span>);</span><br><span class="line">myset.insert(<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// delete</span></span><br><span class="line"><span class="keyword">auto</span> cnt = myset.erase(<span class="number">2</span>); <span class="comment">// 返回删除几个元素，0个，1个</span></span><br><span class="line"><span class="comment">// clear</span></span><br><span class="line">myset.clear();</span><br><span class="line"></span><br><span class="line"><span class="comment">// for </span></span><br><span class="line"><span class="keyword">for</span> (<span class="built_in">std</span>::<span class="built_in">set</span>&lt;<span class="type">int</span>&gt;::iterator it = myset.begin(); it != myset.end(); it++) &#123;</span><br><span class="line"><span class="comment">// or</span></span><br><span class="line"><span class="comment">// for (auto it = myset.begin(); it != myset.end(); it++) &#123;</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; *it &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// for 逆序</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span> it = myset.rbegin(); it != myset.rend(); it++) &#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; *it &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// count 元素查询</span></span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">set</span>&lt;<span class="type">int</span>&gt; myset;</span><br><span class="line">myset.insert(<span class="number">2</span>);</span><br><span class="line">myset.insert(<span class="number">4</span>);</span><br><span class="line">myset.insert(<span class="number">6</span>);</span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; myset.count(<span class="number">4</span>) &lt;&lt; <span class="string">&quot;\n&quot;</span>; <span class="comment">// 1</span></span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; myset.count(<span class="number">8</span>) &lt;&lt; <span class="string">&quot;\n&quot;</span>; <span class="comment">// 0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// find 元素查询</span></span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">set</span>&lt;<span class="type">int</span>&gt; myset = &#123;<span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>&#125;;</span><br><span class="line"><span class="keyword">auto</span> search = myset.find(<span class="number">2</span>);</span><br><span class="line"><span class="keyword">if</span> (search != myset.end()) &#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Found &quot;</span> &lt;&lt; *search &lt;&lt; <span class="string">&quot;\n&quot;</span>; <span class="comment">// Found 2</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Not found\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// empty </span></span><br><span class="line"><span class="keyword">if</span> (myset.empty())</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;empty set &quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://shengyu7697.github.io/std-set/">https://shengyu7697.github.io/std-set/</a></p>
+<h3 id="排列组合"><a href="#排列组合" class="headerlink" title="排列组合"></a>排列组合</h3><p><a target="_blank" rel="noopener" href="https://codeantenna.com/a/Z0YeOt7gu4">算法-递归法实现排列组合C++</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wangdeqiang2007/article/details/78975216">通用 排列&#x2F;组合 函数(c++实现)</a></p>
+<h4 id="全排列-stl"><a href="#全排列-stl" class="headerlink" title="全排列(stl)"></a>全排列(stl)</h4><p>从n个不同元素中任取m（m≤n）个元素，按照一定的顺序排列起来，叫做从n个不同元素中取出m个元素的一个排列。当m&#x3D;n时所有的排列情况叫<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E5%85%A8%E6%8E%92%E5%88%97&spm=1001.2101.3001.7020">全排列</a>。如果这组数有n个，那么全排列数为n!个。</p>
+<p>比如a，b，c的全排列一共有3！&#x3D; 6 种 分别是{a, b, c}、{a, c, b}、{b, a, c}、{b, c, a}、{c, a, b}、{c, b, a}。</p>
+<p>api:</p>
+<p><code>prev_permutation</code></p>
+<p><code>next_permutation</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span> <span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> arr[] = &#123;<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>&#125;;</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;用prev_permutation对3 2 1的全排列&quot;</span>&lt;&lt;endl;</span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; arr[<span class="number">0</span>] &lt;&lt; <span class="string">&#x27; &#x27;</span> &lt;&lt; arr[<span class="number">1</span>] &lt;&lt; <span class="string">&#x27; &#x27;</span> &lt;&lt; arr[<span class="number">2</span>]&lt;&lt;<span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">prev_permutation</span>(arr,arr<span class="number">+3</span>) );      </span><br><span class="line">    <span class="comment">///获取上一个较大字典序排列，如果3改为2，只对前两个数全排列</span></span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> arr1[] = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;;</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;用next_permutation对1 2 3的全排列&quot;</span>&lt;&lt;endl;</span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; arr1[<span class="number">0</span>] &lt;&lt; <span class="string">&#x27; &#x27;</span> &lt;&lt; arr1[<span class="number">1</span>] &lt;&lt; <span class="string">&#x27; &#x27;</span> &lt;&lt; arr1[<span class="number">2</span>] &lt;&lt;<span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">next_permutation</span>(arr1,arr1<span class="number">+3</span>) );      </span><br><span class="line">    <span class="comment">///获取下一个较大字典序排列，如果3改为2，只对前两个数全排列</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">///注意数组顺序，必要时要对数组先进行排序</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="全排列递归思路"><a href="#全排列递归思路" class="headerlink" title="全排列递归思路"></a><strong>全排列递归思路</strong></h5><p>我们可以将这个排列问题画成图形表示，即排列枚举树，比如下图为{1,2,3}的排列枚举树，此树和我们这里介绍的算法完全一致；</p>
+<p> <img src="/2022/05/06/Sub_Language/CPlus/CPlus_Vector/image-20220507112024363.png" alt="image-20220507112024363"></p>
+<p>算法思路：</p>
+<p>(1)n个元素的全排列&#x3D;（n-1个元素的全排列）+（另一个元素作为前缀）；</p>
+<p>(2)出口：如果只有一个元素的全排列，则说明已经排完，则输出数组；</p>
+<p>(3)不断将每个元素放作第一个元素，然后将这个元素作为前缀，并将其余元素继续全排列，等到出口，出口出去后还需要还原数组；</p>
+<h4 id="排列（递归）"><a href="#排列（递归）" class="headerlink" title="排列（递归）"></a>排列（递归）</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** permutaion: 排列。</span></span><br><span class="line"><span class="comment"> * 从n个数中选出m个数的方式，若不考虑顺序Cn(m)，若考虑顺序An(m)</span></span><br><span class="line"><span class="comment"> */</span><span class="comment">/* 问题：密码破解</span></span><br><span class="line"><span class="comment"> * 假设有一个 4 位字母密码，每位密码是 a～e 之间的小写字。</span></span><br><span class="line"><span class="comment"> * 编写代码暴力破解密码。</span></span><br><span class="line"><span class="comment"> * 提示：根据可重复排列的规律，生成所有可能的 4 位密码。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line">using namespace <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Permutation</span> &#123;</span>  </span><br><span class="line">  private:  </span><br><span class="line">    <span class="type">int</span> resultCount_ = <span class="number">0</span>;  </span><br><span class="line">  public:</span><br><span class="line">  <span class="comment">/** Details: 根据输入字母列表，获得所有的排列方式。</span></span><br><span class="line"><span class="comment">   *  params: result- 当前排列形式， candidate- 未排列字母表。</span></span><br><span class="line"><span class="comment">   *  return: null</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="type">void</span> <span class="title function_">breakPassword</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; result, <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; candidate)</span> &#123;    </span><br><span class="line">    <span class="type">int</span> len = candidate.size();    </span><br><span class="line">    <span class="keyword">if</span> (<span class="number">0</span> == len) &#123;      </span><br><span class="line">    <span class="comment">// 无字母剩余，输出排列结果</span></span><br><span class="line">      outputResult(result);</span><br><span class="line">      resultCount_++;      </span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;    </span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;      </span><br><span class="line">      <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; resultNew;</span><br><span class="line">      <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; candidateLeft;</span><br><span class="line">      <span class="comment">// 读取排列字母</span></span><br><span class="line">      resultNew = result;</span><br><span class="line">      resultNew.push_back(candidate[i]);      </span><br><span class="line">      <span class="comment">// 获得剩余字母表</span></span><br><span class="line">      candidateLeft = candidate;   </span><br><span class="line">      <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;::iterator it = candidateLeft.begin();</span><br><span class="line">      candidateLeft.erase(it + i);      </span><br><span class="line">      <span class="comment">// 递归</span></span><br><span class="line">      breakPassword(resultNew, candidateLeft);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;  </span><br><span class="line">  <span class="comment">// 输出结果  </span></span><br><span class="line">  <span class="type">void</span> <span class="title function_">outputResult</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; result)</span> &#123;    </span><br><span class="line">    <span class="keyword">for</span> (<span class="type">unsigned</span> <span class="type">int</span> i = <span class="number">0</span>; i &lt; result.size(); i++) &#123;</span><br><span class="line">      <span class="built_in">cout</span> &lt;&lt; result[i];</span><br><span class="line">    &#125;    </span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  &#125;  </span><br><span class="line">  <span class="comment">// 获得所有可能密码总数    </span></span><br><span class="line">  <span class="type">int</span> <span class="title function_">getResultCount</span><span class="params">()</span> &#123;    </span><br><span class="line">    <span class="keyword">return</span> resultCount_;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">  <span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span> &#123;  </span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; fourAlphabetString = &#123;<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>, <span class="string">&quot;d&quot;</span>, <span class="string">&quot;e&quot;</span>&#125;;  </span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; res;</span><br><span class="line">    Permutation test;</span><br><span class="line">    test.breakPassword(res, fourAlphabetString);  </span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;可能的密码形式：&quot;</span>;  </span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; test.getResultCount() &lt;&lt; <span class="string">&quot;种&quot;</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="组合-数组"><a href="#组合-数组" class="headerlink" title="组合(数组)"></a>组合(数组)</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line">using namespace <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; &amp;<span class="title function_">combination</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; &amp;res, <span class="type">const</span> <span class="type">size_t</span> &amp;choose, <span class="built_in">string</span> &amp;working, <span class="type">const</span> <span class="type">size_t</span> &amp;pos)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (choose &gt; working.size() - pos)</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">size_t</span> i = pos; i != working.size(); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        working[i] = <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (choose == <span class="number">0</span> || pos == working.size())</span><br><span class="line">    &#123;</span><br><span class="line">        res.push_back(working);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">    working[pos] = <span class="string">&#x27;1&#x27;</span>;</span><br><span class="line">    combination(res, choose - <span class="number">1</span>, working, pos + <span class="number">1</span>);</span><br><span class="line">    working[pos] = <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">    combination(res, choose, working, pos + <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; res;</span><br><span class="line">    <span class="type">const</span> <span class="type">size_t</span> choose = <span class="number">3</span>;</span><br><span class="line">    <span class="built_in">string</span> <span class="title function_">working</span><span class="params">(<span class="number">5</span>, <span class="string">&#x27;0&#x27;</span>)</span>;</span><br><span class="line">    combination(res, choose, working, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i != res.size(); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; res[i] &lt;&lt; <span class="string">&#x27;\t&#x27;</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">size_t</span> j = <span class="number">0</span>; j != working.size(); ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (res[i][j] == <span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="built_in">cout</span> &lt;&lt; j + <span class="number">1</span> &lt;&lt; <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="组合-stl-vector"><a href="#组合-stl-vector" class="headerlink" title="组合(stl, vector)"></a>组合(stl, vector)</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;boost/assign.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;boost/function.hpp&gt;</span></span></span><br><span class="line"></span><br><span class="line">using namespace <span class="built_in">std</span>;</span><br><span class="line">using namespace boost;</span><br><span class="line">using namespace boost::assign;</span><br><span class="line"></span><br><span class="line"><span class="keyword">inline</span> <span class="type">void</span> <span class="title function_">print_</span><span class="params">(<span class="type">int</span> t)</span>&#123;<span class="built_in">cout</span>&lt;&lt;t&lt;&lt;<span class="string">&quot; &quot;</span>;&#125;</span><br><span class="line"><span class="keyword">inline</span> <span class="type">void</span> <span class="title function_">print</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;&amp; vec)</span></span><br><span class="line">&#123;</span><br><span class="line">    for_each(vec.begin(),vec.end(),print_);</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//! 全排列测试</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">test1</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; vec;</span><br><span class="line">    vec += <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>;</span><br><span class="line">    sort(vec.begin(),vec.end());</span><br><span class="line">    <span class="type">int</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">    &#123;</span><br><span class="line">       print(vec);</span><br><span class="line">       i++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(next_permutation(vec.begin(),vec.end()));</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;i&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;<span class="comment">//40320</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//! 组合测试</span></span><br><span class="line"><span class="type">size_t</span> <span class="title function_">test2</span><span class="params">(<span class="type">int</span> n,<span class="type">int</span> m,boost::function&lt;<span class="type">void</span>(<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;&amp; vec)&gt; fn)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; p,<span class="built_in">set</span>;</span><br><span class="line">    p.insert(p.end(),m,<span class="number">1</span>);</span><br><span class="line">    p.insert(p.end(),n-m,<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i != p.size();++i)</span><br><span class="line">        <span class="built_in">set</span>.push_back(i+<span class="number">1</span>);</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; vec;</span><br><span class="line">    <span class="type">size_t</span> cnt = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">do</span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i != p.size();++i)</span><br><span class="line">            <span class="keyword">if</span>(p[i])</span><br><span class="line">               vec.push_back(<span class="built_in">set</span>[i]);</span><br><span class="line">        fn(vec);</span><br><span class="line">        cnt ++;</span><br><span class="line">        vec.clear();</span><br><span class="line">    &#125;<span class="keyword">while</span>(prev_permutation(p.begin(), p.end()));</span><br><span class="line">    <span class="keyword">return</span> cnt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// test1();</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;test2(<span class="number">20</span>,<span class="number">3</span>,print)&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="组合（class，递归）"><a href="#组合（class，递归）" class="headerlink" title="组合（class，递归）"></a>组合（class，递归）</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line">using namespace <span class="built_in">std</span>;</span><br><span class="line"><span class="comment">// 组合</span></span><br><span class="line"><span class="comment">// 思想：从一些对象n中选出一部分m(1&lt;=m&lt;=n)，不考虑顺序，可能的形式有几种。</span></span><br><span class="line"><span class="comment">// 应用：队伍参赛排序。自然语言处理中，处理输入词。当输入词相同仅顺序不一致时，</span></span><br><span class="line"><span class="comment">// 可以采用组合的概念将其排序，并认定为意思相同。</span></span><br><span class="line"></span><br><span class="line">template&lt;typename T&gt; <span class="class"><span class="keyword">class</span> <span class="title">Combination</span> &#123;</span>  </span><br><span class="line">private:  </span><br><span class="line">  <span class="type">const</span> <span class="type">int</span> firstPrize;  </span><br><span class="line">  <span class="type">const</span> <span class="type">int</span> secondPrize;  </span><br><span class="line">  <span class="type">const</span> <span class="type">int</span> thirdPrize;  </span><br><span class="line">public:</span><br><span class="line">  Combination(<span class="type">int</span> x, <span class="type">int</span> y, <span class="type">int</span> z)</span><br><span class="line">      : firstPrize(x), secondPrize(y), thirdPrize(z) &#123;</span><br><span class="line">  &#125;  </span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">  * @description:</span></span><br><span class="line"><span class="comment">  * 从10个人中选出三等奖3人，二等奖2人，一等奖1人，不能重复获奖。</span></span><br><span class="line"><span class="comment">  * @param &#123;type&#125; rewardNum- 指定赏金数， result- 奖赏方式结果。</span></span><br><span class="line"><span class="comment">  * @return: null</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="type">void</span> <span class="title function_">rewardMethods</span><span class="params">(<span class="built_in">vector</span>&lt;T&gt; result, <span class="built_in">vector</span>&lt;T&gt; candidate)</span>&#123;    </span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> len = thirdPrize + secondPrize + firstPrize;    </span><br><span class="line">    <span class="keyword">if</span> (result.size() == len) &#123;      </span><br><span class="line">      <span class="comment">// 输出结果</span></span><br><span class="line">      resultOutput(result);      </span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;      </span><br><span class="line">      <span class="keyword">for</span> (<span class="type">unsigned</span> <span class="type">int</span> i = <span class="number">0</span>; i &lt; candidate.size(); i++) &#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; resultNew = result;</span><br><span class="line">        resultNew.push_back(candidate[i]); </span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; candidateNew;</span><br><span class="line">        copyElem(candidate, candidateNew, i + <span class="number">1</span>);</span><br><span class="line">        rewardMethods(resultNew, candidateNew);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;  </span><br><span class="line">  <span class="comment">// 数据复制函数</span></span><br><span class="line">  <span class="type">void</span> <span class="title function_">copyElem</span><span class="params">(<span class="built_in">vector</span>&lt;T&gt;&amp; input, <span class="built_in">vector</span>&lt;T&gt;&amp; output, <span class="type">int</span> i)</span>&#123;    </span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;::iterator it = input.begin() + i;    </span><br><span class="line">    <span class="keyword">for</span> (; it &lt; input.end(); it++) &#123;</span><br><span class="line">      output.push_back(*it);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;  </span><br><span class="line">  <span class="comment">// 输出结果</span></span><br><span class="line">  <span class="type">void</span> <span class="title function_">resultOutput</span><span class="params">(<span class="built_in">vector</span>&lt;T&gt; res)</span> &#123;    </span><br><span class="line">    <span class="keyword">for</span> (<span class="type">unsigned</span> <span class="type">int</span> i = <span class="number">0</span>; i &lt; res.size(); i++) &#123;      </span><br><span class="line">      <span class="keyword">if</span> (i == thirdPrize) <span class="built_in">cout</span> &lt;&lt; <span class="string">&#x27;*&#x27;</span>;     </span><br><span class="line">      <span class="keyword">if</span> (i == thirdPrize + secondPrize) </span><br><span class="line">      <span class="built_in">cout</span> &lt;&lt; <span class="string">&#x27;*&#x27;</span>;      </span><br><span class="line">      <span class="built_in">cout</span> &lt;&lt; res[i] &lt;&lt; <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">    &#125;    </span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">  <span class="comment">// test</span></span><br><span class="line">  <span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">    Combination &lt;<span class="type">int</span>&gt; test(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>);  </span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; res;  <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt; candidate;  </span><br><span class="line">    <span class="comment">// 输入</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">unsigned</span> <span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">      candidate.push_back(i + <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    test.rewardMethods(res, candidate);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="可重复组合（运行Pass）"><a href="#可重复组合（运行Pass）" class="headerlink" title="可重复组合（运行Pass）"></a>可重复组合（运行Pass）</h3><ul>
+<li><p>允许元素重复的一类组合问题</p>
+</li>
+<li><p>用P(n, k)表示从n个元素中选出k个元素（允许重复）的组合问题，那么此问题可以分解为两个子问题：P(n, k-1)和P(n-1, k)，</p>
+</li>
+<li><p>解释如下：</p>
+<ul>
+<li><p>P(n, k)中n个元素的所有k元素组合可以分成两部分。</p>
+</li>
+<li><p>第一部分的每个组合均以第一个元素开始，再连接上k-1个元素的组合，即再连接上P(n,k-1)的每一个组合；</p>
+</li>
+<li><p>第二部分的每个组合不含有第一个元素，即P(n-1, k)中的每一个组合（此时元素为后n-1个元素）。</p>
+</li>
+<li><p>因此，P(n, k)分解为P(n, k-1)和P(n-1, k)。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>如果用f(n, k)表示P(n, k)中的组合数，那么有：<br>（1）当k &#x3D; 1时，f(n, k) &#x3D; n<br>（2）当n &#x3D; 1时，f(n, k) &#x3D; 1<br>（3）当k &gt; 1且n &gt; 1时，f(n, k) &#x3D; f(n, k -1) + f(n-1, k)</p>
+<p>此外，有公式f(n, k) &#x3D; C(n + k -1, k)（表示n+k-1选k的组合数，没有重复元素），这可以用归纳法证明，这里就不啰嗦了。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename ElemType&gt;</span><br><span class="line"><span class="type">void</span> <span class="title function_">CalcRepeatableCombination</span><span class="params">(<span class="type">const</span> ElemType elements[], <span class="type">int</span> num, <span class="type">int</span> k, <span class="built_in">vector</span>&lt;ElemType&gt; &amp;pre, <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;ElemType&gt;&gt; &amp;result)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (k == <span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; num; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// copy(pre.begin(), pre.end(), ostream_iterator&lt;ElemType&gt;(cout));</span></span><br><span class="line">            <span class="comment">// cout &lt;&lt; elements[i];</span></span><br><span class="line">            <span class="comment">// cout &lt;&lt; endl;</span></span><br><span class="line">            <span class="built_in">vector</span>&lt;ElemType&gt; <span class="title function_">tmp</span><span class="params">(pre.begin(), pre.end())</span>;</span><br><span class="line">            tmp.push_back(elements[i]);</span><br><span class="line">            result.push_back(tmp);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (num == <span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// ostream_iterator&lt;ElemType&gt; outIter(cout);</span></span><br><span class="line">        <span class="comment">// outIter = copy(pre.begin(), pre.end(), outIter);</span></span><br><span class="line">        <span class="comment">// fill_n(outIter, k, elements[0]);</span></span><br><span class="line">        <span class="comment">// cout &lt;&lt; endl;</span></span><br><span class="line">        <span class="built_in">vector</span>&lt;ElemType&gt; <span class="title function_">tmp</span><span class="params">(pre.begin(), pre.end())</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; k; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            tmp.push_back(elements[<span class="number">0</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        result.push_back(tmp);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    pre.push_back(elements[<span class="number">0</span>]);</span><br><span class="line">    CalcRepeatableCombination(elements, num, k - <span class="number">1</span>, pre, result);</span><br><span class="line">    pre.pop_back();</span><br><span class="line"></span><br><span class="line">    CalcRepeatableCombination(elements + <span class="number">1</span>, num - <span class="number">1</span>, k, pre, result);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;typename ElemType&gt;</span><br><span class="line"><span class="type">void</span> <span class="title function_">CalcRepeatableCombination</span><span class="params">(<span class="type">const</span> ElemType elements[], <span class="type">int</span> num, <span class="type">int</span> k, <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;ElemType&gt;&gt; &amp;result)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot; num=&quot;</span> &lt;&lt; num &lt;&lt; <span class="string">&quot; k=&quot;</span> &lt;&lt; k &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="comment">// assert(num &gt;= k &amp;&amp; k &gt;= 1);</span></span><br><span class="line">    assert(k &gt;= <span class="number">1</span>);</span><br><span class="line">    <span class="built_in">vector</span>&lt;ElemType&gt; one;</span><br><span class="line">    CalcRepeatableCombination(elements, num, k, one, result);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> elements[] = &#123;<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>, <span class="string">&#x27;d&#x27;</span>&#125;;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="type">char</span>&gt; com_r;</span><br><span class="line">    CalcRepeatableCombination(elements, <span class="number">4</span>, <span class="number">3</span>, com_r);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/C/" rel="tag"># C++</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/05/04/Sub_Language/CPlus/CPlus_Eigne/" rel="prev" title="C++ Eigen矩阵库">
+      <i class="fa fa-chevron-left"></i> C++ Eigen矩阵库
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/05/10/Sub_Language/CPlus/CPlus_Performance/" rel="next" title="C++ 性能优化">
+      C++ 性能优化 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-vector"><span class="nav-number">2.</span> <span class="nav-text">1. vector</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#push-back"><span class="nav-number">2.1.</span> <span class="nav-text">push_back()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#find"><span class="nav-number">2.2.</span> <span class="nav-text">find</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#max"><span class="nav-number">2.3.</span> <span class="nav-text">max</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#vector-TO-%E6%95%B0%E7%BB%84"><span class="nav-number">2.4.</span> <span class="nav-text">vector TO 数组</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1%EF%BC%9Amemcpy"><span class="nav-number">2.4.1.</span> <span class="nav-text">1：memcpy</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2%EF%BC%9A-std-copy-vector-to-arr"><span class="nav-number">2.4.2.</span> <span class="nav-text">2： std::copy  vector to arr</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#max-1"><span class="nav-number">2.5.</span> <span class="nav-text">max</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#vector-%E5%88%87%E7%89%87"><span class="nav-number">2.6.</span> <span class="nav-text">vector 切片</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8E%BB%E9%87%8D"><span class="nav-number">2.7.</span> <span class="nav-text">去重</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Map"><span class="nav-number">3.</span> <span class="nav-text">2. Map</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-number">3.1.</span> <span class="nav-text">构造函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE"><span class="nav-number">3.2.</span> <span class="nav-text">插入数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E6%89%BE"><span class="nav-number">3.3.</span> <span class="nav-text">查找</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%81%8D%E5%8E%86"><span class="nav-number">3.4.</span> <span class="nav-text">遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E4%B8%8E%E6%B8%85%E7%A9%BA%E5%85%83%E7%B4%A0"><span class="nav-number">3.5.</span> <span class="nav-text">删除与清空元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%A7%E5%B0%8F"><span class="nav-number">3.6.</span> <span class="nav-text">大小</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-unordered-map"><span class="nav-number">4.</span> <span class="nav-text">3. unordered_map</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8BHashmap"><span class="nav-number">4.1.</span> <span class="nav-text">建立Hashmap</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%81%8D%E5%8E%86Map"><span class="nav-number">4.2.</span> <span class="nav-text">遍历Map</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%A8%E6%9E%90-map-VS-unordered-map"><span class="nav-number">5.</span> <span class="nav-text">辨析.map VS unordered_map</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="nav-number">5.1.</span> <span class="nav-text">总结：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-set"><span class="nav-number">6.</span> <span class="nav-text">4. set</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%92%E5%88%97%E7%BB%84%E5%90%88"><span class="nav-number">7.</span> <span class="nav-text">排列组合</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%A8%E6%8E%92%E5%88%97-stl"><span class="nav-number">7.1.</span> <span class="nav-text">全排列(stl)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%A8%E6%8E%92%E5%88%97%E9%80%92%E5%BD%92%E6%80%9D%E8%B7%AF"><span class="nav-number">7.1.1.</span> <span class="nav-text">全排列递归思路</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8E%92%E5%88%97%EF%BC%88%E9%80%92%E5%BD%92%EF%BC%89"><span class="nav-number">7.2.</span> <span class="nav-text">排列（递归）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%84%E5%90%88-%E6%95%B0%E7%BB%84"><span class="nav-number">7.3.</span> <span class="nav-text">组合(数组)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%84%E5%90%88-stl-vector"><span class="nav-number">7.4.</span> <span class="nav-text">组合(stl, vector)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%84%E5%90%88%EF%BC%88class%EF%BC%8C%E9%80%92%E5%BD%92%EF%BC%89"><span class="nav-number">7.5.</span> <span class="nav-text">组合（class，递归）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E9%87%8D%E5%A4%8D%E7%BB%84%E5%90%88%EF%BC%88%E8%BF%90%E8%A1%8CPass%EF%BC%89"><span class="nav-number">8.</span> <span class="nav-text">可重复组合（运行Pass）</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

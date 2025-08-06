@@ -1,0 +1,1767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Simon Shi的小站">
+<meta property="og:url" content="https://novav.github.io/page/26/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="AI,Machine Learning, Deep Learning">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://novav.github.io/page/26/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2020/03/17/Sub_Language/CVs/Language-Open3d/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/17/Sub_Language/CVs/Language-Open3d/" class="post-title-link" itemprop="url">Open3d API</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-17 15:41:20" itemprop="dateCreated datePublished" datetime="2020-03-17T15:41:20+00:00">2020-03-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Graphices/" itemprop="url" rel="index"><span itemprop="name">Graphices</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Graphices/Open3D/" itemprop="url" rel="index"><span itemprop="name">Open3D</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Open3D API</p>
+<p>[TOC]</p>
+<h2 id="Open3D-demo"><a href="#Open3D-demo" class="headerlink" title="Open3D demo"></a>Open3D demo</h2><p>文件读取</p>
+<h3 id="PointCloud："><a href="#PointCloud：" class="headerlink" title="PointCloud："></a>PointCloud：</h3><ul>
+<li>1 文件读取</li>
+<li>2 数组数据读取</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Testing IO for point cloud ...&quot;</span>)</span><br><span class="line">pcd = o3d.io.read_point_cloud(<span class="string">&quot;../../TestData/fragment.pcd&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(pcd)</span><br><span class="line">o3d.io.write_point_cloud(<span class="string">&quot;copy_of_fragment.pcd&quot;</span>, pcd)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">source = o3d.io.read_point_cloud(<span class="string">&quot;../TestData/ICP/cloud_bin_0.pcd&quot;</span>)</span><br><span class="line">target = o3d.io.read_point_cloud(<span class="string">&quot;../TestData/ICP/cloud_bin_1.pcd&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="TriMesh"><a href="#TriMesh" class="headerlink" title="TriMesh:"></a>TriMesh:</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Testing IO for meshes ...&quot;</span>)</span><br><span class="line">mesh = o3d.io.read_triangle_mesh(<span class="string">&quot;../../TestData/knot.ply&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(mesh)</span><br><span class="line">o3d.io.write_triangle_mesh(<span class="string">&quot;copy_of_knot.ply&quot;</span>, mesh)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Image："><a href="#Image：" class="headerlink" title="Image："></a>Image：</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Testing IO for textured meshes ...&quot;</span>)</span><br><span class="line">textured_mesh = o3d.io.read_triangle_mesh(<span class="string">&quot;../../TestData/crate/crate.obj&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(textured_mesh)</span><br><span class="line">o3d.io.write_triangle_mesh(<span class="string">&quot;copy_of_crate.obj&quot;</span>,</span><br></pre></td></tr></table></figure>
+
+<h3 id="TriMesh-to-PointCloud-v1"><a href="#TriMesh-to-PointCloud-v1" class="headerlink" title="TriMesh to PointCloud v1"></a>TriMesh to PointCloud v1</h3><p>​        triMesh完全PointCloud读取</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">load_ply_point_cloud</span>(<span class="params">filename,voxel_size=<span class="number">0.5</span></span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Load a ply point cloud, print it, and render it&quot;</span>)</span><br><span class="line">    mesh= open3d.io.read_triangle_mesh(filename)</span><br><span class="line">    voxel_mesh = open3d.geometry.VoxelGrid.create_from_triangle_mesh(mesh)</span><br><span class="line">    <span class="keyword">return</span> mesh,voxel_mesh</span><br><span class="line"></span><br><span class="line">points_ar = []</span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> voxel_mesh.voxels:</span><br><span class="line">    points_ar.append(x.grid_index)</span><br><span class="line">points = np.array(points_ar)</span><br><span class="line">pcd = open3d.geometry.PointCloud()</span><br><span class="line">pcd.points = open3d.utility.Vector3dVector(points)</span><br></pre></td></tr></table></figure>
+
+<h3 id="TriMesh-to-PointCloud-v2"><a href="#TriMesh-to-PointCloud-v2" class="headerlink" title="TriMesh to PointCloud v2"></a>TriMesh to PointCloud v2</h3><p>​        采样的方式，进行采用PointCloud</p>
+<p><code>sample_points_poisson_disk</code><strong>(<em><strong>self</strong></em>,</strong> <em>number_of_points</em><strong>,</strong> <em>init_factor&#x3D;5</em><strong>,</strong> <em>pcl&#x3D;None</em><strong>)</strong></p>
+<p>​        函数从网格中取样点，其中每个点到邻近点的距离大致相同(蓝色噪声)。 方法是基于 Yuksel</p>
+<p><code>sample_points_uniformly</code><strong>(<em><strong>self 自我</strong></em>,</strong> <em>number_of_points&#x3D;100 点数100</em><strong>)</strong></p>
+<p>​        函数来均匀地从网格中取样点。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Load a ply point could, print, render it&quot;</span>)</span><br><span class="line">mesh= open3d.io.read_triangle_mesh(filename)</span><br><span class="line">o3d.geometry.TriangleMesh.sample_points_uniformly(mesh, voxel_size)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Voxel"><a href="#Voxel" class="headerlink" title="Voxel"></a>Voxel</h3><p>Base Voxel class, containing grid id and color</p>
+<p>基本体素类，包含网格 id 和颜色</p>
+<h3 id="VoxelGrid"><a href="#VoxelGrid" class="headerlink" title="VoxelGrid"></a>VoxelGrid</h3><p>open3d.geometry.VoxelGrid</p>
+<h3 id="可视化"><a href="#可视化" class="headerlink" title="可视化"></a>可视化</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">source = o3.io.read_point_cloud(mscan)</span><br><span class="line">o3.visualization.draw_geometries([source])</span><br></pre></td></tr></table></figure>
+
+<h2 id="API-detail"><a href="#API-detail" class="headerlink" title="API detail"></a>API detail</h2><h3 id="open3d-gemotry-TriangleMesh"><a href="#open3d-gemotry-TriangleMesh" class="headerlink" title="open3d.gemotry.TriangleMesh"></a>open3d.gemotry.TriangleMesh</h3><p><em>static</em><code>create_from_point_cloud_alpha_shape</code><strong>(<em><strong>pcd</strong></em>,</strong> <em>alpha</em><strong>,</strong> <em>tetra_mesh</em><strong>,</strong> <em>pt_map</em><strong>)</strong></p>
+<p><em>static</em><code>create_from_point_cloud_ball_pivoting</code><strong>(<em><strong>pcd</strong></em>,</strong> <em>radii</em><strong>)</strong></p>
+<p><em>static</em><code>create_from_point_cloud_poisson</code><strong>(<em><strong>pcd</strong></em>,</strong> <em>depth&#x3D;8</em><strong>,</strong> <em>width&#x3D;0</em><strong>,</strong> <em>scale&#x3D;1.1</em><strong>,</strong> <em>linear_fit&#x3D;False</em><strong>)</strong></p>
+<h3 id="open3d-registration-registration-ransac-based-on-feature-matching"><a href="#open3d-registration-registration-ransac-based-on-feature-matching" class="headerlink" title="open3d.registration.registration_ransac_based_on_feature_matching"></a>open3d.registration.registration_ransac_based_on_feature_matching</h3><p>Parameters</p>
+<ul>
+<li><strong>source</strong> (<a target="_blank" rel="noopener" href="http://www.open3d.org/docs/release/python_api/open3d.geometry.PointCloud.html#open3d.geometry.PointCloud"><em>open3d.geometry.PointCloud</em></a>) – The source point cloud.</li>
+<li><strong>target</strong> (<a target="_blank" rel="noopener" href="http://www.open3d.org/docs/release/python_api/open3d.geometry.PointCloud.html#open3d.geometry.PointCloud"><em>open3d.geometry.PointCloud</em></a>) – The target point cloud.</li>
+<li><strong>source_feature</strong> (<a target="_blank" rel="noopener" href="http://www.open3d.org/docs/release/python_api/open3d.registration.Feature.html#open3d.registration.Feature"><em>open3d.registration.Feature</em></a>) – Source point cloud feature.</li>
+<li><strong>target_feature</strong> (<a target="_blank" rel="noopener" href="http://www.open3d.org/docs/release/python_api/open3d.registration.Feature.html#open3d.registration.Feature"><em>open3d.registration.Feature</em></a>) – Target point cloud feature.</li>
+<li><strong>max_correspondence_distance</strong> (<em>float</em>) – Maximum correspondence points-pair distance.</li>
+<li><strong>estimation_method</strong> (<a target="_blank" rel="noopener" href="http://www.open3d.org/docs/release/python_api/open3d.registration.TransformationEstimation.html#open3d.registration.TransformationEstimation"><em>open3d.registration.TransformationEstimation</em></a><em>,</em> <em>optional</em><em>,</em> <em>default&#x3D;registration::TransformationEstimationPointToPoint without scaling.</em>) – Estimation method. One of (<code>registration::TransformationEstimationPointToPoint</code>, <code>registration::TransformationEstimationPointToPlane</code>)</li>
+<li><strong>ransac_n</strong> (<em>int</em><em>,</em> <em>optional</em><em>,</em> <em>default&#x3D;4</em>) – Fit ransac with <code>ransac_n</code> correspondences</li>
+<li><strong>checkers</strong> (<em>List</em><em>[</em><a target="_blank" rel="noopener" href="http://www.open3d.org/docs/release/python_api/open3d.registration.CorrespondenceChecker.html#open3d.registration.CorrespondenceChecker"><em>open3d.registration.CorrespondenceChecker</em></a><em>]**,</em> <em>optional</em><em>,</em> <em>default&#x3D;<strong>[</strong>]</em>) – checkers</li>
+<li><strong>criteria</strong> (<a target="_blank" rel="noopener" href="http://www.open3d.org/docs/release/python_api/open3d.registration.RANSACConvergenceCriteria.html#open3d.registration.RANSACConvergenceCriteria"><em>open3d.registration.RANSACConvergenceCriteria</em></a><em>,</em> <em>optional</em><em>,</em> <em>default&#x3D;registration::RANSACConvergenceCriteria class with max_iteration&#x3D;100000</em><em>,</em> <em>and max_validation&#x3D;100</em>) – Convergence criteria</li>
+</ul>
+<p>Returns</p>
+<p>​        open3d.registration.RegistrationResult</p>
+<h3 id="open3d-registration-RegistrationResult"><a href="#open3d-registration-RegistrationResult" class="headerlink" title="open3d.registration.RegistrationResult"></a>open3d.registration.RegistrationResult</h3><ul>
+<li><p><em>property</em><code>correspondence_set</code></p>
+<p>Correspondence set between source and target point cloud.Type<code>n x 2</code> int numpy array</p>
+<p>源点云与目标点云之间的对应集[source, target]。（此处的源点云与目标点云，均是采样过后的对应关系之间）</p>
+</li>
+<li><p><em>property</em><code>fitness</code></p>
+<p>The overlapping area (# of inlier correspondences &#x2F; # of points in target). Higher is better.Typefloat</p>
+<p>重叠区域(向内对应的 # &#x2F; 目标点的 #)。越高越好。</p>
+</li>
+<li><p><em>property</em><code>inlier_rmse</code></p>
+<p>RMSE of all inlier correspondences. Lower is better.Typefloat</p>
+<p>所有相关函数的 RMSE。越低越好。</p>
+</li>
+<li><p><em>property</em><code>transformation</code></p>
+<p>The estimated transformation matrix.Type<code>4 x 4</code> float64 numpy array</p>
+<p>估计的变换矩阵。</p>
+</li>
+</ul>
+<h3 id="open3d-registration-CorrespondenceCheckerBasedOnDistance"><a href="#open3d-registration-CorrespondenceCheckerBasedOnDistance" class="headerlink" title="open3d.registration.CorrespondenceCheckerBasedOnDistance"></a>open3d.registration.CorrespondenceCheckerBasedOnDistance</h3><p>​        Class to check if aligned point clouds are close (less than specified threshold).</p>
+<p>​        检查对齐的点云是否关闭(小于指定的阈值)。</p>
+<h3 id="open3d-registration-CorrespondenceCheckerBasedOnEdgeLength"><a href="#open3d-registration-CorrespondenceCheckerBasedOnEdgeLength" class="headerlink" title="open3d.registration.CorrespondenceCheckerBasedOnEdgeLength"></a>open3d.registration.CorrespondenceCheckerBasedOnEdgeLength</h3><p>​        Check if two point clouds build the polygons with similar edge lengths. That is, checks if the lengths of any two arbitrary edges (line formed by two vertices) individually drawn withinin source point cloud and within the target point cloud with correspondences are similar. The only parameter similarity_threshold is a number between 0 (loose) and 1 (strict)</p>
+<p>​        检查两个点云是否构建边长相似的多边形。 也就是说，检查在源点云和目标点云中单独绘制的任意两条边(由两个顶点组成的直线)的长度是否相似。 唯一的参数相似性阈值是介于0(宽松)和1(严格)之间的数字</p>
+<h3 id="open3d-registration-RANSACConvergenceCriteria"><a href="#open3d-registration-RANSACConvergenceCriteria" class="headerlink" title="open3d.registration.RANSACConvergenceCriteria"></a>open3d.registration.RANSACConvergenceCriteria</h3><p>​    定义 RANSAC 的收敛准则。 如果迭代次数达到最大迭代次数，或者验证已经运行了最大验证次数，则 RANSAC 算法停止。 注意，验证是迭代中最昂贵的计算运算符。 大多数迭代并不完全进行验证。 这是至关重要的，以控制最大验证，使计算时间是可接受的。</p>
+<h3 id="open3d-geometry-PointCloud"><a href="#open3d-geometry-PointCloud" class="headerlink" title="open3d.geometry.PointCloud"></a>open3d.geometry.PointCloud</h3><p>​        crop**(<strong>bounding_box</strong>,** <em>bounding_box</em><strong>)</strong></p>
+<h3 id="open3d-geometry-OrientedBoundingBox"><a href="#open3d-geometry-OrientedBoundingBox" class="headerlink" title="open3d.geometry.OrientedBoundingBox"></a>open3d.geometry.OrientedBoundingBox</h3><p>​        static <strong>create_from_points</strong></p>
+<p>​        get_max_bound**(<strong>self</strong>)**</p>
+<p>​        <strong>get_min_bound</strong>(self)</p>
+<p>​        <strong>get_oriented_bounding_box</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2020/03/17/CV_3D/CV-3D-Transform/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/17/CV_3D/CV-3D-Transform/" class="post-title-link" itemprop="url">三维坐标变换原理-平移, 旋转, 缩放</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-17 10:39:11" itemprop="dateCreated datePublished" datetime="2020-03-17T10:39:11+00:00">2020-03-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CG/" itemprop="url" rel="index"><span itemprop="name">CG</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CG/transform/" itemprop="url" rel="index"><span itemprop="name">transform</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[TOC]</p>
+<p><a target="_blank" rel="noopener" href="https://www.syen.me/article/2019/05/20/three-dimensions-transform">三维坐标变换原理-平移, 旋转, 缩放</a></p>
+<h1 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h1><h2 id="齐次坐标"><a href="#齐次坐标" class="headerlink" title="齐次坐标"></a>齐次坐标</h2><p>给定一个二维点(x, y)，那么形如(kx, ky, k)的所有三元组就都是等价的，它们就是这个点的齐次坐标(homogeneous)。齐次坐标就是将一个原本是n维的向量用一个n+1维向量来表示，是指一个用于投影几何里的坐标系统，如同用于欧氏几何里的笛卡儿坐标一般</p>
+<h2 id="矩阵的乘法"><a href="#矩阵的乘法" class="headerlink" title="矩阵的乘法"></a>矩阵的乘法</h2><p>矩阵的乘法运算，阮一峰老师写的比较清楚,具体可以看 <a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2015/09/matrix-multiplication.html">这里</a></p>
+<h2 id="矩阵的线性变换"><a href="#矩阵的线性变换" class="headerlink" title="矩阵的线性变换"></a>矩阵的线性变换</h2><p>矩阵的线性变换就是从一个线性空间 $V_1$ 的某一个点跃迁到另一个线性空间  $V_2$ 的另一个点的运动。也就是说是一个点不仅可以变换到同一个线性空间中的另一个点，而且可以变换到另一个线性空间中的另一个点去</p>
+<p><strong>矩阵和线性变换之间的关系</strong>： 矩阵本身描述了一个坐标系，矩阵与矩阵的乘法描述了一个运动。换句话说：如果矩阵仅仅自己出现，那么他描述了一个坐标系，如果他和另一个矩阵或向量同时出现，而且做乘法运算，那么它表示运动（线性变换）</p>
+<p>数学表述为: $\vec{b}&#x3D;M\vec{a}$, 即矩阵 M 描述了向量 $a$ 到向量$b$ 的运动</p>
+<p>如将三维坐标D1经过矩阵M变换到坐标D2, 就可以表达为： </p>
+<p>$$<br>D_2 &#x3D; D_1 \cdot M &#x3D;<br>\left[<br>\begin{matrix} a1 &amp; b1 &amp; c1 \ b2 &amp; b2 &amp; c2 \ a3 &amp; b3 &amp; c3 \end{matrix}<br>\right]<br>\left( \begin{matrix} z1 \ y2 \ z3 \end{matrix} \right)<br>&#x3D; x1 \left( \begin{matrix} z1 \ y2 \ z3 \end{matrix} \right)</p>
+<ul>
+<li>y2 \left( \begin{matrix} b1 \ b2 \ b3 \end{matrix} \right)</li>
+<li>z3 \left( \begin{matrix} c1 \ c2 \ c3 \end{matrix} \right)<br>&#x3D; \left( \begin{matrix} X \ Y \ Z \end{matrix} \right)<br>$$</li>
+</ul>
+<h1 id="坐标变换"><a href="#坐标变换" class="headerlink" title="坐标变换"></a>坐标变换</h1><h3 id="平移"><a href="#平移" class="headerlink" title="平移"></a>平移</h3><p>假设在三维空间坐标系中, 点Ai​(x, y, z)在x方向移动了dx, y方向移动dy, z方向移动了dz。到达点Aj​(X, Y, Z), 则</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">X = x + dx</span><br><span class="line">Y = y + dy</span><br><span class="line">Z = z + dz</span><br></pre></td></tr></table></figure>
+
+<p>如上所述, 则存在一个平移矩阵M,使得Ai​M&#x3D;Aj​，但是在纯粹的三维矩阵中，我们永远也找不到这样一个矩阵M使条件成立。此时可以借助齐次坐标。齐次坐标规定用一个n+1维度的向量来表示原来的n维向量. 此时将Ai(x, y, z) 表示为(x, y, z, 1), 则可以得到矩阵M</p>
+<p><img src="/2020/03/17/CV_3D/CV-3D-Transform/2024-04-03-12-06-39-image.png"></p>
+<p>验证: 假设Ai(4, 8, 2), x方向移动了dx, y方向移动dy, z方向移动了dz, 则Aj(4+dx, 8+dy , 2+dz) </p>
+<p><img src="/2020/03/17/CV_3D/CV-3D-Transform/2024-04-03-12-07-12-image.png"></p>
+<h3 id="缩放"><a href="#缩放" class="headerlink" title="缩放"></a>缩放</h3><p>假设在三维空间坐标系中, 点Ai(x, y, z)在x方向缩放了Sx, y方向缩放了Sy, z方向缩放了Sz。到达点Aj(X, Y, Z), 则</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">X = x * Sx</span><br><span class="line">Y = y * Sy</span><br><span class="line">Z = z * Sz</span><br></pre></td></tr></table></figure>
+
+<p>同理，缩放矩阵为</p>
+<p><img src="/2020/03/17/CV_3D/CV-3D-Transform/2024-04-03-12-07-53-image.png"></p>
+<h3 id="旋转"><a href="#旋转" class="headerlink" title="旋转"></a>旋转</h3><p>矩阵的旋转比较复杂，需要涉及到三角函数。 点Ai(x, y, z)绕X轴旋转θ度时， 到达点Aj(X, Y, Z), 则</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">X = X</span><br><span class="line">Y = y*cosθ - y*sinθ</span><br><span class="line">z = z*sinθ + z*cosθ</span><br></pre></td></tr></table></figure>
+
+<p>矩阵M为</p>
+<p><img src="/2020/03/17/CV_3D/CV-3D-Transform/2024-04-03-12-08-19-image.png"></p>
+<p>绕Y轴旋转时</p>
+<p><img src="/2020/03/17/CV_3D/CV-3D-Transform/2024-04-03-12-08-30-image.png"></p>
+<p>绕Z轴旋转时</p>
+<p><img src="/2020/03/17/CV_3D/CV-3D-Transform/2024-04-03-12-08-36-image.png"></p>
+<p>欧拉变换是绕3个旋转轴的旋转矩阵的乘积</p>
+<h1 id="Open3D示例"><a href="#Open3D示例" class="headerlink" title="Open3D示例"></a>Open3D示例</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> open3d <span class="keyword">as</span> o3d</span><br><span class="line"><span class="keyword">import</span> copy</span><br><span class="line"></span><br><span class="line">vec = np.identity(<span class="number">4</span>)</span><br><span class="line">vec[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">2</span></span><br><span class="line">vec[<span class="number">1</span>][<span class="number">1</span>] = <span class="number">2</span></span><br><span class="line">vec[<span class="number">2</span>][<span class="number">2</span>] = <span class="number">2</span></span><br><span class="line"><span class="built_in">print</span>(vec)</span><br><span class="line"></span><br><span class="line"><span class="comment"># filename = &#x27;data/hello_smpl_stand_new.ply&#x27;</span></span><br><span class="line">mbody = <span class="string">&#x27;/home/simon/tf_demo/vton3d/3dface/Align/data/hello_smpl_stand_new.ply&#x27;</span></span><br><span class="line">mface = <span class="string">&#x27;/home/simon/tf_demo/vton3d/3dface/Align/data/mx_new.ply&#x27;</span></span><br><span class="line"></span><br><span class="line">mmbody = o3d.io.read_triangle_mesh(mbody)</span><br><span class="line"></span><br><span class="line">mesh_face = o3d.io.read_triangle_mesh(mface)</span><br><span class="line">mmface = o3d.geometry.Geometry3D.transform(mesh_face, vec)</span><br><span class="line"><span class="built_in">print</span>(mmface)</span><br><span class="line"></span><br><span class="line">o3d.visualization.draw_geometries([mmface, mmbody])</span><br></pre></td></tr></table></figure>
+
+<p>问题：给定两个坐标，如何计算变换矩阵？</p>
+<h1 id="webgl示例分析"><a href="#webgl示例分析" class="headerlink" title="webgl示例分析"></a>webgl示例分析</h1><p>在webgl中, 在矩阵变换常用的库<a target="_blank" rel="noopener" href="http://glmatrix.net/">glmatrix</a>中有计算平移矩阵的<strong>translate</strong>方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Translate a mat4 by the given vector</span><br><span class="line"> *</span><br><span class="line"> * @param &#123;mat4&#125; out the receiving matrix</span><br><span class="line"> * @param &#123;mat4&#125; a the matrix to translate</span><br><span class="line"> * @param &#123;vec3&#125; v vector to translate by</span><br><span class="line"> * @returns &#123;mat4&#125; out</span><br><span class="line"> */</span><br><span class="line">function translate(out, a, v) &#123;</span><br><span class="line">  var x = v[0],</span><br><span class="line">      y = v[1],</span><br><span class="line">      z = v[2];</span><br><span class="line">  var a00 = void 0,</span><br><span class="line">      a01 = void 0,</span><br><span class="line">      a02 = void 0,</span><br><span class="line">      a03 = void 0;</span><br><span class="line">  var a10 = void 0,</span><br><span class="line">      a11 = void 0,</span><br><span class="line">      a12 = void 0,</span><br><span class="line">      a13 = void 0;</span><br><span class="line">  var a20 = void 0,</span><br><span class="line">      a21 = void 0,</span><br><span class="line">      a22 = void 0,</span><br><span class="line">      a23 = void 0;</span><br><span class="line"></span><br><span class="line">  if (a === out) &#123;</span><br><span class="line">    out[12] = a[0] * x + a[4] * y + a[8] * z + a[12];</span><br><span class="line">    out[13] = a[1] * x + a[5] * y + a[9] * z + a[13];</span><br><span class="line">    out[14] = a[2] * x + a[6] * y + a[10] * z + a[14];</span><br><span class="line">    out[15] = a[3] * x + a[7] * y + a[11] * z + a[15];</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    a00 = a[0];a01 = a[1];a02 = a[2];a03 = a[3];</span><br><span class="line">    a10 = a[4];a11 = a[5];a12 = a[6];a13 = a[7];</span><br><span class="line">    a20 = a[8];a21 = a[9];a22 = a[10];a23 = a[11];</span><br><span class="line"></span><br><span class="line">    out[0] = a00;out[1] = a01;out[2] = a02;out[3] = a03;</span><br><span class="line">    out[4] = a10;out[5] = a11;out[6] = a12;out[7] = a13;</span><br><span class="line">    out[8] = a20;out[9] = a21;out[10] = a22;out[11] = a23;</span><br><span class="line"></span><br><span class="line">    out[12] = a00 * x + a10 * y + a20 * z + a[12];</span><br><span class="line">    out[13] = a01 * x + a11 * y + a21 * z + a[13];</span><br><span class="line">    out[14] = a02 * x + a12 * y + a22 * z + a[14];</span><br><span class="line">    out[15] = a03 * x + a13 * y + a23 * z + a[15];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  return out;</span><br><span class="line">&#125;</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<p>通常使用translate方法来创建一个平移矩阵, 之后再shader中便可以通过这个平移矩阵来计算gl_Position的值。 通过上面的结果我们知道平移矩阵由最后四位数决定, 所以只需要计算数组的最后四位数即可。 根据矩阵的运算法则, 即可得到结果。</p>
+<p>通常如果在webgl想创建一个平移矩阵, 可以使用下面的方式。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var translateMatrix = mat4.create(); //创建单位矩阵</span><br><span class="line">mat4.translate(translateMatrix, translateMatrix, vec3.fromValues(dx, dy, dz));</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<p>得到平移矩阵后，传递到顶点shader中与需要计算的点相乘即可得到目标点的坐标。</p>
+<h3 id="ref"><a href="#ref" class="headerlink" title="ref"></a>ref</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u014090429/article/details/100762308">人脸姿态估计（计算欧拉角）-CSDN博客</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2020/03/16/CV/CV-Face-Recognition/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/16/CV/CV-Face-Recognition/" class="post-title-link" itemprop="url">计算机视觉--人脸识别发展</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-16 18:51:57" itemprop="dateCreated datePublished" datetime="2020-03-16T18:51:57+00:00">2020-03-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV-Apply/" itemprop="url" rel="index"><span itemprop="name">CV_Apply</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV-Apply/Face-Recongnition/" itemprop="url" rel="index"><span itemprop="name">Face Recongnition</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>人脸识别技术的发展经历了以下三个阶段</strong></p>
+<p>第一阶段，主要研究<strong>简单背景中的人脸的识别和人脸识别过程中所需的面部特征</strong>。二十世纪七十年代，得利于电脑的发展，开始有研发人员利用电脑搭建质量较高的人脸灰度图模型。在这个阶段的研究虽然人脸识别还未能真正落地应用，但是对设计师机器识别人脸算法和系统的工程师有很重要的引导。</p>
+<p>第二阶段，主要研究的是<strong>人机交互式的人脸识别</strong>。同样的，这主要还是老外们在研究，lesk和harmon采用几何特征参数和多维特征向量共同描述人脸图像信息，同时基于这种思想开发了图像识别系统。Kobayashi和kaya将统计识别的相关理论应用到人脸识别众，采用欧式几何距离来描述面部特征，比如嘴唇和鼻子的距离、鼻子和眼睛的距离等等。Stonham则提出了一种单隐层的自适应神经网络来进行人脸识别和表情分析。尽管如此，这个阶段还是没有摆脱人工干预，还是需要操作员的某些经验知识。</p>
+<p>第三阶段，**机器自动识别阶段。**随着计算机硬件配置的不断提高和算法的不断改善和提高，人脸识别的运算速度和效率也越来越高。不仅能自动识别正面的光照良好、没有遮挡的面部，而且对不用姿态、不同表情、不同年龄、不同光照的人脸也能进行识别。甚至可以识别出表情、年龄等信息。现今，机器识别的准确率已经超越了人类。</p>
+<p>近几年来，随着数据库训练基础的大大增加，和神经技术的累积，再加之统计学和数据学的发展，才逐渐走向了成熟。加上计算机的发展、物联网、互联网行业的快速发展，人脸识别的精度也逐渐上升，人脸识别技术也得到了前所未有的发展。人脸识别算法的更新、扫描方式、对比方式、数据库，各个环节相关打通，人脸识别终端设备终于投入到实际生产以及服务中来。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2020/03/16/CV/CV-GAN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/16/CV/CV-GAN/" class="post-title-link" itemprop="url">计算机视觉--GAN</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-16 18:51:57" itemprop="dateCreated datePublished" datetime="2020-03-16T18:51:57+00:00">2020-03-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/" itemprop="url" rel="index"><span itemprop="name">CV</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/Networks/" itemprop="url" rel="index"><span itemprop="name">Networks</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/Networks/GAN/" itemprop="url" rel="index"><span itemprop="name">GAN</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[TOC]</p>
+<h1 id="GAN"><a href="#GAN" class="headerlink" title="GAN"></a>GAN</h1><p>1、模型发展、理论改进</p>
+<p> PGGAN、SNGAN、SAGAN、BigGAN、StyleGAN 等，这些模型都还在强调如何通过随机采样生成高质量图像。</p>
+<p>2、应用领域发展</p>
+<p>如 FUNIT、SPADE 等已经将注意力放在了应用层，也就是如何利用 GAN 做好图像翻译等实际应用任务。</p>
+<h2 id="Image-to-Image-Translation"><a href="#Image-to-Image-Translation" class="headerlink" title="Image-to-Image Translation"></a>Image-to-Image Translation</h2><ul>
+<li>局部纹理间的转换展开的，例如人脸属性变换、画作的风格变换、图像分割等，</li>
+<li>语义联系模型转换，引入注意力机制（U-GAT-IT）<ul>
+<li>采用全局和平均池化下的类激活图（Class Activation Map-CAM）[2]来实现的</li>
+<li>再加上<strong>自适应图层实例归一化</strong>（AdaLIN），其作用是帮助注意力引导模型灵活控制形状和纹理的变化量。</li>
+</ul>
+</li>
+</ul>
+<h3 id="pix2pix（监督学习）"><a href="#pix2pix（监督学习）" class="headerlink" title="pix2pix（监督学习）"></a>pix2pix（监督学习）</h3><h3 id="pix2pipxHD"><a href="#pix2pipxHD" class="headerlink" title="pix2pipxHD"></a>pix2pipxHD</h3><h3 id="CycleGan（非监督学习）"><a href="#CycleGan（非监督学习）" class="headerlink" title="CycleGan（非监督学习）"></a>CycleGan（非监督学习）</h3><h3 id="UNIT-citeUNIT"><a href="#UNIT-citeUNIT" class="headerlink" title="UNIT citeUNIT"></a>UNIT citeUNIT</h3><h3 id="MUNIT-9"><a href="#MUNIT-9" class="headerlink" title="MUNIT [9]"></a>MUNIT [9]</h3><p>将图像分解为领域不变的内容代码和捕获领域特定属性的样式代码，从而可以扩展到多对多映射。</p>
+<h3 id="U-GAT-IT-★★★★★"><a href="#U-GAT-IT-★★★★★" class="headerlink" title="U-GAT-IT (★★★★★)"></a>U-GAT-IT (★★★★★)</h3><p>基于GAN的新型无监督图像转换 </p>
+<p><a target="_blank" rel="noopener" href="https://www.sohu.com/a/333947112_500659">https://www.sohu.com/a/333947112_500659</a></p>
+<h3 id="FUNIT"><a href="#FUNIT" class="headerlink" title="FUNIT"></a>FUNIT</h3><h3 id="SPADE"><a href="#SPADE" class="headerlink" title="SPADE"></a>SPADE</h3><p>论文标题：《Semantic Image Synthesis with Spatially-Adaptive Normalization》</p>
+<p>论文链接：CVPR 2019 Open Access Repository</p>
+<p>源码链接：<a target="_blank" rel="noopener" href="https://github.com/NVlabs/SPADE">https://github.com/NVlabs/SPADE</a></p>
+<p>语义图像合成是指基于语义分割的结果来生成真实图片，过程如下图所示。很显然，这是图像语义分割的反过程；但不同的是，语义分割由真实图片分割出来的结果应该是唯一的(one-to-one mapping)，而语义图像合成的结果只要是合理的就可以了，也就是说有多样的结果(one-to-many mapping)。</p>
+<p>目前语义图像合成领域的经典方法有：CRN [1], pix2pixHD [2], SIMS [3], SPADE [4], 以及近些年来更多基于GAN的方法。</p>
+<p><img src="/2020/03/16/CV/CV-GAN/2024-04-07-15-55-43-image.png"></p>
+<p><img src="/2020/03/16/CV/CV-GAN/2024-04-07-15-57-02-image.png"></p>
+<h3 id="CAM"><a href="#CAM" class="headerlink" title="CAM"></a>CAM</h3><p>（Class Activation Map）</p>
+<h3 id="AdaLIN"><a href="#AdaLIN" class="headerlink" title="(AdaLIN)"></a>(AdaLIN)</h3><p>Adaptive Layer-Instance Normalization </p>
+<h2 id="VideoGAN"><a href="#VideoGAN" class="headerlink" title="VideoGAN"></a>VideoGAN</h2><h3 id="vid2vid"><a href="#vid2vid" class="headerlink" title="vid2vid"></a>vid2vid</h3><img title src="/2020/03/16/CV/CV-GAN/2024-03-06-16-26-04-image.png" alt width="581">
+
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/maqunfi/article/details/88186935">Vid2Vid多图详解-CSDN博客</a></p>
+<h1 id="Cartoon"><a href="#Cartoon" class="headerlink" title="Cartoon"></a>Cartoon</h1><h2 id="CartoonGAN-CVPR-2018"><a href="#CartoonGAN-CVPR-2018" class="headerlink" title="CartoonGAN CVPR 2018"></a>CartoonGAN CVPR 2018</h2><p>清华</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/znxlwm/pytorch-CartoonGAN">https://github.com/znxlwm/pytorch-CartoonGAN</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/taki0112/CartoonGAN-Tensorflow">https://github.com/taki0112/CartoonGAN-Tensorflow</a></p>
+<img title src="/2020/03/16/CV/CV-GAN/0001.png" alt="img" style="zoom: 50%;" width="420">
+
+<p><img src="https://github.com/znxlwm/pytorch-CartoonGAN/raw/master/assets/paper_results.png" alt="img"></p>
+<h2 id="CarttonGAN-CVPR2020"><a href="#CarttonGAN-CVPR2020" class="headerlink" title="CarttonGAN CVPR2020"></a>CarttonGAN CVPR2020</h2><p><a target="_blank" rel="noopener" href="https://github.com/SystemErrorWang/CartoonGAN">https://github.com/SystemErrorWang/CartoonGAN</a></p>
+<p>效果： </p>
+<p>​    风景好点</p>
+<p>​    人物处理差点</p>
+<p><img src="https://github.com/SystemErrorWang/CartoonGAN/raw/master/results/WechatIMG78.jpeg?raw=true" alt="alt text"></p>
+<h2 id="White-box-Cartoonization"><a href="#White-box-Cartoonization" class="headerlink" title="White-box-Cartoonization"></a>White-box-Cartoonization</h2><p><a target="_blank" rel="noopener" href="https://github.com/SystemErrorWang/White-box-Cartoonization">https://github.com/SystemErrorWang/White-box-Cartoonization</a></p>
+<p>CVPR2020 paper “Learning to Cartoonize Using White-box Cartoon Representations”.</p>
+<p><a target="_blank" rel="noopener" href="https://systemerrorwang.github.io/White-box-Cartoonization">https://systemerrorwang.github.io/White-box-Cartoonization</a></p>
+<p><a target="_blank" rel="noopener" href="https://systemerrorwang.github.io/White-box-Cartoonization/paper/06791.pdf">https://systemerrorwang.github.io/White-box-Cartoonization/paper/06791.pdf</a></p>
+<p>字节跳动，东京大学，Style2Paints Research（线稿上色）</p>
+<img title src="/2020/03/16/CV/CV-GAN/image-20200514204037043.png" alt="image-20200514204037043" style="zoom: 33%;" width="470">
+
+<h2 id="AnimeGAN"><a href="#AnimeGAN" class="headerlink" title="AnimeGAN"></a>AnimeGAN</h2><p>AnimeGAN: a novel lightweight GAN for photo animation</p>
+<p>武汉大学 土木工程学院</p>
+<p>湖北工业大学 计算机学院</p>
+<p>Wine-64</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./configure --enable-win64</span><br><span class="line"></span><br><span class="line">sudo apt-get install mingw-64</span><br></pre></td></tr></table></figure>
+
+<p>Wine-32</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install g++-multilib</span><br><span class="line">sudo apt-get install libncurses5:i386</span><br><span class="line">sudo apt-get install libc6:i386 libgcc1:i386 libstdc++5:i386 libstdc++6:i386</span><br><span class="line">————————————————</span><br><span class="line">https://blog.csdn.net/m0_37763336/article/details/83618390</span><br><span class="line">原文链接：https://blog.csdn.net/hackerwin7/java/article/details/37878007</span><br><span class="line"></span><br><span class="line">sudo apt install libx11-dev:i386</span><br><span class="line">sudo apt-get install  libfreetype6-dev:i386    libfreetype6-dev</span><br></pre></td></tr></table></figure>
+
+<h1 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h1><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/91745671">CycleGAN、DualGAN、DiscoGAN</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2020/03/13/CV_3D/CV-3D-Base/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/13/CV_3D/CV-3D-Base/" class="post-title-link" itemprop="url">计算机视觉--点云对齐</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-13 12:33:43" itemprop="dateCreated datePublished" datetime="2020-03-13T12:33:43+00:00">2020-03-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV-3D/" itemprop="url" rel="index"><span itemprop="name">CV_3D</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV-3D/registration/" itemprop="url" rel="index"><span itemprop="name">registration</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Computer Vision Algorithm</p>
+<p>[TOC]</p>
+<h1 id="Point-set-registration"><a href="#Point-set-registration" class="headerlink" title="Point set registration"></a>Point set registration</h1><h2 id="1-1Rigid-registration"><a href="#1-1Rigid-registration" class="headerlink" title="1.1Rigid registration"></a><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Point_set_registration#Rigid_registration">1.1Rigid registration</a></h2><p>刚性注册：给定两个点集，刚性配准产生一个<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Rigid_transformation">刚性变换</a>，该<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Rigid_transformation">变换</a>将一个点集映射到另一个点集。刚性变换定义为不改变任何两点之间距离的变换。通常，这种转换包括<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Translation_(geometry)">平移</a>和<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Rotation">旋转</a>。[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Point_set_registration#cite_note-lmfitzgibbon-12">12]</a>在极少数情况下，点集也可能会被镜像。在机器人技术和计算机视觉中，刚性配准应用最多。</p>
+<h2 id="1-2Non-rigid-registration"><a href="#1-2Non-rigid-registration" class="headerlink" title="1.2Non-rigid registration"></a><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Point_set_registration#Non-rigid_registration">1.2Non-rigid registration</a></h2><p>给定两个点集，非刚性配准产生一个非刚性转换，该转换将一个点集映射到另一个点集。非刚性变换包括<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Affine_transformations">affine仿射变换，</a>例如<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Scaling_(geometry)">缩放</a>和<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Shear_mapping">剪切贴图</a>。但是，在点集配准的情况下，非刚性配准通常涉及非线性变换。如果已知点集<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Eigenmode">变化</a>的<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Eigenmode">本征模式，</a>则可以通过特征值对非线性变换进行参数化。[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Point_set_registration#cite_note-cpdmyronenko2-13">13]</a>非线性变换也可以参数化为<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Thin_plate_spline">(TPS)薄板样条</a>。[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Point_set_registration#cite_note-tpsrpmchui-14">14] </a>[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Point_set_registration#cite_note-cpdmyronenko2-13">13]</a></p>
+<h1 id="Registration-algorithm"><a href="#Registration-algorithm" class="headerlink" title="Registration algorithm"></a>Registration algorithm</h1><p>三维点集拟合</p>
+<h2 id="PPF-–2010"><a href="#PPF-–2010" class="headerlink" title="PPF –2010"></a>PPF –2010</h2><p>算法的精髓：“整体建模，局部匹配”</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/94952276?utm_source=wechat_session">【6D位姿估计】Point Pair Feature (PPF)</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/KYJL888/article/details/83057116">(学习opencv)Surface Matching之PPF Point Pair Feature 点对特征</a></p>
+<h2 id="Others"><a href="#Others" class="headerlink" title="Others"></a>Others</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/yin52133/archive/2012/07/21/2602562.html">机器视觉之 ICP算法和RANSAC算法</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wishchin/article/details/17505555">三维点集拟合：平面拟合、RANSAC、ICP算法</a></p>
+<h2 id="平面拟合"><a href="#平面拟合" class="headerlink" title="平面拟合"></a>平面拟合</h2><ul>
+<li><p>SVD ：</p>
+<ul>
+<li>根据协方差矩阵的SVD变换，最小奇异值对应的<strong>奇异向量</strong>就是平面的方向。</li>
+<li>注意：这个方法是直接的计算方法，没办法解决数值计算遇到的病态矩阵问题.在公式转化代码之前必须对空间点坐标进行近似归一化！</li>
+</ul>
+</li>
+<li><p>使用法线方法</p>
+<ul>
+<li><p>使用合适的方法剔除离群点，计算点云的形心P；</p>
+</li>
+<li><p>若在已经获得法线的点云中，可以对法线进行剔除离散点之后，求取最小方差的均值，直接求得法线方向N( alpha, beta, theta )；</p>
+</li>
+<li><p>使用点法式描述三维平面；或者根据形心P和法线方向，计算出平面方程的一般式。</p>
+</li>
+</ul>
+</li>
+<li><p>空间向量的旋转</p>
+</li>
+</ul>
+<h2 id="Ransac-1981"><a href="#Ransac-1981" class="headerlink" title="Ransac 1981"></a>Ransac 1981</h2><p>“RANdom SAmple Consensus（随机抽样一致）”</p>
+<h2 id="ICP-ptp-Point-to-Point-–1992"><a href="#ICP-ptp-Point-to-Point-–1992" class="headerlink" title="[ICP-ptp] Point-to-Point  –1992"></a>[ICP-ptp] Point-to-Point  –1992</h2><p>点云匹配：ICP（Iterative Closest Point迭代最近点）</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/fb_941219/article/details/89792422">ICP_SVD</a></p>
+<p>matlab: <a target="_blank" rel="noopener" href="https://github.com/ToughStoneX/3D_ICP">https://github.com/ToughStoneX/3D_ICP</a></p>
+<p>open3d-python: <a target="_blank" rel="noopener" href="http://www.open3d.org/docs/release/tutorial/Basic/icp_registration.html">http://www.open3d.org/docs/release/tutorial/Basic/icp_registration.html</a></p>
+<h2 id="ICP-ptl-Point-to-Plane-ICP-–2001"><a href="#ICP-ptl-Point-to-Plane-ICP-–2001" class="headerlink" title="[ICP-ptl] Point-to-Plane ICP –2001"></a>[ICP-ptl] Point-to-Plane ICP –2001</h2><p>Efficient variants of the ICP algorithm. In 3-D Digital Imaging and Modeling, 2001.</p>
+<p>Rusinkiewicz和M.Levoy。ICP算法的高效变体。在3D数字成像和建模中，2001年</p>
+<h2 id="GMMREG-2010"><a href="#GMMREG-2010" class="headerlink" title="GMMREG 2010"></a>GMMREG 2010</h2><p>《A Robust Algorithm for Point Set Registration Using Mixture of Gaussians 2005》 <a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/author/37294404600">Bing Jian</a></p>
+<p>《Robust Point Set Registration Using Gaussian Mixture Models 2010》<a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/author/37294404600">Bing Jian</a></p>
+<h2 id="Colored-Point-Cloud-Registration-2017"><a href="#Colored-Point-Cloud-Registration-2017" class="headerlink" title="Colored Point Cloud Registration 2017"></a><strong>Colored Point Cloud Registration 2017</strong></h2><p>Colored Point Cloud Registration Revisited, ICCV, 2017.     J.Park, Q.-Y. Zhou, and V. Koltun</p>
+<p>该算法比以前的点云配准算法更准确，更健壮，而运行速度与ICP配准的运行速度相当。</p>
+<h2 id="Global-Registration"><a href="#Global-Registration" class="headerlink" title="Global Registration"></a>Global Registration</h2><p><a target="_blank" rel="noopener" href="http://www.open3d.org/docs/release/tutorial/Basic/icp_registration.html#icp-registration">ICP</a>和<a target="_blank" rel="noopener" href="http://www.open3d.org/docs/release/tutorial/Advanced/colored_pointcloud_registration.html#colored-point-registration">彩色点云登记</a>被称为<strong>当地的</strong>，因为它们依赖于一个粗略的排列为初始登记的方法。本教程介绍了另一类注册方法，称为<strong>全局</strong>注册。该算法系列不需要对齐即可进行初始化。它们通常产生不太严格的对齐结果，并用作局部方法的初始化。</p>
+<h2 id="Fast-global-registration-–2016"><a href="#Fast-global-registration-–2016" class="headerlink" title="Fast global registration –2016"></a>Fast global registration –2016</h2><p>RANSAC 《Fast Global Registration, ECCV》, 2016. Q.-Y. Zhou, J. Park, and V. Koltun</p>
+<p>基于RANSAC的<a target="_blank" rel="noopener" href="http://www.open3d.org/docs/release/tutorial/Advanced/global_registration.html#global-registration">Fast global registration</a>解决方案可能需要很长时间，这是因为有无数的模型建议和评估。 [<a target="_blank" rel="noopener" href="http://www.open3d.org/docs/release/tutorial/reference.html#zhou2016">Zhou2016]</a>引入了一种更快的方法，该方法可以快速优化几乎没有对应关系的行处理权重。由于每次迭代都没有模型建议和评估，[<a target="_blank" rel="noopener" href="http://www.open3d.org/docs/release/tutorial/reference.html#zhou2016">Zhou2016]中</a>提出的方法可以节省大量的计算时间。</p>
+<p>该脚本比较了基于RANSAC的<a target="_blank" rel="noopener" href="http://www.open3d.org/docs/release/tutorial/Advanced/global_registration.html#global-registration">全局注册</a>和[<a target="_blank" rel="noopener" href="http://www.open3d.org/docs/release/tutorial/reference.html#zhou2016">Zhou2016]的</a>实现的运行时间。</p>
+<h2 id="Multiway-registration"><a href="#Multiway-registration" class="headerlink" title="Multiway registration"></a>Multiway registration</h2><p>Robust Reconstruction of Indoor Scenes, CVPR, 2015. S.Choi, Q.-Y. Zhou, and V. Koltun</p>
+<p>Multiway registration is the process to align multiple pieces of geometry in a global space. Typically, the input is a set of geometries (e.g., point clouds or RGBD images) $ {𝐏_𝑖} $. The output is a set of rigid transformations ${𝐓_𝑖}$, so that the transformed point clouds ${𝐓_𝑖 P_i} $ are aligned in the global space.</p>
+<h1 id="Supply"><a href="#Supply" class="headerlink" title="Supply"></a>Supply</h1><h2 id="《Alignment-of-3D-models》"><a href="#《Alignment-of-3D-models》" class="headerlink" title="《Alignment of 3D models》"></a>《Alignment of 3D models》</h2><h2 id="《A-3D-Model-Alignment-and-Retrieval-System》"><a href="#《A-3D-Model-Alignment-and-Retrieval-System》" class="headerlink" title="《A 3D Model Alignment and Retrieval System》"></a>《A 3D Model Alignment and Retrieval System》</h2><p>$TS -&gt; R_c -&gt; TS -&gt; R_r -&gt; TS$</p>
+<p><img src="/2020/03/13/CV_3D/CV-3D-Base/image-20200313130556659.png" alt="image-20200313130556659"></p>
+<h2 id="AlignNet-3D"><a href="#AlignNet-3D" class="headerlink" title="AlignNet-3D"></a>AlignNet-3D</h2><p>引言<br>       Align(register) point clouds 即对齐(配准)点云，意思是将一个点云匹配到另一个点云上面，主要用来将从一个物体的不同角度得到的局部点云拼接起来，由此得到一个完整的3D模型，对点云做Alignment或Registration从本意上来说并没有什么本质的区别，尤其是在阅读学术论文的时候。</p>
+<pre><code>  但是我在工作中所了解到的是Alignment是把几个3D相机固定起来，然后计算出这几台3D相机点云之间相对位置的转换矩阵，一般情况下以第一个相机的坐标系为基准，把其他相机的点云通过转换与平移移到相同的坐标系下，然后可以实时捕捉完整的3D点云。而Registration则指的是只用一台3D相机，连续从各个角度对一个物体进行扫描，然后把把得到的点云一帧一帧的拼接起来，由此而得到完整的3D模型。所以从这个角度来说，Alignment得到完整模型是实时的，是多个相机同一时间从多个角度得到的点云拼接起来，每一帧都是完整模型，Registration则是一台相机从不同时间不同角度的到点云拼接，完整3D模型不是实时的，需要通过离线处理得到。但其本质均是通过得到点云之间的转换矩阵来实现匹配。
+</code></pre>
+<p>常见的Alignment或Registration算法<br>       最常见的Alignment算法即**ICP(Iterative Closest Point)**及其各种变体,如其名字所示，此方法是通过先对点云进行初配准，然后迭代最近点使相对应的点距离最小而得到一个转换矩阵。以下对Point-to-point ICP和Point-to-plane ICP这两种ICP方法做简要介绍：</p>
+<p>Point-to-point &amp; Point-to-plane ICP</p>
+<p>一般来说，此ICP算法会迭代两个步骤：</p>
+<p>（1）找到目标点云P和源点云Q中相对应的点集K&#x3D;{(p,q)}，定义p与q的目标函数E(T)和q到p的转换矩阵T,不同的ICP变体使用不同的目标函数E(T)。<br>（2）通过最小化目标函数E(T)来更新变换T。<br> point-to-point ICP使用的目标函数如下所示</p>
+<p>而point-to-plane ICP使用了一个不同的目标函数</p>
+<p>AlignNet-3D介绍<br>       AlignNet-3D是论文AlignNet-3D: Fast Point Cloud Registration of Partially Observed Objects里研究的一种align点云的方法，论文主要研究了智能汽车的精确3D跟踪状态估计，提出了一个以学习为基础的方法AlignNet-3D来对不同时间捕获的汽车点云做Alignment，以此来估计汽车近距离内的精确运动，作者的评估表明AlignNet-3D在计算上优于global 3D registration，同时显著提高了效率。</p>
+<p>论文创新点，参考论文所使用的方法都是直接通过优化计算转换的算法，而此论文是通过学习的方式来Align点云，因此，它可以受益于额外的训练数据，并对遮挡和截断具有鲁棒性。</p>
+<p>方法简述，论文的方法可以概述为给定一个物体在不同时间捕获的两个点云，然后通过对观测到的点云做Alignment来精确地估计物体的相对运动，如下图所示：<br>————————————————<br>版权声明：本文为CSDN博主「Asher_zheng」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Asher_zheng/article/details/103094927">https://blog.csdn.net/Asher_zheng/article/details/103094927</a></p>
+<h2 id="Aligning-3D-Data"><a href="#Aligning-3D-Data" class="headerlink" title="Aligning 3D Data"></a>Aligning 3D Data</h2><p>动机：</p>
+<ul>
+<li><p>形状检查</p>
+</li>
+<li><p>运动估计</p>
+</li>
+<li><p>外观分析（我们所做的）</p>
+</li>
+<li><p>纹理映射 (Texture mapping) 一般应用于2D到3D的UV Map</p>
+</li>
+<li><p>跟踪</p>
+</li>
+</ul>
+<p>How to find correspondences:  User input? Feature detection?  Signatures?（ 用户输入？特征检测？签名？）</p>
+<p>Alternative(备选方案): assume closest points correspond 假设最接近的点</p>
+<h1 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h1><p><a target="_blank" rel="noopener" href="http://www.open3d.org/docs/release/tutorial/Advanced/rgbd_integration.html">Open3D官网</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45930823/article/details/103532771">open3d ply文件 表面体素（voxel）、点云（point cloud）</a></p>
+<h1 id="基础知识："><a href="#基础知识：" class="headerlink" title="基础知识："></a>基础知识：</h1><h2 id="霍夫的投票方案"><a href="#霍夫的投票方案" class="headerlink" title="霍夫的投票方案"></a>霍夫的投票方案</h2><h2 id="SVD"><a href="#SVD" class="headerlink" title="SVD"></a>SVD</h2><h2 id="PnP"><a href="#PnP" class="headerlink" title="PnP"></a>PnP</h2>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2020/03/12/Tools/Tools-proxy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/12/Tools/Tools-proxy/" class="post-title-link" itemprop="url">Tools Proxy</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-12 09:57:23" itemprop="dateCreated datePublished" datetime="2020-03-12T09:57:23+00:00">2020-03-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="账号分享"><a href="#账号分享" class="headerlink" title="账号分享"></a>账号分享</h3><p>v2ray <a target="_blank" rel="noopener" href="https://ssrvps.org/archives/2870">https://ssrvps.org/archives/2870</a></p>
+<p>15天过期，重新</p>
+<h3 id="v2ray"><a href="#v2ray" class="headerlink" title="v2ray"></a>v2ray</h3><p>v2ray 客户端（Linux、Ubuntu）</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/v2ray/v2ray-core/releases/download/v4.22.1/v2ray-linux-64.zip">https://github.com/v2ray/v2ray-core/releases/download/v4.22.1/v2ray-linux-64.zip</a></p>
+<p>客户端配置：</p>
+<p> 无GUI： .v2ray –config&#x3D;..&#x2F;..&#x2F;config.json</p>
+<p> 带GUI参考：<a target="_blank" rel="noopener" href="https://mahongfei.com/1776.html">https://mahongfei.com/1776.html</a></p>
+<h3 id="virtual-Net"><a href="#virtual-Net" class="headerlink" title="virtual Net"></a>virtual Net</h3><p>Linux 安装</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -s https://install.zerotier.com | sudo bash</span><br></pre></td></tr></table></figure>
+
+<p>查看安装zerotier版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo zerotier-cli status</span><br></pre></td></tr></table></figure>
+
+<p>加入一个netWork</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo zerotier-cli join ################（networkid）</span><br></pre></td></tr></table></figure>
+
+<p>查看加入的网络的信息，比如network</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo zerotier-cli listnetworks</span><br></pre></td></tr></table></figure>
+
+<p>退出加入的network网段</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo zerotier-cli leave ################（networkid）</span><br></pre></td></tr></table></figure>
+
+<p>启动、停止服务(mac下，linux尝试发现没有launchctl command)</p>
+<p>#Stop and start the service with launchctl<br>停止</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> launchctl unload /Library/LaunchDaemons/com.zerotier.one.plist</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+
+<p>启动</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> launchctl load /Library/LaunchDaemons/com.zerotier.one.plist</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+
+<p>卸载服务（未尝试）</p>
+<p>#Cleanly uninstall ZeroTier One, preserving only your secret identity</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="string">&quot;/Library/Application Support/ZeroTier/One/uninstall.sh&quot;</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2020/03/11/AI/AI-Research/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/11/AI/AI-Research/" class="post-title-link" itemprop="url">AI Research institutes</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-11 23:02:54" itemprop="dateCreated datePublished" datetime="2020-03-11T23:02:54+00:00">2020-03-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:37" itemprop="dateModified" datetime="2025-08-06T08:16:37+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI-Research/" itemprop="url" rel="index"><span itemprop="name">AI Research</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="AI-研究所"><a href="#AI-研究所" class="headerlink" title="AI 研究所"></a>AI 研究所</h2><p>马普所</p>
+<p>MIP-virtualhumans</p>
+<ul>
+<li>CV， 3D</li>
+</ul>
+<p>​    <a target="_blank" rel="noopener" href="http://virtualhumans.mpi-inf.mpg.de/publications.html">http://virtualhumans.mpi-inf.mpg.de/publications.html</a></p>
+<p>DeepMind</p>
+<ul>
+<li>游戏，机器博弈</li>
+</ul>
+<p>Uwa - 西澳大学-工程数学学院</p>
+<p>​    世界排名前100， 澳洲八校联盟成员</p>
+<p>​    <a target="_blank" rel="noopener" href="https://www.uwa.edu.au/ems/home">https://www.uwa.edu.au/ems/home</a></p>
+<p>​    <a target="_blank" rel="noopener" href="http://staffhome.ecm.uwa.edu.au/~00053650/recognition.html">http://staffhome.ecm.uwa.edu.au/~00053650/recognition.html</a></p>
+<p>清华</p>
+<p>​    <a target="_blank" rel="noopener" href="https://aminer.org/">Aminer: 科技情报大数据挖掘与服务系统平台</a></p>
+<p>中科院</p>
+<p>微软研究院</p>
+<p>Google研究院</p>
+<p>FaceBook研究院</p>
+<p>阿里</p>
+<p>百度</p>
+<p>腾讯</p>
+<p>字节跳动</p>
+<pre><code>- 今日头条
+- 西瓜视频
+- 抖音（孵化）
+</code></pre>
+<p>计算机图形学与混合现实在线平台</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://games-cn.org/">http://games-cn.org/</a></li>
+</ul>
+<h3 id="AIGC汇聚"><a href="#AIGC汇聚" class="headerlink" title="AIGC汇聚"></a>AIGC汇聚</h3><p><a target="_blank" rel="noopener" href="https://ooaioo.com/#term-1619">OOAIOO AI工具集合</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2020/03/10/Sub_Language/CPlus/CPlus_Env/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/10/Sub_Language/CPlus/CPlus_Env/" class="post-title-link" itemprop="url">C++ 环境配置及HelloWorld</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-10 00:00:00" itemprop="dateCreated datePublished" datetime="2020-03-10T00:00:00+00:00">2020-03-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[TOC]</p>
+<p><a target="_blank" rel="noopener" href="https://sourceforge.net/projects/mingw-w64/">官网</a>下载 <code>x86_64-posix-seh</code></p>
+<h3 id="VSCode"><a href="#VSCode" class="headerlink" title="VSCode"></a>VSCode</h3><p>配置参考</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44717317/article/details/103651560">CSDN VS Code gcc配置C++环境（Mingw-w64）</a></p>
+<p><a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/languages/cpp">C&#x2F;C++ for Visual Studio Code</a></p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># cltr+shift+P 打开命令面板</span></span><br><span class="line"><span class="section"># 1 输入C/C++ 选择编辑配置Ui</span></span><br><span class="line"><span class="bullet">-</span> c<span class="emphasis">_cpp_</span>properties.json</span><br><span class="line"><span class="section"># 2 输入tasks 选择任务-配置默认构建任务</span></span><br><span class="line"><span class="bullet">-</span> tasks.json</span><br><span class="line"><span class="section"># 3 输入launch，选择调试，打开launch.json</span></span><br><span class="line"><span class="bullet">-</span> launch.json</span><br><span class="line"><span class="section"># 4 运行配置（auto gen）</span></span><br><span class="line"><span class="bullet">-</span> settings.json</span><br></pre></td></tr></table></figure>
+
+<p>运行：</p>
+<p>​    1、终端–运行生成任务（Ctrl+Shift+B）</p>
+<p>​    2、F5 调试（Ctrl+F5 运行）</p>
+<h3 id="Cmake"><a href="#Cmake" class="headerlink" title="Cmake"></a>Cmake</h3><ul>
+<li>参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/henry_23/article/details/120998555"> CSDN Visual Studio Code 中 CMake 插件的基本使用</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_46384757/article/details/121753149">五分钟学会使用cmake创建visual studio工程</a></li>
+<li></li>
+</ul>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 新建项目</span></span><br><span class="line"><span class="comment"># 插件市场安装 Cmake Tools</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建CmakeList.txt</span></span><br><span class="line">--</span><br><span class="line">cmake_minimum_required (VERSION 3.0.0)</span><br><span class="line">project(Cmake_demo)</span><br><span class="line"></span><br><span class="line">add_executable(demo, <span class="string">&quot;main.cpp&quot;</span>, <span class="string">&quot;foo.cpp&quot;</span>, <span class="string">&quot;foo.h&quot;</span>)</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="comment"># ctrl+shift+P 打开命令面板，输入configure检索并执行“Cmake:Configure”命令</span></span><br><span class="line"><span class="comment"># 执行Configure，选择一个kit</span></span><br><span class="line"></span><br><span class="line">Configure 完成的输出</span><br><span class="line"></span><br><span class="line">VS窗口底部默认又一些按钮，可以点击`build`按钮，就可以构建目标all。</span><br></pre></td></tr></table></figure>
+
+<h3 id="GLIBCXX-USE-CXX11-ABI宏的作用"><a href="#GLIBCXX-USE-CXX11-ABI宏的作用" class="headerlink" title="_GLIBCXX_USE_CXX11_ABI宏的作用"></a>_GLIBCXX_USE_CXX11_ABI宏的作用</h3><p>参考GCC提供的手册<Dual abi>:</Dual></p>
+<p>在 GCC 5.1 版本中，libstdc++ 引入了一个新特性，其中包括 std::string 和 std::list 的新实现。为了符合 C++11 标准，这些更改是必要的，该标准禁止 Copy-On-Write 字符串并要求列表跟踪其大小。</p>
+<p>这样虽然符合了c++11的标注，旧版就无法兼容了。为了解决这个问题，对于旧版而言，GCC5.1添加了__cxx11命名空间，GCC5.1或者说c++11规范下的string和list，实际上是std::__cxx11::string和std::__cxx11::list，所以我们一般的using namespace std就会变成形如using namespace std::__cxx11的样子。也就是说，有旧版(c++03规范)的libstdc++.so，和新版(c++11规范)的libstdc++.so两个库同时存在。</p>
+<p>为了避免两个库到底选择哪一个的麻烦，GCC5.1就引入了-D_GLIBCXX_USE_CXX11_ABI来控制编译器到底链接哪一个libstdc++.so，</p>
+<p>-D_GLIBCXX_USE_CXX11_ABI&#x3D;0 链接旧版库<br>-D_GLIBCXX_USE_CXX11_ABI&#x3D;1 链接新版库</p>
+<p>如果在CMakeLists里设置</p>
+<p>add_definitions(-D _GLIBCXX_USE_CXX11_ABI&#x3D;0)<br>1<br>Reference：</p>
+<p>[1]. <a target="_blank" rel="noopener" href="https://gcc.gnu.org/onlinedocs/libstdc++/manual/using_dual_abi.html">https://gcc.gnu.org/onlinedocs/libstdc++/manual/using_dual_abi.html</a></p>
+<h3 id="ERR"><a href="#ERR" class="headerlink" title="ERR"></a>ERR</h3><p>‘’’’  The terminal process “C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -Command g++ -g D:\Qiansi\games\DDZ-QS-Server\AI_server_Star_call&#x2F;ddz_move_star.cpp D:\Qiansi\games\DDZ-QS-Server\AI_server_Star_call&#x2F;main.cpp -I D:\Qiansi\games\DDZ-QS-Server\AI_server_Star_call&#x2F; -o main.exe” terminated with exit code: 1. </p>
+<ul>
+<li><p>Terminal will be reused by tasks, press any key to close it. </p>
+</li>
+<li><p>Executing task: g++ -g D:\Qiansi\games\DDZ-QS-Server\AI_server_Star_call&#x2F;main.cpp D:\Qiansi\games\DDZ-QS-Server\AI_server_Star_call&#x2F;ddz_move_star.cpp -I D:\Qiansi\games\DDZ-QS-Server\AI_server_Star_call&#x2F; -o main.exe</p>
+</li>
+</ul>
+<p>C:\Users\Simon\AppData\Local\Temp\ccwu1HiS.o: In function <code>main&#39;: D:/Qiansi/games/DDZ-QS-Server/AI_server_Star_call/main.cpp:22: undefined reference to </code>ddzmove_star::get_move_type(int*)’<br>collect2.exe: error: ld returned 1 exit status</p>
+<ul>
+<li>The terminal process “C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -Command g++ -g D:\Qiansi\games\DDZ-QS-Server\AI_server_Star_call&#x2F;main.cpp D:\Qiansi\games\DDZ-QS-Server\AI_server_Star_call&#x2F;ddz_move_star.cpp -I D:\Qiansi\games\DDZ-QS-Server\AI_server_Star_call&#x2F; -o main.exe” terminated with exit code: 1. </li>
+<li>Terminal will be reused by tasks, press any key to close it.</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;ddz_move_star.h&gt;</span><br><span class="line">---&gt;</span><br><span class="line">#include &quot;ddz_move_star.h&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="ERR2"><a href="#ERR2" class="headerlink" title="ERR2"></a>ERR2</h3><p>CMake Error: Error: generator : Ninja</p>
+<p>Does not match the generator used previously: MinGW Makefiles</p>
+<p>Either remove the CMakeCache.txt file and CMakeFiles directory or choose a different binary directory.</p>
+<p>—&gt; 删除缓存</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2020/02/29/Tools/Tools-Ubuntu-Desktop%20install/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/02/29/Tools/Tools-Ubuntu-Desktop%20install/" class="post-title-link" itemprop="url">Tools-Ubuntu-Desktop-install</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-02-29 15:47:57" itemprop="dateCreated datePublished" datetime="2020-02-29T15:47:57+00:00">2020-02-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OS/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OS/Linux/Ubuntu/" itemprop="url" rel="index"><span itemprop="name">Ubuntu</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[TOC]</p>
+<h1 id="Tools-Ubuntu-Desktop-install"><a href="#Tools-Ubuntu-Desktop-install" class="headerlink" title="Tools-Ubuntu-Desktop install"></a>Tools-Ubuntu-Desktop install</h1><h3 id="1、Ubuntu-Desktop-官网："><a href="#1、Ubuntu-Desktop-官网：" class="headerlink" title="1、Ubuntu Desktop 官网："></a>1、Ubuntu Desktop 官网：</h3><p><a target="_blank" rel="noopener" href="https://www.ubuntugeek.com/install-gui-in-ubuntu-server.html">https://www.ubuntugeek.com/install-gui-in-ubuntu-server.html</a></p>
+<p>We have already discussed how to <a target="_blank" rel="noopener" href="https://www.ubuntugeek.com/step-by-step-ubuntu-904-jaunty-lamp-server-setup.html">install ubuntu 9.04 LAMP server</a> .If you are a new user and not familiar with command prompt you can install GUI for your ubuntu LAMP server using the 2 options</p>
+<ol>
+<li><p>Install desktop Environment</p>
+</li>
+<li><p>Install Webmin</p>
+</li>
+</ol>
+<p><strong>1) Install desktop Environment</strong></p>
+<p>First you nee to make sure you have enabled Universe and multiverse repositories in &#x2F;etc&#x2F;apt&#x2F;sources.list file once you have enable you need to use the following command to install GUI</p>
+<blockquote>
+<p>sudo apt-get update</p>
+</blockquote>
+<blockquote>
+<p>sudo apt-get install ubuntu-desktop</p>
+</blockquote>
+<p>The above command will install GNOME desktop</p>
+<p>If you wan to install a graphical desktop manager without some of the desktop addons like Evolution and OpenOffice, but continue to use the server flavor kernel use the following command</p>
+<blockquote>
+<p>sudo aptitude install –without-recommends ubuntu-desktop</p>
+</blockquote>
+<p>If you want to install light weight desktop install xfce using the following command</p>
+<blockquote>
+<p>sudo apt-get install xubuntu-desktop</p>
+</blockquote>
+<p>If you want to install KDE desktop use the following command</p>
+<blockquote>
+<p>sudo apt-get install kubuntu-desktop</p>
+</blockquote>
+<p><strong>2) Install Webmin in Ubuntu</strong></p>
+<ul>
+<li>略</li>
+</ul>
+<h3 id="2、xinit"><a href="#2、xinit" class="headerlink" title="2、xinit"></a>2、xinit</h3><p>apt install -y xinit</p>
+<h3 id="3、VNC-server-client"><a href="#3、VNC-server-client" class="headerlink" title="3、VNC server&#x2F;client"></a>3、VNC server&#x2F;client</h3><p>安装Gnome桌面环境：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install gnome-session-flashback</span><br></pre></td></tr></table></figure>
+
+<p>安装VNC服务：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install vnc4server -y</span><br><span class="line">sudo apt install ubuntu-desktop gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal -y</span><br></pre></td></tr></table></figure>
+
+<p>首次配置VNC服务：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vncserver</span><br></pre></td></tr></table></figure>
+
+<p>输入VNC连接密码。</p>
+<p>结束 vncserver：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vncserver -kill :1</span><br></pre></td></tr></table></figure>
+
+<p>修改<code>~/.vnc/xstartup</code>，在 <code>x-window-manager &amp;</code>的后面新增下面这些行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">gnome-panel &amp;</span><br><span class="line">gnome-settings-daemon &amp;</span><br><span class="line">metacity &amp;</span><br><span class="line">nautilus &amp;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Fix to make GNOME work</span></span><br><span class="line">export XKL_XMODMAP_DISABLE=1</span><br><span class="line">/etc/X11/Xsession</span><br></pre></td></tr></table></figure>
+
+<p>重新启动VNC服务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vncserver</span><br></pre></td></tr></table></figure>
+
+<p>作者：赵星云<br>链接：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/70b522d006d8">https://www.jianshu.com/p/70b522d006d8</a><br>来源：简书<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<h3 id="4、xrdp"><a href="#4、xrdp" class="headerlink" title="4、xrdp"></a>4、xrdp</h3><p>一.在操作系统中用管理员权限安装以下软件</p>
+<p>   \1. 安装xrdp：</p>
+<p>​     sudo apt-get install xrdp</p>
+<p>   \2. 安装vnc4server：</p>
+<p>​     sudo apt-get install vnc4server</p>
+<p>   \3. 安装xubuntu-desktop：</p>
+<p>​      sudo apt-get install xubuntu-desktop</p>
+<p>​    \4. xsession中写入xfce4-session,需要远程的用户都要单独执行这条命令：</p>
+<p>​      echo “xfce4-session” &gt;~&#x2F;.xsession</p>
+<p>​    \5. 重启xrdp服务：</p>
+<p>​       &#x2F;etc&#x2F;init.d&#x2F;xrdp restart</p>
+<p>二. Windows端操作</p>
+<p>   1.执行MSTSC开启远程登陆终端</p>
+<p>​     <img src="/2020/02/29/Tools/Tools-Ubuntu-Desktop%20install/853751-20191028141654118-1420680837.png" alt="img"></p>
+<p>   \2. 输入密码：</p>
+<p>​     <img src="/2020/02/29/Tools/Tools-Ubuntu-Desktop%20install/853751-20191028141813379-1485558996.png" alt="img"></p>
+<p>   \3. 连接的界面</p>
+<p>​     <img src="/2020/02/29/Tools/Tools-Ubuntu-Desktop%20install/853751-20191028141934569-968731671.png" alt="img"></p>
+<p>#########################################################</p>
+<p>三. ubuntu vsftpd.conf配置</p>
+<p>listen&#x3D;YES</p>
+<p>listen_port&#x3D;2112</p>
+<p>anonymous_enable&#x3D;NO</p>
+<p>local_enable&#x3D;YES</p>
+<p>write_enable&#x3D;YES</p>
+<p>chroot_local_user&#x3D;NO</p>
+<p>chroot_list_file&#x3D;&#x2F;etc&#x2F;vsftpd.chroot_list</p>
+<p>pam_service_name&#x3D;ftp</p>
+<h3 id="5、Question"><a href="#5、Question" class="headerlink" title="5、Question"></a>5、Question</h3><p>安装xserver的时候不要安装有关nvidia的软件，然后编译安装就好了。</p>
+<h3 id="6、Install-X-window"><a href="#6、Install-X-window" class="headerlink" title="6、Install X window"></a>6、Install X window</h3><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/40195740/how-to-run-openai-gym-render-over-a-server">https://stackoverflow.com/questions/40195740/how-to-run-openai-gym-render-over-a-server</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Install and configure X window with virtual screen</span></span><br><span class="line">sudo apt-get install xserver-xorg libglu1-mesa-dev freeglut3-dev mesa-common-dev libxmu-dev libxi-dev</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Configure the nvidia-x</span></span><br><span class="line">sudo nvidia-xconfig -a --use-display-device=None --virtual=1280x1024</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Run the virtual screen <span class="keyword">in</span> the background (:0)</span></span><br><span class="line">sudo /usr/bin/X :0 &amp;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">We only need to setup the virtual screen once</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Run the program with vitural screen</span></span><br><span class="line">DISPLAY=:0 &lt;program&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">If you dont want to <span class="built_in">type</span> `DISPLAY=:0` everytime</span></span><br><span class="line">export DISPLAY=:0</span><br></pre></td></tr></table></figure>
+
+<p>sudo nvidia-xconfig -a –use-display-device&#x3D;Device0 –virtual&#x3D;1280x1024</p>
+<p>sudo nvidia-xconfig -a  –virtual&#x3D;1280x1024</p>
+<h3 id="7、VNC-配置ALL（-自启动选项）"><a href="#7、VNC-配置ALL（-自启动选项）" class="headerlink" title="7、VNC 配置ALL（+ 自启动选项）"></a>7、VNC 配置ALL（+ 自启动选项）</h3>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2020/02/10/CV_3D/CV-3D-Face-Model/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/02/10/CV_3D/CV-3D-Face-Model/" class="post-title-link" itemprop="url">CV-3D-Face-Model</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-02-10 17:21:48" itemprop="dateCreated datePublished" datetime="2020-02-10T17:21:48+00:00">2020-02-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV-3D/" itemprop="url" rel="index"><span itemprop="name">CV_3D</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV-3D/3D-Face/" itemprop="url" rel="index"><span itemprop="name">3D Face</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="开源3D人脸重建项目整理"><a href="#开源3D人脸重建项目整理" class="headerlink" title="开源3D人脸重建项目整理"></a>开源3D人脸重建项目整理</h1><p>[TOC]</p>
+<p>本文主要总结了经典3D人脸重建开源算法，如有遗漏请大家提醒补充。</p>
+<h2 id="〇、基础"><a href="#〇、基础" class="headerlink" title="〇、基础"></a>〇、基础</h2><h3 id="1-3DMM-1999"><a href="#1-3DMM-1999" class="headerlink" title="1. 3DMM 1999"></a>1. 3DMM 1999</h3><p>3D Morphable Model</p>
+<p>《A Morphable Model For The Synthesis Of 3D Faces》 1999</p>
+<p>提出人脸的一种线性表示方法</p>
+<p>所有三维人脸是已经进行**稠密对齐(3D face registration)**的，即所有的三维人脸都能用相同的点云数或面片数来表示，且相同序号的点代表相同的语义</p>
+<p>The model has 53K vertices and 106K faces.</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/likewind1993/article/details/81455882">3D 人脸建模  介绍 + code</a></p>
+<p><a target="_blank" rel="noopener" href="https://tensors.space/2020/01/3DMM%E7%9A%84%E4%BC%A0%E7%BB%9F%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95/">3DMM的传统优化方法 | 阮明康</a></p>
+<p><img src="/2020/02/10/CV_3D/CV-3D-Face-Model/image-20200210230052577.png" alt="image-20200210230052577"></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">def <span class="title function_">split_coeff</span><span class="params">(self, coeffs)</span>:</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    Return:</span><br><span class="line">        coeffs_dict     -- a dict of torch.tensors</span><br><span class="line"></span><br><span class="line">    Parameters:</span><br><span class="line">        coeffs          -- torch.tensor, <span class="title function_">size</span> <span class="params">(B, <span class="number">256</span>)</span></span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    id_coeffs = coeffs[:, :<span class="number">80</span>]</span><br><span class="line">    exp_coeffs = coeffs[:, <span class="number">80</span>: <span class="number">144</span>]</span><br><span class="line">    tex_coeffs = coeffs[:, <span class="number">144</span>: <span class="number">224</span>]</span><br><span class="line">    angles = coeffs[:, <span class="number">224</span>: <span class="number">227</span>]</span><br><span class="line">    gammas = coeffs[:, <span class="number">227</span>: <span class="number">254</span>]</span><br><span class="line">    translations = coeffs[:, <span class="number">254</span>:]</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="string">&#x27;id&#x27;</span>: id_coeffs,</span><br><span class="line">        <span class="string">&#x27;exp&#x27;</span>: exp_coeffs,</span><br><span class="line">        <span class="string">&#x27;tex&#x27;</span>: tex_coeffs,</span><br><span class="line">        <span class="string">&#x27;angle&#x27;</span>: angles,</span><br><span class="line">        <span class="string">&#x27;gamma&#x27;</span>: gammas,</span><br><span class="line">        <span class="string">&#x27;trans&#x27;</span>: translations</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-BFM模型"><a href="#2-BFM模型" class="headerlink" title="2.BFM模型"></a>2.BFM模型</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/ling_76539446/article/details/102886398">BFM模型介绍及可视化实现（C++）</a></p>
+<p>Basel Face Model是一个开源的人脸 <a target="_blank" rel="noopener" href="http://www.wityx.com/database/">数据库</a>，其基本原理是3DMM，因此其便是在PCA的基础上进行存储的。 目前有多个版本的数据库（2009，2017， 2022）。 官方网站：2009，2017</p>
+<h4 id="数据内容（以2009版本为例）"><a href="#数据内容（以2009版本为例）" class="headerlink" title="数据内容（以2009版本为例）"></a>数据内容（以2009版本为例）</h4><p>01_MorphableModel.mat（数据主体）</p>
+<p>​    BFM模型由53490个顶点构成，其shape&#x2F;texture的数据长度为160470（53490*3），因为其排列方式如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">shape<span class="punctuation">:</span> x_1<span class="punctuation">,</span> y_1<span class="punctuation">,</span> z_1<span class="punctuation">,</span> x_2<span class="punctuation">,</span> y_2<span class="punctuation">,</span> z_2<span class="punctuation">,</span> ...<span class="punctuation">,</span> x_<span class="punctuation">&#123;</span><span class="number">53490</span><span class="punctuation">&#125;</span><span class="punctuation">,</span> y_<span class="punctuation">&#123;</span><span class="number">53490</span><span class="punctuation">&#125;</span><span class="punctuation">,</span> z_<span class="punctuation">&#123;</span><span class="number">53490</span><span class="punctuation">&#125;</span></span><br><span class="line">texture<span class="punctuation">:</span> r_1<span class="punctuation">,</span> g_1<span class="punctuation">,</span> b_1<span class="punctuation">,</span> r_2<span class="punctuation">,</span> g_2<span class="punctuation">,</span> b_2<span class="punctuation">,</span> ...<span class="punctuation">,</span> r_<span class="punctuation">&#123;</span><span class="number">53490</span><span class="punctuation">&#125;</span><span class="punctuation">,</span> g_<span class="punctuation">&#123;</span><span class="number">53490</span><span class="punctuation">&#125;</span><span class="punctuation">,</span> b_<span class="punctuation">&#123;</span><span class="number">53490</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>.h5文件与.mat文件对应关系</p>
+<p>​    <em>[注] .h5文件中的tl数量与.mat数量不同，主成分方差的值也不同，且shape的值是.mat中shape值的0.001倍（见<code>/shape/representer/length-unit</code>）。</em></p>
+<p>Matlab脚本</p>
+<p>​    建议阅读<code>script_gen_random_head.m</code>文件，该脚本实现了如何生成随机脸，从中我们可以学习到BFM模型的使用方法。</p>
+<p><img src="/2020/02/10/CV_3D/CV-3D-Face-Model/2024-03-18-16-33-15-image.png"></p>
+<h2 id="一、单图三维人脸重建开源算法"><a href="#一、单图三维人脸重建开源算法" class="headerlink" title="一、单图三维人脸重建开源算法"></a>一、单图三维人脸重建开源算法</h2><p>单图三维人脸重建代码，指根据一张二维人脸图像，恢复与之对应的三维人脸（包括形状和纹理），一些算法提供了训练代码及网络框架，一些算法仅提供了测试接口。</p>
+<p>目前单图三维人脸重建主要的发展方向有两种，一种是基于多任务的三维人脸重建，在三维人脸重建过程的同时完成其他与人脸有关的任务，例如，人脸识别，人脸对齐，特征点定位等，以同时提高多任务的效果。另一种，期望重建出精细化的三维人脸，包括对表情和细节的恢复。</p>
+<h3 id="1-3DDFA-CVPR-2016："><a href="#1-3DDFA-CVPR-2016：" class="headerlink" title="1.3DDFA CVPR 2016："></a>1.<a target="_blank" rel="noopener" href="https://github.com/cleardusk/3DDFA">3DDFA</a> CVPR 2016：</h3><p>Github: <a target="_blank" rel="noopener" href="https://github.com/cleardusk/3DDFA">https://github.com/cleardusk/3DDFA</a></p>
+<p>《<a target="_blank" rel="noopener" href="http://www.cbsr.ia.ac.cn/users/xiangyuzhu/projects/3DDFA/main.htm">Face Alignment in Full Pose Range: A 3D Total Solution</a>》CVPR2016</p>
+<p>通过恢复稠密的三维形状，以解决大姿态人脸2D特征点检测的问题。文中提到，这是第一篇利用CNN来解决3D人脸对齐问题的文章，网络通过输入PNCC图和原始二维图，输出234维参数（包括6维姿态参数[缩放参数,pitch,yaw,roll偏转角,沿xy轴的平移量]，199维3DMM形状参数，29维3DMM表情参数），利用得到的系数更新原始的PNCC图，再与原图一起进行迭代。</p>
+<p><img src="/2020/02/10/CV_3D/CV-3D-Face-Model/vertex_3d.jpg" alt="Vertex 3D"></p>
+<h3 id="2-pix2vertex-ICCV-2017："><a href="#2-pix2vertex-ICCV-2017：" class="headerlink" title="2.pix2vertex ICCV 2017："></a>2.<a target="_blank" rel="noopener" href="https://github.com/matansel/pix2vertex">pix2vertex</a> ICCV 2017：</h3><p>Github: <a target="_blank" rel="noopener" href="https://github.com/matansel/pix2vertex">https://github.com/matansel/pix2vertex</a></p>
+<p>《<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1703.10131">Unrestricted Facial Geometry Reconstruction Using Image-to-Image Translation</a>》ICCV 2017(Sela17)</p>
+<p>文章通过一个Image-to-Image转换网络，从一张二维图像中恢复一张普通深度图像与一张稠密对应图。根据文中提到的迭代弹性形变算法（实际是一种非刚性三维人脸对齐方法）将2.5D图像转化3D人脸网格。</p>
+<p><img src="/2020/02/10/CV_3D/CV-3D-Face-Model/image-20200210190858197.png" alt="image-20200210190858197"></p>
+<h3 id="3-CNN3DMM-CVPR-2017："><a href="#3-CNN3DMM-CVPR-2017：" class="headerlink" title="3.CNN3DMM_CVPR 2017："></a>3.<a target="_blank" rel="noopener" href="https://github.com/anhttran/3dmm_cnn">CNN3DMM</a>_CVPR 2017：</h3><p>《<a target="_blank" rel="noopener" href="https://talhassner.github.io/home/publication/2017_CVPR">Regressing Robust and Discriminative 3D Morphable Models With a Very Deep Neural Network</a>》CVPR2017</p>
+<p>Github: <a target="_blank" rel="noopener" href="https://github.com/anhttran/3dmm_cnn">https://github.com/anhttran/3dmm_cnn</a></p>
+<p>本文介绍的是上2文中恢复基础形状的方法，利用ResNet101深层神经网络框架，从in-the-wild二维图像恢复三维人脸形状，并用于识别，在文中针对训练数据量不足提出数据扩充方法，利用一篇<a target="_blank" rel="noopener" href="http://xueshu.baidu.com/usercenter/paper/show%3Fpaperid%3D63c13a0fb4d7b33dac5c0de53ea5d415%26site%3Dxueshu_se">多图三维人脸重建文章方法</a>生成足量的带标签的三维人脸，训练过程仍采用回归3DMM参数的方法。</p>
+<p><img src="/2020/02/10/CV_3D/CV-3D-Face-Model/image-20200210191137165.png" alt="image-20200210191137165"></p>
+<h3 id="4-Richardson-CVPR-2017："><a href="#4-Richardson-CVPR-2017：" class="headerlink" title="4.Richardson_CVPR 2017："></a>4.<a target="_blank" rel="noopener" href="https://github.com/Cogito2012/3DFaceRecon">Richardson_CVPR 2017</a>：</h3><p>Github: <a target="_blank" rel="noopener" href="https://github.com/Cogito2012/3DFaceRecon">https://github.com/Cogito2012/3DFaceRecon</a></p>
+<p>《Learning Detailed Face Reconstruction from a Single Image》CVPR2017</p>
+<p><img src="/2020/02/10/CV_3D/CV-3D-Face-Model/image-20200210193653717.png" alt="image-20200210193653717"></p>
+<h3 id="5-E2FAR-CVPR-2017："><a href="#5-E2FAR-CVPR-2017：" class="headerlink" title="5.E2FAR CVPR 2017："></a>5.<a target="_blank" rel="noopener" href="https://github.com/ShownX/mxnet-E2FAR">E2FAR</a> CVPR 2017：</h3><p>《<a target="_blank" rel="noopener" href="http://openaccess.thecvf.com/content_cvpr_2017/html/Dou_End-To-End_3D_Face_CVPR_2017_paper.html">End-To-End 3D Face Reconstruction With Deep Neural Networks</a>》CVPR2017</p>
+<p>Github: <a target="_blank" rel="noopener" href="https://github.com/ShownX/mxnet-E2FAR">https://github.com/ShownX/mxnet-E2FAR</a></p>
+<p>文章采用端到端的方法估计最优3DMM参数，输入是二维图像及其感兴趣区域，采用Dlib进行特征点检测，将恢复人脸身份形状和表情形状作分为人脸重建的两个子任务，输出包含身份参数向量和表情参数向量。</p>
+<p><img src="/2020/02/10/CV_3D/CV-3D-Face-Model/image-20200210223741952.png" alt="image-20200210223741952"></p>
+<h3 id="6-VRN-ICCV-2017："><a href="#6-VRN-ICCV-2017：" class="headerlink" title="6.VRN ICCV 2017："></a>6.<a target="_blank" rel="noopener" href="https://github.com/AaronJackson/vrn">VRN</a> ICCV 2017：</h3><p>《<a target="_blank" rel="noopener" href="http://aaronsplace.co.uk/papers/jackson2017recon/">Large Pose 3D Face Reconstruction from a Single Image via Direct Volumetric CNN Regression</a>》ICCV2017</p>
+<p>GitHub: <a target="_blank" rel="noopener" href="https://github.com/AaronJackson/vrn">https://github.com/AaronJackson/vrn</a></p>
+<p>官网: <a target="_blank" rel="noopener" href="https://cvl-demos.cs.nott.ac.uk/vrn/">https://cvl-demos.cs.nott.ac.uk/vrn/</a></p>
+<p>A.S. Jackson 诺丁汉大学</p>
+<p>采用体素方法进行三维人脸重建，对人脸而言重建精度不高，但是一种很好的三维人体重建方法。</p>
+<p><img src="/2020/02/10/CV_3D/CV-3D-Face-Model/image-20200210173005834.png" alt="image-20200210173005834"></p>
+<h3 id="7-3DMMasSTN-ICCVW-2017："><a href="#7-3DMMasSTN-ICCVW-2017：" class="headerlink" title="7. 3DMMasSTN ICCVW 2017："></a>7. <a target="_blank" rel="noopener" href="https://github.com/anilbas/3DMMasSTN">3DMMasSTN</a> ICCVW 2017：</h3><p>Github: <a target="_blank" rel="noopener" href="https://github.com/anilbas/3DMMasSTN">https://github.com/anilbas/3DMMasSTN</a></p>
+<p>《<a target="_blank" rel="noopener" href="http://xueshu.baidu.com/usercenter/paper/show%3Fpaperid%3D29a049c95a03ca5c49efbe02f08c2575%26site%3Dxueshu_se">3D Morphable Models as Spatial Transformer Networks</a>》ICCVW2017</p>
+<p>3DMM方法作为空间转化网络的应用，利用3DMM恢复三维人脸形状从而得到姿态归一化和补全自遮挡的人脸图片。</p>
+<p><img src="/2020/02/10/CV_3D/CV-3D-Face-Model/fig1.png" alt="Overview of the 3DMM-STN"></p>
+<h3 id="8-EOSand4Dface-2017："><a href="#8-EOSand4Dface-2017：" class="headerlink" title="8. EOSand4Dface 2017："></a>8. <a target="_blank" rel="noopener" href="https://github.com/patrikhuber/eos">EOS</a>and<a target="_blank" rel="noopener" href="https://github.com/patrikhuber/4dface">4Dface</a> 2017：</h3><p>《<a target="_blank" rel="noopener" href="http://xueshu.baidu.com/usercenter/paper/show%3Fpaperid%3D55a34a1fbd6cbf9bf4cd824aa580fec4%26site%3Dxueshu_se">A Multiresolution 3D Morphable Face Model and Fitting Framework</a>》Visapp 2016 and 《<a target="_blank" rel="noopener" href="https://xueshu.baidu.com/usercenter/paper/show%3Fpaperid%3D074434f1094a27c7473330f65cbc5565%26site%3Dxueshu_se">Real-Time 3D Face Fitting and Texture Fusion on In-the-Wild Videos</a>》 <em>IEEE Signal Processing Letters</em>24.4 (2017)</p>
+<p>Github: <a target="_blank" rel="noopener" href="https://github.com/patrikhuber/eos">https://github.com/patrikhuber/eos</a></p>
+<p>Github: <a target="_blank" rel="noopener" href="https://github.com/patrikhuber/4dface">https://github.com/patrikhuber/4dface</a></p>
+<p>这篇文章的方法主要致力于将3DMM应用到实际开发中，作者提出一个基于C++的拟合框架，可支持Surrey Face Model (SFM), 4D Face Model (4DFM), and the Basel Face Model (BFM) 2009 and 2017数据库，目前这个拟合框架仍在更新。</p>
+<h4 id="eos"><a href="#eos" class="headerlink" title="eos"></a>eos</h4><img title src="/2020/02/10/CV_3D/CV-3D-Face-Model/sfm_shape_3448_mesh.png" alt="4D Face Model colour picture" style="zoom:20%;" width="251">
+
+<h4 id="4Dface"><a href="#4Dface" class="headerlink" title="4Dface"></a>4Dface</h4><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><img title src="/2020/02/10/CV_3D/CV-3D-Face-Model/4dfm_color_sample.jpg" alt="4D Face Model colour picture" style="zoom:20%;" width="256"></td>
+<td><img title src="/2020/02/10/CV_3D/CV-3D-Face-Model/4dfm_shape.png" alt="4D Face Model colour picture" style="zoom:10%;" width="258"></td>
+</tr>
+</tbody></table>
+<p><a target="_blank" rel="noopener" href="https://www.4dface.io/4dfm/">www.4dface.io/4dfm</a>.</p>
+<h3 id="9-Genova-CVPR-2018-1806-06098："><a href="#9-Genova-CVPR-2018-1806-06098：" class="headerlink" title="9 .Genova_CVPR 2018 1806.06098："></a>9 .<a target="_blank" rel="noopener" href="https://github.com/google/tf_mesh_renderer">Genova_CVPR 2018</a> 1806.06098：</h3><p>《Unsupervised Training for 3D Morphable Model Regression》CVPR2018</p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1806.06098">https://arxiv.org/abs/1806.06098</a></p>
+<p>github: <a target="_blank" rel="noopener" href="https://github.com/google/tf_mesh_renderer">https://github.com/google/tf_mesh_renderer</a>    (bazel, c++, tf)</p>
+<p>本文由普林斯顿大学、谷歌和麻省理工学院合作完成，是 CVPR 2018 的 spotlight 文章。<strong>使用无监督训练的方法基于 3DMM 进行人脸三维重建</strong>。论文基于编码器和解码器模型，创新性地将人脸识别网络引入训练的损失函数，使得生成的 3D 人脸能很好地保留了输入图片的人脸个体特征。**该模型旨在拟合形状和纹理，并没有学习姿态表情和光照。**算法的编码器接受图像作为输入，输出用于 3DMM 模型的参数。解码器接受参数后合成 3D 人脸。为了使网络不仅能保持个体信息，还能生成自然真实的人脸，作者提出了 3 个新的损失函数，即批分布损失（batch distribution loss）、回环损失（loopback loss）和多视角身份损失（multi-view identity loss）。批分布损失可使每个批的统计量与 3DMM 的统计量一致。回环损失可保证生成的 3D 人脸模型的2D成像图片重新进入编码器得到的参数和原图的参数尽量一致。多视角身份损失能使得模型学习到独立于观察角度的个体特征。实验结果说明，模型不仅仅可以生成与输入图像高度相似的 3D 人脸，而且生成的人脸独立于输入的表情和姿态，甚至被遮挡的人脸也可以达到不错的生成效果。</p>
+<p><img src="/2020/02/10/CV_3D/CV-3D-Face-Model/image-20200210185718650.png" alt="image-20200210185718650"></p>
+<h3 id="10-CoMA-ECCV-2018"><a href="#10-CoMA-ECCV-2018" class="headerlink" title="10. CoMA ECCV 2018:"></a>10. <a target="_blank" rel="noopener" href="https://github.com/anuragranj/coma">CoMA</a> ECCV 2018:</h3><p>《<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1807.10267">Generating 3D faces using Convolutional Mesh Autoencoders</a>》ECCV2018</p>
+<p>提出一种基于卷积面片自编码重建网络来获得三维人脸形状信息。</p>
+<p>github: <a target="_blank" rel="noopener" href="https://github.com/anuragranj/coma">https://github.com/anuragranj/coma</a></p>
+<p><img src="/2020/02/10/CV_3D/CV-3D-Face-Model/image-20200210185852990.png" alt="image-20200210185852990"></p>
+<h3 id="11-PRnet-ECCV-2018："><a href="#11-PRnet-ECCV-2018：" class="headerlink" title="11. PRnet ECCV 2018："></a>11. <a target="_blank" rel="noopener" href="https://github.com/YadiraF/PRNet">PRnet</a> ECCV 2018：</h3><p>《<a target="_blank" rel="noopener" href="http://link.springer.com/content/pdf/10.1007/978-3-030-01264-9_33.pdf">Joint 3D Face Reconstruction and Dense Alignment with Position Map Regression Network</a>》ECCV2018</p>
+<p>github: <a target="_blank" rel="noopener" href="https://github.com/YadiraF/PRNet">https://github.com/YadiraF/PRNet</a></p>
+<ul>
+<li>上海交通大学 + 云从科技 +</li>
+</ul>
+<p>一篇针对三维人脸重建与对齐的论文，文章通过恢复稠密的3D人脸形状来定位2D人脸图片上的特征点，同时完成估计人脸姿态，人脸交换等应用。文中提到用uv-map来表示3D形状，实现了从端到端的网络结构。</p>
+<p><img src="/2020/02/10/CV_3D/CV-3D-Face-Model/image-20200210190114627.png" alt="image-20200210190114627"></p>
+<h3 id="12-Extreme-3d-faces-CVPR2018："><a href="#12-Extreme-3d-faces-CVPR2018：" class="headerlink" title="12. Extreme_3d_faces CVPR2018："></a>12. <a target="_blank" rel="noopener" href="https://github.com/anhttran/extreme_3d_faces">Extreme_3d_faces</a> CVPR2018：</h3><p>《<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1712.05083">Extreme 3D Face Reconstruction: Seeing Through Occlusions</a>》CVPR2018</p>
+<p>Github: <a target="_blank" rel="noopener" href="https://github.com/anhttran/extreme_3d_faces">https://github.com/anhttran/extreme_3d_faces</a></p>
+<p>文章方法先恢复一个基础形状，表情，六维视角自由度，然后估计一个凹凸贴图，用来捕捉人脸皱纹和非参的中级特征，再补全人脸被遮挡区域。</p>
+<p><img src="/2020/02/10/CV_3D/CV-3D-Face-Model/image-20200210190240938.png" alt="image-20200210190240938"></p>
+<h3 id="13-Deep3DFace-CVPRW-2019："><a href="#13-Deep3DFace-CVPRW-2019：" class="headerlink" title="13. Deep3DFace CVPRW 2019："></a>13. <a target="_blank" rel="noopener" href="https://github.com/Microsoft/Deep3DFaceReconstruction">Deep3DFace</a> CVPRW 2019：</h3><p>《Accurate 3D Face Reconstruction with Weakly-Supervised Learning: From Single Image to Image Set》arXiv 2019 </p>
+<p>最近，基于深度学习的3D人脸重建方法在质量和效率上均显示出令人鼓舞的结果，但是训练深度神经网络通常需要大量数据，而具有真实3D人脸形状的人脸图像却很少。 在本文中，我们提出了一种新颖的深度3D人脸重建方法，该方法包括：1）利用鲁棒的混合损失函数进行<strong>弱监督学习</strong>，同时考虑了低层和感知层信息以进行监督，以及2）执行多通过利用来自不同图像的互补信息进行形状聚合来重建图像人脸。 我们的方法快速，准确，并且对遮挡和大姿势稳健。我们在三个数据集上提供了全面的实验，系统地比较了我们的方法和15种最新方法，并展示了其最新的性能。</p>
+<p>github: <a target="_blank" rel="noopener" href="https://github.com/Microsoft/Deep3DFaceReconstruction">https://github.com/Microsoft/Deep3DFaceReconstruction</a></p>
+<ul>
+<li>Microsoft</li>
+<li>3DMM系数</li>
+</ul>
+<p>训练流程：</p>
+<p><img src="/2020/02/10/CV_3D/CV-3D-Face-Model/3-Figure1-1.png" alt="3-Figure1-1"></p>
+<p>示例：</p>
+<p><img src="/2020/02/10/CV_3D/CV-3D-Face-Model/image-20200210174434478.png" alt="image-20200210174434478"></p>
+<h3 id="14-MMFace-CVPR-2019"><a href="#14-MMFace-CVPR-2019" class="headerlink" title="14. MMFace  CVPR 2019"></a>14. MMFace  CVPR 2019</h3><ul>
+<li><p>用多指标回归网络MMFace解决3D人脸可变形模型（3DMM）与输入图像对齐的野外人脸重建问题。</p>
+<p>  <img src="/2020/02/10/CV_3D/CV-3D-Face-Model/2-Figure2-1.png" alt="图2。我们的方法在AFLW2000-3D上的人脸重建和对齐结果[2]。"></p>
+</li>
+</ul>
+<h3 id="15-2DASL-2019"><a href="#15-2DASL-2019" class="headerlink" title="15. 2DASL 2019"></a>15. 2DASL 2019</h3><p>project: Joint 3D Face Reconstruction and Dense Face Alignment from A Single Image with 2D-Assisted Self-Supervised Learning （2DASL)</p>
+<p>1903.09359《3D Face Reconstruction from A Single Image Assisted by 2D Face Images in the Wild》</p>
+<p>从单个2D图像重建3D人脸是具有广泛应用的挑战性问题。最近的方法通常旨在学习基于CNN的3D人脸模型，该模型从2D图像中回归3D变形模型（3DMM）的系数，以渲染3D人脸重建或密集人脸对齐。但是，缺少带有3D注释的训练数据会极大地限制那些方法的性能。为了缓解这个问题，我们提出了一种新颖的2D辅助自我监督学习（2DASL）方法，该方法可以有效地使用带有嘈杂地标信息的“野生” 2D面部图像来显着改善3D面部模型学习。具体来说，将稀疏的2D面部地标作为附加信息，2DSAL<strong>引入了四种新颖的自我监督方案</strong>，这些方案将2D地标和3D地标预测视为一种自映射过程，包括2D和3D界标自预测一致性，基于2D界标预测的循环一致性以及基于界标预测的预测3DMM系数的自评。使用这四个自我监督方案，2DASL方法大大减轻了对传统的配对2D到3D注释的需求，并提供了更高质量的3D人脸模型，而无需任何其他3D注释。在多个具有挑战性的数据集上进行的实验表明，我们的方法在3D人脸重建和密集人脸对齐方面都远远超过了最新技术。2DASL方法极大地减轻了对传统的2D到3D配对注释的需求，并提供了更高质量的3D人脸模型，而无需任何其他3D注释。在多个具有挑战性的数据集上进行的实验表明，我们的方法在3D人脸重建和密集人脸对齐方面都远远超过了最新技术。2DASL方法极大地减轻了对传统的2D到3D配对注释的需求，并提供了更高质量的3D人脸模型，而无需任何其他3D注释。在多个具有挑战性的数据集上进行的实验表明，我们的方法在3D人脸重建和密集人脸对齐方面都远远超过了最新技术。</p>
+<p>Paper: <a target="_blank" rel="noopener" href="https://arxiv.org/abs/1903.09359">https://arxiv.org/abs/1903.09359</a></p>
+<p>Github: <a target="_blank" rel="noopener" href="https://github.com/XgTu/2DASL">https://github.com/XgTu/2DASL</a></p>
+<p><img src="/2020/02/10/CV_3D/CV-3D-Face-Model/image-20200731170617469.png" alt="image-20200731170617469"></p>
+<p><img src="/2020/02/10/CV_3D/CV-3D-Face-Model/image-20200731170640042.png" alt="image-20200731170640042"></p>
+<p><img src="/2020/02/10/CV_3D/CV-3D-Face-Model/55403032-76960580-5587-11e9-926b-4be4d72c3e3f.gif"></p>
+<p><img src="/2020/02/10/CV_3D/CV-3D-Face-Model/55403128-b3fa9300-5587-11e9-92f0-b7733431ddc9.gif"></p>
+<h3 id="16-GANFIT-2019"><a href="#16-GANFIT-2019" class="headerlink" title="16. GANFIT 2019"></a>16. GANFIT 2019</h3><p>code: <a target="_blank" rel="noopener" href="https://github.com/barisgecer/GANFit">https://github.com/barisgecer/GANFit</a></p>
+<p>《GANFIT: Generative Adversarial Network Fitting for High Fidelity 3D Face Reconstruction》</p>
+<p><img src="/2020/02/10/CV_3D/CV-3D-Face-Model/4-Figure2-1.png" alt="Figure 2: Detailed overview of the proposed approach. A 3D face reconstruction is rendered by a differentiable renderer (shown in purple). Cost functions are mainly formulated by means of identity features on a pretrained face recognition network (shown in gray) and they are optimized by flowing the error all the way back to the latent parameters (ps, pe, pt, c, i, shown in green) with gradient descent optimization. End-to-end differentiable architecture enables us to use computationally cheap and reliable first order derivatives for optimization thus making it possible to employ deep networks as a generator (i.e,. statistical model) or as a cost function."></p>
+<h3 id="17-TBGAN-2019"><a href="#17-TBGAN-2019" class="headerlink" title="17. TBGAN 2019"></a>17. TBGAN 2019</h3><p>code: <a target="_blank" rel="noopener" href="https://github.com/barisgecer/TBGAN">https://github.com/barisgecer/TBGAN</a></p>
+<p>《Synthesizing Coupled 3D Face Modalities by Trunk-Branch Generative Adversarial Networks》</p>
+<p><img src="/2020/02/10/CV_3D/CV-3D-Face-Model/2-Figure1-1.png" alt="Fig. 1: We propose a novel generative adversarial network that can synthesize high-quality texture, shape, and normals jointly for realistic and coherent 3D faces. Moreover, we demonstrate how we can condition the generation on the expression and create faces with various facial expressions."></p>
+<h3 id="Adaptive-2D-3D-2020"><a href="#Adaptive-2D-3D-2020" class="headerlink" title="Adaptive 2D 3D  2020"></a>Adaptive 2D 3D  2020</h3><ul>
+<li>《Adaptive 3D Face Reconstruction from a Single Image》</li>
+<li>3D重建，遮挡和极端姿势的解决方案</li>
+<li>没有开源</li>
+</ul>
+<h3 id="AvatarMe-CVPR-2020"><a href="#AvatarMe-CVPR-2020" class="headerlink" title="AvatarMe CVPR 2020"></a>AvatarMe CVPR 2020</h3><p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2003.13845">https://arxiv.org/abs/2003.13845</a></p>
+<p>《AvatarMe: Realistically Renderable 3D Facial Reconstruction “in-the-wild”》</p>
+<p>AvatarMe是第一种能够从单个“野生”图像中以更高的细节水平重建逼真的3D人脸的方法。为此，我们捕获了大量的面部形状和反射率数据集，并基于一种3D纹理和形状重建方法，并逐步完善其结果，以生成高分辨率散布和镜面反射所需的图像。逼真的渲染。</p>
+<ul>
+<li>使用专业扫描设备，搜集了一套完整的3D人脸数据集</li>
+</ul>
+<img src="/2020/02/10/CV_3D/CV-3D-Face-Model/avatarme_method.png" alt="avatarme_method" style="zoom:200%;">
+
+<p><img src="/2020/02/10/CV_3D/CV-3D-Face-Model/avatarme_teaser.png" alt="avatarme_teaser"></p>
+<img src="/2020/02/10/CV_3D/CV-3D-Face-Model/proc_specAlbs.gif" alt="proc_specAlbs" style="zoom:50%;">
+
+<h3 id="FRDA-open"><a href="#FRDA-open" class="headerlink" title="FRDA-open"></a>FRDA-open</h3><p><a target="_blank" rel="noopener" href="https://github.com/Star-Clouds/FRDA">https://github.com/Star-Clouds/FRDA</a></p>
+<ul>
+<li>Face Reconstruction</li>
+<li>Dense Alignment</li>
+<li>Face 3D landmarks</li>
+<li>3D Pose Estimation</li>
+</ul>
+<hr>
+<h2 id="二、多图三维人脸重建开源算法"><a href="#二、多图三维人脸重建开源算法" class="headerlink" title="二、多图三维人脸重建开源算法"></a>二、多图三维人脸重建开源算法</h2><p>大部分基于多图的三维人脸的工作，希望从同一个人不同时间和环境拍摄的图像集合中恢复一个标准的具有身份信息的人脸形状（不带姿态，表情，纹理等），</p>
+<h3 id="1-AFAR："><a href="#1-AFAR：" class="headerlink" title="1.AFAR："></a>1.<a target="_blank" rel="noopener" href="http://cvlab.cse.msu.edu/project-face-recon.html">AFAR</a>：</h3><p>《<strong>Adaptive 3D Face Reconstruction from Unconstrained Photo Collections</strong>》CVPR2016</p>
+<p>这篇文章在首先在CVPR2015提出，在CVPR2016对算法细节进行了改进，先基于从粗到细的方法，利用二维图片的特征点拟合3DMM系数，再根据PS方法对精细的细节进行恢复，最后得到三维人脸。</p>
+<h2 id="三、人脸数据集"><a href="#三、人脸数据集" class="headerlink" title="三、人脸数据集"></a>三、人脸数据集</h2><h3 id="300W-LP"><a href="#300W-LP" class="headerlink" title="300W-LP"></a>300W-LP</h3><h3 id="FaceWarehouse：用于视觉计算的3D面部表情数据库"><a href="#FaceWarehouse：用于视觉计算的3D面部表情数据库" class="headerlink" title="FaceWarehouse：用于视觉计算的3D面部表情数据库"></a>FaceWarehouse：用于视觉计算的3D面部表情数据库</h3><p>3D面部表情数据库<img src="/2020/02/10/CV_3D/CV-3D-Face-Model/6-Figure4-1.png" alt="图4：使用具有不同数量组件的双线性模型拟合面部表情网格。 左上角是输入网格，下面显示了在identity属性和expression属性中使用不同数量组件的拟合结果。"></p>
+<h2 id="训练源码"><a href="#训练源码" class="headerlink" title="训练源码:"></a>训练源码:</h2><h3 id="3D-Morphable-Model-training"><a href="#3D-Morphable-Model-training" class="headerlink" title="3D-Morphable-Model-training"></a><a target="_blank" rel="noopener" href="https://github.com/hkbonychen/3D-Morphable-Model-training">3D-Morphable-Model-training</a></h3><p>​        This program is to train the face 3D morphable model (3DMM)</p>
+<p>​        <a target="_blank" rel="noopener" href="https://github.com/hkbonychen/3D-Morphable-Model-training">https://github.com/hkbonychen/3D-Morphable-Model-training</a></p>
+<h2 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h2><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/3ef721e7c07e">开源3D人脸重建项目整理</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.semanticscholar.org/paper/3D-Morphable-Face-Models%E2%80%94Past%2C-Present%2C-and-Future-Egger-Smith/579fe5fa694cf6b27229fd0f0ce7dc487e0ceb18">3D Morphable Face Models—Past, Present, and Future</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/AndrewChiyz/3DMM-and-3D-Face-reconstruction-and-manipulation">3DMM-and-3D-Face-reconstruction-and-manipulation</a></p>
+<h2 id="四、综述文献"><a href="#四、综述文献" class="headerlink" title="四、综述文献"></a>四、综述文献</h2><h4 id="State-of-the-Art-on-Monocular-3D-Face-Reconstruction-Tracking-and-Applications"><a href="#State-of-the-Art-on-Monocular-3D-Face-Reconstruction-Tracking-and-Applications" class="headerlink" title="State of the Art on Monocular 3D Face Reconstruction, Tracking, and Applications"></a>State of the Art on Monocular 3D Face Reconstruction, Tracking, and Applications</h4><p>单眼3D人脸重建，跟踪和应用的最新技术 2018</p>
+<p>计算机图形和视觉社区长期致力于构建用于基于视觉输入来重建，跟踪和分析人脸的计算机化工具。在过去的几年中，取得了飞速的进步，这导致了新颖而强大的算法，即使在从单个RGB或RGB-D摄像机进行重建的极具挑战性的情况下，也能获得令人印象深刻的结果。随着这些技术在速度，准确性和易用性方面的进一步提高，应用范围广泛且稳步增长。受此飞速发展的推动，这份最新报告<strong>总结了单眼面部表情捕捉的最新趋势，并讨论了其应用，从基于动作的动画到实时面部重现</strong>。我们将讨论的重点放在使用基于优化的重建算法来恢复和跟踪人脸的三维模型的方法上。我们提供了有关真实世界图像形成的基本概念的深入概述，并讨论了使这些算法实用的常见假设和简化方法。 此外，**我们广泛介绍了用于更好地约束欠约束的单眼重建问题的先验知识，并讨论了用于从单眼2D数据中恢复密集的，光几何3D人脸模型的优化技术。**最后，我们在运动捕捉，面部动画以及图像和视频编辑的背景下，讨论了所审查算法的各种用例。</p>
+<p>CCS概念•计算方法→重构；跟踪；动作捕捉; 形状造型；3D成像；</p>
+<hr>
+<h1 id="人脸企业级商业应用"><a href="#人脸企业级商业应用" class="headerlink" title="人脸企业级商业应用"></a>人脸企业级商业应用</h1><h2 id="face-8K"><a href="#face-8K" class="headerlink" title="face++8K"></a>face++8K</h2><h2 id="face-1K"><a href="#face-1K" class="headerlink" title="face++1K"></a>face++1K</h2><p>花钱采，花钱标 ：）</p>
+<p>数据问题统一回复下：采集的话，主要是公司内部有一定数据积累，尤其是人脸识别组数据积累很大，这也是我们公司的优势吧。然后标注前期是精标，后期有些数据是大模型+筛选标注的。</p>
+<p>10M的数据量</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/25/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><span class="page-number current">26</span><a class="page-number" href="/page/27/">27</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/27/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

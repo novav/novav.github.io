@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Open3D API [TOC] Open3D demo文件读取 PointCloud： 1 文件读取 2 数组数据读取  1234print(&quot;Testing IO for point cloud ...&quot;)pcd &#x3D; o3d.io.read_point_cloud(&quot;..&#x2F;..&#x2F;TestData&#x2F;fragment.pcd&quot;)print(pcd)o3d.i">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Open3d API">
+<meta property="og:url" content="https://novav.github.io/2020/03/17/Sub_Language/CVs/Language-Open3d/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="Open3D API [TOC] Open3D demo文件读取 PointCloud： 1 文件读取 2 数组数据读取  1234print(&quot;Testing IO for point cloud ...&quot;)pcd &#x3D; o3d.io.read_point_cloud(&quot;..&#x2F;..&#x2F;TestData&#x2F;fragment.pcd&quot;)print(pcd)o3d.i">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-03-17T15:41:20.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:40.532Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="Open3D">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://novav.github.io/2020/03/17/Sub_Language/CVs/Language-Open3d/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Open3d API | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2020/03/17/Sub_Language/CVs/Language-Open3d/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Open3d API
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-17 15:41:20" itemprop="dateCreated datePublished" datetime="2020-03-17T15:41:20+00:00">2020-03-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Graphices/" itemprop="url" rel="index"><span itemprop="name">Graphices</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Graphices/Open3D/" itemprop="url" rel="index"><span itemprop="name">Open3D</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Open3D API</p>
+<p>[TOC]</p>
+<h2 id="Open3D-demo"><a href="#Open3D-demo" class="headerlink" title="Open3D demo"></a>Open3D demo</h2><p>文件读取</p>
+<h3 id="PointCloud："><a href="#PointCloud：" class="headerlink" title="PointCloud："></a>PointCloud：</h3><ul>
+<li>1 文件读取</li>
+<li>2 数组数据读取</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Testing IO for point cloud ...&quot;</span>)</span><br><span class="line">pcd = o3d.io.read_point_cloud(<span class="string">&quot;../../TestData/fragment.pcd&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(pcd)</span><br><span class="line">o3d.io.write_point_cloud(<span class="string">&quot;copy_of_fragment.pcd&quot;</span>, pcd)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">source = o3d.io.read_point_cloud(<span class="string">&quot;../TestData/ICP/cloud_bin_0.pcd&quot;</span>)</span><br><span class="line">target = o3d.io.read_point_cloud(<span class="string">&quot;../TestData/ICP/cloud_bin_1.pcd&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="TriMesh"><a href="#TriMesh" class="headerlink" title="TriMesh:"></a>TriMesh:</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Testing IO for meshes ...&quot;</span>)</span><br><span class="line">mesh = o3d.io.read_triangle_mesh(<span class="string">&quot;../../TestData/knot.ply&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(mesh)</span><br><span class="line">o3d.io.write_triangle_mesh(<span class="string">&quot;copy_of_knot.ply&quot;</span>, mesh)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Image："><a href="#Image：" class="headerlink" title="Image："></a>Image：</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Testing IO for textured meshes ...&quot;</span>)</span><br><span class="line">textured_mesh = o3d.io.read_triangle_mesh(<span class="string">&quot;../../TestData/crate/crate.obj&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(textured_mesh)</span><br><span class="line">o3d.io.write_triangle_mesh(<span class="string">&quot;copy_of_crate.obj&quot;</span>,</span><br></pre></td></tr></table></figure>
+
+<h3 id="TriMesh-to-PointCloud-v1"><a href="#TriMesh-to-PointCloud-v1" class="headerlink" title="TriMesh to PointCloud v1"></a>TriMesh to PointCloud v1</h3><p>​        triMesh完全PointCloud读取</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">load_ply_point_cloud</span>(<span class="params">filename,voxel_size=<span class="number">0.5</span></span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Load a ply point cloud, print it, and render it&quot;</span>)</span><br><span class="line">    mesh= open3d.io.read_triangle_mesh(filename)</span><br><span class="line">    voxel_mesh = open3d.geometry.VoxelGrid.create_from_triangle_mesh(mesh)</span><br><span class="line">    <span class="keyword">return</span> mesh,voxel_mesh</span><br><span class="line"></span><br><span class="line">points_ar = []</span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> voxel_mesh.voxels:</span><br><span class="line">    points_ar.append(x.grid_index)</span><br><span class="line">points = np.array(points_ar)</span><br><span class="line">pcd = open3d.geometry.PointCloud()</span><br><span class="line">pcd.points = open3d.utility.Vector3dVector(points)</span><br></pre></td></tr></table></figure>
+
+<h3 id="TriMesh-to-PointCloud-v2"><a href="#TriMesh-to-PointCloud-v2" class="headerlink" title="TriMesh to PointCloud v2"></a>TriMesh to PointCloud v2</h3><p>​        采样的方式，进行采用PointCloud</p>
+<p><code>sample_points_poisson_disk</code><strong>(<em><strong>self</strong></em>,</strong> <em>number_of_points</em><strong>,</strong> <em>init_factor&#x3D;5</em><strong>,</strong> <em>pcl&#x3D;None</em><strong>)</strong></p>
+<p>​        函数从网格中取样点，其中每个点到邻近点的距离大致相同(蓝色噪声)。 方法是基于 Yuksel</p>
+<p><code>sample_points_uniformly</code><strong>(<em><strong>self 自我</strong></em>,</strong> <em>number_of_points&#x3D;100 点数100</em><strong>)</strong></p>
+<p>​        函数来均匀地从网格中取样点。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Load a ply point could, print, render it&quot;</span>)</span><br><span class="line">mesh= open3d.io.read_triangle_mesh(filename)</span><br><span class="line">o3d.geometry.TriangleMesh.sample_points_uniformly(mesh, voxel_size)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Voxel"><a href="#Voxel" class="headerlink" title="Voxel"></a>Voxel</h3><p>Base Voxel class, containing grid id and color</p>
+<p>基本体素类，包含网格 id 和颜色</p>
+<h3 id="VoxelGrid"><a href="#VoxelGrid" class="headerlink" title="VoxelGrid"></a>VoxelGrid</h3><p>open3d.geometry.VoxelGrid</p>
+<h3 id="可视化"><a href="#可视化" class="headerlink" title="可视化"></a>可视化</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">source = o3.io.read_point_cloud(mscan)</span><br><span class="line">o3.visualization.draw_geometries([source])</span><br></pre></td></tr></table></figure>
+
+<h2 id="API-detail"><a href="#API-detail" class="headerlink" title="API detail"></a>API detail</h2><h3 id="open3d-gemotry-TriangleMesh"><a href="#open3d-gemotry-TriangleMesh" class="headerlink" title="open3d.gemotry.TriangleMesh"></a>open3d.gemotry.TriangleMesh</h3><p><em>static</em><code>create_from_point_cloud_alpha_shape</code><strong>(<em><strong>pcd</strong></em>,</strong> <em>alpha</em><strong>,</strong> <em>tetra_mesh</em><strong>,</strong> <em>pt_map</em><strong>)</strong></p>
+<p><em>static</em><code>create_from_point_cloud_ball_pivoting</code><strong>(<em><strong>pcd</strong></em>,</strong> <em>radii</em><strong>)</strong></p>
+<p><em>static</em><code>create_from_point_cloud_poisson</code><strong>(<em><strong>pcd</strong></em>,</strong> <em>depth&#x3D;8</em><strong>,</strong> <em>width&#x3D;0</em><strong>,</strong> <em>scale&#x3D;1.1</em><strong>,</strong> <em>linear_fit&#x3D;False</em><strong>)</strong></p>
+<h3 id="open3d-registration-registration-ransac-based-on-feature-matching"><a href="#open3d-registration-registration-ransac-based-on-feature-matching" class="headerlink" title="open3d.registration.registration_ransac_based_on_feature_matching"></a>open3d.registration.registration_ransac_based_on_feature_matching</h3><p>Parameters</p>
+<ul>
+<li><strong>source</strong> (<a target="_blank" rel="noopener" href="http://www.open3d.org/docs/release/python_api/open3d.geometry.PointCloud.html#open3d.geometry.PointCloud"><em>open3d.geometry.PointCloud</em></a>) – The source point cloud.</li>
+<li><strong>target</strong> (<a target="_blank" rel="noopener" href="http://www.open3d.org/docs/release/python_api/open3d.geometry.PointCloud.html#open3d.geometry.PointCloud"><em>open3d.geometry.PointCloud</em></a>) – The target point cloud.</li>
+<li><strong>source_feature</strong> (<a target="_blank" rel="noopener" href="http://www.open3d.org/docs/release/python_api/open3d.registration.Feature.html#open3d.registration.Feature"><em>open3d.registration.Feature</em></a>) – Source point cloud feature.</li>
+<li><strong>target_feature</strong> (<a target="_blank" rel="noopener" href="http://www.open3d.org/docs/release/python_api/open3d.registration.Feature.html#open3d.registration.Feature"><em>open3d.registration.Feature</em></a>) – Target point cloud feature.</li>
+<li><strong>max_correspondence_distance</strong> (<em>float</em>) – Maximum correspondence points-pair distance.</li>
+<li><strong>estimation_method</strong> (<a target="_blank" rel="noopener" href="http://www.open3d.org/docs/release/python_api/open3d.registration.TransformationEstimation.html#open3d.registration.TransformationEstimation"><em>open3d.registration.TransformationEstimation</em></a><em>,</em> <em>optional</em><em>,</em> <em>default&#x3D;registration::TransformationEstimationPointToPoint without scaling.</em>) – Estimation method. One of (<code>registration::TransformationEstimationPointToPoint</code>, <code>registration::TransformationEstimationPointToPlane</code>)</li>
+<li><strong>ransac_n</strong> (<em>int</em><em>,</em> <em>optional</em><em>,</em> <em>default&#x3D;4</em>) – Fit ransac with <code>ransac_n</code> correspondences</li>
+<li><strong>checkers</strong> (<em>List</em><em>[</em><a target="_blank" rel="noopener" href="http://www.open3d.org/docs/release/python_api/open3d.registration.CorrespondenceChecker.html#open3d.registration.CorrespondenceChecker"><em>open3d.registration.CorrespondenceChecker</em></a><em>]**,</em> <em>optional</em><em>,</em> <em>default&#x3D;<strong>[</strong>]</em>) – checkers</li>
+<li><strong>criteria</strong> (<a target="_blank" rel="noopener" href="http://www.open3d.org/docs/release/python_api/open3d.registration.RANSACConvergenceCriteria.html#open3d.registration.RANSACConvergenceCriteria"><em>open3d.registration.RANSACConvergenceCriteria</em></a><em>,</em> <em>optional</em><em>,</em> <em>default&#x3D;registration::RANSACConvergenceCriteria class with max_iteration&#x3D;100000</em><em>,</em> <em>and max_validation&#x3D;100</em>) – Convergence criteria</li>
+</ul>
+<p>Returns</p>
+<p>​        open3d.registration.RegistrationResult</p>
+<h3 id="open3d-registration-RegistrationResult"><a href="#open3d-registration-RegistrationResult" class="headerlink" title="open3d.registration.RegistrationResult"></a>open3d.registration.RegistrationResult</h3><ul>
+<li><p><em>property</em><code>correspondence_set</code></p>
+<p>Correspondence set between source and target point cloud.Type<code>n x 2</code> int numpy array</p>
+<p>源点云与目标点云之间的对应集[source, target]。（此处的源点云与目标点云，均是采样过后的对应关系之间）</p>
+</li>
+<li><p><em>property</em><code>fitness</code></p>
+<p>The overlapping area (# of inlier correspondences &#x2F; # of points in target). Higher is better.Typefloat</p>
+<p>重叠区域(向内对应的 # &#x2F; 目标点的 #)。越高越好。</p>
+</li>
+<li><p><em>property</em><code>inlier_rmse</code></p>
+<p>RMSE of all inlier correspondences. Lower is better.Typefloat</p>
+<p>所有相关函数的 RMSE。越低越好。</p>
+</li>
+<li><p><em>property</em><code>transformation</code></p>
+<p>The estimated transformation matrix.Type<code>4 x 4</code> float64 numpy array</p>
+<p>估计的变换矩阵。</p>
+</li>
+</ul>
+<h3 id="open3d-registration-CorrespondenceCheckerBasedOnDistance"><a href="#open3d-registration-CorrespondenceCheckerBasedOnDistance" class="headerlink" title="open3d.registration.CorrespondenceCheckerBasedOnDistance"></a>open3d.registration.CorrespondenceCheckerBasedOnDistance</h3><p>​        Class to check if aligned point clouds are close (less than specified threshold).</p>
+<p>​        检查对齐的点云是否关闭(小于指定的阈值)。</p>
+<h3 id="open3d-registration-CorrespondenceCheckerBasedOnEdgeLength"><a href="#open3d-registration-CorrespondenceCheckerBasedOnEdgeLength" class="headerlink" title="open3d.registration.CorrespondenceCheckerBasedOnEdgeLength"></a>open3d.registration.CorrespondenceCheckerBasedOnEdgeLength</h3><p>​        Check if two point clouds build the polygons with similar edge lengths. That is, checks if the lengths of any two arbitrary edges (line formed by two vertices) individually drawn withinin source point cloud and within the target point cloud with correspondences are similar. The only parameter similarity_threshold is a number between 0 (loose) and 1 (strict)</p>
+<p>​        检查两个点云是否构建边长相似的多边形。 也就是说，检查在源点云和目标点云中单独绘制的任意两条边(由两个顶点组成的直线)的长度是否相似。 唯一的参数相似性阈值是介于0(宽松)和1(严格)之间的数字</p>
+<h3 id="open3d-registration-RANSACConvergenceCriteria"><a href="#open3d-registration-RANSACConvergenceCriteria" class="headerlink" title="open3d.registration.RANSACConvergenceCriteria"></a>open3d.registration.RANSACConvergenceCriteria</h3><p>​    定义 RANSAC 的收敛准则。 如果迭代次数达到最大迭代次数，或者验证已经运行了最大验证次数，则 RANSAC 算法停止。 注意，验证是迭代中最昂贵的计算运算符。 大多数迭代并不完全进行验证。 这是至关重要的，以控制最大验证，使计算时间是可接受的。</p>
+<h3 id="open3d-geometry-PointCloud"><a href="#open3d-geometry-PointCloud" class="headerlink" title="open3d.geometry.PointCloud"></a>open3d.geometry.PointCloud</h3><p>​        crop**(<strong>bounding_box</strong>,** <em>bounding_box</em><strong>)</strong></p>
+<h3 id="open3d-geometry-OrientedBoundingBox"><a href="#open3d-geometry-OrientedBoundingBox" class="headerlink" title="open3d.geometry.OrientedBoundingBox"></a>open3d.geometry.OrientedBoundingBox</h3><p>​        static <strong>create_from_points</strong></p>
+<p>​        get_max_bound**(<strong>self</strong>)**</p>
+<p>​        <strong>get_min_bound</strong>(self)</p>
+<p>​        <strong>get_oriented_bounding_box</strong></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Open3D/" rel="tag"># Open3D</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/17/CV_3D/CV-3D-Transform/" rel="prev" title="三维坐标变换原理-平移, 旋转, 缩放">
+      <i class="fa fa-chevron-left"></i> 三维坐标变换原理-平移, 旋转, 缩放
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/03/21/CV/CV-Survery/" rel="next" title="CV Survery 计算机视觉综述">
+      CV Survery 计算机视觉综述 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Open3D-demo"><span class="nav-number">1.</span> <span class="nav-text">Open3D demo</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PointCloud%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">PointCloud：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TriMesh"><span class="nav-number">1.2.</span> <span class="nav-text">TriMesh:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Image%EF%BC%9A"><span class="nav-number">1.3.</span> <span class="nav-text">Image：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TriMesh-to-PointCloud-v1"><span class="nav-number">1.4.</span> <span class="nav-text">TriMesh to PointCloud v1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TriMesh-to-PointCloud-v2"><span class="nav-number">1.5.</span> <span class="nav-text">TriMesh to PointCloud v2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Voxel"><span class="nav-number">1.6.</span> <span class="nav-text">Voxel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VoxelGrid"><span class="nav-number">1.7.</span> <span class="nav-text">VoxelGrid</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="nav-number">1.8.</span> <span class="nav-text">可视化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#API-detail"><span class="nav-number">2.</span> <span class="nav-text">API detail</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#open3d-gemotry-TriangleMesh"><span class="nav-number">2.1.</span> <span class="nav-text">open3d.gemotry.TriangleMesh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#open3d-registration-registration-ransac-based-on-feature-matching"><span class="nav-number">2.2.</span> <span class="nav-text">open3d.registration.registration_ransac_based_on_feature_matching</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#open3d-registration-RegistrationResult"><span class="nav-number">2.3.</span> <span class="nav-text">open3d.registration.RegistrationResult</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#open3d-registration-CorrespondenceCheckerBasedOnDistance"><span class="nav-number">2.4.</span> <span class="nav-text">open3d.registration.CorrespondenceCheckerBasedOnDistance</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#open3d-registration-CorrespondenceCheckerBasedOnEdgeLength"><span class="nav-number">2.5.</span> <span class="nav-text">open3d.registration.CorrespondenceCheckerBasedOnEdgeLength</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#open3d-registration-RANSACConvergenceCriteria"><span class="nav-number">2.6.</span> <span class="nav-text">open3d.registration.RANSACConvergenceCriteria</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#open3d-geometry-PointCloud"><span class="nav-number">2.7.</span> <span class="nav-text">open3d.geometry.PointCloud</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#open3d-geometry-OrientedBoundingBox"><span class="nav-number">2.8.</span> <span class="nav-text">open3d.geometry.OrientedBoundingBox</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

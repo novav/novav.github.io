@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Pog [toc] Abstract游戏作为人工智能发展的基准由来已久。最近，使用搜索和学习的方法在一组完美信息博弈中表现出了很强的表现，而使用博弈论推理和学习的方法在特定的不完美信息扑克变种中表现出了很强的表现。我们介绍了一种将引导搜索、自玩学习和博弈论推理相结合的通用算法Player of Games。players of Games是第一个在大型完备和不完备信息博弈中取得较强经验性能的算法—">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Player Of Game(POG)论文翻译">
+<meta property="og:url" content="https://novav.github.io/2021/12/19/Games/Paper-Game-POG/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="Pog [toc] Abstract游戏作为人工智能发展的基准由来已久。最近，使用搜索和学习的方法在一组完美信息博弈中表现出了很强的表现，而使用博弈论推理和学习的方法在特定的不完美信息扑克变种中表现出了很强的表现。我们介绍了一种将引导搜索、自玩学习和博弈论推理相结合的通用算法Player of Games。players of Games是第一个在大型完备和不完备信息博弈中取得较强经验性能的算法—">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://uploader.shimo.im/f/7bF2LrZt1Is2olCj.png!thumbnail?accessToken=eyJhbGciOiJIUzI1NiIsImtpZCI6ImRlZmF1bHQiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJhY2Nlc3NfcmVzb3VyY2UiLCJleHAiOjE2NDk2ODIyMDMsImciOiJXV3F3Q3ZSUjhXdFhRanRUIiwiaWF0IjoxNjQ5NjgxOTAzLCJ1c2VySWQiOjMyNzIxNjY5fQ.U9jNMkb0ZZcEMlHQ2fdRyY3GvN-Msz-GvMc4ftaszUY">
+<meta property="og:image" content="https://uploader.shimo.im/f/AyVb3paDBq4Ks0k4.png!thumbnail?accessToken=eyJhbGciOiJIUzI1NiIsImtpZCI6ImRlZmF1bHQiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJhY2Nlc3NfcmVzb3VyY2UiLCJleHAiOjE2NDk2ODIyMDMsImciOiJXV3F3Q3ZSUjhXdFhRanRUIiwiaWF0IjoxNjQ5NjgxOTAzLCJ1c2VySWQiOjMyNzIxNjY5fQ.U9jNMkb0ZZcEMlHQ2fdRyY3GvN-Msz-GvMc4ftaszUY">
+<meta property="og:image" content="https://uploader.shimo.im/f/cC9Gos8EtlDYDGrW.png!thumbnail?accessToken=eyJhbGciOiJIUzI1NiIsImtpZCI6ImRlZmF1bHQiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJhY2Nlc3NfcmVzb3VyY2UiLCJleHAiOjE2NDk2ODIyMDMsImciOiJXV3F3Q3ZSUjhXdFhRanRUIiwiaWF0IjoxNjQ5NjgxOTAzLCJ1c2VySWQiOjMyNzIxNjY5fQ.U9jNMkb0ZZcEMlHQ2fdRyY3GvN-Msz-GvMc4ftaszUY">
+<meta property="og:image" content="https://uploader.shimo.im/f/5GPQGAoNThIIRPwV.png!thumbnail?accessToken=eyJhbGciOiJIUzI1NiIsImtpZCI6ImRlZmF1bHQiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJhY2Nlc3NfcmVzb3VyY2UiLCJleHAiOjE2NDk2ODIyMDMsImciOiJXV3F3Q3ZSUjhXdFhRanRUIiwiaWF0IjoxNjQ5NjgxOTAzLCJ1c2VySWQiOjMyNzIxNjY5fQ.U9jNMkb0ZZcEMlHQ2fdRyY3GvN-Msz-GvMc4ftaszUY">
+<meta property="article:published_time" content="2021-12-19T11:39:58.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:39.916Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="Paper Reading">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://uploader.shimo.im/f/7bF2LrZt1Is2olCj.png!thumbnail?accessToken=eyJhbGciOiJIUzI1NiIsImtpZCI6ImRlZmF1bHQiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJhY2Nlc3NfcmVzb3VyY2UiLCJleHAiOjE2NDk2ODIyMDMsImciOiJXV3F3Q3ZSUjhXdFhRanRUIiwiaWF0IjoxNjQ5NjgxOTAzLCJ1c2VySWQiOjMyNzIxNjY5fQ.U9jNMkb0ZZcEMlHQ2fdRyY3GvN-Msz-GvMc4ftaszUY">
+
+<link rel="canonical" href="https://novav.github.io/2021/12/19/Games/Paper-Game-POG/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Player Of Game(POG)论文翻译 | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2021/12/19/Games/Paper-Game-POG/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Player Of Game(POG)论文翻译
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-12-19 11:39:58" itemprop="dateCreated datePublished" datetime="2021-12-19T11:39:58+00:00">2021-12-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Game/" itemprop="url" rel="index"><span itemprop="name">Game</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Game/Imperfect-Information-Game/" itemprop="url" rel="index"><span itemprop="name">Imperfect Information Game</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Pog</p>
+<p>[toc]</p>
+<p>Abstract游戏作为人工智能发展的基准由来已久。最近，使用搜索和学习的方法在一组完美信息博弈中表现出了很强的表现，而使用博弈论推理和学习的方法在特定的不完美信息扑克变种中表现出了很强的表现。我们介绍了一种将引导搜索、自玩学习和博弈论推理相结合的通用算法Player of Games。players of Games是第一个在大型完备和不完备信息博弈中取得较强经验性能的算法—–这是向真正适用于任意环境的通用算法迈出的重要一步。我们证明了 Player of Games 是健全的，随着可用计算时间和近似容量的增加，收敛到完美的游戏。 Player of Games在国际象棋和围棋方面取得了强劲的表现，在单挑无限注德州扑克  中击败了最强大的公开智能体(Slumbot)，并在苏格兰场击败了最先进的Agent。 一个不完美的信息游戏，说明了引导搜索、学习和博弈论推理的价值。 </p>
+<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1 Introduction"></a>1 Introduction</h2><p>在 1950 年代，Arthur L. Samuel 开发了一个跳棋程序，该程序采用了现在所谓的极小极大搜索（带有 alpha-beta 剪枝）和“（死记硬背）rote learning”，通过自我对弈来改进其评估功能 [62]。这项调查启发了许多其他人，最终塞缪尔共同创立了人工智能领域 [61] 并普及了“机器学习”一词。几年前，世界目睹了一个计算机程序在围棋比赛中击败了一位长期存在的专业人士 [70]。 AlphaGo 还结合了学习和搜索。许多类似的成就发生在这两者之间，例如super-human象棋的竞赛导致DeepBlue[17]，TD-Gammon通过自我对弈自学在西洋双陆棋（Backgammon ）中发挥大师级的表现[82]，延续了将游戏作为该领域主流进程的典型标志。    </p>
+<p>​		在整个成功的过程中，有一个重要的共同元素：专注于单一游戏。确实，深蓝不会下围棋，塞缪尔的程序也不会下国际象棋。同样，AlphaGo 也不会下国际象棋；然而，它的继任者 AlphaZero [71] 能够并且做到了。 AlphaZero 证明了使用 AlphaGo 方法的简化，并且以最少的人类知识，单个算法可以掌握三种不同的完美信息游戏。尽管取得了这一成功，但 AlphaZero 不能玩扑克，而且对不完美信息游戏的扩展尚不清楚。    与此同时，实现超人类扑克人工智能的方法也大不相同。强大的扑克游戏依赖于博弈论推理来确保有效隐藏私人信息。最初，超人类扑克代理人主要基于计算近似纳什均衡oﬄine [37]。然后添加了搜索，并证明是在无限变体中取得超人成功的关键因素 [55, 11, 12]。其他大型游戏的训练也受到<strong>博弈论推理</strong>和<strong>搜索</strong>的启发，例如 Hanabi [4, 44]、The Resistance [69]、Bridge [49]、AlphaStar [83] 和（无新闻）外交【 (no-press) Diplomacy】 [ 2, 25, 3]。然而，尽管取得了显着的成功：每一次进步仍然是在一个单一的游戏中，明确使用特定领域的知识和结构来实现强大的性能。 </p>
+<p>​		在本文中，我们介绍了游戏玩家 (PoG)，这是一种新算法，它概括了可以使用自我对弈学习、搜索和博弈论推理实现强大性能的游戏类别。 PoG 使用growing-tree反事实后悔最小化（GT-CFR）：一种随时局部搜索，非均匀地构建子博弈，将树扩展到最相关的未来状态，同时迭代地改进价值和策略。此外，PoG 采用合理的自我对弈：一种学习过程，该过程使用博弈结果和应用于先前搜索中出现的情况的递归子搜索来训练价值和策略网络。 </p>
+<p>​		Player of Games 是第一个在具有完美和不完美信息的挑战领域中实现强大性能的算法——这是迈向可以在任意环境中学习的真正通用算法的重要一步。传统搜索的应用在不完美信息博弈中存在众所周知的问题 [61]。尽管最近在不完美信息游戏中的合理搜索取得了进展 [55, 10, 84]，但评估仍然集中在单个领域（例如扑克）。 Player of Games 填补了这一空白，它使用单一算法，以及很少领域特定知识。它在这些根本不同的游戏类型中的搜索是合理的 [84]：通过重新求解子游戏，以在在线游戏期间保持一致，保证找到一个近似的纳什均衡，并在可计算可利用性的小博弈中，在实践中产生较低的可利用性。 PoG 在四种不同的游戏中表现出强大的性能：两种完全信息（国际象棋和围棋）和两种不完全信息（扑克和苏格兰场）。最后，与扑克不同的是，苏格兰场的搜索范围和游戏长度明显更长，需要长期规划。 </p>
+<h2 id="2-Background-and-Terminology"><a href="#2-Background-and-Terminology" class="headerlink" title="2 Background and Terminology"></a>2 Background and Terminology</h2><p>​		我们从必要的背景和符号开始来描述主要算法和结果。我们在第 5 节中将我们的算法与其他方法联系起来。在这里，我们简要介绍了必要的概念，这些概念基于因子观察随机博弈 (FOSG) 形式主义。有关形式主义的更多详细信息，请参见 [40, 64]。   </p>
+<p>​		两个玩家之间的博弈从特定的世界状态 <a href="#">w^{init}</a>开始，然后进行到后继世界状态 w ∈ W 作为玩家选择动作 a ∈ A 的结果，直到达到最终状态时游戏结束。在任何世界状态 w，我们将使用符号 A(w) ⊆ A 来指代那些在世界状态 w 中可用或合法的动作。在游戏过程中采取的一系列动作称为历史，用 h ∈ H 表示，<a href="#">h^{‘} \subseteq h</a> 表示前缀历史（子序列）。在终端历史 z ⊂ H 处，每个玩家 i 收到一个效用 ui(z)。   </p>
+<p>​		信息状态（私有状态）是关于一个玩家的信息的状态。具体来说，玩家 i 的 si ∈ Si 是一组由于缺少信息而无法区分的历史。一个简单的例子是扑克中的一个特定决策点，玩家 i 不知道对手的私人牌；信息状态中的历史仅在决定对手私人卡的机会事件结果上有所不同，因为其他一切都是公共知识。参与者 i 执行策略 πi : Si → Δ(A)，其中 Δ(A) 表示动作 A 的一组概率分布。每个参与者的目标是找到最大化他们自己预期效用的策略。 </p>
+<p>​		每次玩家采取行动时，每个玩家都会得到一个<strong>私人观察 Opriv(i)(w, a, w )</strong> 和<strong>一个公开观察 Opub(w, a, w )</strong> 作为应用行动 a 的结果，改变游戏状态w 到 w 。公共状态 spub &#x3D; spub(h) ∈ Spub 是沿历史 h 遇到的公共观察序列。例如，德州扑克的公开状态由初始公开信息（筹码量和底注）、投注历史和任何公开显示的牌面代表。设 Si(spub) 是给定 spub 的玩家 i 的可能信息状态集合：每个信息状态 si ∈ Si(spub) 与 spub 中的公共观察一致，但具有不同的私人观察序列。例如，在扑克中，信息状态将包含玩家 i 的私人牌。 FOSG 的完整示例见附录 A。   </p>
+<p>​		<strong>公共信念状态</strong> β &#x3D; (spub, r)，其中范围（或信念）r ∈ ∆(S1(spub))×∆(S2(spub)) 是代表两个参与者的可能信息状态的一对分布spub 中对信息状态的信念。图 1 描述了公共信仰状态的各个组成部分的基本描述。例如，在苏格兰场的游戏中，信息状态对应于逃避者（X 先生）的位置。一个具体的例子如图 2 所示。逃避者的真实位置是隐藏的，但可能是四个不同位置之一，侦探更怀疑逃避者在位置 63，而不是 35、62 或 78。在苏格兰场，r 中的分布之一是点质量，因为侦探没有对 X 先生隐藏任何私人信息。 <img src="https://uploader.shimo.im/f/7bF2LrZt1Is2olCj.png!thumbnail?accessToken=eyJhbGciOiJIUzI1NiIsImtpZCI6ImRlZmF1bHQiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJhY2Nlc3NfcmVzb3VyY2UiLCJleHAiOjE2NDk2ODIyMDMsImciOiJXV3F3Q3ZSUjhXdFhRanRUIiwiaWF0IjoxNjQ5NjgxOTAzLCJ1c2VySWQiOjMyNzIxNjY5fQ.U9jNMkb0ZZcEMlHQ2fdRyY3GvN-Msz-GvMc4ftaszUY" alt="img"></p>
+<p>Fig2: 在苏格兰场对公共信仰状态的描述:圆圈表示位置，边缘表示交通连接，红色的条表示对X先生所在位置的私人(未透露的)信息状态的beliefs。   </p>
+<p>​		假设玩家使用联合策略 π &#x3D; (π1, π2)。将玩家对玩家 i 的期望效用表示为 ui(π1, π2)，将 -i 表示为玩家 i 的对手。<strong>最佳响应策略</strong>是针对某些 π−i 实现最大效用的任何策略 <a href="#">$$π_i^b：u_i(π_i^b, π_{−i}) &#x3D; max_{π_i^{‘}} u_i(π^{‘}<em>i, π</em>{−i})$$</a>。当且仅当 π1 是对 π2 的最佳响应且 π2 是对 π1 的最佳响应时，联合策略 π 是<strong>纳什均衡</strong>。还有近似均衡：当且仅当 ui(πib, π−i) − ui(πi, π−i) ≤ 所有参与者 i 时，π 是 <a href="#">$$\epsilon -Nash$$</a> <strong>均衡</strong>。在两人零和博弈中，纳什均衡是最优的，因为它们最大化了两个玩家的最坏情况效用保证。此外，均衡策略是可以互换的：如果 πA 和 πB 是纳什均衡，那么<a href="#">$(π_1^A, π_2^B)$</a>和 <a href="#">$(π_1^B, π_2^A)$</a> 也是均衡。因此，代理的目标是计算一种这样的最优（或近似最优)均衡策略。  </p>
+<h3 id="2-1-Tree-Search-and-Machine-Learning"><a href="#2-1-Tree-Search-and-Machine-Learning" class="headerlink" title="2.1 Tree Search and Machine Learning"></a>2.1 Tree Search and Machine Learning</h3><p>​		人工智能领域的第一个主要里程碑是通过受极大极小定理启发的高效搜索技术获得的 [62, 17]。在具有完美信息的两人零和游戏中，该方法使用从当前世界状态 wt 开始的深度限制搜索，以及启发式评估函数来估计超出深度限制的状态值，h(wt+d ) 和博弈论推理来back up(倒推)价值 [38]。研究人员开发了显着的搜索增强功能 [52, 63]，极大地提高了性能，得到了 IBM 的超越人类的DeepBlue 国际象棋程序 [17]。 </p>
+<p>​		然而，这种经典方法无法在围棋中实现超人类的表现，围棋的分支因子和状态空间复杂度明显高于国际象棋。在 Go [24] 的挑战下，研究人员提出了蒙特卡罗树搜索 (MCTS) [39, 18]。与极小极大搜索不同，MCTS 通过模拟构建树，从一棵以 wt 为根的空树开始，通过添加当前不在树中的模拟轨迹中遇到的第一个状态来扩展树，最后估计从 rollout 到游戏结束的值。 在围棋和其他游戏中MCTS发挥明显更强的作用 [14]，在围棋中达到 6 段业余水平。然而，领域知识形式的启发式方法对于实现这些里程碑仍然是必要的。   </p>
+<p>​		在 AlphaGo [70] 中，价值函数和策略被合并，最初从人类专家数据中学习，然后通过自我对弈进行改进。深度网络近似值函数，先验策略有助于指导树搜索过程中动作的选择。该方法是第一个在围棋中实现超人类水平的方法 [70]。 AlphaGo Zero 移除了人类数据和围棋特定特征的初始训练 [72]。 AlphaZero 使用最少的领域知识在国际象棋和将棋以及围棋中达到了最先进的性能 [71]。   </p>
+<p>​		PoG 与 AlphaZero 一样，使用最少的领域知识将<strong>搜索</strong>和从<strong>自我对弈</strong>中学习结合起来。然而，与 MCTS 不同，MCTS 不适用于不完美信息游戏，PoG 的搜索算法基于反事实后悔最小化，并且对于完美和不完美信息游戏都是合理的。</p>
+<h3 id="2-2-Game-Theoretic-Reasoning-and-Counterfactual-Regret-Minimization"><a href="#2-2-Game-Theoretic-Reasoning-and-Counterfactual-Regret-Minimization" class="headerlink" title="2.2 Game-Theoretic Reasoning and Counterfactual Regret Minimization"></a><strong>2.2 Game-Theoretic Reasoning and Counterfactual Regret Minimization</strong></h3><p>​		在不完美信息博弈中，由隐藏信息产生的策略选择对于确定每个玩家的预期奖励至关重要。简单地玩太可预测可能会出现问题：在经典的示例游戏石头剪刀布中，玩家唯一不知道的是对手的行动选择，但是这些信息完全决定了他们可以获得的奖励。选择始终进行一个动作（例如rock）的玩家很容易被另一个做出最佳反应（例如paper）的玩家击败。纳什均衡以相等的概率执行每个动作，这将任何特定反策略的收益最小化。类似地，在扑克中，了解对手的牌或他们的策略可以产生显着更高的预期奖励，而在苏格兰场，如果知道玩家当前的位置，则有更高的机会抓住逃避者。在这些示例中，玩家可以利用隐藏信息的任何知识来执行反策略(counter-strategy)，从而获得更高的奖励。因此，为了避免被利用，玩家必须以不泄露自己私人信息的方式行事。我们将这种一般行为称为<strong>博弈论推理(<strong>gametheoretic reasoning</strong>)</strong>，因为它是计算（近似）极小极大优化策略的结果。在过去的 20 年里，博弈论推理对于竞争性扑克 AI 的成功至关重要。 </p>
+<p>​		一种计算近似最优策略的算法是反事实后悔最小化（CFR）[86]。 CFR 是一种自我对弈算法，它以最小化长期平均遗憾的方式为每个玩家 i 在每个信息状态 s 上生成策略迭代 <a href="#">$π_i^t(s)$</a>。结果，CFR 在自我博弈中采用的 T次迭代平均策略<a href="#">$\bar{\pi}^{T}$</a>，以 O(1&#x2F; T ) 的速率收敛到  <a href="#">$\epsilon-Nash$</a>均衡。在每次迭代 ，为每个动作 a ∈ A(s) 计算 t 、反事实值 v_i(s, a)  和不玩 a 的直接遗憾，<a href="#">$r(s, a) &#x3D; v_i(s, a) − \sum_{a \in A (s)} π (s, a) v_i(s, a)$</a>被计算并列在一个累积后悔表中，存储 <a href="#">$R^T (s, a) &#x3D; \sum ^T_{t&#x3D;1} r^t(s, a)$</a>。使用遗憾匹配 [27] 计算新策略： <a href="#">$π^{t+1}(s) &#x3D; \frac{[R^t (s,a)]^+}{ \sum_a[R^t(s,a)]^+}$</a>，其中 <a href="#">$[x]^+ &#x3D; max (x, 0)$</a>，如果所有遗憾都是非正的，则重置为统一值。 CFR+ [79] 是 CFR 的后继者，它在完全解决单挑限注德州扑克游戏中发挥了关键作用，这是迄今为止有待解决的最大的不完美信息游戏 [6]。 CFR+ 的一个主要组成部分是不同的策略更新机制，regret-matching+，它对累积值的定义略有不同：<a href="#">$Q^t(s, a) &#x3D; (Q^{t−1}(s, a) + r^t(s, a))^+$</a>，和<a href="#">$π^{t+1}(s, a) &#x3D; \frac{ Q^t(s, a)}{\sum_b Q^t(s, b)}$</a>。 CFR（或 CFR+）的一种常见形式是<strong>遍历公共树</strong>，而不是经典的扩展形式博弈树。计算反事实值所需的数量，例如每个参与者在他们的策略下达到每个信息状态的概率（称为他们的范围）作为信念(beliefs)被维护。最后，可以使用范围、机会概率和效用（通常更有效 [36])直接评估叶节点。  </p>
+<h3 id="2-3-Imperfect-Information-Search-Decomposition-and-Re-Solving"><a href="#2-3-Imperfect-Information-Search-Decomposition-and-Re-Solving" class="headerlink" title="2.3 Imperfect Information Search, Decomposition, and Re-Solving"></a><strong>2.3 Imperfect Information Search, Decomposition, and Re-Solving</strong></h3><p>2.3 不完善信息的搜索、分解和重新求解 纳什均衡和极小极大等解决方案概念是在联合策略（joint policies）上定义的。该政策是在比赛期间确定的。搜索可以被描述为一个过程，它可能会在后续访问相同状态时返回不同的动作分布。在基于搜索的决策中，新的解决方案是在决策时计算的。每个状态可能取决于过去的游戏玩法、时间限制和随机（机会）事件的样本，这引入了重要的微妙之处，例如交叉不同搜索的解决方案兼容性 [84]。 CFR 传统上被用作求解器，通过自我对弈计算整个策略。每次迭代都会遍历整个博弈树，从树中更深的子博弈中的其他值递归计算信息状态的值。假设有人想要针对某个深度 d &gt; 0 的游戏部分制定策略。如果有一个预言机（oracle）来计算深度 d 的值，那么 CFR 的每次迭代都可以运行到深度 d 并查询预言机以返回值。因此，策略在深度 d’ &gt; d 处不可用。通过一组值总结深度 d 以下的策略，这些值可用于重建深度 d 及以上的策略，这是不完美信息游戏分解的基础 [15]。不完美信息博弈中的子博弈是植根于公共状态 s_pub 的博弈。为了使子博弈成为合适的博弈，它与初始信息状态上的置信分布 r 配对，<a href="#">s \in S_i(s_{pub})</a>。这是完美信息博弈中子博弈的严格概括，其中每个公共状态都只有一个信息状态（因此实际上不再是私有的）和一个概率为 1 的信念。 子博弈分解一直是扑克 AI 最新发展的重要组成部分，这些发展可扩展到大型游戏，例如无限注德州扑克 [55、11、12、7]。子博弈分解使局部搜索能够在游戏过程中细化策略，类似于完美信息游戏中的<strong>经典搜索算法</strong>和传统的<strong>贝尔曼式自举</strong>来学习价值函数 [55, 69, 85, 7]。具体来说，由参数 θ 表示的<strong>反事实价值网络 (CVN)</strong> 对价值函数 <a href="#">vθ(β) &#x3D; {v_i(s_i)}<em>{s_i \in S_i(s</em>{pub})}</a>,i∈{1,2} 进行编码，其中 β 包括玩家对信息的信念在 s_pub 公开信息的状态。然后可以使用函数 vθ 代替上面提到的预言机来汇总 s_pub 下子树的值。图 3 显示了使用分解的深度限制 CFR 求解器的示例。 <img src="https://uploader.shimo.im/f/AyVb3paDBq4Ks0k4.png!thumbnail?accessToken=eyJhbGciOiJIUzI1NiIsImtpZCI6ImRlZmF1bHQiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJhY2Nlc3NfcmVzb3VyY2UiLCJleHAiOjE2NDk2ODIyMDMsImciOiJXV3F3Q3ZSUjhXdFhRanRUIiwiaWF0IjoxNjQ5NjgxOTAzLCJ1c2VySWQiOjMyNzIxNjY5fQ.U9jNMkb0ZZcEMlHQ2fdRyY3GvN-Msz-GvMc4ftaszUY" alt="img"> <strong>Safe re-solving</strong>安全重解是一种技术，它仅根据先前（近似）解的摘要信息生成子博弈策略：玩家的范围和对手的反事实值。这是通过构建具有特定约束的辅助游戏来完成的。辅助博弈中的子博弈策略的生成方式保留了原始解决方案的可利用性保证，因此它们可以替换子博弈中的原始策略。在 [15] 和 [10, Section 4.1] 中可以找到辅助游戏构建的完整示例。 <strong>Continual re-solving</strong> 连续重求解是经典游戏搜索的一种类似物，适用于不完美信息游戏，它使用安全重求解的重复应用来玩游戏的一集 [55]。它首先解决以游戏开始为根的深度限制博弈树，搜索是解决问题的步骤。随着博弈的进行，对于某个信息状态 si 的每个后续决策，持续的重新求解将通过在 si 重新求解来优化当前策略。与其他搜索方法一样，它使用额外的计算来更彻底地探索玩家遇到的特定情况。 [55] 的连续重求解方法使用了一些扑克的一些属性，这在苏格兰场等其他游戏中是找不到的，因此我们使用了一种更通用的重求解方法，可以应用于更广泛的游戏类别。我们在附录 B.1 中讨论了这个更通用的重新求解变体的细节。 </p>
+<h2 id="3-Player-of-Games-PoG"><a href="#3-Player-of-Games-PoG" class="headerlink" title="3 Player of Games (PoG)"></a>3 Player of Games (PoG)</h2><p>我们现在描述我们的主要算法。 由于 PoG 有多个组件，我们首先分别描述它们，然后在本节末尾描述它们是如何组合的。    为清楚起见，附录 B 中提供了许多细节（包括完整的伪代码)。 </p>
+<h3 id="3-1-Counterfactual-Value-and-Policy-Networks"><a href="#3-1-Counterfactual-Value-and-Policy-Networks" class="headerlink" title="3.1 Counterfactual Value-and-Policy Networks"></a>3.1 Counterfactual Value-and-Policy Networks</h3><p>PoG 的第一个主要组件是具有参数 θ 的反事实价值与策略网络 (CVPN)，如图 4 所示。这些参数表示函数 fθ(β) &#x3D; (v, p)，其中输出 v 是反事实值（ 每个玩家的每个信息状态一个），以及先前策略 p，在公共状态 s_pub(h) 中，在某些play历史 h 中，对于acting玩家的每个信息状态一个。 在我们的实验中，我们使用标准的前馈网络和残差网络。 架构的细节在 B.3 节中描述。 </p>
+<h3 id="3-2-Search-via-Growing-Tree-CFR"><a href="#3-2-Search-via-Growing-Tree-CFR" class="headerlink" title="3.2 Search via Growing-Tree CFR"></a>3.2 Search via Growing-Tree CFR</h3><p>生长树 CFR (GT-CFR) 是一种新算法，它在随时间递增的公共博弈树上运行 CFR 变体。 GT-CFR 以初始树 L0 开始，其中包含 β 及其所有子公共状态。 然后 GT-CFR 的每次迭代 t 由两个阶段组成： 1.<strong>后悔更新阶段</strong>（在3.2.1小节中详细描述）在当前树<a href="#">L^t</a>上运行几个公共树-CFR更新。 2. <strong>扩展阶段</strong>（在 3.2.2 小节中详细描述）通过基于模拟的扩展轨迹添加新的公共状态来扩展 <a href="#">L^t</a>，产生一个新的更大的树<a href="#">L^{t+1}</a>。 <img src="https://uploader.shimo.im/f/cC9Gos8EtlDYDGrW.png!thumbnail?accessToken=eyJhbGciOiJIUzI1NiIsImtpZCI6ImRlZmF1bHQiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJhY2Nlc3NfcmVzb3VyY2UiLCJleHAiOjE2NDk2ODIyMDMsImciOiJXV3F3Q3ZSUjhXdFhRanRUIiwiaWF0IjoxNjQ5NjgxOTAzLCJ1c2VySWQiOjMyNzIxNjY5fQ.U9jNMkb0ZZcEMlHQ2fdRyY3GvN-Msz-GvMc4ftaszUY" alt="img">在报告结果时，我们使用符号 PoG(s, c) 来表示运行 GT-CFR 的 PoG 和 s 次总扩展模拟，以及每个后悔更新阶段的 c 次扩展模拟，因此 GT-CFR 迭代的总数为 [s&#x2F;\left<a href="#"> c \right]</a> 。 例如，PoG(8000, 10) 指的是 8000 次扩展模拟，每次后悔更新（800 次 GT-CFR 迭代)进行 10 次扩展。 c 可以是小数，因此例如 0.1 表示每 10 个后悔更新阶段就有一个新节点。 图 5 描绘了整个 GT-CFR 循环。 我们选择了这个特定的符号来直接比较总拓展模拟， s 与 AlphaZero。</p>
+<h4 id="3-2-1-The-Regret-Update-Phase-of-Growing-Tree-CFR"><a href="#3-2-1-The-Regret-Update-Phase-of-Growing-Tree-CFR" class="headerlink" title="3.2.1 The Regret Update Phase of Growing-Tree CFR"></a>3.2.1 The Regret Update Phase of Growing-Tree CFR</h4><p>后悔更新阶段使用<strong>同步更新、后悔匹配+和线性加权策略平均</strong> [79] 在 Lt 上运行公共树 CFR 的 1&#x2F;c 更新（迭代）。 在公共树叶节点，对置信状态 β 的 CVPN 进行查询，其值 fθ(β’ ) &#x3D; (v, p) 用作以 β’ 为根的公共子博弈的反事实值的估计。 </p>
+<h4 id="3-2-2-The-Expansion-Phase-of-Growing-Tree-CFR"><a href="#3-2-2-The-Expansion-Phase-of-Growing-Tree-CFR" class="headerlink" title="3.2.2 The Expansion Phase of Growing-Tree CFR"></a>3.2.2 The Expansion Phase of Growing-Tree CFR</h4><p>在扩展阶段，新的公共树节点被添加到 L。搜索统计信息，最初为空，在信息状态 si 上维护，在同一搜索内的所有扩展阶段累积。在<strong>每次模拟开始时</strong>，信息状态 si 从 βroot 中的信念中采样。然后，从 si 中采样一个世界状态 wroot，以及相关的历史 hroot。根据混合策略选择动作，该策略考虑了<strong>学习值</strong>（通过 πPUCT(si(h))）以及来自搜索<a href="#">π_{select}(si(h)) &#x3D; 1&#x2F;2 πPUCT(s_i(h)) + 1&#x2F;2 πCFR (s_i(h))</a>的<strong>当前活动策略 <a href="#">（πCFR(s_i(h))）</a></strong>。<strong>第一个策略</strong>由 PUCT [70] 使用反事实值 vi(si, a) 确定，该值由对手在 si 处的到达概率之和的归一化，类似于状态条件动作值，以及从查询中获得的先验策略 p。<strong>第二个</strong>是 CFR 在 si(h) 的当前政策。一旦模拟遇到信息状态<a href="#">s_i \in s_{pub}</a>使得<a href="#">s_{pub} \notin L</a>，模拟结束，将 spub 添加到 L，并且沿着轨迹期间访问的节点更新访问计数。与 AlphaZero [71] 类似，在一次 GT-CFR 迭代中进行 c 次模拟时，虚拟损失 [68] 被添加到 PUCT 统计数据中。 AlphaZero 总是在迭代结束时扩展单个动作&#x2F;节点（具有最高 UCB 分数的动作）。完美信息博弈中的最优策略可以是确定性的，因此扩展单个动作&#x2F;节点就足够了。在不完美信息博弈中，最优策略可能是随机的，对多个动作具有非零概率（这些动作的数量然后被称为支持大小）。游戏中的不确定性水平（就每个公共状态的信息状态而言）与支持大小之间存在直接联系 [66]。换句话说，最优策略可能需要的动作数量是每个公共状态的信息状态数量的函数，我们将这个数字称为最小支持大小 k。因此，PoG 不是扩展单个动作，而是扩展按先验排序的前 k 个动作。然后将与扩展动作对应的所有公共状态添加到树中（连同导致这些公共状态的所有动作)。当 PoG 扩展先前扩展的节点时，由于已经满足最小支持大小要求，因此仅额外扩展单个动作。请注意，对于完美信息游戏，扩展的作用与 AlphaZero 相同，因为支持大小 k &#x3D; 1，因此添加了具有最高先验的单个动作。 </p>
+<h4 id="3-2-3-Convergence-Guarantees"><a href="#3-2-3-Convergence-Guarantees" class="headerlink" title="3.2.3 Convergence Guarantees"></a>3.2.3 Convergence Guarantees</h4><p>在 GT-CFR 中生长树<strong>允许搜索有选择地关注对局部决策很重要的空间部分</strong>。 从一棵小树开始，随着时间的推移添加节点在收敛方面没有额外的成本： <strong>Theorem 1</strong> 定理 1. 令 Lt 为时间 t 的公共树。 假设公共状态永远不会从前瞻树中删除，所以 <a href="#">L^t \subseteq L^{t+1}</a>。 对于任何给定的树 L，让 N (L) 是树的内部：GT-CFR 生成策略的所有非叶子、非终端公共状态。 令 F(L) 是 L 的边界，包含非终端叶子，其中 GT-CFR 使用反事实值的噪声估计。 设 U 是任何两种策略在任何信息状态下反事实值的最大差异，A 是任何信息状态下的最大动作数。 那么，玩家 i 在迭代 T 时的遗憾是有界的： 定理 1 中的遗憾 <a href="#">R^{T,full}</a> 是 GT-CFR 迭代与任何可能策略之间的性能差距。 定理 1 表明GT-CFR 返回的平均策略以 1&#x2F;√T 的速率收敛于纳什均衡，但由于价值函数中的 e-error 具有一些最小的可利用性。 当使用 GT-CFR 作为持续重新求解中每个重新求解搜索步骤的游戏求解算法时，也没有额外的成本： <strong>Theorem 2</strong> 定理 2. 假设我们玩了一个使用连续重求解的游戏，有一个初始求解和 D 重求解步骤。每个求解或重新求解步骤使用 e 噪声值函数通过 GT-CFR 的 T 次迭代找到一个近似的纳什均衡，公共状态永远不会从前瞻树中删除，最大内部大小 <a href="#">\sum_{s_{pub} \in N(L^T)} |S_i(S_{pub})|</a>所有前瞻树的边界N ，所有前瞻树的边界大小总和以 F 为界，任何信息集的最大动作数为 A，任何两个策略之间的最大差值为 U 。最终策略的可利用性受<a href="#">(5D + 2) (F + NU \sqrt{A &#x2F; T } )</a> 的限制。 定理 2 类似于 [55] 的定理 1，适用于 GT-CFR 并使用更详细的误差模型，该模型可以更准确地描述在近似均衡策略上训练的价值函数。它表明使用 GT-CFR 持续重新求解具有我们可能希望的一般特性：可利用性随着计算时间的增加和价值函数误差的减少而降低，并且不会随着游戏长度的增加而不受控制地增长。定理的证明在附录 E 中给出。  </p>
+<h3 id="3-3-Data-Generation-via-Sound-Self-play"><a href="#3-3-Data-Generation-via-Sound-Self-play" class="headerlink" title="3.3 Data Generation via Sound Self-play"></a>3.3 Data Generation via Sound Self-play</h3><p>POG通过在每个决策点运行搜索，在自我对弈中生成数据片段。每个情节从对应于游戏开始的初始历史 h0 开始，并产生一系列历史 (h0, h1, · · · )。在时间 t，代理运行本地搜索，然后选择一个动作 at，通过在 ht 处采取动作，从环境中获得下一个历史记录 ht+1。<strong>用于训练 CVPN 的数据是通过产生的轨迹和个人搜索收集的。</strong>  在生成用于训练 CVPN 的数据时，重要的是在不同公共状态下执行的搜索与由 θ 表示的 CVPN 以及在先前公共状态沿相同轨迹进行的搜索保持一致（例如，两次搜索不应计算两个不同的最优策略）。这是可靠(sound)搜索的关键要求 [15, 55, 84]，我们将sound搜索算法在自我播放中生成数据的过程称sound自我播放。   为了实现健全的自我对弈，在数据生成期间执行的搜索，在标准安全解析辅助游戏（如第 2.3 节所述）上运行 GT-CFR。辅助博弈包括在初始决策时对手决定进入子博弈的选项，或取由 fθ(β) 返回的替代值。有关此解析过程的详细构造，请参阅第 B.1 节。 </p>
+<h3 id="3-4-Training-Process"><a href="#3-4-Training-Process" class="headerlink" title="3.4 Training Process"></a>3.4 Training Process</h3><p>由 <strong>GT-CFR 生成的策略</strong>和由<strong>健全的自我对弈生成的数据</strong>的质量关键取决于 CVPN 返回的值。 因此，为了产生高性能搜索和生成高质量数据，估计准确很重要。 在本小节中，我们将描述用于训练 CVPN 的程序。 图 6 总结了该过程。<img src="https://uploader.shimo.im/f/5GPQGAoNThIIRPwV.png!thumbnail?accessToken=eyJhbGciOiJIUzI1NiIsImtpZCI6ImRlZmF1bHQiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJhY2Nlc3NfcmVzb3VyY2UiLCJleHAiOjE2NDk2ODIyMDMsImciOiJXV3F3Q3ZSUjhXdFhRanRUIiwiaWF0IjoxNjQ5NjgxOTAzLCJ1c2VySWQiOjMyNzIxNjY5fQ.U9jNMkb0ZZcEMlHQ2fdRyY3GvN-Msz-GvMc4ftaszUY" alt="img"> </p>
+<h4 id="3-4-1-Query-Collection"><a href="#3-4-1-Query-Collection" class="headerlink" title="3.4.1 Query Collection"></a>3.4.1 Query Collection</h4><p>如第 3.2 节和第 3.3 节所述，情节是由每个玩家从当前公共状态搜索 GT-CFR 生成的。 每次搜索都会从公共树叶节点 β（在图 6 中描绘为粉红色节点）产生许多网络查询。 训练过程通过监督学习改进了 CVPN。 使用基于值目标的 Huber 损失 [32] 训练值，并且策略损失是相对于目标策略的交叉熵。 将价值和策略目标添加到用于同时训练 CVPN 的训练数据的滑动窗口数据集中。 CVPN 在训练期间在参与者上异步更新。 </p>
+<h4 id="3-4-2-Computing-Training-Targets"><a href="#3-4-2-Computing-Training-Targets" class="headerlink" title="3.4.2 Computing Training Targets"></a>3.4.2 Computing Training Targets</h4><p>策略目标是根据 3.3 中描述的sound-自我游戏产生的情节主线（在自我游戏中达到的历史）在公共状态开始的搜索组合而成的。具体来说，它们是根公共状态内所有信息状态的输出策略，在 GT-CFR 的遗憾更新阶段计算。 价值目标可以通过两种不同的方式获得。首先，游戏的结果被用作沿着由sound自我播放生成的情节主线的状态的 (TD(1)) 值目标。其次，价值目标也是通过引导获得的：从以输入查询为根的子博弈运行 GT-CFR 的实例。原则上，任何求解器都可以使用，因为任何以 β 为根的子博弈都有明确定义的值。因此，这一步通过 2.3 节中描述的分解来充当策略改进算子。具体来说，价值目标是在 GT-CFR 迭代 T 次后，对于发起搜索的公共状态中的所有信息状态的最终反事实值。分配不同值目标的具体方式由 B.5 节中的伪代码描述，并由 B.4 节中描述的超参数确定。 </p>
+<h4 id="3-4-3-Recursive-Queries"><a href="#3-4-3-Recursive-Queries" class="headerlink" title="3.4.3 Recursive Queries"></a>3.4.3 Recursive Queries</h4><p>虽然求解器是查询的计算目标，但它也通过运行 GT-CFR 自己生成更多查询。其中一些递归查询也被添加到缓冲区中以备将来解决。因此，在任何给定时间，缓冲区可能包括由主自玩游戏中的搜索生成的查询或主线外求解器生成的查询。为了确保缓冲区不受递归查询的支配，我们将添加新递归查询的概率设置为小于 1（在我们的实验中，该值通常为 0.1 或 0.2；有关确切值，请参阅第 B.4 节）。 </p>
+<h4 id="3-4-4-Consistency-of-Training-Process"><a href="#3-4-4-Consistency-of-Training-Process" class="headerlink" title="3.4.4 Consistency of Training Process"></a>3.4.4 Consistency of Training Process</h4><p>3.4.4 培训过程的一致性 </p>
+<p>一个自然的问题是，训练过程是否或在什么情况下可以确保收敛到最佳值？答案是肯定的：训练过程逐渐收敛到最优值，随着 T → ∞ 并且具有非常大的（指数）内存。   非正式地，想象一个 oracle 函数 f (β)，它可以简单地记住特定 β 的值和策略，类似于表格值或策略迭代算法，除了连续键。对于以深度为 1 的某个 β 为根的任何子博弈（每个动作都会导致最终状态），可以在求解器的 T 次迭代之后为 β 计算和存储值和策略。然后可以归纳应用：由于 CFR 是确定性的，对于 GT-CFR 第一次迭代的任何子博弈，将生成有限数量的查询。这些查询中的每一个都将使用 GT-CFR 解决。最终，查询将是一个特定的查询，距离终端状态有一步，其值可以精确计算并存储在 f (β) 中。由于此值是在自游戏中或由查询求解器生成的，并且 CFR 是确定性的，因此它将产生另一个具有相同查询的自游戏游戏，除了它会从 f (β) 加载求解的值，并归纳这些值将自下而上传播。由于 CFR 是确定性的且 T 是有限的，因此尽管存在连续值键，但这些确保内存需求不是无限的。   实际上，训练过程的成功将取决于函数逼近（即神经网络架构）的表示能力和训练效率。 </p>
+<h3 id="3-5-Bringing-it-all-Together-Full-Algorithm-Overview"><a href="#3-5-Bringing-it-all-Together-Full-Algorithm-Overview" class="headerlink" title="3.5 Bringing it all Together: Full Algorithm Overview"></a>3.5 Bringing it all Together: Full Algorithm Overview</h3><p>PoG 算法通过健全的自我对弈进行学习：每个玩家在面临要做出的决定时，使用配备反事实价值和策略网络的健全生长树 sound growing-tree CFR 搜索来生成策略，然后将其用于采样要采取的行动。这个过程生成两种类型的训练数据：<strong>搜索查询，然后单独解决（有时递归生成新查询）和完整游戏轨迹</strong>。训练过程以不同的方式使用数据：<strong>游戏的结果</strong>和<strong>解决的查询</strong>来训练网络的价值头，以及沿着主线搜索的策略输出来训练网络的策略头。在实践中，self-play 数据的生成和训练是并行发生的：actors 生成 self-play 数据（并解决查询)，而训练者学习新网络并定期更新 actor。   有关算法的完整详细描述，包括超参数值和上述每个过程的具体描述，请参见附录 B。 </p>
+<h2 id="4-Evaluation"><a href="#4-Evaluation" class="headerlink" title="4 Evaluation"></a>4 Evaluation</h2><h2 id="5-Relate-Work"><a href="#5-Relate-Work" class="headerlink" title="5 Relate Work"></a>5 Relate Work</h2><p>​		游戏玩家建立在之前工作中开发的几个组件的基础上。在本节中，我们将描述这些过去最相关的作品以及它们与 PoG 的关系。   </p>
+<p>​		PoG 结合了许多最初在 AlphaZero 及其前身以及 DeepStack 中提出的元素 [70, 72, 71, 55]。具体来说，PoG 使用来自 AlphaGo 和 DeepStack 的深度神经网络的组合搜索和学习，以及来自 DeepStack 的不完全信息游戏中的博弈论推理和搜索。在不完全信息游戏中使用公共信念状态和分解是无限注德州扑克取得成功的关键组成部分 [15, 10, 55, 11, 13, 12, 7]。与 AlphaZero 的主要区别在于 PoG 中的搜索和自我对弈训练也适用于不完美信息游戏和跨游戏类型的评估。与 DeepStack 的主要区别在于使用明显较少的领域知识：使用自我对弈（而不是特定于扑克的启发式）来生成训练数据和用于游戏所有阶段的单个网络。最密切相关的算法是基于循环信念的学习 (<strong>ReBeL</strong>) [7]。与 PoG 一样，ReBeL 通过自我对弈结合了搜索、学习和博弈论推理。主要区别在于 PoG 基于（安全）连续解析和sound self-play。为了实现 ReBeL 的保证，它的测试时间搜索必须使用与训练相同的算法进行，而 PoG 可以使用第 3.1 节中描述的形式的任何基于信念的价值和策略网络（类似于例如 AlphaZero，它训练使用 800 次模拟，但随后可以在测试时使用更大的模拟限制）。 PoG 在不同游戏类型的许多不同挑战游戏中也得到了实证验证。 </p>
+<p> —-what     </p>
+<p>​		在寻找不完美信息博弈方面已经有大量工作。在实践中非常成功的一种方法是确定性：在决策时，对一组候选世界状态进行采样，并执行某种形式的搜索 [19, 51]。事实上，PimBot [59, 58] 正是基于这些方法并在苏格兰场取得了最先进的成果。然而，这些方法不能保证随着时间的推移收敛到最佳策略。我们在第 C.4 节中证明了这种在实践中缺乏对常见搜索算法和标准 RL 基准的收敛性。相比之下，PoG 中的搜索基于博弈论推理。其他算法已提议在搜索中添加博弈论推理：Smooth UCT [28] 将 UCT [39] 与虚构游戏相结合，但其收敛特性尚不清楚。在线结果抽样 [48] 衍生出蒙特卡罗 CFR [42] 的 MCTS 变体；然而，OOS 只能保证在单一信息状态（局部一致性）下接近近似平衡，并且尚未在大型游戏中进行评估。 PoG 使用的 GT-CFR 使用基于分解的声音搜索，并且是全局一致的 [15, 84]。   </p>
+<p>​		已经为<strong>两人零和游戏</strong>提出了许多 RL 算法：虚构的自我对弈 [29, 30]，策略空间响应预言机 (PSRO) [43, 56, 54]，双神经 CFR [46]，Deep CFR 和 DREAM [8, 76]，后悔策略梯度 [75]，可利用性下降 [50]，神经复制器动力学 (NeuRD) [31]，优势后悔匹配演员评论家 [26]，摩擦FoReL [60]、MAIO [57]、扩展式双甲骨文 (XDO) [53] 和神经自动课程 (NAC) [21]。这些方法使用于计算（近似）纳什均衡的经典算法适应具有采样经验和一般函数近似的 RL 设置。因此，它们结合了博弈论推理和学习。其中一些方法已显示出可扩展性：Pipeline PSRO 击败了 Stratego Barrage 中最好的公开可用代理； Deep CFR、DREAM 和 ARMAC 在大型扑克游戏中显示出可喜的结果。结合人类数据，AlphaStar 能够使用博弈论推理来创建大师级的实时策略策略 [83]。然而，他们都不能在测试时使用搜索来完善他们的策略。   </p>
+<p>​		最后，有些作品将搜索、学习和&#x2F;或博弈论推理的某种组合应用于特定领域。神经网络已经通过 Q-learning 训练来学习玩苏格兰场 [20]；然而，由此产生的政策的整体发挥实力并没有直接与任何其他已知的苏格兰场经纪人进行比较。在扑克中，Supremus 对 DeepStack 提出了许多改进，并证明它们在与人类专家比赛时产生了很大的不同 [85]。另一项工作使用了一种受 DeepStack 启发的方法应用于 The Resistance [69]。在合作环境中，一些作品利用基于信念的学习（和搜索）使用公共子博弈分解 [22, 45, 73]，应用于 Hanabi [4]。搜索和强化学习相结合，产生了一个与最先进的机器人（WBridg e5) 和人类 [49]。 最近，学习和博弈论推理也被结合起来，在协作游戏 Overcooked [77] 中，在没有人类数据的情况下，产生了与人类一起玩得很好的代理。 值得注意的是（无新闻）外交游戏。 博弈论推理与最佳响应策略迭代中的学习相结合 [2]。 博弈论搜索和监督学习被用于 [25] 在两人变体上达到人类水平的表现。 最近，这三者结合在 DORA [3] 中，它学会了在没有人类数据的情况下玩外交，并且在两人变体上也达到了人类水平的表现。 PoG 与这些作品的主要区别在于它们专注于特定的游戏并利用特定领域的知识来获得强大的性能。 </p>
+<h2 id="6-Conclusion"><a href="#6-Conclusion" class="headerlink" title="6 Conclusion"></a>6 Conclusion</h2><p>​		在本文中，我们描述了游戏玩家 **(PoG) 一种结合了搜索、学习和博弈论推理的统一算法。 PoG 由两个主要部分组成：一种新颖的生长树反事实后悔最小化（GT-CFR），以及通过自我博弈学习反事实价值和策略网络的健全自我博弈。**最值得注意的是，PoG 是一种适用于完美和不完美信息博弈的健全算法：随着计算资源的增加，PoG 可以保证产生更好的极小极大优化策略的近似。这一发现也在 Leduc 扑克（简易德州玩法)中得到了经验验证，与任何不使用搜索的纯强化学习算法不同，额外的搜索会导致测试时间近似的细化。   </p>
+<p>​		PoG 是此类中第一个使用最少领域知识在挑战领域展示强大性能的合理算法。在国际象棋和围棋的完美信息游戏中，PoG 的性能达到人类专家或专业人士的水平，但在给定相同资源的情况下，其性能明显弱于此类游戏的专用算法，如 AlphaZero。在不完全信息游戏无限注德州扑克中，PoG 击败了 Slumbot，这是最好的公开可用的扑克代理，并且表明不会被使用特定于扑克的启发式的本地最佳响应代理利用。在苏格兰场，PoG 击败了最先进的代理人。   </p>
+<p>​		PoG 有一些局限性值得在未来的工作中研究。首先，可以删除扑克中投注抽象的使用，以支持大型动作空间的一般动作减少策略。其次，PoG 目前需要枚举每个公共状态的信息状态，这在某些游戏中可能会非常昂贵；这可以通过一个生成模型来近似，该模型对世界状态进行采样并对采样的子集进行操作。最后，大量的计算资源用于在挑战领域获得强大的发挥；一个有趣的问题是，是否可以使用较少的计算资源来实现这种级别的游戏。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Paper-Reading/" rel="tag"># Paper Reading</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/12/06/Tools/Tools_sum/" rel="prev" title="Tools 常用工具解密">
+      <i class="fa fa-chevron-left"></i> Tools 常用工具解密
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/12/24/ResearchRecord/Papers-Log-2021/" rel="next" title="Papers Log 2021">
+      Papers Log 2021 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Introduction"><span class="nav-number">1.</span> <span class="nav-text">1 Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Background-and-Terminology"><span class="nav-number">2.</span> <span class="nav-text">2 Background and Terminology</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Tree-Search-and-Machine-Learning"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Tree Search and Machine Learning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Game-Theoretic-Reasoning-and-Counterfactual-Regret-Minimization"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 Game-Theoretic Reasoning and Counterfactual Regret Minimization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-Imperfect-Information-Search-Decomposition-and-Re-Solving"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 Imperfect Information Search, Decomposition, and Re-Solving</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Player-of-Games-PoG"><span class="nav-number">3.</span> <span class="nav-text">3 Player of Games (PoG)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-Counterfactual-Value-and-Policy-Networks"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 Counterfactual Value-and-Policy Networks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-Search-via-Growing-Tree-CFR"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 Search via Growing-Tree CFR</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-1-The-Regret-Update-Phase-of-Growing-Tree-CFR"><span class="nav-number">3.2.1.</span> <span class="nav-text">3.2.1 The Regret Update Phase of Growing-Tree CFR</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-2-The-Expansion-Phase-of-Growing-Tree-CFR"><span class="nav-number">3.2.2.</span> <span class="nav-text">3.2.2 The Expansion Phase of Growing-Tree CFR</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-3-Convergence-Guarantees"><span class="nav-number">3.2.3.</span> <span class="nav-text">3.2.3 Convergence Guarantees</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-Data-Generation-via-Sound-Self-play"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 Data Generation via Sound Self-play</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-Training-Process"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 Training Process</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-1-Query-Collection"><span class="nav-number">3.4.1.</span> <span class="nav-text">3.4.1 Query Collection</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-2-Computing-Training-Targets"><span class="nav-number">3.4.2.</span> <span class="nav-text">3.4.2 Computing Training Targets</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-3-Recursive-Queries"><span class="nav-number">3.4.3.</span> <span class="nav-text">3.4.3 Recursive Queries</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-4-Consistency-of-Training-Process"><span class="nav-number">3.4.4.</span> <span class="nav-text">3.4.4 Consistency of Training Process</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-Bringing-it-all-Together-Full-Algorithm-Overview"><span class="nav-number">3.5.</span> <span class="nav-text">3.5 Bringing it all Together: Full Algorithm Overview</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Evaluation"><span class="nav-number">4.</span> <span class="nav-text">4 Evaluation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Relate-Work"><span class="nav-number">5.</span> <span class="nav-text">5 Relate Work</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-Conclusion"><span class="nav-number">6.</span> <span class="nav-text">6 Conclusion</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

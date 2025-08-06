@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Deep Image Matting 针对此前的图像抠图算法，在图像的前景和背景颜色相似或纹理复杂时表现不佳可能存在的问题：only use low-level features 和 lack high-level context。 提出以下创新： 一个深度卷积 encoder-decorder 网络，它将一个图像补丁和相应的 trimap 作为输入，预测图像的 alpha matte； 一个小型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Matting 抠图">
+<meta property="og:url" content="https://novav.github.io/2025/04/24/Paper/Paper-CV-4-Matting/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="Deep Image Matting 针对此前的图像抠图算法，在图像的前景和背景颜色相似或纹理复杂时表现不佳可能存在的问题：only use low-level features 和 lack high-level context。 提出以下创新： 一个深度卷积 encoder-decorder 网络，它将一个图像补丁和相应的 trimap 作为输入，预测图像的 alpha matte； 一个小型">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2025/04/24/Paper/Paper-CV-4-Matting/2025-04-24-16-56-09-image.png">
+<meta property="og:image" content="https://novav.github.io/2025/04/24/Paper/Paper-CV-4-Matting/2025-04-24-16-57-11-image.png">
+<meta property="og:image" content="https://novav.github.io/2025/04/24/Paper/Paper-CV-4-Matting/2025-04-24-16-57-50-image.png">
+<meta property="og:image" content="https://novav.github.io/2025/04/24/Paper/Paper-CV-4-Matting/2025-04-24-17-03-44-image.png">
+<meta property="og:image" content="https://novav.github.io/2025/04/24/Paper/Paper-CV-4-Matting/2025-04-24-16-59-58-image.png">
+<meta property="og:image" content="https://novav.github.io/2025/04/24/Paper/Paper-CV-4-Matting/2025-04-24-17-00-16-image.png">
+<meta property="og:image" content="https://novav.github.io/2025/04/24/Paper/Paper-CV-4-Matting/2025-04-24-17-01-11-image.png">
+<meta property="og:image" content="https://novav.github.io/2025/04/24/Paper/Paper-CV-4-Matting/2025-04-24-17-03-12-image.png">
+<meta property="og:image" content="https://novav.github.io/2025/04/24/Paper/Paper-CV-4-Matting/2025-04-24-17-02-53-image.png">
+<meta property="og:image" content="https://novav.github.io/2025/04/24/Paper/Paper-CV-4-Matting/2025-04-24-17-02-34-image.png">
+<meta property="og:image" content="https://novav.github.io/2025/04/24/Paper/Paper-CV-4-Matting/2025-04-24-17-02-18-image.png">
+<meta property="article:published_time" content="2025-04-24T12:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:40.052Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="Matte">
+<meta property="article:tag" content="segment">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2025/04/24/Paper/Paper-CV-4-Matting/2025-04-24-16-56-09-image.png">
+
+<link rel="canonical" href="https://novav.github.io/2025/04/24/Paper/Paper-CV-4-Matting/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Matting 抠图 | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2025/04/24/Paper/Paper-CV-4-Matting/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Matting 抠图
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-04-24 12:00:00" itemprop="dateCreated datePublished" datetime="2025-04-24T12:00:00+00:00">2025-04-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/" itemprop="url" rel="index"><span itemprop="name">CV</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/Matting/" itemprop="url" rel="index"><span itemprop="name">Matting</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="Deep-Image-Matting"><a href="#Deep-Image-Matting" class="headerlink" title="Deep Image Matting"></a>Deep Image Matting</h3><p><img src="/2025/04/24/Paper/Paper-CV-4-Matting/2025-04-24-16-56-09-image.png"></p>
+<p>针对此前的图像抠图算法，在图像的前景和背景颜色相似或纹理复杂时表现不佳可能存在的问题：only use low-level features 和 lack high-level context。</p>
+<p>提出以下创新：</p>
+<p>一个深度卷积 encoder-decorder 网络，它将一个图像补丁和相应的 trimap 作为输入，预测图像的 alpha matte；</p>
+<p>一个小型的卷积网络，用更准确的阿尔法值和更清晰的边缘来完善第一个网络的阿尔法预测。</p>
+<p>此外，还创建了一个大规模的图像抠图数据集，包括 49,300 张训练图像和 1,000 张测试图像。<br>参考论文：Deep Image Matting</p>
+<p>论文地址：<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1703.03872">https://arxiv.org/pdf/1703.03872</a></p>
+<p>开源地址：<a target="_blank" rel="noopener" href="https://sites.google.com/view/deepimagematting(%E6%95%B0%E6%8D%AE%E9%9C%80%E8%A6%81%E9%80%9A%E8%BF%87%E9%82%AE%E7%AE%B1[bprice@adobe.com]%E8%81%94%E7%B3%BB%E8%8E%B7%E5%BE%97)">https://sites.google.com/view/deepimagematting(数据需要通过邮箱[bprice@adobe.com]联系获得)</a></p>
+<p><img src="/2025/04/24/Paper/Paper-CV-4-Matting/2025-04-24-16-57-11-image.png"></p>
+<span id="more"></span>
+
+<h3 id="Background-Matting"><a href="#Background-Matting" class="headerlink" title="Background Matting"></a>Background Matting</h3><p><img src="/2025/04/24/Paper/Paper-CV-4-Matting/2025-04-24-16-57-50-image.png"></p>
+<p>Background Matting 是华盛顿大学提出的一种背景 matting 技术，该技术可以在自然环境中随意捕获高质量的前景和 alpha matte。</p>
+<p>研究创新如下：</p>
+<p>首个使用随意捕获背景的无三元图(trimap-free)自动抠图算法。</p>
+<p>一种新的抠图架构(上下文切换模块)，可在输入提示中进行选择。</p>
+<p>一种自监督对抗训练方法，以改善真实图像上的抠图效果。</p>
+<p>在多种输入(手持设备、固定摄像头、室内、室外)上与多种竞争方法进行实验比较，展示了该方法的相对成功。</p>
+<p>参考论文：Background Matting: The World is Your Green Screen (CVPR 2020)</p>
+<p>论文地址：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2004.00626">https://arxiv.org/abs/2004.00626</a></p>
+<p>开源地址：<a target="_blank" rel="noopener" href="https://github.com/senguptaumd/Background-Matting">https://github.com/senguptaumd/Background-Matting</a></p>
+<h3 id="BackgroundMattingV2"><a href="#BackgroundMattingV2" class="headerlink" title="BackgroundMattingV2"></a>BackgroundMattingV2</h3><p>BackgroundMattingV2 是 Background Matting 升级版，由华盛顿大学提出的一种实时、高分辨率的背景替换技术，它可以在 4K 30fps 和 HD 60fps 下运行。</p>
+<p>另外，还提供了两个大型视频和图像抠图数据集：VideoMatte240K 和 PhotoMatte13K&#x2F;85。</p>
+<p>VideoMatte240K 共收集 484 个高分辨率的绿幕视频，其中 384 个视频为 4K 分辨率，100 个为 HD 分辨率，并通过 Adobe After Effects 生成了总共 240,709 帧单独的 alpha 遮罩和前景。</p>
+<p>PhotoMatte13K&#x2F;85 包含 13665 张用摄影棚质量的灯光和摄像机在绿屏前拍摄的图像集合，以及通过色度抠像(chromakey)算法提取的抠图，并进行手动调整与错误修复。另外收集一套 85 张质量类似的抠图作为测试集。</p>
+<p>参考论文：Real-Time High-Resolution Background Matting (CVPR 2021)</p>
+<p>论文地址：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2012.07810">https://arxiv.org/abs/2012.07810</a></p>
+<p>论文介绍：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45929156/article/details/122632480">https://blog.csdn.net/qq_45929156/article/details/122632480</a></p>
+<p>开源地址：<a target="_blank" rel="noopener" href="https://github.com/PeterL1n/BackgroundMattingV2(%E5%8C%85%E5%90%AB%E6%95%B0%E6%8D%AE%E4%B8%8B%E8%BD%BD)">https://github.com/PeterL1n/BackgroundMattingV2(包含数据下载)</a></p>
+<h3 id="RVM-视频抠像"><a href="#RVM-视频抠像" class="headerlink" title="RVM 视频抠像"></a>RVM 视频抠像</h3><p>RVM(Robust Video Matting) 是专为稳定人物视频抠像的设计。不同于现有神经网络将每一帧作为单独图片处理，RVM 使用循环神经网络，在处理视频流时有时间记忆。RVM 可在任意视频上做实时高清抠像。在 Nvidia GTX 1080Ti 上实现 4K 76FPS 和 HD 104FPS。</p>
+<p>参考论文：Robust High-Resolution Video Matting with Temporal Guidance (WACV 2022)</p>
+<p>论文地址：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2108.11515">https://arxiv.org/abs/2108.11515</a></p>
+<p>开源地址：<a target="_blank" rel="noopener" href="https://github.com/PeterL1n/RobustVideoMatting">https://github.com/PeterL1n/RobustVideoMatting</a></p>
+<p><img src="/2025/04/24/Paper/Paper-CV-4-Matting/2025-04-24-17-03-44-image.png"></p>
+<h3 id="PaddleSeg"><a href="#PaddleSeg" class="headerlink" title="PaddleSeg"></a>PaddleSeg</h3><p>PaddleSeg 是基于飞桨 PaddlePaddle 开发的端到端图像分割开发套件，涵盖了高精度和轻量级等不同方向的大量高质量分割模型。通过模块化的设计，提供了配置化驱动和 API 调用两种应用方式，帮助开发者更便捷地完成从训练到部署的全流程图像分割应用。</p>
+<p>提供语义分割、交互式分割、全景分割、Matting 四大图像分割能力，广泛应用在自动驾驶、医疗、质检、巡检、娱乐等场景。</p>
+<p>开源地址：<a target="_blank" rel="noopener" href="https://github.com/PaddlePaddle/PaddleSeg/blob/release/2.5/Matting/README_CN.md">https://github.com/PaddlePaddle/PaddleSeg/blob/release/2.5/Matting/README_CN.md</a></p>
+<p><img src="/2025/04/24/Paper/Paper-CV-4-Matting/2025-04-24-16-59-58-image.png"></p>
+<h3 id="MODNet"><a href="#MODNet" class="headerlink" title="MODNet"></a>MODNet</h3><p>MODNet</p>
+<p>MODNet 是一个仅需 RGB 图片输入的实时人像抠图模型，包含两项创新技术：用于高效语义特征融合的 e-ASPP 模块，以及自监督的 SOC 策略，以使 MODNet 能够泛化到新的数据领域。</p>
+<p>另外，还提出一个新的基准测试——PPM，具有以下特点：</p>
+<p>精细标注：所有图像都经过仔细标注和审核，确保高质量标签。</p>
+<p>自然背景：所有图像均使用原始背景，没有进行背景替换。</p>
+<p>丰富多样性：图像覆盖全身或半身，且包含各种不同的姿势。</p>
+<p>高分辨率：图像分辨率介于1080p到4K之间，保证了高质量的视觉效果。</p>
+<p>参考论文：MODNet: Trimap-Free Portrait Matting in Real Time (AAAI 2022)</p>
+<p>论文地址：<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2011.11961">https://arxiv.org/pdf/2011.11961</a></p>
+<p>开源地址：<a target="_blank" rel="noopener" href="https://github.com/ZHKKKe/MODNet">https://github.com/ZHKKKe/MODNet</a></p>
+<p>下载地址：<a target="_blank" rel="noopener" href="https://github.com/ZHKKKe/PPM">https://github.com/ZHKKKe/PPM</a></p>
+<p><img src="/2025/04/24/Paper/Paper-CV-4-Matting/2025-04-24-17-00-16-image.png"></p>
+<p><img src="/2025/04/24/Paper/Paper-CV-4-Matting/2025-04-24-17-01-11-image.png"></p>
+<h2 id="数据集"><a href="#数据集" class="headerlink" title="数据集"></a>数据集</h2><h3 id="MAGICK"><a href="#MAGICK" class="headerlink" title="MAGICK"></a>MAGICK</h3><p>MAGICK 数据集，包含 150,000 个生成的物体及其准确的 alpha matte。涵盖了各种物体，并且具有高质量的 matte，包含头发、毛发、细小部分和透明度等细节。该数据集在训练 RGBA 生成、alpha-to-rgb 或自然图像抠图网络方面都有很大帮助。</p>
+<p>参考论文：MAGICK: A Large-scale Captioned Dataset from Matting Generated Images using Chroma Keying (CVPR 2024)</p>
+<p>论文地址：<a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content/CVPR2024/papers/Burgert_MAGICK_A_Large-scale_Captioned_Dataset_from_Matting_Generated_Images_using_CVPR_2024_paper.pdf">https://openaccess.thecvf.com/content/CVPR2024/papers/Burgert_MAGICK_A_Large-scale_Captioned_Dataset_from_Matting_Generated_Images_using_CVPR_2024_paper.pdf</a></p>
+<p>下载地址：<a target="_blank" rel="noopener" href="https://ryanndagreat.github.io/MAGICK/">https://ryanndagreat.github.io/MAGICK/</a></p>
+<p><img src="/2025/04/24/Paper/Paper-CV-4-Matting/2025-04-24-17-03-12-image.png"></p>
+<h3 id="matting-human-datasets"><a href="#matting-human-datasets" class="headerlink" title="matting_human_datasets"></a>matting_human_datasets</h3><p>该数据集是由国内公司高质量标注的，包含 34427 张图像和对应的 matting 结果图。</p>
+<p>下载地址：<a target="_blank" rel="noopener" href="https://github.com/aisegmentcn/matting_human_datasets">https://github.com/aisegmentcn/matting_human_datasets</a></p>
+<p><img src="/2025/04/24/Paper/Paper-CV-4-Matting/2025-04-24-17-02-53-image.png"></p>
+<h3 id="RealWorldPortrait-636"><a href="#RealWorldPortrait-636" class="headerlink" title="RealWorldPortrait-636"></a>RealWorldPortrait-636</h3><p>RealWorldPortrait-636 数据集由 636 张精确标注的人像图片组成。</p>
+<p>参考论文：Mask Guided Matting via Progressive Refinement Network (CVPR 2021)</p>
+<p>论文地址：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2012.06722">https://arxiv.org/abs/2012.06722</a></p>
+<p>下载地址：<a target="_blank" rel="noopener" href="https://github.com/yucornetto/MGMatting">https://github.com/yucornetto/MGMatting</a></p>
+<p><img src="/2025/04/24/Paper/Paper-CV-4-Matting/2025-04-24-17-02-34-image.png"></p>
+<h3 id="Distinctions-646"><a href="#Distinctions-646" class="headerlink" title="Distinctions-646"></a>Distinctions-646</h3><p>Distinction-646 数据集由 646 张前景图像及其手动标注的 alpha matte 组成。</p>
+<p>参考论文：Attention-Guided Hierarchical Structure Aggregation for Image Matting (CVPR2020)</p>
+<p>论文地址：<a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content_CVPR_2020/papers/Qiao_Attention-Guided_Hierarchical_Structure_Aggregation_for_Image_Matting_CVPR_2020_paper.pdf">https://openaccess.thecvf.com/content_CVPR_2020/papers/Qiao_Attention-Guided_Hierarchical_Structure_Aggregation_for_Image_Matting_CVPR_2020_paper.pdf</a></p>
+<p>下载地址：<a target="_blank" rel="noopener" href="https://github.com/yuhaoliu7456/CVPR2020-HAttMatting">https://github.com/yuhaoliu7456/CVPR2020-HAttMatting</a></p>
+<p><img src="/2025/04/24/Paper/Paper-CV-4-Matting/2025-04-24-17-02-18-image.png"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Matte/" rel="tag"># Matte</a>
+              <a href="/tags/segment/" rel="tag"># segment</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/04/18/Sub_Language/DL_Train/EVAL_method/" rel="prev" title="AI 算法模型评估">
+      <i class="fa fa-chevron-left"></i> AI 算法模型评估
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/04/25/AI_Apply/deduplication/" rel="next" title="图片去重-哈希算法">
+      图片去重-哈希算法 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Deep-Image-Matting"><span class="nav-number">1.</span> <span class="nav-text">Deep Image Matting</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Background-Matting"><span class="nav-number">2.</span> <span class="nav-text">Background Matting</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BackgroundMattingV2"><span class="nav-number">3.</span> <span class="nav-text">BackgroundMattingV2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RVM-%E8%A7%86%E9%A2%91%E6%8A%A0%E5%83%8F"><span class="nav-number">4.</span> <span class="nav-text">RVM 视频抠像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PaddleSeg"><span class="nav-number">5.</span> <span class="nav-text">PaddleSeg</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MODNet"><span class="nav-number">6.</span> <span class="nav-text">MODNet</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="nav-number"></span> <span class="nav-text">数据集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MAGICK"><span class="nav-number">1.</span> <span class="nav-text">MAGICK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#matting-human-datasets"><span class="nav-number">2.</span> <span class="nav-text">matting_human_datasets</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RealWorldPortrait-636"><span class="nav-number">3.</span> <span class="nav-text">RealWorldPortrait-636</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Distinctions-646"><span class="nav-number">4.</span> <span class="nav-text">Distinctions-646</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

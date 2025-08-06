@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="[toc] Poker Algorithm developer history论文阅读《Regret minimization in games and the development of champion multiplayer computer poker playing agents》(游戏中的遗憾最小化与多人计算机扑克游戏冠军的发展)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Poker Algorithm developer history">
+<meta property="og:url" content="https://novav.github.io/2019/08/16/Games/PokerGame_Algorithm/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="[toc] Poker Algorithm developer history论文阅读《Regret minimization in games and the development of champion multiplayer computer poker playing agents》(游戏中的遗憾最小化与多人计算机扑克游戏冠军的发展)">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2019/08/16/Games/PokerGame_Algorithm/1565942465956.png">
+<meta property="og:image" content="https://novav.github.io/2019/08/16/Games/PokerGame_Algorithm/1565840537365.png">
+<meta property="og:image" content="https://novav.github.io/2019/08/16/Games/PokerGame_Algorithm/1565850744597.png">
+<meta property="og:image" content="https://novav.github.io/2019/08/16/Games/PokerGame_Algorithm/1565851657792.png">
+<meta property="og:image" content="https://novav.github.io/2019/08/16/Games/PokerGame_Algorithm/1565852077450.png">
+<meta property="og:image" content="https://novav.github.io/2019/08/16/Games/PokerGame_Algorithm/1565920524462.png">
+<meta property="og:image" content="https://novav.github.io/2019/08/16/Games/PokerGame_Algorithm/1565920690554.png">
+<meta property="og:image" content="https://novav.github.io/2019/08/16/Games/PokerGame_Algorithm/1565920542091.png">
+<meta property="og:image" content="https://novav.github.io/2019/08/16/Games/PokerGame_Algorithm/1565924553479.png">
+<meta property="og:image" content="https://novav.github.io/2019/08/16/Games/PokerGame_Algorithm/1565924826273.png">
+<meta property="og:image" content="https://novav.github.io/2019/08/16/Games/PokerGame_Algorithm/1565857727752.png">
+<meta property="og:image" content="https://novav.github.io/2019/08/16/Games/PokerGame_Algorithm/1565860219326.png">
+<meta property="og:image" content="https://novav.github.io/2019/08/16/Games/PokerGame_Algorithm/1565861841669.png">
+<meta property="og:image" content="https://novav.github.io/2019/08/16/Games/PokerGame_Algorithm/1565862009249.png">
+<meta property="og:image" content="https://novav.github.io/2019/08/16/Games/PokerGame_Algorithm/1565878309846.png">
+<meta property="og:image" content="https://novav.github.io/2019/08/16/Games/PokerGame_Algorithm/1565936945792.png">
+<meta property="og:image" content="https://novav.github.io/2019/08/16/Games/PokerGame_Algorithm/1565940219092.png">
+<meta property="article:published_time" content="2019-08-16T08:39:31.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:39.924Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="Game">
+<meta property="article:tag" content="CFR">
+<meta property="article:tag" content="MCTS">
+<meta property="article:tag" content="Poker">
+<meta property="article:tag" content="NashEquilibriun">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2019/08/16/Games/PokerGame_Algorithm/1565942465956.png">
+
+<link rel="canonical" href="https://novav.github.io/2019/08/16/Games/PokerGame_Algorithm/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Poker Algorithm developer history | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2019/08/16/Games/PokerGame_Algorithm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Poker Algorithm developer history
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-08-16 08:39:31" itemprop="dateCreated datePublished" datetime="2019-08-16T08:39:31+00:00">2019-08-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Game/" itemprop="url" rel="index"><span itemprop="name">Game</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>[toc]</p>
+<h2 id="Poker-Algorithm-developer-history"><a href="#Poker-Algorithm-developer-history" class="headerlink" title="Poker Algorithm developer history"></a>Poker Algorithm developer history</h2><p>论文阅读《Regret minimization in games and the development of champion multiplayer computer poker playing agents》(游戏中的遗憾最小化与多人计算机扑克游戏冠军的发展)</p>
+<span id="more"></span>
+
+
+<h2 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h2><h3 id="Definition-2-1-normal-form-game"><a href="#Definition-2-1-normal-form-game" class="headerlink" title="Definition 2.1 normal-form game"></a>Definition 2.1 normal-form game</h3><p><img src="/2019/08/16/Games/PokerGame_Algorithm/1565942465956.png" alt="1565942465956"></p>
+<p>Definition 2.1. A finite normal-form game G is a tuple &lt;N, A, u&gt; containing the following components:</p>
+<ul>
+<li>A finite set N &#x3D; {1, 2, …, n} of players.</li>
+<li>A set of action profiles A &#x3D; A1×A2×· · ·×An, with Ai being a finite set of actions available to player i.</li>
+<li>For each i 2 N, a utility function ui : A ! R that denotes the payoff for player i under each possible action profile</li>
+</ul>
+<h3 id="Definition-2-2-Extensive-form-game"><a href="#Definition-2-2-Extensive-form-game" class="headerlink" title="Definition 2.2 Extensive-form game"></a>Definition 2.2 Extensive-form game</h3><p><img src="/2019/08/16/Games/PokerGame_Algorithm/1565840537365.png" alt="1565840537365"></p>
+<h3 id="Definition-2-3-perfect-reall-imperfect-recall"><a href="#Definition-2-3-perfect-reall-imperfect-recall" class="headerlink" title="Definition 2.3 perfect reall &amp; imperfect recall"></a>Definition 2.3 perfect reall &amp; imperfect recall</h3><p><img src="/2019/08/16/Games/PokerGame_Algorithm/1565850744597.png" alt="1565850744597"></p>
+<h3 id="Definition-2-4-纳什均衡"><a href="#Definition-2-4-纳什均衡" class="headerlink" title="Definition 2.4 纳什均衡"></a>Definition 2.4 纳什均衡</h3><p><img src="/2019/08/16/Games/PokerGame_Algorithm/1565851657792.png" alt="1565851657792"></p>
+<h3 id="Definition-2-5-Weakly-strictly-dominated-stregy"><a href="#Definition-2-5-Weakly-strictly-dominated-stregy" class="headerlink" title="Definition 2.5 Weakly&#x2F;strictly  dominated stregy"></a>Definition 2.5 Weakly&#x2F;strictly  dominated stregy</h3><p><img src="/2019/08/16/Games/PokerGame_Algorithm/1565852077450.png" alt="1565852077450"></p>
+<p>​	在三人博弈中，纳什均衡的计算是属于PPAD-complete的<a target="_blank" rel="noopener" href="http://www.jijitang.com/article/540faac420296a4535b9314a/ji-suan-yi-ge-na-shi-jun-heng-di-fu-za-xing-The-Complexity-of-Computing-a-Nash-Equilibrium">Computing Nash Equilibrium</a> (二人博弈也属于此)</p>
+<p>Nash Equilibrium 两个推广</p>
+<ul>
+<li><p>PDF_correlated  equilibria()</p>
+<ul>
+<li>no player has an incentive to unilaterally deviate from any recommendation</li>
+</ul>
+</li>
+<li><h2 id="PDF-coarse-correlated-equilibria"><a href="#PDF-coarse-correlated-equilibria" class="headerlink" title="PDF_coarse correlated equilibria "></a><a target="_blank" rel="noopener" href="http://www.cs.cornell.edu/courses/cs6840/2012sp/Feb17Notes.pdf">PDF_coarse correlated equilibria </a></h2></li>
+</ul>
+<h3 id="Definition-2-6-abstraction-for-player"><a href="#Definition-2-6-abstraction-for-player" class="headerlink" title="Definition 2.6 abstraction for player"></a>Definition 2.6 abstraction for player</h3><p><img src="/2019/08/16/Games/PokerGame_Algorithm/1565920524462.png" alt="1565920524462"></p>
+<p><img src="/2019/08/16/Games/PokerGame_Algorithm/1565920690554.png" alt="1565920690554"></p>
+<p><img src="/2019/08/16/Games/PokerGame_Algorithm/1565920542091.png" alt="1565920542091"></p>
+<h3 id="Definition2-7-Grafting-partition-for-player-i"><a href="#Definition2-7-Grafting-partition-for-player-i" class="headerlink" title="Definition2.7 Grafting partition for player i"></a>Definition2.7 Grafting partition for player i</h3><p><img src="/2019/08/16/Games/PokerGame_Algorithm/1565924553479.png" alt="1565924553479"></p>
+<h3 id="Definition2-8-grafted-strategy-for-player-i"><a href="#Definition2-8-grafted-strategy-for-player-i" class="headerlink" title="Definition2.8 grafted strategy for player i"></a>Definition2.8 grafted strategy for player i</h3><p><img src="/2019/08/16/Games/PokerGame_Algorithm/1565924826273.png" alt="1565924826273"></p>
+<h2 id="Theorem"><a href="#Theorem" class="headerlink" title="Theorem"></a>Theorem</h2><h3 id="Theorem2-1-2e-Nash-equilibrium"><a href="#Theorem2-1-2e-Nash-equilibrium" class="headerlink" title="Theorem2.1 2e-Nash equilibrium"></a>Theorem2.1 2e-Nash equilibrium</h3><p><img src="/2019/08/16/Games/PokerGame_Algorithm/1565857727752.png" alt="1565857727752"></p>
+<h3 id="Theorem2-2-regret-step"><a href="#Theorem2-2-regret-step" class="headerlink" title="Theorem2.2 regret &amp; step"></a>Theorem2.2 regret &amp; step</h3><p>当使用regret matching时，玩家regret与step的平方根成正比</p>
+<p><img src="/2019/08/16/Games/PokerGame_Algorithm/1565860219326.png" alt="1565860219326"></p>
+<h3 id="Theorem2-3-regert-max"><a href="#Theorem2-3-regert-max" class="headerlink" title="Theorem2.3 regert max"></a>Theorem2.3 regert max</h3><p><img src="/2019/08/16/Games/PokerGame_Algorithm/1565861841669.png" alt="1565861841669"></p>
+<h3 id="Theorem2-4-平均regret-bounded"><a href="#Theorem2-4-平均regret-bounded" class="headerlink" title="Theorem2.4 平均regret bounded"></a>Theorem2.4 平均regret bounded</h3><p><img src="/2019/08/16/Games/PokerGame_Algorithm/1565862009249.png" alt="1565862009249"></p>
+<h2 id="Algorithm-Method"><a href="#Algorithm-Method" class="headerlink" title="Algorithm Method"></a>Algorithm Method</h2><h3 id="Regret-Matching"><a href="#Regret-Matching" class="headerlink" title="Regret Matching"></a>Regret Matching</h3><p>accumulated regret: 衡量玩家i有多少次，宁愿选择a，而不跟随σ</p>
+<p>$$<br>R_i^T (a) &#x3D; \sum_{t&#x3D;1}^{T} (u_i(a, σ_{-i}^t) - u_i(σ_i^t, σ_{-i}^t)<br>$$</p>
+<p>Successive strategies：<br>$$<br>\sigma_i^{T+1}(a) &#x3D; \frac{R_i^{T,+}(a)}{\sum_{b \in A_i}R_i^{T, +}(b)}<br>$$</p>
+<h3 id="Counterfactual-Regret-Minimization-CFR"><a href="#Counterfactual-Regret-Minimization-CFR" class="headerlink" title="Counterfactual Regret Minimization(CFR)"></a>Counterfactual Regret Minimization(CFR)</h3><p>counterfactual value (player i)<br>$$<br>u(i, \sigma) &#x3D; \sum_{z\in Z_I} u_i(z)\pi_{-1}^\sigma (z[I])\pi^{\sigma}(z[I], z)<br>$$</p>
+<p>counterfactual regret (at iteration t)<br>$$<br>r_i^t(I,a ) &#x3D; v(I, \sigma_{I \to a} ^ t) - u_i(I, \sigma^t)<br>$$<br>​	σ(I-&gt;a) is the profile σ except at I, action a is always taken. </p>
+<p>​	the regret $r_i^t(i; a) $ measures how much player i would rather play action a at i than follow σt i at i, assuming player i plays to reach i.</p>
+<p>​	后悔 $r_i^t(i; a) $ 衡量的是，我宁愿在I上玩动作a，也不愿在I上跟随σ_i^t，假设Player玩到I。</p>
+<p>cumulative counterfactual regret<br>$$<br>R_i^T (I, a) &#x3D;\sum_{t&#x3D;1}^{T}r_i^t(I, a)<br>$$</p>
+<p>current strategy profile  </p>
+<p>$$<br>\sigma_i^{T+1}(I, a) &#x3D; \frac{R_i^{T,+}(I, a)}{\sum_{b \in A(I)}R_i^{T, +}(I, b)}<br>$$</p>
+<h3 id="MCCFR"><a href="#MCCFR" class="headerlink" title="MCCFR"></a>MCCFR</h3><p>Chance Sampling(CS)</p>
+<p>​	sampled counterfactual value<br>$$<br>\widetilde{u}<em>i(I, \sigma) &#x3D; \sum</em>{z\in Z_I \cap Q_j} u_i(z)\pi_{-i}^{\sigma}(z[I]) \pi^{\sigma} (z[I], z)&#x2F;q(z)<br>$$<br>​	sampled counterfactual regret<br>$$<br>\widetilde{r}_i^t(I, a) &#x3D; \widetilde{v}<em>i(I, \sigma</em>{I \to a}^t) - \widetilde{v}_i(I, \sigma^t)<br>$$</p>
+<p>​	sampled cumulative counterfactual regret<br>$$<br>\widetilde{R}_i^T &#x3D; \sum _{t&#x3D;1}^{T}\widetilde{r}_i^t(I, a)<br>$$</p>
+<p>External Sampling(ES)</p>
+<p>ES takes CS one step further by considering only a single action for not only chance, but also for the opponents, where opponent actions are sampled according to the current profile $σ_{-i}^t $</p>
+<p>Outcome Sampling(OS)</p>
+<p>最极端的mccfr版本,</p>
+<p>samples a single action at every history, walking just a single trajectory through the tree on each traversal ($Q_j &#x3D; {z}$). 在每一段历史记录中对单个动作进行采样，每次遍历时只遍历一条轨迹($Q_j &#x3D; {z}$)。</p>
+<h3 id="CS-MCTS"><a href="#CS-MCTS" class="headerlink" title="CS-MCTS"></a>CS-MCTS</h3><h3 id="ES-MCTS-Pesudocode"><a href="#ES-MCTS-Pesudocode" class="headerlink" title="ES-MCTS Pesudocode"></a>ES-MCTS Pesudocode</h3><p><img src="/2019/08/16/Games/PokerGame_Algorithm/1565878309846.png" alt="1565878309846"></p>
+<h3 id><a href="#" class="headerlink" title></a></h3><h4 id="WalkTree-recursive-function"><a href="#WalkTree-recursive-function" class="headerlink" title="WalkTree (recursive function)"></a>WalkTree (recursive function)</h4><p>four case:</p>
+<p>​	-1 reached teminal node : 返回效用值；(line 6)</p>
+<p>​	-2 at a chance node : 根据策略采样一个动作，并续递归；(line 7)</p>
+<p>​	-3 at opponent’s chance node : 采样个动作，并继续递归.(line 9-14)</p>
+<p>​	-4 update the cumulative profile (in two player game;)</p>
+<p>ES:递归方法WakeTree</p>
+<h4 id="UpdateCumulativeProfile"><a href="#UpdateCumulativeProfile" class="headerlink" title="UpdateCumulativeProfile"></a>UpdateCumulativeProfile</h4><p>after walkTree</p>
+<h3 id="-1"><a href="#-1" class="headerlink" title></a></h3><h3 id="Probing-MCCFR"><a href="#Probing-MCCFR" class="headerlink" title="Probing + MCCFR"></a>Probing + MCCFR</h3><h4 id="Pesudocode"><a href="#Pesudocode" class="headerlink" title="Pesudocode"></a>Pesudocode</h4><p><img src="/2019/08/16/Games/PokerGame_Algorithm/1565936945792.png" alt="1565936945792"></p>
+<p>对比ES算法，多了一个action set sampling distribution Q(I),  对于已经</p>
+<p>0：walk tree(h, i, q):</p>
+<p>1、h是terminal节点，返回u</p>
+<p>2、P(h)是chanceNode，sample action $a \sim \sigma_c(h,·)$, goto_0(ha)</p>
+<p>3、P(h)是 opponent’s Node,</p>
+<p>3.1、对所有的$a \in A(I)$更新$s(I,a) &#x3D; s(I, a) + (\sigma(I, a)&#x2F;q)$</p>
+<p>3.2、sample action $a \sim \sigma(I, ·)$， goto_0(ha)</p>
+<p>采样信息集$Q(I) \sim Q(I)$</p>
+<p><strong>4、遍历玩家i在当前信息集I上的所有可能action</strong></p>
+<ul>
+<li>如果 a 属于Q(I): 更新q’并且goto_0(ha)</li>
+<li>否则：Probe(ba)</li>
+</ul>
+<p>5、便利i的信息I下所有可能action，更新R(I, a)</p>
+<p>6、返回信息集上累计采样虚拟效用值$\sum_{a \in A(I)} \sigma(I, a) \widetilde{u}(a)$</p>
+<h3 id="AS-MCTS-Average-Strategy-Sampling"><a href="#AS-MCTS-Average-Strategy-Sampling" class="headerlink" title="AS-MCTS(Average Strategy Sampling)"></a>AS-MCTS(Average Strategy Sampling)</h3><p>AS can be seen as a sampling scheme between OS and ES  (可看作OS, ES之间的折中方案)</p>
+<p><img src="/2019/08/16/Games/PokerGame_Algorithm/1565940219092.png" alt="AS_MCCFR"></p>
+<p>AS_select:</p>
+<p>​	AS对每个信息集上玩家的action子集采样。而不像OS采样一个action，也不像ES采样所有action</p>
+<p>cumulative profile $s^T_i(I, ·) $on iteration T , an exploration parameter $\epsilon \in (0, 1]$,a threshold parameter $τ \in  [1, 1)$, and a bonus parameter $β \in [0, 1)$,  each of player i’s actions $a \in A(I)$ are sampled independently with probability :<br>$$<br>ρ(I; a) &#x3D; max {\epsilon,   \frac{β + \tau s_i^T(I, a)} {\beta + \sum_{b \in A(I)} s^T_i(I, b)} }<br>$$</p>
+<p>[GO](#Regret Matching)</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>《Regret minimization in games and the development of champion multiplayer computer poker playing agents》(游戏中的遗憾最小化与多人计算机扑克游戏冠军的发展)</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Game/" rel="tag"># Game</a>
+              <a href="/tags/CFR/" rel="tag"># CFR</a>
+              <a href="/tags/MCTS/" rel="tag"># MCTS</a>
+              <a href="/tags/Poker/" rel="tag"># Poker</a>
+              <a href="/tags/NashEquilibriun/" rel="tag"># NashEquilibriun</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/08/15/Games/MCTS_CFR/" rel="prev" title="MCTS-CFR">
+      <i class="fa fa-chevron-left"></i> MCTS-CFR
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/08/19/Games/MCTS_Survey/" rel="next" title="【Paper Read】A survey of Monte Carlo Tree Search Methods">
+      【Paper Read】A survey of Monte Carlo Tree Search Methods <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Poker-Algorithm-developer-history"><span class="nav-number">1.</span> <span class="nav-text">Poker Algorithm developer history</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Definition"><span class="nav-number">2.</span> <span class="nav-text">Definition</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Definition-2-1-normal-form-game"><span class="nav-number">2.1.</span> <span class="nav-text">Definition 2.1 normal-form game</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Definition-2-2-Extensive-form-game"><span class="nav-number">2.2.</span> <span class="nav-text">Definition 2.2 Extensive-form game</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Definition-2-3-perfect-reall-imperfect-recall"><span class="nav-number">2.3.</span> <span class="nav-text">Definition 2.3 perfect reall &amp; imperfect recall</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Definition-2-4-%E7%BA%B3%E4%BB%80%E5%9D%87%E8%A1%A1"><span class="nav-number">2.4.</span> <span class="nav-text">Definition 2.4 纳什均衡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Definition-2-5-Weakly-strictly-dominated-stregy"><span class="nav-number">2.5.</span> <span class="nav-text">Definition 2.5 Weakly&#x2F;strictly  dominated stregy</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PDF-coarse-correlated-equilibria"><span class="nav-number">3.</span> <span class="nav-text">PDF_coarse correlated equilibria </span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Definition-2-6-abstraction-for-player"><span class="nav-number">3.1.</span> <span class="nav-text">Definition 2.6 abstraction for player</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Definition2-7-Grafting-partition-for-player-i"><span class="nav-number">3.2.</span> <span class="nav-text">Definition2.7 Grafting partition for player i</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Definition2-8-grafted-strategy-for-player-i"><span class="nav-number">3.3.</span> <span class="nav-text">Definition2.8 grafted strategy for player i</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Theorem"><span class="nav-number">4.</span> <span class="nav-text">Theorem</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Theorem2-1-2e-Nash-equilibrium"><span class="nav-number">4.1.</span> <span class="nav-text">Theorem2.1 2e-Nash equilibrium</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Theorem2-2-regret-step"><span class="nav-number">4.2.</span> <span class="nav-text">Theorem2.2 regret &amp; step</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Theorem2-3-regert-max"><span class="nav-number">4.3.</span> <span class="nav-text">Theorem2.3 regert max</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Theorem2-4-%E5%B9%B3%E5%9D%87regret-bounded"><span class="nav-number">4.4.</span> <span class="nav-text">Theorem2.4 平均regret bounded</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Algorithm-Method"><span class="nav-number">5.</span> <span class="nav-text">Algorithm Method</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Regret-Matching"><span class="nav-number">5.1.</span> <span class="nav-text">Regret Matching</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Counterfactual-Regret-Minimization-CFR"><span class="nav-number">5.2.</span> <span class="nav-text">Counterfactual Regret Minimization(CFR)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MCCFR"><span class="nav-number">5.3.</span> <span class="nav-text">MCCFR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CS-MCTS"><span class="nav-number">5.4.</span> <span class="nav-text">CS-MCTS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ES-MCTS-Pesudocode"><span class="nav-number">5.5.</span> <span class="nav-text">ES-MCTS Pesudocode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.6.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#WalkTree-recursive-function"><span class="nav-number">5.6.1.</span> <span class="nav-text">WalkTree (recursive function)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UpdateCumulativeProfile"><span class="nav-number">5.6.2.</span> <span class="nav-text">UpdateCumulativeProfile</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-1"><span class="nav-number">5.7.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Probing-MCCFR"><span class="nav-number">5.8.</span> <span class="nav-text">Probing + MCCFR</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Pesudocode"><span class="nav-number">5.8.1.</span> <span class="nav-text">Pesudocode</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AS-MCTS-Average-Strategy-Sampling"><span class="nav-number">5.9.</span> <span class="nav-text">AS-MCTS(Average Strategy Sampling)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">6.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

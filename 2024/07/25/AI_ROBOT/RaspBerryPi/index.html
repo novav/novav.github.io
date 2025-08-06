@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="系统安装 超详细树莓派4B安装Ubuntu Server无屏幕_ubuntu server for raspberry 4b-CSDN博客 GitHub - zerotier&#x2F;ZeroTierOne: A Smart Ethernet Switch for Earth ROS 安装 ROS——ubuntu 20.04 &#x2F; 18.04安装 ROS - 腾讯云开发者社区-腾讯云 S">
+<meta property="og:type" content="article">
+<meta property="og:title" content="树莓派安装系统-Camrea+ROS+rplidar A1">
+<meta property="og:url" content="https://novav.github.io/2024/07/25/AI_ROBOT/RaspBerryPi/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="系统安装 超详细树莓派4B安装Ubuntu Server无屏幕_ubuntu server for raspberry 4b-CSDN博客 GitHub - zerotier&#x2F;ZeroTierOne: A Smart Ethernet Switch for Earth ROS 安装 ROS——ubuntu 20.04 &#x2F; 18.04安装 ROS - 腾讯云开发者社区-腾讯云 S">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2024/07/25/AI_ROBOT/RaspBerryPi/2024-07-29-09-54-40-image.png">
+<meta property="og:image" content="https://novav.github.io/2024/07/25/AI_ROBOT/RaspBerryPi/2024-07-29-09-54-14-image.png">
+<meta property="og:image" content="https://novav.github.io/2024/07/25/AI_ROBOT/RaspBerryPi/2024-07-29-09-55-08-image.png">
+<meta property="article:published_time" content="2024-07-25T12:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:38.197Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="raspberry">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2024/07/25/AI_ROBOT/RaspBerryPi/2024-07-29-09-54-40-image.png">
+
+<link rel="canonical" href="https://novav.github.io/2024/07/25/AI_ROBOT/RaspBerryPi/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>树莓派安装系统-Camrea+ROS+rplidar A1 | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2024/07/25/AI_ROBOT/RaspBerryPi/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          树莓派安装系统-Camrea+ROS+rplidar A1
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-07-25 12:00:00" itemprop="dateCreated datePublished" datetime="2024-07-25T12:00:00+00:00">2024-07-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>系统安装</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44223509/article/details/120753053">超详细树莓派4B安装Ubuntu Server无屏幕_ubuntu server for raspberry 4b-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/zerotier/ZeroTierOne">GitHub - zerotier&#x2F;ZeroTierOne: A Smart Ethernet Switch for Earth</a></p>
+<p>ROS 安装</p>
+<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/news/1335468">ROS——ubuntu 20.04 &#x2F; 18.04安装 ROS - 腾讯云开发者社区-腾讯云</a></p>
+<p>SLAM Relate</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/lzy6041/article/details/86702318">2D SLAM_Cartographer（1）_Google Cartographer安装与测试（demo）_not yet implemented for 2d-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/CloudFlame/p/16443723.html">【cartogarpher_ros】二： 官方Demo的介绍与演示 - CloudFlame - 博客园</a></p>
+<span id="more"></span>
+
+<h3 id="静态IP配置"><a href="#静态IP配置" class="headerlink" title="静态IP配置"></a>静态IP配置</h3><p>编辑</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/dhcpcd.conf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#无线</span></span><br><span class="line">interface wlan0</span><br><span class="line">inform <span class="number">192.168</span><span class="number">.43</span><span class="number">.100</span></span><br><span class="line">static routers=<span class="number">192.168</span><span class="number">.43</span><span class="number">.1</span></span><br></pre></td></tr></table></figure>
+
+<p>sudo reboot</p>
+<h3 id="远程登录"><a href="#远程登录" class="headerlink" title="远程登录"></a>远程登录</h3><p>1 Ubuntu 系统</p>
+<ul>
+<li>安装xface4</li>
+</ul>
+<p>2 Windows系统</p>
+<ul>
+<li>Xlaunch 配置MultiWindow-&gt; :0 -&gt; AccessControl</li>
+<li>Xming安装path&#x2F;X0.hosts 增加远程ip？（可以不加）</li>
+</ul>
+<p>3 使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xfce4-session</span><br></pre></td></tr></table></figure>
+
+<h3 id="CSI摄像头之ffplayer"><a href="#CSI摄像头之ffplayer" class="headerlink" title="CSI摄像头之ffplayer"></a>CSI摄像头之ffplayer</h3><p><a target="_blank" rel="noopener" href="https://chuckmails.medium.com/enable-pi-camera-with-raspberry-pi4-ubuntu-20-10-327208312f6e"># Enable Pi Camera with Raspberry Pi 4 Ubuntu 20.10</a></p>
+<h4 id="Install-raspi-config-for-camera-enabling"><a href="#Install-raspi-config-for-camera-enabling" class="headerlink" title="Install raspi-config for camera enabling"></a>Install raspi-config for camera enabling</h4><ul>
+<li><p>Find the version you want to install</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://archive.raspberrypi.org/debian/pool/main/r/raspi-config/?C=D;O=A&source=post_page-----327208312f6e--------------------------------"> Index of &#x2F;debian&#x2F;pool&#x2F;main&#x2F;r&#x2F;raspi-config  Edit description archive.raspberrypi.org</a></p>
+</li>
+<li><p>Download the deb file</p>
+</li>
+<li><pre><code class="language-shell">wget http://mirrors.ustc.edu.cn/archive.raspberrypi.org/debian/pool/main/r/raspi-config/raspi-config_20201108_all.deb
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- Solve the dependency problem</span><br><span class="line"></span><br><span class="line">- ```shell</span><br><span class="line">  sudo apt install lua5.1 libatopology2 libfftw3-single3</span><br><span class="line">          libsamplerate0 alsa-utils</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+<li><p>Install it</p>
+</li>
+<li><pre><code class="language-shell">sudo dpkg -i raspi-config_20201108_all.deb
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### Turn On</span><br><span class="line"></span><br><span class="line">let’s try to turn on Pi camera in raspi-config~</span><br><span class="line"></span><br><span class="line">```shell</span><br><span class="line">sudo raspi-config</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ul>
+<p>Oh sh…</p>
+<p>It’ll pop out error message “Your firmwave appears to be out of date (no start_x.elf). Please update”</p>
+<ul>
+<li>Mount on the &#x2F;boot</li>
+</ul>
+<p><code>df -h #Find your device numbert 查找設備號</code></p>
+<p><img src="/2024/07/25/AI_ROBOT/RaspBerryPi/2024-07-29-09-54-40-image.png"></p>
+<p><code>mount /dev/mmcblk0p1 /boot #your may be different 你的可能不一樣</code></p>
+<p><code>Reboot</code></p>
+<p>Now, you can turn on your Pi camera setting in raspi-config.</p>
+<p><img src="/2024/07/25/AI_ROBOT/RaspBerryPi/2024-07-29-09-54-14-image.png"></p>
+<h4 id="Find-your-camera"><a href="#Find-your-camera" class="headerlink" title="Find your camera"></a>Find your camera</h4><p>We’ll use this “v4l2-ctl — list-devices”</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install v4l-utils  </span><br><span class="line">v4l2-ctl --list-devices</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/07/25/AI_ROBOT/RaspBerryPi/2024-07-29-09-55-08-image.png"></p>
+<h4 id="Now-Test-it"><a href="#Now-Test-it" class="headerlink" title="Now, Test it !!"></a>Now, Test it !!</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install ffmpeg</span><br><span class="line">ffplay /dev/video0</span><br></pre></td></tr></table></figure>
+
+<h2 id="CSI-摄像头之picamera"><a href="#CSI-摄像头之picamera" class="headerlink" title="CSI 摄像头之picamera"></a>CSI 摄像头之picamera</h2><p>要在 Ubuntu 上为 CSI (Camera Serial Interface) 摄像头安装 ROS 驱动，最典型的例子就是树莓派摄像头模块，它使用 CSI 接口与树莓派通信。如果你是在树莓派上使用 CSI 摄像头，那么你可以使用 <code>picamera</code> 库来访问摄像头。如果你是在其他基于 Linux 的系统上使用类似的 CSI 摄像头，那么你需要确保你的系统支持 CSI 接口，并且有相应的驱动程序。</p>
+<h3 id="步骤-1-确认-CSI-摄像头支持"><a href="#步骤-1-确认-CSI-摄像头支持" class="headerlink" title="步骤 1: 确认 CSI 摄像头支持"></a>步骤 1: 确认 CSI 摄像头支持</h3><p>确保你的系统支持 CSI 摄像头，并且摄像头已正确连接到 CSI 接口上。</p>
+<h3 id="步骤-2-安装必要的软件包"><a href="#步骤-2-安装必要的软件包" class="headerlink" title="步骤 2: 安装必要的软件包"></a>步骤 2: 安装必要的软件包</h3><ol>
+<li><p><strong>安装 <code>picamera</code> 库</strong>：<br>如果你使用的是树莓派，<code>picamera</code> 库应该已经预装在树莓派操作系统中。如果不是，则需要安装 <code>picamera</code> 库：</p>
+<p>Bash</p>
+<p>深色版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install picamera</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>安装 ROS 相关软件包</strong>：<br>确保 ROS 已经安装在你的系统上。如果你还没有安装 ROS Noetic，请参考之前的指导安装 ROS Noetic。</p>
+</li>
+<li><p><strong>安装 <code>image_transport</code> 和 <code>camera_info_manager</code></strong>：<br>这些软件包提供了发布图像数据和管理摄像头信息的能力。</p>
+<p>Bash</p>
+<p>深色版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install ros-noetic-image-transport ros-noetic-camera-info-manager</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="步骤-3-编写-ROS-节点"><a href="#步骤-3-编写-ROS-节点" class="headerlink" title="步骤 3: 编写 ROS 节点"></a>步骤 3: 编写 ROS 节点</h3><p>为了将摄像头数据发布为 ROS 消息，你需要编写一个 ROS 节点来捕获图像并发布。以下是一个简单的示例，说明如何使用 <code>picamera</code> 库和 ROS 来实现这一目标。</p>
+<h4 id="示例代码：发布摄像头图像"><a href="#示例代码：发布摄像头图像" class="headerlink" title="示例代码：发布摄像头图像"></a>示例代码：发布摄像头图像</h4><ol>
+<li><p><strong>创建 ROS 工作空间</strong>：</p>
+<p>Bash</p>
+<p>深色版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p ~/catkin_ws/src</span><br><span class="line">cd ~/catkin_ws</span><br><span class="line">catkin_make</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>创建 ROS 包</strong>：</p>
+<p>Bash</p>
+<p>深色版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd ~/catkin_ws/src</span><br><span class="line">catkin_create_pkg csi_camera_driver rospy picamera</span><br><span class="line">cd csi_camera_driver</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>编写 ROS 节点</strong>：<br>在 <code>src</code> 目录下创建一个名为 <code>camera_node.py</code> 的文件，并添加以下内容：</p>
+<p>Python</p>
+<p>深色版本</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="keyword">import</span> rospy</span><br><span class="line"><span class="keyword">from</span> sensor_msgs.msg <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> cv_bridge <span class="keyword">import</span> CvBridge, CvBridgeError</span><br><span class="line"><span class="keyword">from</span> picamera.array <span class="keyword">import</span> PiRGBArray</span><br><span class="line"><span class="keyword">from</span> picamera <span class="keyword">import</span> PiCamera</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">talker</span>():</span><br><span class="line">    pub = rospy.Publisher(<span class="string">&#x27;/csi_camera/image_raw&#x27;</span>, Image, queue_size=<span class="number">10</span>)</span><br><span class="line">    rospy.init_node(<span class="string">&#x27;csi_camera_driver&#x27;</span>, anonymous=<span class="literal">True</span>)</span><br><span class="line">    rate = rospy.Rate(<span class="number">10</span>)  <span class="comment"># 10 Hz</span></span><br><span class="line"></span><br><span class="line">    camera = PiCamera()</span><br><span class="line">    camera.resolution = (<span class="number">640</span>, <span class="number">480</span>)</span><br><span class="line">    camera.framerate = <span class="number">10</span></span><br><span class="line">    rawCapture = PiRGBArray(camera, size=(<span class="number">640</span>, <span class="number">480</span>))</span><br><span class="line"></span><br><span class="line">    bridge = CvBridge()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> frame <span class="keyword">in</span> camera.capture_continuous(rawCapture, <span class="built_in">format</span>=<span class="string">&quot;bgr&quot;</span>, use_video_port=<span class="literal">True</span>):</span><br><span class="line">        image = frame.array</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            ros_image = bridge.cv2_to_imgmsg(image, <span class="string">&quot;bgr8&quot;</span>)</span><br><span class="line">            pub.publish(ros_image)</span><br><span class="line">        <span class="keyword">except</span> CvBridgeError <span class="keyword">as</span> e:</span><br><span class="line">            <span class="built_in">print</span>(e)</span><br><span class="line"></span><br><span class="line">        rawCapture.truncate(<span class="number">0</span>)</span><br><span class="line">        rate.sleep()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        talker()</span><br><span class="line">    <span class="keyword">except</span> rospy.ROSInterruptException:</span><br><span class="line">        <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>编译 ROS 包</strong>：</p>
+<p>Bash</p>
+<p>深色版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~/catkin_ws</span><br><span class="line">catkin_make</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>运行 ROS 节点</strong>：</p>
+<p>Bash</p>
+<p>深色版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">source devel/setup.bash</span><br><span class="line">rosrun csi_camera_driver camera_node.py</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="步骤-4-查看图像"><a href="#步骤-4-查看图像" class="headerlink" title="步骤 4: 查看图像"></a>步骤 4: 查看图像</h3><ol>
+<li><p><strong>安装 <code>image_view</code></strong>：<br>如果你还没有安装 <code>image_view</code>，可以使用以下命令安装：</p>
+<p>Bash</p>
+<p>深色版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install ros-noetic-image-view</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>查看图像</strong>：<br>在另一个终端窗口中运行 <code>image_view</code> 节点来查看图像：</p>
+<p>Bash</p>
+<p>深色版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rosrun image_view image_view image:=/csi_camera/image_raw</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="故障排除"><a href="#故障排除" class="headerlink" title="故障排除"></a>故障排除</h3><p>如果你遇到任何问题，可以尝试以下步骤：</p>
+<ol>
+<li><p><strong>检查摄像头是否正确连接</strong>：确保摄像头已经正确插入 CSI 接口。</p>
+</li>
+<li><p><strong>检查权限</strong>：确保你的用户有权限访问摄像头设备。</p>
+</li>
+<li><p><strong>查看日志</strong>：查看系统的日志文件，如 <code>/var/log/syslog</code>，以获取更多关于错误的信息。</p>
+</li>
+<li><p><strong>检查树莓派的配置</strong>：确保在 <code>/boot/config.txt</code> 中开启了摄像头支持。</p>
+</li>
+</ol>
+<p>如果你需要更具体的帮助，请提供更多关于你的系统配置和遇到的具体问题的信息。</p>
+<h2 id="ROS-rplidar-A1"><a href="#ROS-rplidar-A1" class="headerlink" title="ROS+rplidar A1"></a>ROS+rplidar A1</h2><h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install ros-noetic-rplidar-ros</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">sudo</span> gpasswd --add USER_NAME dialout</span></span><br></pre></td></tr></table></figure>
+
+<p>运行（old Fail）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">roscore </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rosrun rplidar_ros rplidarNode</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rostopic list</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">rostopic  <span class="built_in">echo</span> /scan</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="lsusb"><a href="#lsusb" class="headerlink" title="lsusb"></a>lsusb</h3><p>Bus 001 Device 003: ID 10c4:ea60 Silicon Labs CP210x UART Bridge</p>
+<h3 id="RUN"><a href="#RUN" class="headerlink" title="RUN"></a>RUN</h3><p>运行成功（雷达对电源要求高，笔记本电源不行）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">1 core server start</span></span><br><span class="line">roscore</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">2 启动lidar</span></span><br><span class="line">roslaunch rplidar_ros rplidar_a1.launch</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">2 启动lidar + viz可视化</span></span><br><span class="line">roslaunch rplidar_ros view_rplidar_a1.launch</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">3 list</span></span><br><span class="line">rostopic list</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">4 输出话题</span></span><br><span class="line">rostopic echo /scan</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/raspberry/" rel="tag"># raspberry</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/07/24/AI_ROBOT/ROS_MOVEIT/" rel="prev" title="ROS 之 机器臂MoveIt">
+      <i class="fa fa-chevron-left"></i> ROS 之 机器臂MoveIt
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/07/29/Tools/Tools_FFmpeg/" rel="next" title="FFmpeg 使用教程">
+      FFmpeg 使用教程 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%99%E6%80%81IP%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">静态IP配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95"><span class="nav-number">2.</span> <span class="nav-text">远程登录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSI%E6%91%84%E5%83%8F%E5%A4%B4%E4%B9%8Bffplayer"><span class="nav-number">3.</span> <span class="nav-text">CSI摄像头之ffplayer</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Install-raspi-config-for-camera-enabling"><span class="nav-number">3.1.</span> <span class="nav-text">Install raspi-config for camera enabling</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Find-your-camera"><span class="nav-number">3.2.</span> <span class="nav-text">Find your camera</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Now-Test-it"><span class="nav-number">3.3.</span> <span class="nav-text">Now, Test it !!</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSI-%E6%91%84%E5%83%8F%E5%A4%B4%E4%B9%8Bpicamera"><span class="nav-number"></span> <span class="nav-text">CSI 摄像头之picamera</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-1-%E7%A1%AE%E8%AE%A4-CSI-%E6%91%84%E5%83%8F%E5%A4%B4%E6%94%AF%E6%8C%81"><span class="nav-number">1.</span> <span class="nav-text">步骤 1: 确认 CSI 摄像头支持</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-2-%E5%AE%89%E8%A3%85%E5%BF%85%E8%A6%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E5%8C%85"><span class="nav-number">2.</span> <span class="nav-text">步骤 2: 安装必要的软件包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-3-%E7%BC%96%E5%86%99-ROS-%E8%8A%82%E7%82%B9"><span class="nav-number">3.</span> <span class="nav-text">步骤 3: 编写 ROS 节点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81%EF%BC%9A%E5%8F%91%E5%B8%83%E6%91%84%E5%83%8F%E5%A4%B4%E5%9B%BE%E5%83%8F"><span class="nav-number">3.1.</span> <span class="nav-text">示例代码：发布摄像头图像</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-4-%E6%9F%A5%E7%9C%8B%E5%9B%BE%E5%83%8F"><span class="nav-number">4.</span> <span class="nav-text">步骤 4: 查看图像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%85%E9%9A%9C%E6%8E%92%E9%99%A4"><span class="nav-number">5.</span> <span class="nav-text">故障排除</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ROS-rplidar-A1"><span class="nav-number"></span> <span class="nav-text">ROS+rplidar A1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lsusb"><span class="nav-number">2.</span> <span class="nav-text">lsusb</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RUN"><span class="nav-number">3.</span> <span class="nav-text">RUN</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

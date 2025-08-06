@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="[TOC] GAN1、模型发展、理论改进  PGGAN、SNGAN、SAGAN、BigGAN、StyleGAN 等，这些模型都还在强调如何通过随机采样生成高质量图像。 2、应用领域发展 如 FUNIT、SPADE 等已经将注意力放在了应用层，也就是如何利用 GAN 做好图像翻译等实际应用任务。 Image-to-Image Translation 局部纹理间的转换展开的，例如人脸属性变换、画作的风">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机视觉--GAN">
+<meta property="og:url" content="https://novav.github.io/2020/03/16/CV/CV-GAN/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="[TOC] GAN1、模型发展、理论改进  PGGAN、SNGAN、SAGAN、BigGAN、StyleGAN 等，这些模型都还在强调如何通过随机采样生成高质量图像。 2、应用领域发展 如 FUNIT、SPADE 等已经将注意力放在了应用层，也就是如何利用 GAN 做好图像翻译等实际应用任务。 Image-to-Image Translation 局部纹理间的转换展开的，例如人脸属性变换、画作的风">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2020/03/16/CV/CV-GAN/2024-04-07-15-55-43-image.png">
+<meta property="og:image" content="https://novav.github.io/2020/03/16/CV/CV-GAN/2024-04-07-15-57-02-image.png">
+<meta property="og:image" content="https://novav.github.io/2020/03/16/CV/CV-GAN/2024-03-06-16-26-04-image.png">
+<meta property="og:image" content="https://novav.github.io/2020/03/16/CV/CV-GAN/0001.png">
+<meta property="og:image" content="https://github.com/znxlwm/pytorch-CartoonGAN/raw/master/assets/paper_results.png">
+<meta property="og:image" content="https://github.com/SystemErrorWang/CartoonGAN/raw/master/results/WechatIMG78.jpeg?raw=true">
+<meta property="og:image" content="https://novav.github.io/2020/03/16/CV/CV-GAN/image-20200514204037043.png">
+<meta property="article:published_time" content="2020-03-16T18:51:57.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:38.249Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="CV">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2020/03/16/CV/CV-GAN/2024-04-07-15-55-43-image.png">
+
+<link rel="canonical" href="https://novav.github.io/2020/03/16/CV/CV-GAN/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>计算机视觉--GAN | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2020/03/16/CV/CV-GAN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          计算机视觉--GAN
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-16 18:51:57" itemprop="dateCreated datePublished" datetime="2020-03-16T18:51:57+00:00">2020-03-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/" itemprop="url" rel="index"><span itemprop="name">CV</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/Networks/" itemprop="url" rel="index"><span itemprop="name">Networks</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/Networks/GAN/" itemprop="url" rel="index"><span itemprop="name">GAN</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>[TOC]</p>
+<h1 id="GAN"><a href="#GAN" class="headerlink" title="GAN"></a>GAN</h1><p>1、模型发展、理论改进</p>
+<p> PGGAN、SNGAN、SAGAN、BigGAN、StyleGAN 等，这些模型都还在强调如何通过随机采样生成高质量图像。</p>
+<p>2、应用领域发展</p>
+<p>如 FUNIT、SPADE 等已经将注意力放在了应用层，也就是如何利用 GAN 做好图像翻译等实际应用任务。</p>
+<h2 id="Image-to-Image-Translation"><a href="#Image-to-Image-Translation" class="headerlink" title="Image-to-Image Translation"></a>Image-to-Image Translation</h2><ul>
+<li>局部纹理间的转换展开的，例如人脸属性变换、画作的风格变换、图像分割等，</li>
+<li>语义联系模型转换，引入注意力机制（U-GAT-IT）<ul>
+<li>采用全局和平均池化下的类激活图（Class Activation Map-CAM）[2]来实现的</li>
+<li>再加上<strong>自适应图层实例归一化</strong>（AdaLIN），其作用是帮助注意力引导模型灵活控制形状和纹理的变化量。</li>
+</ul>
+</li>
+</ul>
+<h3 id="pix2pix（监督学习）"><a href="#pix2pix（监督学习）" class="headerlink" title="pix2pix（监督学习）"></a>pix2pix（监督学习）</h3><h3 id="pix2pipxHD"><a href="#pix2pipxHD" class="headerlink" title="pix2pipxHD"></a>pix2pipxHD</h3><h3 id="CycleGan（非监督学习）"><a href="#CycleGan（非监督学习）" class="headerlink" title="CycleGan（非监督学习）"></a>CycleGan（非监督学习）</h3><h3 id="UNIT-citeUNIT"><a href="#UNIT-citeUNIT" class="headerlink" title="UNIT citeUNIT"></a>UNIT citeUNIT</h3><h3 id="MUNIT-9"><a href="#MUNIT-9" class="headerlink" title="MUNIT [9]"></a>MUNIT [9]</h3><p>将图像分解为领域不变的内容代码和捕获领域特定属性的样式代码，从而可以扩展到多对多映射。</p>
+<h3 id="U-GAT-IT-★★★★★"><a href="#U-GAT-IT-★★★★★" class="headerlink" title="U-GAT-IT (★★★★★)"></a>U-GAT-IT (★★★★★)</h3><p>基于GAN的新型无监督图像转换 </p>
+<p><a target="_blank" rel="noopener" href="https://www.sohu.com/a/333947112_500659">https://www.sohu.com/a/333947112_500659</a></p>
+<h3 id="FUNIT"><a href="#FUNIT" class="headerlink" title="FUNIT"></a>FUNIT</h3><h3 id="SPADE"><a href="#SPADE" class="headerlink" title="SPADE"></a>SPADE</h3><p>论文标题：《Semantic Image Synthesis with Spatially-Adaptive Normalization》</p>
+<p>论文链接：CVPR 2019 Open Access Repository</p>
+<p>源码链接：<a target="_blank" rel="noopener" href="https://github.com/NVlabs/SPADE">https://github.com/NVlabs/SPADE</a></p>
+<p>语义图像合成是指基于语义分割的结果来生成真实图片，过程如下图所示。很显然，这是图像语义分割的反过程；但不同的是，语义分割由真实图片分割出来的结果应该是唯一的(one-to-one mapping)，而语义图像合成的结果只要是合理的就可以了，也就是说有多样的结果(one-to-many mapping)。</p>
+<p>目前语义图像合成领域的经典方法有：CRN [1], pix2pixHD [2], SIMS [3], SPADE [4], 以及近些年来更多基于GAN的方法。</p>
+<p><img src="/2020/03/16/CV/CV-GAN/2024-04-07-15-55-43-image.png"></p>
+<p><img src="/2020/03/16/CV/CV-GAN/2024-04-07-15-57-02-image.png"></p>
+<h3 id="CAM"><a href="#CAM" class="headerlink" title="CAM"></a>CAM</h3><p>（Class Activation Map）</p>
+<h3 id="AdaLIN"><a href="#AdaLIN" class="headerlink" title="(AdaLIN)"></a>(AdaLIN)</h3><p>Adaptive Layer-Instance Normalization </p>
+<h2 id="VideoGAN"><a href="#VideoGAN" class="headerlink" title="VideoGAN"></a>VideoGAN</h2><h3 id="vid2vid"><a href="#vid2vid" class="headerlink" title="vid2vid"></a>vid2vid</h3><img title src="/2020/03/16/CV/CV-GAN/2024-03-06-16-26-04-image.png" alt width="581">
+
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/maqunfi/article/details/88186935">Vid2Vid多图详解-CSDN博客</a></p>
+<h1 id="Cartoon"><a href="#Cartoon" class="headerlink" title="Cartoon"></a>Cartoon</h1><h2 id="CartoonGAN-CVPR-2018"><a href="#CartoonGAN-CVPR-2018" class="headerlink" title="CartoonGAN CVPR 2018"></a>CartoonGAN CVPR 2018</h2><p>清华</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/znxlwm/pytorch-CartoonGAN">https://github.com/znxlwm/pytorch-CartoonGAN</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/taki0112/CartoonGAN-Tensorflow">https://github.com/taki0112/CartoonGAN-Tensorflow</a></p>
+<img title src="/2020/03/16/CV/CV-GAN/0001.png" alt="img" style="zoom: 50%;" width="420">
+
+<p><img src="https://github.com/znxlwm/pytorch-CartoonGAN/raw/master/assets/paper_results.png" alt="img"></p>
+<h2 id="CarttonGAN-CVPR2020"><a href="#CarttonGAN-CVPR2020" class="headerlink" title="CarttonGAN CVPR2020"></a>CarttonGAN CVPR2020</h2><p><a target="_blank" rel="noopener" href="https://github.com/SystemErrorWang/CartoonGAN">https://github.com/SystemErrorWang/CartoonGAN</a></p>
+<p>效果： </p>
+<p>​    风景好点</p>
+<p>​    人物处理差点</p>
+<p><img src="https://github.com/SystemErrorWang/CartoonGAN/raw/master/results/WechatIMG78.jpeg?raw=true" alt="alt text"></p>
+<h2 id="White-box-Cartoonization"><a href="#White-box-Cartoonization" class="headerlink" title="White-box-Cartoonization"></a>White-box-Cartoonization</h2><p><a target="_blank" rel="noopener" href="https://github.com/SystemErrorWang/White-box-Cartoonization">https://github.com/SystemErrorWang/White-box-Cartoonization</a></p>
+<p>CVPR2020 paper “Learning to Cartoonize Using White-box Cartoon Representations”.</p>
+<p><a target="_blank" rel="noopener" href="https://systemerrorwang.github.io/White-box-Cartoonization">https://systemerrorwang.github.io/White-box-Cartoonization</a></p>
+<p><a target="_blank" rel="noopener" href="https://systemerrorwang.github.io/White-box-Cartoonization/paper/06791.pdf">https://systemerrorwang.github.io/White-box-Cartoonization/paper/06791.pdf</a></p>
+<p>字节跳动，东京大学，Style2Paints Research（线稿上色）</p>
+<img title src="/2020/03/16/CV/CV-GAN/image-20200514204037043.png" alt="image-20200514204037043" style="zoom: 33%;" width="470">
+
+<h2 id="AnimeGAN"><a href="#AnimeGAN" class="headerlink" title="AnimeGAN"></a>AnimeGAN</h2><p>AnimeGAN: a novel lightweight GAN for photo animation</p>
+<p>武汉大学 土木工程学院</p>
+<p>湖北工业大学 计算机学院</p>
+<p>Wine-64</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./configure --enable-win64</span><br><span class="line"></span><br><span class="line">sudo apt-get install mingw-64</span><br></pre></td></tr></table></figure>
+
+<p>Wine-32</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install g++-multilib</span><br><span class="line">sudo apt-get install libncurses5:i386</span><br><span class="line">sudo apt-get install libc6:i386 libgcc1:i386 libstdc++5:i386 libstdc++6:i386</span><br><span class="line">————————————————</span><br><span class="line">https://blog.csdn.net/m0_37763336/article/details/83618390</span><br><span class="line">原文链接：https://blog.csdn.net/hackerwin7/java/article/details/37878007</span><br><span class="line"></span><br><span class="line">sudo apt install libx11-dev:i386</span><br><span class="line">sudo apt-get install  libfreetype6-dev:i386    libfreetype6-dev</span><br></pre></td></tr></table></figure>
+
+<h1 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h1><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/91745671">CycleGAN、DualGAN、DiscoGAN</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CV/" rel="tag"># CV</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/13/CV_3D/CV-3D-Base/" rel="prev" title="计算机视觉--点云对齐">
+      <i class="fa fa-chevron-left"></i> 计算机视觉--点云对齐
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/03/16/CV/CV-Face-Recognition/" rel="next" title="计算机视觉--人脸识别发展">
+      计算机视觉--人脸识别发展 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#GAN"><span class="nav-number">1.</span> <span class="nav-text">GAN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Image-to-Image-Translation"><span class="nav-number">1.1.</span> <span class="nav-text">Image-to-Image Translation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#pix2pix%EF%BC%88%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%EF%BC%89"><span class="nav-number">1.1.1.</span> <span class="nav-text">pix2pix（监督学习）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pix2pipxHD"><span class="nav-number">1.1.2.</span> <span class="nav-text">pix2pipxHD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CycleGan%EF%BC%88%E9%9D%9E%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%EF%BC%89"><span class="nav-number">1.1.3.</span> <span class="nav-text">CycleGan（非监督学习）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UNIT-citeUNIT"><span class="nav-number">1.1.4.</span> <span class="nav-text">UNIT citeUNIT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MUNIT-9"><span class="nav-number">1.1.5.</span> <span class="nav-text">MUNIT [9]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#U-GAT-IT-%E2%98%85%E2%98%85%E2%98%85%E2%98%85%E2%98%85"><span class="nav-number">1.1.6.</span> <span class="nav-text">U-GAT-IT (★★★★★)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FUNIT"><span class="nav-number">1.1.7.</span> <span class="nav-text">FUNIT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SPADE"><span class="nav-number">1.1.8.</span> <span class="nav-text">SPADE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CAM"><span class="nav-number">1.1.9.</span> <span class="nav-text">CAM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AdaLIN"><span class="nav-number">1.1.10.</span> <span class="nav-text">(AdaLIN)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VideoGAN"><span class="nav-number">1.2.</span> <span class="nav-text">VideoGAN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vid2vid"><span class="nav-number">1.2.1.</span> <span class="nav-text">vid2vid</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Cartoon"><span class="nav-number">2.</span> <span class="nav-text">Cartoon</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CartoonGAN-CVPR-2018"><span class="nav-number">2.1.</span> <span class="nav-text">CartoonGAN CVPR 2018</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CarttonGAN-CVPR2020"><span class="nav-number">2.2.</span> <span class="nav-text">CarttonGAN CVPR2020</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#White-box-Cartoonization"><span class="nav-number">2.3.</span> <span class="nav-text">White-box-Cartoonization</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AnimeGAN"><span class="nav-number">2.4.</span> <span class="nav-text">AnimeGAN</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ref"><span class="nav-number">3.</span> <span class="nav-text">Ref</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

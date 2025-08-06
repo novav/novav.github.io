@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="[TOC] 3D-CNN Method         iDT     LRCN  CVPR 2015   LSTM composite model     C3D  2015   TSN  ECCV 2016   R3DCNN NVIDIA 2016   P3D MSRA ICCV 2017   R3D&#x2F;2.5D  2017   T3D  2017   R2+1D  2018">
+<meta property="og:type" content="article">
+<meta property="og:title" content="3D CNN">
+<meta property="og:url" content="https://novav.github.io/2019/08/26/CV_3D/CV_3D/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="[TOC] 3D-CNN Method         iDT     LRCN  CVPR 2015   LSTM composite model     C3D  2015   TSN  ECCV 2016   R3DCNN NVIDIA 2016   P3D MSRA ICCV 2017   R3D&#x2F;2.5D  2017   T3D  2017   R2+1D  2018">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2019/08/26/CV_3D/CV_3D/v2-e51c8770654a1eb92f984e8cc2cf0cd8_hd.jpg">
+<meta property="og:image" content="https://novav.github.io/2019/08/26/CV_3D/CV_3D/v2-5eda0b0b2967fba1d8b6f31f04ef9d49_hd.jpg">
+<meta property="og:image" content="https://novav.github.io/2019/08/26/CV_3D/CV_3D/1567834917557.png">
+<meta property="og:image" content="https://novav.github.io/2019/08/26/CV_3D/CV_3D/1567834970578.png">
+<meta property="og:image" content="https://novav.github.io/2019/08/26/CV_3D/CV_3D/v2-b1d256a551911be85f445b16bdca5b5c_hd.jpg">
+<meta property="og:image" content="https://novav.github.io/2019/08/26/CV_3D/CV_3D/v2-d24ee52c0f5ddc3bdf5614c52841692f_hd.jpg">
+<meta property="og:image" content="https://novav.github.io/2019/08/26/CV_3D/CV_3D/v2-e2dd2daf56bfc15d1b24fd0456258c3a_hd.jpg">
+<meta property="og:image" content="https://novav.github.io/2019/08/26/CV_3D/CV_3D/v2-e0c6cb5e2b7022930f736d4d63a272a7_hd.jpg">
+<meta property="og:image" content="https://novav.github.io/2019/08/26/CV_3D/CV_3D/1567836996218.png">
+<meta property="og:image" content="https://novav.github.io/2019/08/26/CV_3D/CV_3D/closer_fig2-1567133357920.png">
+<meta property="og:image" content="https://novav.github.io/2019/08/26/CV_3D/CV_3D/1568038064174.png">
+<meta property="og:image" content="https://novav.github.io/2019/08/26/CV_3D/CV_3D/1568037268584.png">
+<meta property="og:image" content="https://novav.github.io/2019/08/26/CV_3D/CV_3D/1568037351528.png">
+<meta property="og:image" content="https://novav.github.io/2019/08/26/CV_3D/CV_3D/v2-055d0ce473ca714d3ef68ce8c363f76b_hd.jpg">
+<meta property="og:image" content="https://novav.github.io/2019/08/26/CV_3D/CV_3D/1567131688063.png">
+<meta property="article:published_time" content="2019-08-26T09:44:22.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:38.788Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="CNN">
+<meta property="article:tag" content="CNN3D">
+<meta property="article:tag" content="DNN">
+<meta property="article:tag" content="Video Representation">
+<meta property="article:tag" content="Action Recognition">
+<meta property="article:tag" content="Video Classification">
+<meta property="article:tag" content="Spatiotemporal">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2019/08/26/CV_3D/CV_3D/v2-e51c8770654a1eb92f984e8cc2cf0cd8_hd.jpg">
+
+<link rel="canonical" href="https://novav.github.io/2019/08/26/CV_3D/CV_3D/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>3D CNN | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2019/08/26/CV_3D/CV_3D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          3D CNN
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-08-26 09:44:22" itemprop="dateCreated datePublished" datetime="2019-08-26T09:44:22+00:00">2019-08-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/" itemprop="url" rel="index"><span itemprop="name">CV</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/Networks/" itemprop="url" rel="index"><span itemprop="name">Networks</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>[TOC]</p>
+<h2 id="3D-CNN-Method"><a href="#3D-CNN-Method" class="headerlink" title="3D-CNN Method"></a>3D-CNN Method</h2><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>iDT</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>LRCN</td>
+<td></td>
+<td>CVPR 2015</td>
+</tr>
+<tr>
+<td>LSTM composite model</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>C3D</td>
+<td></td>
+<td>2015</td>
+</tr>
+<tr>
+<td>TSN</td>
+<td></td>
+<td>ECCV 2016</td>
+</tr>
+<tr>
+<td>R3DCNN</td>
+<td>NVIDIA</td>
+<td>2016</td>
+</tr>
+<tr>
+<td>P3D</td>
+<td>MSRA</td>
+<td>ICCV 2017</td>
+</tr>
+<tr>
+<td>R3D&#x2F;2.5D</td>
+<td></td>
+<td>2017</td>
+</tr>
+<tr>
+<td>T3D</td>
+<td></td>
+<td>2017</td>
+</tr>
+<tr>
+<td>R2+1D</td>
+<td></td>
+<td>2018</td>
+</tr>
+</tbody></table>
+<span id="more"></span>
+
+<p>–</p>
+<hr>
+<p>General Lib:</p>
+<p>[ video model zoo (caffe2) ] <a target="_blank" rel="noopener" href="https://github.com/facebookresearch/VMZ">https://github.com/facebookresearch/VMZ</a></p>
+<p>Currently, this codebase supports the following models:</p>
+<ul>
+<li>R(2+1)D, MCx models [<a target="_blank" rel="noopener" href="https://research.fb.com/wp-content/uploads/2018/04/a-closer-look-at-spatiotemporal-convolutions-for-action-recognition.pdf">1]</a>.</li>
+<li>CSN models [<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1904.02811.pdf">2]</a>.</li>
+<li>R(2+1)D and CSN models pre-trained on large-scale (65 million!) weakly-supervised public Instagram videos (<strong>IG-65M</strong>) [<a target="_blank" rel="noopener" href="https://research.fb.com/wp-content/uploads/2019/05/Large-scale-weakly-supervised-pre-training-for-video-action-recognition.pdf">3]</a>.</li>
+</ul>
+<h3 id="C3D"><a href="#C3D" class="headerlink" title="C3D"></a>C3D</h3><p>[github caffe ]<a target="_blank" rel="noopener" href="https://github.com/facebook/C3D">https://github.com/facebook/C3D</a></p>
+<p>[ github tensorflow ]<a target="_blank" rel="noopener" href="https://github.com/hx173149/C3D-tensorflow">https://github.com/hx173149/C3D-tensorflow</a></p>
+<p>[github pytorch] <a target="_blank" rel="noopener" href="https://github.com/jfzhang95/pytorch-video-recognition">https://github.com/jfzhang95/pytorch-video-recognition</a></p>
+<p>3x3x3 kernel</p>
+<p><img src="/2019/08/26/CV_3D/CV_3D/v2-e51c8770654a1eb92f984e8cc2cf0cd8_hd.jpg" alt="img"></p>
+<p><img src="/2019/08/26/CV_3D/CV_3D/v2-5eda0b0b2967fba1d8b6f31f04ef9d49_hd.jpg" alt="img"></p>
+<h3 id="P3D"><a href="#P3D" class="headerlink" title="P3D"></a>P3D</h3><p>[ caffe ] <a target="_blank" rel="noopener" href="https://github.com/ZhaofanQiu/pseudo-3d-residual-networks">https://github.com/ZhaofanQiu/pseudo-3d-residual-networks</a></p>
+<p>[ pytorch ] <a target="_blank" rel="noopener" href="https://github.com/jfzhang95/pytorch-video-recognition">https://github.com/jfzhang95/pytorch-video-recognition</a></p>
+<p>Learning spatio-temporal representation with pseudo-3d residual networks. In ICCV, 2017.</p>
+<p><img src="/2019/08/26/CV_3D/CV_3D/1567834917557.png" alt="1567834917557"></p>
+<p><img src="/2019/08/26/CV_3D/CV_3D/1567834970578.png" alt="1567834970578"></p>
+<h3 id="T3D"><a href="#T3D" class="headerlink" title="T3D*"></a>T3D*</h3><p>Architecture: DenseNet + 3D</p>
+<p>[ github pytorch] <a target="_blank" rel="noopener" href="https://github.com/MohsenFayyaz89/T3D">https://github.com/MohsenFayyaz89/T3D</a></p>
+<p><img src="/2019/08/26/CV_3D/CV_3D/v2-b1d256a551911be85f445b16bdca5b5c_hd.jpg" alt="img"></p>
+<p><img src="/2019/08/26/CV_3D/CV_3D/v2-d24ee52c0f5ddc3bdf5614c52841692f_hd.jpg" alt="img"></p>
+<h3 id="Res3D-R3D"><a href="#Res3D-R3D" class="headerlink" title="Res3D&#x2F;R3D"></a>Res3D&#x2F;R3D</h3><p>architecture:    ResNet + 3DConv</p>
+<p>[github pytorch] <a target="_blank" rel="noopener" href="https://github.com/jfzhang95/pytorch-video-recognition">https://github.com/jfzhang95/pytorch-video-recognition</a></p>
+<p><img src="/2019/08/26/CV_3D/CV_3D/v2-e2dd2daf56bfc15d1b24fd0456258c3a_hd.jpg" alt="img"></p>
+<p><img src="/2019/08/26/CV_3D/CV_3D/v2-e0c6cb5e2b7022930f736d4d63a272a7_hd.jpg" alt="img"></p>
+<h4 id="R2-5D"><a href="#R2-5D" class="headerlink" title="R2.5D"></a>R2.5D</h4><p><img src="/2019/08/26/CV_3D/CV_3D/1567836996218.png" alt="1567836996218"></p>
+<h3 id="R2-1D"><a href="#R2-1D" class="headerlink" title="R2+1D"></a>R2+1D</h3><p>[ offical video model zoo (caffe2) ] <a target="_blank" rel="noopener" href="https://github.com/facebookresearch/VMZ">https://github.com/facebookresearch/VMZ</a></p>
+<p>[ github PyTorch] <a target="_blank" rel="noopener" href="https://github.com/leftthomas/R2Plus1D-C3D">https://github.com/leftthomas/R2Plus1D-C3D</a></p>
+<p>[ github pytorch] <a target="_blank" rel="noopener" href="https://github.com/jfzhang95/pytorch-video-recognition">https://github.com/jfzhang95/pytorch-video-recognition</a></p>
+<p><img src="/2019/08/26/CV_3D/CV_3D/closer_fig2-1567133357920.png" alt="Figure 2"></p>
+<h3 id="R3DCNN"><a href="#R3DCNN" class="headerlink" title="R3DCNN"></a>R3DCNN</h3><p>[NVIDIA]<a target="_blank" rel="noopener" href="https://research.nvidia.com/sites/default/files/publications/NVIDIA_R3DCNN_cvpr2016.pdf">https://research.nvidia.com/sites/default/files/publications/NVIDIA_R3DCNN_cvpr2016.pdf</a></p>
+<p>[tensorflow ]<a target="_blank" rel="noopener" href="https://github.com/breadbread1984/R3DCNN">https://github.com/breadbread1984/R3DCNN</a></p>
+<p>[tensorflow ] <a target="_blank" rel="noopener" href="https://github.com/kilsenp/R3DCNN-tensorflow">https://github.com/kilsenp/R3DCNN-tensorflow</a></p>
+<p>architecture: C3D + RNN</p>
+<h3 id="TSN"><a href="#TSN" class="headerlink" title="TSN"></a>TSN</h3><p>[github caffe ] <a target="_blank" rel="noopener" href="https://github.com/yjxiong/temporal-segment-networks">https://github.com/yjxiong/temporal-segment-networks</a></p>
+<p>[ caffe opensource ] <a target="_blank" rel="noopener" href="https://github.com/yjxiong/caffe">https://github.com/yjxiong/caffe</a></p>
+<p>[Paper] <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1608.00859.pdf">https://arxiv.org/pdf/1608.00859.pdf</a></p>
+<p><img src="/2019/08/26/CV_3D/CV_3D/1568038064174.png" alt="1568038064174"></p>
+<h3 id="I3D"><a href="#I3D" class="headerlink" title="I3D"></a>I3D</h3><p>Architecture: Inception base</p>
+<p>[git keras ] <a target="_blank" rel="noopener" href="https://github.com/OanaIgnat/i3d_keras">https://github.com/OanaIgnat/i3d_keras</a></p>
+<p>[Paper ] <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1705.07750.pdf">https://arxiv.org/pdf/1705.07750.pdf</a></p>
+<p><img src="/2019/08/26/CV_3D/CV_3D/1568037268584.png" alt="1568037268584"></p>
+<p><img src="/2019/08/26/CV_3D/CV_3D/1568037351528.png" alt="1568037351528"></p>
+<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>手工特征提取方法(iDT)</p>
+<p><img src="/2019/08/26/CV_3D/CV_3D/v2-055d0ce473ca714d3ef68ce8c363f76b_hd.jpg" alt="img"></p>
+<p>​    </p>
+<p>R2+1D的错误率比R3D的更小（约0.2个百分点）</p>
+<p><img src="/2019/08/26/CV_3D/CV_3D/1567131688063.png" alt="1567131688063"></p>
+<p>3D-Conv 的适用场景：视频识别，图像识别</p>
+<p>UCF100</p>
+<p>C3D-:  82.3% or 82-90%</p>
+<p>P3D:</p>
+<p>T3D: 90-93%</p>
+<p>R3D-: 85.8%</p>
+<p>R21D: </p>
+<p>model_blocktype &#x3D; {<br>    ‘r2plus1d’: ‘2.5d’,<br>    ‘r3d’: ‘3d’,<br>    ‘ir-csn’: ‘3d-sep’,<br>    ‘ip-csn’: ‘0.3d’<br>}</p>
+<h3 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h3><p>论文笔记——基于的视频行为识别&#x2F;动作识别算法笔记(三) <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/41659502">https://zhuanlan.zhihu.com/p/41659502</a></p>
+<p>[1]. D. Tran, L. Bourdev, R. Fergus, L. Torresani, and M. Paluri. Learning spatiotemporal features with 3d convolutional networks. In ICCV, 2015. 1, 2, 3, 7</p>
+<p>[2]. Z. Qiu, T. Yao, , and T. Mei. Learning spatio-temporal representation with pseudo-3d residual networks. In ICCV, 2017. 1, 2, 4, 7, 8</p>
+<p>[3]. A. Diba, M. Fayyaz, V. Sharma, AH. Karami, MM Arzani. Temporal 3D ConvNets: New Architecture and Transfer Learning for Video Classification. arXiv:1711.08200v1, 22 Nov 2017</p>
+<p>[4]. [Res3D&#x2F;R3D] T. Du, J. Ray, S. Zheng, SF. Chang, M. Paluri. ConvNet Architecture Search for Spatiotemporal Feature Learning. arXiv:1708.05038v1 16 Aug 2017</p>
+<p>[5]. T. Du, H. Wang, L. Torresani, J. Ray, Y.Lecun. A Closer Look at Spatiotemporal Convolutions for Action Recognition. arXiv:1711.11248v3 12 Apr 2018</p>
+<p>J. Carreira and A. Zisserman. Quo vadis, action recognition? a new model and the kinetics dataset. In CVPR, 2017. 1, 3, 5, 7, 8 </p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CNN/" rel="tag"># CNN</a>
+              <a href="/tags/CNN3D/" rel="tag"># CNN3D</a>
+              <a href="/tags/DNN/" rel="tag"># DNN</a>
+              <a href="/tags/Video-Representation/" rel="tag"># Video Representation</a>
+              <a href="/tags/Action-Recognition/" rel="tag"># Action Recognition</a>
+              <a href="/tags/Video-Classification/" rel="tag"># Video Classification</a>
+              <a href="/tags/Spatiotemporal/" rel="tag"># Spatiotemporal</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/08/23/Sub_Language/DL_Train/Tensorflow/Uff2TensorRT/" rel="prev" title="TensorFlow(pb) to TensorRT(uff)">
+      <i class="fa fa-chevron-left"></i> TensorFlow(pb) to TensorRT(uff)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/08/27/CV/CV_2DNN/" rel="next" title="Awesome - Image Classification">
+      Awesome - Image Classification <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#3D-CNN-Method"><span class="nav-number">1.</span> <span class="nav-text">3D-CNN Method</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#C3D"><span class="nav-number">1.1.</span> <span class="nav-text">C3D</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#P3D"><span class="nav-number">1.2.</span> <span class="nav-text">P3D</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#T3D"><span class="nav-number">1.3.</span> <span class="nav-text">T3D*</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Res3D-R3D"><span class="nav-number">1.4.</span> <span class="nav-text">Res3D&#x2F;R3D</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#R2-5D"><span class="nav-number">1.4.1.</span> <span class="nav-text">R2.5D</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#R2-1D"><span class="nav-number">1.5.</span> <span class="nav-text">R2+1D</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#R3DCNN"><span class="nav-number">1.6.</span> <span class="nav-text">R3DCNN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TSN"><span class="nav-number">1.7.</span> <span class="nav-text">TSN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#I3D"><span class="nav-number">1.8.</span> <span class="nav-text">I3D</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#END"><span class="nav-number">2.</span> <span class="nav-text">END</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#reference"><span class="nav-number">2.1.</span> <span class="nav-text">reference</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

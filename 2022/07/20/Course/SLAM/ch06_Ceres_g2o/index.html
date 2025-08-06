@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="1、状态估计问题1.1 批量状态估计与最大后验估计经典 SLAM 模型由一个运动方程和一个观测方程构成： $$x_k &#x3D; f (x_{k-1}, u_k) + w_k  \z_{k,j} &#x3D; h(y_i, x_k) + v_{k,j}$$ xk是相机的位姿变量，可以由Tk∈SE(3)表达。运动方程与输入的具体形式有关，在视觉SLAM中没有特殊性（和普通的机器人、车辆的情况一样）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SLAM 第六讲 非线性优化">
+<meta property="og:url" content="https://novav.github.io/2022/07/20/Course/SLAM/ch06_Ceres_g2o/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="1、状态估计问题1.1 批量状态估计与最大后验估计经典 SLAM 模型由一个运动方程和一个观测方程构成： $$x_k &#x3D; f (x_{k-1}, u_k) + w_k  \z_{k,j} &#x3D; h(y_i, x_k) + v_{k,j}$$ xk是相机的位姿变量，可以由Tk∈SE(3)表达。运动方程与输入的具体形式有关，在视觉SLAM中没有特殊性（和普通的机器人、车辆的情况一样）">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2022/07/20/Course/SLAM/ch06_Ceres_g2o/2022-08-01-20-20-00-image.png">
+<meta property="article:published_time" content="2022-07-20T12:09:00.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:39.808Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="SLAM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2022/07/20/Course/SLAM/ch06_Ceres_g2o/2022-08-01-20-20-00-image.png">
+
+<link rel="canonical" href="https://novav.github.io/2022/07/20/Course/SLAM/ch06_Ceres_g2o/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>SLAM 第六讲 非线性优化 | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/07/20/Course/SLAM/ch06_Ceres_g2o/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SLAM 第六讲 非线性优化
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-07-20 12:09:00" itemprop="dateCreated datePublished" datetime="2022-07-20T12:09:00+00:00">2022-07-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SLAM/" itemprop="url" rel="index"><span itemprop="name">SLAM</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="1、状态估计问题"><a href="#1、状态估计问题" class="headerlink" title="1、状态估计问题"></a>1、状态估计问题</h2><h3 id="1-1-批量状态估计与最大后验估计"><a href="#1-1-批量状态估计与最大后验估计" class="headerlink" title="1.1 批量状态估计与最大后验估计"></a>1.1 批量状态估计与最大后验估计</h3><p>经典 SLAM 模型由一个运动方程和一个观测方程构成：</p>
+<p>$$<br>x_k &#x3D; f (x_{k-1}, u_k) + w_k  \<br>z_{k,j} &#x3D; h(y_i, x_k) + v_{k,j}<br>$$</p>
+<p>xk是相机的位姿变量，可以由Tk∈SE(3)表达。运动方程与输入的具体形式有关，在视觉SLAM中没有特殊性（和普通的机器人、车辆的情况一样）。观测方程则由针孔模型给定。假设在xk处对路标yj进行了一次观测，对应到图像上的像素位置z<em>k,j</em>，那么，观测方程可以表示成</p>
+<p>$$<br>sz_{k,j} &#x3D; K(R_ky_j + t_k)<br>$$</p>
+<p>其中K为相机内参，<em>s</em>为像素点的距离，也是(R<em>k</em>y<em>j</em> +t<em>k</em>)的第三个分量。如果使用变换矩阵Tk描述位姿，那么路标点yj必须以齐次坐标来描述，计算完成后要转换为非齐次坐标。</p>
+<p>在运动和观测方程中，通常假设两个噪声项wk,<em>v</em>k,j满足零均值的高斯分布：</p>
+<p>$$<br>w_k \sim N(0, R_k), v_k \sim N(0, Q_{k,j})<br>$$</p>
+<p>其中N表示高斯分布，<strong>0</strong>表示零均值，Rk,Qk,j为协方差矩阵。在这些噪声的影响下，希望通过带噪声的数据z和u推断位姿x和地图y（以及它们的概率分布），这构成了一个状态估计问题。</p>
+<p>处理这个状态估计问题的方法分成两种。</p>
+<p>第一种：由于在SLAM过程中，这些数据是随时间逐渐过来的，所以在直观上，应该持有一个当前时刻的估计状态，然后用新的数据来更新它。这种方式称为增量（incremental）的方法，或者叫滤波器。在SLAM的早期研究，主要使用扩展卡尔曼滤波器（EKF）及其衍生方法来求解。</p>
+<p>第二种：是把数据累加起来一并处理，这种方式称为批量（batch）的方法。例如，可以把0到<em>k</em>时刻所有的输入和观测数据都放在一起，求在这样的输入和观测下，如何估计整个0到<em>k</em>时刻的轨迹与地图？</p>
+<p>增量方法仅关心当前时刻的状态估计xk，而对之前的状态则不多考虑；相对地，批量方法可以在更大的范围达到最优化，被认为优于传统的滤波器，成为当前视觉SLAM的主流方法。极端情况下，可以让机器人或无人机收集所有时刻的数据，再带回计算中心统一处理，这也正是SfM（Structure from Motion）的主流做法。这种极端情况不实时，不符合SLAM的运用场景。所以在SLAM中，实用的方法通常是一些折中的手段。比如，固定一些历史轨迹，仅对当前时刻附近的一些轨迹进行优化，这就是滑动窗口估计法。还有因子图增量平滑优化的方法，能够增量增加优化问题并进行动态调整，能够达到有滤波器的速度和图优化的精度。</p>
+<p>先讨论批量方法，考虑从1到<em>N</em>的所有时刻，并假设有<em>M</em>个路标点。定义所有时刻的机器人位姿和路标点坐标为：</p>
+<p>$$<br>x &#x3D; {x_1, …, x_N}, y&#x3D;{y_1, …, y_M}<br>$$</p>
+<p>用不带下标的u表示所有时刻的输入，z表示所有时刻的观测数据。对机器人状态的估计，从概率学的观点来看，就是已知输入数据u和观测数据z的条件下，求状态x*,*y的条件概率分布：</p>
+<p>$$<br>P(x,y|z,u)<br>$$</p>
+<p>特别地，当不知道控制输入，只有一张张图像时，即只考虑观测方程带来的数据时，相当于估计<em>P</em>(x*,*y|z)的条件概率分布，此问题也称为Structure from Motion（SfM），即如何从许多图像中重建三维空间结构。</p>
+<p>为了估计状态变量的条件分布，利用贝叶斯法则，有：</p>
+<p>$$<br>P(x,y|z,u) &#x3D; \frac{P(z,u|x,y) P(x,y)}{P(z,u)} \infty<br>\underbrace{P(z,u|x,y)}<em>{似然} \underbrace{P(x,y)}</em>{先验}<br>$$</p>
+<p>贝叶斯法则左侧称为后验概率，右侧的 <em>P</em>(z|x) 称为似然（Likehood），另一部分 <em>P</em>(x) 称为先验（Prior）。直接求后验分布是困难的，但是求一个状态最优估计，使得在该状态下后验概率最大化（Maximize a Posterior，MAP），则是可行的：</p>
+<p>$$<br>(x, y)^*_{Map} &#x3D; argmax P (x,y| z,u) &#x3D; argmax P(z,u|x,y)P(x,y)<br>$$</p>
+<p>贝叶斯法则的分母部分与待估计的状态x,y无关，因而可以忽略。贝叶斯法则说明，求解最大后验概率等价于最大化似然和先验的乘积。进一步，如果不知道机器人位姿或路标大概在什么地方，此时就没有了先验。那么，可以求解最大似然估计（Maximize Likelihood Estimation，MLE）：</p>
+<p>$$<br>(x,y)^*_{MLE} &#x3D; argmax P(z,u| x,y)<br>$$</p>
+<p>似然是指“在现在的位姿下，可能产生怎样的观测数据”。但是由于知道观测数据，所以最大似然估计可以理解成：“在什么样的状态下，最可能产生现在观测到的数据”。这就是最大似然估计的直观意义。</p>
+<h3 id="1-2-最小二乘的引出"><a href="#1-2-最小二乘的引出" class="headerlink" title="1.2 最小二乘的引出"></a>1.2 最小二乘的引出</h3><p>如何求最大似然估计呢？在高斯分布的假设下，最大似然能够有较简单的形式。回顾观测模型，对于某一次观测：</p>
+<p>$$<br>z_{k,j} &#x3D; h(y_i, x_k) + v(k,j)<br>$$</p>
+<p>假设噪声项vk ∼ N (0,Qk,j)，观测数据的条件概率为：</p>
+<p>$$<br>P(z_{j,k} | x_k, y_i) &#x3D; N( h(y_i, x_k), Q_{k,j})<br>$$</p>
+<p>它依然是一个高斯分布。考虑单次观测的最大似然估计，可以使用最小化负对数来求一个高斯分布的最大似然。</p>
+<p>高斯分布在负对数下有较好的数学形式。考虑任意高维高斯分布x ∼ N(µ,Σ)，它的概率密度函数展开形式为：</p>
+<p>$$<br>P(x) &#x3D; \frac{1}{\sqrt[]{ (2\pi)^N det(\Sigma)}}<br>\exp \big( -\frac{1}{2}(x-\mu)^T \Sigma^{-1}(x-\mu) \big)<br>$$</p>
+<p>对其取负对数，则变为：</p>
+<p>$$<br>-\ln(P(x))&#x3D;  \frac{1}{2} \ln \big({ (2\pi)^N det(\Sigma)} \big)</p>
+<ul>
+<li>-\frac{1}{2}(x-\mu)^T \Sigma^{-1}(x-\mu)<br>$$</li>
+</ul>
+<p>因为对数函数是单调递增的，所以对原函数求最大化相当于对负对数求最小化。在最小化上式的x时，第一项与x无关，可以略去。于是，只要最小化右侧的二次型项，就得到了对状态的最大似然估计。代入SLAM的观测模型，相当于在求：</p>
+<p>$$<br>b<br>$$</p>
+<p>该式等价于最小化噪声项（即误差）的一个二次型。这个二次型称为马哈拉诺比斯距离（Mahalanobis distance），又叫马氏距离。它也可以看成是由(Qk,j)-1 加权之后的欧氏距离（二范数），这里(Qk,j)-1也叫做信息矩阵，即高斯分布协方差矩阵之逆。</p>
+<p>现在考虑批量时刻的数据。通常假设各个时刻的输入和观测是相互独立的，这意味着各个输入之间是独立的，各个观测之间是独立的，并且输入和观测也是独立的。于是可以对联合分布进行因式分解：</p>
+<p>$$<br>b<br>$$</p>
+<p>这说明可以独立地处理各时刻的运动和观测。定义各次输入和观测数据与模型之间的误差：</p>
+<p>$$<br>e_{u,k} &#x3D; x_k - f(x_{k-1},u_k) \<br>e_{z,j,k} &#x3D; z_{k,j} - h(x_k, y_i)<br>$$</p>
+<p>那么，最小化所有时刻估计值与真实值之间的马氏距离，等价于求最大似然估计。负对数允许把乘积变成求和：</p>
+<p>$$<br>\min J(x,y) &#x3D; \sum_{k} e_{u,k}^T R_{k}^{-1} e_{u,k} +<br>\sum_{k}\sum_{j} e_{z,k,j}^T R_{k,j}^{-1} e_{z,k,j}<br>$$</p>
+<p>这样就得到了一个最小二乘问题（Least Square Problem），它的解等价于状态的最大似然估计。直观上看，由于噪声的存在，当我们把估计的轨迹与地图代入 SLAM 的运动、观测方程中时，它们并不会完美地成立。这时对状态的估计值进行微调，使得整体的误差下降一些。当然这个下降也有限度，它一般会到达一个极小值。这就是一个典型非线性优化的过程。</p>
+<p><strong>SLAM 中的最小二乘问题具有一些特定的结构：</strong></p>
+<p>• 整个问题的目标函数由许多个误差的（加权的）二次型组成。虽然总体的状态变量维数很高，但每个误差项都是简单的，仅与一两个状态变量有关。例如，运动误差只与$x_{k−1}, x_k$ 有关，观测误差只与$x_k,y_j$有关。这种关系会让整个问题有一种稀疏的矩阵形式，计算量大大减少。</p>
+<p>• 如果使用李代数表示增量，则该问题是无约束的最小二乘问题。但如果用旋转矩阵&#x2F;变换矩阵描述位姿，则会引入旋转矩阵自身的约束，即需在问题中加入$R^TR &#x3D; I$且$det(R) &#x3D;1$的条件。额外的约束会使优化变得更困难。这体现了李代数的优势。</p>
+<p>• 使用了二次型度量误差。误差的分布将影响此项在整个问题中的权重。例如，某次的观测非常准确，那么协方差矩阵就会“小”，而信息矩阵就会“大”，所以这个误差项会在整个问题中占有较高的权重。</p>
+<h3 id="1-3-例子：批量状态估计"><a href="#1-3-例子：批量状态估计" class="headerlink" title="1.3 例子：批量状态估计"></a>1.3 例子：批量状态估计</h3><p>考虑一个离散时间系统：</p>
+<p>$$<br>x_k &#x3D; x_{k-1} + u_k + w_k,  \quad  w_k \sim N(0, Q_k) \<br>z_k &#x3D; x_{k} + n_k,      \qquad\qquad     n_k \sim N(0, R_k)<br>$$</p>
+<p>这可以表达一辆沿 <em>x</em> 轴前进或后退的汽车。第一个公式为运动方程，uk 为输入，wk 为噪声；第二个公式为观测方程，zk 为对汽车位置的测量。取时间 k &#x3D; 1,…,3，现希望根据已有的 v,y 进行状态估计。设初始状态 <em>x</em>0 已知，来推导批量（batch）状态的最大似然估计。</p>
+<p>首先，令批量状态变量为$x &#x3D; [x_0,x_1,x_2,x_3]^T$，令批量观测为$z &#x3D; [z_1,z_2, z_3]^T$，定义$u &#x3D; [u_1,u_2,u_3]^T$。最大似然估计为：</p>
+<p>$$<br>x^*_{map} &#x3D; \argmax P(x|u,z) &#x3D; \argmax P(u,z|x)\<br>\quad<br>&#x3D; \sum^{3}<em>{k&#x3D;1} (u_k| x</em>{k-1, x_k})<br>\sum^{3}_{k&#x3D;1} (z_k| )<br>$$</p>
+<p>运动方程：</p>
+<p>$$<br>P(u_k| x_{k-1}, x_k) &#x3D; N (x_k - x_{k-1}, Q_k)<br>$$</p>
+<p>观测方程：</p>
+<p>$$<br>P(z_k, x_k) &#x3D; N(x_k, R_k)<br>$$</p>
+<p>构建误差变量：</p>
+<p>$$<br>e_{u,k} &#x3D; x_k - x_{k-1} - u_k,  \quad<br>e_{z,k} &#x3D; z_k - x_k<br>$$</p>
+<p>于是最小二乘的目标函数为</p>
+<p>$$<br>\min \sum_{k&#x3D;1}^3 e_{u,k}^T Q_k^{-1} e_{u,k} +<br>\sum_{k&#x3D;1}^3 e_{z,k}^T R_{k}^{-1} e_{z,k}<br>$$</p>
+<p>这个系统是线性系统，将它写成向量形式。定义向量$y &#x3D; [u,z]^T$，那么可以写出矩阵H，使得：</p>
+<p>$$<br>y - Hx &#x3D; e \sim N(0, \Sigma)<br>$$</p>
+<p>那么：</p>
+<p>$$<br>H &#x3D; []</p>
+<p>\<br>\Sigma &#x3D; diag(Q_1, Q_2, Q_3, R_1, R_2, R_3)<br>$$</p>
+<p>整个问题可以写成：</p>
+<p>$$<br>x_{map}^* &#x3D; \argmax e^T \Sigma^{-1}e.<br>$$</p>
+<p>这个问题有唯一的解：</p>
+<p>$$<br>x_{map}^* &#x3D; (H^T \Sigma^{-1} H)^{-1} H^T \Sigma^{-1}y<br>$$</p>
+<h2 id="2、非线性最小二乘"><a href="#2、非线性最小二乘" class="headerlink" title="2、非线性最小二乘"></a>2、非线性最小二乘</h2><p>考虑一个最小二乘问题：</p>
+<p>$$<br>\min_{x} F(x) &#x3D; \frac{1}{2} ||f(x)||^2_2<br>$$</p>
+<p>其中，自变量$x\in R_n$，f是任意标量非线性函数f(x):Rn-&gt;R。注意这里的系数1&#x2F;2是无关紧要的。如何求解这样一个优化问题：如果f是个数学形式上很简单的函数，那么该问题可以用解析形式来求。令目标函数的导数为零，然后求解x的最优值，就求二元函数的极值一样：</p>
+<p>$$<br>\frac{dF}{dx} &#x3D; 0<br>$$</p>
+<p>解此方程，就得到了导数为零处的极值，可能是极大，极小或鞍点处的值。只要逐个比较函数值大小即可。如果 <em>f</em> 为简单的线性函数，那么这个问题就是简单的线性最小二乘问题，但是有些导函数形式复杂，使得该方程不容易求解。求解这个方程需要知道关于目标函数的全局性质，而通常这是不大可能的。对于不方便直接求解的最小二乘问题，可以用迭代的方式，从一个初始值出发，不断地更新当前的优化变量，使目标函数下降。具体步骤可列写如下：</p>
+<ol>
+<li>给定某个初始值x0。</li>
+<li>对于第 <em>k</em> 次迭代，寻找一个增量 ∆x<em>k</em>，使得</li>
+</ol>
+<p>$$<br>|| f(x_k + \Delta x_k) ||^2_2<br>$$</p>
+<p>达到极小值。</p>
+<ol start="3">
+<li><p>若 ∆xk 足够小，则停止。</p>
+</li>
+<li><p>否则，令x(k+1) &#x3D; xk + ∆xk，返回第 2 步。</p>
+</li>
+</ol>
+<p>这让求解导函数为零的问题变成了一个不断寻找下降增量 ∆xk 的问题。由于可以对 f 进行线性化，增量的计算将简单很多。当函数下降直到增量非常小的时候，就认为算法收敛，目标函数达到了一个极小值。在这个过程中，问题在于如何找到每次迭代点的增量，而这是一个局部的问题，只需要关心 <em>f</em> 在迭代值处的局部性质而非全局性质。这类方法在最优化、机器学习等领域应用非常广泛。</p>
+<p>下面是如何寻找这个增量 ∆xk的方法。</p>
+<h3 id="2-1-一阶和二阶梯度法"><a href="#2-1-一阶和二阶梯度法" class="headerlink" title="2.1 一阶和二阶梯度法"></a>2.1 一阶和二阶梯度法</h3><p>考虑第 k 次迭代，假设在xk处，想要找到增量 ∆xk，最直观的方式是将目标函数在xk附近进行泰勒展开：</p>
+<p>$$<br>F<br>$$</p>
+<p>其中J(xk) 是 F(x)关于x的一阶导数（也叫梯度、雅可比矩阵﹝Jacobian﹞），H 则是二阶导数（海塞﹝Hessian﹞矩阵），它们都在xk 处取值。可以选择保留泰勒展开的一阶或二阶项，那么对应的求解方法则称为一阶梯度或二阶梯度法。如果保留一阶梯度，取增量为反向的梯度，即可保证函数下降：∆x∗&#x3D; −J(xk)</p>
+<p>这只是个方向，通常还要再指定一个步长 λ。步长可以根据一定的条件来计算，在机器学习当中也有一些经验性质的方法。这种方法被称为最速下降法。它的直观意义是：只要沿着反向梯度方向前进，在一阶（线性）的近似下，目标函数必定会下降。</p>
+<p>以上都是在第k次迭代时进行的，并不涉及其他的迭代信息。为了简化符号，省略下标k，并认为这些对任意一次迭代都成立。</p>
+<p>选择保留二阶梯度信息，此时增量方程为：</p>
+<p>$$<br>$$</p>
+<p>右侧只含 ∆x的零次、一次和二次项。求右侧等式关于 ∆x的导数并令它为零，得到：</p>
+<p>$$</p>
+<p>$$<br>求解这个线性方程就得到了增量。此类方法又称为牛顿法。</p>
+<p>一阶和二阶梯度法都十分直观，只要把函数在迭代点附近进行泰勒展开，并针对更新量做最小化即可。用一个一次或二次的函数近似原函数，然后用近似函数的最小值来估计原函数的极小值。只要原目标函数局部看起来像一次或二次函数，这类算法就是成立的。不过这两种方法也存在问题：最速下降法过于贪心，容易走出锯齿路线，反而增加了迭代次数。而牛顿法则需要计算目标函数的H矩阵，这在问题规模较大时非常困难，通常倾向于避免H的计算。所以引出了下面的一些方法。</p>
+<h3 id="2-2-高斯牛顿法"><a href="#2-2-高斯牛顿法" class="headerlink" title="2.2 高斯牛顿法"></a>2.2 高斯牛顿法</h3><p>牛顿法是对目标函数 F(x) 进行一阶泰勒展开，而高斯牛顿法是对f(x)进行一阶泰勒展开：f (x + ∆x) ≈ f(x) + J(x)T∆x.</p>
+<p>注：把 J(x) 写成列向量，那么它可以和 ∆x 进行内积，得到一个标量。</p>
+<p>这里J(x)T为f(x)关于x的导数，为n×1的列向量。目标是寻找增量∆x，使得∥f(x+∆x)∥2达到最小。为了求 ∆x，需要解一个线性的最小二乘问题：</p>
+<p>$$</p>
+<p>F<br>$$</p>
+<p>根据极值条件，将上述目标函数对 ∆x求导，并令导数为零。可以得到如下方程组：</p>
+<p>$$<br>F<br>$$</p>
+<p>这个方程是关于变量∆x的线性方程组，称它为增量方程，也可以称为高斯牛顿方程（GaussNewton equation）或者正规方程（Normal equation）。把左边的系数定义为H，右边定义为g，那么上式变为：H∆x &#x3D; g.</p>
+<p>对比牛顿法可见，高斯牛顿法用JJT作为牛顿法中二阶Hessian矩阵的近似，从而省略了计算H的过程。求解增量方程是整个优化问题的核心所在。高斯牛顿法的算法步骤可以写成：</p>
+<ol>
+<li><p>给定初始值x0。</p>
+</li>
+<li><p>对于第 k 次迭代，求出当前的雅可比矩阵J(xk) 和误差f(xk)。</p>
+</li>
+<li><p>求解增量方程：H∆xk &#x3D; g。</p>
+</li>
+<li><p>若 ∆xk 足够小，则停止。否则，令x(k+1) &#x3D; xk+ ∆xk，返回第 2 步。</p>
+</li>
+</ol>
+<p>从算法步骤中，主要还是增量的求解。只要能够顺利解出增量，就能保证目标函数能够正确地下降。</p>
+<p>为了求解增量方程，需要求解H−1，这需要H矩阵可逆，但实际数据中计算得到的JJT只有半正定性。也就是说，在使用高斯牛顿法时，可能出现JJT为奇异矩阵或者病态（ill-condition）的情况，此时增量的稳定性较差，导致算法不收敛。直观地说，原函数在这个点的局部近似不像一个二次函数。假设H非奇异也非病态，如果求出来的步长∆x太大，也会导致采用的局部近似式：f (x + ∆x) ≈ f(x) + J(x)T∆x.不够准确，这样一来无法保证它的迭代收敛。</p>
+<p>在非线性优化领域，相当多的算法都可以归结为高斯牛顿法的变种。这些算法都借助了高斯牛顿法的思想并且通过改进修正其缺点。例如一些线搜索方法 (line search method) 加入了一个步长α，在确定了∆x后进一步找到 α 使得 ∥f(x + α∆x)∥2 达到最小，而不是简单地令 α &#x3D; 1。</p>
+<p>列文伯格—马夸尔特方法在一定程度上修正了这些问题，比高斯牛顿法更为鲁棒，但收敛速度会比高斯牛顿法更慢，被称为阻尼牛顿法（Damped Newton Method）。</p>
+<h3 id="2-3-列文伯格—马夸尔特方法"><a href="#2-3-列文伯格—马夸尔特方法" class="headerlink" title="2.3 列文伯格—马夸尔特方法"></a>2.3 列文伯格—马夸尔特方法</h3><p>高斯牛顿法中采用的近似二阶泰勒展开只能在展开点附近有较好的近似效果，所以应该给∆x添加一个范围，称为信赖区域（Trust Region）。这个范围定义了在什么情况下二阶近似是有效的，这类方法也称为信赖区域方法（Trust Region Method）。在信赖区域里边，近似是有效的；出了这个区域，近似可能会出问题。</p>
+<p>那么如何确定这个信赖区域的范围呢？一个比较好的方法是根据近似模型跟实际函数之间的差异来确定：如果差异小，说明近似效果好，扩大近似的范围；反之，如果差异大，就缩小近似的范围。我们定义一个指标 <em>ρ</em> 来刻画近似的好坏程度：</p>
+<p>$$<br>F<br>$$</p>
+<p><em>ρ</em> 的分子是实际函数下降的值，分母是近似模型下降的值。如果 <em>ρ</em> 接近于 1，则近似是好的。如果 <em>ρ</em> 太小，说明实际减小的值远少于近似减小的值，则认为近似比较差，需要缩小近似范围。反之，如果 <em>ρ</em> 比较大，则说明实际下降的比预计的更大，可以放大近似范围。</p>
+<p>于是构建一个改良版的非线性优化框架，该框架会比高斯牛顿法有更好的效果：</p>
+<ol>
+<li>给定初始值 x0，以及初始优化半径 µ。</li>
+<li>对于第 k 次迭代，在高斯牛顿法的基础上加上信赖区域，求解：</li>
+</ol>
+<p>$$<br>F<br>$$</p>
+<ol>
+<li>其中 µ 是信赖区域的半径，D 为系数矩阵。</li>
+<li>计算 ρ。</li>
+<li>若 ρ &gt; 3&#x2F;4，则设置 µ &#x3D; 2µ。</li>
+<li>若 ρ &lt; 1&#x2F;4，则设置 µ &#x3D; 0.5µ。</li>
+<li>如果 ρ 大于某阈值，则认为近似可行。令 xk+1 &#x3D; xk + ∆xk。</li>
+<li>判断算法是否收敛。如不收敛则返回第 2 步，否则结束。</li>
+</ol>
+<p>这里近似范围扩大的倍数和阈值都是经验值，可以替换成别的数值。</p>
+<p>$$<br>F<br>$$</p>
+<p>这个式子中，把增量限定于一个半径为 µ 的球中，认为只在这个球内才是有效的。带上D之后，这个球可以看成一个椭球。在列文伯格提出的优化方法中，把D取成单位阵I，相当于直接把 ∆xk约束在一个球中。随后，马夸尔特提出将D取成非负数对角阵——实际中通常用JTJ 的对角元素平方根，使得在梯度小的维度上约束范围更大一些。</p>
+<p>在列文伯格—马夸尔特优化中，需要求解这个子问题来获得梯度。</p>
+<p>这个子问题是带不等式约束的优化问题，用拉格朗日乘子把约束项放到目标函数中，构成拉格朗日函数：</p>
+<p>$$<br>F<br>$$</p>
+<p>这里 <em>λ</em> 为拉格朗日乘子。类似于高斯牛顿法中的做法，令该拉格朗日函数关于∆x的导数为零，它的核心仍是计算增量的线性方程：</p>
+<p>$$<br>F<br>$$</p>
+<p>可以看到，增量方程相比于高斯牛顿法，多了一项 <em>λ</em>D<em>T</em>D。考虑它的简化形式，即D &#x3D; I，那么相当于求解：</p>
+<p>(H + <em>λ</em>I)∆x<em>k</em> &#x3D; g*.*</p>
+<p>当参数λ比较小时，H占主要地位，这说明二次近似模型在该范围内是比较好的，列文伯格—马夸尔特方法更接近于高斯牛顿法。另一方面，当λ比较大时，λI占据主要地位，列文伯格—马夸尔特方法更接近于一阶梯度下降法（即最速下降），这说明附近的二次近似不够好。列文伯格—马夸尔特方法的求解方式，可在一定程度上避免线性方程组的系数矩阵的非奇异和病态问题，提供更稳定、更准确的增量 ∆x。</p>
+<p>在实际中，还存在许多其他的方式来求解增量，例如</p>
+<p>[31] J. Nocedal and S. Wright, Numerical Optimization. Springer Science &amp; Business Media, 2006.</p>
+<p>实际问题中，通常选择高斯牛顿法或列文伯格—马夸尔特方法其中之一作为梯度下降策略。当问题性质较好时，用高斯牛顿。如果问题接近病态，则用列文伯格—马夸尔特方法。</p>
+<table>
+<thead>
+<tr>
+<th>梯度下降法</th>
+<th>场景</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>牛顿法</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>高斯-牛顿</td>
+<td>问题质量较好</td>
+<td></td>
+</tr>
+<tr>
+<td>列文伯格-马夸尔特方法</td>
+<td>问题接近病态？</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>专门介绍数值优化的书籍</p>
+<p>[31] J. Nocedal and S. Wright, Numerical Optimization. Springer Science &amp; Business Media, 2006.</p>
+<p>以高斯牛顿法和列文伯格—马夸尔特方法为代表的优化方法，在很多开源的优化库中都已经实现并提供给用户。最优化是处理许多实际问题的基本数学工具，不光在视觉 SLAM 中起着核心作用，在类似于深度学习等其他领域，它也是求解问题的核心方法之一（深度学习数据量很大，以一阶方法为主）。</p>
+<p>无论是高斯牛顿法还是列文伯格—马夸尔特方法，在做最优化计算时，都需要提供变量的初始值。这个初始值不能随意设置。实际上非线性优化的所有迭代求解方案，都需要用户来提供一个良好的初始值。由于目标函数太复杂，导致在求解空间上的变化难以预测，对问题提供不同的初始值往往会导致不同的计算结果。这种情况是非线性优化的通病：大多数算法都容易陷入局部极小值。因此，无论是哪类科学问题，提供初始值都应该有科学依据，例如视觉 SLAM 问题中，会用 ICP、PnP 之类的算法提供优化初始值（视觉前端）。一个良好的初始值对最优化问题非常重要。</p>
+<p>如何求解线性增量方程组呢？在视觉SLAM算法里，经常遇到∆x的维度很大，如果是要做大规模的视觉三维重建，就会经常发现这个维度可以轻易达到几十万甚至更高的级别。要对那么大个矩阵进行求逆是大多数处理器无法负担的，因此存在着许多针对线性方程组的数值求解方法。在不同的领域有不同的求解方式，但几乎没有一种方式是直接求系数矩阵的逆，会采用矩阵分解的方法来解线性方程，例如 QR、Cholesky 等分解方法。(工程数学)</p>
+<p>视觉SLAM里这个矩阵往往有特定的稀疏形式，这为实时求解优化问题提供了可能性。利用稀疏形式的消元、分解，最后再进行求解增量，会让求解的效率大大提高。在很多开源的优化库上，比如GTSAM，维度为一万多的变量在一般的PC上就可以在几秒甚至更短的时间内被求解出来，其原因也是用了更加高级的数学工具（因子图增量平滑优化）。视觉SLAM算法现在能够实时地实现，多亏了系数矩阵是稀疏的，如果矩阵是稠密的，优化这类视觉SLAM算法不会被学界广泛采纳了。</p>
+<h2 id="3-实践：曲线拟合问题"><a href="#3-实践：曲线拟合问题" class="headerlink" title="3 实践：曲线拟合问题"></a>3 实践：曲线拟合问题</h2><h3 id="3-1手写高斯牛顿法"><a href="#3-1手写高斯牛顿法" class="headerlink" title="3.1手写高斯牛顿法"></a>3.1手写高斯牛顿法</h3><p>考虑一条满足以下方程的曲线：</p>
+<p>$$<br>y &#x3D; \exp (ax^2 + bx + c) + w<br>$$</p>
+<p>其中 <em>a,b,c</em> 为曲线的参数，<em>w</em> 为高斯噪声，满足 <em>w</em> ∼ (0*,σ*2)。假设有 <em>N</em> 个关于 <em>x,y</em> 的观测数据点，根据这些数据点求出曲线的参数。那么，可以求解下面的最小二乘问题来估计曲线参数：</p>
+<p>$$<br>\min_{a,b,c} 1&#x2F;2 \sum_{i&#x3D;1}^N<br>|| y_i - \exp( ax_i^2 + bx_i +c ) || ^2<br>$$</p>
+<p>在这个问题中，待估计的变量是 <em>a,b,c</em>，而不是 <em>x</em>。程序里先根据模型生成 <em>x,y</em> 的真值，然后在真值中添加高斯分布的噪声。随后，使用高斯牛顿法来从带噪声的数据（x，y）拟合参数模型。定义误差为:</p>
+<p>$$<br>e_i &#x3D; y_i - \exp(ax_i^2 + bx_i + c)<br>$$</p>
+<p>那么可以求出每个误差项对于状态变量的导数：</p>
+<p>$$<br>\frac{\partial e_i} {\partial a} &#x3D; -x_i^2 \exp(ax_i^2 + bx_i + c)\<br>\frac{\partial e_i} {\partial b} &#x3D; -x_i \exp(ax_i^2 + bx_i + c)\<br>\frac{\partial e_i} {\partial c} &#x3D; - \exp(ax_i^2 + bx_i + c) \<br>$$</p>
+<p>于是</p>
+<p>$$<br>J_i &#x3D; [\frac{\partial e_i}{\partial a}, \frac{\partial e_i}{\partial b}, \frac{\partial e_i}{\partial c}]<br>$$</p>
+<p>高斯牛顿法的增量方程为：</p>
+<p>$$<br>\big( \sum_{i&#x3D;1}{100} J_i(\sigma^2)^{-1} J_i^T \big)<br>\Delta x_k &#x3D;<br>\sum_{i&#x3D;1}^{100} -  J_i(\sigma^2)^-1 e_i</p>
+<p>$$</p>
+<p>也可以选择把所有的J<em>i</em> 排成一列，将这个方程写成矩阵形式，它的含义与求和形式是一致的。下面的代码演示了这个过程是如何进行的：&gt; slambook2&#x2F;ch6&#x2F;gaussNewton.cpp</p>
+<p>在这个例子中演示了如何对一个简单的拟合问题进行迭代优化。该程序输出每一步迭代的目标函数值和更新量，如下：</p>
+<p>整个问题的目标函数在迭代 9 次之后趋近收敛，更新量趋近于零。最终估计的值与真值接近，函数图像如下：</p>
+<p>蓝色点为100个数据点，黑色线为理论模型，红色线为拟合的模型。</p>
+<h3 id="3-2使用-Ceres-进行曲线拟合"><a href="#3-2使用-Ceres-进行曲线拟合" class="headerlink" title="3.2使用 Ceres 进行曲线拟合"></a>3.2使用 Ceres 进行曲线拟合</h3><p>Google Ceres 是一个广泛使用的最小二乘问题求解库。在 Ceres 中，只需按照一定步骤定义待解的优化问题，然后交给求解器计算即可。Ceres 求解的最小二乘问题最一般的形式如下（带边界的核函数最小二乘）：</p>
+<p>$$<br>\min_{x} 1&#x2F;2 \sum_{j} p_i (|| f_i (x_{i_1}, …, x_{i_n}) ||^2)<br>\<br>s.t. \qquad l_j \leq x_j \leq u_j.</p>
+<p>$$</p>
+<p>在这个问题中，<em>x</em>1*,<em>··· <em>,xn</em> 为优化变量，又称参数块（Parameter blocks），<em>fi</em> 称为代价函数（Cost function），也称为残差块（Residual blocks），在 SLAM 中也可理解为误差项。<em>lj</em> 和 <em>uj</em> 为第 <em>j</em> 个优化变量的上限和下限。在最简单的情况下，取 <em>lj</em> &#x3D; −∞</em>,uj* &#x3D; ∞（不限制优化变量的边界）。此时，目标函数由许多平方项经过一个<strong>核函数</strong> ρ(·) 之后求和组成。取 <em>ρ</em> 为恒等函数，那么目标函数即为许多项的平方和，就得到了无约束的最小二乘问题。为了让 Ceres 求解这个问题，需要做以下几件事：</p>
+<ol>
+<li>定义每个参数块。参数块通常为向量，但是在SLAM里也可以定义成四元数、李代数这种特殊的结构。如果是向量，那么需要为每个参数块分配一个 double 数组，来存储变量的值。</li>
+<li>然后定义残差块的计算方式。残差块通常关联若干个参数块，对它们进行一些自定义的计算，然后返回残差值。Ceres 对它们求平方和之后，作为目标函数的值。</li>
+<li>残差块往往也需要定义雅可比的计算方式。在 Ceres 中，可以使用自动求导功能，也可以手动指定雅可比的计算过程。如果要使用自动求导，那么残差块需要按照特定的写法来书写：残差的计算过程是一个带模板的括号运算符。</li>
+<li>最后，把所有的参数块和残差块加入 Ceres 定义的 Problem 对象中，调用 Solve 函数求解即可。求解之前，可以传入一些配置信息，例如迭代次数、终止条件等，也可以使用默认的配置。</li>
+</ol>
+<h4 id="安装-Ceres"><a href="#安装-Ceres" class="headerlink" title="安装 Ceres"></a>安装 Ceres</h4><p>Ceres 的 github 地址为：<a target="_blank" rel="noopener" href="https://github.com/ceres-solver/ceres-solver">ceres-solver&#x2F;ceres-solver</a>，</p>
+<p>安装依赖项</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt−get install liblapack−dev libsuitesparse−dev libcxsparse3 \</span><br><span class="line">         libgflags−dev libgoogle−glog−dev libgtest−dev  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">sudo</span> apt install liblapack-dev libsuitesparse-dev libcxsparse3.1.4 \</span><br><span class="line">        libgflags-dev libgoogle-glog-dev libgtest-dev </span><br></pre></td></tr></table></figure>
+
+<p>然后进入 Ceres 库目录下，使用 cmake 编译并安装。安装完成后，在&#x2F;usr&#x2F;local&#x2F;include&#x2F;ceres 下找到 Ceres 的头文件，并在&#x2F;usr&#x2F;local&#x2F;lib&#x2F;下找到名为 libceres.a 的库文件。有了这些文件，就可以使用 Ceres 进行优化计算了。</p>
+<h4 id="使用-Ceres-拟合曲线"><a href="#使用-Ceres-拟合曲线" class="headerlink" title="使用 Ceres 拟合曲线"></a>使用 Ceres 拟合曲线</h4><p>下面的代码演示了如何使用 Ceres 求解同样的问题：slambook&#x2F;ch6&#x2F;ceresCurveFitting.cpp</p>
+<p>利用 OpenCV 的噪声生成器生成了 100 个带高斯噪声的数据，随后利用 Ceres 进行拟合。这里Ceres用法有如下几项：</p>
+<ol>
+<li>定义残差块的类。方法是书写一个类（或结构体），并在类中定义带模板参数的 () 运算符，这样该类就成为了一个拟函数（Functor），或者叫仿函数。这种定义方式使得 Ceres 可以像调用函数一样，对该类的某个对象（比如 a）调用 a<double>() 方法。Ceres 会把雅可比矩阵作为类型参数传入此函数，从而实现自动求导的功能。</double></li>
+<li>程序中的 double abc[3] 即为参数块，而对于残差块，对每一个数据构造 CURVE_FIT-TING_COST 对象，然后调用 AddResidualBlock 将误差项添加到目标函数中。由于优化需要梯度，有若干种选择：（1）使用 Ceres 的自动求导（Auto Diff）；（2）使用数值求导（Numeric Diff）；（3）自行推导解析的导数形式，提供给 Ceres。</li>
+<li>自动求导需要指定误差项和优化变量的维度。这里的误差是标量，维度为 1；优化的是 <em>a,b,c</em> 三个量，维度为 3。于是，在自动求导类 AutoDiffCostFunction 的模板参数中设定变量维度为 1、3。</li>
+<li>设定好问题后，调用 Solve 函数进行求解。可以在options里配置优化选项。例如，可以选择使用 Line Search 还是 Trust Region、迭代次数、步长，等等。可以查看 Options 的定义，看看有哪些优化方法可选，一般默认的配置已经可用于很广泛的问题了。</li>
+</ol>
+<p>最终的优化值和手写的基本相同，但运行速度上 Ceres 要相对慢一些。</p>
+<p>Ceres的优点是提供了自动求导工具，不必去计算很麻烦的雅可比矩阵。Ceres的自动求导是通过模板元实现的，在编译时期就可以完成自动求导工作，不过仍然是数值导数。此外，Ceres的优化过程配置也很丰富，使其适合很广泛的最小二乘优化问题，包括 SLAM 之外的各种问题。</p>
+<p>注：自动求导也是用数值导数实现的。</p>
+<ul>
+<li><input checked disabled type="checkbox"> 代码实现</li>
+</ul>
+<h3 id="3-3使用-g2o-进行曲线拟合"><a href="#3-3使用-g2o-进行曲线拟合" class="headerlink" title="3.3使用 g2o 进行曲线拟合"></a>3.3使用 g2o 进行曲线拟合</h3><p>g2o（General Graphic Optimization，G2O）是在SLAM领域广为使用的优化库。它是一个基于<strong>图优化</strong>的库。图优化是一种将非线性优化与图论结合起来的理论。</p>
+<p><strong>图优化理论简介</strong></p>
+<p>前面介绍了非线性最小二乘的求解方式。它们是由很多个误差项之和组成的。然而，仅有一组优化变量和许多个误差项，并不清楚它们之间的关联。比如，某个优化变量xj存在于多少个误差项中呢？能保证对它的优化是有意义的吗？进一步，希望能够直观地看到该优化问题长什么样。于是，就引出了图优化。</p>
+<p>图优化，是把优化问题表现成图（Graph）的一种方式。这里的图是图论意义上的图。一个图由若干个顶点（Vertex），以及连接着这些顶点的边（Edge）组成。进而，用顶点表示优化变量，用边表示误差项。于是，对任意一个上述形式的非线性最小二乘问题，可以构建与之对应的一个图。可以简单地称它为图，也可以用概率图里的定义，称之为贝叶斯图或因子图。</p>
+<p>如下图：</p>
+<p><img src="/2022/07/20/Course/SLAM/ch06_Ceres_g2o/2022-08-01-20-20-00-image.png"></p>
+<p>用三角形表示相机位姿节点，用圆形表示路标点，它们构成了图优化的顶点；同时，实线表示相机的运动模型，虚线表示观测模型，它们构成了图优化的边。最基本的图优化是用图模型来表达一个非线性最小二乘的优化问题，可以利用图模型的某些性质做更好的优化。</p>
+<p>g2o 是一个通用的图优化库，可以在g2o里求解任何能够表示为图优化的最小二乘问题，包括<strong>曲线拟合问题</strong>。</p>
+<h4 id="g2o-的编译与安装"><a href="#g2o-的编译与安装" class="headerlink" title="g2o 的编译与安装"></a>g2o 的编译与安装</h4><p>安装依赖：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt−get install qt5−qmake qt5−default libqglviewer−dev−qt5 libsuitesparse−dev libcxsparse3 libcholmod3</span><br></pre></td></tr></table></figure>
+
+<p>从GitHub下载并cmake安装：<a target="_blank" rel="noopener" href="https://github.com/RainerKuemmerle/g2o">https://github.com/RainerKuemmerle/g2o</a></p>
+<p>安装完成后， g2o 的头文件将位于&#x2F;usr&#x2F;local&#x2F;g2o 下，库文件位于&#x2F;usr&#x2F;local&#x2F;lib&#x2F;下</p>
+<p><strong>使用 g2o 拟合曲线</strong></p>
+<p>首先要将曲线拟合问题抽象成图优化。这个过程中，节点为优化变量， 边为误差项。</p>
+<p>在曲线拟合问题中，整个问题只有一个顶点：曲线模型的参数 a, b, c；而各个带噪声的数据点， 构成了一个个误差项，也就是图优化的边。这里的边是一元边（Unary Edge），即只连接一个顶点。事实上，图优化中一条边可以连接一个、两个或多个顶点，这主要反映每个误差与多少个优化变量有关。</p>
+<p>主要步骤：</p>
+<ol>
+<li>定义顶点和边的类型。</li>
+<li>构建图。</li>
+<li>选择优化算法。</li>
+<li>调用g2o进行优化，返回结果。</li>
+</ol>
+<p>程序：slambook&#x2F;ch6&#x2F;g2oCurveFitting.cpp</p>
+<p>在这个程序中，从g2o派生出了用于曲线拟合的图优化顶点和边：CurveFittingVertex 和 CurveFittingEdge，这实质上扩展了g2o的使用方式。这两个类分别派生于BaseVertex和BaseUnaryEdge类。在派生类中，重写了重要的虚函数：</p>
+<ol>
+<li>顶点的更新函数：oplusImpl。优化过程最重要的是增量∆x的计算，而该函数处理的是 xk+1 &#x3D; xk + ∆x 的过程。在曲线拟合过程中，由于优化变量（曲线参数）本身位于向量空间中，这个更新计算就是简单的加法。但是当优化变量不在向量空间中时，比如x是相机位姿，它本身不一定有加法运算。这时就需要重新定义增量如何加到现有的估计上的行为了。</li>
+<li>顶点的重置函数：setToOriginImpl。即把估计值置零即可。</li>
+<li>边的误差计算函数：computeError。该函数需要取出边所连接的顶点的当前估计值，根据曲线模型，与它的观测值进行比较。这和最小二乘问题中的误差模型是一致的。</li>
+<li>边的雅可比计算函数：linearizeOplus。这个函数里计算了每条边相对于顶点的雅可比。</li>
+<li>存盘和读盘函数：read、write。</li>
+</ol>
+<p>定义了顶点和边之后，在main函数里声明了一个图模型，然后按照生成的噪声数据，往图模型中添加顶点和边，最后调用优化函数进行优化。g2o会给出优化的结果。</p>
+<p>    第一版书代码Debug：</p>
+<p><a target="_blank" rel="noopener" href="https://www.codeleading.com/article/14861493981/">《视觉SLAM十四讲》 g2o实践代码报错解决方法（第六讲为例） - 代码先锋网</a></p>
+<h2 id="4-小结"><a href="#4-小结" class="headerlink" title="4 小结"></a>4 小结</h2><p>非线性优化问题：<u>由许多个误差项平方和组成的最小二乘问题</u>。讨论了两种主要的梯度下降方式：高斯牛顿法和列文伯格 —马夸尔特方法。在实践部分中，分别使用了手写高斯牛顿法、Ceres 和 g2o 两种优化库求解同一个 曲线拟合问题，发现结果相似。 特别地，<u>如果用g2o来拟合曲线，必须先把问题转换为图优化，定义新的顶点和边。</u>相比之下，Ceres 定义误差项求曲线拟合问题则自然了很多，因为它本身即是一个优化库。然而，在 SLAM 中更多的问题是，一个带有许多个相机位姿和许多个空间点的优化问题如何求解。特别地，当相机位姿以李代数表示时，误差项关于相机位姿的导数如何计算。g2o提供了大量现成的顶点和边，非常便于相机位姿估计问题。而在 Ceres 中， 不得不自己实现每一个Cost Function，有一些不便。</p>
+<p>Ceres 库提供了基于模板元的自动求导和运行时的数值求导，而 g2o 只提供了运行时数值求导这一种方式。但是对于大多数问题，如果能够推导出雅可比矩阵的解析形式并告诉优化库，就可以避免数值求导中的诸多问题。</p>
+<blockquote>
+<p>非线性拟合（曲线拟合）</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>非线性优化<br>梯度下降法</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>高斯牛顿法</td>
+<td></td>
+</tr>
+<tr>
+<td>列文伯格-马夸尔特法</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>工具库</th>
+<th>特性</th>
+<th>求导</th>
+<th>使用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Ceres</td>
+<td>-</td>
+<td>（自动求导）基于模板元的自动求导和运行时的数值求导</td>
+<td></td>
+</tr>
+<tr>
+<td>G2o</td>
+<td>提供了大量现成的顶点和边，非常便于相机位姿估计问题</td>
+<td>运行时数值求导这一种方式</td>
+<td>必须先把问题转换为图优化，定义新的顶点和边</td>
+</tr>
+</tbody></table>
+<h2 id="习题"><a href="#习题" class="headerlink" title="习题"></a>习题</h2><ol>
+<li>证明线性方程 Ax &#x3D; b 当系数矩阵 A 超定时，最小二乘解为 x &#x3D; (ATA) −1ATb。</li>
+<li>调研最速下降法、牛顿法、高斯牛顿法和列文伯格—马夸尔特方法各有什么优缺点。</li>
+<li>为什么高斯牛顿法的增量方程系数矩阵可能不正定？不正定有什么几何含义？为什么在这种情况下解就不稳定了？</li>
+<li>DogLeg 是什么？它与高斯牛顿法和列文伯格—马夸尔特方法有何异同？</li>
+<li>阅读 Ceres 的教学材料（<a href="https://link.zhihu.com/?target=http://ceres-solver.org/tutorial.html">http://ceres-solver.org/tutorial.html</a>）以更好地掌握其用法。</li>
+<li>阅读 g2o 自带的文档 。</li>
+<li>更改曲线拟合实验中的曲线模型，并用 Ceres 和 g2o 进行优化实验。</li>
+</ol>
+<h2 id="笔记总结"><a href="#笔记总结" class="headerlink" title="笔记总结"></a>笔记总结</h2><h3 id="笔记总结（1）—非线性优化原理"><a href="#笔记总结（1）—非线性优化原理" class="headerlink" title="笔记总结（1）—非线性优化原理"></a>笔记总结（1）—非线性优化原理</h3><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/462463343">https://zhuanlan.zhihu.com/p/462463343</a></p>
+<h3 id="笔记总结（2）—非线性优化应用"><a href="#笔记总结（2）—非线性优化应用" class="headerlink" title="笔记总结（2）—非线性优化应用"></a>笔记总结（2）—非线性优化应用</h3><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/462932847">https://zhuanlan.zhihu.com/p/462932847</a></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/448550039">视觉SLAM十四讲学习笔记-第六讲-非线性优化的状态估计问题</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/450299798">视觉SLAM十四讲学习笔记-第六讲-非线性优化的非线性最小二乘问题</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/455852322">视觉SLAM十四讲学习笔记-第六讲-非线性优化的实践-高斯牛顿法和曲线拟合</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/462463343"> 笔记总结（1）—非线性优化原理</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/462932847"> 笔记总结（2）—非线性优化应用</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/SLAM/" rel="tag"># SLAM</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/07/12/Sub_Language/CPlus/Cplus_TCP/" rel="prev" title="C++ 网络编程">
+      <i class="fa fa-chevron-left"></i> C++ 网络编程
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/07/27/Course/SLAM/ch07_vo/" rel="next" title="SMPL 第七讲 视觉里程计 ICP和实践">
+      SMPL 第七讲 视觉里程计 ICP和实践 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E7%8A%B6%E6%80%81%E4%BC%B0%E8%AE%A1%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">1、状态估计问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E6%89%B9%E9%87%8F%E7%8A%B6%E6%80%81%E4%BC%B0%E8%AE%A1%E4%B8%8E%E6%9C%80%E5%A4%A7%E5%90%8E%E9%AA%8C%E4%BC%B0%E8%AE%A1"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 批量状态估计与最大后验估计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E7%9A%84%E5%BC%95%E5%87%BA"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 最小二乘的引出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E4%BE%8B%E5%AD%90%EF%BC%9A%E6%89%B9%E9%87%8F%E7%8A%B6%E6%80%81%E4%BC%B0%E8%AE%A1"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 例子：批量状态估计</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98"><span class="nav-number">2.</span> <span class="nav-text">2、非线性最小二乘</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E4%B8%80%E9%98%B6%E5%92%8C%E4%BA%8C%E9%98%B6%E6%A2%AF%E5%BA%A6%E6%B3%95"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 一阶和二阶梯度法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E9%AB%98%E6%96%AF%E7%89%9B%E9%A1%BF%E6%B3%95"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 高斯牛顿法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E5%88%97%E6%96%87%E4%BC%AF%E6%A0%BC%E2%80%94%E9%A9%AC%E5%A4%B8%E5%B0%94%E7%89%B9%E6%96%B9%E6%B3%95"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 列文伯格—马夸尔特方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">2.4.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%AE%9E%E8%B7%B5%EF%BC%9A%E6%9B%B2%E7%BA%BF%E6%8B%9F%E5%90%88%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">3 实践：曲线拟合问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1%E6%89%8B%E5%86%99%E9%AB%98%E6%96%AF%E7%89%9B%E9%A1%BF%E6%B3%95"><span class="nav-number">3.1.</span> <span class="nav-text">3.1手写高斯牛顿法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2%E4%BD%BF%E7%94%A8-Ceres-%E8%BF%9B%E8%A1%8C%E6%9B%B2%E7%BA%BF%E6%8B%9F%E5%90%88"><span class="nav-number">3.2.</span> <span class="nav-text">3.2使用 Ceres 进行曲线拟合</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-Ceres"><span class="nav-number">3.2.1.</span> <span class="nav-text">安装 Ceres</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-Ceres-%E6%8B%9F%E5%90%88%E6%9B%B2%E7%BA%BF"><span class="nav-number">3.2.2.</span> <span class="nav-text">使用 Ceres 拟合曲线</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3%E4%BD%BF%E7%94%A8-g2o-%E8%BF%9B%E8%A1%8C%E6%9B%B2%E7%BA%BF%E6%8B%9F%E5%90%88"><span class="nav-number">3.3.</span> <span class="nav-text">3.3使用 g2o 进行曲线拟合</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#g2o-%E7%9A%84%E7%BC%96%E8%AF%91%E4%B8%8E%E5%AE%89%E8%A3%85"><span class="nav-number">3.3.1.</span> <span class="nav-text">g2o 的编译与安装</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%B0%8F%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">4 小结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%A0%E9%A2%98"><span class="nav-number">5.</span> <span class="nav-text">习题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%94%E8%AE%B0%E6%80%BB%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text">笔记总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%94%E8%AE%B0%E6%80%BB%E7%BB%93%EF%BC%881%EF%BC%89%E2%80%94%E9%9D%9E%E7%BA%BF%E6%80%A7%E4%BC%98%E5%8C%96%E5%8E%9F%E7%90%86"><span class="nav-number">6.1.</span> <span class="nav-text">笔记总结（1）—非线性优化原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%94%E8%AE%B0%E6%80%BB%E7%BB%93%EF%BC%882%EF%BC%89%E2%80%94%E9%9D%9E%E7%BA%BF%E6%80%A7%E4%BC%98%E5%8C%96%E5%BA%94%E7%94%A8"><span class="nav-number">6.2.</span> <span class="nav-text">笔记总结（2）—非线性优化应用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

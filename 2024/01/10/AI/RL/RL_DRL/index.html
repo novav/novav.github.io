@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="基础微分PI也很困难，除非我们能把它转换成对数。求偏导  那么这个log的偏导怎么求呢?   回顾 TD 和SARSA几乎一样，只是把V换成Q  $$SARSA: Q(S,A) \larr Q(S,A) + \alpha[ R+ \gamma Q(S’,A’) - Q(S,A)] \TD(0): V(S_t) \larr V(S_t) + \alpha[ R+ \gamma V(S_{t+1})">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DRL">
+<meta property="og:url" content="https://novav.github.io/2024/01/10/AI/RL/RL_DRL/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="基础微分PI也很困难，除非我们能把它转换成对数。求偏导  那么这个log的偏导怎么求呢?   回顾 TD 和SARSA几乎一样，只是把V换成Q  $$SARSA: Q(S,A) \larr Q(S,A) + \alpha[ R+ \gamma Q(S’,A’) - Q(S,A)] \TD(0): V(S_t) \larr V(S_t) + \alpha[ R+ \gamma V(S_{t+1})">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2024/01/10/AI/RL/RL_DRL/2024-01-16-11-36-47-image.png">
+<meta property="og:image" content="https://novav.github.io/2024/01/10/AI/RL/RL_DRL/2024-01-16-11-38-54-image.png">
+<meta property="og:image" content="https://novav.github.io/2024/01/10/AI/RL/RL_DRL/2024-01-17-16-42-41-image.png">
+<meta property="og:image" content="https://novav.github.io/2024/01/10/AI/RL/RL_DRL/2024-01-17-10-41-23-image.png">
+<meta property="article:published_time" content="2024-01-10T21:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:38.029Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="RL">
+<meta property="article:tag" content="DRL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2024/01/10/AI/RL/RL_DRL/2024-01-16-11-36-47-image.png">
+
+<link rel="canonical" href="https://novav.github.io/2024/01/10/AI/RL/RL_DRL/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>DRL | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2024/01/10/AI/RL/RL_DRL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          DRL
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-01-10 21:00:00" itemprop="dateCreated datePublished" datetime="2024-01-10T21:00:00+00:00">2024-01-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><p>微分PI也很困难，除非我们能把它转换成对数。求偏导</p>
+<p><img src="/2024/01/10/AI/RL/RL_DRL/2024-01-16-11-36-47-image.png"></p>
+<p>那么这个log的偏导怎么求呢?</p>
+<img src="/2024/01/10/AI/RL/RL_DRL/2024-01-16-11-38-54-image.png" title alt width="503">
+
+<h3 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h3><ul>
+<li>TD 和SARSA几乎一样，只是把V换成Q</li>
+</ul>
+<p>$$<br>SARSA: Q(S,A) \larr Q(S,A) + \alpha[ R+ \gamma Q(S’,A’) - Q(S,A)] \<br>TD(0): V(S_t) \larr V(S_t) + \alpha[ R+ \gamma V(S_{t+1}) - V(S_t)] \<br>$$</p>
+<h4 id="Q-learning"><a href="#Q-learning" class="headerlink" title="Q-learning"></a>Q-learning</h4><ul>
+<li>Qlearning公式和SARSA相比，就差那么一个max。</li>
+</ul>
+<p>$$<br>QLeaning: Q(S,A) \larr Q(S,A) + \alpha[ R+ \gamma \max Q(S’, a) - Q(S,A)] \<br>$$</p>
+<h3 id="DQN"><a href="#DQN" class="headerlink" title="DQN"></a>DQN</h3><p>DQN &#x3D; TD + 神经网络</p>
+<p>DQN的深度网络，就像用一张布去覆盖Qlearning中的Qtable</p>
+<p>DQN用magic函数，也就是神经网络解决了Qlearning不能解决的连续状态空间问题。</p>
+<p>$$<br>Q(S,A) \larr Q(S,A )+ \alpha \big[<br>    R + \gamma \max Q(S’, a) - Q(S,A)<br>\big]<br>$$</p>
+<ul>
+<li><img src="/2024/01/10/AI/RL/RL_DRL/2024-01-17-16-42-41-image.png" title alt width="412"></li>
+</ul>
+<h3 id="DoubeDQN"><a href="#DoubeDQN" class="headerlink" title="DoubeDQN"></a>DoubeDQN</h3><ul>
+<li>新增一个TargetQ网络，解决DQN的Q网络的学习效率比较低，而且不稳定。</li>
+</ul>
+<h3 id="DuelingDQN"><a href="#DuelingDQN" class="headerlink" title="DuelingDQN"></a>DuelingDQN</h3><p>A + S &#x3D; Q : S值与A值的和，就是原来的Q值。</p>
+<h3 id="DDPG"><a href="#DDPG" class="headerlink" title="DDPG"></a>DDPG</h3><ul>
+<li><p>DDPG就是用magic解决DQN不能解决的连续控制型问题。</p>
+</li>
+<li><p>也就是说，用一个magic函数，直接替代maxQ(s’,a’)的功能。也就是说，我们期待我们输入状态s，magic函数返回我们动作action的取值，这个取值能够让q值最大。这个就是DDPG中的Actor的功能。</p>
+</li>
+<li><p>我们之前讲DQN也说过，DQN的深度网络，就像用一张布去覆盖Qlearning中的Qtable。这也是DDPG中Critic的功能。</p>
+</li>
+<li><p>DDPG其实并不是PG，并没有做带权重的梯度更新。而是在梯度上升，在寻找最大值。</p>
+</li>
+<li><p>Critic</p>
+<ul>
+<li><p>Critic网络的作用是预估Q，虽然它还叫Critic，但和AC中的Critic不一样，这里预估的是Q不是V；</p>
+</li>
+<li><p>注意Critic的输入有两个：动作和状态，需要一起输入到Critic中；</p>
+</li>
+<li><p>Critic网络的loss其还是和AC一样，用的是TD-error。</p>
+</li>
+</ul>
+</li>
+<li><p>Actor</p>
+<ul>
+<li><p>和AC不同，Actor输出的是一个动作；</p>
+</li>
+<li><p>Actor的功能是，输出一个动作A，这个动作A输入到Crititc后，能够获得最大的Q值。</p>
+</li>
+<li><p>所以Actor的更新方式和AC不同，不是用带权重梯度更新，而是用梯度上升。</p>
+</li>
+</ul>
+</li>
+</ul>
+<img src="/2024/01/10/AI/RL/RL_DRL/2024-01-17-10-41-23-image.png" title alt width="408">
+
+<h3 id="常见算法公式"><a href="#常见算法公式" class="headerlink" title="常见算法公式"></a>常见算法公式</h3><p>1、策略梯度法: $ \sum <em>{t’&#x3D;t}^{T} r(s</em>{i,t’}, a_{i,t’}) - b_i$</p>
+<p>2、状态值函数估计轨迹的return:  $q(s,a)$</p>
+<p>3、优势函数估计轨迹的return：$A(s,a) &#x3D; q(s,a) - V(s,a)$</p>
+<p>4、TD-Error 估计轨迹的return： $r(s,a) + q(s) - q(s’)$</p>
+<h3 id="Monte-Carlo"><a href="#Monte-Carlo" class="headerlink" title="Monte Carlo:"></a>Monte Carlo:</h3><p>    $V^{\pi}(s_t) &#x3D; \sum^T_{t’&#x3D;t} r(s_{t’}, a_{t’} )$</p>
+<p>    training data: ${s_{i,t}, V^{\pi}(s_t) }$</p>
+<p>    Loss: $ L &#x3D; 1&#x2F;2 \sum_i || \hat{V}^{\pi}(s_i) - y_i || ^2$</p>
+<p>$$<br>V(S_t) \larr V(S_t) + \alpha [G_t - V(S_t)]<br>$$</p>
+<ul>
+<li><p>蒙地卡罗需要完成整个游戏过程，直到最终状态，才能通过回溯计算G值。这使得PG方法的效率被限制。</p>
+</li>
+<li><p>那我们可不可以更快呢？相信大家已经想到了，那就是改为TD。</p>
+</li>
+<li><p>但改为TD还有一个问题需要解决，就是：在PG，我们需要计算G值；那么在TD中，我们应该怎样估算每一步的Q值呢？（答案是神经网络）</p>
+</li>
+</ul>
+<h3 id="TD-bootstrap"><a href="#TD-bootstrap" class="headerlink" title="TD(bootstrap):"></a>TD(bootstrap):</h3><p>    training data: $ {  s_{i,t}, r(s_{i,t}, a_{i,t} ) + \hat{V}^{\pi}<em>{\phi}( s</em>{i, t+1}) }$</p>
+<p>    引入bias，–&gt; 减少方差variance</p>
+<h3 id="AC-ac-zhihu"><a href="#AC-ac-zhihu" class="headerlink" title="AC:  ac-zhihu"></a>AC:  <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/110998399">ac-zhihu</a></h3><ul>
+<li><p>Actor: 一个输出策略，负责选择动作；</p>
+</li>
+<li><p>Critic: 一个负责计算每个动作的分数。</p>
+</li>
+</ul>
+<p>$$<br>\nabla L_{\theta} &#x3D; \frac{1}{N} \sum_{i&#x3D;1}^{N} \sum_{t&#x3D;0}^{T} \Big[ \nabla_{\theta} log \pi_{\theta}(a_{i,t}|s_{i,t}) \Big(r(s_{i,t}, a_{i,t}) + \gamma \hat{V}<em>{\phi}^{\pi} (s</em>{i,t+1}) - \hat{V}<em>{\phi}^{\pi}(s</em>{i,t}) - b_i \Big) \Big]<br>$$</p>
+<p>    lower variance with bias</p>
+<p>总结下TD-error的知识：</p>
+<ul>
+<li><p>为了避免正数陷阱，我们希望Actor的更新权重有正有负。因此，我们把Q值减去他们的均值V。有：Q(s,a)-V(s)</p>
+</li>
+<li><p>为了避免需要预估V值和Q值，我们希望把Q和V统一；由于Q(s,a) &#x3D; gamma * V(s’) + r - V(s)。所以我们得到TD-error公式： TD-error &#x3D; gamma * V(s’) + r - V(s)</p>
+</li>
+<li><p>TD-error就是Actor更新策略时候，带权重更新中的权重值；</p>
+</li>
+<li><p>现在Critic不再需要预估Q，而是预估V。而根据马可洛夫链所学，我们知道TD-error就是Critic网络需要的loss，也就是说，Critic函数需要最小化TD-error。</p>
+</li>
+</ul>
+<h3 id="Policy-Gradient"><a href="#Policy-Gradient" class="headerlink" title="Policy Gradient:"></a>Policy Gradient:</h3><ul>
+<li><p>PG是一个蒙地卡罗+神经网络的算法。</p>
+</li>
+<li><p>策略评估</p>
+</li>
+<li><p>策略提升</p>
+</li>
+<li><p>VPG更新算法</p>
+</li>
+<li><p>$$<br>Policy Graditent: E_{\pi}[\nabla_{\theta}(log_{\pi}(s,a,\theta)) R(\tau)]<br>$$</p>
+</li>
+<li><p>$$<br>Update rule: \Delta \theta &#x3D; \alpha * \nabla_\theta (<br>log\pi(s,a,\theta)<br>) R(\tau)<br>$$</p>
+</li>
+<li><p>$\pi : 策略函数，R(): score function 、alpha： lr $</p>
+</li>
+</ul>
+<p>    $\nabla L_{\theta} &#x3D; \frac{1}{N} \sum_{i&#x3D;1}^{N} \sum_{t&#x3D;0}^{T} \Big[ \nabla_{\theta} log \pi_{\theta}(a_{i,t}|s_{i,t}) \Big( \sum_{t’&#x3D;t}^{T} \gamma^{t’-t} r(s_{i,t}, a_{i,t}) - b_i \Big)\Big]$</p>
+<p>    no bias with higher variance (because use single sample estimate)</p>
+<p>PG算法，计算策略梯度的估计器，并将其插入随机梯度上升算法中。最常用的梯度估计器具有以下形式 </p>
+<p>$$<br>\hat{g} &#x3D; \hat{E}<em>t \Big[<br>    \nabla</em>{\theta} log {\pi}_{\theta}(a_t| s_t) \hat{A}_t<br>\Big]  \tag{PPO-1}<br>$$</p>
+<p>E: 表示有限批次样品的经验平均值。</p>
+<p>Loss PG:</p>
+<p>$$<br>L^{PG}(\theta) &#x3D; \hat{E}<em>t \Big[<br>    log {\pi}</em>{\theta} (a_t | s_t ) \hat{A}_t</p>
+<p>\Big] \tag{PPO-2}<br>$$</p>
+<h3 id="结合AC-PG"><a href="#结合AC-PG" class="headerlink" title="结合AC + PG:"></a>结合AC + PG:</h3><p>整条轨迹</p>
+<p>$$<br>\nabla L_{\theta} &#x3D;<br>\frac{1}{N} \sum_{i&#x3D;1}^{N} \sum_{t&#x3D;0}^{T}<br>\Big[<br> \nabla_{\theta} log \pi_{\theta}(a_{i,t}|s_{i,t})<br>\Big(<br>\sum_{t’&#x3D;t}^{T} \gamma^{t’-t} r(s_{i,t}, a_{i,t})</p>
+<ul>
+<li>\hat{V}<em>{\phi}^{\pi}(s</em>{i,t})<br>\Big)<br>\Big]<br>$$</li>
+</ul>
+<p>n-step:</p>
+<p>$$<br>\nabla L_{\theta} &#x3D;<br>\frac{1}{N} \sum_{i&#x3D;1}^{N} \sum_{t&#x3D;0}^{T}<br>[<br> \nabla_{\theta} log \pi_{\theta}(a_{i,t}|s_{i,t})<br>(<br>\sum_{t’&#x3D;t}^{t+n} \gamma^{t’-t} r(s_{i,t}, a_{i,t})</p>
+<ul>
+<li>\hat{V}<em>{\phi}^{\pi}(s</em>{i,t})<br>)<br>]<br>$$</li>
+</ul>
+<h3 id="“vanilla”-policy-gradient-REINFORCE"><a href="#“vanilla”-policy-gradient-REINFORCE" class="headerlink" title="“vanilla” policy gradient &#x2F; REINFORCE"></a>“vanilla” policy gradient &#x2F; REINFORCE</h3><h3 id="TRPO"><a href="#TRPO" class="headerlink" title="TRPO"></a>TRPO</h3><p>trust region &#x2F; natural policy gradient methods</p>
+<p>TRPO 与 PPO 之间的区别在于 TRPO 使用了 KL 散度作为约束条件，虽然损失函数是等价的，但是这种表示形式更难计算，所以较少使用。</p>
+<p>约束下最大化更新：</p>
+<p>$$<br>maxmize(\theta) \space \hat{E}<em>t<br>\Big[<br>\frac{\pi</em>{\theta}(a_t| s_t) }<br>     {\pi_{\theta_{old}}(a_t | s_t)}<br>\hat{A}_t<br>\Big]<br>\tag{PPO-3,4}<br>$$</p>
+<p>$$<br>subject \space to \space \hat{E}<em>t<br>\Big[<br>KL \big[<br>    \pi</em>{\theta_{old}}(\cdot|s_t),<br>    \pi_{\theta}(\cdot|s_t)<br>\big]<br>\Big] \leq \delta<br>$$</p>
+<p>PPO思想1，使用panalty（惩罚）求解无约束优化问题</p>
+<p>$$<br>maximize({\theta}) \space<br>\hat{E}<em>t \Big[<br>\frac{\pi</em>{\theta}(a_t| s_t) }<br>     {\pi_{\theta_{old}}(a_t | s_t)}<br>\hat{A}<em>t - \beta<br>   KL\big[\pi</em>{\theta_{old}} (\cdot| s_t),<br>      \pi_{\theta} (\cdot| s_t)<br>     \big]<br>\Big] \tag{PPO-5}<br>$$</p>
+<h3 id="相关算法"><a href="#相关算法" class="headerlink" title="相关算法"></a>相关算法</h3><p>single path TRPO; </p>
+<p>vine TRPO; </p>
+<p>cross-entropy method  (CEM)</p>
+<p>covariance matrix adaption (CMA) 协方差矩阵自适应</p>
+<p><strong>natural gradient</strong>, the classic natural policy gradient algorithm</p>
+<p>Max KL</p>
+<p>RWR</p>
+<h3 id="PPO"><a href="#PPO" class="headerlink" title="PPO"></a>PPO</h3><p>CPI : conservative policy iteration 保守政策迭代 (普通的PG算法)</p>
+<p>$$<br>L^{CPI}(\theta) &#x3D; \hat{E}<em>t \Big[<br>   \frac{ \pi</em>{\theta}(a_t| s_t) }<br>         {\pi_{\theta_{old}}(a_t| s_t)}<br>    \hat{A}_t<br>\Big]<br>&#x3D; \hat{E}_t [<br>    r_t(\theta) \hat{A}_t<br>]  \tag{6}<br>$$</p>
+<p><strong>PPO_2-CLIP</strong> (PPO2思想，对ratio(分布比率)进行clip) 即取一个lower bound，保证梯度更新后效果不会变差</p>
+<p>$$<br>L^{CLIP} (\theta)<br>&#x3D; \hat{E}_t \Big[<br>    min\Big(r_t(\theta) \hat{A}_t,<br>        clip \big(r_t(\theta), 1-\epsilon, 1+\epsilon \big) \hat{A}_t \Big)<br>\Big]   \tag{7}<br>$$</p>
+<p>$\epsilon &#x3D; 0.2$ , $L^{CLIP}$ 是$L^{CPI}$的下界。</p>
+<p><strong>PPO_1算法(Adaptive KL Penalty):</strong></p>
+<p>$$<br>L^{KLPEN} (\theta) &#x3D; \hat{E}<em>t \Big[<br>\frac{\pi</em>{\theta}(a_t| s_t)}<br>{\pi_{\theta_{old}}(a_t| s_t)}<br>\hat{A}<em>t - \beta<br>   KL \big[<br>          \pi</em>{\theta_{old}} (\cdot| s_t),<br>          \pi_{\theta} (\cdot| s_t)<br>      \big]<br>\Big]   \tag{8}<br>$$</p>
+<p>$$<br>d &#x3D; \hat{E}<em>t \Big[<br>   KL\big[<br>          \pi</em>{\theta_{old}} (\cdot| s_t),<br>          \pi_{\theta} (\cdot| s_t)<br>     \big]<br>\Big]<br>\<br>if d &lt; d_{targ} &#x2F; 1.5, \beta &#x3D; \beta &#x2F; 2 \<br>if d &lt; d_{targ} \times 1.5, \beta &#x3D; \beta \times 2</p>
+<p>$$</p>
+<p><strong>PPO_2算法(完整目标函数)</strong></p>
+<p>$$<br>L_t^{CLIP+VF+S}(\theta) &#x3D; \hat{E}_t<br>\Big[<br>    L_t^{CLIP}(\theta)<br>    - c_1 L_t^{VF}(\theta)<br>    + c_2 S<a href="s_t">\pi_{\theta}</a><br>\Big]<br>\tag{9}<br>$$</p>
+<p>S: 表示entropy bonus，当actor和critic共享一套参数时，需要加的误差项 S ：an entropy bonus，在exploration时很有用</p>
+<p>$L_t^{VF}$ squared-error loss $(V_{\theta(S_t)} - V_t^{targ})^2$</p>
+<p><strong>PG Advantage Estimator:</strong></p>
+<p>$$<br>\hat{A}<em>t &#x3D; -V(s_t) + r_t + \gamma r</em>{t+1} + …<br>          + \gamma^{T-t+1} r_{T-1}<br>          + \gamma^{T-t} V(s_T)<br>\tag{10}<br>$$</p>
+<blockquote>
+<p>GAE也是用于平衡bias和variance的一种方法，公式比较复杂一点，思想是$TD（\lambda）$</p>
+</blockquote>
+<p>truncated version of generalized advantage estimator（GAE）:</p>
+<p>$$<br>\hat{A}<em>t &#x3D; \delta_t + (\gamma \lambda )\delta</em>{t+1} + … + … +<br>          (\gamma \lambda )^{T-t+1 }\delta_{T-1}  \tag{11,12} \<br>    where \space \gamma_t &#x3D; r_t + \lambda V(s_{t+1}) - V(s_t)<br>$$</p>
+<p>No clipping or penalty:</p>
+<p>$$<br>L_t(\theta) &#x3D; r_t(\theta)\hat{A}_t<br>$$</p>
+<p>Clipping:</p>
+<p>$$<br>L_t(\theta) &#x3D; min \Big(<br>    r_t(\theta)\hat{A}_t,<br>    clip\big(r_t(\theta), 1-\epsilon, 1+\epsilon\big)\hat{A}_t<br>\Big)<br>$$</p>
+<p>KL penalty (fixed or adaptive)</p>
+<p>$$<br>L_t(\theta) &#x3D; r_t(\theta)\hat{A}<em>t -<br>    \beta KL<br>\big[<br>     \pi</em>{\theta_{old}}, \pi_{\theta}<br>\big]<br>$$</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/RL/" rel="tag"># RL</a>
+              <a href="/tags/DRL/" rel="tag"># DRL</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/01/08/Course/Robot/" rel="prev" title="Robot Checklist">
+      <i class="fa fa-chevron-left"></i> Robot Checklist
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/01/30/NLP/LangChain/" rel="next" title="LLM 编程框架-LangChain">
+      LLM 编程框架-LangChain <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9E%E9%A1%BE"><span class="nav-number">2.</span> <span class="nav-text">回顾</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Q-learning"><span class="nav-number">2.1.</span> <span class="nav-text">Q-learning</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DQN"><span class="nav-number">3.</span> <span class="nav-text">DQN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DoubeDQN"><span class="nav-number">4.</span> <span class="nav-text">DoubeDQN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DuelingDQN"><span class="nav-number">5.</span> <span class="nav-text">DuelingDQN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DDPG"><span class="nav-number">6.</span> <span class="nav-text">DDPG</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%AE%97%E6%B3%95%E5%85%AC%E5%BC%8F"><span class="nav-number">7.</span> <span class="nav-text">常见算法公式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Monte-Carlo"><span class="nav-number">8.</span> <span class="nav-text">Monte Carlo:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TD-bootstrap"><span class="nav-number">9.</span> <span class="nav-text">TD(bootstrap):</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AC-ac-zhihu"><span class="nav-number">10.</span> <span class="nav-text">AC:  ac-zhihu</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Policy-Gradient"><span class="nav-number">11.</span> <span class="nav-text">Policy Gradient:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E5%90%88AC-PG"><span class="nav-number">12.</span> <span class="nav-text">结合AC + PG:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%80%9Cvanilla%E2%80%9D-policy-gradient-REINFORCE"><span class="nav-number">13.</span> <span class="nav-text">“vanilla” policy gradient &#x2F; REINFORCE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TRPO"><span class="nav-number">14.</span> <span class="nav-text">TRPO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E7%AE%97%E6%B3%95"><span class="nav-number">15.</span> <span class="nav-text">相关算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PPO"><span class="nav-number">16.</span> <span class="nav-text">PPO</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

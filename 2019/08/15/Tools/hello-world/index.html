@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hello World">
+<meta property="og:url" content="https://novav.github.io/2019/08/15/Tools/hello-world/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img2020.cnblogs.com/blog/2229336/202109/2229336-20210925200928640-1508087348.jpg">
+<meta property="article:published_time" content="2019-08-15T08:39:31.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:40.584Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="Github-Actions">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img2020.cnblogs.com/blog/2229336/202109/2229336-20210925200928640-1508087348.jpg">
+
+<link rel="canonical" href="https://novav.github.io/2019/08/15/Tools/hello-world/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Hello World | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2019/08/15/Tools/hello-world/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Hello World
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-08-15 08:39:31" itemprop="dateCreated datePublished" datetime="2019-08-15T08:39:31+00:00">2019-08-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hello/" itemprop="url" rel="index"><span itemprop="name">Hello</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<span id="more"></span>
+
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo s[erver]</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo g[enerate]</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo d[eploy]</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/deployment.html">Deployment</a></p>
+<ul>
+<li></li>
+</ul>
+<hr>
+<h2 id="安装Nodejs，node"><a href="#安装Nodejs，node" class="headerlink" title="安装Nodejs，node"></a>安装Nodejs，node</h2><p>1.移除错误的node_modules</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/lib/</span><br><span class="line">rm node_modules/ -rf</span><br></pre></td></tr></table></figure>
+
+<p>2 卸载nodejs：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get autoremove nodejs</span><br></pre></td></tr></table></figure>
+
+<p>3安装nodejs：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install nodejs</span><br><span class="line">sudo apt install nodejs-legacy</span><br><span class="line">sudo apt install npm</span><br></pre></td></tr></table></figure>
+
+<p>更新npm的包镜像源，方便快速下载</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo npm config set registry https://registry.npm.taobao.org</span><br><span class="line">sudo npm config list</span><br></pre></td></tr></table></figure>
+
+<p>全局安装n管理器(用于管理nodejs版本)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo npm install n -g</span><br></pre></td></tr></table></figure>
+
+<p>安装最新的nodejs（stable版本）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo n stable</span><br><span class="line">sudo node -v</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用Hexo"><a href="#使用Hexo" class="headerlink" title="使用Hexo"></a>使用Hexo</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">npm -v</span><br><span class="line">node -v</span><br><span class="line">sudo npm install -g hexo-cli</span><br><span class="line">hexo -g</span><br><span class="line">hexo server</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h2><p>创建博客所在目录</p>
+<blockquote>
+<p>mkdir hexo</p>
+</blockquote>
+<p>安装 Hexo</p>
+<blockquote>
+<p>创建目录<br> mkdir hexo<br> 切换目录<br> cd hexo<br> 全局安装 Hexo，需要最高权限，记得输入root密码<br> sudo npm install -g hexo-cli<br> 初始化 Hexo<br> hexo init</p>
+</blockquote>
+<p>如果报错执行代码,不报错忽略</p>
+<blockquote>
+<p>sudo npm config set user 0<br> sudo npm config set unsafe-perm true<br> sudo npm install -g hexo-cli</p>
+</blockquote>
+<p>安装插件</p>
+<blockquote>
+<p>npm install hexo-generator-index –save<br> npm install hexo-generator-archive –save<br> npm install hexo-generator-category –save<br> npm install hexo-generator-tag –save<br> npm install hexo-server –save<br> npm install hexo-deployer-git –save<br> npm install hexo-deployer-heroku –save<br> npm install hexo-deployer-rsync –save<br> npm install hexo-deployer-openshift –save<br> npm install hexo-renderer-marked –save<br> npm install hexo-renderer-stylus –save<br> npm install hexo-generator-feed –save<br> npm install hexo-generator-sitemap –save</p>
+</blockquote>
+<p>测试安装成功</p>
+<blockquote>
+<p>hexo server</p>
+</blockquote>
+<p>git config</p>
+<blockquote>
+<p>git config –global core.autocrlf false</p>
+<p>git config –global core.safecrlf true</p>
+<p>git config –global core.autocrlf true</p>
+<p>#拒绝提交包含混合换行符的文件<br>git config –global core.safecrlf true   </p>
+<p>#允许提交包含混合换行符的文件<br>git config –global core.safecrlf false   </p>
+<p>#提交包含混合换行符的文件时给出警告<br>git config –global core.safecrlf warn</p>
+</blockquote>
+<h3 id="Hexo-GitPages-部署"><a href="#Hexo-GitPages-部署" class="headerlink" title="Hexo+GitPages 部署"></a>Hexo+GitPages 部署</h3><p><a target="_blank" rel="noopener" href="http://crafet.github.io/2018/03/11/%E4%BD%BF%E7%94%A8hexo%E6%9E%84%E5%BB%BA%E6%94%AF%E6%8C%81latex%E7%9A%84blog/">hexo + latex &#x3D; blog</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903961435045902">Auto编译+用 GitHub Actions 自动化发布Hexo网站到 GitHub Pages - 掘金</a></p>
+<h4 id="手动部署"><a href="#手动部署" class="headerlink" title="手动部署"></a>手动部署</h4><p>本文将使用 GitHub Actions 部署至 GitHub Pages，此方法适用于公开或私人储存库。若你不希望将源文件夹上传到 GitHub，请参阅 一键部署。</p>
+<p>1 建立名为 &lt;你的 GitHub 用户名&gt;.github.io 的储存库，若之前已将 Hexo 上传至其他储存库，将该储存库重命名即可。<br>2 将 Hexo 文件夹中的文件 push 到储存库的默认分支，默认分支通常名为 main，旧一点的储存库可能名为 master。</p>
+<ul>
+<li>将 main 分支 push 到 GitHub：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git push -u origin main</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>默认情况下 public&#x2F; 不会被上传(也不该被上传)，确保 .gitignore 文件中包含一行 public&#x2F;。整体文件夹结构应该与 范例储存库 大致相似。</li>
+</ul>
+<p>3 使用 node –version 指令检查你电脑上的 Node.js 版本，并记下该版本 (例如：v16.y.z)<br>4 在储存库中建立 .github&#x2F;workflows&#x2F;pages.yml，并填入以下内容 (将 16 替换为上个步骤中记下的版本)：</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">.github/workflows/pages.yml</span><br><span class="line">name: Pages</span><br><span class="line"></span><br><span class="line">on:</span><br><span class="line">  push:</span><br><span class="line">    branches:</span><br><span class="line">      - main # <span class="keyword">default</span> branch</span><br><span class="line"></span><br><span class="line">jobs:</span><br><span class="line">  pages:</span><br><span class="line">    runs-on: ubuntu-latest</span><br><span class="line">    permissions:</span><br><span class="line">      contents: write</span><br><span class="line">    steps:</span><br><span class="line">      - uses: actions/checkout@v2</span><br><span class="line">      - name: Use Node.js <span class="number">16.</span>x</span><br><span class="line">        uses: actions/setup-node@v2</span><br><span class="line">        <span class="keyword">with</span>:</span><br><span class="line">          node-version: <span class="string">&quot;16&quot;</span></span><br><span class="line">      - name: Cache NPM dependencies</span><br><span class="line">        uses: actions/cache@v2</span><br><span class="line">        <span class="keyword">with</span>:</span><br><span class="line">          path: node_modules</span><br><span class="line">          key: $&#123;&#123; runner.OS &#125;&#125;-npm-cache</span><br><span class="line">          restore-keys: |</span><br><span class="line">            $&#123;&#123; runner.OS &#125;&#125;-npm-cache</span><br><span class="line">      - name: Install Dependencies</span><br><span class="line">        run: npm install</span><br><span class="line">      - name: Build</span><br><span class="line">        run: npm run build</span><br><span class="line">      - name: Deploy</span><br><span class="line">        uses: peaceiris/actions-gh-pages@v3</span><br><span class="line">        <span class="keyword">with</span>:</span><br><span class="line">          github_token: $&#123;&#123; secrets.GITHUB_TOKEN &#125;&#125;</span><br><span class="line">          publish_dir: ./<span class="keyword">public</span></span><br></pre></td></tr></table></figure>
+
+<p>5 当部署作业完成后，产生的页面会放在储存库中的 gh-pages 分支。<br>6 在储存库中前往 Settings &gt; Pages &gt; Source，并将 branch 改为 gh-pages。<br>前往 https:&#x2F;&#x2F;&lt;你的 GitHub 用户名&gt;.github.io 查看网站。</p>
+<h4 id="一键部署"><a href="#一键部署" class="headerlink" title="一键部署"></a>一键部署</h4><p>以下教学改编自 一键部署。</p>
+<ol>
+<li><p>安装 hexo-deployer-git。</p>
+</li>
+<li><p>在 _config.yml 中添加以下配置（如果配置已经存在，请将其替换为如下）:</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: https:<span class="comment">//github.com/&lt;username&gt;/&lt;project&gt;</span></span><br><span class="line">  # example, https:<span class="comment">//github.com/hexojs/hexojs.github.io</span></span><br><span class="line">  branch: gh-pages</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>执行 hexo clean &amp;&amp; hexo deploy 。</li>
+</ol>
+</li>
+<li><p>浏览 &lt;GitHub 用户名&gt;.github.io 检查你的网站能否运作。</p>
+</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/github-pages#%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2">在 GitHub Pages 上部署 Hexo | Hexo</a></p>
+<h3 id="自定义部署方案"><a href="#自定义部署方案" class="headerlink" title="自定义部署方案"></a>自定义部署方案</h3><p>主要有3个仓库：</p>
+<ul>
+<li>私有仓库Blog：存储 Hexo 项目文章以及源代码</li>
+<li>公共仓库hiyongz.github.io：存储编译之后的静态页面。</li>
+<li>Gitee公共仓库：内容和hiyongz.github.io一样，只是使用的服务不同。</li>
+</ul>
+<p>配置发布秘钥，用于将生成的静态博客文件 push 至 GitHub Pages 所在的仓库XXXXX.github.io：</p>
+<p><strong>1、生成秘钥</strong></p>
+<p>执行如下命令生成公钥和私钥，替换邮件地址为你的github邮箱地址，其实也可以不使用邮箱，这里只是为了便于辨识。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -f hexo-deploy-key -t rsa -C <span class="string">&quot;username@example.com&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>命令执行后会生成两个文件：<code>hexo-deploy-key</code> 和 <code>hexo-deploy-key.pub</code> 。</p>
+<p><strong>2、将公钥添加到Github Pages仓库中</strong></p>
+<p>步骤：hiyongz.github.io仓库 -&gt; Settings -&gt; Deploy keys -&gt; Add deploy key</p>
+<ul>
+<li>Title设置为 <code>HEXO_DEPLOY_PUB</code> (可以根据自己喜好设置)</li>
+<li>Key填写 <code>github-deploy-key.pub</code> 文件内容</li>
+<li>勾选 <code>Allow write access</code> 选项</li>
+</ul>
+<p><img src="https://img2020.cnblogs.com/blog/2229336/202109/2229336-20210925200928640-1508087348.jpg"></p>
+<p><strong>3、将私钥添加到博客源码仓库中</strong></p>
+<p>步骤：博客仓库 -&gt; Settings -&gt; Secrets -&gt; New repository secret</p>
+<ul>
+<li>Name 填写 <code>HEXO_DEPLOY_KEY</code> 。</li>
+<li>Value 填写 <code>github-deploy-key</code> 文件内容。</li>
+</ul>
+<h3 id="使用技巧"><a href="#使用技巧" class="headerlink" title="使用技巧"></a>使用技巧</h3><p>文档引用</p>
+<p><a href="/2020/03/16/CV/CV-GAN/">CV绝对路径 &#x2F;2020&#x2F;03&#x2F;16&#x2F;CV&#x2F;CV-GAN&#x2F;</a></p>
+<p><a href="./2020/03/16/CV/CV-GAN/">CV相对路径 .&#x2F;2020&#x2F;03&#x2F;16&#x2F;CV&#x2F;CV-GAN&#x2F;</a></p>
+<p>使用自动链接插件：Hexo有一些插件可以帮助你更方便地在文章之间创建链接，例如<code>hexo-abbrlink</code>可以为每篇文章生成一个简短的、可记忆的链接标识符，使得链接更加简洁。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Github-Actions/" rel="tag"># Github-Actions</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/08/03/AI/DL/DL_book/" rel="prev" title="DL_books">
+      <i class="fa fa-chevron-left"></i> DL_books
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/08/15/Games/MCTS_GO/" rel="next" title="MCTS GO">
+      MCTS GO <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Nodejs%EF%BC%8Cnode"><span class="nav-number">2.</span> <span class="nav-text">安装Nodejs，node</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Hexo"><span class="nav-number">3.</span> <span class="nav-text">使用Hexo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85hexo"><span class="nav-number">4.</span> <span class="nav-text">安装hexo</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hexo-GitPages-%E9%83%A8%E7%BD%B2"><span class="nav-number">4.1.</span> <span class="nav-text">Hexo+GitPages 部署</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E9%83%A8%E7%BD%B2"><span class="nav-number">4.1.1.</span> <span class="nav-text">手动部署</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2"><span class="nav-number">4.1.2.</span> <span class="nav-text">一键部署</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E9%83%A8%E7%BD%B2%E6%96%B9%E6%A1%88"><span class="nav-number">4.2.</span> <span class="nav-text">自定义部署方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7"><span class="nav-number">4.3.</span> <span class="nav-text">使用技巧</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

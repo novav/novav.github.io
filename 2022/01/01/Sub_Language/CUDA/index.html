@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="[TOC] Ubuntu系统下的驱动安装1- Ubuntu16 ()  nvidia-384安装成功  2- Ubuntu18 (驱动版本太低,无法安装成功)  驱动410安装: 为了与UbuntuServer版本服务器一致，在18.04最新桌面版上安装410驱动，但是一直报内核报错，尝试了所有的安装方式，都无法顺利安装成功  网上也没有类似的问题，最终准备换440的驱动安装，安装成功   CUD">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CUDA版本问题解决">
+<meta property="og:url" content="https://novav.github.io/2022/01/01/Sub_Language/CUDA/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="[TOC] Ubuntu系统下的驱动安装1- Ubuntu16 ()  nvidia-384安装成功  2- Ubuntu18 (驱动版本太低,无法安装成功)  驱动410安装: 为了与UbuntuServer版本服务器一致，在18.04最新桌面版上安装410驱动，但是一直报内核报错，尝试了所有的安装方式，都无法顺利安装成功  网上也没有类似的问题，最终准备换440的驱动安装，安装成功   CUD">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-01-01T00:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:40.532Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="CUDA">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://novav.github.io/2022/01/01/Sub_Language/CUDA/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>CUDA版本问题解决 | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/01/01/Sub_Language/CUDA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CUDA版本问题解决
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2022-01-01T00:00:00+00:00">2022-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DNN-platform/" itemprop="url" rel="index"><span itemprop="name">DNN_platform</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DNN-platform/CUDA/" itemprop="url" rel="index"><span itemprop="name">CUDA</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>[TOC]</p>
+<h2 id="Ubuntu系统下的驱动安装"><a href="#Ubuntu系统下的驱动安装" class="headerlink" title="Ubuntu系统下的驱动安装"></a>Ubuntu系统下的驱动安装</h2><p>1- Ubuntu16 ()</p>
+<ul>
+<li>nvidia-384安装成功</li>
+</ul>
+<p>2- Ubuntu18 (驱动版本太低,无法安装成功)</p>
+<ul>
+<li><p>驱动410安装: 为了与UbuntuServer版本服务器一致，在18.04最新桌面版上安装410驱动，但是一直报内核报错，尝试了所有的安装方式，都无法顺利安装成功</p>
+</li>
+<li><p>网上也没有类似的问题，最终准备换440的驱动安装，安装成功</p>
+</li>
+</ul>
+<h2 id="CUDA"><a href="#CUDA" class="headerlink" title="CUDA"></a>CUDA</h2><p>CUDA 驱动对应版本 <a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html">https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html</a></p>
+<p>CUDA 下载 <a target="_blank" rel="noopener" href="https://developer.nvidia.com/cuda-toolkit-archive">https://developer.nvidia.com/cuda-toolkit-archive</a></p>
+<table>
+<thead>
+<tr>
+<th>CUDA Toolkit</th>
+<th>Minimum Required Driver Version for CUDA Minor Version Compatibility*</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td>Linux x86_64 Driver Version</td>
+<td>Windows x86_64 Driver Version</td>
+</tr>
+<tr>
+<td>CUDA 12.x</td>
+<td>&gt;&#x3D;525.60.13</td>
+<td>&gt;&#x3D;528.33</td>
+</tr>
+<tr>
+<td>CUDA 11.8.x CUDA 11.7.x CUDA 11.6.x CUDA 11.5.x CUDA 11.4.x CUDA 11.3.x CUDA 11.2.x CUDA 11.1.x</td>
+<td>&gt;&#x3D;450.80.02</td>
+<td>&gt;&#x3D;452.39</td>
+</tr>
+<tr>
+<td>CUDA 11.0 (11.0.3)</td>
+<td>&gt;&#x3D;450.36.06**</td>
+<td>&gt;&#x3D;451.22**</td>
+</tr>
+</tbody></table>
+<p>\</p>
+<table>
+<thead>
+<tr>
+<th>CUDA 12.4 GA</th>
+<th>&gt;&#x3D;550.54.14</th>
+<th>&gt;&#x3D;551.61</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CUDA 12.3 Update 1</td>
+<td>&gt;&#x3D;545.23.08</td>
+<td>&gt;&#x3D;546.12</td>
+</tr>
+<tr>
+<td>CUDA 12.3 GA</td>
+<td>&gt;&#x3D;545.23.06</td>
+<td>&gt;&#x3D;545.84</td>
+</tr>
+<tr>
+<td>CUDA 12.2 Update 2</td>
+<td>&gt;&#x3D;535.104.05</td>
+<td>&gt;&#x3D;537.13</td>
+</tr>
+<tr>
+<td>CUDA 12.2 Update 1</td>
+<td>&gt;&#x3D;535.86.09</td>
+<td>&gt;&#x3D;536.67</td>
+</tr>
+<tr>
+<td>CUDA 12.2 GA</td>
+<td>&gt;&#x3D;535.54.03</td>
+<td>&gt;&#x3D;536.25</td>
+</tr>
+<tr>
+<td>CUDA 12.1 Update 1</td>
+<td>&gt;&#x3D;530.30.02</td>
+<td>&gt;&#x3D;531.14</td>
+</tr>
+<tr>
+<td>CUDA 12.1 GA</td>
+<td>&gt;&#x3D;530.30.02</td>
+<td>&gt;&#x3D;531.14</td>
+</tr>
+<tr>
+<td>CUDA 12.0 Update 1</td>
+<td>&gt;&#x3D;525.85.12</td>
+<td>&gt;&#x3D;528.33</td>
+</tr>
+<tr>
+<td>CUDA 12.0 GA</td>
+<td>&gt;&#x3D;525.60.13</td>
+<td>&gt;&#x3D;527.41</td>
+</tr>
+<tr>
+<td>CUDA 11.8 GA</td>
+<td>&gt;&#x3D;520.61.05</td>
+<td>&gt;&#x3D;520.06</td>
+</tr>
+<tr>
+<td>CUDA 11.7 Update 1</td>
+<td>&gt;&#x3D;515.48.07</td>
+<td>&gt;&#x3D;516.31</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>CUDA Toolkit</th>
+<th>Linux x86_64 Driver Version</th>
+<th>Windows x86_64 Driver Version</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CUDA 11.7 GA</td>
+<td>&gt;&#x3D;515.43.04</td>
+<td>&gt;&#x3D;516.01</td>
+</tr>
+<tr>
+<td>CUDA 11.6 Update 2</td>
+<td>&gt;&#x3D;510.47.03</td>
+<td>&gt;&#x3D;511.65</td>
+</tr>
+<tr>
+<td>CUDA 11.6 Update 1</td>
+<td>&gt;&#x3D;510.47.03</td>
+<td>&gt;&#x3D;511.65</td>
+</tr>
+<tr>
+<td>CUDA 11.6 GA</td>
+<td>&gt;&#x3D;510.39.01</td>
+<td>&gt;&#x3D;511.23</td>
+</tr>
+<tr>
+<td>CUDA 11.5 Update 2</td>
+<td>&gt;&#x3D;495.29.05</td>
+<td>&gt;&#x3D;496.13</td>
+</tr>
+<tr>
+<td>CUDA 11.5 Update 1</td>
+<td>&gt;&#x3D;495.29.05</td>
+<td>&gt;&#x3D;496.13</td>
+</tr>
+<tr>
+<td>CUDA 11.5 GA</td>
+<td>&gt;&#x3D;495.29.05</td>
+<td>&gt;&#x3D;496.04</td>
+</tr>
+<tr>
+<td>CUDA 11.4 Update 4</td>
+<td>&gt;&#x3D;470.82.01</td>
+<td>&gt;&#x3D;472.50</td>
+</tr>
+<tr>
+<td>CUDA 11.4 Update 3</td>
+<td>&gt;&#x3D;470.82.01</td>
+<td>&gt;&#x3D;472.50</td>
+</tr>
+<tr>
+<td>CUDA 11.4 Update 2</td>
+<td>&gt;&#x3D;470.57.02</td>
+<td>&gt;&#x3D;471.41</td>
+</tr>
+<tr>
+<td>CUDA 11.4 Update 1</td>
+<td>&gt;&#x3D;470.57.02</td>
+<td>&gt;&#x3D;471.41</td>
+</tr>
+<tr>
+<td>CUDA 11.4.0 GA</td>
+<td>&gt;&#x3D;470.42.01</td>
+<td>&gt;&#x3D;471.11</td>
+</tr>
+<tr>
+<td>CUDA 11.3.1 Update 1</td>
+<td>&gt;&#x3D;465.19.01</td>
+<td>&gt;&#x3D;465.89</td>
+</tr>
+<tr>
+<td>CUDA 11.3.0 GA</td>
+<td>&gt;&#x3D;465.19.01</td>
+<td>&gt;&#x3D;465.89</td>
+</tr>
+<tr>
+<td>CUDA 11.2.2 Update 2</td>
+<td>&gt;&#x3D;460.32.03</td>
+<td>&gt;&#x3D;461.33</td>
+</tr>
+<tr>
+<td>CUDA 11.2.1 Update 1</td>
+<td>&gt;&#x3D;460.32.03</td>
+<td>&gt;&#x3D;461.09</td>
+</tr>
+<tr>
+<td>CUDA 11.2.0 GA</td>
+<td>&gt;&#x3D;460.27.03</td>
+<td>&gt;&#x3D;460.82</td>
+</tr>
+<tr>
+<td><strong>CUDA 10.2.89</strong></td>
+<td>&gt;&#x3D; 440.33</td>
+<td>&gt;&#x3D; 441.22</td>
+</tr>
+<tr>
+<td>CUDA 10.1 (10.1.105 general release, and updates)</td>
+<td>&gt;&#x3D; 418.39</td>
+<td>&gt;&#x3D; 418.96</td>
+</tr>
+<tr>
+<td><strong>CUDA 10.0.130</strong></td>
+<td>&gt;&#x3D; 410.48</td>
+<td>&gt;&#x3D; 411.31</td>
+</tr>
+<tr>
+<td><strong>CUDA 9.2 (9.2.148 Update 1)</strong></td>
+<td>&gt;&#x3D; 396.37</td>
+<td>&gt;&#x3D; 398.26</td>
+</tr>
+<tr>
+<td>CUDA 9.2 (9.2.88)</td>
+<td>&gt;&#x3D; 396.26</td>
+<td>&gt;&#x3D; 397.44</td>
+</tr>
+<tr>
+<td>CUDA 9.1 (9.1.85)</td>
+<td>&gt;&#x3D; 390.46</td>
+<td>&gt;&#x3D; 391.29</td>
+</tr>
+<tr>
+<td>CUDA 9.0 (9.0.76)</td>
+<td>&gt;&#x3D; 384.81</td>
+<td>&gt;&#x3D; 385.54</td>
+</tr>
+<tr>
+<td>CUDA 8.0 (8.0.61 GA2)</td>
+<td>&gt;&#x3D; 375.26</td>
+<td>&gt;&#x3D; 376.51</td>
+</tr>
+<tr>
+<td>CUDA 8.0 (8.0.44)</td>
+<td>&gt;&#x3D; 367.48</td>
+<td>&gt;&#x3D; 369.30</td>
+</tr>
+<tr>
+<td>CUDA 7.5 (7.5.16)</td>
+<td>&gt;&#x3D; 352.31</td>
+<td>&gt;&#x3D; 353.66</td>
+</tr>
+<tr>
+<td>CUDA 7.0 (7.0.28)</td>
+<td>&gt;&#x3D; 346.46</td>
+<td>&gt;&#x3D; 347.62</td>
+</tr>
+</tbody></table>
+<h2 id="CUDNN"><a href="#CUDNN" class="headerlink" title="CUDNN"></a>CUDNN</h2><p><a target="_blank" rel="noopener" href="https://developer.nvidia.com/rdp/cudnn-download">https://developer.nvidia.com/rdp/cudnn-download</a></p>
+<h2 id="算力评估"><a href="#算力评估" class="headerlink" title="算力评估"></a>算力评估</h2><ul>
+<li>10.1之前的，可以去cuda自带的目录下，编译测试<ul>
+<li>&#x2F;usr&#x2F;local&#x2F;cuda-9.0&#x2F;samples&#x2F;5_simulations&#x2F;</li>
+</ul>
+</li>
+<li>11及之后的版本，需要去GitHub上下载，编译测试<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cuda-samples/tree/master/Samples/4_CUDA_Libraries/batchCUBLAS">Nvidia-cuda-sample batchCBLAS</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="Cuda-GPU"><a href="#Cuda-GPU" class="headerlink" title="Cuda-GPU"></a>Cuda-GPU</h3><table>
+<thead>
+<tr>
+<th>GPU</th>
+<th>Compute Capability</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="https://www.nvidia.com/en-us/geforce/gaming-laptops/#specs">GeForce RTX 3070</a></td>
+<td>8.6</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://www.nvidia.com/en-us/geforce/gaming-laptops/#specs">GeForce RTX 3060</a></td>
+<td>8.6</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CUDA/" rel="tag"># CUDA</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/12/24/ResearchRecord/Papers-Log-2021/" rel="prev" title="Papers Log 2021">
+      <i class="fa fa-chevron-left"></i> Papers Log 2021
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/01/01/Course/ActionGenerated/" rel="next" title="AI应用热点方向">
+      AI应用热点方向 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu%E7%B3%BB%E7%BB%9F%E4%B8%8B%E7%9A%84%E9%A9%B1%E5%8A%A8%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">Ubuntu系统下的驱动安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CUDA"><span class="nav-number">2.</span> <span class="nav-text">CUDA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CUDNN"><span class="nav-number">3.</span> <span class="nav-text">CUDNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E5%8A%9B%E8%AF%84%E4%BC%B0"><span class="nav-number">4.</span> <span class="nav-text">算力评估</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Cuda-GPU"><span class="nav-number">4.1.</span> <span class="nav-text">Cuda-GPU</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

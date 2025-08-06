@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="[TOC] 数据初始化1、readcsv1df &#x3D; pd.read_csv(&#x27;file_path&#x27;)  2、12345df &#x3D; pd.DataFrame(columns&#x3D;[&#x27;index&#x27;, &#x27;v2&#x27;])df[&#x27;index&#x27;] &#x3D; np.arange(10)df[&#x27;v2&#x27;] &#x3D; np.random.r">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tools_pandas APIs">
+<meta property="og:url" content="https://novav.github.io/2020/07/13/Sub_Language/PythonDoc/Language-pd/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="[TOC] 数据初始化1、readcsv1df &#x3D; pd.read_csv(&#x27;file_path&#x27;)  2、12345df &#x3D; pd.DataFrame(columns&#x3D;[&#x27;index&#x27;, &#x27;v2&#x27;])df[&#x27;index&#x27;] &#x3D; np.arange(10)df[&#x27;v2&#x27;] &#x3D; np.random.r">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-07-13T20:20:52.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:40.556Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="pandas">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://novav.github.io/2020/07/13/Sub_Language/PythonDoc/Language-pd/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>tools_pandas APIs | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2020/07/13/Sub_Language/PythonDoc/Language-pd/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          tools_pandas APIs
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-07-13 20:20:52" itemprop="dateCreated datePublished" datetime="2020-07-13T20:20:52+00:00">2020-07-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/python/pandas/" itemprop="url" rel="index"><span itemprop="name">pandas</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>[TOC]</p>
+<h2 id="数据初始化"><a href="#数据初始化" class="headerlink" title="数据初始化"></a>数据初始化</h2><h3 id="1、readcsv"><a href="#1、readcsv" class="headerlink" title="1、readcsv"></a>1、readcsv</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_csv(<span class="string">&#x27;file_path&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2、"><a href="#2、" class="headerlink" title="2、"></a>2、</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">df = pd.DataFrame(columns=[<span class="string">&#x27;index&#x27;</span>, <span class="string">&#x27;v2&#x27;</span>])</span><br><span class="line">df[<span class="string">&#x27;index&#x27;</span>] = np.arange(<span class="number">10</span>)</span><br><span class="line">df[<span class="string">&#x27;v2&#x27;</span>] = np.random.randn(<span class="number">10</span>)</span><br><span class="line"><span class="comment"># 修改某行的v2列值</span></span><br><span class="line">df.loc[df.index==<span class="number">1</span>, <span class="string">&#x27;c&#x27;</span>] = <span class="string">&#x27;9&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3、pd-和np转换"><a href="#3、pd-和np转换" class="headerlink" title="3、pd 和np转换"></a>3、pd 和np转换</h3><p>首先导入numpy模块、pandas模块、创建一个DataFrame类型数据df</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df=pd.DataFrame(&#123;<span class="string">&#x27;A&#x27;</span>:[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],<span class="string">&#x27;B&#x27;</span>:[<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>],<span class="string">&#x27;C&#x27;</span>:[<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>]&#125;)</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span>使用DataFrame中的values方法</span><br><span class="line">df.values</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>使用DataFrame中的as_matrix()方法</span><br><span class="line">df.as_matrix()</span><br><span class="line"></span><br><span class="line"><span class="number">3.</span>使用Numpy中的array方法</span><br><span class="line">np.array(df)</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>语法</th>
+<th>操作</th>
+<th>返回结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>df.head(n)</code></td>
+<td>查看 DataFrame 对象的前n行</td>
+<td>DataFrame</td>
+</tr>
+<tr>
+<td><code>df.tail(n)</code></td>
+<td>查看 DataFrame 对象的最后n行</td>
+<td>DataFrame</td>
+</tr>
+<tr>
+<td><code>df.sample(n)</code></td>
+<td>查看 n 个样本，随机</td>
+<td>DataFrame</td>
+</tr>
+</tbody></table>
+<h2 id="读取列"><a href="#读取列" class="headerlink" title="读取列"></a>读取列</h2><p>以下两种方法都可以代表一列：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">df[<span class="string">&#x27;name&#x27;</span>] <span class="comment"># 会返回本列的 Series</span></span><br><span class="line">df.name</span><br><span class="line">df.Q1</span><br><span class="line"><span class="comment"># df.1Q 即使列名叫 1Q 也无法使用</span></span><br><span class="line"><span class="comment"># df.my name 有空格也无法调用，可以处理加上下划线</span></span><br></pre></td></tr></table></figure>
+
+<p>注意，当列名为一个合法的 python 变量时可以直接作为属性去使用。</p>
+<h2 id="读取部分行列"><a href="#读取部分行列" class="headerlink" title="读取部分行列"></a>读取部分行列</h2><p>有时我们需要按条件选择部分列、部分行，一般常用的有：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>语法</th>
+<th>返回结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>选择列</td>
+<td><code>df[col]</code></td>
+<td>Series</td>
+</tr>
+<tr>
+<td>按索引选择行</td>
+<td><code>df.loc[label]</code></td>
+<td>Series</td>
+</tr>
+<tr>
+<td>按数字索引选择行</td>
+<td><code>df.iloc[loc]</code></td>
+<td>Series</td>
+</tr>
+<tr>
+<td>使用切片选择行</td>
+<td><code>df[5:10]</code></td>
+<td>DataFrame</td>
+</tr>
+<tr>
+<td>用表达式筛选行</td>
+<td><code>df[bool_vec]</code></td>
+<td>DataFrame</td>
+</tr>
+</tbody></table>
+<p>以上操作称为 Fancy Indexing（花式索引），它来自 Numpy，是指传递一个索引序列，然后一次性得到多个索引元素。Fancy Indexing 和 slicing 不同，它通常将元素拷贝到新的数据对象中。索引中可以有切片 slice，或者省略 ellipsis、新轴 newaxis、布尔数组或者整数数组索引等，可以看做是一个多维切片。</p>
+<p>接下来我们将重点介绍一下这些查询的方法。</p>
+<h2 id="数据遍历"><a href="#数据遍历" class="headerlink" title="数据遍历"></a>数据遍历</h2><h3 id="1-使用-iterrows"><a href="#1-使用-iterrows" class="headerlink" title="1. 使用 .iterrows()"></a>1. 使用 <code>.iterrows()</code></h3><p><code>iterrows()</code> 方法返回 DataFrame 的索引标签和相应的行数据。这是一个迭代器，它会产生 (index, Series) 对，其中索引是行索引（如果有），Series 是该行的数据。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建示例 DataFrame</span></span><br><span class="line">data = &#123;<span class="string">&#x27;A&#x27;</span>: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], <span class="string">&#x27;B&#x27;</span>: [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]&#125;</span><br><span class="line">df = pd.DataFrame(data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 遍历每一行</span></span><br><span class="line"><span class="keyword">for</span> index, row <span class="keyword">in</span> df.iterrows():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Index: <span class="subst">&#123;index&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Row data: <span class="subst">&#123;row&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>()</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-使用-itertuples"><a href="#2-使用-itertuples" class="headerlink" title="2. 使用 .itertuples()"></a>2. 使用 <code>.itertuples()</code></h3><p><code>itertuples()</code> 方法返回一个迭代器，用于迭代 DataFrame 行作为命名元组。这种方式比使用 <code>iterrows()</code> 更快一些，因为不需要创建 Series 对象。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 遍历每一行</span></span><br><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> df.itertuples(index=<span class="literal">True</span>, name=<span class="string">&#x27;Pandas&#x27;</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Index: <span class="subst">&#123;row.Index&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Data: A=<span class="subst">&#123;row.A&#125;</span>, B=<span class="subst">&#123;row.B&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>()</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-使用-apply"><a href="#3-使用-apply" class="headerlink" title="3. 使用 .apply()"></a>3. 使用 <code>.apply()</code></h3><p><code>apply()</code> 方法可以应用于整个 DataFrame 或者沿着一个轴应用到每一列或每一行上。这里我们使用 <code>axis=1</code> 来对每一行应用函数。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">process_row</span>(<span class="params">row</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Processing row: <span class="subst">&#123;row&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">df.apply(process_row, axis=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-使用-loc-或-iloc"><a href="#4-使用-loc-或-iloc" class="headerlink" title="4. 使用 .loc 或 .iloc"></a>4. 使用 <code>.loc</code> 或 <code>.iloc</code></h3><p>如果你想要更灵活地访问特定行或列的数据，可以使用 <code>.loc</code> 或 <code>.iloc</code> 方法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用 .loc 按照标签索引访问</span></span><br><span class="line"><span class="keyword">for</span> index <span class="keyword">in</span> df.index:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Index: <span class="subst">&#123;index&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Row data: <span class="subst">&#123;df.loc[index]&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 .iloc 按照位置索引访问</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(df)):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Row <span class="subst">&#123;i&#125;</span> data: <span class="subst">&#123;df.iloc[i]&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>()</span><br></pre></td></tr></table></figure>
+
+<h2 id="切片-行-列"><a href="#切片-行-列" class="headerlink" title="切片 [行&#x2F;列]"></a>切片 [行&#x2F;列]</h2><p>我们可以像列表那样利用切片功能选择部分行的数据，但是不支持索引一条：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">df[:2] # 前两行数据</span><br><span class="line">df[4:10]</span><br><span class="line">df[:] # 所有数据，一般没这么用的</span><br><span class="line">df[:10:2] # 按步长取</span><br><span class="line">s[::-1] # 反转顺序</span><br></pre></td></tr></table></figure>
+
+<p>也可以选择列：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">df[&#x27;name&#x27;] # 只要一列，Series</span><br><span class="line">df[[&#x27;Q1&#x27;, &#x27;Q2&#x27;]] # 选择两列</span><br><span class="line">df[[&#x27;name&#x27;]] # 选择一列，返回 DataFrame，注意和上例区别</span><br></pre></td></tr></table></figure>
+
+<h3 id="按标签-loc（行）"><a href="#按标签-loc（行）" class="headerlink" title="按标签 .loc（行）"></a>按标签 .loc（行）</h3><p><code>df.loc()</code> 的格式为 df.loc[&lt;索引表达式&gt;, &lt;列表达式&gt;]，表达式支持以下形式：</p>
+<p>单个标签:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 代表索引，如果是字符需要加引号</span></span><br><span class="line">df.loc[<span class="number">0</span>] <span class="comment"># 选择索引为 0 的行</span></span><br><span class="line">df.loc[<span class="number">8</span>]</span><br></pre></td></tr></table></figure>
+
+<p>单个列表标签：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">name, value, socre, grade</span><br><span class="line">Eli,9,23,C</span><br><span class="line">Ben,8,89,A</span><br><span class="line">Tom,7,65,B</span><br><span class="line">Toni,6,34,C</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">df.loc[[<span class="number">0</span>,<span class="number">5</span>,<span class="number">10</span>]] <span class="comment"># 指定索引 0，5，10 的行</span></span><br><span class="line">df.loc[[<span class="string">&#x27;Eli&#x27;</span>, <span class="string">&#x27;Ben&#x27;</span>]] <span class="comment"># 如果行索引是 name，提取所有列</span></span><br><span class="line">df.loc[[<span class="string">&#x27;Eli&#x27;</span>, <span class="string">&#x27;Ben&#x27;</span>],[<span class="string">&quot;name&quot;</span>, <span class="string">&quot;grade&quot;</span>]] <span class="comment"># 如果行索引是 name, 提取指定列</span></span><br><span class="line">df.loc[:,[<span class="string">&quot;name&quot;</span>, <span class="string">&quot;grade&quot;</span>]]</span><br><span class="line"><span class="comment"># 真假选择，长度要和索引一样</span></span><br><span class="line">df.loc[[<span class="literal">False</span>, <span class="literal">True</span>]*<span class="number">50</span>] <span class="comment"># 为真的列显示，隔一个显示一个</span></span><br></pre></td></tr></table></figure>
+
+<p>带标签的切片，包括起始和停止<code>start:stop</code>， 可以其中只有一个，返回包括它们的数据：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">df.loc[<span class="number">0</span>:<span class="number">5</span>] <span class="comment"># 索引切片, 代表0-5行，包括5</span></span><br><span class="line">df.loc[<span class="string">&#x27;2010&#x27;</span>:<span class="string">&#x27;2014&#x27;</span>] <span class="comment"># 如果索引是时间可以用字符查询</span></span><br><span class="line">df.loc[:] <span class="comment"># 所有</span></span><br><span class="line"><span class="comment"># 本方法支持 Series</span></span><br></pre></td></tr></table></figure>
+
+<p>关于 loc 的更详细介绍可访问：<a target="_blank" rel="noopener" href="https://www.gairuo.com/p/pandas-loc">loc 查询数据行和列</a>。</p>
+<p>进行切片操作，索引必须经过排序，意味着索引单调递增或者单调递减，以下代码中其中一个为 True，否则会引发 <code>KeyError</code> 错误。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 索引单调性</span></span><br><span class="line">(</span><br><span class="line">    df.index.is_monotonic_increasing,</span><br><span class="line">    df.index.is_monotonic_decreasing</span><br><span class="line">)</span><br><span class="line"><span class="comment"># (True, False)</span></span><br></pre></td></tr></table></figure>
+
+<p>通过上边的规则可以先对索引排序再执行词义上的查询，如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 姓名开头从 Ad 到 Bo 的</span></span><br><span class="line">df.set_index(<span class="string">&#x27;name&#x27;</span>).sort_index().loc[<span class="string">&#x27;Ad&#x27;</span>:<span class="string">&#x27;Bo&#x27;</span>]</span><br><span class="line"><span class="comment"># 姓名开头从开始到 Bo 的</span></span><br><span class="line">df.set_index(<span class="string">&#x27;name&#x27;</span>).sort_index().loc[:<span class="string">&#x27;Bo&#x27;</span>]</span><br><span class="line"><span class="comment"># 团队名称从 C 到 D 的</span></span><br><span class="line">df.set_index(<span class="string">&#x27;team&#x27;</span>).sort_index().loc[<span class="string">&#x27;C&#x27;</span>: <span class="string">&#x27;D&#x27;</span>]</span><br><span class="line"><span class="comment"># 姓名开头从 Te 到 X 的</span></span><br><span class="line">df.sort_values(<span class="string">&#x27;name&#x27;</span>).set_index(<span class="string">&#x27;name&#x27;</span>).loc[<span class="string">&#x27;Te&#x27;</span>: <span class="string">&#x27;X&#x27;</span>]</span><br></pre></td></tr></table></figure>
+
+<p>列筛选，必须有行元素：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dft.loc[:, [<span class="string">&#x27;Q1&#x27;</span>, <span class="string">&#x27;Q2&#x27;</span>]] <span class="comment"># 所有行，Q1 和 Q2两列</span></span><br><span class="line">dft.loc[:, [<span class="string">&#x27;Q1&#x27;</span>, <span class="string">&#x27;Q2&#x27;</span>]] <span class="comment"># 所有行，Q1 和 Q2两列</span></span><br><span class="line">dft.loc[:<span class="number">10</span>, <span class="string">&#x27;Q1&#x27;</span>:] <span class="comment"># 0-10 行，Q1后边的所有列</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="按位置-iloc"><a href="#按位置-iloc" class="headerlink" title="按位置 .iloc"></a>按位置 .iloc</h3><p><code>df.iloc</code> 与 <code>df.loc</code> 相似，但只能用自然索引（行和列的 0 - n 索引），不能用标签。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">df.iloc[:3]</span><br><span class="line">df.iloc[:]</span><br><span class="line">df.iloc[:, [1, 2]]</span><br><span class="line">df.iloc[2:20:3]</span><br><span class="line">s.iloc[:3]</span><br></pre></td></tr></table></figure>
+
+<p>如果想筛选多个不连续的行列数据（使用 <code>np.r_</code>），可以使用以下方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 筛选索引0-4&amp;10&amp;5-29每两行取一个&amp;70-74</span><br><span class="line">df.iloc[np.r_[:5, 10, 15:30:2, 70:75]] # 行</span><br><span class="line">df.iloc[:, np.r_[0, 2:6]] # 列，0列和第2-5列</span><br><span class="line"># 也可以使用追加的方式拼接</span><br><span class="line">df.loc[:5].append(df.loc[10]).append(df.loc[15:30:2])</span><br></pre></td></tr></table></figure>
+
+<p>关于 iloc 的更详细介绍可访问：<a target="_blank" rel="noopener" href="https://www.gairuo.com/p/pandas-iloc">iloc 数字索引位置选择</a>。</p>
+<h3 id="取具体值-at"><a href="#取具体值-at" class="headerlink" title="取具体值 .at"></a>取具体值 .at</h3><p>类似于 loc, 但仅取一个具体的值，结构为 at[&lt;索引&gt;,&lt;列名&gt;]：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 注：索引是字符需要加引号</span></span><br><span class="line">df.at[<span class="number">4</span>, <span class="string">&#x27;Q1&#x27;</span>] <span class="comment"># 65</span></span><br><span class="line">df.at[<span class="string">&#x27;lily&#x27;</span>, <span class="string">&#x27;Q1&#x27;</span>] <span class="comment"># 65 假定索引是 name</span></span><br><span class="line">df.at[<span class="number">0</span>, <span class="string">&#x27;name&#x27;</span>] <span class="comment"># &#x27;Liver&#x27;</span></span><br><span class="line">df.loc[<span class="number">0</span>].at[<span class="string">&#x27;name&#x27;</span>] <span class="comment"># &#x27;Liver&#x27;</span></span><br><span class="line"><span class="comment"># 指定列的值对应其他列的值</span></span><br><span class="line">df.set_index(<span class="string">&#x27;name&#x27;</span>).at[<span class="string">&#x27;Eorge&#x27;</span>, <span class="string">&#x27;team&#x27;</span>] <span class="comment"># &#x27;C&#x27;</span></span><br><span class="line">df.set_index(<span class="string">&#x27;name&#x27;</span>).team.at[<span class="string">&#x27;Eorge&#x27;</span>] <span class="comment"># &#x27;C&#x27;</span></span><br><span class="line"><span class="comment"># 指定列的对应索引的值</span></span><br><span class="line">df.team.at[<span class="number">3</span>] <span class="comment"># &#x27;C&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>同样 iat 和 iloc 一样，仅支持数字索引：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df.iat[<span class="number">4</span>, <span class="number">2</span>] <span class="comment"># 65</span></span><br><span class="line">df.loc[<span class="number">0</span>].iat[<span class="number">1</span>] <span class="comment"># &#x27;E&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>.get 可以做类似字典的操作，如果无值给返回默认值（例中是0）：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">df.get(<span class="string">&#x27;name&#x27;</span>, <span class="number">0</span>) <span class="comment"># 是 name 列</span></span><br><span class="line">df.get(<span class="string">&#x27;nameXXX&#x27;</span>, <span class="number">0</span>) <span class="comment"># 0, 返回默认值</span></span><br><span class="line">s.get(<span class="number">3</span>, <span class="number">0</span>) <span class="comment"># 93, Series 传索引返回具体值</span></span><br><span class="line">df.name.get(<span class="number">99</span>, <span class="number">0</span>) <span class="comment"># &#x27;Ben&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="表达式筛选"><a href="#表达式筛选" class="headerlink" title="表达式筛选"></a>表达式筛选</h3><p><code>[]</code> 切片里可以使用表达式进行筛选：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">df[df[&#x27;Q1&#x27;] == 8] # Q1 等于8</span><br><span class="line">df[~(df[&#x27;Q1&#x27;] == 8)] # 不等于8</span><br><span class="line">df[df.name == &#x27;Ben&#x27;] # 姓名为Ben</span><br><span class="line">df.loc[df[&#x27;Q1&#x27;] &gt; 90, &#x27;Q1&#x27;:]  # Q1 大于90，显示Q1后边的所有列</span><br><span class="line">df.loc[(df.Q1 &gt; 80) &amp; (df.Q2 &lt; 15)] # and 关系</span><br><span class="line">df.loc[(df.Q1 &gt; 90) | (df.Q2 &lt; 90)] # or 关系</span><br><span class="line">df[df.Q1 &gt; df.Q2]</span><br></pre></td></tr></table></figure>
+
+<p><code>df.loc</code> 里的索引部分可以使用表达式进行数据筛选。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">df.loc[df[&#x27;Q1&#x27;] == 8] # 等于8</span><br><span class="line">df.loc[df.Q1 == 8] # 等于8</span><br><span class="line">df.loc[df[&#x27;Q1&#x27;] &gt; 90, &#x27;Q1&#x27;] # Q1 大于90，只显示 Q1 Series</span><br><span class="line">df.loc[df[&#x27;Q1&#x27;] &gt; 90, [&#x27;Q1&#x27;]]  # Q1 大于90，只显示 Q1 DataFrame</span><br><span class="line"># 其他表达式与切片一致</span><br><span class="line"></span><br><span class="line"># 通过列位置筛选列</span><br><span class="line">df.loc[:, lambda df: df.columns.str.len()==4] # 真假组成的序列</span><br><span class="line">df.loc[:, lambda df: [i for i in df.columns if &#x27;Q&#x27; in i]] # 列名列表</span><br><span class="line">df.iloc[:3, lambda df: df.columns.str.len()==2] # 真假组成的序列</span><br></pre></td></tr></table></figure>
+
+<p>逻辑判断和函数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">df.eq() # 等于相等 ==</span><br><span class="line">df.ne() # 不等于 !=</span><br><span class="line">df.le() # 小于等于 &gt;=</span><br><span class="line">df.lt() # 小于 &lt;</span><br><span class="line">df.ge() # 大于等于 &gt;=</span><br><span class="line">df.gt() # 大于 &gt;</span><br><span class="line"># 都支持  axis&#123;0 or ‘index’, 1 or ‘columns’&#125;, default ‘columns’</span><br><span class="line">df[df.Q1.ne(89)] # Q1 不等于8</span><br><span class="line">df.loc[df.Q1.gt(90) &amp; df.Q2.lt(90)] # and 关系 Q1&gt;90 Q2&lt;90</span><br></pre></td></tr></table></figure>
+
+<p>其他函数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># isin</span><br><span class="line">df[df.team.isin([&#x27;A&#x27;,&#x27;B&#x27;])] # 包含 AB 两组的</span><br><span class="line">df[df.isin(&#123;&#x27;team&#x27;: [&#x27;C&#x27;, &#x27;D&#x27;], &#x27;Q1&#x27;:[36,93]&#125;)] # 复杂查询，其他值为 NaN</span><br></pre></td></tr></table></figure>
+
+<h3 id="函数筛选"><a href="#函数筛选" class="headerlink" title="函数筛选"></a>函数筛选</h3><p>函数生成具体的标签值或者同长度对应布尔索引，作用于筛选：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">df[lambda df: df[&#x27;Q1&#x27;] == 8] # Q1为8的</span><br><span class="line">df.loc[lambda df: df.Q1 == 8, &#x27;Q1&#x27;:&#x27;Q2&#x27;] # Q1为8的, 显示 Q1 Q2</span><br><span class="line"># 选择字段时尽量使用字典法，属性法在条件表达式时一些情况可能有 bug</span><br></pre></td></tr></table></figure>
+
+<p>函数不仅能应用在行位上，也能应用在列位上。</p>
+<h2 id="str查询"><a href="#str查询" class="headerlink" title="str查询"></a>str查询</h2><h3 id="模糊查询"><a href="#模糊查询" class="headerlink" title="模糊查询"></a>模糊查询</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">data[data.列名.<span class="built_in">str</span>.contains()]</span><br><span class="line">data[data.列名.<span class="built_in">str</span>.contains(<span class="string">&#x27;^某某&#x27;</span>)]</span><br><span class="line">data[data.列名.<span class="built_in">str</span>.contains(<span class="string">&#x27;某某&#x27;</span>)]</span><br><span class="line">data[data.列名.<span class="built_in">str</span>.contains(<span class="string">&#x27;某某$&#x27;</span>)]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">data[<span class="string">&#x27;列名&#x27;</span>]=data[<span class="string">&#x27;列名&#x27;</span>].apply(<span class="built_in">str</span>)<span class="comment">#把非字符串格式改为字符串格式</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#// 多条件查询</span></span><br><span class="line">data[data.source.<span class="built_in">str</span>.contains(<span class="string">&#x27;某某|某某1&#x27;</span>)]</span><br><span class="line"><span class="comment"># 对条件查询结果进行删除</span></span><br><span class="line">data[-data.source.<span class="built_in">str</span>.contains(<span class="string">&#x27;某某|某某1&#x27;</span>)]</span><br><span class="line"></span><br><span class="line"><span class="comment">#数据框去重</span></span><br><span class="line">DataFrame.drop_duplicates(subset=<span class="literal">None</span>,keep=<span class="string">&#x27;first&#x27;</span>,inplace=<span class="literal">False</span>)</span><br><span class="line"><span class="comment">#    按某列去重</span></span><br><span class="line">data.drop_duplicates(subset=<span class="string">&#x27;列名&#x27;</span>,keep=<span class="string">&#x27;first&#x27;</span>,inplace=<span class="literal">False</span>)</span><br><span class="line"><span class="comment">#    按多列去重</span></span><br><span class="line">data.drop_duplicates(subset=[<span class="string">&#x27;列名&#x27;</span>,<span class="string">&#x27;列名1&#x27;</span>],keep=<span class="string">&#x27;first&#x27;</span>,inplace=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="df内置方法"><a href="#df内置方法" class="headerlink" title="df内置方法"></a>df内置方法</h2><h3 id="where-和-mask"><a href="#where-和-mask" class="headerlink" title="where 和 mask"></a>where 和 mask</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">s.where(s &gt; <span class="number">90</span>) <span class="comment"># 不符合条件的为 NaN</span></span><br><span class="line">s.where(s &gt; <span class="number">90</span>, <span class="number">0</span>) <span class="comment"># 不符合条件的为 0</span></span><br><span class="line"><span class="comment"># np.where, 大于80是真否则是假</span></span><br><span class="line">np.where(s&gt;<span class="number">80</span>, <span class="literal">True</span>, <span class="literal">False</span>)</span><br><span class="line">np.where(df.num&gt;=<span class="number">60</span>, <span class="string">&#x27;合格&#x27;</span>, <span class="string">&#x27;不合格&#x27;</span>)</span><br><span class="line"></span><br><span class="line">s.mask(s &gt; <span class="number">90</span>) <span class="comment"># 符合条件的为 NaN</span></span><br><span class="line">s.mask(s &gt; <span class="number">90</span>, <span class="number">0</span>) <span class="comment"># 符合条件的为 0</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 例：能被整除的显示，不能的显示相反数</span></span><br><span class="line">m = df.loc[:,<span class="string">&#x27;Q1&#x27;</span>:<span class="string">&#x27;Q4&#x27;</span>] % <span class="number">3</span> == <span class="number">0</span></span><br><span class="line">df.loc[:,<span class="string">&#x27;Q1&#x27;</span>:<span class="string">&#x27;Q4&#x27;</span>].where(m, -df.loc[:,<span class="string">&#x27;Q1&#x27;</span>:<span class="string">&#x27;Q4&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 行列相同数量，返回一个 array</span></span><br><span class="line">df.lookup([<span class="number">1</span>,<span class="number">3</span>,<span class="number">4</span>], [<span class="string">&#x27;Q1&#x27;</span>,<span class="string">&#x27;Q2&#x27;</span>,<span class="string">&#x27;Q3&#x27;</span>]) <span class="comment"># array([36, 96, 61])</span></span><br><span class="line">df.lookup([<span class="number">1</span>], [<span class="string">&#x27;Q1&#x27;</span>]) <span class="comment"># array([36])</span></span><br></pre></td></tr></table></figure>
+
+<p>mask 和 where 还可以通过数据筛选返回布尔序列：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 返回布尔序列，符合条件的行为 True</span><br><span class="line">(df.where((df.team==&#x27;A&#x27;) &amp; (df.Q1&gt;60)) == df).Q1</span><br><span class="line"></span><br><span class="line"># 返回布尔序列，符合条件的行为 False</span><br><span class="line">(df.mask((df.team==&#x27;A&#x27;) &amp; (df.Q1&gt;60)) == df).Q1</span><br></pre></td></tr></table></figure>
+
+<h3 id="query"><a href="#query" class="headerlink" title="query"></a>query</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">df.query(<span class="string">&#x27;Q1 &gt; Q2 &gt; 90&#x27;</span>) <span class="comment"># 直接写类型 sql where 语句</span></span><br><span class="line">df.query(<span class="string">&#x27;Q1 + Q2 &gt; 180&#x27;</span>)</span><br><span class="line">df.query(<span class="string">&#x27;Q1 == Q2&#x27;</span>)</span><br><span class="line">df.query(<span class="string">&#x27;(Q1&lt;50) &amp; (Q2&gt;40) and (Q3&gt;90)&#x27;</span>)</span><br><span class="line">df.query(<span class="string">&#x27;Q1 &gt; Q2 &gt; Q3 &gt; Q4&#x27;</span>)</span><br><span class="line">df.query(<span class="string">&#x27;team != &quot;C&quot;&#x27;</span>)</span><br><span class="line">df.query(<span class="string">&#x27;team in [&quot;A&quot;,&quot;B&quot;]&#x27;</span>)</span><br><span class="line">df.query(<span class="string">&#x27;team not in (&quot;E&quot;,&quot;A&quot;,&quot;B&quot;)&#x27;</span>)</span><br><span class="line">df.query(<span class="string">&#x27;name.str.contains(&quot;am&quot;)&#x27;</span>) <span class="comment"># 包含 am 字符</span></span><br><span class="line"><span class="comment"># 对于名称中带有空格的列，可以使用反引号引起来</span></span><br><span class="line">df.query(<span class="string">&#x27;B == `team name`&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 支持传入变量，如：大于平均分40分的</span></span><br><span class="line">a = df.Q1.mean()</span><br><span class="line">df.query(<span class="string">&#x27;Q1 &gt; @a+40&#x27;</span>)</span><br><span class="line">df.query(<span class="string">&#x27;Q1 &gt; `Q2`+@a&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># df.eval() 用法与 df.query 类似</span></span><br><span class="line">df[df.<span class="built_in">eval</span>(<span class="string">&quot;Q1 &gt; 90 &gt; Q3 &gt; 10&quot;</span>)]</span><br><span class="line">df[df.<span class="built_in">eval</span>(<span class="string">&quot;Q1 &gt; `Q2`+@a&quot;</span>)]</span><br></pre></td></tr></table></figure>
+
+<h3 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h3><p>使用 filter 可以对行名和列名进行筛选。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">df.<span class="built_in">filter</span>(items=[<span class="string">&#x27;Q1&#x27;</span>, <span class="string">&#x27;Q2&#x27;</span>]) <span class="comment"># 选择两列</span></span><br><span class="line">df.<span class="built_in">filter</span>(regex=<span class="string">&#x27;Q&#x27;</span>, axis=<span class="number">1</span>) <span class="comment"># 列名包含Q的</span></span><br><span class="line">df.<span class="built_in">filter</span>(regex=<span class="string">&#x27;e$&#x27;</span>, axis=<span class="number">1</span>) <span class="comment"># 以 e 结尾的</span></span><br><span class="line">df.<span class="built_in">filter</span>(regex=<span class="string">&#x27;1$&#x27;</span>, axis=<span class="number">0</span>) <span class="comment"># 正则, 索引名包含1的</span></span><br><span class="line">df.<span class="built_in">filter</span>(like=<span class="string">&#x27;2&#x27;</span>, axis=<span class="number">0</span>) <span class="comment"># 索引中有2的</span></span><br><span class="line"><span class="comment"># 索引中2开头列名有Q的</span></span><br><span class="line">df.<span class="built_in">filter</span>(regex=<span class="string">&#x27;^2&#x27;</span>, axis=<span class="number">0</span>).<span class="built_in">filter</span>(like=<span class="string">&#x27;Q&#x27;</span>, axis=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>关于 filter 的详细介绍，可以查阅：<a target="_blank" rel="noopener" href="https://www.gairuo.com/p/pandas-filter">Pandas filter 筛选标签</a>。</p>
+<h3 id="索引选择器-pd-IndexSlice"><a href="#索引选择器-pd-IndexSlice" class="headerlink" title="索引选择器 pd.IndexSlice"></a>索引选择器 pd.IndexSlice</h3><p><code>pd.IndexSlice</code> 的使用方法类似于<code>df.loc[]</code> 切片中的方法，常用在多层索引中，以及需要指定应用范围（subset 参数）的函数中，特别是在链式方法中。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">df.loc[pd.IndexSlice[:, [&#x27;Q1&#x27;, &#x27;Q2&#x27;]]]</span><br><span class="line"># 变量化使用</span><br><span class="line">idx = pd.IndexSlice</span><br><span class="line">df.loc[idx[:, [&#x27;Q1&#x27;, &#x27;Q2&#x27;]]]</span><br><span class="line">df.loc[idx[:, &#x27;Q1&#x27;:&#x27;Q4&#x27;], :] # 多索引</span><br></pre></td></tr></table></figure>
+
+<p>复杂的选择：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 创建复杂条件选择器</span><br><span class="line">selected = df.loc[(df.team==&#x27;A&#x27;) &amp; (df.Q1&gt;90)]</span><br><span class="line">idxs = pd.IndexSlice[selected.index, &#x27;name&#x27;]</span><br><span class="line"># 应用选择器</span><br><span class="line">df.loc[idxs]</span><br><span class="line"># 选择这部分区域加样式（样式功能见教程后文介绍）</span><br><span class="line">df.style.applymap(style_fun, subset=idxs)</span><br></pre></td></tr></table></figure>
+
+<h3 id="按数据类型"><a href="#按数据类型" class="headerlink" title="按数据类型"></a>按数据类型</h3><p>可以只选择或者排除指定类型数据：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">df.select_dtypes(include=[<span class="string">&#x27;float64&#x27;</span>]) <span class="comment"># 选择 float64 型数据</span></span><br><span class="line">df.select_dtypes(include=<span class="string">&#x27;bool&#x27;</span>)</span><br><span class="line">df.select_dtypes(include=[<span class="string">&#x27;number&#x27;</span>]) <span class="comment"># 只取数字型</span></span><br><span class="line">df.select_dtypes(exclude=[<span class="string">&#x27;int&#x27;</span>]) <span class="comment"># 排除 int 类型</span></span><br><span class="line">df.select_dtypes(exclude=[<span class="string">&#x27;datetime64&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+<h3 id="any-和-all"><a href="#any-和-all" class="headerlink" title="any 和 all"></a>any 和 all</h3><p>any 方法如果至少有一个值为 True 是便为 True，all 需要所有值为 True 才为 True。它们可以传入 axis 为 1，会按行检测。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Q1 Q2 成绩全为 80 分的</span></span><br><span class="line">df[(df.loc[:,[<span class="string">&#x27;Q1&#x27;</span>,<span class="string">&#x27;Q2&#x27;</span>]] &gt; <span class="number">80</span>).<span class="built_in">all</span>(<span class="number">1</span>)]</span><br><span class="line"><span class="comment"># Q1 Q2 成绩至少有一个 80 分的</span></span><br><span class="line">df[(df.loc[:,[<span class="string">&#x27;Q1&#x27;</span>,<span class="string">&#x27;Q2&#x27;</span>]] &gt; <span class="number">80</span>).<span class="built_in">any</span>(<span class="number">1</span>)]</span><br></pre></td></tr></table></figure>
+
+<h3 id="理解筛选原理"><a href="#理解筛选原理" class="headerlink" title="理解筛选原理"></a>理解筛选原理</h3><p>df[&lt;表达式&gt;] 里边的表达式如果单独拿出来，可以看到：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">df.Q1.gt(90)</span><br><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">0     False</span><br><span class="line">1     False</span><br><span class="line">2     False</span><br><span class="line">3      True</span><br><span class="line">4     False</span><br><span class="line">      ...</span><br><span class="line">Name: Q1, Length: 100, dtype: bool</span><br><span class="line">&#x27;&#x27;&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>会有一个由真假值组成的数据，筛选后的结果就是为 True 的内容。</p>
+<h3 id="mean-median-unique-value-count"><a href="#mean-median-unique-value-count" class="headerlink" title="mean() &#x2F; median() &#x2F; unique() &#x2F; value_count()"></a>mean() &#x2F; median() &#x2F; unique() &#x2F; value_count()</h3><ul>
+<li><p>mean()</p>
+</li>
+<li><p>median()</p>
+</li>
+<li><p>unique()</p>
+</li>
+<li><p>value_count()</p>
+</li>
+</ul>
+<h3 id="map-apply"><a href="#map-apply" class="headerlink" title="map &amp; apply"></a>map &amp; apply</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Series数据修改，返回当前列的series</span></span><br><span class="line">review_points_mean = reviews.points.mean()</span><br><span class="line">reviews.points.<span class="built_in">map</span>(<span class="keyword">lambda</span> p: p - review_points_mean)</span><br><span class="line"></span><br><span class="line"><span class="comment"># DataFrame 引用修改，返回完整的DF数据</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">remean_points</span>(<span class="params">row</span>):</span><br><span class="line">    row.points = row.points - review_points_mean</span><br><span class="line">    <span class="keyword">return</span> row</span><br><span class="line"></span><br><span class="line">reviews.apply(remean_points, axis=<span class="string">&#x27;columns&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="案例实操"><a href="#案例实操" class="headerlink" title="案例实操"></a>案例实操</h2><h3 id="获取指定值的索引"><a href="#获取指定值的索引" class="headerlink" title="获取指定值的索引"></a>获取指定值的索引</h3><p>有时候我们需要知道指定值所在的位置，即一个值在表中的索引，可以使用以一下方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 指定值的的索引对</span><br><span class="line">np.argwhere(df.values == &#x27;Eorge&#x27;)</span><br><span class="line"># array([[3, 0]])</span><br><span class="line"># 值为 90 的索引对</span><br><span class="line">np.argwhere(df.values == 90)</span><br><span class="line">&#x27;&#x27;&#x27;</span><br><span class="line">array([[33,  2],</span><br><span class="line">       [64,  5]])</span><br><span class="line">&#x27;&#x27;&#x27;</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改某行某列的值"><a href="#修改某行某列的值" class="headerlink" title="修改某行某列的值"></a>修改某行某列的值</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">x2 = pd.read_csv(<span class="string">&quot;submit.csv&quot;</span>)</span><br><span class="line"><span class="comment"># 修改id==80000的行，&#x27;isDefault&#x27;的值</span></span><br><span class="line">x2.loc[x2.<span class="built_in">id</span>==<span class="number">800000</span>,<span class="string">&#x27;isDefault&#x27;</span>] = <span class="number">1</span></span><br><span class="line">x2</span><br></pre></td></tr></table></figure>
+
+<h2 id="相关内容"><a href="#相关内容" class="headerlink" title="相关内容"></a>相关内容</h2>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/pandas/" rel="tag"># pandas</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/07/12/Improve/2020-Plan/" rel="prev" title="2020_PLAN">
+      <i class="fa fa-chevron-left"></i> 2020_PLAN
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/07/15/Sub_Language/DL_Train/Pytorch/doc-pytorch/" rel="next" title="PyTorch Doc Detail">
+      PyTorch Doc Detail <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">1.</span> <span class="nav-text">数据初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81readcsv"><span class="nav-number">1.1.</span> <span class="nav-text">1、readcsv</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81"><span class="nav-number">1.2.</span> <span class="nav-text">2、</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81pd-%E5%92%8Cnp%E8%BD%AC%E6%8D%A2"><span class="nav-number">1.3.</span> <span class="nav-text">3、pd 和np转换</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96%E5%88%97"><span class="nav-number">2.</span> <span class="nav-text">读取列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96%E9%83%A8%E5%88%86%E8%A1%8C%E5%88%97"><span class="nav-number">3.</span> <span class="nav-text">读取部分行列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%81%8D%E5%8E%86"><span class="nav-number">4.</span> <span class="nav-text">数据遍历</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%BD%BF%E7%94%A8-iterrows"><span class="nav-number">4.1.</span> <span class="nav-text">1. 使用 .iterrows()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%BD%BF%E7%94%A8-itertuples"><span class="nav-number">4.2.</span> <span class="nav-text">2. 使用 .itertuples()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%BD%BF%E7%94%A8-apply"><span class="nav-number">4.3.</span> <span class="nav-text">3. 使用 .apply()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E4%BD%BF%E7%94%A8-loc-%E6%88%96-iloc"><span class="nav-number">4.4.</span> <span class="nav-text">4. 使用 .loc 或 .iloc</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%87%E7%89%87-%E8%A1%8C-%E5%88%97"><span class="nav-number">5.</span> <span class="nav-text">切片 [行&#x2F;列]</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%89%E6%A0%87%E7%AD%BE-loc%EF%BC%88%E8%A1%8C%EF%BC%89"><span class="nav-number">5.1.</span> <span class="nav-text">按标签 .loc（行）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%89%E4%BD%8D%E7%BD%AE-iloc"><span class="nav-number">5.2.</span> <span class="nav-text">按位置 .iloc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%96%E5%85%B7%E4%BD%93%E5%80%BC-at"><span class="nav-number">5.3.</span> <span class="nav-text">取具体值 .at</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%AD%9B%E9%80%89"><span class="nav-number">5.4.</span> <span class="nav-text">表达式筛选</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E7%AD%9B%E9%80%89"><span class="nav-number">5.5.</span> <span class="nav-text">函数筛选</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#str%E6%9F%A5%E8%AF%A2"><span class="nav-number">6.</span> <span class="nav-text">str查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2"><span class="nav-number">6.1.</span> <span class="nav-text">模糊查询</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#df%E5%86%85%E7%BD%AE%E6%96%B9%E6%B3%95"><span class="nav-number">7.</span> <span class="nav-text">df内置方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#where-%E5%92%8C-mask"><span class="nav-number">7.1.</span> <span class="nav-text">where 和 mask</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#query"><span class="nav-number">7.2.</span> <span class="nav-text">query</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#filter"><span class="nav-number">7.3.</span> <span class="nav-text">filter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E9%80%89%E6%8B%A9%E5%99%A8-pd-IndexSlice"><span class="nav-number">7.4.</span> <span class="nav-text">索引选择器 pd.IndexSlice</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%89%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">7.5.</span> <span class="nav-text">按数据类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#any-%E5%92%8C-all"><span class="nav-number">7.6.</span> <span class="nav-text">any 和 all</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%90%86%E8%A7%A3%E7%AD%9B%E9%80%89%E5%8E%9F%E7%90%86"><span class="nav-number">7.7.</span> <span class="nav-text">理解筛选原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mean-median-unique-value-count"><span class="nav-number">7.8.</span> <span class="nav-text">mean() &#x2F; median() &#x2F; unique() &#x2F; value_count()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#map-apply"><span class="nav-number">7.9.</span> <span class="nav-text">map &amp; apply</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E5%AE%9E%E6%93%8D"><span class="nav-number">8.</span> <span class="nav-text">案例实操</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E6%8C%87%E5%AE%9A%E5%80%BC%E7%9A%84%E7%B4%A2%E5%BC%95"><span class="nav-number">8.1.</span> <span class="nav-text">获取指定值的索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%9F%90%E8%A1%8C%E6%9F%90%E5%88%97%E7%9A%84%E5%80%BC"><span class="nav-number">8.2.</span> <span class="nav-text">修改某行某列的值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E5%86%85%E5%AE%B9"><span class="nav-number">9.</span> <span class="nav-text">相关内容</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

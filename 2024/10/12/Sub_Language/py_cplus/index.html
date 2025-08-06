@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Pybind11 Python C++环境安装1conda install pybind11 -c conda-forge  绑定一个c++的类文件结构123src&#x2F;Person.cpp    &#x2F;Person.h    &#x2F;p_person.cpp  # pybind文件  Person.cpp12345678910111213141516171819202122232425262728293031">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python call CPlus">
+<meta property="og:url" content="https://novav.github.io/2024/10/12/Sub_Language/py_cplus/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="Pybind11 Python C++环境安装1conda install pybind11 -c conda-forge  绑定一个c++的类文件结构123src&#x2F;Person.cpp    &#x2F;Person.h    &#x2F;p_person.cpp  # pybind文件  Person.cpp12345678910111213141516171819202122232425262728293031">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-10-12T00:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:40.560Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="Cplus">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="pybind11">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://novav.github.io/2024/10/12/Sub_Language/py_cplus/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Python call CPlus | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2024/10/12/Sub_Language/py_cplus/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Python call CPlus
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-10-12 00:00:00" itemprop="dateCreated datePublished" datetime="2024-10-12T00:00:00+00:00">2024-10-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="Pybind11-Python-C"><a href="#Pybind11-Python-C" class="headerlink" title="Pybind11 Python C++"></a>Pybind11 Python C++</h2><h3 id="环境安装"><a href="#环境安装" class="headerlink" title="环境安装"></a>环境安装</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install pybind11 -c conda-forge</span><br></pre></td></tr></table></figure>
+
+<h2 id="绑定一个c-的类"><a href="#绑定一个c-的类" class="headerlink" title="绑定一个c++的类"></a>绑定一个c++的类</h2><h3 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">src/Person.cpp</span><br><span class="line">    /Person.h</span><br><span class="line">    /p_person.cpp  # pybind文件</span><br></pre></td></tr></table></figure>
+
+<h4 id="Person-cpp"><a href="#Person-cpp" class="headerlink" title="Person.cpp"></a>Person.cpp</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Persion.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;Person.h&quot;</span></span></span><br><span class="line"></span><br><span class="line">Person::Person() &#123;</span><br><span class="line">    name = <span class="string">&quot;&quot;</span>;</span><br><span class="line">    age = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Person::Person(<span class="built_in">string</span> name, <span class="type">int</span> age) &#123;</span><br><span class="line">    this-&gt;name = name;</span><br><span class="line">    this-&gt;age = age;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Person::~Person() &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> <span class="title function_">Person::say_hello</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;hello, my name is &quot;</span> + this-&gt;name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">Person::set_name</span><span class="params">(<span class="built_in">string</span> name)</span> &#123;</span><br><span class="line">    this-&gt;name = name;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">void</span> <span class="title function_">Person::set_age</span><span class="params">(<span class="type">int</span> age)</span> &#123;</span><br><span class="line">    this-&gt;age = age;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> <span class="title function_">Person::get_name</span><span class="params">()</span> <span class="type">const</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> this-&gt;name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">Person::get_age</span><span class="params">()</span> <span class="type">const</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> this-&gt;age;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Person-h"><a href="#Person-h" class="headerlink" title="Person.h"></a>Person.h</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Persion.h</span></span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> once</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line">using namespace <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> &#123;</span></span><br><span class="line">    public:</span><br><span class="line">        Person();</span><br><span class="line">        Person(<span class="built_in">string</span> name, <span class="type">int</span> age);</span><br><span class="line">        ~Person();</span><br><span class="line"></span><br><span class="line">        <span class="type">void</span> <span class="title function_">set_name</span><span class="params">(<span class="built_in">string</span> name)</span>;</span><br><span class="line">        <span class="type">void</span> <span class="title function_">set_age</span><span class="params">(<span class="type">int</span> age)</span>;</span><br><span class="line">        <span class="built_in">string</span> <span class="title function_">get_name</span><span class="params">()</span> <span class="type">const</span>;</span><br><span class="line">        <span class="type">int</span> <span class="title function_">get_age</span><span class="params">()</span> <span class="type">const</span>;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">string</span> <span class="title function_">say_hello</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    private:</span><br><span class="line">        <span class="built_in">string</span> name;</span><br><span class="line">        <span class="type">int</span> age;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="p-person-cpp"><a href="#p-person-cpp" class="headerlink" title="p_person.cpp"></a>p_person.cpp</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;pybind11/pybind11.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;pybind11/stl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;Person.h&quot;</span></span></span><br><span class="line"></span><br><span class="line">namespace py = pybind11;</span><br><span class="line"></span><br><span class="line">PYBIND11_MODULE(person, m) </span><br><span class="line">&#123;</span><br><span class="line">    m.doc() = <span class="string">&quot;Person module&quot;</span>; <span class="comment">// optional module docstring</span></span><br><span class="line"></span><br><span class="line">    py::class_&lt;Person&gt;(m, <span class="string">&quot;Person&quot;</span>)</span><br><span class="line">        .def(py::init&lt;&gt;())</span><br><span class="line">        .def(<span class="string">&quot;get_name&quot;</span>, &amp;Person::get_name)</span><br><span class="line">        .def(<span class="string">&quot;set_name&quot;</span>, &amp;Person::set_name)</span><br><span class="line">        .def(<span class="string">&quot;get_age&quot;</span>, &amp;Person::get_age)</span><br><span class="line">        .def(<span class="string">&quot;set_age&quot;</span>, &amp;Person::set_age)</span><br><span class="line">        <span class="comment">// .def(&quot;get_gender&quot;, &amp;Person::get_gender)</span></span><br><span class="line">        <span class="comment">// .def(&quot;set_gender&quot;, &amp;Person::set_gender)</span></span><br><span class="line">        .def(<span class="string">&quot;say_hello&quot;</span>, &amp;Person::say_hello);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="CMakeList-txt"><a href="#CMakeList-txt" class="headerlink" title="CMakeList.txt"></a>CMakeList.txt</h3><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># CMakeLists.txt</span></span><br><span class="line">cmake_minimum_required(VERSION 3.10)</span><br><span class="line"></span><br><span class="line">project(PythonCPPExample)</span><br><span class="line"></span><br><span class="line"><span class="comment"># set(CMAKE_CXX_STANDARD 17)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># add_executable(PythonCPPExample main.cpp)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># find_package(&lt;PackageName&gt; [version] [EXACT] [QUIET] [MODULE]</span></span><br><span class="line">set(PYTHON_EXECUTABLE /root/anaconda3/envs/pytorch_1.7.1_cu92/bin/python3.8)</span><br><span class="line">set(PYTHON_INCLUDE_DIR /root/anaconda3/envs/pytorch_1.7.1_cu92/<span class="keyword">include</span>/python3.8)</span><br><span class="line">set(PYTHON_LIBRARY /root/anaconda3/envs/pytorch_1.7.1_cu92/lib/libpython3.8.so)</span><br><span class="line"></span><br><span class="line">find_package(PythonLibs 3 REQUIRED )</span><br><span class="line"><span class="comment"># 这个文件很重要</span></span><br><span class="line">set(pybind11_DIR /root/anaconda3/envs/pytorch_1.7.1_cu92/share/cmake/pybind11/ ) <span class="comment"># lib/python3.8/site-packages/pybind11 )</span></span><br><span class="line">find_package(pybind11 REQUIRED)</span><br><span class="line"></span><br><span class="line">message(STATUS <span class="string">&quot; -XX- LIb path: $&#123;PYTHON_INCLUDE_DIRS&#125;&quot;</span>)</span><br><span class="line">message(STATUS <span class="string">&quot; -XX- LIb path: $&#123;pybind11_DIR&#125;&quot;</span>)</span><br><span class="line">message(STATUS <span class="string">&quot; -XX- LIb path: $&#123;pybinSHARED &quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># add_subdirectory(src)</span></span><br><span class="line"></span><br><span class="line">Pybind11_add_module(person</span><br><span class="line">            src/Person.cpp</span><br><span class="line">   d11_INCLUDE_DIRS&#125;<span class="string">&quot;)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># .h 头文件路径</span></span><br><span class="line"><span class="string"># include_directories(</span></span><br><span class="line"><span class="string">#         $&#123;PYTHON_INCLUDE_DIRS&#125;</span></span><br><span class="line"><span class="string">#         &#x27;./src/&#x27;</span></span><br><span class="line"><span class="string">#         $&#123;pybind11_INCLUDE_DIRS&#125;</span></span><br><span class="line"><span class="string">#         )</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># 库生成（动态SHARED，静态STATIC）</span></span><br><span class="line"><span class="string"># add_library(person          src/p_person.cpp)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># 目标文件依赖库</span></span><br><span class="line"><span class="string"># target_link_libraries(person $&#123;PYTHON_LIBRARIES&#125; pybind11::pybind11)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># install(TARGETS person DESTINATION $&#123;PYTHON_INSTALL_DIR&#125;/site-packages/ )</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir build</span><br><span class="line">cd build</span><br><span class="line">cmake ..</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
+
+<p>最终得到文件</p>
+<blockquote>
+<p>person.cpython-38-x86_64-linux-gnu.so</p>
+</blockquote>
+<h2 id="python-Call"><a href="#python-Call" class="headerlink" title="python Call"></a>python Call</h2><ol>
+<li>当前环境下 CMakefile的环境下运行</li>
+</ol>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> person</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    a = person.Person()</span><br><span class="line">    <span class="comment"># a = person.Person(&#x27;Tom&#x27;, 18)</span></span><br><span class="line">    a.set_name(<span class="string">&quot;Tom&quot;</span>)</span><br><span class="line">    a.set_age(<span class="number">19</span>)</span><br><span class="line">    <span class="built_in">print</span>(a.say_hello())</span><br></pre></td></tr></table></figure>
+
+<p>2、换个环境下运行</p>
+<ul>
+<li>（此demo）只需要python版本一致，即可运行</li>
+</ul>
+<h2 id="ref"><a href="#ref" class="headerlink" title="ref"></a>ref</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_28087491/article/details/128305877">Python 中如何使用pybind11调用C++_pybind11 python调用c++-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_74083422/article/details/134680380">pybind11：实现Python调用C++代码（入门）-CSDN博客</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Cplus/" rel="tag"># Cplus</a>
+              <a href="/tags/Python/" rel="tag"># Python</a>
+              <a href="/tags/pybind11/" rel="tag"># pybind11</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/09/20/Sub_Language/PythonDoc/Language-py-threads/" rel="prev" title="Python Thread etc">
+      <i class="fa fa-chevron-left"></i> Python Thread etc
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/10/14/Tools/Blander/" rel="next" title="Blander">
+      Blander <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Pybind11-Python-C"><span class="nav-number">1.</span> <span class="nav-text">Pybind11 Python C++</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.</span> <span class="nav-text">环境安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%91%E5%AE%9A%E4%B8%80%E4%B8%AAc-%E7%9A%84%E7%B1%BB"><span class="nav-number">2.</span> <span class="nav-text">绑定一个c++的类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="nav-number">2.1.</span> <span class="nav-text">文件结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Person-cpp"><span class="nav-number">2.1.1.</span> <span class="nav-text">Person.cpp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Person-h"><span class="nav-number">2.1.2.</span> <span class="nav-text">Person.h</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#p-person-cpp"><span class="nav-number">2.1.3.</span> <span class="nav-text">p_person.cpp</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CMakeList-txt"><span class="nav-number">2.2.</span> <span class="nav-text">CMakeList.txt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%AF%91"><span class="nav-number">2.3.</span> <span class="nav-text">编译</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#python-Call"><span class="nav-number">3.</span> <span class="nav-text">python Call</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ref"><span class="nav-number">4.</span> <span class="nav-text">ref</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

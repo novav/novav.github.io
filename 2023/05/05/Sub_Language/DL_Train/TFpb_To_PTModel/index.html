@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Tensorflow权重迁移至Pytorch_tensorflow权重转pytorch_古月萝北的博客-CSDN博客 Conv2D层Tensorflow的数据维度为(B,H,W,C), 而Pytorch的数据维度为(B,C,H,W), 因此二者卷积层的权重矩阵也是不一样的。Pytorch的为(out_channels,in_channels,H,W), Tensorflow的为(H,W,in_ch">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tensorflow权重迁移至Pytorch">
+<meta property="og:url" content="https://novav.github.io/2023/05/05/Sub_Language/DL_Train/TFpb_To_PTModel/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="Tensorflow权重迁移至Pytorch_tensorflow权重转pytorch_古月萝北的博客-CSDN博客 Conv2D层Tensorflow的数据维度为(B,H,W,C), 而Pytorch的数据维度为(B,C,H,W), 因此二者卷积层的权重矩阵也是不一样的。Pytorch的为(out_channels,in_channels,H,W), Tensorflow的为(H,W,in_ch">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-05-05T12:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:40.548Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="TF">
+<meta property="article:tag" content="Torch">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://novav.github.io/2023/05/05/Sub_Language/DL_Train/TFpb_To_PTModel/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Tensorflow权重迁移至Pytorch | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2023/05/05/Sub_Language/DL_Train/TFpb_To_PTModel/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Tensorflow权重迁移至Pytorch
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-05-05 12:00:00" itemprop="dateCreated datePublished" datetime="2023-05-05T12:00:00+00:00">2023-05-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/DNN/" itemprop="url" rel="index"><span itemprop="name">DNN</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_36438332/article/details/124690077">Tensorflow权重迁移至Pytorch_tensorflow权重转pytorch_古月萝北的博客-CSDN博客</a></p>
+<h4 id="Conv2D层"><a href="#Conv2D层" class="headerlink" title="Conv2D层"></a>Conv2D层</h4><p>Tensorflow的数据维度为(B,H,W,C), 而Pytorch的数据维度为(B,C,H,W), 因此二者卷积层的权重矩阵也是不一样的。Pytorch的为(out_channels,in_channels,H,W), Tensorflow的为(H,W,in_channels,out_channels), 因此权重迁移时需要转置权重矩阵。</p>
+<p>此外，如果卷积带有bias，layer.get_weights()返回长度为2的列表，第一个元素为权重矩阵，第二个元素为bias.</p>
+<span id="more"></span>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Conv2dWithName</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,in_planes, out_planes, kernel_size=<span class="number">3</span>, stride=<span class="number">1</span>,padding=<span class="number">0</span>, groups=<span class="number">1</span>, use_bias=<span class="literal">True</span>, dilation=<span class="number">1</span>,name=<span class="literal">None</span></span>):</span><br><span class="line">        <span class="built_in">super</span>(Conv2dWithName, <span class="variable language_">self</span>).__init__()</span><br><span class="line">        <span class="variable language_">self</span>.conv2d=nn.Conv2d(in_planes, out_planes, kernel_size=kernel_size, stride=stride,</span><br><span class="line">                     padding=padding, groups=groups, bias=use_bias, dilation=dilation)</span><br><span class="line">        <span class="variable language_">self</span>.name=name <span class="comment">#存储模块名称</span></span><br><span class="line">        <span class="variable language_">self</span>.use_bias=use_bias</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self,x</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.conv2d(x)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">set_weight</span>(<span class="params">self,layer</span>):</span><br><span class="line">        <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;INFO: init layer %s with tf weights&#x27;</span>%<span class="variable language_">self</span>.name)</span><br><span class="line">            weights=layer.get_weights()</span><br><span class="line">            weight=weights[<span class="number">0</span>]</span><br><span class="line">            weight=torch.from_numpy(weight)</span><br><span class="line">            weight=weight.permute((<span class="number">3</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">1</span>))</span><br><span class="line">            <span class="variable language_">self</span>.conv2d.weight.copy_(weight)</span><br><span class="line">            <span class="keyword">if</span> <span class="variable language_">self</span>.use_bias:</span><br><span class="line">                bias=weights[<span class="number">1</span>]</span><br><span class="line">                bias = torch.from_numpy(bias)</span><br><span class="line">                <span class="variable language_">self</span>.conv2d.bias.copy_(bias)</span><br></pre></td></tr></table></figure>
+
+<h4 id="Dense"><a href="#Dense" class="headerlink" title="Dense"></a>Dense</h4><p>类似的，dense层包含weight，bias两个权重参数。需要注意的是Pytorch的weight维度为(out_dims,in_dims)，而Tensorflow正好相反为(in_dims,out_dims)。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">DenseWithName</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,in_dim,out_dim,name=<span class="literal">None</span></span>):</span><br><span class="line">        <span class="built_in">super</span>(DenseWithName, <span class="variable language_">self</span>).__init__()</span><br><span class="line">        <span class="variable language_">self</span>.dense=nn.Linear(in_dim,out_dim)</span><br><span class="line">        <span class="variable language_">self</span>.name=name</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">set_weight</span>(<span class="params">self,layer</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;INFO: init layer %s with tf weights&#x27;</span> % <span class="variable language_">self</span>.name)</span><br><span class="line">        <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">            weights = layer.get_weights()</span><br><span class="line">            weight = torch.from_numpy(weights[<span class="number">0</span>]).transpose(<span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">            <span class="variable language_">self</span>.dense.weight.copy_(weight)</span><br><span class="line">            bias = weights[<span class="number">1</span>]</span><br><span class="line">            bias = torch.from_numpy(bias)</span><br><span class="line">            <span class="variable language_">self</span>.dense.bias.copy_(bias)</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self,x</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.dense(x)</span><br></pre></td></tr></table></figure>
+
+<h4 id="BatchNorm层"><a href="#BatchNorm层" class="headerlink" title="BatchNorm层"></a>BatchNorm层</h4><p>BatchNorm需要迁移weight、bias、running_mean、running_var四个参数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">BatchNorm2dWithName</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,n_chaanels,name=<span class="literal">None</span></span>):</span><br><span class="line">        <span class="built_in">super</span>(BatchNorm2dWithName, <span class="variable language_">self</span>).__init__()</span><br><span class="line">        <span class="variable language_">self</span>.bn=nn.BatchNorm2d(n_chaanels)</span><br><span class="line">        <span class="variable language_">self</span>.name=name</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self,x</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.bn(x)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">set_weight</span>(<span class="params">self,layer</span>):</span><br><span class="line">        <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;INFO: init layer %s with tf weights&#x27;</span> % <span class="variable language_">self</span>.name)</span><br><span class="line">            weights=layer.get_weights()</span><br><span class="line">            gamma=torch.from_numpy(weights[<span class="number">0</span>])</span><br><span class="line">            beta=torch.from_numpy(weights[<span class="number">1</span>])</span><br><span class="line">            run_mean=torch.from_numpy(weights[<span class="number">2</span>])</span><br><span class="line">            run_var= torch.from_numpy(weights[<span class="number">3</span>])</span><br><span class="line">            <span class="variable language_">self</span>.bn.bias.copy_(beta)</span><br><span class="line">            <span class="variable language_">self</span>.bn.running_mean.copy_(run_mean)</span><br><span class="line">            <span class="variable language_">self</span>.bn.running_var.copy_(run_var)</span><br><span class="line">            <span class="variable language_">self</span>.bn.weight.copy_(gamma)</span><br></pre></td></tr></table></figure>
+
+<h4 id="逐层迁移权重"><a href="#逐层迁移权重" class="headerlink" title="逐层迁移权重"></a>逐层迁移权重</h4><p>我们可以参照已有的Tensorflow模型结构，利用上述封装好的层来搭建深度模型。迁移权重时可以遍历模型的所有层，逐层迁移权重。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> m <span class="keyword">in</span> <span class="variable language_">self</span>.modules():<span class="comment">#遍历模型的所有模块</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">isinstance</span>(m, (Conv2dWithName,BatchNorm2dWithName,DenseWithName)):</span><br><span class="line">        layer=tf_model.get_layer(m.name)</span><br><span class="line">        m.set_weight(layer)</span><br></pre></td></tr></table></figure>
+
+<h4 id="下面以ResNet50为例测试权重迁移："><a href="#下面以ResNet50为例测试权重迁移：" class="headerlink" title="下面以ResNet50为例测试权重迁移："></a>下面以ResNet50为例测试权重迁移：</h4><p>Tensorflow模型</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">block1</span>(<span class="params">x, filters, kernel_size=<span class="number">3</span>, stride=<span class="number">1</span>,</span></span><br><span class="line"><span class="params">           conv_shortcut=<span class="literal">True</span>, name=<span class="literal">None</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;A residual block.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    # Arguments</span></span><br><span class="line"><span class="string">        x: input tensor.</span></span><br><span class="line"><span class="string">        filters: integer, filters of the bottleneck layer.</span></span><br><span class="line"><span class="string">        kernel_size: default 3, kernel size of the bottleneck layer.</span></span><br><span class="line"><span class="string">        stride: default 1, stride of the first layer.</span></span><br><span class="line"><span class="string">        conv_shortcut: default True, use convolution shortcut if True,</span></span><br><span class="line"><span class="string">            otherwise identity shortcut.</span></span><br><span class="line"><span class="string">        name: string, block label.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    # Returns</span></span><br><span class="line"><span class="string">        Output tensor for the residual block.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    bn_axis = <span class="number">3</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> conv_shortcut <span class="keyword">is</span> <span class="literal">True</span>:</span><br><span class="line">        shortcut = layers.Conv2D(<span class="number">4</span> * filters, <span class="number">1</span>, strides=stride,</span><br><span class="line">                                 name=name + <span class="string">&#x27;_0_conv&#x27;</span>)(x)</span><br><span class="line">        shortcut = layers.BatchNormalization(axis=bn_axis, epsilon=<span class="number">1.001e-5</span>,</span><br><span class="line">                                             name=name + <span class="string">&#x27;_0_bn&#x27;</span>)(shortcut)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        shortcut = x</span><br><span class="line"></span><br><span class="line">    x = layers.Conv2D(filters, <span class="number">1</span>, strides=stride, name=name + <span class="string">&#x27;_1_conv&#x27;</span>)(x)</span><br><span class="line">    x = layers.BatchNormalization(axis=bn_axis, epsilon=<span class="number">1.001e-5</span>,</span><br><span class="line">                                  name=name + <span class="string">&#x27;_1_bn&#x27;</span>)(x)</span><br><span class="line">    x = layers.Activation(<span class="string">&#x27;relu&#x27;</span>, name=name + <span class="string">&#x27;_1_relu&#x27;</span>)(x)</span><br><span class="line"></span><br><span class="line">    x = layers.Conv2D(filters, kernel_size, padding=<span class="string">&#x27;SAME&#x27;</span>,</span><br><span class="line">                      name=name + <span class="string">&#x27;_2_conv&#x27;</span>)(x)</span><br><span class="line">    x = layers.BatchNormalization(axis=bn_axis, epsilon=<span class="number">1.001e-5</span>,</span><br><span class="line">                                  name=name + <span class="string">&#x27;_2_bn&#x27;</span>)(x)</span><br><span class="line">    x = layers.Activation(<span class="string">&#x27;relu&#x27;</span>, name=name + <span class="string">&#x27;_2_relu&#x27;</span>)(x)</span><br><span class="line"></span><br><span class="line">    x = layers.Conv2D(<span class="number">4</span> * filters, <span class="number">1</span>, name=name + <span class="string">&#x27;_3_conv&#x27;</span>)(x)</span><br><span class="line">    x = layers.BatchNormalization(axis=bn_axis, epsilon=<span class="number">1.001e-5</span>,</span><br><span class="line">                                  name=name + <span class="string">&#x27;_3_bn&#x27;</span>)(x)</span><br><span class="line"></span><br><span class="line">    x = layers.Add(name=name + <span class="string">&#x27;_add&#x27;</span>)([shortcut, x])</span><br><span class="line">    x = layers.Activation(<span class="string">&#x27;relu&#x27;</span>, name=name + <span class="string">&#x27;_out&#x27;</span>)(x)</span><br><span class="line">    <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">stack1</span>(<span class="params">x, filters, blocks, stride1=<span class="number">2</span>, name=<span class="literal">None</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;A set of stacked residual blocks.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    # Arguments</span></span><br><span class="line"><span class="string">        x: input tensor.</span></span><br><span class="line"><span class="string">        filters: integer, filters of the bottleneck layer in a block.</span></span><br><span class="line"><span class="string">        blocks: integer, blocks in the stacked blocks.</span></span><br><span class="line"><span class="string">        stride1: default 2, stride of the first layer in the first block.</span></span><br><span class="line"><span class="string">        name: string, stack label.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    # Returns</span></span><br><span class="line"><span class="string">        Output tensor for the stacked blocks.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    x = block1(x, filters, stride=stride1, name=name + <span class="string">&#x27;_block1&#x27;</span>)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, blocks + <span class="number">1</span>):</span><br><span class="line">        x = block1(x, filters, conv_shortcut=<span class="literal">False</span>, name=name + <span class="string">&#x27;_block&#x27;</span> + <span class="built_in">str</span>(i))</span><br><span class="line">    <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ResNet50_TF</span>(<span class="params">inputs,</span></span><br><span class="line"><span class="params">             preact=<span class="literal">False</span>,</span></span><br><span class="line"><span class="params">             use_bias=<span class="literal">True</span>,</span></span><br><span class="line"><span class="params">             model_name=<span class="string">&#x27;resnet50&#x27;</span></span>):</span><br><span class="line"></span><br><span class="line">    bn_axis = <span class="number">3</span></span><br><span class="line"></span><br><span class="line">    x = layers.ZeroPadding2D(padding=((<span class="number">3</span>, <span class="number">3</span>), (<span class="number">3</span>, <span class="number">3</span>)), name=<span class="string">&#x27;conv1_pad&#x27;</span>)(inputs)</span><br><span class="line">    x = layers.Conv2D(<span class="number">64</span>, <span class="number">7</span>, strides=<span class="number">2</span>, use_bias=use_bias, name=<span class="string">&#x27;conv1_conv&#x27;</span>)(x)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> preact <span class="keyword">is</span> <span class="literal">False</span>:</span><br><span class="line">        x = layers.BatchNormalization(axis=bn_axis, epsilon=<span class="number">1.001e-5</span>,</span><br><span class="line">                                      name=<span class="string">&#x27;conv1_bn&#x27;</span>)(x)</span><br><span class="line">        x = layers.Activation(<span class="string">&#x27;relu&#x27;</span>, name=<span class="string">&#x27;conv1_relu&#x27;</span>)(x)</span><br><span class="line"></span><br><span class="line">    x = layers.ZeroPadding2D(padding=((<span class="number">1</span>, <span class="number">1</span>), (<span class="number">1</span>, <span class="number">1</span>)), name=<span class="string">&#x27;pool1_pad&#x27;</span>)(x)</span><br><span class="line">    x = layers.MaxPooling2D(<span class="number">3</span>, strides=<span class="number">2</span>, name=<span class="string">&#x27;pool1_pool&#x27;</span>)(x)</span><br><span class="line"></span><br><span class="line">    outputs = []</span><br><span class="line">    x = stack1(x, <span class="number">64</span>, <span class="number">3</span>, stride1=<span class="number">1</span>, name=<span class="string">&#x27;conv2&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    x = stack1(x, <span class="number">128</span>, <span class="number">4</span>, name=<span class="string">&#x27;conv3&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    x = stack1(x, <span class="number">256</span>, <span class="number">6</span>, name=<span class="string">&#x27;conv4&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    x = stack1(x, <span class="number">512</span>, <span class="number">3</span>, name=<span class="string">&#x27;conv5&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    x = layers.GlobalAveragePooling2D(name=<span class="string">&#x27;avg_pool&#x27;</span>)(x)</span><br><span class="line"></span><br><span class="line">    x = layers.Dense(<span class="number">1</span>, activation=<span class="string">&#x27;linear&#x27;</span>, name=<span class="string">&#x27;final_fc&#x27;</span>)(x)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Create model.</span></span><br><span class="line">    model = models.Model(inputs, x, name=model_name)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> model</span><br></pre></td></tr></table></figure>
+
+<h4 id="Pytorch"><a href="#Pytorch" class="headerlink" title="Pytorch"></a>Pytorch</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">conv3x3</span>(<span class="params">in_planes, out_planes, stride=<span class="number">1</span>, groups=<span class="number">1</span>, dilation=<span class="number">1</span>,name=<span class="literal">None</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;3x3 convolution with padding&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">return</span> Conv2dWithName(in_planes, out_planes, kernel_size=<span class="number">3</span>, stride=stride,</span><br><span class="line">                     padding=dilation, groups=groups, bias=<span class="literal">True</span>, dilation=dilation,name=name)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">conv1x1</span>(<span class="params">in_planes, out_planes, stride=<span class="number">1</span>,name=<span class="literal">None</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;1x1 convolution&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">return</span> Conv2dWithName(in_planes, out_planes, kernel_size=<span class="number">1</span>, stride=stride, bias=<span class="literal">True</span>,name=name)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BasicBlock</span>(nn.Module):</span><br><span class="line">    expansion = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, inplanes, planes, stride=<span class="number">1</span>, downsample=<span class="literal">None</span>, groups=<span class="number">1</span>,</span></span><br><span class="line"><span class="params">                 base_width=<span class="number">64</span>, dilation=<span class="number">1</span>, norm_layer=<span class="literal">None</span></span>):</span><br><span class="line">        <span class="built_in">super</span>(BasicBlock, <span class="variable language_">self</span>).__init__()</span><br><span class="line">        <span class="keyword">if</span> norm_layer <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            norm_layer = nn.BatchNorm2d</span><br><span class="line">        <span class="keyword">if</span> groups != <span class="number">1</span> <span class="keyword">or</span> base_width != <span class="number">64</span>:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">&#x27;BasicBlock only supports groups=1 and base_width=64&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> dilation &gt; <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">raise</span> NotImplementedError(<span class="string">&quot;Dilation &gt; 1 not supported in BasicBlock&quot;</span>)</span><br><span class="line">        <span class="comment"># Both self.conv1 and self.downsample layers downsample the input when stride != 1</span></span><br><span class="line">        <span class="variable language_">self</span>.conv1 = conv3x3(inplanes, planes, stride)</span><br><span class="line">        <span class="variable language_">self</span>.bn1 = norm_layer(planes)</span><br><span class="line">        <span class="variable language_">self</span>.relu = nn.ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line">        <span class="variable language_">self</span>.conv2 = conv3x3(planes, planes)</span><br><span class="line">        <span class="variable language_">self</span>.bn2 = norm_layer(planes)</span><br><span class="line">        <span class="variable language_">self</span>.downsample = downsample</span><br><span class="line">        <span class="variable language_">self</span>.stride = stride</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        identity = x</span><br><span class="line"></span><br><span class="line">        out = <span class="variable language_">self</span>.conv1(x)</span><br><span class="line">        out = <span class="variable language_">self</span>.bn1(out)</span><br><span class="line">        out = <span class="variable language_">self</span>.relu(out)</span><br><span class="line"></span><br><span class="line">        out = <span class="variable language_">self</span>.conv2(out)</span><br><span class="line">        out = <span class="variable language_">self</span>.bn2(out)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> <span class="variable language_">self</span>.downsample <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            identity = <span class="variable language_">self</span>.downsample(x)</span><br><span class="line"></span><br><span class="line">        out += identity</span><br><span class="line">        out = <span class="variable language_">self</span>.relu(out)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> out</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Bottleneck</span>(nn.Module):</span><br><span class="line"></span><br><span class="line">    expansion = <span class="number">4</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, inplanes, planes, stride=<span class="number">1</span>, downsample=<span class="literal">None</span>, groups=<span class="number">1</span>,</span></span><br><span class="line"><span class="params">                 base_width=<span class="number">64</span>, dilation=<span class="number">1</span>, norm_layer=<span class="literal">None</span>,name=<span class="literal">None</span></span>):</span><br><span class="line">        <span class="built_in">super</span>(Bottleneck, <span class="variable language_">self</span>).__init__()</span><br><span class="line">        <span class="keyword">if</span> norm_layer <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            norm_layer = BatchNorm2dWithName</span><br><span class="line">        width = <span class="built_in">int</span>(planes * (base_width / <span class="number">64.</span>)) * groups</span><br><span class="line">        <span class="comment"># Both self.conv2 and self.downsample layers downsample the input when stride != 1</span></span><br><span class="line">        <span class="variable language_">self</span>.conv1 = conv1x1(inplanes, width,stride=stride,name=name+<span class="string">&#x27;_1_conv&#x27;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.bn1 = norm_layer(width,name=name+<span class="string">&#x27;_1_bn&#x27;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.conv2 = conv3x3(width, width, name=name+<span class="string">&#x27;_2_conv&#x27;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.bn2 = norm_layer(width,name=name+<span class="string">&#x27;_2_bn&#x27;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.conv3 = conv1x1(width, planes * <span class="variable language_">self</span>.expansion,name=name+<span class="string">&#x27;_3_conv&#x27;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.bn3 = norm_layer(planes * <span class="variable language_">self</span>.expansion,name=name+<span class="string">&#x27;_3_bn&#x27;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.relu = nn.ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line">        <span class="variable language_">self</span>.downsample = downsample</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> <span class="variable language_">self</span>.downsample <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="variable language_">self</span>.downsample[<span class="number">0</span>].name=name+<span class="string">&#x27;_0_conv&#x27;</span></span><br><span class="line">            <span class="variable language_">self</span>.downsample[<span class="number">1</span>].name = name + <span class="string">&#x27;_0_bn&#x27;</span></span><br><span class="line">        <span class="variable language_">self</span>.stride = stride</span><br><span class="line">        <span class="variable language_">self</span>.name=name</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        identity = x</span><br><span class="line"></span><br><span class="line">        out = checkpoint(<span class="variable language_">self</span>.conv1,x)</span><br><span class="line">        out = checkpoint(<span class="variable language_">self</span>.bn1,out)</span><br><span class="line">        out = <span class="variable language_">self</span>.relu(out)</span><br><span class="line"></span><br><span class="line">        out = checkpoint(<span class="variable language_">self</span>.conv2,out)</span><br><span class="line">        out = checkpoint(<span class="variable language_">self</span>.bn2,out)</span><br><span class="line">        out = <span class="variable language_">self</span>.relu(out)</span><br><span class="line"></span><br><span class="line">        out = checkpoint(<span class="variable language_">self</span>.conv3,out)</span><br><span class="line">        out = checkpoint(<span class="variable language_">self</span>.bn3,out)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> <span class="variable language_">self</span>.downsample <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            identity = checkpoint(<span class="variable language_">self</span>.downsample,x)</span><br><span class="line"></span><br><span class="line">        out += identity</span><br><span class="line">        out = <span class="variable language_">self</span>.relu(out)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> out</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ResNet</span>(nn.Module):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, block, layers, width_per_group=<span class="number">64</span></span>):</span><br><span class="line">        <span class="built_in">super</span>(ResNet, <span class="variable language_">self</span>).__init__()</span><br><span class="line"></span><br><span class="line">        norm_layer = BatchNorm2dWithName</span><br><span class="line">        <span class="variable language_">self</span>._norm_layer = norm_layer</span><br><span class="line"></span><br><span class="line">        <span class="variable language_">self</span>.inplanes = <span class="number">64</span></span><br><span class="line">        <span class="variable language_">self</span>.dilation = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="variable language_">self</span>.base_width = width_per_group</span><br><span class="line">        <span class="variable language_">self</span>.conv1 = Conv2dWithName(<span class="number">3</span>, <span class="variable language_">self</span>.inplanes, kernel_size=<span class="number">7</span>, stride=<span class="number">2</span>, padding=<span class="number">3</span>,</span><br><span class="line">                               bias=<span class="literal">True</span>,name=<span class="string">&#x27;conv1_conv&#x27;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.bn1 = norm_layer(<span class="variable language_">self</span>.inplanes,name=<span class="string">&#x27;conv1_bn&#x27;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.relu = nn.ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line">        <span class="variable language_">self</span>.maxpool = nn.MaxPool2d(kernel_size=<span class="number">3</span>, stride=<span class="number">2</span>, padding=<span class="number">1</span>)</span><br><span class="line">        <span class="variable language_">self</span>.layer1 = <span class="variable language_">self</span>._make_layer(block, <span class="number">64</span>, layers[<span class="number">0</span>],name=<span class="string">&#x27;conv2&#x27;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.layer2 = <span class="variable language_">self</span>._make_layer(block, <span class="number">128</span>, layers[<span class="number">1</span>], stride=<span class="number">2</span>,</span><br><span class="line">                                       name=<span class="string">&#x27;conv3&#x27;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.layer3 = <span class="variable language_">self</span>._make_layer(block, <span class="number">256</span>, layers[<span class="number">2</span>], stride=<span class="number">2</span>,</span><br><span class="line">                                      name=<span class="string">&#x27;conv4&#x27;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.layer4 = <span class="variable language_">self</span>._make_layer(block, <span class="number">512</span>, layers[<span class="number">3</span>], stride=<span class="number">2</span>,</span><br><span class="line">                                       name=<span class="string">&#x27;conv5&#x27;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.avgpool = nn.AdaptiveAvgPool2d((<span class="number">1</span>, <span class="number">1</span>))</span><br><span class="line"></span><br><span class="line">        <span class="variable language_">self</span>.final_fc=DenseWithName(<span class="number">2048</span>,<span class="number">1</span>,name=<span class="string">&#x27;final_fc&#x27;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> m <span class="keyword">in</span> <span class="variable language_">self</span>.modules():</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">isinstance</span>(m, nn.Conv2d):</span><br><span class="line">                nn.init.kaiming_normal_(m.weight, mode=<span class="string">&#x27;fan_out&#x27;</span>, nonlinearity=<span class="string">&#x27;relu&#x27;</span>)</span><br><span class="line">            <span class="keyword">elif</span> <span class="built_in">isinstance</span>(m, (nn.BatchNorm2d, nn.GroupNorm)):</span><br><span class="line">                nn.init.constant_(m.weight, <span class="number">1</span>)</span><br><span class="line">                nn.init.constant_(m.bias, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">_make_layer</span>(<span class="params">self, block, planes, blocks, stride=<span class="number">1</span>, name=<span class="literal">None</span></span>):</span><br><span class="line"></span><br><span class="line">        norm_layer = <span class="variable language_">self</span>._norm_layer</span><br><span class="line">        downsample = nn.Sequential(</span><br><span class="line">            conv1x1(<span class="variable language_">self</span>.inplanes, planes * block.expansion, stride=stride),</span><br><span class="line">            norm_layer(planes * block.expansion),</span><br><span class="line">        )</span><br><span class="line">        layers = []</span><br><span class="line">        layers.append(block(inplanes=<span class="variable language_">self</span>.inplanes, planes=planes, stride=stride, downsample=downsample,</span><br><span class="line">                            name=name+<span class="string">&#x27;_block1&#x27;</span>))</span><br><span class="line">        <span class="variable language_">self</span>.inplanes = planes * block.expansion</span><br><span class="line">        <span class="keyword">for</span> lyer <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, blocks):</span><br><span class="line">            layers.append(block(<span class="variable language_">self</span>.inplanes, planes, base_width=<span class="variable language_">self</span>.base_width, dilation=<span class="variable language_">self</span>.dilation,</span><br><span class="line">                               name=name+<span class="string">&#x27;_block%d&#x27;</span>%(lyer+<span class="number">1</span>)))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> nn.Sequential(*layers)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">init_from_tf</span>(<span class="params">self,tf_model</span>):</span><br><span class="line">        <span class="keyword">for</span> m <span class="keyword">in</span> <span class="variable language_">self</span>.modules():</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">isinstance</span>(m, (Conv2dWithName,BatchNorm2dWithName,DenseWithName)):</span><br><span class="line">                layer=tf_model.get_layer(m.name)</span><br><span class="line">                m.set_weight(layer)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">_forward_impl</span>(<span class="params">self, x</span>):</span><br><span class="line"></span><br><span class="line">        <span class="comment"># See note [TorchScript super()]</span></span><br><span class="line">        x = checkpoint(<span class="variable language_">self</span>.conv1,x)</span><br><span class="line">        x = checkpoint(<span class="variable language_">self</span>.bn1,x)</span><br><span class="line">        x = <span class="variable language_">self</span>.relu(x)</span><br><span class="line">        x = F.max_pool2d(x,kernel_size=<span class="number">3</span>, stride=<span class="number">2</span>, padding=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        x = <span class="variable language_">self</span>.layer1(x)</span><br><span class="line"></span><br><span class="line">        x = <span class="variable language_">self</span>.layer2(x)</span><br><span class="line"></span><br><span class="line">        x = <span class="variable language_">self</span>.layer3(x)</span><br><span class="line"></span><br><span class="line">        x = <span class="variable language_">self</span>.layer4(x)</span><br><span class="line"></span><br><span class="line">        x=<span class="variable language_">self</span>.avgpool(x).squeeze(-<span class="number">1</span>).squeeze(-<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        x=<span class="variable language_">self</span>.final_fc(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>._forward_impl(x)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">_resnet</span>(<span class="params">arch, block, layers,  **kwargs</span>):</span><br><span class="line">    model = ResNet(block, layers, **kwargs)</span><br><span class="line">    <span class="keyword">return</span> model</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">resnet50_torch</span>(<span class="params">**kwargs</span>):</span><br><span class="line">    <span class="keyword">return</span> _resnet(<span class="string">&#x27;resnet50&#x27;</span>, Bottleneck, [<span class="number">3</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">3</span>],  **kwargs)</span><br></pre></td></tr></table></figure>
+
+<h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">input_shape = (<span class="literal">None</span>, <span class="literal">None</span>, <span class="number">3</span>)</span><br><span class="line">inputs = Input(shape=input_shape)</span><br><span class="line">res50_tf=ResNet50_TF(inputs)</span><br><span class="line">res50_tf.load_weights(<span class="string">&#x27;./src/Resnet——weights.h5&#x27;</span>,by_name=<span class="literal">True</span>)</span><br><span class="line">res50_torch=resnet50_torch().<span class="built_in">float</span>()</span><br><span class="line">res50_torch.init_from_tf(res50_tf)</span><br><span class="line">res50_torch.<span class="built_in">eval</span>()</span><br><span class="line">img=np.random.rand(<span class="number">1</span>,<span class="number">224</span>,<span class="number">224</span>,<span class="number">3</span>)</span><br><span class="line">img2=torch.from_numpy(img).permute([<span class="number">0</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">2</span>]).<span class="built_in">float</span>()</span><br><span class="line">p_tf=res50_tf.predict(img)</span><br><span class="line">p_torch=res50_torch(img2).data.numpy()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;tensorflow predict: %f &#x27;</span>%p_tf[<span class="number">0</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;pytorch predict: %f &#x27;</span>%p_torch[<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
+
+<h3 id="Data"><a href="#Data" class="headerlink" title="Data"></a>Data</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">image = np.random.rand(<span class="number">5</span>, <span class="number">5</span>, <span class="number">3</span>)</span><br><span class="line">torch_image = np.transpose(image, (<span class="number">2</span>, <span class="number">0</span>, <span class="number">1</span>)).astype(np.float32)</span><br><span class="line"><span class="comment"># [B, C, H, W] for pytorch</span></span><br><span class="line">torch_image = torch.unsqueeze(torch.as_tensor(torch_image), dim=<span class="number">0</span>)</span><br><span class="line"><span class="comment"># [B, H, W, C] for tensorflow</span></span><br><span class="line">tf_image = np.expand_dims(image, axis=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a target="_blank" rel="noopener" href="https://www.saoniuhuo.com/question/detail-2563751.html">将Tensorflow权重转移到等效的Pytorch模型 _大数据知识库</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">weight_loading</span>(<span class="params">pretrained_weights</span>):</span><br><span class="line">    <span class="comment"># Load the weights</span></span><br><span class="line">    tf_model = tf.keras.models.load_model(pretrained_weights)</span><br><span class="line">    tf_weights = tf_model.get_weights()</span><br><span class="line">    <span class="comment"># Load the PyTorch model</span></span><br><span class="line">    pt_model = UNet() <span class="comment">#implemented based on the previous model (by myself)</span></span><br><span class="line">    initial_state_dict = pt_model.state_dict()</span><br><span class="line">    new_state_dict = &#123;&#125;</span><br><span class="line">    <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">        x = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i, layer <span class="keyword">in</span> <span class="built_in">enumerate</span>(pt_model.modules()):</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">isinstance</span>(layer, torch.nn.Conv2d):</span><br><span class="line">                <span class="comment"># extract the weights and biases from the TensorFlow weights</span></span><br><span class="line">                weight_tf = tf_weights[x*<span class="number">2</span>]</span><br><span class="line">                bias_tf = tf_weights[x*<span class="number">2</span>+<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">                <span class="comment"># convert the weights and biases to PyTorch format</span></span><br><span class="line">                weight_pt = torch.tensor(weight_tf.transpose())</span><br><span class="line">                bias_pt = torch.tensor(bias_tf)</span><br><span class="line">                <span class="comment"># get the name of the weight and bias tensors</span></span><br><span class="line">                weight_name = <span class="built_in">list</span>(pt_model.named_parameters())[x*<span class="number">2</span>][<span class="number">0</span>]</span><br><span class="line">                bias_name = <span class="built_in">list</span>(pt_model.named_parameters())[x*<span class="number">2</span>+<span class="number">1</span>][<span class="number">0</span>]</span><br><span class="line">                <span class="comment"># set the weights and biases in the PyTorch model state_dict</span></span><br><span class="line">                new_state_dict[weight_name]= weight_pt</span><br><span class="line">                new_state_dict[bias_name] = bias_pt</span><br><span class="line">                x = x + <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">isinstance</span>(layer, torch.nn.ConvTranspose2d):</span><br><span class="line">                weight_tf = tf_weights[x*<span class="number">2</span>]</span><br><span class="line">                bias_tf = tf_weights[x*<span class="number">2</span>+<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">                <span class="comment"># convert the weights and biases to PyTorch format</span></span><br><span class="line">                weight_pt = torch.tensor(np.transpose(weight_tf, (<span class="number">2</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="number">1</span>)))</span><br><span class="line">                bias_pt = torch.tensor(bias_tf)</span><br><span class="line">                <span class="comment"># get the name of the weight and bias tensors</span></span><br><span class="line">                weight_name = <span class="built_in">list</span>(pt_model.named_parameters())[x*<span class="number">2</span>][<span class="number">0</span>]</span><br><span class="line">                bias_name = <span class="built_in">list</span>(pt_model.named_parameters())[x*<span class="number">2</span>+<span class="number">1</span>][<span class="number">0</span>]</span><br><span class="line">                <span class="comment"># set the weights and biases in the PyTorch model state_dict</span></span><br><span class="line">                new_state_dict[weight_name] = weight_pt</span><br><span class="line">                new_state_dict[bias_name] = bias_pt</span><br><span class="line">                x = x + <span class="number">1</span></span><br><span class="line">    <span class="comment"># load the new generated state_dict to pt_model</span></span><br><span class="line">    pt_model.load_state_dict(new_state_dict)</span><br><span class="line">    <span class="keyword">return</span> pt_model</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/TF/" rel="tag"># TF</a>
+              <a href="/tags/Torch/" rel="tag"># Torch</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/05/05/Sub_Language/DL_Train/Pytorch/deploy_libtorch/" rel="prev" title="(pytorch) libtorch Models deploy">
+      <i class="fa fa-chevron-left"></i> (pytorch) libtorch Models deploy
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/06/01/ResearchRecord/2023_AIs/" rel="next" title="AIs -- GPT">
+      AIs -- GPT <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Conv2D%E5%B1%82"><span class="nav-number">1.</span> <span class="nav-text">Conv2D层</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Dense"><span class="nav-number">2.</span> <span class="nav-text">Dense</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BatchNorm%E5%B1%82"><span class="nav-number">3.</span> <span class="nav-text">BatchNorm层</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%90%E5%B1%82%E8%BF%81%E7%A7%BB%E6%9D%83%E9%87%8D"><span class="nav-number">4.</span> <span class="nav-text">逐层迁移权重</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8B%E9%9D%A2%E4%BB%A5ResNet50%E4%B8%BA%E4%BE%8B%E6%B5%8B%E8%AF%95%E6%9D%83%E9%87%8D%E8%BF%81%E7%A7%BB%EF%BC%9A"><span class="nav-number">5.</span> <span class="nav-text">下面以ResNet50为例测试权重迁移：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Pytorch"><span class="nav-number">6.</span> <span class="nav-text">Pytorch</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-number">7.</span> <span class="nav-text">测试</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Data"><span class="nav-number"></span> <span class="nav-text">Data</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number"></span> <span class="nav-text">参考</span></a></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

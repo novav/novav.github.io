@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="ROS（Robot Operating System，机器人操作系统）是一个为机器人软件开发提供支持的灵活框架。它为机器人软件开发者提供了一套广泛的工具和库，使得他们能够更容易地构建和运行机器人应用。 # 一小时实践入门 ROS—机器人操作系统 学习计划学习ROS (Robot Operating System) 在一小时内是非常紧凑的，但你可以通过实践来尽快掌握基础。以下是一个基本的一小时学习计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ROS通信，控制Gazebo-11机器人">
+<meta property="og:url" content="https://novav.github.io/2024/06/25/AI_ROBOT/Gazebo_ROS/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="ROS（Robot Operating System，机器人操作系统）是一个为机器人软件开发提供支持的灵活框架。它为机器人软件开发者提供了一套广泛的工具和库，使得他们能够更容易地构建和运行机器人应用。 # 一小时实践入门 ROS—机器人操作系统 学习计划学习ROS (Robot Operating System) 在一小时内是非常紧凑的，但你可以通过实践来尽快掌握基础。以下是一个基本的一小时学习计">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2024/06/25/AI_ROBOT/Gazebo_ROS/2024-06-26-10-47-05-image.png">
+<meta property="og:image" content="https://novav.github.io/2024/06/25/AI_ROBOT/Gazebo_ROS/2024-06-26-10-49-56-image.png">
+<meta property="og:image" content="https://novav.github.io/2024/06/25/AI_ROBOT/Gazebo_ROS/6f6c8e8d833c79d0fee08ce744eae4247bf53609.gif">
+<meta property="article:published_time" content="2024-06-25T21:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:38.101Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="Robot">
+<meta property="article:tag" content="Gazebo">
+<meta property="article:tag" content="ROS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2024/06/25/AI_ROBOT/Gazebo_ROS/2024-06-26-10-47-05-image.png">
+
+<link rel="canonical" href="https://novav.github.io/2024/06/25/AI_ROBOT/Gazebo_ROS/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>ROS通信，控制Gazebo-11机器人 | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2024/06/25/AI_ROBOT/Gazebo_ROS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ROS通信，控制Gazebo-11机器人
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-06-25 21:00:00" itemprop="dateCreated datePublished" datetime="2024-06-25T21:00:00+00:00">2024-06-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Robot/" itemprop="url" rel="index"><span itemprop="name">Robot</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Robot/ROS/" itemprop="url" rel="index"><span itemprop="name">ROS</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>ROS（Robot Operating System，机器人操作系统）是一个为机器人软件开发提供支持的灵活框架。它为机器人软件开发者提供了一套广泛的工具和库，使得他们能够更容易地构建和运行机器人应用。</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/661888714"># 一小时实践入门 ROS—机器人操作系统</a></p>
+<h2 id="学习计划"><a href="#学习计划" class="headerlink" title="学习计划"></a>学习计划</h2><p>学习ROS (Robot Operating System) 在一小时内是非常紧凑的，但你可以通过实践来尽快掌握基础。以下是一个基本的一小时学习计划，以项目实践为目标:</p>
+<p>1. <strong>环境设置</strong></p>
+<ul>
+<li><p><strong>安装ROS</strong>：</p>
+</li>
+<li><p>用docker快速安装ROS的基本版本。</p>
+</li>
+<li><p>设置环境变量。</p>
+</li>
+</ul>
+<p>2. <strong>基本概念</strong></p>
+<ul>
+<li><p><strong>节点 (Nodes)</strong>：</p>
+</li>
+<li><p>创建一个简单的节点。</p>
+</li>
+<li><p>运行节点，并观察输出。</p>
+</li>
+<li><p><strong>主题 (Topics)</strong>：</p>
+</li>
+<li><p>创建一个简单的主题发布者和订阅者。</p>
+</li>
+<li><p>发布和订阅消息。</p>
+</li>
+</ul>
+<p>3. <strong>实践项目</strong></p>
+<ul>
+<li><p><strong>创建一个简单的机器人模拟</strong>：</p>
+</li>
+<li><p>选择一个简单的机器人模型，如一个两轮机器人。</p>
+</li>
+<li><p>在ROS中加载机器人模型。</p>
+</li>
+<li><p>使用Gazebo控制机器人移动并监控机器人的状态和位置。</p>
+</li>
+</ul>
+<p>这个计划需要你在一个实际的ROS环境中操作。</p>
+<h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><h3 id="docker快速安装ROS-Gazebo"><a href="#docker快速安装ROS-Gazebo" class="headerlink" title="docker快速安装ROS Gazebo"></a>docker快速安装ROS Gazebo</h3><ul>
+<li><p>DockerDesktop安装</p>
+</li>
+<li><p><strong>Dockerfile编写（参照<a href="./2024/06/22/Gazebo/">Gazebo 上手 wsl</a>）编译成image</strong></p>
+</li>
+<li><p>Windows中安装和启动VcXsrv</p>
+<ul>
+<li>启动xLaunch</li>
+</ul>
+</li>
+<li><p>运行Docker容器</p>
+</li>
+<li><p>创建项目工作空间</p>
+<ul>
+<li><pre><code class="language-shell">mkdir -p ~/catkin_ws/src
+cd ~/catkin_ws/src
+catkin_init_workspace
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- ```shell</span><br><span class="line">  cd ~/catkin_ws</span><br><span class="line">  catkin_make</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h3><p>ros_environment.sh</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Source ROS setup script</span></span><br><span class="line">source /opt/ros/noetic/setup.bash</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Source workspace setup script</span></span><br><span class="line">source ~/catkin_ws/devel/setup.bash</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Set ROS Master URI</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Replace <span class="string">&#x27;localhost&#x27;</span> with your ROS Master<span class="string">&#x27;s IP if it&#x27;</span>s on a different machine</span></span><br><span class="line">export ROS_MASTER_URI=http://localhost:11311</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Set ROS Hostname</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Replace <span class="string">&#x27;localhost&#x27;</span> with this machine<span class="string">&#x27;s IP if this machine is not the ROS Master</span></span></span><br><span class="line">export ROS_HOSTNAME=localhost</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Set ROS IP</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Replace &#x27;</span>localhost<span class="string">&#x27; with this machine&#x27;</span>s IP</span></span><br><span class="line">export ROS_IP=localhost</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Set Gazebo Plugin Path</span></span><br><span class="line">export GAZEBO_PLUGIN_PATH=/opt/ros/noetic/lib:$GAZEBO_PLUGIN_PATH</span><br></pre></td></tr></table></figure>
+
+<p>运行生效环境配置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source ros_environment.sh</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>通过 <code>source</code>命令，它加载了ROS和你的工作空间的设置脚本。</li>
+<li>它设置了 <code>ROS_MASTER_URI</code>，<code>ROS_HOSTNAME</code>和 <code>ROS_IP</code>环境变量，以确保你的ROS节点可以正确地通信。</li>
+</ul>
+<p>每次启动新的终端或ROS容器时，都应执行 <code>source ros_environment.sh</code>命令以确保环境变量正确设置。为了简化这个过程，你可能想要将 <code>source ros_environment.sh</code>命令添加到你的 <code>.bashrc</code>文件中，这样它会在每次启动新终端时自动执行。</p>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="创建一个简单节点"><a href="#创建一个简单节点" class="headerlink" title="创建一个简单节点"></a>创建一个简单节点</h3><p>1.<strong>创建一个新的ROS包</strong> 首先，在你的工作空间的 <code>src</code> 目录中创建一个新的ROS包。我们将此包命名为 <code>simple_node_package</code>，并依赖于 <code>roscpp</code> 和 <code>std_msgs</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/catkin_ws/src</span><br><span class="line">catkin_create_pkg simple_node_package roscpp std_msgs</span><br></pre></td></tr></table></figure>
+
+<p>2.<strong>编写简单的ROS节点</strong> 现在，创建一个名为 simple_node.cpp 的文件，并填写以下代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;ros/ros.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;std_msgs/String.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> **argv)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="comment">// 初始化ROS节点</span></span><br><span class="line">  ros::init(argc, argv, <span class="string">&quot;simple_node&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 创建节点句柄</span></span><br><span class="line">  ros::NodeHandle nh;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 创建一个发布者对象</span></span><br><span class="line">  ros::Publisher chatter_pub = nh.advertise&lt;std_msgs::String&gt;(<span class="string">&quot;chatter&quot;</span>, <span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 设置循环频率</span></span><br><span class="line">  ros::Rate <span class="title function_">loop_rate</span><span class="params">(<span class="number">10</span>)</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span> (ros::ok())</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">// 创建一个消息对象</span></span><br><span class="line">    std_msgs::String msg;</span><br><span class="line">    msg.data = <span class="string">&quot;Hello, ROS!&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 发布消息</span></span><br><span class="line">    chatter_pub.publish(msg);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 处理任何可用的回调函数</span></span><br><span class="line">    ros::spinOnce();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 按照设定的频率休眠</span></span><br><span class="line">    loop_rate.sleep();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后将其复制到 simple_node_package 包中src目录中。</p>
+<p>3.<strong>修改CMakeLists.txt</strong> 为了编译你的节点，你需要修改 <code>simple_node_package</code> 包的 <code>CMakeLists.txt</code> 文件。把这两行代码加到文件的最后，</p>
+<p>文件名：<code>CMakeLists.txt</code></p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">（原代码）</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_executable</span>(simple_node src/simple_node.cpp)</span><br><span class="line"><span class="keyword">target_link_libraries</span>(simple_node <span class="variable">$&#123;catkin_LIBRARIES&#125;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>4.构建编译：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~/catkin_ws</span><br><span class="line">catkin_make</span><br></pre></td></tr></table></figure>
+
+<p>5 RosCore运行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">roscore</span><br></pre></td></tr></table></figure>
+
+<p>6 新节点运行（在新的终端中）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it &lt;container_name&gt; /bin/bash</span><br><span class="line"></span><br><span class="line"><span class="built_in">source</span> /data/ros_environment.sh</span><br><span class="line">rosrun simple_node_package simple_node</span><br></pre></td></tr></table></figure>
+
+<h3 id="运行节点，观察输出"><a href="#运行节点，观察输出" class="headerlink" title="运行节点，观察输出"></a>运行节点，观察输出</h3><p>运行和观察ROS节点输出相对简单。在上一步中，你已经创建了一个名为 <code>simple_node</code>的节点，它发布”Hello, ROS!”消息到 <code>chatter</code>主题。现在我们将运行该节点并观察其输出。</p>
+<p>1.<strong>观察输出</strong> 现在，我们和之前一样<code>docker exec -it &lt;container_name&gt; /bin/bash</code> 再打开第三个终端。</p>
+<p>在第三个新的终端中，你可以使用 <code>rostopic</code>命令来监听 <code>chatter</code>主题并观察节点的输出：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">source /data/ros_environment.sh</span><br><span class="line">rostopic echo /chatter  </span><br></pre></td></tr></table></figure>
+
+<p>你应该看到每秒10条”Hello, ROS!”消息，如下所示：</p>
+<p>略</p>
+<p>2 <strong>查看节点和主题信息</strong> 你还可以使用 <code>rosnode</code>和 <code>rostopic</code>命令来获取有关运行中节点和主题的更多信息。</p>
+<ul>
+<li>查看运行中的节点列表：<code>rosnode list</code></li>
+<li>查看特定节点的信息（例如 <code>simple_node</code>）： <code>rosnode info /simple_node</code></li>
+<li>查看特定主题的信息（例如 <code>chatter</code>）：<code>rostopic info /chatter</code></li>
+</ul>
+<h3 id="创建一个简单的主题发布者和接收者"><a href="#创建一个简单的主题发布者和接收者" class="headerlink" title="创建一个简单的主题发布者和接收者"></a>创建一个简单的主题发布者和接收者</h3><p>在ROS中，节点可以通过发布和订阅主题来交换消息。下面我们将创建一个简单的主题发布者和订阅者。我们将继续使用之前创建的 <code>simple_node_package</code>包。</p>
+<p>1.<strong>创建发布者</strong> 首先，我们创建一个名为 <code>publisher_node.cpp</code>的文件来发布消息到一个名为 <code>chatter</code>的主题。</p>
+<p>文件名：<code>publisher_node.cpp</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;ros/ros.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;std_msgs/String.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> **argv)</span></span><br><span class="line">&#123;</span><br><span class="line">  ros::init(argc, argv, <span class="string">&quot;publisher_node&quot;</span>);</span><br><span class="line">  ros::NodeHandle nh;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 创建了一个发布者对象，该对象可以发布消息到名为 chatter的主题。1000是队列大小，它确定了在订阅者能够处理之前可以缓冲的消息数量。</span></span><br><span class="line">  ros::Publisher chatter_pub = nh.advertise&lt;std_msgs::String&gt;(<span class="string">&quot;chatter&quot;</span>, <span class="number">1000</span>);</span><br><span class="line">  ros::Rate <span class="title function_">loop_rate</span><span class="params">(<span class="number">10</span>)</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span> (ros::ok())</span><br><span class="line">  &#123;</span><br><span class="line">    std_msgs::String msg;</span><br><span class="line">    msg.data = <span class="string">&quot;Hello, ROS!&quot;</span>;</span><br><span class="line"></span><br><span class="line">    chatter_pub.publish(msg); / /发布到 chatter主题</span><br><span class="line"></span><br><span class="line">    ros::spinOnce();</span><br><span class="line">    loop_rate.sleep();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2.<strong>创建订阅者</strong> 接下来，我们创建一个名为 <code>subscriber_node.cpp</code>的文件来订阅 <code>chatter</code>主题并打印接收到的消息。（文件的操作和前面的一样，不再赘述）</p>
+<p>文件名：<code>subscriber_node.cpp</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;ros/ros.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;std_msgs/String.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">chatterCallback</span><span class="params">(<span class="type">const</span> std_msgs::String::ConstPtr&amp; msg)</span></span><br><span class="line">&#123;</span><br><span class="line">  ROS_INFO(<span class="string">&quot;I heard: [%s]&quot;</span>, msg-&gt;data.c_str());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> **argv)</span></span><br><span class="line">&#123;</span><br><span class="line">  ros::init(argc, argv, <span class="string">&quot;subscriber_node&quot;</span>);</span><br><span class="line">  ros::NodeHandle nh;</span><br><span class="line">  <span class="comment">//订阅了名为 chatter的主题。1000是队列大小，它确定了可以在处理之前缓冲的消息数量。</span></span><br><span class="line">  ros::Subscriber sub = nh.subscribe(<span class="string">&quot;chatter&quot;</span>, <span class="number">1000</span>, chatterCallback);</span><br><span class="line"></span><br><span class="line">  ros::spin();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3.<strong>更新CMakeLists.txt</strong> 现在，更新 <code>simple_node_package</code>包的 <code>CMakeLists.txt</code>文件以包含新的节点。</p>
+<p>文件名：<code>CMakeLists.txt</code></p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">（原来的代码）</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_executable</span>(publisher_node src/publisher_node.cpp)</span><br><span class="line"><span class="keyword">target_link_libraries</span>(publisher_node <span class="variable">$&#123;catkin_LIBRARIES&#125;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_executable</span>(subscriber_node src/subscriber_node.cpp)</span><br><span class="line"><span class="keyword">target_link_libraries</span>(subscriber_node <span class="variable">$&#123;catkin_LIBRARIES&#125;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>4.<strong>构建工作空间</strong> 返回到你的工作空间的根目录，并运行 <code>catkin_make</code>来构建你的工作空间和新节点：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/catkin_ws</span><br><span class="line">catkin_make</span><br></pre></td></tr></table></figure>
+
+<p>5.<strong>运行发布者和订阅者节点</strong> 确保你的ROS核心正在运行（前面说过的<code>roscore</code>），然后在两个不同的终端中分别运行发布者和订阅者节点：</p>
+<p>终端一</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">source ~/catkin_ws/devel/setup.bash</span><br><span class="line">rosrun simple_node_package publisher_node</span><br></pre></td></tr></table></figure>
+
+<p>终端二</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">source ~/catkin_ws/devel/setup.bash</span><br><span class="line">rosrun simple_node_package subscriber_node</span><br></pre></td></tr></table></figure>
+
+<p>现在，你应该能在订阅者节点的终端中看到每秒10条”Hello, ROS!”消息，表明发布者和订阅者节点正在正确地交换消息。</p>
+<h2 id="实践项目Robot-controller"><a href="#实践项目Robot-controller" class="headerlink" title="实践项目Robot controller"></a>实践项目Robot controller</h2><p>在ROS中，通常使用URDF（Unified Robot Description Format，统一机器人描述格式）或者xacro（XML Macros，XML宏）来描述机器人模型。在这一步中，我们将创建一个简单的两轮机器人模型。</p>
+<h3 id="两轮ROBOT模型"><a href="#两轮ROBOT模型" class="headerlink" title="两轮ROBOT模型"></a>两轮ROBOT模型</h3><h4 id="1-创建ROS-pkg"><a href="#1-创建ROS-pkg" class="headerlink" title="1 创建ROS pkg"></a>1 创建ROS pkg</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~/catkin_ws/src</span><br><span class="line">catkin_create_pkg your_robot_package roscpp rospy std_msgs sensor_msgs gazebo_ros gazebo_plugins</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-创建URDF文件"><a href="#2-创建URDF文件" class="headerlink" title="2 创建URDF文件"></a>2 创建URDF文件</h4><p>在新创建的 <code>your_robot_package</code>包中创建一个名为 <code>two_wheel_robot.urdf</code>的文件来描述你的两轮机器人。</p>
+<p>将这个文件放到<code>~/catkin_ws/src/your_robot_package/urdf/two_wheel_robot.urdf</code></p>
+<p>two_wheel_robot.urdf</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span>?&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">robot</span> <span class="attr">name</span>=<span class="string">&quot;two_wheel_robot&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- Base Link --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">name</span>=<span class="string">&quot;base_link&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">visual</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">cylinder</span> <span class="attr">length</span>=<span class="string">&quot;0.1&quot;</span> <span class="attr">radius</span>=<span class="string">&quot;0.2&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">visual</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">collision</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">cylinder</span> <span class="attr">length</span>=<span class="string">&quot;0.1&quot;</span> <span class="attr">radius</span>=<span class="string">&quot;0.2&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">collision</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">inertial</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">mass</span> <span class="attr">value</span>=<span class="string">&quot;10&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">inertia</span> <span class="attr">ixx</span>=<span class="string">&quot;0.1&quot;</span> <span class="attr">ixy</span>=<span class="string">&quot;0&quot;</span> <span class="attr">ixz</span>=<span class="string">&quot;0&quot;</span> <span class="attr">iyy</span>=<span class="string">&quot;0.1&quot;</span> <span class="attr">iyz</span>=<span class="string">&quot;0&quot;</span> <span class="attr">izz</span>=<span class="string">&quot;0.1&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">inertial</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">link</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- Left Wheel --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">joint</span> <span class="attr">name</span>=<span class="string">&quot;left_wheel_joint&quot;</span> <span class="attr">type</span>=<span class="string">&quot;continuous&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">parent</span> <span class="attr">link</span>=<span class="string">&quot;base_link&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">child</span> <span class="attr">link</span>=<span class="string">&quot;left_wheel&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">origin</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0.15 0&quot;</span> <span class="attr">rpy</span>=<span class="string">&quot;1.57079632679 0 0&quot;</span>/&gt;</span>  <span class="comment">&lt;!-- Rotate the wheel to be perpendicular to the ground --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">axis</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 1&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">joint</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">name</span>=<span class="string">&quot;left_wheel&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">visual</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">cylinder</span> <span class="attr">length</span>=<span class="string">&quot;0.05&quot;</span> <span class="attr">radius</span>=<span class="string">&quot;0.1&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">visual</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">collision</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">cylinder</span> <span class="attr">length</span>=<span class="string">&quot;0.05&quot;</span> <span class="attr">radius</span>=<span class="string">&quot;0.1&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">collision</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">inertial</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">mass</span> <span class="attr">value</span>=<span class="string">&quot;1&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">inertia</span> <span class="attr">ixx</span>=<span class="string">&quot;0.025&quot;</span> <span class="attr">ixy</span>=<span class="string">&quot;0&quot;</span> <span class="attr">ixz</span>=<span class="string">&quot;0&quot;</span> <span class="attr">iyy</span>=<span class="string">&quot;0.025&quot;</span> <span class="attr">iyz</span>=<span class="string">&quot;0&quot;</span> <span class="attr">izz</span>=<span class="string">&quot;0.025&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">inertial</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">link</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- Right Wheel --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">joint</span> <span class="attr">name</span>=<span class="string">&quot;right_wheel_joint&quot;</span> <span class="attr">type</span>=<span class="string">&quot;continuous&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">parent</span> <span class="attr">link</span>=<span class="string">&quot;base_link&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">child</span> <span class="attr">link</span>=<span class="string">&quot;right_wheel&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">origin</span> <span class="attr">xyz</span>=<span class="string">&quot;0 -0.15 0&quot;</span> <span class="attr">rpy</span>=<span class="string">&quot;1.57079632679 0 0&quot;</span>/&gt;</span>  <span class="comment">&lt;!-- Rotate the wheel to be perpendicular to the ground --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">axis</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 1&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">joint</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">name</span>=<span class="string">&quot;right_wheel&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">visual</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">cylinder</span> <span class="attr">length</span>=<span class="string">&quot;0.05&quot;</span> <span class="attr">radius</span>=<span class="string">&quot;0.1&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">visual</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">collision</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">cylinder</span> <span class="attr">length</span>=<span class="string">&quot;0.05&quot;</span> <span class="attr">radius</span>=<span class="string">&quot;0.1&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">collision</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">inertial</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">mass</span> <span class="attr">value</span>=<span class="string">&quot;1&quot;</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">inertia</span> <span class="attr">ixx</span>=<span class="string">&quot;0.025&quot;</span> <span class="attr">ixy</span>=<span class="string">&quot;0&quot;</span> <span class="attr">ixz</span>=<span class="string">&quot;0&quot;</span> <span class="attr">iyy</span>=<span class="string">&quot;0.025&quot;</span> <span class="attr">iyz</span>=<span class="string">&quot;0&quot;</span> <span class="attr">izz</span>=<span class="string">&quot;0.025&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">inertial</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">link</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">gazebo</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugin</span> <span class="attr">name</span>=<span class="string">&quot;gazebo_ros_diff_drive&quot;</span> <span class="attr">filename</span>=<span class="string">&quot;libgazebo_ros_diff_drive.so&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">updateRate</span>&gt;</span>100.0<span class="tag">&lt;/<span class="name">updateRate</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">leftJoint</span>&gt;</span>left_wheel_joint<span class="tag">&lt;/<span class="name">leftJoint</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">rightJoint</span>&gt;</span>right_wheel_joint<span class="tag">&lt;/<span class="name">rightJoint</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">wheelSeparation</span>&gt;</span>0.3<span class="tag">&lt;/<span class="name">wheelSeparation</span>&gt;</span> <span class="comment">&lt;!-- This should be the distance between your wheels --&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">wheelDiameter</span>&gt;</span>0.2<span class="tag">&lt;/<span class="name">wheelDiameter</span>&gt;</span> <span class="comment">&lt;!-- This should be the diameter of your wheels --&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">torque</span>&gt;</span>20<span class="tag">&lt;/<span class="name">torque</span>&gt;</span> <span class="comment">&lt;!-- You may need to adjust this value --&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">commandTopic</span>&gt;</span>cmd_vel<span class="tag">&lt;/<span class="name">commandTopic</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">odometryTopic</span>&gt;</span>odom<span class="tag">&lt;/<span class="name">odometryTopic</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">odometryFrame</span>&gt;</span>odom<span class="tag">&lt;/<span class="name">odometryFrame</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">robotBaseFrame</span>&gt;</span>base_link<span class="tag">&lt;/<span class="name">robotBaseFrame</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">gazebo</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">robot</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在这个URDF文件中，我们定义了一个简单的两轮机器人，它有一个基础链接（base_link）和两个连续关节，每个关节连接一个轮子。</p>
+<h4 id="3-查看机器人模型"><a href="#3-查看机器人模型" class="headerlink" title="3 查看机器人模型"></a>3 查看机器人模型</h4><p>为了查看你的机器人模型，你可以使用 <code>urdf</code>包中的 <code>urdf_viewer</code>工具。</p>
+<p>首先需要下载 <code>urdf_tutorial</code> ros包，解压放到<code>~/catkin_ws/src/urdf_tutorial</code>目录中。</p>
+<p>然后执行</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">catkin_make</span><br></pre></td></tr></table></figure>
+
+<p>查看模型</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">roslaunch urdf_tutorial display.launch model:=&#x27;$(find your_robot_package)/urdf/two_wheel_robot.urdf&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>这个命令会启动RViz，并加载你的两轮机器人模型。在RViz中，你应该能看到你的两轮机器人模型，并可以通过旋转和缩放来检查它的各个部分。</p>
+<p>通过创建和查看URDF文件，你可以获得对ROS中机器人模型描述的基本理解，并可以开始为你的两轮机器人添加更多复杂的特性和组件。</p>
+<p><img src="/2024/06/25/AI_ROBOT/Gazebo_ROS/2024-06-26-10-47-05-image.png"></p>
+<h3 id="控制ROBOT移动"><a href="#控制ROBOT移动" class="headerlink" title="控制ROBOT移动"></a>控制ROBOT移动</h3><p>控制机器人移动通常涉及编写一个ROS节点，该节点发布到机器人的速度命令主题。对于简单的两轮机器人，通常会有一个名为 <code>cmd_vel</code>的主题，它接收 <code>geometry_msgs/Twist</code>类型的消息来控制机器人的线速度和角速度。</p>
+<p>1.<strong>创建控制节点</strong> 创建一个新的文件名为 <code>robot_controller.cpp</code>的文件，在 <code>your_robot_package/src</code> 目录中。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;ros/ros.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;geometry_msgs/Twist.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> **argv)</span></span><br><span class="line">&#123;</span><br><span class="line">    ros::init(argc, argv, <span class="string">&quot;robot_controller&quot;</span>);</span><br><span class="line">    ros::NodeHandle nh;</span><br><span class="line"></span><br><span class="line">    ros::Publisher cmd_vel_pub = nh.advertise&lt;geometry_msgs::Twist&gt;(<span class="string">&quot;cmd_vel&quot;</span>, <span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">    ros::Rate <span class="title function_">loop_rate</span><span class="params">(<span class="number">10</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (ros::ok())</span><br><span class="line">    &#123;</span><br><span class="line">        geometry_msgs::Twist cmd_vel_msg;</span><br><span class="line">        cmd_vel_msg.linear.x = <span class="number">-0.5</span>;  <span class="comment">// 0.5 m/s forward</span></span><br><span class="line">        cmd_vel_msg.angular.z = <span class="number">0.1</span>; <span class="comment">// 0.1 rad/s rotation</span></span><br><span class="line"></span><br><span class="line">        cmd_vel_pub.publish(cmd_vel_msg);</span><br><span class="line"></span><br><span class="line">        ros::spinOnce();</span><br><span class="line">        loop_rate.sleep();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这段代码中，我们创建了一个名为 <code>robot_controller</code>的ROS节点，它发布 <code>geometry_msgs/Twist</code>消息到 <code>cmd_vel</code>主题，以控制机器人的线速度和角速度。</p>
+<p>2.<strong>更新CMakeLists.txt</strong> 修改 <code>your_robot_package</code> 包的 <code>CMakeLists.txt</code>文件以包含新的控制节点。</p>
+<p>文件名: <code>CMakeLists.txt</code></p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">（原代码）</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_executable</span>(robot_controller src/robot_controller.cpp)</span><br><span class="line"><span class="keyword">target_link_libraries</span>(robot_controller <span class="variable">$&#123;catkin_LIBRARIES&#125;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>3.<strong>构建你的工作空间</strong> 返回到你的工作空间的根目录，并运行 <code>catkin_make</code>来构建你的工作空间和新控制节点：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/catkin_ws</span><br><span class="line">catkin_make</span><br></pre></td></tr></table></figure>
+
+<p>4.<strong>运行控制节点</strong> 在一个新的终端中，运行你的控制节点来发布速度命令：（需要提前运行<code>roscore</code>）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/data/ros_environment.sh</span><br><span class="line">rosrun your_robot_package robot_controller</span><br></pre></td></tr></table></figure>
+
+<p>现在，你的控制节点应该在 <code>cmd_vel</code>主题上发布速度命令。</p>
+<p>然后和上面一样，我们打开一个新的终端，然后查看 <code>cmd_vel</code>主题的消息:</p>
+<p>新终端</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">source ~/data/ros_environment.sh</span><br><span class="line">rostopic echo /cmd_vel</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/06/25/AI_ROBOT/Gazebo_ROS/2024-06-26-10-49-56-image.png"></p>
+<h3 id="Gazebo监控机器人的状况"><a href="#Gazebo监控机器人的状况" class="headerlink" title="Gazebo监控机器人的状况"></a>Gazebo监控机器人的状况</h3><p><strong>创建一个启动文件</strong> (<code>launch</code>文件) 来加载机器人模型和控制器。在该包中的<code>launch</code>文件夹（需新建）中创建一个文件名为<code>robot.launch</code>的文件，并将以下内容复制到该文件中:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Load the URDF into the ROS Parameter Server --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;robot_description&quot;</span> <span class="attr">textfile</span>=<span class="string">&quot;$(find your_robot_package)/urdf/two_wheel_robot.urdf&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- Launch Gazebo with the robot model --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">include</span> <span class="attr">file</span>=<span class="string">&quot;$(find gazebo_ros)/launch/empty_world.launch&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;world_name&quot;</span> <span class="attr">value</span>=<span class="string">&quot;worlds/empty.world&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;paused&quot;</span> <span class="attr">value</span>=<span class="string">&quot;false&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- Spawn robot model --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;spawn_urdf&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;gazebo_ros&quot;</span> <span class="attr">type</span>=<span class="string">&quot;spawn_model&quot;</span> <span class="attr">args</span>=<span class="string">&quot;-param robot_description -urdf  -model two_wheel_robot&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- Load the controller --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;robot_controller&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;your_robot_package&quot;</span> <span class="attr">type</span>=<span class="string">&quot;robot_controller&quot;</span> <span class="attr">output</span>=<span class="string">&quot;screen&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>编译你的ROS包</strong>:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~/catkin_ws </span><br><span class="line">catkin_make</span><br></pre></td></tr></table></figure>
+
+<p><strong>启动Gazebo和机器人控制器</strong>:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">roslaunch your_robot_package robot.launch </span><br></pre></td></tr></table></figure>
+
+<p>在执行上述步骤后，你应该能够在Gazebo中看到你的机器人模型，并能够通过ROS来控制它。在<code>robot_controller.cpp</code>中，你可以使用ROS的消息和服务来读取传感器数据、发送控制命令和与机器人交互。同时，你可以看到机器人在Gazebo中的实时模拟表现。</p>
+<p>这只是一个基本的设置，具体的实现可能需要根据你的机器人模型和控制器代码进行调整。例如，你可能需要配置机器人的传感器和控制器，或者修改Gazebo和ROS的启动文件以适应你的特定需求。</p>
+<p><img src="/2024/06/25/AI_ROBOT/Gazebo_ROS/6f6c8e8d833c79d0fee08ce744eae4247bf53609.gif"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Robot/" rel="tag"># Robot</a>
+              <a href="/tags/Gazebo/" rel="tag"># Gazebo</a>
+              <a href="/tags/ROS/" rel="tag"># ROS</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/06/22/AI_ROBOT/Gazebo/" rel="prev" title="Gazebo 上手 wsl">
+      <i class="fa fa-chevron-left"></i> Gazebo 上手 wsl
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/06/27/AI_ROBOT/ROS_dev/" rel="next" title="ROS Robot实战（gazebo）">
+      ROS Robot实战（gazebo） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E8%AE%A1%E5%88%92"><span class="nav-number">1.</span> <span class="nav-text">学习计划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#docker%E5%BF%AB%E9%80%9F%E5%AE%89%E8%A3%85ROS-Gazebo"><span class="nav-number">2.1.</span> <span class="nav-text">docker快速安装ROS Gazebo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">2.2.</span> <span class="nav-text">配置环境变量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">3.</span> <span class="nav-text">基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E8%8A%82%E7%82%B9"><span class="nav-number">3.1.</span> <span class="nav-text">创建一个简单节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E8%8A%82%E7%82%B9%EF%BC%8C%E8%A7%82%E5%AF%9F%E8%BE%93%E5%87%BA"><span class="nav-number">3.2.</span> <span class="nav-text">运行节点，观察输出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E4%B8%BB%E9%A2%98%E5%8F%91%E5%B8%83%E8%80%85%E5%92%8C%E6%8E%A5%E6%94%B6%E8%80%85"><span class="nav-number">3.3.</span> <span class="nav-text">创建一个简单的主题发布者和接收者</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E8%B7%B5%E9%A1%B9%E7%9B%AERobot-controller"><span class="nav-number">4.</span> <span class="nav-text">实践项目Robot controller</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%A4%E8%BD%AEROBOT%E6%A8%A1%E5%9E%8B"><span class="nav-number">4.1.</span> <span class="nav-text">两轮ROBOT模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%88%9B%E5%BB%BAROS-pkg"><span class="nav-number">4.1.1.</span> <span class="nav-text">1 创建ROS pkg</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%88%9B%E5%BB%BAURDF%E6%96%87%E4%BB%B6"><span class="nav-number">4.1.2.</span> <span class="nav-text">2 创建URDF文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E6%9F%A5%E7%9C%8B%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%A8%A1%E5%9E%8B"><span class="nav-number">4.1.3.</span> <span class="nav-text">3 查看机器人模型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6ROBOT%E7%A7%BB%E5%8A%A8"><span class="nav-number">4.2.</span> <span class="nav-text">控制ROBOT移动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gazebo%E7%9B%91%E6%8E%A7%E6%9C%BA%E5%99%A8%E4%BA%BA%E7%9A%84%E7%8A%B6%E5%86%B5"><span class="nav-number">4.3.</span> <span class="nav-text">Gazebo监控机器人的状况</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

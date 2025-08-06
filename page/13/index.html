@@ -1,0 +1,1627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Simon Shi的小站">
+<meta property="og:url" content="https://novav.github.io/page/13/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="AI,Machine Learning, Deep Learning">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://novav.github.io/page/13/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2023/01/15/Course/SLAM/ch03_Eigen/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/01/15/Course/SLAM/ch03_Eigen/" class="post-title-link" itemprop="url">SLAM 三维刚体运动</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-01-15 10:00:00" itemprop="dateCreated datePublished" datetime="2023-01-15T10:00:00+00:00">2023-01-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SLAM/" itemprop="url" rel="index"><span itemprop="name">SLAM</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SLAM/Eigen/" itemprop="url" rel="index"><span itemprop="name">Eigen</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p> SLAM三维刚体运动（Eigen实现）</p>
+<ul>
+<li><p>旋转</p>
+</li>
+<li><p>欧拉角</p>
+</li>
+<li><p>四元数</p>
+</li>
+<li><p>变换</p>
+</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/01/15/Course/SLAM/ch03_Eigen/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2023/01/12/Course/SLAM/ch09_vo_practice/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/01/12/Course/SLAM/ch09_vo_practice/" class="post-title-link" itemprop="url">视觉SLAM十四讲 第九 实践章 设计前端</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-01-12 20:09:09" itemprop="dateCreated datePublished" datetime="2023-01-12T20:09:09+00:00">2023-01-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SLAM/" itemprop="url" rel="index"><span itemprop="name">SLAM</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>第九 实践章 设计前端</p>
+<p>目标:</p>
+<ul>
+<li><p>设计一个视觉里程计的前端</p>
+</li>
+<li><p>理解SLAM软件框架是如何搭建</p>
+</li>
+<li><p>理解在前端设计中容易出现问题的地方，以及修补方式。</p>
+</li>
+</ul>
+<h2 id="1、搭建VO框架"><a href="#1、搭建VO框架" class="headerlink" title="1、搭建VO框架"></a>1、搭建VO框架</h2><p>单目视觉相对复杂，RGBD最简单，没有初始化，也没有尺度问题</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">-bin    可执行文件</span><br><span class="line">-include/myslam    头文件.h</span><br><span class="line">-src    源代码cpp</span><br><span class="line">-test   测试用文件cpp</span><br><span class="line">-lib</span><br><span class="line">-config</span><br><span class="line">-cmake_modules 三方库的cmake文件</span><br><span class="line">-CmakeList.txt</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-1、数据结构："><a href="#1-1、数据结构：" class="headerlink" title="1.1、数据结构："></a>1.1、数据结构：</h3><p>帧</p>
+<p>路标</p>
+<p>配置文件</p>
+<p>坐标转换</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">stateDiagram</span><br><span class="line"></span><br><span class="line">Frame --&gt; Camera</span><br><span class="line">Frame --&gt; MapPoint : has many</span><br><span class="line">Map --&gt; MapPoint: has many</span><br><span class="line">Config   </span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2、Camera类"><a href="#1-2、Camera类" class="headerlink" title="1.2、Camera类"></a>1.2、Camera类</h3><ul>
+<li><p>存储相机内参和外参</p>
+</li>
+<li><p>相机坐标系，像素坐标系，世界坐标系的转换</p>
+</li>
+<li><p>世界坐标系（需要一个相机的内参）</p>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;myslam/common_include.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> myslam</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Pinhole RGBD camera model</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Camera</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">typedef</span> std::shared_ptr&lt;Camera&gt; Ptr;</span><br><span class="line">    <span class="type">float</span>   fx_, fy_, cx_, cy_, depth_scale_;  <span class="comment">// Camera intrinsics </span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">Camera</span>();</span><br><span class="line">    <span class="built_in">Camera</span> ( <span class="type">float</span> fx, <span class="type">float</span> fy, <span class="type">float</span> cx, <span class="type">float</span> cy, <span class="type">float</span> depth_scale=<span class="number">0</span> ) :</span><br><span class="line">        <span class="built_in">fx_</span> ( fx ), <span class="built_in">fy_</span> ( fy ), <span class="built_in">cx_</span> ( cx ), <span class="built_in">cy_</span> ( cy ), <span class="built_in">depth_scale_</span> ( depth_scale )</span><br><span class="line">    &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// coordinate transform: world, camera, pixel</span></span><br><span class="line">    <span class="function">Vector3d <span class="title">world2camera</span><span class="params">( <span class="type">const</span> Vector3d&amp; p_w, <span class="type">const</span> SE3&amp; T_c_w )</span></span>;</span><br><span class="line">    <span class="function">Vector3d <span class="title">camera2world</span><span class="params">( <span class="type">const</span> Vector3d&amp; p_c, <span class="type">const</span> SE3&amp; T_c_w )</span></span>;</span><br><span class="line">    <span class="function">Vector2d <span class="title">camera2pixel</span><span class="params">( <span class="type">const</span> Vector3d&amp; p_c )</span></span>;</span><br><span class="line">    <span class="function">Vector3d <span class="title">pixel2camera</span><span class="params">( <span class="type">const</span> Vector2d&amp; p_p, <span class="type">double</span> depth=<span class="number">1</span> )</span></span>; </span><br><span class="line">    <span class="function">Vector3d <span class="title">pixel2world</span> <span class="params">( <span class="type">const</span> Vector2d&amp; p_p, <span class="type">const</span> SE3&amp; T_c_w, <span class="type">double</span> depth=<span class="number">1</span> )</span></span>;</span><br><span class="line">    <span class="function">Vector2d <span class="title">world2pixel</span> <span class="params">( <span class="type">const</span> Vector3d&amp; p_w, <span class="type">const</span> SE3&amp; T_c_w )</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span> <span class="comment">// CAMERA_H</span></span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>智能指针，Camera指针类型，传递参数时候，只需用Camera::Ptr类型即可</p>
+</li>
+<li><p>SE3表达相机的位姿</p>
+</li>
+</ul>
+<p>camera.cpp</p>
+<ul>
+<li>相关的原理与第五章讲解的内容一致，坐标转换。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;myslam/camera.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> myslam</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">Camera::<span class="built_in">Camera</span>()</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Vector3d <span class="title">Camera::world2camera</span> <span class="params">( <span class="type">const</span> Vector3d&amp; p_w, <span class="type">const</span> SE3&amp; T_c_w )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> T_c_w*p_w;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Vector3d <span class="title">Camera::camera2world</span> <span class="params">( <span class="type">const</span> Vector3d&amp; p_c, <span class="type">const</span> SE3&amp; T_c_w )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> T_c_w.<span class="built_in">inverse</span>() *p_c;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Vector2d <span class="title">Camera::camera2pixel</span> <span class="params">( <span class="type">const</span> Vector3d&amp; p_c )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Vector2d</span> (</span><br><span class="line">        fx_ * <span class="built_in">p_c</span> ( <span class="number">0</span>,<span class="number">0</span> ) / <span class="built_in">p_c</span> ( <span class="number">2</span>,<span class="number">0</span> ) + cx_,</span><br><span class="line">        fy_ * <span class="built_in">p_c</span> ( <span class="number">1</span>,<span class="number">0</span> ) / <span class="built_in">p_c</span> ( <span class="number">2</span>,<span class="number">0</span> ) + cy_</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Vector3d <span class="title">Camera::pixel2camera</span> <span class="params">( <span class="type">const</span> Vector2d&amp; p_p, <span class="type">double</span> depth )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Vector3d</span> (</span><br><span class="line">        ( <span class="built_in">p_p</span> ( <span class="number">0</span>,<span class="number">0</span> )-cx_ ) *depth/fx_,</span><br><span class="line">        ( <span class="built_in">p_p</span> ( <span class="number">1</span>,<span class="number">0</span> )-cy_ ) *depth/fy_,</span><br><span class="line">        depth</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Vector2d <span class="title">Camera::world2pixel</span> <span class="params">( <span class="type">const</span> Vector3d&amp; p_w, <span class="type">const</span> SE3&amp; T_c_w )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">camera2pixel</span> ( <span class="built_in">world2camera</span> ( p_w, T_c_w ) );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Vector3d <span class="title">Camera::pixel2world</span> <span class="params">( <span class="type">const</span> Vector2d&amp; p_p, <span class="type">const</span> SE3&amp; T_c_w, <span class="type">double</span> depth )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">camera2world</span> ( <span class="built_in">pixel2camera</span> ( p_p, depth ), T_c_w );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3、Frame类"><a href="#1-3、Frame类" class="headerlink" title="1.3、Frame类"></a>1.3、Frame类</h3><h3 id="1-4-MapPoint类"><a href="#1-4-MapPoint类" class="headerlink" title="1.4 MapPoint类"></a>1.4 MapPoint类</h3><h3 id="1-5-Map类"><a href="#1-5-Map类" class="headerlink" title="1.5 Map类"></a>1.5 Map类</h3><h3 id="1-6-Config类"><a href="#1-6-Config类" class="headerlink" title="1.6 Config类"></a>1.6 Config类</h3><h2 id="2、基本VO操作，特征提取，匹配"><a href="#2、基本VO操作，特征提取，匹配" class="headerlink" title="2、基本VO操作，特征提取，匹配"></a>2、基本VO操作，特征提取，匹配</h2><h2 id="3、改进：优化PNP的结果"><a href="#3、改进：优化PNP的结果" class="headerlink" title="3、改进：优化PNP的结果"></a>3、改进：优化PNP的结果</h2><h2 id="4、改进：局部地图"><a href="#4、改进：局部地图" class="headerlink" title="4、改进：局部地图"></a>4、改进：局部地图</h2><h2 id="5、小结"><a href="#5、小结" class="headerlink" title="5、小结"></a>5、小结</h2>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2023/01/12/Course/SLAM/ch10_optimization1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/01/12/Course/SLAM/ch10_optimization1/" class="post-title-link" itemprop="url">视觉SLAM十四讲 第十 后端1</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-01-12 20:09:09" itemprop="dateCreated datePublished" datetime="2023-01-12T20:09:09+00:00">2023-01-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SLAM/" itemprop="url" rel="index"><span itemprop="name">SLAM</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>目标：</p>
+<ol>
+<li>实际设计一个视觉里程计前端。  </li>
+<li>理解 SLAM 软件框架是如何搭建的。  </li>
+<li>理解在前端设计中容易出现的问题，以及修补的方式。</li>
+</ol>
+<p>你会管理局部的机器人轨迹与路标点，并体验一下一个软件框架是如何组成的。</p>
+<p>可能的问题：</p>
+<ul>
+<li>相机运动过快、图像模糊、误匹配……都会使算法失效。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2023/01/12/Course/SLAM/ch11_optimization2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/01/12/Course/SLAM/ch11_optimization2/" class="post-title-link" itemprop="url">视觉SLAM十四讲 第十一 后端优化2</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-01-12 20:09:09" itemprop="dateCreated datePublished" datetime="2023-01-12T20:09:09+00:00">2023-01-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SLAM/" itemprop="url" rel="index"><span itemprop="name">SLAM</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/12/31/Sub_Language/CPlus/Cplus_Pro/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/12/31/Sub_Language/CPlus/Cplus_Pro/" class="post-title-link" itemprop="url">常见问题解答</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-12-31 12:00:00" itemprop="dateCreated datePublished" datetime="2022-12-31T12:00:00+00:00">2022-12-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>1、template的作用</p>
+<p>    模板函数：</p>
+<ul>
+<li><p>不是一个确定的函数，编译器不会为其生成可执行代码。</p>
+</li>
+<li><p>定义模板函数，只是一个对函数功能框架的描述</p>
+</li>
+<li><p>具体执行时候，将根据传递的实际参数，决定其功能。</p>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Swap</span><span class="params">(T &amp;x, T &amp;y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    T tmp = x;</span><br><span class="line">    x = y;</span><br><span class="line">    y = tmp;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">2</span>, b = <span class="number">9</span>;</span><br><span class="line">    <span class="built_in">Swap</span>(a,b);    <span class="comment">//编译器自动生成 void Swap (int &amp;, int &amp;)函数</span></span><br><span class="line">    <span class="type">double</span> c = <span class="number">2.9</span>, d = <span class="number">3.2</span>;</span><br><span class="line">    <span class="built_in">Swap</span>(c, d);</span><br><span class="line">    <span class="type">char</span> *a = <span class="string">&quot;abc&quot;</span>,*b = <span class="string">&quot;def&quot;</span>; <span class="comment">//编译器自动生成 void Swap (char &amp;, char &amp;)函数</span></span><br><span class="line">    <span class="built_in">Swap</span>(a,b);</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;a=&quot;</span>&lt;&lt;a&lt;&lt;<span class="string">&quot; &quot;</span>&lt;&lt;<span class="string">&quot;b=&quot;</span>&lt;&lt;b&lt;&lt;endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_54685803/article/details/121390581">C++模板函数_咸鱼不贤的博客-CSDN博客_c++ 模板函数</a></p>
+<p>2、STL的作用</p>
+<ul>
+<li><p> <a target="_blank" rel="noopener" href="http://c.biancheng.net/stl/">STL</a> 标准模板库</p>
+</li>
+<li><p>STL，英文全称 s<a target="_blank" rel="noopener" href="http://c.biancheng.net/ref/tan.html">tan</a>dard template library，中文可译为标准模板库或者泛型库，其包含有大量的模板类和模板函数，是 C++ 提供的一个基础模板的集合，用于完成诸如输入&#x2F;输出、数学计算等功能。</p>
+</li>
+<li><p>从根本上说，STL 是一些容器、算法和其他一些组件的集合，所有容器和算法都是总结了几十年来算法和<a target="_blank" rel="noopener" href="http://c.biancheng.net/data_structure/">数据结构</a>的研究成果，汇集了许多计算机专家学者经验的基础上实现的，因此可以说，STL 基本上达到了各种存储方法和相关算法的高度优化。</p>
+</li>
+<li><p>STL 可以更加方便灵活地处理数据。</p>
+</li>
+</ul>
+<p>表 2 C++ STL头文件</p>
+<table>
+<thead>
+<tr>
+<th><iterator></iterator></th>
+<th><functional></functional></th>
+<th><vector></vector></th>
+<th><deque></deque></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><list></list></td>
+<td><queue></queue></td>
+<td><stack></stack></td>
+<td><set></set></td>
+</tr>
+<tr>
+<td><map></map></td>
+<td><algorithm></algorithm></td>
+<td><numeric></numeric></td>
+<td><memory></memory></td>
+</tr>
+<tr>
+<td><utility></utility></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/12/23/Improve/2023-Plan/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/12/23/Improve/2023-Plan/" class="post-title-link" itemprop="url">Plan 2023</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-12-23 12:00:00" itemprop="dateCreated datePublished" datetime="2022-12-23T12:00:00+00:00">2022-12-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="寄语"><a href="#寄语" class="headerlink" title="寄语"></a>寄语</h3><ul>
+<li><p>少刷视频，多读书</p>
+</li>
+<li><p>读书，多思考</p>
+</li>
+<li><p>提升英语水平，多邻国&#x2F;雅思&#x2F;托福</p>
+<ul>
+<li>多读英文原著</li>
+</ul>
+</li>
+<li><p>深入的学习一门技术</p>
+<ul>
+<li>unix网络编程c++等</li>
+</ul>
+</li>
+</ul>
+<hr>
+<ul>
+<li><p>ML</p>
+<ul>
+<li><p><input disabled type="checkbox"> 
+《机器学习》</p>
+</li>
+<li><p><input disabled type="checkbox"> 
+《统计学习方法》</p>
+</li>
+<li><p><input disabled type="checkbox"> 
+《图解机器学习-日》</p>
+</li>
+<li><p><input disabled type="checkbox"> 
+《模式识别与机器学习》</p>
+</li>
+</ul>
+</li>
+<li><p>RL</p>
+<ul>
+<li><p><input checked disabled type="checkbox"> 
+《Reinforcement Learning: An Introduction》【PDF】</p>
+</li>
+<li><p><input disabled type="checkbox"> 
+《多视图几何–机械工业》【实体书】</p>
+</li>
+<li><p><input disabled type="checkbox"> </p>
+</li>
+</ul>
+</li>
+<li><p>SLAM：</p>
+<ul>
+<li><p><input checked disabled type="checkbox"> 
+《视觉SLAM十四讲》【实体书&#x2F;PDF】</p>
+</li>
+<li><p><input disabled type="checkbox"> 
+基础知识</p>
+<ul>
+<li><p><input disabled type="checkbox"> 
+Pnp求解</p>
+</li>
+<li><p><input disabled type="checkbox"> 
+EKF</p>
+</li>
+<li><p><input disabled type="checkbox"> 
+ROS</p>
+</li>
+</ul>
+</li>
+<li><p><input checked disabled type="checkbox"> 
+源码阅读ORB_SLAM2</p>
+</li>
+<li><p><input disabled type="checkbox"> 
+硬件搭建</p>
+</li>
+<li><p><input disabled type="checkbox"> 
+《宾夕法尼亚大学-SLAM》</p>
+</li>
+</ul>
+</li>
+<li><p>算法研究</p>
+<ul>
+<li><p><input disabled type="checkbox"> 
+图论算法（最短路径）</p>
+</li>
+<li><p><input disabled type="checkbox"> 
+动态规划</p>
+</li>
+<li><p><input disabled type="checkbox"> 
+最优化理论：退火算法</p>
+</li>
+</ul>
+</li>
+<li></li>
+</ul>
+<hr>
+<h3 id="Soft-Power"><a href="#Soft-Power" class="headerlink" title="Soft Power"></a>Soft Power</h3><ul>
+<li><p>英语</p>
+<ul>
+<li><p><input disabled type="checkbox"> 
+阅读</p>
+</li>
+<li><p><input disabled type="checkbox"> 
+单词</p>
+</li>
+<li><p><input disabled type="checkbox"> 
+口语</p>
+</li>
+</ul>
+</li>
+<li><p>Etc</p>
+</li>
+</ul>
+<hr>
+<h3 id="Academic-Education-Examination"><a href="#Academic-Education-Examination" class="headerlink" title="Academic Education&#x2F;Examination"></a>Academic Education&#x2F;Examination</h3><ul>
+<li><p><input disabled type="checkbox"> 
+同等学力申硕</p>
+</li>
+<li><p><input disabled type="checkbox"> 
+Course</p>
+</li>
+<li><p><input disabled type="checkbox"> 
+MEM二战？</p>
+</li>
+<li><p><input disabled type="checkbox"> 
+<a href="%5B%E7%9F%B3%E5%A2%A8%E6%96%87%E6%A1%A3%5D(https://shimo.im/docs/HRk8YxYpYXHtYTDC)">软考-高级–信息系统项目管理师</a> 23年（3.20号报名，5月27考试）</p>
+</li>
+</ul>
+<hr>
+<h2 id="Annual-Plan"><a href="#Annual-Plan" class="headerlink" title="Annual Plan"></a>Annual Plan</h2><h3 id="Q1计划"><a href="#Q1计划" class="headerlink" title="Q1计划"></a>Q1计划</h3><ul>
+<li><p><input disabled type="checkbox"> 
+技术：</p>
+<ul>
+<li><p><input checked disabled type="checkbox"> 
+SLAM配套视频，代码</p>
+</li>
+<li><p><input disabled type="checkbox"> 
+ORB_SLAM2源码阅读</p>
+</li>
+</ul>
+</li>
+<li><p><input checked disabled type="checkbox"> 
+英语：《RL English edtion》</p>
+</li>
+<li><p><input disabled type="checkbox"> 
+软考：</p>
+<ul>
+<li><p><input checked disabled type="checkbox"> 
+PPT知识阅读理解</p>
+</li>
+<li><p>[ ]</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Q2计划"><a href="#Q2计划" class="headerlink" title="Q2计划"></a>Q2计划</h3><ul>
+<li><input disabled type="checkbox"> SLAM</li>
+<li><input disabled type="checkbox"> 软考-高项</li>
+</ul>
+<p>4月</p>
+<ul>
+<li><input disabled type="checkbox"> SLAM</li>
+</ul>
+<p>5月</p>
+<ul>
+<li><input disabled type="checkbox"> SLAM</li>
+</ul>
+<p>6月</p>
+<ul>
+<li><input disabled type="checkbox"> SLAM</li>
+</ul>
+<h3 id="Q3计划"><a href="#Q3计划" class="headerlink" title="Q3计划"></a>Q3计划</h3><ul>
+<li><input disabled type="checkbox"> 学历</li>
+<li><input disabled type="checkbox"> SLAM</li>
+</ul>
+<h3 id="Q4计划"><a href="#Q4计划" class="headerlink" title="Q4计划"></a>Q4计划</h3><ul>
+<li><input checked disabled type="checkbox"> SLAM</li>
+</ul>
+<h2 id="读书"><a href="#读书" class="headerlink" title="读书"></a>读书</h2><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/6k9wUxhPGUHmEPuuW16T8g">2023交大安泰寒假书单 | 6本书籍点燃你的寒冬（上）</a></p>
+<p><strong>《<strong><strong>漫长的20世纪</strong></strong>》</strong>  作者: 乔万尼·阿里吉。资本主义自诞生以来的历史发展规律。<br>    这部堪称经典的著作，将我们的视野拉长，让我们看到资本主义自诞生以来的历史发展规律。我们能看到产业资本和金融资本的交替扩张循环，也能看到政府与市场不断发现新的协作关系，还能看到每一轮大国崛起的内在动力。了解历史，有助于我们更好地预判未来的大趋势。</p>
+<p><strong>《数字唬人》</strong> 作者: 迈克尔·布拉斯兰 &#x2F;安德鲁·迪诺 </p>
+<p>    在本书中，牛津大学首席经济学者与知名记者联手出击，通过日常生活中妙趣横生的故事和数字常识，拆穿统计学常用的唬人伎俩，利用普通人所具备的常识、经验与能力，揭开数字代表的高超谎言，还原事件的真相，使读者在轻松愉快的阅读中直捣数字核心与背后的意义，练就一生受用的数字透视力。</p>
+<p><strong>《女士品茶》</strong> 作者：戴维·萨尔斯伯格。在20世纪波澜壮阔的科学发展史中，一瞥统计学的缘起和大放异彩，读起来颇有趣味。</p>
+<p><strong>《Think Again: The Power of Knowing</strong> <strong>What You Don’t Know》</strong> 作者：Adam Grant（沃顿商学院教授）（反思）</p>
+<p>这是一本可以教会我们如何拥抱怀疑、拥抱未知和拥抱自己的错误的书籍。在现实生活中人们往往囿于自己的思维定式和偏见，不愿意反思也不会反思。然而，真正的智者并不拘泥于一种思考模式，而是会愿意不断地重新思考他们的立场。这本书教会我们，作为一种心态和技能，反思的能力是可以被教授和习得的。在这个不断变化的社会，学会反思可能是帮助你获得优势的秘密武器。</p>
+<p><strong>《The new geography of jobs》</strong> 作者：Enrico Moretti</p>
+<p>Our global economy is becoming increasingly local, and where we live and work is more important than ever. This is true even after the pandemic. This book explains why people agglomerate and how the agglomeration effect has reshaped the economic geography of the US, especially as the economy has undergone globalization and the structural change from manufacturing to services, making local spillovers even more critical for economic success.</p>
+<p>Globalization will continue to be important. China will undergo structural change, too, as other countries have experienced as they develop. This book provides a great insight into the importance of geography in considering the country’s economy and development in the future.</p>
+<p><strong>《东方学》</strong> 作者：爱德华·W·萨义德</p>
+<p>一本哲学著作，指出西方对于东方的凝视，与其说是传统与现代的对望，毋宁说更是一种权力关系。</p>
+<p>今天，所有陷于“东方主义”泥沼中的传统文明应勇敢而全面地对自己和他者进行双重反思。</p>
+<p><strong>《向心城市》</strong> 作者:陆铭  城市化</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/12/20/Sub_Language/CPlus/CPlus_IO/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/12/20/Sub_Language/CPlus/CPlus_IO/" class="post-title-link" itemprop="url">C ++ IO File</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-12-20 09:00:00" itemprop="dateCreated datePublished" datetime="2022-12-20T09:00:00+00:00">2022-12-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Outline"><a href="#Outline" class="headerlink" title="Outline:"></a>Outline:</h2><h2 id="Base"><a href="#Base" class="headerlink" title="Base"></a>Base</h2><p><img src="/2022/12/20/Sub_Language/CPlus/CPlus_IO/2025-08-06-16-13-22-image.png"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/12/20/Sub_Language/CPlus/CPlus_IO/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/12/02/Course/SLAMs/ORB_SLAM2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/12/02/Course/SLAMs/ORB_SLAM2/" class="post-title-link" itemprop="url">ORB_SLAM2开源代码</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-12-02 15:43:00" itemprop="dateCreated datePublished" datetime="2022-12-02T15:43:00+00:00">2022-12-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SLAM/" itemprop="url" rel="index"><span itemprop="name">SLAM</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SLAM/ORB-SLAM2/" itemprop="url" rel="index"><span itemprop="name">ORB_SLAM2</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="一、ORB-SLAM2的特点"><a href="#一、ORB-SLAM2的特点" class="headerlink" title="一、ORB_SLAM2的特点"></a>一、ORB_SLAM2的特点</h1><p>  1、ORB_SLAM2是首个支持单目、双目和RGB-D相机的完整开源SLAM方案，能够实现地图重用，回环检测和重新定位的功能。</p>
+<p>  2、能够在GPU上进行实时工作，比如手机、无人机、汽车。</p>
+<p>  3、特征点法的巅峰之作，定位精度非常高。</p>
+<p>  4、能够实时计算处相机的位姿，并生成场景的稀疏三维重建地图。</p>
+<h1 id="二、算法流程框架"><a href="#二、算法流程框架" class="headerlink" title="二、算法流程框架"></a>二、算法流程框架</h1><h2 id="ORB-SLAM整体流程如下图所示"><a href="#ORB-SLAM整体流程如下图所示" class="headerlink" title="ORB-SLAM整体流程如下图所示"></a>ORB-SLAM整体流程如下图所示</h2><p><img src="/2022/12/02/Course/SLAMs/ORB_SLAM2/2023-01-10-10-10-18-image.png"></p>
+<p>它主要有三个线程组成：跟踪、Local Mapping（又称小图）、Loop Closing（又称大图）</p>
+<h3 id="a、跟踪（Tracking）"><a href="#a、跟踪（Tracking）" class="headerlink" title="a、跟踪（Tracking）"></a>a、跟踪（Tracking）</h3><p>    这一部分主要工作是从图像中提取ORB特征，根据上一帧进行姿态估计，或者进行通过全局重定位初始化位姿，然后跟踪已经重建的局部地图，优化位姿，再根据一些规则确定新的关键帧。</p>
+<p>跟踪线程相当于一个视觉里程计，流程如下：</p>
+<ul>
+<li><p>首先，对原始图像提取ORB特征并计算描述子。</p>
+</li>
+<li><p>根据特征描述，在图像间进行特征匹配。</p>
+</li>
+<li><p>根据匹配特征点估计相机运动。</p>
+</li>
+<li><p>根据关键帧判别准则，判断当前帧是否为关键帧。</p>
+</li>
+</ul>
+<h3 id="b、建图（LocalMapping）"><a href="#b、建图（LocalMapping）" class="headerlink" title="b、建图（LocalMapping）"></a>b、建图（LocalMapping）</h3><p>    这一部分主要完成局部地图构建。包括对关键帧的插入，验证最近生成的地图点并进行筛选，然后生成新的地图点，使用局部捆集调整（Local BA），最后再对插入的关键帧进行筛选，去除多余的关键帧。</p>
+<h3 id="c、闭环检测（LoopClosing）"><a href="#c、闭环检测（LoopClosing）" class="headerlink" title="c、闭环检测（LoopClosing）"></a>c、闭环检测（LoopClosing）</h3><p>  这一部分主要分为两个过程，分别是闭环探测和闭环校正。闭环检测先使用WOB进行探测，然后通过<mark>Sim3</mark>算法计算<mark>相似变换</mark>。闭环校正，主要是闭环融合和Essential Graph的图优化</p>
+<h1 id="三、安装教程"><a href="#三、安装教程" class="headerlink" title="三、安装教程"></a>三、安装教程</h1><h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/raulmur/ORB_SLAM2.git ORB_SLAM2</span><br></pre></td></tr></table></figure>
+
+<h2 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ORB_SLAM2</span><br><span class="line"><span class="built_in">chmod</span> +x build.sh</span><br><span class="line">./build.sh</span><br></pre></td></tr></table></figure>
+
+<h1 id="四、TUM数据集"><a href="#四、TUM数据集" class="headerlink" title="四、TUM数据集"></a>四、TUM数据集</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_60355964/article/details/125995064#TUM_9">SLAM数据集TUM，KITTI，EuRoC数据集的下载地址与真实轨迹文件的查找_m0_60355964的博客-CSDN博客_euroc数据集下载</a></p>
+<p><a target="_blank" rel="noopener" href="https://vision.in.tum.de/data/datasets/rgbd-dataset/download">【TUM数据集 】Computer Vision Group - Dataset Download</a></p>
+<h1 id="五、Demo-RUN"><a href="#五、Demo-RUN" class="headerlink" title="五、Demo RUN"></a>五、Demo RUN</h1><h2 id="1、单目例子"><a href="#1、单目例子" class="headerlink" title="1、单目例子"></a>1、单目例子</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./Examples/Monocular/mono_tum Vocabulary/ORBvoc.txt </span><br><span class="line">Examples/Monocular/TUM1.yaml ../TUM_datasets/rgbd_dataset_freiburg1_desk/</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1yw411U7tF/">Example Video</a></p>
+<h2 id="2、自制单目-数据集mp4"><a href="#2、自制单目-数据集mp4" class="headerlink" title="2、自制单目-数据集mp4"></a>2、自制单目-数据集mp4</h2><p>3、</p>
+<h1 id="相关博客"><a href="#相关博客" class="headerlink" title="相关博客"></a>相关博客</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_41944449/article/details/119864865">vslam流程框架介绍_chengwei_peng的博客-CSDN博客_vslam是什么意思</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/121601875">【知乎】VSLAM小科普</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/peng_258/article/details/126725770">orbslam2 安装与运行_Darren_pty的博客-CSDN博客_orbslam2安装运行</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_58173801/article/details/119980457">ORB_SLAM2 源码解析 ORB_SLAM2简介（一）_小负不负的博客-CSDN博客_orb-slam2</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45485946/article/details/122744655">【一文足以系列】ORB SLAM2完整详细算法流程_铃灵狗的博客-CSDN博客_orbslam2</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.yuque.com/chenhai-7zi1m/se4n14">ORB-SLAM2笔记 ·魔法少女郭德纲 语雀(B站视频讲解)</a></p>
+<p>他人镜:</p>
+<ul>
+<li><p><input disabled type="checkbox"> 
+<a target="_blank" rel="noopener" href="https://blog.csdn.net/hltt3838/article/details/113810629">ORB-SLAM2代码阅读笔记汇总-他人镜-CSDN博客</a></p>
+</li>
+<li><p><input disabled type="checkbox"> 
+<a target="_blank" rel="noopener" href="https://blog.csdn.net/hltt3838/article/details/115084067">ORB-SLAM2 代码（+理论）解析（一）：进入mono_euroc 主函数-他人镜-CSDN博客</a></p>
+</li>
+</ul>
+<p>文科生：</p>
+<ul>
+<li><p><input disabled type="checkbox"> 
+<a target="_blank" rel="noopener" href="https://blog.csdn.net/moyu123456789/article/details/90436657">ORB-SLAM2代码阅读笔记（四）：Tracking线程2——ORB特征提取_border_reflect_101 高斯模糊-文科生-CSDN博客</a></p>
+</li>
+<li><p><input disabled type="checkbox"> 
+<a target="_blank" rel="noopener" href="https://blog.csdn.net/moyu123456789/article/details/90896758">ORB-SLAM2代码阅读笔记（六）：Tracking线程4—Track函数中相机位姿估计_orb-slam位姿估计算法-文科生-CSDN博客</a></p>
+</li>
+<li><p><input disabled type="checkbox"> 
+<a target="_blank" rel="noopener" href="https://blog.csdn.net/moyu123456789/article/details/91299474">ORB-SLAM2代码阅读笔记（七）：LocalMapping线程-文科生-CSDN博客</a></p>
+</li>
+<li><p><input disabled type="checkbox"> 
+<a target="_blank" rel="noopener" href="https://blog.csdn.net/moyu123456789/article/details/91374510">ORB-SLAM2代码阅读笔记（八）：LoopClosing线程_sim3-CSDN博客</a></p>
+</li>
+<li><p><input disabled type="checkbox"> 
+<a target="_blank" rel="noopener" href="https://blog.csdn.net/moyu123456789/article/details/91620024">ORB-SLAM2代码阅读笔记（九）：进行窗口显示的Viewer线程-文科生-CSDN博客</a></p>
+</li>
+</ul>
+<p>实践代码：</p>
+<ul>
+<li><p><input disabled type="checkbox"> 
+<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_41469272/article/details/119885449">SLAM轨迹精度测评(TUM格式)-Nie_Xun-CSDN博客</a></p>
+</li>
+<li><p><input disabled type="checkbox"> 
+<a target="_blank" rel="noopener" href="https://blog.csdn.net/Prototype___/article/details/133675184">ORB-SLAM2运行自制数据集进行定位教程_如何用orb-slam2跑自己的数据集-CSDN博客</a></p>
+</li>
+<li><p><input disabled type="checkbox"> 
+<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42585108/article/details/105614770"># ORB-SLAM 2跑通自己的数据集</a></p>
+</li>
+<li><p><input disabled type="checkbox"> 
+<a target="_blank" rel="noopener" href="https://blog.csdn.net/cloud_less/article/details/78773537">ORB-SLAM2运行自己的数据集_orb slam运行自己的数据集-CSDN博客</a></p>
+</li>
+</ul>
+<p>Math</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/438129018">关于KL散度（Kullback-Leibler Divergence）的笔记</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/09/15/Course/SLAM/ch08_vo2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/09/15/Course/SLAM/ch08_vo2/" class="post-title-link" itemprop="url">直接法视觉里程计(LK,DM,)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-09-15 12:00:00" itemprop="dateCreated datePublished" datetime="2022-09-15T12:00:00+00:00">2022-09-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SLAM/" itemprop="url" rel="index"><span itemprop="name">SLAM</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>目标：</p>
+<ul>
+<li><p>理解<mark>光流法</mark>跟踪特征点的原理</p>
+</li>
+<li><p>理解<mark>直接法</mark>是如何估计相机位姿的</p>
+</li>
+<li><p>使用g2o进行直接法的计算。</p>
+</li>
+</ul>
+<h2 id="1、直接法引出"><a href="#1、直接法引出" class="headerlink" title="1、直接法引出"></a>1、直接法引出</h2><h3 id="特征点法的缺点："><a href="#特征点法的缺点：" class="headerlink" title="特征点法的缺点："></a>特征点法的缺点：</h3><table>
+<thead>
+<tr>
+<th></th>
+<th>缺点</th>
+<th>解决思路</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td>关键点的提取与描述子的计算非常耗时。</td>
+<td>1、保留特征点，只计算关键点，不计算描述子，使用<mark>光流</mark>跟踪特征点运动（仍使用特征点，匹配描述子换成光流跟踪，估计相机运动仍使用对极几何，Pnp或ICP算法）</td>
+</tr>
+<tr>
+<td></td>
+<td>关注与特征点，忽略了特征点之外的所有信息。</td>
+<td>法2、只计算关键点，不计算描述子，使用直接法，计算特征点在下一时刻图像的位置。</td>
+</tr>
+<tr>
+<td></td>
+<td>特征缺失（白墙，空荡荡的走廊）</td>
+<td>法3、既不计算关键点，也不计算描述子，根据像素灰度差异，直接计算相机运动。</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>法1还是特征点法；法2，法3，则是直接法；</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>特征点法</th>
+<th>直接法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>优化相机运动</td>
+<td>特征点在相机中的投影，最小化投影误差</td>
+<td>在直接法中，我们并不需要知道点与点之间之间的对应关系，而是</td>
+</tr>
+<tr>
+<td>通过最小化光度误差（Photometric error）来求得它们<br>最小化光度误差</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>SVO，LSD_SLAM</td>
+</tr>
+<tr>
+<td></td>
+<td>重构稀疏特征点（稀疏地图）</td>
+<td>直接法分为稀疏、稠密和</td>
+</tr>
+<tr>
+<td>半稠密三种。</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>直接法根据</td>
+</tr>
+<tr>
+<td><br>像素的亮度信息，估计相机的运动</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>区别：</p>
+<ul>
+<li><p>需要配对点，通过其它法得到</p>
+</li>
+<li><p>不需要配对点，直接得到关系</p>
+</li>
+</ul>
+<p>不提特征计算VO的思路：</p>
+<ul>
+<li><p>通过其它方式寻找配对点–光流</p>
+</li>
+<li><p>无配对点–直接法</p>
+</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/09/15/Course/SLAM/ch08_vo2/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/08/09/Sub_Language/CPlus/Cplus_bug_log/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/08/09/Sub_Language/CPlus/Cplus_bug_log/" class="post-title-link" itemprop="url">C++ 编译报错解决集锦</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-08-09 12:00:00" itemprop="dateCreated datePublished" datetime="2022-08-09T12:00:00+00:00">2022-08-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="1、使用ceres编译报错-error-‘integer-sequence’-is-not-a-member-of-‘std‘"><a href="#1、使用ceres编译报错-error-‘integer-sequence’-is-not-a-member-of-‘std‘" class="headerlink" title="1、使用ceres编译报错 error: ‘integer_sequence’ is not a member of ‘std‘"></a>1、使用ceres编译报错 error: ‘integer_sequence’ is not a member of ‘std‘</h4><p>修改cmake 将设置c++标准的</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span>(<span class="type">CMAKE_CXX_FLAGS</span> <span class="string">&quot;-std=c++11&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>替换为</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span>(CMAKE_CXX_STANDARD <span class="number">11</span>)</span><br></pre></td></tr></table></figure>
+
+<p>可以解决</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/12/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/14/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

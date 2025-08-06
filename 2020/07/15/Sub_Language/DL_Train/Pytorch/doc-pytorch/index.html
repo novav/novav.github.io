@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="APIs [TOC] Tensorpytorch12345678910111213141516171819202122#1 list-&gt;tensordata &#x3D; [[1,2],[3,4]]x_data &#x3D; torch.tensor(data, dtype&#x3D;torch.float)### torch.FloatTensor, torch.DoubleTensorfloat_tensor &#x3D; t">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PyTorch Doc Detail">
+<meta property="og:url" content="https://novav.github.io/2020/07/15/Sub_Language/DL_Train/Pytorch/doc-pytorch/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="APIs [TOC] Tensorpytorch12345678910111213141516171819202122#1 list-&gt;tensordata &#x3D; [[1,2],[3,4]]x_data &#x3D; torch.tensor(data, dtype&#x3D;torch.float)### torch.FloatTensor, torch.DoubleTensorfloat_tensor &#x3D; t">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2020/07/15/Sub_Language/DL_Train/Pytorch/doc-pytorch/2024-04-30-10-03-27-image.png">
+<meta property="og:image" content="https://novav.github.io/2020/07/15/Sub_Language/DL_Train/Pytorch/doc-pytorch/image-20220630094510503.png">
+<meta property="og:image" content="https://novav.github.io/2020/07/15/Sub_Language/DL_Train/Pytorch/doc-pytorch/2024-04-17-19-19-50-image.png">
+<meta property="article:published_time" content="2020-07-15T10:54:51.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:40.544Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="API">
+<meta property="article:tag" content="PyTorch">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2020/07/15/Sub_Language/DL_Train/Pytorch/doc-pytorch/2024-04-30-10-03-27-image.png">
+
+<link rel="canonical" href="https://novav.github.io/2020/07/15/Sub_Language/DL_Train/Pytorch/doc-pytorch/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>PyTorch Doc Detail | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2020/07/15/Sub_Language/DL_Train/Pytorch/doc-pytorch/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          PyTorch Doc Detail
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-07-15 10:54:51" itemprop="dateCreated datePublished" datetime="2020-07-15T10:54:51+00:00">2020-07-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DNN-platform/" itemprop="url" rel="index"><span itemprop="name">DNN_platform</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DNN-platform/pytorch/" itemprop="url" rel="index"><span itemprop="name">pytorch</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>APIs</p>
+<p>[TOC]</p>
+<h2 id="Tensor"><a href="#Tensor" class="headerlink" title="Tensor"></a>Tensor</h2><h3 id="pytorch"><a href="#pytorch" class="headerlink" title="pytorch"></a>pytorch</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1 list-&gt;tensor</span></span><br><span class="line">data = [[<span class="number">1</span>,<span class="number">2</span>],[<span class="number">3</span>,<span class="number">4</span>]]</span><br><span class="line">x_data = torch.tensor(data, dtype=torch.<span class="built_in">float</span>)</span><br><span class="line"><span class="comment">### torch.FloatTensor, torch.DoubleTensor</span></span><br><span class="line">float_tensor = torch.FloatTensor([<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">#2 np.array -&gt; tensor</span></span><br><span class="line">np_array = np.array(data)</span><br><span class="line">x_np_data = torch.from_numpy(data)</span><br><span class="line"></span><br><span class="line"><span class="comment">#3 tensor -&gt; tensor</span></span><br><span class="line">x_ones = torch.ones_like(x_data)</span><br><span class="line">x_rand = torch.rand_like(x_data, dtype=torch.<span class="built_in">float</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#4 new empty tensor</span></span><br><span class="line">shape = (<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line">x_ones = torch.ones(shape)</span><br><span class="line">x_zeros = torch.zeros(shape)</span><br><span class="line">x_rand = torch.rand(shape)</span><br><span class="line"></span><br><span class="line"><span class="comment">#5  tensor to numpy</span></span><br><span class="line">tensor.numpy()</span><br></pre></td></tr></table></figure>
+
+<h3 id="libtorch-c"><a href="#libtorch-c" class="headerlink" title="libtorch(c++)"></a>libtorch(c++)</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1 数组 -&gt; Tensor</span></span><br><span class="line"><span class="type">int</span> data[<span class="number">10</span>] = &#123;<span class="number">3</span>,<span class="number">4</span>,<span class="number">6</span>&#125;</span><br><span class="line">torch::Tensor x_data = torch::<span class="built_in">from_blob</span>(data,&#123;<span class="number">3</span>&#125;,torch::kFloat)</span><br><span class="line"></span><br><span class="line"><span class="comment">//2 vector -&gt; Tensor</span></span><br><span class="line">std::vector&lt;<span class="type">float</span>&gt; std_vector = &#123;<span class="number">3</span>，<span class="number">4</span>，<span class="number">6</span>&#125;;</span><br><span class="line">torch::Tensor vector_data = torch::<span class="built_in">from_brob</span>(std_vector.<span class="built_in">data</span>(),&#123;<span class="number">3</span>&#125;,torch::kFloat);</span><br><span class="line"></span><br><span class="line"><span class="comment">//3 Tensor like</span></span><br><span class="line">torch::Tensor x = torch::<span class="built_in">zeros</span>(&#123;<span class="number">3</span>,<span class="number">4</span>&#125;);</span><br><span class="line">torch::Tensor x_zeros = torch::<span class="built_in">zeros_like</span>(x);</span><br><span class="line">torch::Tensor x_ones = torch::<span class="built_in">ones_like</span>(x);</span><br><span class="line">torch::Tensor x_rand = torch::<span class="built_in">rand_like</span>(x);</span><br><span class="line"><span class="comment">//浅拷贝</span></span><br><span class="line">torch::Tensor y = x</span><br><span class="line"><span class="comment">//深拷贝</span></span><br><span class="line">torch::Tensor z = x.<span class="built_in">clone</span>();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//4 new shape Tensor</span></span><br><span class="line">torch::Tensor x_ones = torch::<span class="built_in">ones</span>(&#123;<span class="number">3</span>,<span class="number">4</span>&#125;);</span><br><span class="line">torch::Tensor x_zeros = torch::<span class="built_in">zeros</span>(&#123;<span class="number">3</span>,<span class="number">4</span>&#125;);</span><br><span class="line">torch::Tensor x_eye = torch::<span class="built_in">eye</span>(<span class="number">4</span>);</span><br><span class="line">torch::Tensor x_full = torch::<span class="built_in">full</span>(&#123;<span class="number">3</span>,<span class="number">4</span>&#125;,<span class="number">10</span>);</span><br><span class="line">torch::Tensor x_rand = torch::<span class="built_in">rand</span>(&#123;<span class="number">3</span>,<span class="number">4</span>&#125;);</span><br><span class="line">torch::Tensor x_randn = torch::<span class="built_in">randn</span>(&#123;<span class="number">3</span>,<span class="number">4</span>&#125;);</span><br><span class="line">torch::Tensor x_randint = torch::<span class="built_in">randint</span>(<span class="number">0</span>,<span class="number">4</span>,&#123;<span class="number">3</span>,<span class="number">3</span>&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="张量操作"><a href="#张量操作" class="headerlink" title="张量操作"></a>张量操作</h3><h4 id="pytorch-1"><a href="#pytorch-1" class="headerlink" title="pytorch"></a>pytorch</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># index + slice</span></span><br><span class="line">tensor = torch.rand(<span class="number">4</span>,<span class="number">4</span>)</span><br><span class="line">a = tensor[:, <span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># get mask</span></span><br><span class="line">Tensor[Mask]</span><br></pre></td></tr></table></figure>
+
+<h4 id="libtorch-c-1"><a href="#libtorch-c-1" class="headerlink" title="libtorch(c++)"></a>libtorch(c++)</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index </span></span><br><span class="line"><span class="keyword">auto</span> x = torch::rand(&#123;<span class="number">3</span>,<span class="number">4</span>&#125;);</span><br><span class="line">y = x[<span class="number">1</span>];</span><br><span class="line">y = x[<span class="number">1</span>][<span class="number">3</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// slice</span></span><br><span class="line"><span class="keyword">auto</span> x = torch::rand(&#123;<span class="number">3</span>,<span class="number">4</span>&#125;);</span><br><span class="line"><span class="keyword">auto</span> y = x.select(<span class="number">0</span>,<span class="number">1</span>); <span class="comment">// 第0维的第一层张量</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">auto</span> x = torch::rand(&#123;<span class="number">3</span>,<span class="number">4</span>&#125;);</span><br><span class="line"><span class="keyword">auto</span> y = x.narrow(<span class="number">0</span>, <span class="number">2</span>, <span class="number">2</span>); <span class="comment">// 从第0维的第2层张量开始，选两层张量？</span></span><br><span class="line"><span class="keyword">auto</span> y = x.slice(<span class="number">0</span>, <span class="number">1</span>, <span class="number">3</span>); <span class="comment">// 从第0维中，选第1维到第3-1维的张量 ？</span></span><br></pre></td></tr></table></figure>
+
+<p>3、 提取指定元素形成新的张量（关键字index：就代表是提取出来相应的元素组成新的张量）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;b.index_select(<span class="number">0</span>,torch::tensor(&#123;<span class="number">0</span>, <span class="number">3</span>, <span class="number">3</span>&#125;)).sizes();<span class="comment">//选择第0维的0，3，3组成新张量[3,3,28,28]</span></span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;b.index_select(<span class="number">1</span>,torch::tensor(&#123;<span class="number">0</span>,<span class="number">2</span>&#125;)).sizes(); <span class="comment">//选择第1维的第0和第2的组成新张量[10, 2, 28, 28]</span></span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;b.index_select(<span class="number">2</span>,torch::arange(<span class="number">0</span>,<span class="number">8</span>)).sizes(); <span class="comment">//选择十张图片每个通道的前8列的所有像素[10, 3, 8, 28]</span></span><br><span class="line"></span><br><span class="line">Tensor x_data = torch::rand(&#123;<span class="number">3</span>,<span class="number">4</span>&#125;);</span><br><span class="line">Tensor mask = torch::zeros(&#123;<span class="number">3</span>,<span class="number">4</span>&#125;);</span><br><span class="line"></span><br><span class="line">mask[<span class="number">1</span>][<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">mask[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//index()方法输入参量为布尔值组成的数组，输出参量为对应index的值组成新的张量(新的内存空间)</span></span><br><span class="line">Tensor x = x_data.index(&#123; mask.to(kBool) &#125;);    </span><br></pre></td></tr></table></figure>
+
+<h3 id="张量基本运算"><a href="#张量基本运算" class="headerlink" title="张量基本运算"></a>张量基本运算</h3><p>3.1 pytorch<br>① 按元素的加减乘除正常使用±*&#x2F;的运算符即可<br>② 矩阵乘法：例如xx^T</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x = torch.rand((<span class="number">3</span>,<span class="number">4</span>))</span><br><span class="line">y = x @ x.T</span><br><span class="line">y = x.matmul(x.T)</span><br></pre></td></tr></table></figure>
+
+<p>3.2 torchlib<br>① 按元素的加减乘除正常使用±*&#x2F;的运算符即可<br>② 矩阵乘法：例如xx^T</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> x = torch::<span class="built_in">rand</span>(&#123;<span class="number">3</span>,<span class="number">4</span>&#125;);</span><br><span class="line">x.<span class="built_in">mm</span>(x.<span class="built_in">t</span>());</span><br></pre></td></tr></table></figure>
+
+<h2 id="Init-Weight"><a href="#Init-Weight" class="headerlink" title="Init Weight"></a>Init Weight</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">torch.nn.init.xavier_uniform_(conv.weight)</span><br><span class="line">torch.nn.init.xavier_uniform_(conv.bias, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># REF: https://blog.csdn.net/qq_42995479/article/details/120598487</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># kaiming均匀分布</span></span><br><span class="line"><span class="comment"># torch.nn.init.kaiming_uniform_(tensor, a=0, mode=&#x27;fan_in&#x27;, nonlinearity=&#x27;leaky_relu&#x27;)</span></span><br><span class="line"><span class="comment"># 服从 U(-a, a), a = sqrt(6 / (1 + b ^2) * fan_in), 其中b为激活函数的负半轴的斜率， relu是0</span></span><br><span class="line"><span class="comment"># model 可以是fan_in或者fan_out。fan_in 表示使正向传播时，方差一致； fan_out使反向传播时， 方差一致</span></span><br><span class="line"><span class="comment"># nonlinearity 可选为relu和leaky_relu， 默认是leaky_relu</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># kaiming正态分布,  N～ (0,std)，其中std = sqrt(2/(1+b^2)*fan_in)</span></span><br><span class="line"><span class="comment"># torch.nn.init.kaiming_normal_(tensor, a=0, mode=&#x27;fan_in&#x27;, nonlinearity=&#x27;leaky_relu&#x27;)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> m <span class="keyword">in</span> net.modules():</span><br><span class="line">     <span class="keyword">if</span> <span class="built_in">isinstance</span>(m, torch.nn.Conv2d):</span><br><span class="line">          nn.kaiming_normal_(m.weight, mode = <span class="string">&#x27;fan_in&#x27;</span>)</span><br><span class="line">          nn.init.kaiming_normal_(m.weight, mode=<span class="string">&#x27;fan_out&#x27;</span>, nonlinearity=<span class="string">&#x27;relu&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="API-tensor"><a href="#API-tensor" class="headerlink" title="API-tensor"></a>API-tensor</h2><p><a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/torch.html">torch &mdash; PyTorch 2.0 documentation</a></p>
+<img src="/2020/07/15/Sub_Language/DL_Train/Pytorch/doc-pytorch/2024-04-30-10-03-27-image.png" title alt width="633">
+
+<h3 id="torch-reshape"><a href="#torch-reshape" class="headerlink" title="torch.reshape()"></a>torch.reshape()</h3><p><strong>torch.reshape用来改变tensor的shape。</strong><br><strong>torch.reshape(tensor,shape)</strong></p>
+<h3 id="tensor-squeeze"><a href="#tensor-squeeze" class="headerlink" title="tensor.squeeze()"></a>tensor.squeeze()</h3><p><strong>维度压缩</strong></p>
+<p>如果 <strong>input</strong> 的形状为 <strong>(A×1×B×C×1×D)</strong>，那么返回的tensor的形状则为 <strong>(A×B×C×D)</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = torch.zeros(<span class="number">2</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x.size()</span><br><span class="line">torch.Size([<span class="number">2</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">2</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>y = torch.squeeze(x)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>y.size()</span><br><span class="line">torch.Size([<span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>y = torch.squeeze(x, <span class="number">0</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>y.size()</span><br><span class="line">torch.Size([<span class="number">2</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">2</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>y = torch.squeeze(x, <span class="number">1</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>y.size()</span><br><span class="line">torch.Size([<span class="number">2</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">2</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>y = torch.squeeze(x, (<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>))</span><br><span class="line">torch.Size([<span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>])</span><br></pre></td></tr></table></figure>
+
+<h3 id="tensor-unsqueenze"><a href="#tensor-unsqueenze" class="headerlink" title="tensor.unsqueenze()"></a>tensor.unsqueenze()</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = torch.tensor([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>torch.unsqueeze(x, <span class="number">0</span>)</span><br><span class="line">tensor([[ <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>,  <span class="number">4</span>]])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>torch.unsqueeze(x, <span class="number">1</span>)</span><br><span class="line">tensor([[ <span class="number">1</span>],</span><br><span class="line">        [ <span class="number">2</span>],</span><br><span class="line">        [ <span class="number">3</span>],</span><br><span class="line">        [ <span class="number">4</span>]])</span><br></pre></td></tr></table></figure>
+
+<h3 id="torch-gather函数"><a href="#torch-gather函数" class="headerlink" title="torch.gather函数"></a>torch.gather函数</h3><p>​    (todo)</p>
+<p>​    图解PyTorch中的 []<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/352877584">https://zhuanlan.zhihu.com/p/352877584</a></p>
+<h3 id="torch-flatten"><a href="#torch-flatten" class="headerlink" title="torch.flatten()"></a>torch.flatten()</h3><p>扁平化</p>
+<p>torch.flatten(t, start_dim&#x3D;0, end_dim&#x3D;-1) 的实现原理如下。假设类型为 torch.tensor 的张量 t 的形状如下所示：(2,4,3,5,6)，则 torch.flatten(t, 1, 3).shape 的结果为 (2, 60, 6)。将索引为 start_dim 和 end_dim 之间（包括该位置）的数量相乘【1，2，3维度的数据扁平化处理合成一个维度】，其余位置不变。因为默认 start_dim&#x3D;0，end_dim&#x3D;-1，所以 torch.flatten(t) 返回只有一维的数据。</p>
+<p><img src="/2020/07/15/Sub_Language/DL_Train/Pytorch/doc-pytorch/image-20220630094510503.png" alt="image-20220630094510503"></p>
+<h3 id="mean"><a href="#mean" class="headerlink" title="mean()"></a>mean()</h3><p>        求均值</p>
+<h3 id="var"><a href="#var" class="headerlink" title="var()"></a>var()</h3><p>        求方差</p>
+<h3 id="item"><a href="#item" class="headerlink" title="item()"></a>item()</h3><p>        .item()用于在只包含一个元素的<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=tensor&spm=1001.2101.3001.7020">tensor</a>中提取值，注意是只包含一个元素，否则的话使用.tolist()</p>
+<h3 id="tolist"><a href="#tolist" class="headerlink" title="tolist()"></a>tolist()</h3><p>        tensor转换为Python List</p>
+<h3 id="permute"><a href="#permute" class="headerlink" title="permute"></a>permute</h3><ul>
+<li><p>作用类似tf的transpose()</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.jb51.net/article/246243.htm">pytorch中permute()函数用法实例详解_python_脚本之家</a></p>
+</li>
+</ul>
+<h3 id="mask"><a href="#mask" class="headerlink" title="mask"></a>mask</h3><p>pytorch提供mask机制用来提取数据中“感兴趣”的部分。过程如下：左边的矩阵是原数据，中间的mask是遮罩矩阵，标记为1的表明对这个位置的数据“感兴趣”-保留，反之舍弃。整个过程可以视作是在原数据上盖了一层mask，只有感兴趣的部分（值为1）显露出来，而其他部分则背遮住。</p>
+<p><img src="/2020/07/15/Sub_Language/DL_Train/Pytorch/doc-pytorch/2024-04-17-19-19-50-image.png"></p>
+<h4 id="torch-masked-fill-input-mask-value"><a href="#torch-masked-fill-input-mask-value" class="headerlink" title="torch.masked_fill(input, mask, value)"></a>torch.masked_fill(input, mask, value)</h4><p>参数：　　</p>
+<ul>
+<li>input：输入的原数据</li>
+<li>mask：遮罩矩阵</li>
+<li>value：被“遮住的”部分填充的数据，可以取0、1等值，数据类型不限，int、float均可</li>
+</ul>
+<p>返回值：一个和input相同size的masked-tensor</p>
+<p>使用：</p>
+<ul>
+<li>output &#x3D; torch.masked_fill(input, mask, value)</li>
+<li>output &#x3D; input.masked_fill(mask, value)</li>
+</ul>
+<h4 id="torch-masked-select-input-mask-out"><a href="#torch-masked-select-input-mask-out" class="headerlink" title="torch.masked_select(input, mask, out)"></a>torch.masked_select(input, mask, out)</h4><p>参数：　　</p>
+<ul>
+<li>input：输入的原数据</li>
+<li>mask：遮罩矩阵</li>
+<li>out：输出的结果，和原tensor不共用内存，一般在左侧接收，而不在形参中赋值</li>
+</ul>
+<p>返回值：一维tensor，数据为“选中”的数据</p>
+<p>使用：</p>
+<ul>
+<li>torch.masked_select(input, mask, out)</li>
+<li>output &#x3D; input.masked_select(mask)</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">selected_ele = torch.masked_select(input=imgs, mask=mask)  # true表示selected，false则未选中，所以这里没有取反</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">tensor([182.,  92.,  86., 157., 148.,  56.])</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="torch-masked-scatter-input-mask-source"><a href="#torch-masked-scatter-input-mask-source" class="headerlink" title="torch.masked_scatter(input, mask, source)"></a>torch.masked_scatter(input, mask, source)</h4><p>说明：将从input中mask得到的数据赋值到source-tensor中</p>
+<p>参数：　　</p>
+<ul>
+<li>input：输入的原数据</li>
+<li>mask：遮罩矩阵</li>
+<li>source：遮罩矩阵的”样子“（全零还是全一或是其他），true表示遮住了</li>
+</ul>
+<p>返回值：一个和source相同size的masked-tensor</p>
+<p>使用：</p>
+<ul>
+<li>output &#x3D; torch.masked_scatter(input, mask, source)</li>
+<li>output &#x3D; input.masked_scatter(mask, source)</li>
+</ul>
+<h2 id="API-Model"><a href="#API-Model" class="headerlink" title="API-Model"></a>API-Model</h2><h4 id="train-mode-True"><a href="#train-mode-True" class="headerlink" title="train(mode&#x3D;True)"></a>train(mode&#x3D;True)</h4><p>将<code>module</code>设置为 <code>training mode</code>。</p>
+<p>仅仅当模型中有<code>Dropout</code>和<code>BatchNorm</code>是才会有影响。</p>
+<h4 id="eval"><a href="#eval" class="headerlink" title="eval()"></a>eval()</h4><p>将模型设置成<code>evaluation</code>模式</p>
+<p>仅仅当模型中有<code>Dropout</code>和<code>BatchNorm</code>是才会有影响。</p>
+<h2 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/68717029">pytorch多机多卡分布式训练</a></p>
+<h3 id="BN使用注意事项"><a href="#BN使用注意事项" class="headerlink" title="BN使用注意事项"></a>BN使用注意事项</h3><p>model.eval()之后，pytorch会管理BN的参数，所以不需要TF那般麻烦；</p>
+<p>$$<br>Y &#x3D; (X - running_mean) &#x2F; sqrt(running_var + eps) * gamma + beta<br>$$</p>
+<p>其中gamma、beta为可学习参数（在pytorch中分别改叫weight和bias），训练时通过反向传播更新；而running_mean、running_var则是在前向时先由X计算出mean和var，再由mean和var以动量momentum来更新running_mean和running_var。</p>
+<p>所以在训练阶段，running_mean和running_var在每次前向时更新一次；</p>
+<p>在测试阶段，则通过net.eval()固定该BN层的running_mean和running_var，此时这两个值即为训练阶段最后一次前向时确定的值，并在<strong>整个测试阶段保持不变</strong>。</p>
+<h3 id="torchrun"><a href="#torchrun" class="headerlink" title="torchrun"></a>torchrun</h3><p><a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/elastic/run.html">torchrun (Elastic Launch) &mdash; PyTorch 2.3 documentation</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Komach/article/details/130765773">关于集群分布式torchrun命令踩坑记录（自用）-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/74792767">【分布式训练】单机多卡的正确打开方式（三）：PyTorch</a></p>
+<h2 id="Model-Save-Load"><a href="#Model-Save-Load" class="headerlink" title="Model Save &amp; Load"></a>Model Save &amp; Load</h2><h3 id="save-model"><a href="#save-model" class="headerlink" title="save model"></a>save model</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">torch.save(&#123;</span><br><span class="line">            <span class="string">&#x27;model_state_dict&#x27;</span>: &#123;k: _models[k].state_dict() <span class="keyword">for</span> k <span class="keyword">in</span> _models&#125;,</span><br><span class="line">            <span class="string">&#x27;optimizer_state_dict&#x27;</span>: &#123;k: optimizers[k].state_dict() <span class="keyword">for</span> k <span class="keyword">in</span> optimizers&#125;,</span><br><span class="line">            <span class="string">&quot;stats&quot;</span>: stats,</span><br><span class="line">            <span class="string">&#x27;flags&#x27;</span>: <span class="built_in">vars</span>(flags),</span><br><span class="line">            <span class="string">&#x27;frames&#x27;</span>: frames,</span><br><span class="line">            <span class="string">&#x27;position_frames&#x27;</span>: position_frames</span><br><span class="line">        &#125;, checkpointpath)</span><br></pre></td></tr></table></figure>
+
+<h3 id="save-state-dict"><a href="#save-state-dict" class="headerlink" title="save state_dict()"></a>save state_dict()</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.save(learner_model.get_model(position).state_dict(), model_weights_dir)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Saving-Loading-Model"><a href="#Saving-Loading-Model" class="headerlink" title="Saving &amp; Loading Model"></a>Saving &amp; Loading Model</h3><p><strong>Save:</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.save(model.state_dict(), PATH)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Load:</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">model = TheModelClass(*args, **kwargs)</span><br><span class="line">model.load_state_dict(torch.load(PATH))</span><br><span class="line">model.<span class="built_in">eval</span>()</span><br></pre></td></tr></table></figure>
+
+<h3 id="Save-Load-Entire-Model"><a href="#Save-Load-Entire-Model" class="headerlink" title="Save&#x2F;Load Entire Model"></a>Save&#x2F;Load Entire Model</h3><p><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/beginner/saving_loading_models.html#save-load-entire-model">Officle </a></p>
+<p><strong>Save:</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.save(model, PATH)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Load:</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Model class must be defined somewhere</span></span><br><span class="line">model = torch.load(PATH)</span><br><span class="line">model.<span class="built_in">eval</span>()</span><br></pre></td></tr></table></figure>
+
+<h3 id="Export-Load-Model-in-TorchScript-Format"><a href="#Export-Load-Model-in-TorchScript-Format" class="headerlink" title="Export&#x2F;Load Model in TorchScript Format"></a>Export&#x2F;Load Model in TorchScript Format</h3><p><strong>Export:</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">model_scripted = torch.jit.script(model) <span class="comment"># Export to TorchScript</span></span><br><span class="line">model_scripted.save(<span class="string">&#x27;model_scripted.pt&#x27;</span>) <span class="comment"># Save</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Load:</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">model = torch.jit.load(<span class="string">&#x27;model_scripted.pt&#x27;</span>)</span><br><span class="line">model.<span class="built_in">eval</span>()</span><br></pre></td></tr></table></figure>
+
+<h3 id="Saving-Loading-a-General-Checkpoint-for-Inference-and-or-Resuming-Training"><a href="#Saving-Loading-a-General-Checkpoint-for-Inference-and-or-Resuming-Training" class="headerlink" title="Saving &amp; Loading a General Checkpoint for Inference and&#x2F;or Resuming Training"></a>Saving &amp; Loading a General Checkpoint for Inference and&#x2F;or Resuming Training</h3><p>Save:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">torch.save(&#123;</span><br><span class="line">            <span class="string">&#x27;epoch&#x27;</span>: epoch,</span><br><span class="line">            <span class="string">&#x27;model_state_dict&#x27;</span>: model.state_dict(),</span><br><span class="line">            <span class="string">&#x27;optimizer_state_dict&#x27;</span>: optimizer.state_dict(),</span><br><span class="line">            <span class="string">&#x27;loss&#x27;</span>: loss,</span><br><span class="line">            ...</span><br><span class="line">            &#125;, PATH)</span><br></pre></td></tr></table></figure>
+
+<p>Load:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">model = TheModelClass(*args, **kwargs)</span><br><span class="line">optimizer = TheOptimizerClass(*args, **kwargs)</span><br><span class="line"></span><br><span class="line">checkpoint = torch.load(PATH)</span><br><span class="line">model.load_state_dict(checkpoint[<span class="string">&#x27;model_state_dict&#x27;</span>])</span><br><span class="line">optimizer.load_state_dict(checkpoint[<span class="string">&#x27;optimizer_state_dict&#x27;</span>])</span><br><span class="line">epoch = checkpoint[<span class="string">&#x27;epoch&#x27;</span>]</span><br><span class="line">loss = checkpoint[<span class="string">&#x27;loss&#x27;</span>]</span><br><span class="line"></span><br><span class="line">model.<span class="built_in">eval</span>()</span><br><span class="line"><span class="comment"># - or -</span></span><br><span class="line">model.train()</span><br></pre></td></tr></table></figure>
+
+<h3 id="Saving-Multiple-Models-in-One-File"><a href="#Saving-Multiple-Models-in-One-File" class="headerlink" title="Saving Multiple Models in One File"></a>Saving Multiple Models in One File</h3><p>Save:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">torch.save(&#123;</span><br><span class="line">            &#x27;modelA_state_dict&#x27;: modelA.state_dict(),</span><br><span class="line">            &#x27;modelB_state_dict&#x27;: modelB.state_dict(),</span><br><span class="line">            &#x27;optimizerA_state_dict&#x27;: optimizerA.state_dict(),</span><br><span class="line">            &#x27;optimizerB_state_dict&#x27;: optimizerB.state_dict(),</span><br><span class="line">            ...</span><br><span class="line">            &#125;, PATH)</span><br></pre></td></tr></table></figure>
+
+<p>Load:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">modelA = TheModelAClass(*args, **kwargs)</span><br><span class="line">modelB = TheModelBClass(*args, **kwargs)</span><br><span class="line">optimizerA = TheOptimizerAClass(*args, **kwargs)</span><br><span class="line">optimizerB = TheOptimizerBClass(*args, **kwargs)</span><br><span class="line"></span><br><span class="line">checkpoint = torch.load(PATH)</span><br><span class="line">modelA.load_state_dict(checkpoint[&#x27;modelA_state_dict&#x27;])</span><br><span class="line">modelB.load_state_dict(checkpoint[&#x27;modelB_state_dict&#x27;])</span><br><span class="line">optimizerA.load_state_dict(checkpoint[&#x27;optimizerA_state_dict&#x27;])</span><br><span class="line">optimizerB.load_state_dict(checkpoint[&#x27;optimizerB_state_dict&#x27;])</span><br><span class="line"></span><br><span class="line">modelA.eval()</span><br><span class="line">modelB.eval()</span><br><span class="line"># - or -</span><br><span class="line">modelA.train()</span><br><span class="line">modelB.train()</span><br></pre></td></tr></table></figure>
+
+<h3 id="Warmstarting-Model-Using-Parameters-from-a-Different-Model"><a href="#Warmstarting-Model-Using-Parameters-from-a-Different-Model" class="headerlink" title="Warmstarting Model Using Parameters from a Different Model"></a>Warmstarting Model Using Parameters from a Different Model</h3><h3 id="Saving-Loading-Model-Across-Devices"><a href="#Saving-Loading-Model-Across-Devices" class="headerlink" title="Saving &amp; Loading Model Across Devices"></a>Saving &amp; Loading Model Across Devices</h3><p>Save:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.save(modelA.state_dict(), PATH)</span><br></pre></td></tr></table></figure>
+
+<p>Load:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">modelB = TheModelBClass(*args, **kwargs)</span><br><span class="line">modelB.load_state_dict(torch.load(PATH), strict=False)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Save-on-GPU-Load-on-CPU"><a href="#Save-on-GPU-Load-on-CPU" class="headerlink" title="Save on GPU, Load on CPU"></a>Save on GPU, Load on CPU</h3><p><strong>Save:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.save(model.state_dict(), PATH)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Load:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">device = torch.device(&#x27;cpu&#x27;)</span><br><span class="line">model = TheModelClass(*args, **kwargs)</span><br><span class="line">model.load_state_dict(torch.load(PATH, map_location=device))</span><br></pre></td></tr></table></figure>
+
+<h3 id="Save-on-GPU-Load-on-GPU"><a href="#Save-on-GPU-Load-on-GPU" class="headerlink" title="Save on GPU, Load on GPU"></a>Save on GPU, Load on GPU</h3><p><strong>Save:</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.save(model.state_dict(), PATH)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Load:</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">device = torch.device(<span class="string">&quot;cuda&quot;</span>)</span><br><span class="line">model = TheModelClass(*args, **kwargs)</span><br><span class="line">model.load_state_dict(torch.load(PATH))</span><br><span class="line">model.to(device)</span><br><span class="line"><span class="comment"># Make sure to call input = input.to(device) on any input tensors that you feed to the model</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Save-on-CPU-Load-on-GPU"><a href="#Save-on-CPU-Load-on-GPU" class="headerlink" title="Save on CPU, Load on GPU"></a>Save on CPU, Load on GPU</h3><p><strong>Save:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.save(model.state_dict(), PATH)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Load:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">device = torch.device(&quot;cuda&quot;)</span><br><span class="line">model = TheModelClass(*args, **kwargs)</span><br><span class="line">model.load_state_dict(torch.load(PATH, map_location=&quot;cuda:0&quot;))  # Choose whatever GPU device number you want</span><br><span class="line">model.to(device)</span><br><span class="line"># Make sure to call input = input.to(device) on any input tensors that you feed to the model</span><br></pre></td></tr></table></figure>
+
+<h3 id="Saving-torch-nn-DataParallel-Models"><a href="#Saving-torch-nn-DataParallel-Models" class="headerlink" title="Saving torch.nn.DataParallel Models"></a>Saving <code>torch.nn.DataParallel</code> Models</h3><p><strong>Save:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.save(model.module.state_dict(), PATH)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Load:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># Load to whatever device you want</span><br></pre></td></tr></table></figure>
+
+<h2 id="模型参数-打印print"><a href="#模型参数-打印print" class="headerlink" title="模型参数(打印print)"></a>模型参数(打印print)</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">print_model_param_names</span>(<span class="params">model</span>):</span><br><span class="line">    <span class="keyword">for</span> name, param <span class="keyword">in</span> model.named_parameters():</span><br><span class="line">        <span class="built_in">print</span>(name)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">print_model_param_values</span>(<span class="params">model</span>):</span><br><span class="line">    <span class="keyword">for</span> name, param <span class="keyword">in</span> model.named_parameters():</span><br><span class="line">        <span class="built_in">print</span>(name, param.data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个模型实例</span></span><br><span class="line">model = torch.nn.Sequential(</span><br><span class="line">          torch.nn.Linear(<span class="number">10</span>, <span class="number">5</span>),</span><br><span class="line">          torch.nn.ReLU(),</span><br><span class="line">          torch.nn.Linear(<span class="number">5</span>, <span class="number">1</span>)</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打印模型的所有参数名</span></span><br><span class="line">print_model_param_names(model)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打印模型的所有参数值</span></span><br><span class="line">print_model_param_values(model)</span><br></pre></td></tr></table></figure>
+
+<p>此我们可以使用clone()方法来创建它们的副本。具体来说，我们可以使用clone()方法来创建一个张量的深拷贝，然后使用detach()方法来将其从计算图中分离，从而得到一个不会影响原始张量的新张量。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 打印模型的所有参数名和参数值，并取出参数值</span></span><br><span class="line">params = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> name, param <span class="keyword">in</span> model.named_parameters():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Parameter name:&#x27;</span>, name)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Parameter value:&#x27;</span>, param)</span><br><span class="line">    params[name] = param.clone().detach().numpy()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 断开图的链接</span></span><br><span class="line">model = <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/API/" rel="tag"># API</a>
+              <a href="/tags/PyTorch/" rel="tag"># PyTorch</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/07/13/Sub_Language/PythonDoc/Language-pd/" rel="prev" title="tools_pandas APIs">
+      <i class="fa fa-chevron-left"></i> tools_pandas APIs
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/07/16/Sub_Language/CVs/Language-cv2/" rel="next" title="Python Lib OpenCV">
+      Python Lib OpenCV <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Tensor"><span class="nav-number">1.</span> <span class="nav-text">Tensor</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#pytorch"><span class="nav-number">1.1.</span> <span class="nav-text">pytorch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#libtorch-c"><span class="nav-number">1.2.</span> <span class="nav-text">libtorch(c++)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%A0%E9%87%8F%E6%93%8D%E4%BD%9C"><span class="nav-number">1.3.</span> <span class="nav-text">张量操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#pytorch-1"><span class="nav-number">1.3.1.</span> <span class="nav-text">pytorch</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#libtorch-c-1"><span class="nav-number">1.3.2.</span> <span class="nav-text">libtorch(c++)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%A0%E9%87%8F%E5%9F%BA%E6%9C%AC%E8%BF%90%E7%AE%97"><span class="nav-number">1.4.</span> <span class="nav-text">张量基本运算</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Init-Weight"><span class="nav-number">2.</span> <span class="nav-text">Init Weight</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#API-tensor"><span class="nav-number">3.</span> <span class="nav-text">API-tensor</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#torch-reshape"><span class="nav-number">3.1.</span> <span class="nav-text">torch.reshape()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tensor-squeeze"><span class="nav-number">3.2.</span> <span class="nav-text">tensor.squeeze()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tensor-unsqueenze"><span class="nav-number">3.3.</span> <span class="nav-text">tensor.unsqueenze()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#torch-gather%E5%87%BD%E6%95%B0"><span class="nav-number">3.4.</span> <span class="nav-text">torch.gather函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#torch-flatten"><span class="nav-number">3.5.</span> <span class="nav-text">torch.flatten()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mean"><span class="nav-number">3.6.</span> <span class="nav-text">mean()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#var"><span class="nav-number">3.7.</span> <span class="nav-text">var()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#item"><span class="nav-number">3.8.</span> <span class="nav-text">item()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tolist"><span class="nav-number">3.9.</span> <span class="nav-text">tolist()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#permute"><span class="nav-number">3.10.</span> <span class="nav-text">permute</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mask"><span class="nav-number">3.11.</span> <span class="nav-text">mask</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#torch-masked-fill-input-mask-value"><span class="nav-number">3.11.1.</span> <span class="nav-text">torch.masked_fill(input, mask, value)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#torch-masked-select-input-mask-out"><span class="nav-number">3.11.2.</span> <span class="nav-text">torch.masked_select(input, mask, out)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#torch-masked-scatter-input-mask-source"><span class="nav-number">3.11.3.</span> <span class="nav-text">torch.masked_scatter(input, mask, source)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#API-Model"><span class="nav-number">4.</span> <span class="nav-text">API-Model</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#train-mode-True"><span class="nav-number">4.0.1.</span> <span class="nav-text">train(mode&#x3D;True)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#eval"><span class="nav-number">4.0.2.</span> <span class="nav-text">eval()</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%AD%E7%BB%83"><span class="nav-number">5.</span> <span class="nav-text">训练</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BN%E4%BD%BF%E7%94%A8%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">5.1.</span> <span class="nav-text">BN使用注意事项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#torchrun"><span class="nav-number">5.2.</span> <span class="nav-text">torchrun</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Model-Save-Load"><span class="nav-number">6.</span> <span class="nav-text">Model Save &amp; Load</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#save-model"><span class="nav-number">6.1.</span> <span class="nav-text">save model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#save-state-dict"><span class="nav-number">6.2.</span> <span class="nav-text">save state_dict()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Saving-Loading-Model"><span class="nav-number">6.3.</span> <span class="nav-text">Saving &amp; Loading Model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Save-Load-Entire-Model"><span class="nav-number">6.4.</span> <span class="nav-text">Save&#x2F;Load Entire Model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Export-Load-Model-in-TorchScript-Format"><span class="nav-number">6.5.</span> <span class="nav-text">Export&#x2F;Load Model in TorchScript Format</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Saving-Loading-a-General-Checkpoint-for-Inference-and-or-Resuming-Training"><span class="nav-number">6.6.</span> <span class="nav-text">Saving &amp; Loading a General Checkpoint for Inference and&#x2F;or Resuming Training</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Saving-Multiple-Models-in-One-File"><span class="nav-number">6.7.</span> <span class="nav-text">Saving Multiple Models in One File</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Warmstarting-Model-Using-Parameters-from-a-Different-Model"><span class="nav-number">6.8.</span> <span class="nav-text">Warmstarting Model Using Parameters from a Different Model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Saving-Loading-Model-Across-Devices"><span class="nav-number">6.9.</span> <span class="nav-text">Saving &amp; Loading Model Across Devices</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Save-on-GPU-Load-on-CPU"><span class="nav-number">6.10.</span> <span class="nav-text">Save on GPU, Load on CPU</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Save-on-GPU-Load-on-GPU"><span class="nav-number">6.11.</span> <span class="nav-text">Save on GPU, Load on GPU</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Save-on-CPU-Load-on-GPU"><span class="nav-number">6.12.</span> <span class="nav-text">Save on CPU, Load on GPU</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Saving-torch-nn-DataParallel-Models"><span class="nav-number">6.13.</span> <span class="nav-text">Saving torch.nn.DataParallel Models</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E5%8F%82%E6%95%B0-%E6%89%93%E5%8D%B0print"><span class="nav-number">7.</span> <span class="nav-text">模型参数(打印print)</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

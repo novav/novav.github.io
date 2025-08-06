@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="python 备忘录 [TOC] 简单APIFUN: 重命名目录下文件 filter lambda  123456def format_filename(dir):    fs &#x3D; os.listdir(dir)    for f in fs:        new_n &#x3D; &#x27;&#x27;.join(filter(lambda ch: ch not in &#x27;# ()&#123;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python APIs">
+<meta property="og:url" content="https://novav.github.io/2020/09/23/Sub_Language/PythonDoc/Language-py/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="python 备忘录 [TOC] 简单APIFUN: 重命名目录下文件 filter lambda  123456def format_filename(dir):    fs &#x3D; os.listdir(dir)    for f in fs:        new_n &#x3D; &#x27;&#x27;.join(filter(lambda ch: ch not in &#x27;# ()&#123;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-09-23T17:53:59.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:40.556Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://novav.github.io/2020/09/23/Sub_Language/PythonDoc/Language-py/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>python APIs | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2020/09/23/Sub_Language/PythonDoc/Language-py/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          python APIs
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-09-23 17:53:59" itemprop="dateCreated datePublished" datetime="2020-09-23T17:53:59+00:00">2020-09-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>python 备忘录</p>
+<p>[TOC]</p>
+<h2 id="简单API"><a href="#简单API" class="headerlink" title="简单API"></a>简单API</h2><h3 id="FUN-重命名目录下文件"><a href="#FUN-重命名目录下文件" class="headerlink" title="FUN: 重命名目录下文件"></a>FUN: 重命名目录下文件</h3><ul>
+<li>filter</li>
+<li>lambda</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">format_filename</span>(<span class="params"><span class="built_in">dir</span></span>):</span><br><span class="line">    fs = os.listdir(<span class="built_in">dir</span>)</span><br><span class="line">    <span class="keyword">for</span> f <span class="keyword">in</span> fs:</span><br><span class="line">        new_n = <span class="string">&#x27;&#x27;</span>.join(<span class="built_in">filter</span>(<span class="keyword">lambda</span> ch: ch <span class="keyword">not</span> <span class="keyword">in</span> <span class="string">&#x27;# ()&#123;&#125;#&#x27;</span>, f))</span><br><span class="line">        <span class="built_in">print</span>(f, <span class="string">&#x27; ----&gt; &#x27;</span>, new_n)</span><br><span class="line">        os.rename(<span class="built_in">dir</span>+f, <span class="built_in">dir</span>+new_n)</span><br></pre></td></tr></table></figure>
+
+<h3 id="traceback"><a href="#traceback" class="headerlink" title="traceback"></a>traceback</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">log_error</span>(<span class="params">e</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;err:&#x27;</span>, e)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;err:&#x27;</span>, request.form)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;err file:&#x27;</span>, e.__traceback__.tb_frame.f_globals[<span class="string">&quot;__file__&quot;</span>])  <span class="comment"># 发生异常所在的文件</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;err file line:&#x27;</span>, e.__traceback__.tb_lineno)  <span class="comment"># 发生异常所在的行数</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;err &#x27;</span>, traceback.print_exc())</span><br></pre></td></tr></table></figure>
+
+<h3 id="Time"><a href="#Time" class="headerlink" title="Time"></a>Time</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>time.ctime()</span><br><span class="line"><span class="string">&#x27;Thu May 5 14:58:09 2011&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>time.ctime(time.time())</span><br><span class="line"><span class="string">&#x27;Thu May 5 14:58:39 2011&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>time.ctime(<span class="number">1304579615</span>)</span><br><span class="line"><span class="string">&#x27;Thu May 5 15:13:35 2011&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="os"><a href="#os" class="headerlink" title="os"></a>os</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">os.mkdir()</span><br></pre></td></tr></table></figure>
+
+<h3 id="os-path"><a href="#os-path" class="headerlink" title="os.path"></a>os.path</h3><p>os.path.basename()</p>
+<p>os.path.dirname()</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">path = <span class="string">&#x27;/home/User/Documents&#x27;</span></span><br><span class="line">dirname = os.path.dirname(path)</span><br><span class="line"><span class="built_in">print</span>(dirname)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">path = <span class="string">&#x27;/home/User/Documents/file.txt&#x27;</span></span><br><span class="line">dirname = os.path.dirname(path)</span><br><span class="line"><span class="built_in">print</span>(dirname)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">path = <span class="string">&#x27;file.txt&#x27;</span></span><br><span class="line">dirname = os.path.dirname(path)</span><br><span class="line"><span class="built_in">print</span>(dirname)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 三个的结果：</span></span><br><span class="line">&gt;&gt;&gt;/home/User</span><br><span class="line">&gt;&gt;&gt;/home/User/Documents</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="expanduser"><a href="#expanduser" class="headerlink" title="expanduser"></a>expanduser</h4><p>python的os.path 模块提供了一个expanduser函数，它可以将参数中开头部分的 ~ 或 ~user 替换为当前用户的home目录并返回，仅看定义难以理解，我在linux系统和winodws系统下分别实验它的功能。</p>
+<p>在linux系统下，我的账号是kwsy，这个用户的home目录是&#x2F;home&#x2F;kwsy，下面的代码演示如何使用expanduser函数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Python <span class="number">3.7</span><span class="number">.0</span> (default, Jun <span class="number">28</span> <span class="number">2018</span>, <span class="number">13</span>:<span class="number">15</span>:<span class="number">42</span>)</span><br><span class="line">[GCC <span class="number">7.2</span><span class="number">.0</span>] :: Anaconda, Inc. on linux</span><br><span class="line"><span class="type">Type</span> <span class="string">&quot;help&quot;</span>, <span class="string">&quot;copyright&quot;</span>, <span class="string">&quot;credits&quot;</span> <span class="keyword">or</span> <span class="string">&quot;license&quot;</span> <span class="keyword">for</span> more information.</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> os</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>os.path.expanduser(<span class="string">&#x27;~/.config/&#x27;</span>)</span><br><span class="line"><span class="string">&#x27;/home/kwsy/.config/&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="expandvars"><a href="#expandvars" class="headerlink" title="expandvars"></a>expandvars</h4><p>Python中的方法用于扩展给定路径中的环境变量。它将给定路径中形式为<code>$name$</code> 或<code>$&#123;name&#125;$</code>的子字符串替换为环境变量name的值。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">todo</span><br></pre></td></tr></table></figure>
+
+<h3 id="random"><a href="#random" class="headerlink" title="random"></a>random</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">random.randint(0, N) -&gt; one of [0,1, ...,N]</span><br></pre></td></tr></table></figure>
+
+<h3 id="str"><a href="#str" class="headerlink" title="str"></a>str</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">text = <span class="string">&#x27;hello world&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 1. in</span></span><br><span class="line"><span class="keyword">if</span> <span class="string">&#x27;w&#x27;</span> <span class="keyword">in</span> text:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;find w in text&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="string">&#x27;hello&#x27;</span> <span class="keyword">in</span> text:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;find&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="string">&#x27;hello&#x27;</span> <span class="keyword">not</span> <span class="keyword">in</span> text:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27; not find &#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.find func</span></span><br><span class="line"><span class="keyword">if</span> text.find(<span class="string">&#x27;xxx&#x27;</span>) != -<span class="number">1</span>:</span><br><span class="line">     <span class="built_in">print</span>(<span class="string">&#x27;find position=&#x27;</span>, text.find(<span class="string">&#x27;xxx&#x27;</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3 index func</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    position = text.index(<span class="string">&#x27;not exits char&#x27;</span>)</span><br><span class="line"><span class="keyword">except</span> ValueError:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;not find &#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="dict-2-obj"><a href="#dict-2-obj" class="headerlink" title="dict_2_obj"></a>dict_2_obj</h3><h4 id="1、手动映射字段"><a href="#1、手动映射字段" class="headerlink" title="1、手动映射字段"></a>1、手动映射字段</h4><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Person</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, age</span>):</span><br><span class="line">        <span class="variable language_">self</span>.name = name</span><br><span class="line">        <span class="variable language_">self</span>.age = age</span><br><span class="line"></span><br><span class="line">person = Person(data[<span class="string">&#x27;name&#x27;</span>], data[<span class="string">&#x27;age&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+<h4 id="2、自动映射object-hook"><a href="#2、自动映射object-hook" class="headerlink" title="2、自动映射object_hook"></a>2、自动映射object_hook</h4><p>使用 json.loads() 的 object_hook 参数，自动将字典转换为对象‌</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">JsonObject</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, d</span>):</span><br><span class="line">        <span class="variable language_">self</span>.__dict__ = d</span><br><span class="line"></span><br><span class="line">json_str = <span class="string">&#x27;&#123;&quot;name&quot;: &quot;John&quot;, &quot;age&quot;: 30&#125;&#x27;</span></span><br><span class="line">obj = json.loads(json_str, object_hook=JsonObject)</span><br><span class="line"><span class="built_in">print</span>(obj.name)  <span class="comment"># 输出：John</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3、动态属性拓展json-to-object"><a href="#3、动态属性拓展json-to-object" class="headerlink" title="3、动态属性拓展json to object"></a>3、动态属性拓展json to object</h4><p>支持动态解析复杂JSON结构（如嵌套字典或列表）‌</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">obj</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, dict_</span>):</span><br><span class="line">        <span class="variable language_">self</span>.__dict__.update(dict_)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">dict2obj</span>(<span class="params">d</span>):</span><br><span class="line">    <span class="keyword">return</span> json.loads(json.dumps(d), object_hook=obj)</span><br><span class="line"></span><br><span class="line">d = &#123;<span class="string">&#x27;a&#x27;</span>: <span class="number">1</span>, <span class="string">&#x27;b&#x27;</span>: &#123;<span class="string">&#x27;c&#x27;</span>: <span class="number">2</span>&#125;, <span class="string">&#x27;d&#x27;</span>: [<span class="string">&#x27;hi&#x27;</span>, &#123;<span class="string">&#x27;foo&#x27;</span>: <span class="string">&#x27;cjavapy&#x27;</span>&#125;]&#125;</span><br><span class="line"><span class="comment"># 使用1</span></span><br><span class="line">o = dict2obj(d)</span><br><span class="line"><span class="built_in">print</span>(o)</span><br><span class="line"><span class="built_in">print</span>(o.a)</span><br><span class="line"><span class="built_in">print</span>(o.b)</span><br><span class="line"><span class="built_in">print</span>(o.d)</span><br><span class="line"><span class="built_in">print</span>(o.d[<span class="number">1</span>].foo)</span><br></pre></td></tr></table></figure>
+
+<h4 id="进阶1-自定义-递归"><a href="#进阶1-自定义-递归" class="headerlink" title="进阶1 自定义+递归"></a>进阶1 自定义+递归</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">obj</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, d</span>):</span><br><span class="line">        <span class="keyword">for</span> a, b <span class="keyword">in</span> d.items():</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">isinstance</span>(b, (<span class="built_in">list</span>, <span class="built_in">tuple</span>)):</span><br><span class="line">               <span class="built_in">setattr</span>(<span class="variable language_">self</span>, a, [obj(x) <span class="keyword">if</span> <span class="built_in">isinstance</span>(x, <span class="built_in">dict</span>) <span class="keyword">else</span> x <span class="keyword">for</span> x <span class="keyword">in</span> b])</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">               <span class="built_in">setattr</span>(<span class="variable language_">self</span>, a, obj(b) <span class="keyword">if</span> <span class="built_in">isinstance</span>(b, <span class="built_in">dict</span>) <span class="keyword">else</span> b)</span><br><span class="line">d = &#123;<span class="string">&#x27;a&#x27;</span>: <span class="number">1</span>, <span class="string">&#x27;b&#x27;</span>: &#123;<span class="string">&#x27;c&#x27;</span>: <span class="number">2</span>&#125;, <span class="string">&#x27;d&#x27;</span>: [<span class="string">&quot;hi&quot;</span>, &#123;<span class="string">&#x27;foo&#x27;</span>: <span class="string">&quot;cjavapy&quot;</span>&#125;]&#125;</span><br><span class="line">o = obj(d)</span><br><span class="line"><span class="built_in">print</span>(o)</span><br><span class="line"><span class="built_in">print</span>(o.a)</span><br><span class="line"><span class="built_in">print</span>(o.b)</span><br><span class="line"><span class="built_in">print</span>(o.d)</span><br><span class="line"><span class="built_in">print</span>(o.d[<span class="number">1</span>].foo)</span><br></pre></td></tr></table></figure>
+
+<h4 id="json"><a href="#json" class="headerlink" title="json"></a>json</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">obj</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, dict_</span>):</span><br><span class="line">        <span class="variable language_">self</span>.__dict__.update(dict_)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">dict2obj</span>(<span class="params">d</span>):</span><br><span class="line">    <span class="keyword">return</span> json.loads(json.dumps(d), object_hook=obj)</span><br><span class="line">d = &#123;<span class="string">&#x27;a&#x27;</span>: <span class="number">1</span>, <span class="string">&#x27;b&#x27;</span>: &#123;<span class="string">&#x27;c&#x27;</span>: <span class="number">2</span>&#125;, <span class="string">&#x27;d&#x27;</span>: [<span class="string">&#x27;hi&#x27;</span>, &#123;<span class="string">&#x27;foo&#x27;</span>: <span class="string">&#x27;cjavapy&#x27;</span>&#125;]&#125;</span><br><span class="line">o = dict2obj(d)</span><br><span class="line"><span class="built_in">print</span>(o)</span><br><span class="line"><span class="built_in">print</span>(o.a)</span><br><span class="line"><span class="built_in">print</span>(o.b)</span><br><span class="line"><span class="built_in">print</span>(o.d)</span><br><span class="line"><span class="built_in">print</span>(o.d[<span class="number">1</span>].foo)</span><br></pre></td></tr></table></figure>
+
+<h4 id="进阶2-namedtuple-递归"><a href="#进阶2-namedtuple-递归" class="headerlink" title="进阶2 namedtuple + 递归"></a>进阶2 namedtuple + 递归</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> namedtuple</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">struct</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__new__</span>(<span class="params">cls, data</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(data, <span class="built_in">dict</span>):</span><br><span class="line">            <span class="keyword">return</span> namedtuple(</span><br><span class="line">                <span class="string">&#x27;struct&#x27;</span>, data.keys()</span><br><span class="line">            )(</span><br><span class="line">                *(struct(val) <span class="keyword">for</span> val <span class="keyword">in</span> data.values())</span><br><span class="line">            )</span><br><span class="line">        <span class="keyword">elif</span> <span class="built_in">isinstance</span>(data, (<span class="built_in">tuple</span>, <span class="built_in">list</span>, <span class="built_in">set</span>, <span class="built_in">frozenset</span>)):</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">type</span>(data)(struct(_) <span class="keyword">for</span> _ <span class="keyword">in</span> data)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> data</span><br><span class="line">d = &#123;<span class="string">&#x27;a&#x27;</span>: <span class="number">1</span>, <span class="string">&#x27;b&#x27;</span>: &#123;<span class="string">&#x27;c&#x27;</span>: <span class="number">2</span>&#125;, <span class="string">&#x27;d&#x27;</span>: [<span class="string">&#x27;hi&#x27;</span>, &#123;<span class="string">&#x27;foo&#x27;</span>: <span class="string">&#x27;cjavapy&#x27;</span>&#125;]&#125;</span><br><span class="line">o = struct(d)</span><br><span class="line"><span class="built_in">print</span>(o)</span><br><span class="line"><span class="built_in">print</span>(o.a)</span><br><span class="line"><span class="built_in">print</span>(o.b)</span><br><span class="line"><span class="built_in">print</span>(o.d)</span><br><span class="line"><span class="built_in">print</span>(o.d[<span class="number">1</span>].foo)</span><br></pre></td></tr></table></figure>
+
+<h4 id="进阶3-自定义编码、解码器"><a href="#进阶3-自定义编码、解码器" class="headerlink" title="进阶3 自定义编码、解码器"></a>进阶3 自定义编码、解码器</h4><p>通过继承 <code>json.JSONEncoder</code> 和 <code>json.JSONDecoder</code> 处理特殊数据类型（如日期、枚举)</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">CustomEncoder</span>(json.JSONEncoder):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">default</span>(<span class="params">self, obj</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(obj, datetime):</span><br><span class="line">            <span class="keyword">return</span> obj.isoformat()</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">super</span>().default(obj)</span><br><span class="line"></span><br><span class="line">json_str = json.dumps(obj, cls=CustomEncoder)</span><br></pre></td></tr></table></figure>
+
+<h4 id="进阶4-复杂递归"><a href="#进阶4-复杂递归" class="headerlink" title="进阶4 复杂递归"></a>进阶4 复杂递归</h4><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">NestedObject</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, d</span>):</span><br><span class="line">        <span class="keyword">for</span> key, value <span class="keyword">in</span> d.items():</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">isinstance</span>(value, <span class="built_in">dict</span>):</span><br><span class="line">                <span class="built_in">setattr</span>(<span class="variable language_">self</span>, key, NestedObject(value))</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="built_in">setattr</span>(<span class="variable language_">self</span>, key, value)</span><br><span class="line"></span><br><span class="line">json_str = <span class="string">&#x27;&#123;&quot;books&quot;: &#123;&quot;语文&quot;: &quot;济南的冬天&quot;&#125;&#125;&#x27;</span></span><br><span class="line">obj = json.loads(json_str, object_hook=NestedObject)</span><br><span class="line"><span class="built_in">print</span>(obj.books.语文)  <span class="comment"># 输出：济南的冬天</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="数据文件读写"><a href="#数据文件读写" class="headerlink" title="数据文件读写"></a>数据文件读写</h3><h4 id="json-1"><a href="#json-1" class="headerlink" title="json"></a>json</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">json.dumps()</span><br><span class="line">json.loads()</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line"><span class="comment"># json.dumps()函数的使用，将字典转化为字符串</span></span><br><span class="line">dict1 = &#123;<span class="string">&quot;age&quot;</span>: <span class="string">&quot;12&quot;</span>&#125;</span><br><span class="line">json_info = json.dumps(dict1)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Writing JSON data</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;data.json&#x27;</span>, <span class="string">&#x27;w&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    json.dump(data, f)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Reading data back</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;data.json&#x27;</span>, <span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    data = json.load(f)</span><br></pre></td></tr></table></figure>
+
+<h4 id="np"><a href="#np" class="headerlink" title="np"></a>np</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">a=np.array(a)</span><br><span class="line">np.save(‘a.npy’,a)   <span class="comment"># 保存为.npy格式</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a=np.load(‘a.npy’)</span><br><span class="line">a=a.tolist()</span><br></pre></td></tr></table></figure>
+
+<h4 id="csv"><a href="#csv" class="headerlink" title="csv"></a>csv</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">readme = pd.read_csv(‘读我.txt’,sep=’:’,encoding=“utf-<span class="number">8</span>”, engine=‘python’,header=<span class="literal">None</span>)</span><br><span class="line">readme = np.array(readme)</span><br></pre></td></tr></table></figure>
+
+<h2 id="高级API"><a href="#高级API" class="headerlink" title="高级API"></a>高级API</h2><h3 id="组合函数-itertools-combinations-元素不可重复"><a href="#组合函数-itertools-combinations-元素不可重复" class="headerlink" title="组合函数 itertools.combinations()元素不可重复"></a>组合函数 itertools.combinations()元素不可重复</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">itertools.combinations(iters,n)元组输出迭代器，需List显示，全组合直接append分三个元组。</span><br><span class="line">combinations(<span class="string">&#x27;ABCD&#x27;</span>, <span class="number">2</span>) --&gt; AB AC AD BC BD CD</span><br><span class="line"><span class="title function_">combinations</span><span class="params">(range(<span class="number">4</span>), <span class="number">3</span>)</span> --&gt; 012 013 023 123</span><br></pre></td></tr></table></figure>
+
+<p>ref:<a target="_blank" rel="noopener" href="https://blog.csdn.net/liuyi761117/article/details/119800028">组合blog</a></p>
+<h3 id="combinations"><a href="#combinations" class="headerlink" title="combinations"></a>combinations</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> itertools </span><br><span class="line">combinations2 = itertools.combinations(iterable, r)</span><br><span class="line"><span class="keyword">for</span> combo <span class="keyword">in</span> combinations2: </span><br><span class="line">    <span class="built_in">print</span>(combo)</span><br><span class="line">(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">(<span class="number">1</span>, <span class="number">3</span>)</span><br><span class="line">(<span class="number">2</span>, <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="combinations-with-replacement-元素可重复的组合"><a href="#combinations-with-replacement-元素可重复的组合" class="headerlink" title="combinations_with_replacement() 元素可重复的组合"></a>combinations_with_replacement() 元素可重复的组合</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> itertools  </span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义一个可迭代对象  </span></span><br><span class="line">iterable = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]  </span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置组合长度为2  </span></span><br><span class="line">r = <span class="number">2</span>  </span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成可重复组合的迭代器  </span></span><br><span class="line">combinations = itertools.combinations_with_replacement(iterable, r)  </span><br><span class="line"></span><br><span class="line"><span class="comment"># 打印每个组合  </span></span><br><span class="line"><span class="keyword">for</span> combo <span class="keyword">in</span> combinations:  </span><br><span class="line">    <span class="built_in">print</span>(combo)</span><br></pre></td></tr></table></figure>
+
+<p>out</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(1, 1)  </span><br><span class="line">(1, 2)  </span><br><span class="line">(1, 3)  </span><br><span class="line">(2, 2)  </span><br><span class="line">(2, 3)  </span><br><span class="line">(3, 3)</span><br></pre></td></tr></table></figure>
+
+<h3 id="property的理解和使用"><a href="#property的理解和使用" class="headerlink" title="@property的理解和使用"></a>@property的理解和使用</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@property</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">password</span>(<span class="params">self</span>):</span><br><span class="line">    <span class="keyword">raise</span> AttributeError(<span class="string">&#x27;password is not a readable attribute&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">@password.setter</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">password</span>(<span class="params">self, password</span>):</span><br><span class="line">    <span class="variable language_">self</span>.password_hash = generate_password_hash(password)</span><br></pre></td></tr></table></figure>
+
+<h5 id="通常赋值函数"><a href="#通常赋值函数" class="headerlink" title="通常赋值函数"></a>通常赋值函数</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_score</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>._score</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">set_score</span>(<span class="params">self, value</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> <span class="built_in">isinstance</span>(value, <span class="built_in">int</span>):</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">&#x27;score must be an integer!&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> value &lt; <span class="number">0</span> <span class="keyword">or</span> value &gt; <span class="number">100</span>:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">&#x27;score must between 0 ~ 100!&#x27;</span>)</span><br><span class="line">        <span class="variable language_">self</span>._score = value</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>s = Student()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>s.set_score(<span class="number">60</span>) <span class="comment"># ok!</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>s.get_score()</span><br><span class="line"><span class="number">60</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>s.set_score(<span class="number">9999</span>)</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  ...</span><br><span class="line">ValueError: score must between <span class="number">0</span> ~ <span class="number">100</span>!</span><br></pre></td></tr></table></figure>
+
+<h5 id="property"><a href="#property" class="headerlink" title="@property"></a>@property</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">但是为了方便,节省时间,我们不想写s.set_score(<span class="number">9999</span>)啊,直接写s.score = <span class="number">9999</span>不是更快么,加了方法做限制不能让调用的时候变麻烦啊,@<span class="built_in">property</span>快来帮忙….</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line"></span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">score</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>._score</span><br><span class="line"></span><br><span class="line"><span class="meta">    @score.setter</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">score</span>(<span class="params">self,value</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> <span class="built_in">isinstance</span>(value, <span class="built_in">int</span>):</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">&#x27;分数必须是整数才行呐&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> value &lt; <span class="number">0</span> <span class="keyword">or</span> value &gt; <span class="number">100</span>:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">&#x27;分数必须0-100之间&#x27;</span>)</span><br><span class="line">        <span class="variable language_">self</span>._score = value</span><br><span class="line"></span><br><span class="line">看上面代码可知,把get方法变为属性只需要加上@<span class="built_in">property</span>装饰器即可,此时@<span class="built_in">property</span>本身又会创建另外一个装饰器@score.setter,负责把<span class="built_in">set</span>方法变成给属性赋值,这么做完后,我们调用起来既可控又方便</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>s = Student()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>s.score = <span class="number">60</span> <span class="comment"># OK，实际转化为s.set_score(60)</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>s.score <span class="comment"># OK，实际转化为s.get_score()</span></span><br><span class="line"><span class="number">60</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>s.score = <span class="number">9999</span></span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  ...</span><br><span class="line">ValueError: score must between <span class="number">0</span> ~ <span class="number">100</span>!</span><br></pre></td></tr></table></figure>
+
+<h2 id="MP"><a href="#MP" class="headerlink" title="MP"></a>MP</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">对于一般进程间共享数据来说，使用</span><br><span class="line">multiprocessing.Manager().Value</span><br><span class="line">和multiprocessing.Manager().list()</span><br><span class="line">和multiprocessing.Manager().dict()即可。</span><br><span class="line">Or:</span><br><span class="line">Queue()</span><br></pre></td></tr></table></figure>
+
+<h2 id="pyLint"><a href="#pyLint" class="headerlink" title="pyLint"></a>pyLint</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Install</span></span><br><span class="line">pip install pylint</span><br><span class="line">pylint --version</span><br><span class="line"></span><br><span class="line"><span class="comment">#使用,生成默认配置文件：</span></span><br><span class="line">pylint --persistent=n --generate-rcfile &gt; .pylintrc</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查单个文件：</span></span><br><span class="line">pylint [options] m1.py</span><br><span class="line"></span><br><span class="line"><span class="comment"># 整个项目</span></span><br><span class="line">pylint [options] project_path</span><br></pre></td></tr></table></figure>
+
+<h2 id="re"><a href="#re" class="headerlink" title="re"></a>re</h2><p>去除中文标点符号</p>
+<p><code>s = re.sub(r&#39;[.,&quot;\&#39;-?:!;]&#39;, &#39;&#39;, s)</code></p>
+<p>去除中文</p>
+<p><code>temp = re.sub(&#39;[\u4e00-\u9fa5]&#39;,&#39;&#39;,text)</code></p>
+<p>去除英文</p>
+<p><code>temp = re.sub(&#39;[a-zA-Z]&#39;,&#39;&#39;,text)</code></p>
+<p>del数字</p>
+<p><code>temp = re.sub(&#39;[\d]&#39;,&#39;&#39;,text) # [0-9]</code></p>
+<p>del 空格</p>
+<p><code>temp = re.sub(&#39;[\s]&#39;,&#39;&#39;,text) #temp = text.strip()</code></p>
+<h3 id="RUN"><a href="#RUN" class="headerlink" title="RUN"></a>RUN</h3><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1 normal run</span></span><br><span class="line">python -u main.py</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2 subdir run</span></span><br><span class="line">python demo/main.py</span><br><span class="line">--修改main文件</span><br><span class="line"><span class="keyword">import</span> os, sys</span><br><span class="line">sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3 -m 运行</span></span><br><span class="line">python -m model.main</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/09/03/Paper/Paper-CV-ImageInpainting/" rel="prev" title="Paper-CV-Image Inpainting">
+      <i class="fa fa-chevron-left"></i> Paper-CV-Image Inpainting
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/09/28/Tools/Tools-Anbox/" rel="next" title="Tools Android emulator -- Anbox">
+      Tools Android emulator -- Anbox <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E5%8D%95API"><span class="nav-number">1.</span> <span class="nav-text">简单API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FUN-%E9%87%8D%E5%91%BD%E5%90%8D%E7%9B%AE%E5%BD%95%E4%B8%8B%E6%96%87%E4%BB%B6"><span class="nav-number">1.1.</span> <span class="nav-text">FUN: 重命名目录下文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#traceback"><span class="nav-number">1.2.</span> <span class="nav-text">traceback</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Time"><span class="nav-number">1.3.</span> <span class="nav-text">Time</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#os"><span class="nav-number">1.4.</span> <span class="nav-text">os</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#os-path"><span class="nav-number">1.5.</span> <span class="nav-text">os.path</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#expanduser"><span class="nav-number">1.5.1.</span> <span class="nav-text">expanduser</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#expandvars"><span class="nav-number">1.5.2.</span> <span class="nav-text">expandvars</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#random"><span class="nav-number">1.6.</span> <span class="nav-text">random</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#str"><span class="nav-number">1.7.</span> <span class="nav-text">str</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dict-2-obj"><span class="nav-number">1.8.</span> <span class="nav-text">dict_2_obj</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E6%89%8B%E5%8A%A8%E6%98%A0%E5%B0%84%E5%AD%97%E6%AE%B5"><span class="nav-number">1.8.1.</span> <span class="nav-text">1、手动映射字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E8%87%AA%E5%8A%A8%E6%98%A0%E5%B0%84object-hook"><span class="nav-number">1.8.2.</span> <span class="nav-text">2、自动映射object_hook</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81%E5%8A%A8%E6%80%81%E5%B1%9E%E6%80%A7%E6%8B%93%E5%B1%95json-to-object"><span class="nav-number">1.8.3.</span> <span class="nav-text">3、动态属性拓展json to object</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9B%E9%98%B61-%E8%87%AA%E5%AE%9A%E4%B9%89-%E9%80%92%E5%BD%92"><span class="nav-number">1.8.4.</span> <span class="nav-text">进阶1 自定义+递归</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#json"><span class="nav-number">1.8.5.</span> <span class="nav-text">json</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9B%E9%98%B62-namedtuple-%E9%80%92%E5%BD%92"><span class="nav-number">1.8.6.</span> <span class="nav-text">进阶2 namedtuple + 递归</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9B%E9%98%B63-%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BC%96%E7%A0%81%E3%80%81%E8%A7%A3%E7%A0%81%E5%99%A8"><span class="nav-number">1.8.7.</span> <span class="nav-text">进阶3 自定义编码、解码器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9B%E9%98%B64-%E5%A4%8D%E6%9D%82%E9%80%92%E5%BD%92"><span class="nav-number">1.8.8.</span> <span class="nav-text">进阶4 复杂递归</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99"><span class="nav-number">1.9.</span> <span class="nav-text">数据文件读写</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#json-1"><span class="nav-number">1.9.1.</span> <span class="nav-text">json</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#np"><span class="nav-number">1.9.2.</span> <span class="nav-text">np</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#csv"><span class="nav-number">1.9.3.</span> <span class="nav-text">csv</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E7%BA%A7API"><span class="nav-number">2.</span> <span class="nav-text">高级API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E5%90%88%E5%87%BD%E6%95%B0-itertools-combinations-%E5%85%83%E7%B4%A0%E4%B8%8D%E5%8F%AF%E9%87%8D%E5%A4%8D"><span class="nav-number">2.1.</span> <span class="nav-text">组合函数 itertools.combinations()元素不可重复</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#combinations"><span class="nav-number">2.2.</span> <span class="nav-text">combinations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#combinations-with-replacement-%E5%85%83%E7%B4%A0%E5%8F%AF%E9%87%8D%E5%A4%8D%E7%9A%84%E7%BB%84%E5%90%88"><span class="nav-number">2.3.</span> <span class="nav-text">combinations_with_replacement() 元素可重复的组合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#property%E7%9A%84%E7%90%86%E8%A7%A3%E5%92%8C%E4%BD%BF%E7%94%A8"><span class="nav-number">2.4.</span> <span class="nav-text">@property的理解和使用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%80%9A%E5%B8%B8%E8%B5%8B%E5%80%BC%E5%87%BD%E6%95%B0"><span class="nav-number">2.4.0.1.</span> <span class="nav-text">通常赋值函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#property"><span class="nav-number">2.4.0.2.</span> <span class="nav-text">@property</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MP"><span class="nav-number">3.</span> <span class="nav-text">MP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pyLint"><span class="nav-number">4.</span> <span class="nav-text">pyLint</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#re"><span class="nav-number">5.</span> <span class="nav-text">re</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RUN"><span class="nav-number">5.1.</span> <span class="nav-text">RUN</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

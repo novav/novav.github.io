@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="RGA RAG：全称Retrieval-Augmented Generation，检索增强生成。我们知道本次由ChatGPT掀起的LLM大模型浪潮，其核心就是Generation生成，而 Retrieval-augmented 就是指除了 LLM 本身已经学到的知识之外，通过外挂其他数据源的方式来增强 LLM 的能力，这其中就包括了外部向量数据库、外部知识图谱、文档数据，WEB数据等。  架构 如">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LLM RAG">
+<meta property="og:url" content="https://novav.github.io/2024/04/01/NLP/LLM_RAG/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="RGA RAG：全称Retrieval-Augmented Generation，检索增强生成。我们知道本次由ChatGPT掀起的LLM大模型浪潮，其核心就是Generation生成，而 Retrieval-augmented 就是指除了 LLM 本身已经学到的知识之外，通过外挂其他数据源的方式来增强 LLM 的能力，这其中就包括了外部向量数据库、外部知识图谱、文档数据，WEB数据等。  架构 如">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2024/04/01/NLP/LLM_RAG/2024-04-01-18-03-18-image.png">
+<meta property="og:image" content="https://novav.github.io/2024/04/01/NLP/LLM_RAG/2024-04-02-11-04-43-image.png">
+<meta property="og:image" content="https://novav.github.io/2024/04/01/NLP/LLM_RAG/2024-04-02-11-11-57-image.png">
+<meta property="og:image" content="https://novav.github.io/2024/04/01/NLP/LLM_RAG/2024-04-02-11-12-14-image.png">
+<meta property="article:published_time" content="2024-04-01T12:00:01.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:39.968Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="LLM">
+<meta property="article:tag" content="RAG">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2024/04/01/NLP/LLM_RAG/2024-04-01-18-03-18-image.png">
+
+<link rel="canonical" href="https://novav.github.io/2024/04/01/NLP/LLM_RAG/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>LLM RAG | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2024/04/01/NLP/LLM_RAG/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          LLM RAG
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-04-01 12:00:01" itemprop="dateCreated datePublished" datetime="2024-04-01T12:00:01+00:00">2024-04-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LLM/" itemprop="url" rel="index"><span itemprop="name">LLM</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LLM/RAG/" itemprop="url" rel="index"><span itemprop="name">RAG</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>RGA</p>
+<p>RAG：全称Retrieval-Augmented Generation，检索增强生成。我们知道本次由ChatGPT掀起的LLM大模型浪潮，其核心就是Generation生成，而 Retrieval-augmented 就是指除了 LLM 本身已经学到的知识之外，通过外挂其他数据源的方式来增强 LLM 的能力，这其中就包括了外部向量数据库、外部知识图谱、文档数据，WEB数据等。 </p>
+<h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h2><p><img src="/2024/04/01/NLP/LLM_RAG/2024-04-01-18-03-18-image.png"></p>
+<p>如上图所示，经过Doc Loader,加载各种数据源的数据，经过embedding向量化后存储进向量数据库。这是Retrieval-augmented基础数据处理器。用户通过 QA向LLM提问，会通过QA问题向向量数据库召回相似度较高的上下文，通过Prompt提示词一起发给LLM，LLM通过问题与上下文一起生成答案返回给用户。</p>
+<p>我们不经会问，为什么大模型动不动就千亿参数级别，涵盖了PB级的数据，还需要自己外挂数据源。<br>这里面主要几方面的原因：</p>
+<ul>
+<li><p>数据更新： LLM数据来源截止日期一般都是在2022年，而且它无法实时了解最新的信息。外挂知识库可以提供更新的、实时的信息，确保模型对新兴事实和领域内的最新发展有所了解。</p>
+</li>
+<li><p>领域专业知识： 尽快训练LLM的数据量很庞大，但是在某些特定领域，如医学、法律或科学，可能需要深入的专业知识。LLM在这些领域可能无法提供高度准确的信息，因此如果能提供这方面的数据，它能工作得好。</p>
+</li>
+<li><p>定制需求： 对于某些应用场景，用户可能需要LLM在特定方面的专业化，例如公司内部知识库、产品规格等。外挂知识库可以帮助模型更好地服务于特定用户或组织的需求。</p>
+</li>
+<li><p>避免错误： 在特定领域，LLM可能会生成不准确或误导性的信息。通过使用外挂知识库，可以提高答案的准确性，避免潜在的错误。 在实际应用中，外挂知识库通常与LLM进行集成，通过定制的方式来满足用户或企业的特殊需求，提供更专业、准确和个性化的服务。这种集成可以帮助弥补LLM通用性的不足，使其更好地适应特定的应用场景。</p>
+</li>
+</ul>
+<p>好，我们了解了RAG的基本概念，接下来我们就一起深入技术细节，了解RAG的实现原理。</p>
+<span id="more"></span>
+
+<h2 id="技术实现（5-tech）"><a href="#技术实现（5-tech）" class="headerlink" title="技术实现（5-tech）"></a>技术实现（5-tech）</h2><h3 id="1-数据加载（Document-Loaders）"><a href="#1-数据加载（Document-Loaders）" class="headerlink" title="1 数据加载（Document Loaders）"></a>1 数据加载（Document Loaders）</h3><p>RAG的第一要解决的问题是数据来源的问题，数据有多种来源，各种格式的数据，如csv、html、json、markdown、PDF。所有的这些数据都需要有对应的Document Loaders来进行加工处理，将信息正确提取出来。</p>
+<p>以langchain（LLM应用框架）为例，目前langchain社区中已经实现了154种文档加载器 如html：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> langchain_community.document_loaders <span class="keyword">import</span> UnstructuredHTMLLoader</span><br><span class="line">loader = UnstructuredHTMLLoader(<span class="string">&quot;example_data/fake-content.html&quot;</span>) data = loader.load()</span><br></pre></td></tr></table></figure>
+
+<p>更多的文档加载器，可以访问langchain api</p>
+<p><a target="_blank" rel="noopener" href="https://api.python.langchain.com/en/latest/community_api_reference.html#module-langchain_community.document_loaders">langchain–module-langchain_community.document_loaders</a></p>
+<p>可以看到目前langchain社区目前涵盖了国内网诸多网站和平台的数据，如百度云盘、腾讯云文档，甚至包括了区块链信息</p>
+<h3 id="2-数据处理（Text-Splitters）"><a href="#2-数据处理（Text-Splitters）" class="headerlink" title="2 数据处理（Text Splitters）"></a>2 数据处理（Text Splitters）</h3><h4 id="数据分割"><a href="#数据分割" class="headerlink" title="数据分割"></a>数据分割</h4><p><a target="_blank" rel="noopener" href="https://api.python.langchain.com/en/latest/text_splitters_api_reference.html">langchain api text_spiliters</a></p>
+<p>加载完数据后，我们下一步通常需要将数据进行拆分，尤其是在处理长文本的情况下。如何将文本进行分割处理，听起来很简单，比如我按400个字符，直接切片就好了，但往往这样应用效果不甚理想。</p>
+<p>我们通常希望能将将语义相关的文本片段保留在一起。 重点其实就在这个“语义相关”，比如中文，我们希望是句号为分割符，比如一段长代码，我们希望以编程语言特点来分割，比如Python中的def、class</p>
+<p>以langchain为例，langchain目前支持HTML、字符、MarkdownHeader和多种代码分割，甚至正在实验中的语义分割。 </p>
+<p>1、按MarkdownHeader分割</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> langchain.text_splitter <span class="keyword">import</span> MarkdownHeaderTextSplitter</span><br><span class="line"></span><br><span class="line">markdown_document = <span class="string">&quot;# Foo\n\n ## Bar\n\nHi this is Jim\n\nHi this is Joe\n\n ### Boo \n\n Hi this is Lance \n\n ## Baz\n\n Hi this is Molly&quot;</span></span><br><span class="line"></span><br><span class="line">headers_to_split_on = [</span><br><span class="line">(<span class="string">&quot;#&quot;</span>, <span class="string">&quot;Header 1&quot;</span>),</span><br><span class="line">(<span class="string">&quot;##&quot;</span>, <span class="string">&quot;Header 2&quot;</span>),</span><br><span class="line">(<span class="string">&quot;###&quot;</span>, <span class="string">&quot;Header 3&quot;</span>),</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">markdown_splitter = MarkdownHeaderTextSplitter(headers_to_split_on=headers_to_split_on)</span><br><span class="line">md_header_splits = markdown_splitter.split_text(markdown_document)</span><br><span class="line">md_header_splits</span><br><span class="line"></span><br><span class="line">&#123;<span class="string">&#x27;content&#x27;</span>: <span class="string">&#x27;Hi this is Jim \nHi this is Joe&#x27;</span>, <span class="string">&#x27;metadata&#x27;</span>: &#123;<span class="string">&#x27;Header 1&#x27;</span>: <span class="string">&#x27;Foo&#x27;</span>, <span class="string">&#x27;Header 2&#x27;</span>: <span class="string">&#x27;Bar&#x27;</span>&#125;&#125;</span><br><span class="line">&#123;<span class="string">&#x27;content&#x27;</span>: <span class="string">&#x27;Hi this is Molly&#x27;</span>, <span class="string">&#x27;metadata&#x27;</span>: &#123;<span class="string">&#x27;Header 1&#x27;</span>: <span class="string">&#x27;Foo&#x27;</span>, <span class="string">&#x27;Header 2&#x27;</span>: <span class="string">&#x27;Baz&#x27;</span>&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2、按语义分割</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> langchain_experimental.text_splitter <span class="keyword">import</span> SemanticChunker</span><br><span class="line"><span class="keyword">from</span> langchain_openai.embeddings <span class="keyword">import</span> OpenAIEmbeddings</span><br><span class="line"></span><br><span class="line"><span class="comment"># This is a long document we can split up.</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;../../state_of_the_union.txt&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line"> state_of_the_union = f.read()</span><br><span class="line"></span><br><span class="line">text_splitter = SemanticChunker(OpenAIEmbeddings())</span><br><span class="line"></span><br><span class="line">docs = text_splitter.create_documents([state_of_the_union])</span><br><span class="line"><span class="built_in">print</span>(docs[<span class="number">0</span>].page_content)</span><br><span class="line"></span><br><span class="line">Madam Speaker, Madam Vice President, our First Lady <span class="keyword">and</span> Second Gentleman. Members of Congress <span class="keyword">and</span> the Cabinet. Justices of the Supreme Court.</span><br></pre></td></tr></table></figure>
+
+<h4 id="数据信息（metadata）"><a href="#数据信息（metadata）" class="headerlink" title="数据信息（metadata）"></a>数据信息（metadata）</h4><p>在进行文本分割的同时，我们还可以给分割的文本添加一下metadata的数据，方便记录该文本段的一些基本信息，如文章来源、作者信息等。<br>一个是能在进行文本召回时可以作为过滤搜索，另一方面还在作为发给LLM的补充数据，让LLM生成的内容更为丰富</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">metadatas = [&#123;<span class="string">&quot;document&quot;</span>: <span class="number">1</span>&#125;, &#123;<span class="string">&quot;document&quot;</span>: <span class="number">2</span>&#125;]</span><br><span class="line">documents = text_splitter.create_documents( [state_of_the_union, state_of_the_union], metadatas=metadatas ) <span class="built_in">print</span>(documents[<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
+
+<h4 id="分割参数"><a href="#分割参数" class="headerlink" title="分割参数"></a>分割参数</h4><p>在进行文本分割时，我们还需要重点关注两个参数 chunk_size 和 chunk_overlap，这两个参数分别表示分割长度和两段分割文本重合长度。<br>在实际RAG应用中，chunk_size需要结合向量数据库的来选择合适大小，比如腾讯云的向量数据库，一次只支持单块512token（400左右字符）的大小写入，那chunk_size就应该设设置400多。chunk_overlap的大小建议设置在chunk_size的1&#x2F;5左右，在召回多段文本时，可以增加数据的丰富度。<br>实际情况请结合具体项目进行设置和测试验证</p>
+<h3 id="3-数据向量化-（Text-embedding-models）"><a href="#3-数据向量化-（Text-embedding-models）" class="headerlink" title="3 数据向量化 （Text embedding models）"></a>3 数据向量化 （Text embedding models）</h3><p>在进行数据分割后，需要对文本数据段进行向量化，目前主流的中文向量化模型有 </p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>中文支持</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>M3E</td>
+<td>是</td>
+</tr>
+<tr>
+<td>text2vec</td>
+<td>是</td>
+</tr>
+<tr>
+<td>OpenAlEmbeddings</td>
+<td>是</td>
+</tr>
+</tbody></table>
+<p>使用OpenAIEmbeddings向量化处理</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> langchain_openai <span class="keyword">import</span> OpenAIEmbeddings</span><br><span class="line"></span><br><span class="line">embeddings_model = OpenAIEmbeddings(openai_api_key=<span class="string">&quot;...&quot;</span>)</span><br><span class="line"></span><br><span class="line">embeddings = embeddings_model.embed_documents(</span><br><span class="line"> [</span><br><span class="line"> <span class="string">&quot;Hi there!&quot;</span>,</span><br><span class="line"> <span class="string">&quot;Oh, hello!&quot;</span>,</span><br><span class="line"> <span class="string">&quot;What&#x27;s your name?&quot;</span>,</span><br><span class="line"> <span class="string">&quot;My friends call me World&quot;</span>,</span><br><span class="line"> <span class="string">&quot;Hello World!&quot;</span></span><br><span class="line"> ]</span><br><span class="line">)</span><br><span class="line"><span class="built_in">len</span>(embeddings), <span class="built_in">len</span>(embeddings[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line">(<span class="number">5</span>, <span class="number">1536</span>)</span><br></pre></td></tr></table></figure>
+
+<p>目前Langchain支持37种embedding model，这些向量化模型核心功能就将文本向量化，提供给向量数据库进行存储 </p>
+<h3 id="4-向量数据库-（Vector-stores）"><a href="#4-向量数据库-（Vector-stores）" class="headerlink" title="4 向量数据库 （Vector stores）"></a>4 向量数据库 （Vector stores）</h3><p><img src="/2024/04/01/NLP/LLM_RAG/2024-04-02-11-04-43-image.png"></p>
+<p>数据向量化后，就需要将向量数据存储进向量数据库。目前有很多开源向量数据库，如chromadb、faiss-cpu、lancedb。云服务厂商也陆续推出了向量数据库服务，包括腾讯云、阿里云的向量数据库</p>
+<h4 id="lancedb向量数据库使用"><a href="#lancedb向量数据库使用" class="headerlink" title="lancedb向量数据库使用"></a>lancedb向量数据库使用</h4><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> langchain_community.document_loaders <span class="keyword">import</span> TextLoader</span><br><span class="line"><span class="keyword">from</span> langchain_openai <span class="keyword">import</span> OpenAIEmbeddings</span><br><span class="line"><span class="keyword">from</span> langchain.text_splitter <span class="keyword">import</span> CharacterTextSplitter</span><br><span class="line"><span class="keyword">from</span> langchain_community.vectorstores <span class="keyword">import</span> LanceDB</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lancedb</span><br><span class="line"></span><br><span class="line">db = lancedb.connect(<span class="string">&quot;/tmp/lancedb&quot;</span>)</span><br><span class="line">table = db.create_table(</span><br><span class="line">    <span class="string">&quot;my_table&quot;</span>,</span><br><span class="line">    data=[</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">&quot;vector&quot;</span>: embeddings.embed_query(<span class="string">&quot;Hello World&quot;</span>),</span><br><span class="line">            <span class="string">&quot;text&quot;</span>: <span class="string">&quot;Hello World&quot;</span>,</span><br><span class="line">            <span class="string">&quot;id&quot;</span>: <span class="string">&quot;1&quot;</span>,</span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    mode=<span class="string">&quot;overwrite&quot;</span>,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Load the document, split it into chunks, embed each chunk and load it into the vector store.</span></span><br><span class="line">raw_documents = TextLoader(<span class="string">&#x27;../../../state_of_the_union.txt&#x27;</span>).load()</span><br><span class="line">text_splitter = CharacterTextSplitter(chunk_size=<span class="number">1000</span>, chunk_overlap=<span class="number">0</span>)</span><br><span class="line">documents = text_splitter.split_documents(raw_documents)</span><br><span class="line">db = LanceDB.from_documents(documents, OpenAIEmbeddings(), connection=table 作者：智安-DeedRead https://www.bilibili.com/read/cv29676672/ 出处：bilibili</span><br></pre></td></tr></table></figure>
+
+<p>如以Langchain VertorStore为基础类，实现的支持腾讯云的向量数据库服务 TencentVectorDB</p>
+<p>目前Langchain支持47种向量数据库接入，开发者也可以自行实现VertorStore，定义自己的向量数据库。<br>主要实现以下三个抽象方法</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@abstractmethod</span></span><br><span class="line">   <span class="keyword">def</span> <span class="title function_">add_texts</span>(<span class="params"></span></span><br><span class="line"><span class="params">       self,</span></span><br><span class="line"><span class="params">       texts: Iterable[<span class="built_in">str</span>],</span></span><br><span class="line"><span class="params">       metadatas: <span class="type">Optional</span>[<span class="type">List</span>[<span class="built_in">dict</span>]] = <span class="literal">None</span>,</span></span><br><span class="line"><span class="params">       **kwargs: <span class="type">Any</span>,</span></span><br><span class="line"><span class="params">   </span>) -&gt; <span class="type">List</span>[<span class="built_in">str</span>]:</span><br><span class="line">       <span class="string">&quot;&quot;&quot;Run more texts through the embeddings and add to the vectorstore.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">       Args:</span></span><br><span class="line"><span class="string">           texts: Iterable of strings to add to the vectorstore.</span></span><br><span class="line"><span class="string">           metadatas: Optional list of metadatas associated with the texts.</span></span><br><span class="line"><span class="string">           kwargs: vectorstore specific parameters</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">       Returns:</span></span><br><span class="line"><span class="string">           List of ids from adding the texts into the vectorstore.</span></span><br><span class="line"><span class="string">       &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@abstractmethod</span></span><br><span class="line">   <span class="keyword">def</span> <span class="title function_">similarity_search</span>(<span class="params"></span></span><br><span class="line"><span class="params">       self, query: <span class="built_in">str</span>, k: <span class="built_in">int</span> = <span class="number">4</span>, **kwargs: <span class="type">Any</span></span></span><br><span class="line"><span class="params">   </span>) -&gt; <span class="type">List</span>[Document]:</span><br><span class="line">       <span class="string">&quot;&quot;&quot;Return docs most similar to query.&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@classmethod</span></span><br><span class="line"><span class="meta">   @abstractmethod</span></span><br><span class="line">   <span class="keyword">def</span> <span class="title function_">from_texts</span>(<span class="params"></span></span><br><span class="line"><span class="params">       cls: <span class="type">Type</span>[VST],</span></span><br><span class="line"><span class="params">       texts: <span class="type">List</span>[<span class="built_in">str</span>],</span></span><br><span class="line"><span class="params">       embedding: Embeddings,</span></span><br><span class="line"><span class="params">       metadatas: <span class="type">Optional</span>[<span class="type">List</span>[<span class="built_in">dict</span>]] = <span class="literal">None</span>,</span></span><br><span class="line"><span class="params">       **kwargs: <span class="type">Any</span>,</span></span><br><span class="line"><span class="params">   </span>) -&gt; VST:</span><br><span class="line">       <span class="string">&quot;&quot;&quot;Return VectorStore initialized from texts and embeddings.&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>add_texts: 将文本数据向量化，添加进向量数据库</p>
+</li>
+<li><p>similarity_search： 从向量数据库召回数据</p>
+</li>
+<li><p>from_texts：类方法，实现将文本数据向量化，添加进向量数据库</p>
+</li>
+</ul>
+<h3 id="5-数据召回（Retrievers）"><a href="#5-数据召回（Retrievers）" class="headerlink" title="5 数据召回（Retrievers）"></a>5 数据召回（Retrievers）</h3><p>在讲解完数据加载、数据处理、数据向量化和向量数据库后，我们开始进入数据召回的环节。数据召回是我们向 LLM提问时，需要根据我们提问的问题向向量数据库召回相关的文档数据，并和问题加载进Prompt发送给LLM。</p>
+<p>比如下面这段提示词：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">template = <span class="string">&quot;&quot;&quot;Answer the question based only on the following context:</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&#123;context&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Question: &#123;question&#125;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>context就是我们召回的上下文</p>
+<p>数据召回的方法有许多种，应用在不同应用场景，当前Langchain主流支持的Retrievers有以下8种 </p>
+<p><img src="/2024/04/01/NLP/LLM_RAG/2024-04-02-11-11-57-image.png"></p>
+<p><img src="/2024/04/01/NLP/LLM_RAG/2024-04-02-11-12-14-image.png"></p>
+<h4 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h4><p>这里简述一下不同Retrievers的主要应用场景，大家可以具体问题具体分析，再去查阅一下相关文档</p>
+<ul>
+<li><p>Vectorstore 基础的向量召回方法，根据用户问题直接向向量数据库召回数据</p>
+</li>
+<li><p>ParentDocument 如果你文档数据有许多不同的小块信息，你可以根据问题检索出小块信息，再根据小块信息去索引出原文档或者更大块的数据，将大块数据作为上下文发送给LLM</p>
+</li>
+<li><p><u>Multi Vector 如果你有相关问题的数据集</u>，可以为问题和文档分别存储到不同的向量数据库，在检索时可以根据问题检索出合适文档上下文</p>
+</li>
+<li><p>Self Query 如果你提出的问题可以通过基于元数据(而不是与文本的相似性)来获取文档，可以使用这种Retrievers，利用LLM的能力，自动生成对应的检索方法，来召回数据</p>
+</li>
+<li><p>Contextual Compression 如果您发现您检索的文档包含太多不相关的信息，并且分散了LLM的注意力，可以利用上下文压缩的方法，将召回的数据利用LLM进行数据处理</p>
+</li>
+<li><p>Time-Weighted Vectorstore 如果你的文档数据中包含时间相关的数据，可以考虑用此Retriever</p>
+</li>
+<li><p>Multi-Query Retriever 用户提出的问题很复杂，需要多个不同的信息来回答，可以使用此Retriever，利用LLM生成多个相关的问题，再分别从向量数据库召回数据</p>
+</li>
+<li><p>Ensemble 如果您有多种检索方法，并希望尝试将它们组合起来，可以使用此Retriever</p>
+</li>
+<li><p>Long-Context Reorder 当你需要召回多段上下文数据时，但发现LLM并没有根据你的上下文来回答问题时，可以考虑使用 Retriever对你召回的数据进行重新排序，将相似度较高的排在前面，让LLM能更好的利用上下文来回答问题</p>
+</li>
+</ul>
+<h4 id="数据召回算法"><a href="#数据召回算法" class="headerlink" title="数据召回算法"></a>数据召回算法</h4><p>在数据召回中，目前业内有两种较为通用的召回算法</p>
+<p>1 相似度匹配算法（Similarity Search with Euclidean Distance）</p>
+<p>        这是向量数据库自身具备的特点，通过比较向量之间的距离来判断它们的相似度。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docs_with_score = db.max_marginal_relevance_search_with_score(query)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> doc, score <span class="keyword">in</span> docs_with_score:</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;-&quot;</span> * <span class="number">80</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Score: &quot;</span>, score)</span><br><span class="line"><span class="built_in">print</span>(doc.page_content)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;-&quot;</span> * <span class="number">80</span>) 作者：智安-DeedRead https://www.bilibili.com/read/cv29676672/ 出处：bilibili</span><br></pre></td></tr></table></figure>
+
+<p>2 最大边界相关算法（Maximal Marginal Relevance）<br>        采用这个算法，会优化召回的数据段之间的相似程度和多样性，对数据重新打分</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">maximal_marginal_relevance</span>(<span class="params"></span></span><br><span class="line"><span class="params">    query_embedding: np.ndarray,</span></span><br><span class="line"><span class="params">    embedding_list: <span class="built_in">list</span>,</span></span><br><span class="line"><span class="params">    lambda_mult: <span class="built_in">float</span> = <span class="number">0.5</span>,</span></span><br><span class="line"><span class="params">    k: <span class="built_in">int</span> = <span class="number">4</span>,</span></span><br><span class="line"><span class="params"></span>) -&gt; <span class="type">List</span>[<span class="built_in">int</span>]:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Calculate maximal marginal relevance.&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">min</span>(k, <span class="built_in">len</span>(embedding_list)) &lt;= <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> []</span><br><span class="line">    <span class="keyword">if</span> query_embedding.ndim == <span class="number">1</span>:</span><br><span class="line">        query_embedding = np.expand_dims(query_embedding, axis=<span class="number">0</span>)</span><br><span class="line">    similarity_to_query = cosine_similarity(query_embedding, embedding_list)[<span class="number">0</span>]</span><br><span class="line">    most_similar = <span class="built_in">int</span>(np.argmax(similarity_to_query))</span><br><span class="line">    idxs = [most_similar]</span><br><span class="line">    selected = np.array([embedding_list[most_similar]])</span><br><span class="line">    <span class="keyword">while</span> <span class="built_in">len</span>(idxs) &lt; <span class="built_in">min</span>(k, <span class="built_in">len</span>(embedding_list)):</span><br><span class="line">        best_score = -np.inf</span><br><span class="line">        idx_to_add = -<span class="number">1</span></span><br><span class="line">        similarity_to_selected = cosine_similarity(embedding_list, selected)</span><br><span class="line">        <span class="keyword">for</span> i, query_score <span class="keyword">in</span> <span class="built_in">enumerate</span>(similarity_to_query):</span><br><span class="line">            <span class="keyword">if</span> i <span class="keyword">in</span> idxs:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            redundant_score = <span class="built_in">max</span>(similarity_to_selected[i])</span><br><span class="line">            equation_score = (</span><br><span class="line">                lambda_mult * query_score - (<span class="number">1</span> - lambda_mult) * redundant_score</span><br><span class="line">            )</span><br><span class="line">            <span class="keyword">if</span> equation_score &gt; best_score:</span><br><span class="line">                best_score = equation_score</span><br><span class="line">                idx_to_add = i</span><br><span class="line">        idxs.append(idx_to_add)</span><br><span class="line">        selected = np.append(selected, [embedding_list[idx_to_add]], axis=<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">return</span> idxs</span><br></pre></td></tr></table></figure>
+
+<p>我们可以在数据召回实践中，测试不同算法下的效果，来选择合适的算法。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>最后，我们对RAG进行一下总结。RAG底层依赖LLM大模型和数据获取、数据存储等相关技术，在RAG技术层面基于底层技术，共实现了数据加载、数据处理、数据向量化、向量数据库和数据召回等五种技术。可以使用这个5种技术，完成RAG应用实现。 </p>
+<h2 id="REF"><a href="#REF" class="headerlink" title="REF"></a>REF</h2><p> <a target="_blank" rel="noopener" href="https://space.bilibili.com/364471435">深入理解LLM RAG检索生成</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/techforward/article/details/133787625">LangChain+通义千问+AnalyticDB向量引擎保姆级教程_langchain 通义千问-CSDN博客</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/LLM/" rel="tag"># LLM</a>
+              <a href="/tags/RAG/" rel="tag"># RAG</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/04/01/Course/SLAMs/pattern/" rel="prev" title="OpenCV 相机标定">
+      <i class="fa fa-chevron-left"></i> OpenCV 相机标定
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/04/02/NLP/vLLM/" rel="next" title="LLM 推理">
+      LLM 推理 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E5%AE%9E%E7%8E%B0%EF%BC%885-tech%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">技术实现（5-tech）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%95%B0%E6%8D%AE%E5%8A%A0%E8%BD%BD%EF%BC%88Document-Loaders%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">1 数据加载（Document Loaders）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%EF%BC%88Text-Splitters%EF%BC%89"><span class="nav-number">2.2.</span> <span class="nav-text">2 数据处理（Text Splitters）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%88%86%E5%89%B2"><span class="nav-number">2.2.1.</span> <span class="nav-text">数据分割</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E4%BF%A1%E6%81%AF%EF%BC%88metadata%EF%BC%89"><span class="nav-number">2.2.2.</span> <span class="nav-text">数据信息（metadata）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E5%89%B2%E5%8F%82%E6%95%B0"><span class="nav-number">2.2.3.</span> <span class="nav-text">分割参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%95%B0%E6%8D%AE%E5%90%91%E9%87%8F%E5%8C%96-%EF%BC%88Text-embedding-models%EF%BC%89"><span class="nav-number">2.3.</span> <span class="nav-text">3 数据向量化 （Text embedding models）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%90%91%E9%87%8F%E6%95%B0%E6%8D%AE%E5%BA%93-%EF%BC%88Vector-stores%EF%BC%89"><span class="nav-number">2.4.</span> <span class="nav-text">4 向量数据库 （Vector stores）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#lancedb%E5%90%91%E9%87%8F%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BD%BF%E7%94%A8"><span class="nav-number">2.4.1.</span> <span class="nav-text">lancedb向量数据库使用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E6%95%B0%E6%8D%AE%E5%8F%AC%E5%9B%9E%EF%BC%88Retrievers%EF%BC%89"><span class="nav-number">2.5.</span> <span class="nav-text">5 数据召回（Retrievers）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">2.5.1.</span> <span class="nav-text">应用场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8F%AC%E5%9B%9E%E7%AE%97%E6%B3%95"><span class="nav-number">2.5.2.</span> <span class="nav-text">数据召回算法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#REF"><span class="nav-number">4.</span> <span class="nav-text">REF</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Simon Shi的小站">
+<meta property="og:url" content="https://novav.github.io/page/11/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="AI,Machine Learning, Deep Learning">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://novav.github.io/page/11/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2023/06/16/Sub_Language/DL_Platform/TensorRT/Trt_cplus/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/06/16/Sub_Language/DL_Platform/TensorRT/Trt_cplus/" class="post-title-link" itemprop="url">TensorRT call By C++</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-06-16 10:00:00" itemprop="dateCreated datePublished" datetime="2023-06-16T10:00:00+00:00">2023-06-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/deploy/" itemprop="url" rel="index"><span itemprop="name">deploy</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/deploy/TensorRT/" itemprop="url" rel="index"><span itemprop="name">TensorRT</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2023/06/06/Sub_Language/DL_Train/Tensorflow/TF_Env/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/06/06/Sub_Language/DL_Train/Tensorflow/TF_Env/" class="post-title-link" itemprop="url">TF Conda Env Init</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-06-06 12:00:00" itemprop="dateCreated datePublished" datetime="2023-06-06T12:00:00+00:00">2023-06-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Env/" itemprop="url" rel="index"><span itemprop="name">Env</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="Env-Create"><a href="#Env-Create" class="headerlink" title="Env Create"></a>Env Create</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">conda create -name tf1 python=3.7</span><br><span class="line">conda activate tf1</span><br><span class="line">conda search tensorflow</span><br><span class="line">conda install tensorflow=1.13.2</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">conda create -name tf2 python=3.7</span><br><span class="line">conda activate tf2</span><br><span class="line">conda search tensorflow</span><br><span class="line">conda install tensorflow=2.7.*</span><br></pre></td></tr></table></figure>
+
+<p>tensorflow&#x3D;1.13 -&gt; python&#x3D;3.7</p>
+<h2 id="TF"><a href="#TF" class="headerlink" title="TF"></a>TF</h2><h3 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h3><table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Python version</th>
+<th>Compiler</th>
+<th>Build tools</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>tensorflow-2.12.0</td>
+<td>3.8-3.11</td>
+<td>MSVC 2019</td>
+<td>Bazel 5.3.0</td>
+</tr>
+<tr>
+<td>tensorflow-2.11.0</td>
+<td>3.7-3.10</td>
+<td>MSVC 2019</td>
+<td>Bazel 5.3.0</td>
+</tr>
+<tr>
+<td>tensorflow-2.10.0</td>
+<td>3.7-3.10</td>
+<td>MSVC 2019</td>
+<td>Bazel 5.1.1</td>
+</tr>
+<tr>
+<td>tensorflow-2.9.0</td>
+<td>3.7-3.10</td>
+<td>MSVC 2019</td>
+<td>Bazel 5.0.0</td>
+</tr>
+<tr>
+<td>tensorflow-2.8.0</td>
+<td>3.7-3.10</td>
+<td>MSVC 2019</td>
+<td>Bazel 4.2.1</td>
+</tr>
+<tr>
+<td>tensorflow-2.7.0</td>
+<td>3.7-3.9</td>
+<td>MSVC 2019</td>
+<td>Bazel 3.7.2</td>
+</tr>
+<tr>
+<td>tensorflow-2.6.0</td>
+<td>3.6-3.9</td>
+<td>MSVC 2019</td>
+<td>Bazel 3.7.2</td>
+</tr>
+<tr>
+<td>tensorflow-2.5.0</td>
+<td>3.6-3.9</td>
+<td>MSVC 2019</td>
+<td>Bazel 3.7.2</td>
+</tr>
+<tr>
+<td>tensorflow-2.4.0</td>
+<td>3.6-3.8</td>
+<td>MSVC 2019</td>
+<td>Bazel 3.1.0</td>
+</tr>
+<tr>
+<td>tensorflow-2.3.0</td>
+<td>3.5-3.8</td>
+<td>MSVC 2019</td>
+<td>Bazel 3.1.0</td>
+</tr>
+<tr>
+<td>tensorflow-2.2.0</td>
+<td>3.5-3.8</td>
+<td>MSVC 2019</td>
+<td>Bazel 2.0.0</td>
+</tr>
+<tr>
+<td>tensorflow-2.1.0</td>
+<td>3.5-3.7</td>
+<td>MSVC 2019</td>
+<td>Bazel 0.27.1-0.29.1</td>
+</tr>
+<tr>
+<td>tensorflow-2.0.0</td>
+<td>3.5-3.7</td>
+<td>MSVC 2017</td>
+<td>Bazel 0.26.1</td>
+</tr>
+<tr>
+<td>tensorflow-1.15.0</td>
+<td>3.5-3.7</td>
+<td>MSVC 2017</td>
+<td>Bazel 0.26.1</td>
+</tr>
+<tr>
+<td>tensorflow-1.14.0</td>
+<td>3.5-3.7</td>
+<td>MSVC 2017</td>
+<td>Bazel 0.24.1-0.25.2</td>
+</tr>
+<tr>
+<td>tensorflow-1.13.0</td>
+<td>3.5-3.7</td>
+<td>MSVC 2015 update 3</td>
+<td>Bazel 0.19.0-0.21.0</td>
+</tr>
+<tr>
+<td>tensorflow-1.12.0</td>
+<td>3.5-3.6</td>
+<td>MSVC 2015 update 3</td>
+<td>Bazel 0.15.0</td>
+</tr>
+<tr>
+<td>tensorflow-1.11.0</td>
+<td>3.5-3.6</td>
+<td>MSVC 2015 update 3</td>
+<td>Bazel 0.15.0</td>
+</tr>
+<tr>
+<td>tensorflow-1.10.0</td>
+<td>3.5-3.6</td>
+<td>MSVC 2015 update 3</td>
+<td>Cmake v3.6.3</td>
+</tr>
+<tr>
+<td>tensorflow-1.9.0</td>
+<td>3.5-3.6</td>
+<td>MSVC 2015 update 3</td>
+<td>Cmake v3.6.3</td>
+</tr>
+<tr>
+<td>tensorflow-1.8.0</td>
+<td>3.5-3.6</td>
+<td>MSVC 2015 update 3</td>
+<td>Cmake v3.6.3</td>
+</tr>
+<tr>
+<td>tensorflow-1.7.0</td>
+<td>3.5-3.6</td>
+<td>MSVC 2015 update 3</td>
+<td>Cmake v3.6.3</td>
+</tr>
+<tr>
+<td>tensorflow-1.6.0</td>
+<td>3.5-3.6</td>
+<td>MSVC 2015 update 3</td>
+<td>Cmake v3.6.3</td>
+</tr>
+<tr>
+<td>tensorflow-1.5.0</td>
+<td>3.5-3.6</td>
+<td>MSVC 2015 update 3</td>
+<td>Cmake v3.6.3</td>
+</tr>
+<tr>
+<td>tensorflow-1.4.0</td>
+<td>3.5-3.6</td>
+<td>MSVC 2015 update 3</td>
+<td>Cmake v3.6.3</td>
+</tr>
+<tr>
+<td>tensorflow-1.3.0</td>
+<td>3.5-3.6</td>
+<td>MSVC 2015 update 3</td>
+<td>Cmake v3.6.3</td>
+</tr>
+<tr>
+<td>tensorflow-1.2.0</td>
+<td>3.5-3.6</td>
+<td>MSVC 2015 update 3</td>
+<td>Cmake v3.6.3</td>
+</tr>
+<tr>
+<td>tensorflow-1.1.0</td>
+<td>3.5</td>
+<td>MSVC 2015 update 3</td>
+<td>Cmake v3.6.3</td>
+</tr>
+<tr>
+<td>tensorflow-1.0.0</td>
+<td>3.5</td>
+<td>MSVC 2015 update 3</td>
+<td>Cmake v3.6.3</td>
+</tr>
+</tbody></table>
+<h3 id="GPU"><a href="#GPU" class="headerlink" title="GPU"></a>GPU</h3><table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Python version</th>
+<th>Compiler</th>
+<th>Build tools</th>
+<th>cuDNN</th>
+<th>CUDA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>tensorflow_gpu-2.10.0</td>
+<td>3.7-3.10</td>
+<td>MSVC 2019</td>
+<td>Bazel 5.1.1</td>
+<td>8.1</td>
+<td>11.2</td>
+</tr>
+<tr>
+<td>tensorflow_gpu-2.9.0</td>
+<td>3.7-3.10</td>
+<td>MSVC 2019</td>
+<td>Bazel 5.0.0</td>
+<td>8.1</td>
+<td>11.2</td>
+</tr>
+<tr>
+<td>tensorflow_gpu-2.8.0</td>
+<td>3.7-3.10</td>
+<td>MSVC 2019</td>
+<td>Bazel 4.2.1</td>
+<td>8.1</td>
+<td>11.2</td>
+</tr>
+<tr>
+<td>tensorflow_gpu-2.7.0</td>
+<td>3.7-3.9</td>
+<td>MSVC 2019</td>
+<td>Bazel 3.7.2</td>
+<td>8.1</td>
+<td>11.2</td>
+</tr>
+<tr>
+<td>tensorflow_gpu-2.6.0</td>
+<td>3.6-3.9</td>
+<td>MSVC 2019</td>
+<td>Bazel 3.7.2</td>
+<td>8.1</td>
+<td>11.2</td>
+</tr>
+<tr>
+<td>tensorflow_gpu-2.5.0</td>
+<td>3.6-3.9</td>
+<td>MSVC 2019</td>
+<td>Bazel 3.7.2</td>
+<td>8.1</td>
+<td>11.2</td>
+</tr>
+<tr>
+<td>tensorflow_gpu-2.4.0</td>
+<td>3.6-3.8</td>
+<td>MSVC 2019</td>
+<td>Bazel 3.1.0</td>
+<td>8.0</td>
+<td>11.0</td>
+</tr>
+<tr>
+<td>tensorflow_gpu-2.3.0</td>
+<td>3.5-3.8</td>
+<td>MSVC 2019</td>
+<td>Bazel 3.1.0</td>
+<td>7.6</td>
+<td>10.1</td>
+</tr>
+<tr>
+<td>tensorflow_gpu-2.2.0</td>
+<td>3.5-3.8</td>
+<td>MSVC 2019</td>
+<td>Bazel 2.0.0</td>
+<td>7.6</td>
+<td>10.1</td>
+</tr>
+<tr>
+<td>tensorflow_gpu-2.1.0</td>
+<td>3.5-3.7</td>
+<td>MSVC 2019</td>
+<td>Bazel 0.27.1-0.29.1</td>
+<td>7.6</td>
+<td>10.1</td>
+</tr>
+<tr>
+<td>tensorflow_gpu-2.0.0</td>
+<td>3.5-3.7</td>
+<td>MSVC 2017</td>
+<td>Bazel 0.26.1</td>
+<td>7.4</td>
+<td>10</td>
+</tr>
+<tr>
+<td>tensorflow_gpu-1.15.0</td>
+<td>3.5-3.7</td>
+<td>MSVC 2017</td>
+<td>Bazel 0.26.1</td>
+<td>7.4</td>
+<td>10</td>
+</tr>
+<tr>
+<td>tensorflow_gpu-1.14.0</td>
+<td>3.5-3.7</td>
+<td>MSVC 2017</td>
+<td>Bazel 0.24.1-0.25.2</td>
+<td>7.4</td>
+<td>10</td>
+</tr>
+<tr>
+<td>tensorflow_gpu-1.13.0</td>
+<td>3.5-3.7</td>
+<td>MSVC 2015 update 3</td>
+<td>Bazel 0.19.0-0.21.0</td>
+<td>7.4</td>
+<td>10</td>
+</tr>
+<tr>
+<td>tensorflow_gpu-1.12.0</td>
+<td>3.5-3.6</td>
+<td>MSVC 2015 update 3</td>
+<td>Bazel 0.15.0</td>
+<td>7.2</td>
+<td>9.0</td>
+</tr>
+<tr>
+<td>tensorflow_gpu-1.11.0</td>
+<td>3.5-3.6</td>
+<td>MSVC 2015 update 3</td>
+<td>Bazel 0.15.0</td>
+<td>7</td>
+<td>9</td>
+</tr>
+<tr>
+<td>tensorflow_gpu-1.10.0</td>
+<td>3.5-3.6</td>
+<td>MSVC 2015 update 3</td>
+<td>Cmake v3.6.3</td>
+<td>7</td>
+<td>9</td>
+</tr>
+<tr>
+<td>tensorflow_gpu-1.9.0</td>
+<td>3.5-3.6</td>
+<td>MSVC 2015 update 3</td>
+<td>Cmake v3.6.3</td>
+<td>7</td>
+<td>9</td>
+</tr>
+<tr>
+<td>tensorflow_gpu-1.8.0</td>
+<td>3.5-3.6</td>
+<td>MSVC 2015 update 3</td>
+<td>Cmake v3.6.3</td>
+<td>7</td>
+<td>9</td>
+</tr>
+<tr>
+<td>tensorflow_gpu-1.7.0</td>
+<td>3.5-3.6</td>
+<td>MSVC 2015 update 3</td>
+<td>Cmake v3.6.3</td>
+<td>7</td>
+<td>9</td>
+</tr>
+<tr>
+<td>tensorflow_gpu-1.6.0</td>
+<td>3.5-3.6</td>
+<td>MSVC 2015 update 3</td>
+<td>Cmake v3.6.3</td>
+<td>7</td>
+<td>9</td>
+</tr>
+<tr>
+<td>tensorflow_gpu-1.5.0</td>
+<td>3.5-3.6</td>
+<td>MSVC 2015 update 3</td>
+<td>Cmake v3.6.3</td>
+<td>7</td>
+<td>9</td>
+</tr>
+<tr>
+<td>tensorflow_gpu-1.4.0</td>
+<td>3.5-3.6</td>
+<td>MSVC 2015 update 3</td>
+<td>Cmake v3.6.3</td>
+<td>6</td>
+<td>8</td>
+</tr>
+<tr>
+<td>tensorflow_gpu-1.3.0</td>
+<td>3.5-3.6</td>
+<td>MSVC 2015 update 3</td>
+<td>Cmake v3.6.3</td>
+<td>6</td>
+<td>8</td>
+</tr>
+<tr>
+<td>tensorflow_gpu-1.2.0</td>
+<td>3.5-3.6</td>
+<td>MSVC 2015 update 3</td>
+<td>Cmake v3.6.3</td>
+<td>5.1</td>
+<td>8</td>
+</tr>
+<tr>
+<td>tensorflow_gpu-1.1.0</td>
+<td>3.5</td>
+<td>MSVC 2015 update 3</td>
+<td>Cmake v3.6.3</td>
+<td>5.1</td>
+<td>8</td>
+</tr>
+<tr>
+<td>tensorflow_gpu-1.0.0</td>
+<td>3.5</td>
+<td>MSVC 2015 update 3</td>
+<td>Cmake v3.6.3</td>
+<td>5.1</td>
+<td>8</td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2023/06/01/CV_Face/MediaPipe/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/06/01/CV_Face/MediaPipe/" class="post-title-link" itemprop="url">AI-MediaPipe</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-06-01 12:00:00" itemprop="dateCreated datePublished" datetime="2023-06-01T12:00:00+00:00">2023-06-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="MediaPipe基础（2）人脸网格"><a href="#MediaPipe基础（2）人脸网格" class="headerlink" title="MediaPipe基础（2）人脸网格"></a>MediaPipe基础（2）人脸网格</h1><p>摘要：机器学习流水线我们的管道由两个协同工作的实时深度神经网络模型组成一个对完整图像进行操作并计算人脸位置的检测器，以及一个对这些位置进行操作并通过回归预测近似表面几何形状的人脸地标模型。</p>
+<h2 id="1-摘要"><a href="#1-摘要" class="headerlink" title="1.摘要"></a>1.摘要</h2><p>MediaPipe Face Mesh 是一种面部几何解决方案，即使在移动设备上也能实时估计 468 个 3D 面部标志。它采用机器学习 (ML) 来推断 3D 表面几何形状，只需要一个摄像头输入，无需专用深度传感器。该解决方案在整个管道中利用轻量级模型架构和 GPU 加速，提供对实时体验至关重要的实时性能。</p>
+<p>此外，该解决方案与人脸几何模块捆绑在一起，弥合了人脸地标估计和有用的实时增强现实 (AR) 应用程序之间的差距。它建立了一个可度量的3D空间，并使用面部地标屏幕位置来估计该空间内的面部几何形状。人脸几何数据由常见的三维几何基元组成，包括人脸姿态变换矩阵和三角化人脸网格。在幕后，使用一种被称为普鲁克分析的轻量级的统计分析方法，用来驱动一个健壮的、性能好的、可移植的逻辑。该分析在CPU上运行，并且在ML模型推理的基础上具有最小的速度&#x2F;内存占用。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/06/01/CV_Face/MediaPipe/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2023/06/01/NLP/NLP_AIs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/06/01/NLP/NLP_AIs/" class="post-title-link" itemprop="url">AI-GPT</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-06-01 12:00:00" itemprop="dateCreated datePublished" datetime="2023-06-01T12:00:00+00:00">2023-06-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="ChatGPT"><a href="#ChatGPT" class="headerlink" title="ChatGPT"></a>ChatGPT</h3><h3 id="文心一言（百度）"><a href="#文心一言（百度）" class="headerlink" title="文心一言（百度）"></a>文心一言（百度）</h3><h3 id="通义千问（阿里）"><a href="#通义千问（阿里）" class="headerlink" title="通义千问（阿里）"></a>通义千问（阿里）</h3><ul>
+<li><p>代码：<a target="_blank" rel="noopener" href="https://github.com/QwenLM/Qwen">https://github.com/QwenLM/Qwen</a></p>
+</li>
+<li><p>体验地址：<a target="_blank" rel="noopener" href="https://modelscope.cn/studios/qwen/Qwen-7B-Chat-Demo/summary">https://modelscope.cn/studios/qwen/Qwen-7B-Chat-Demo/summary</a></p>
+</li>
+<li><p>18亿（1.8B）、70亿（7B）、140亿（14B）和720亿（72B）。本次开源包括基础模型Qwen，即Qwen-1.8B、Qwen-7B、Qwen-14B、Qwen-72B，以及对话模型Qwen-Chat，即Qwen-1.8B-Chat、Qwen-7B-Chat、Qwen-14B-Chat和Qwen-72B-Chat。</p>
+</li>
+<li><p>利用SFT和RLHF技术实现对齐，从基座模型训练得到对话模型。Qwen-Chat具备聊天、文字创作、摘要、信息抽取、翻译等能力，同时还具备一定的代码生成和简单数学推理的能力。</p>
+</li>
+</ul>
+<h3 id="ChatGLM（清华）"><a href="#ChatGLM（清华）" class="headerlink" title="ChatGLM（清华）"></a>ChatGLM（清华）</h3><p>chatglm ，chatglm2</p>
+<p>项目地址：<a target="_blank" rel="noopener" href="https://github.com/THUDM/ChatGLM2-6B">https://github.com/THUDM/ChatGLM2-6B</a></p>
+<p>HuggingFace：<a target="_blank" rel="noopener" href="https://huggingface.co/THUDM/chatglm2-6b">https://huggingface.co/THUDM/chatglm2-6b</a></p>
+<h3 id="MOSS-复旦NLP团队"><a href="#MOSS-复旦NLP团队" class="headerlink" title="MOSS (复旦NLP团队)"></a>MOSS (复旦NLP团队)</h3><h3 id="LLaMa（Meta）"><a href="#LLaMa（Meta）" class="headerlink" title="LLaMa（Meta）"></a>LLaMa（Meta）</h3><p>    由<a target="_blank" rel="noopener" href="https://m.baidu.com/s?word=Meta&sa=re_dqa_zy">Meta<em></em></a>研发的一系列大语言模型，包括多种不同参数规模的版本，如<a target="_blank" rel="noopener" href="https://m.baidu.com/s?word=7B&sa=re_dqa_zy">7B<em></em></a>、13B、33B和65B（650亿参数）</p>
+<p>    LLaMA-13B在大多数基准上优于GPT-3，尽管其参数只有GPT-3的十分之一。此外，LLaMA-65B和LLaMA-33B是在1.4万亿个<a target="_blank" rel="noopener" href="https://m.baidu.com/s?word=token&sa=re_dqa_zy">token<em></em></a>上训练的，而最小的模型LLaMA-7B是在1万亿个token上训练的</p>
+<p>LLaMA模型的训练数据集来源于公开数据集，无任何定制数据集，这保证了其工作与开源兼容和可复现。整个训练数据集在token化之后大约包含1.4T的token。LLaMA模型的一个显著特点是它可以在单块<a target="_blank" rel="noopener" href="https://m.baidu.com/s?word=V100%20GPU&sa=re_dqa_zy">V100 GPU<em></em></a>上运行，这使得LLaMA模型在计算预算有限的情况下也能提供良好的性能，有助于使大型语言模型的使用和研究更加普及。</p>
+<h4 id="LLaMa-2"><a href="#LLaMa-2" class="headerlink" title="LLaMa-2"></a>LLaMa-2</h4><p>Llama-2相比Llama-1有不少技术层面的改进，从而带来了模型性能、推理效率以及安全性等方面的有效提升。具体而言，重要的改进有以下几点：</p>
+<p>模型架构上使用Group-Query-Attention(GQA)来提高模型推理效率，语境长度从2K增加一倍到4K。预训练语料从1.4T tokens增加到2T tokens。在监督微调（SFT）阶段更加注重数据集质量，使用更少但质量更高的SFT数据相比使用百万量级的公开SFT数据，效果显著提升。引入了三项安全训练技术Supervised Safety Fine-Tuning、Safety RLHF、Safety Context Distillation 提升模型的安全性。</p>
+<h3 id="Alpaca"><a href="#Alpaca" class="headerlink" title="Alpaca"></a>Alpaca</h3><h3 id="miniChatGPT"><a href="#miniChatGPT" class="headerlink" title="miniChatGPT"></a>miniChatGPT</h3><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/652735189">https://zhuanlan.zhihu.com/p/652735189</a></p>
+<h3 id="通义千问-模型参数GPU资源"><a href="#通义千问-模型参数GPU资源" class="headerlink" title="通义千问(模型参数GPU资源)"></a>通义千问(模型参数GPU资源)</h3><table>
+<thead>
+<tr>
+<th>模型</th>
+<th>开源日期</th>
+<th>最大上下文长度</th>
+<th>System Prompt强化</th>
+<th>预训练token数</th>
+<th>微调（Q-Lora）最小GPU用量</th>
+<th>生成2048个token的最小显存占用</th>
+<th>工具调用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Qwen-1.8B</td>
+<td>23.11.30</td>
+<td>32K</td>
+<td>✅</td>
+<td>2.2T</td>
+<td>5.8GB</td>
+<td>2.9GB</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Qwen-7B</td>
+<td>23.08.03</td>
+<td>32K</td>
+<td>❎</td>
+<td>2.4T</td>
+<td>11.5GB</td>
+<td>8.2GB</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Qwen-14B</td>
+<td>23.09.25</td>
+<td>8K</td>
+<td>❎</td>
+<td>3.0T</td>
+<td>18.7GB</td>
+<td>13.0GB</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Qwen-72B</td>
+<td>23.11.30</td>
+<td>32K</td>
+<td>✅</td>
+<td>3.0T</td>
+<td>61.4GB</td>
+<td>48.9GB</td>
+<td>✅</td>
+</tr>
+</tbody></table>
+<h3 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h3><p><strong>HuggingFace</strong>  AI开发者社区，等同于GitHub；</p>
+<p>主要是HuggingFace把AI项目的研发流程标准化，即准备数据集、定义模型、训练和测试，如下所示：</p>
+<p><img src="/2023/06/01/NLP/NLP_AIs/2024-03-25-20-51-52-image.png"></p>
+<p>REF:</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42878111/article/details/134017313">大模型的实践应用4-ChatGLM-6b大模型的结构与核心代码解读，最全的ChatGLM模型架构介绍与源码解读-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/656653210">Zhihu 大模型设计与升级之道：ChatGLM、LLAMA、Baichuan及LLM结构解析</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/SL88PrbSbozlCAsrbRLW3w"># 大模型升级与设计之道：ChatGLM、LLAMA、Baichuan及LLM结构解析</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2023/06/01/ResearchRecord/2023_AIs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/06/01/ResearchRecord/2023_AIs/" class="post-title-link" itemprop="url">AIs -- GPT</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-06-01 12:00:00" itemprop="dateCreated datePublished" datetime="2023-06-01T12:00:00+00:00">2023-06-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/GPT/" itemprop="url" rel="index"><span itemprop="name">GPT</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_36378508/article/details/121809595">GPT2模型详解_zhurui_xiaozhuzaizai的博客-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/lencx/ChatGPT#-downloads">GitHub - lencx&#x2F;ChatGPT: 🔮 ChatGPT Desktop Application (Mac, Windows and Linux)</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2023/05/05/Sub_Language/DL_Train/TFpb_To_PTModel/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/05/05/Sub_Language/DL_Train/TFpb_To_PTModel/" class="post-title-link" itemprop="url">Tensorflow权重迁移至Pytorch</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-05-05 12:00:00" itemprop="dateCreated datePublished" datetime="2023-05-05T12:00:00+00:00">2023-05-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/DNN/" itemprop="url" rel="index"><span itemprop="name">DNN</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_36438332/article/details/124690077">Tensorflow权重迁移至Pytorch_tensorflow权重转pytorch_古月萝北的博客-CSDN博客</a></p>
+<h4 id="Conv2D层"><a href="#Conv2D层" class="headerlink" title="Conv2D层"></a>Conv2D层</h4><p>Tensorflow的数据维度为(B,H,W,C), 而Pytorch的数据维度为(B,C,H,W), 因此二者卷积层的权重矩阵也是不一样的。Pytorch的为(out_channels,in_channels,H,W), Tensorflow的为(H,W,in_channels,out_channels), 因此权重迁移时需要转置权重矩阵。</p>
+<p>此外，如果卷积带有bias，layer.get_weights()返回长度为2的列表，第一个元素为权重矩阵，第二个元素为bias.</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/05/05/Sub_Language/DL_Train/TFpb_To_PTModel/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2023/05/05/Sub_Language/DL_Train/Pytorch/deploy_libtorch/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/05/05/Sub_Language/DL_Train/Pytorch/deploy_libtorch/" class="post-title-link" itemprop="url">(pytorch) libtorch Models deploy</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-05-05 12:00:00" itemprop="dateCreated datePublished" datetime="2023-05-05T12:00:00+00:00">2023-05-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DNN-Platform/" itemprop="url" rel="index"><span itemprop="name">DNN_Platform</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DNN-Platform/pytorch/" itemprop="url" rel="index"><span itemprop="name">pytorch</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DNN-Platform/pytorch/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p> <a target="_blank" rel="noopener" href="https://www.cnblogs.com/carsonzhu/p/17037017.html">深度学习模型热更新及libtorch显存管理</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2023/05/04/Sub_Language/DL_Train/DL_NN_Common/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/05/04/Sub_Language/DL_Train/DL_NN_Common/" class="post-title-link" itemprop="url">Caffe、Tensorflow和Pytorch通道维度顺序小结</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-05-04 12:00:00" itemprop="dateCreated datePublished" datetime="2023-05-04T12:00:00+00:00">2023-05-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/DNN/" itemprop="url" rel="index"><span itemprop="name">DNN</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="Caffe、Tensorflow和Pytorch通道维度顺序小结"><a href="#Caffe、Tensorflow和Pytorch通道维度顺序小结" class="headerlink" title="Caffe、Tensorflow和Pytorch通道维度顺序小结"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/sddai/p/14447105.html">Caffe、Tensorflow和Pytorch通道维度顺序小结</a></h3><p>N: batch;</p>
+<p>C: channel</p>
+<p>H: height</p>
+<p>W: width</p>
+<p>Caffe 的Blob通道顺序是：NCHW;</p>
+<p>Tensorflow的tensor通道顺序：默认是NHWC， 也支持NCHW，使用cuDNN会更快;</p>
+<p>Pytorch中tensor的通道顺序：NCHW</p>
+<p>TensorRT中的tensor 通道顺序： NCHW</p>
+<p>numpy image: H x W x C<br>torch image: C X H X W</p>
+<hr>
+<p>目前世面上深度学习框架比较多，常用的有三大类：Caffe、Tensorflow和Pytorch，这三种深度学习框架都主要在英伟达显卡上面进行训练和测试，很奇怪的是，它们之间的通道维度顺序并没有保持一致，在多个框架中替换着使用，很容易让人混淆了，所以做一个小结。</p>
+<p>Caffe 的通道顺序是NCHW;</p>
+<p>Tensorflow的通道顺序默认是NHWC（但可以设置成NCHW），NHWC 的访存局部性更好（每三个输入像素即可得到一个输出像素），NCHW 则必须等所有通道输入准备好才能得到最终输出结果，需要占用较大的临时空间。</p>
+<p>TensorFlow 为什么选择 NHWC 格式作为默认格式？因为早期开发都是基于 CPU，使用 NHWC 比 NCHW 稍快一些（不难理解，NHWC 局部性更好，cache 利用率高）。</p>
+<p>NCHW 则是 Nvidia cuDNN 默认格式，使用 GPU 加速时用 NCHW 格式速度会更快（也有个别情况例外）。</p>
+<p>最佳实践：设计网络时充分考虑两种格式，最好能灵活切换，在 GPU 上训练时使用 NCHW 格式，在 CPU 上做预测时使用 NHWC 格式。</p>
+<p>Pytorch的通道顺序是NCHW</p>
+<h3 id="下采样"><a href="#下采样" class="headerlink" title="下采样"></a>下采样</h3><table>
+<thead>
+<tr>
+<th>常见下采样方法</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>最大池化</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>平均池化</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>卷积（strides&gt;1）</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>空洞卷积(Atrous Convolution &#x2F; Dilated Convolution)</td>
+<td>也是一种变相的下采样方式，但它通常用于保持特征图尺寸的同时增加感受野</td>
+<td></td>
+</tr>
+<tr>
+<td>自适应下采样(Adaptive Sampling)：</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="上采样"><a href="#上采样" class="headerlink" title="上采样"></a>上采样</h3><p>（将低分辨率特征图放大至高分辨率）</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Function</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Nearest Neighbor Upsampling<br>（最近邻插值<br>Bilinear Interpolation Upsampling<br>（双线性插值）</td>
+<td>old函数 nn.Upsample()<br>F.interpolate (1.6版本之后)</td>
+<td></td>
+</tr>
+<tr>
+<td>Transposed Convolution（转置卷积&#x2F;反卷积）</td>
+<td>nn.ConvTranspose2d</td>
+<td></td>
+</tr>
+<tr>
+<td>PixelShuffle（像素重组）</td>
+<td>nn.PixelShuffle</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="spectral-norm"><a href="#spectral-norm" class="headerlink" title="spectral_norm"></a>spectral_norm</h3><p>是深度学习中的一种正则化技术，主要用于稳定和约束神经网络中的权重矩阵，特别是对于生成对抗网络（GANs）和其他涉及大型权重矩阵的模型，可以有效地解决训练过程中的梯度消失或爆炸问题，以及防止模型过度拟合。</p>
+<p>Spectral normalization（谱范数归一化）通过对权重矩阵的谱范数（即该矩阵的最大奇异值）进行规范化，强制限制权重矩阵的影响范围，从而使网络的训练更加稳定。</p>
+<ol>
+<li>给定一个卷积层 <code>conv</code>，我们可以应用谱范数归一化：</li>
+</ol>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> torch.nn.utils <span class="keyword">import</span> spectral_norm</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个卷积层</span></span><br><span class="line">conv = nn.Conv2d(in_channels, out_channels, kernel_size, bias=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 对权重矩阵应用谱范数归一化</span></span><br><span class="line">conv = spectral_norm(conv)</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>或者在初始化时直接使用 <code>nn.SpectralNorm</code>：</li>
+</ol>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> torch.nn <span class="keyword">import</span> SpectralNorm</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建并直接应用谱范数归一化的卷积层</span></span><br><span class="line">conv = nn.Conv2d(in_channels, out_channels, kernel_size, bias=<span class="literal">False</span>)</span><br><span class="line">conv = SpectralNorm(conv)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Container-Class"><a href="#Container-Class" class="headerlink" title="Container Class"></a>Container Class</h3><h4 id="nn-Sequential"><a href="#nn-Sequential" class="headerlink" title="nn.Sequential"></a>nn.Sequential</h4><p>是一个有序的模块容器，其中的子模块会按照添加的顺序依次执行。它非常适用于堆叠一系列简单的线性操作序列，如连续的卷积和全连接层。定义和使用方式如下：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> torch.nn <span class="keyword">import</span> Sequential, Conv2d, Linear</span><br><span class="line"></span><br><span class="line">model = Sequential(</span><br><span class="line">    Conv2d(in_channels=<span class="number">3</span>, out_channels=<span class="number">64</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>),</span><br><span class="line">    ReLU(),</span><br><span class="line">    MaxPool2d(kernel_size=<span class="number">2</span>),</span><br><span class="line">    Linear(<span class="number">64</span> * reduced_image_size * reduced_image_size, num_classes)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h4 id="nn-ModuleList"><a href="#nn-ModuleList" class="headerlink" title="nn.ModuleList"></a>nn.ModuleList</h4><p> 是一个可迭代的模块容器，但不保持顺序索引。它可以容纳任意数量的 <code>nn.Module</code> 子类实例，并且可以通过索引访问和修改。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> torch.nn <span class="keyword">import</span> ModuleList, Conv2d</span><br><span class="line">conv_layers = ModuleList([Conv2d(<span class="number">32</span>, <span class="number">64</span>, <span class="number">3</span>), Conv2d(<span class="number">64</span>, <span class="number">128</span>, <span class="number">3</span>)])</span><br><span class="line"></span><br><span class="line">self_layers = ModuleList([MyModule(<span class="number">12</span>, <span class="number">24</span>), MyModule2(<span class="number">24</span>,<span class="number">12</span>)])</span><br></pre></td></tr></table></figure>
+
+<h4 id="nn-ModuleDict"><a href="#nn-ModuleDict" class="headerlink" title="nn.ModuleDict"></a>nn.ModuleDict</h4><p><code>nn.ModuleDict</code> 是一个键值对形式的模块容器，其中键是字符串类型，值是 <code>nn.Module</code> 实例。它允许通过字符串关键字来访问和管理子模块，这对于具有命名组件的复杂网络结构非常有用。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> torch.nn <span class="keyword">import</span> ModuleDict, Conv2d</span><br><span class="line"></span><br><span class="line">conv_blocks = ModuleDict(&#123;</span><br><span class="line">    <span class="string">&#x27;block1&#x27;</span>: Conv2d(<span class="number">3</span>, <span class="number">32</span>, <span class="number">3</span>),</span><br><span class="line">    <span class="string">&#x27;block2&#x27;</span>: Conv2d(<span class="number">32</span>, <span class="number">64</span>, <span class="number">5</span>),</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="functional"><a href="#functional" class="headerlink" title="functional"></a>functional</h3><h4 id="Leak-relu"><a href="#Leak-relu" class="headerlink" title="Leak_relu"></a>Leak_relu</h4><p><code>F.leaky_relu_()</code> 和 <code>F.leaky_relu()</code> 都是用来实现Leaky ReLU激活函数的，它们的区别在于是否原地修改输入张量：</p>
+<ol>
+<li><p><strong>F.leaky_relu()</strong>： 这是一个普通的函数调用，它接收一个张量作为输入，计算并返回带有Leaky ReLU激活的输出张量。这个操作不会改变原始输入张量的内容，而是返回一个新的张量。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"><span class="number">2</span><span class="built_in">input</span> = torch.randn(<span class="number">10</span>, <span class="number">10</span>)</span><br><span class="line">3output = F.leaky_relu(<span class="built_in">input</span>, negative_slope=<span class="number">0.01</span>)  <span class="comment"># 返回一个新的张量</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>F.leaky_relu_()</strong>： 这是一个原地(in-place)操作符版本，它会在原始输入张量上直接进行Leaky ReLU激活计算，覆盖掉原来的值，不返回新的张量，而是直接修改输入张量。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"><span class="number">2</span><span class="built_in">input</span> = torch.randn(<span class="number">10</span>, <span class="number">10</span>)</span><br><span class="line">3F.leaky_relu_(<span class="built_in">input</span>, negative_slope=<span class="number">0.01</span>)  <span class="comment"># 直接在原始输入上修改</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>总结来说，如果你希望保留原始输入张量以便后续使用，请使用 <code>F.leaky_relu()</code>；如果你愿意直接在原始输入上进行操作且不需要保留原始值，可以使用 <code>F.leaky_relu_()</code>，这在内存有限的情况下有助于节省存储空间。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2023/05/04/Sub_Language/DL_Train/TFpb_To_PTModel_1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/05/04/Sub_Language/DL_Train/TFpb_To_PTModel_1/" class="post-title-link" itemprop="url">PB(tf) to Pth(Torch)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-05-04 12:00:00" itemprop="dateCreated datePublished" datetime="2023-05-04T12:00:00+00:00">2023-05-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/DNN/" itemprop="url" rel="index"><span itemprop="name">DNN</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[已经验证], 需要根据网络模块修改</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44347020/article/details/107367923">将tensorpack的inference改为pytorch_.pb转换为.pth_云端一散仙的博客-CSDN博客</a></p>
+<h3 id="将pb文件转为pth文件"><a href="#将pb文件转为pth文件" class="headerlink" title="将pb文件转为pth文件"></a>将pb文件转为pth文件</h3><ul>
+<li>相关的文件</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> OrderedDict</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.framework <span class="keyword">import</span> tensor_util</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">view_params</span>():</span><br><span class="line">    pb_file = <span class="string">&#x27;ocr/checkpoint/text_recognition_377500.pb&#x27;</span></span><br><span class="line">    graph = tf.Graph()</span><br><span class="line">    <span class="keyword">with</span> graph.as_default():</span><br><span class="line">        <span class="keyword">with</span> tf.gfile.FastGFile(pb_file, <span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">            graph_def = tf.GraphDef()</span><br><span class="line">            graph_def.ParseFromString(f.read())</span><br><span class="line">            _ = tf.import_graph_def(graph_def, name=<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">            graph_nodes=[n <span class="keyword">for</span> n <span class="keyword">in</span> graph_def.node]</span><br><span class="line">            wts = [n <span class="keyword">for</span> n <span class="keyword">in</span> graph_nodes <span class="keyword">if</span> n.op==<span class="string">&#x27;Const&#x27;</span>]</span><br><span class="line"></span><br><span class="line">    odic = OrderedDict()</span><br><span class="line">    <span class="keyword">for</span> n <span class="keyword">in</span> wts:</span><br><span class="line">        param = tensor_util.MakeNdarray(n.attr[<span class="string">&#x27;value&#x27;</span>].tensor)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> param.size == <span class="number">0</span>:</span><br><span class="line">            odic[n.name] = tensor_util.MakeNdarray(n.attr[<span class="string">&#x27;value&#x27;</span>].tensor)</span><br><span class="line">    torch.save(odic, <span class="string">&#x27;pb_377500.pth&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="模型代码"><a href="#模型代码" class="headerlink" title="模型代码"></a>模型代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">TextRecognition</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>(TextRecognition, <span class="variable language_">self</span>).__init__()</span><br><span class="line">        <span class="variable language_">self</span>.features = nn.Sequential(OrderedDict([</span><br><span class="line">            (<span class="string">&#x27;Conv2d_1a_3x3&#x27;</span>, BasicConv2d(<span class="number">3</span>, <span class="number">32</span>, kernel_size=<span class="number">3</span>, stride=<span class="number">2</span>, padding=<span class="string">&#x27;SAME&#x27;</span>)),</span><br><span class="line">            (<span class="string">&#x27;Conv2d_2a_3x3&#x27;</span>, BasicConv2d(<span class="number">32</span>, <span class="number">32</span>, kernel_size=<span class="number">3</span>, stride=<span class="number">1</span>, padding=<span class="string">&#x27;SAME&#x27;</span>)),</span><br><span class="line">               ...</span><br><span class="line">            (<span class="string">&#x27;Mixed_6h&#x27;</span>, Inception_B()),</span><br><span class="line">        ]))</span><br><span class="line">        <span class="variable language_">self</span>.attention_lstm = AttentionLstm()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        x = <span class="variable language_">self</span>.features(x)</span><br><span class="line">        x = <span class="variable language_">self</span>.attention_lstm(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">LinearBias</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, size</span>):</span><br><span class="line">        <span class="built_in">super</span>(LinearBias, <span class="variable language_">self</span>).__init__()</span><br><span class="line">        <span class="variable language_">self</span>.param = nn.Parameter(torch.Tensor(size))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        x = x + <span class="variable language_">self</span>.param</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">AttentionLstm</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, seq_len=<span class="number">33</span>, is_training=<span class="literal">False</span>, num_classes=<span class="number">7569</span>,</span></span><br><span class="line"><span class="params">                    wemb_size=<span class="number">256</span>, channel=<span class="number">1024</span>, lstm_size=<span class="number">512</span></span>):</span><br><span class="line">        <span class="built_in">super</span>(AttentionLstm, <span class="variable language_">self</span>).__init__()</span><br><span class="line">        <span class="variable language_">self</span>.seq_len = seq_len  <span class="comment"># 33</span></span><br><span class="line">        ...</span><br><span class="line">        <span class="variable language_">self</span>.W_wemb = nn.Linear(<span class="variable language_">self</span>.num_classes, <span class="variable language_">self</span>.wemb_size, bias=<span class="literal">False</span>)</span><br><span class="line">        <span class="variable language_">self</span>.lstm_b = LinearBias(<span class="variable language_">self</span>.lstm_size*<span class="number">4</span>)</span><br><span class="line">        <span class="variable language_">self</span>.tanh = nn.Tanh()</span><br><span class="line">        <span class="variable language_">self</span>.softmax_1d = nn.Softmax(dim=<span class="number">1</span>)</span><br><span class="line">        <span class="variable language_">self</span>.sigmoid = nn.Sigmoid()</span><br><span class="line">        <span class="variable language_">self</span>.dropout_1d = nn.Dropout(<span class="number">0.</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, cnn_feature</span>):  <span class="comment"># bs, 1024, h, w</span></span><br><span class="line">        _, _, <span class="variable language_">self</span>.height, <span class="variable language_">self</span>.width = cnn_feature.size()</span><br><span class="line">        ...</span><br><span class="line">        <span class="keyword">return</span> output_array, attention_array</span><br></pre></td></tr></table></figure>
+
+<p>Pytorch 与 TensorFlow 二维卷积（Conv2d）填充（padding）上的差异，写卷积层的时候遇到的坑。<br>这种差异是由 TensorFlow 和 Pytorch 在卷积运算时使用的填充方式不同导致的。Pytorch 在填充的时候，上、下、左、右各方向填充的大小是一样的，但 TensorFlow 却允许不一样。<br>参考博客1<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/16373af724cc">Pytorch 与 TensorFlow 二维卷积（Conv2d）填充（padding）上的差异 - 简书</a><br>参考博客2<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/70972b8fb6ee">tensorflow与pytorch卷积填充方式的差异 - 简书</a></p>
+<p>在AttentionLstm中，有一个LinearBias类，该类会将pack和self.lstm_b加起来，但是如果在forward中写成相加的形式，就不能将该self.lstm_b保存下来，写成类可以使模型加载参数的时候可以一次加载完成。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">AttentionLstm</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>(AttentionLstm, <span class="variable language_">self</span>).__init__()</span><br><span class="line">        <span class="variable language_">self</span>.seq_len = <span class="number">33</span>  <span class="comment"># 33</span></span><br><span class="line">        <span class="variable language_">self</span>.W_wemb = nn.Linear(<span class="number">10</span>, <span class="number">20</span>, bias=<span class="literal">False</span>)</span><br><span class="line">        <span class="variable language_">self</span>.lstm_b = LinearBias(<span class="number">4</span>)</span><br><span class="line">        <span class="variable language_">self</span>.a = nn.Parameter(torch.Tensor(<span class="number">1</span>))</span><br><span class="line">        <span class="variable language_">self</span>.b = torch.randn(<span class="number">1</span>, <span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">test = AttentionLstm()</span><br><span class="line"><span class="comment"># odict_keys([&#x27;a&#x27;, &#x27;W_wemb.weight&#x27;, &#x27;lstm_b.param&#x27;])，self.b不会保存在state_dict中，而self.lstm_b会保存</span></span><br><span class="line"><span class="built_in">print</span>(test.state_dict())</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pack = <span class="variable language_">self</span>.lstm_W(wemb_prev) + <span class="variable language_">self</span>.lstm_U(h_prev) + <span class="variable language_">self</span>.lstm_Z(attention_feature)  <span class="comment"># bs, 2048</span></span><br><span class="line">pack_with_bias = <span class="variable language_">self</span>.lstm_b(pack)</span><br></pre></td></tr></table></figure>
+
+<p>原代码使用的大都是tensorflow的函数，所以要改成相应的pytorch的函数。</p>
+<table>
+<thead>
+<tr>
+<th>tensorflow</th>
+<th>pytorch</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>tf.matmul</td>
+<td>torch.matmul</td>
+</tr>
+<tr>
+<td>tf.multiply</td>
+<td>torch.mul</td>
+</tr>
+<tr>
+<td>tf.sigmoid</td>
+<td>torch.nn.Sigmoid</td>
+</tr>
+<tr>
+<td>tf.nn</td>
+<td>.dropout    torch.nn.Dropout</td>
+</tr>
+<tr>
+<td>tf.nn</td>
+<td>.softmax    torch.nn.Softmax</td>
+</tr>
+<tr>
+<td>tf.tanh</td>
+<td>torch.tanh</td>
+</tr>
+<tr>
+<td>tf.split</td>
+<td>torch.split</td>
+</tr>
+<tr>
+<td>tf.shape</td>
+<td>torch.size</td>
+</tr>
+<tr>
+<td>tf.reshape</td>
+<td>&#x2F; tf.transpose    torch.reshape &#x2F; view</td>
+</tr>
+<tr>
+<td>tf.expand_dims</td>
+<td>torch.unsqueeze</td>
+</tr>
+<tr>
+<td>tf.add_n</td>
+<td>&#x2F;tf.add    torch.add</td>
+</tr>
+<tr>
+<td>tf.reduce_sum</td>
+<td>torch.sum</td>
+</tr>
+<tr>
+<td>tf.reduce_mean</td>
+<td>torch.mean</td>
+</tr>
+<tr>
+<td>tf.transpose</td>
+<td>torch.permute</td>
+</tr>
+<tr>
+<td>tf.concat</td>
+<td>torch.cat</td>
+</tr>
+<tr>
+<td>tf.nn</td>
+<td>.embedding_lookup    torch.index_select</td>
+</tr>
+</tbody></table>
+<h3 id="加载参数"><a href="#加载参数" class="headerlink" title="加载参数"></a>加载参数</h3><p>最后加载参数验证  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">net = attention_ocr_pytorch.TextRecognition()</span><br><span class="line">net.load_state_dict(torch.load(<span class="string">&#x27;log/pytorch/pb_377500_fl.pth&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<p>end</p>
+<h3 id="Sequence-使用Reshape"><a href="#Sequence-使用Reshape" class="headerlink" title="Sequence 使用Reshape"></a>Sequence 使用Reshape</h3><p>pytorch中没有nn.Reshape层，如果想使用 reshape 功能，通常：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Net</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        ...</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        ...</span><br><span class="line">        h = h.view(-<span class="number">1</span>, <span class="number">128</span>)</span><br><span class="line">        ...</span><br></pre></td></tr></table></figure>
+
+<p>如果要想在 nn.Sequential 中使用 Reshape 功能，可以自定义Reshape层：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Reshape</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, *args</span>):</span><br><span class="line">        <span class="built_in">super</span>(Reshape, <span class="variable language_">self</span>).__init__()</span><br><span class="line">        <span class="variable language_">self</span>.shape = args</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        <span class="keyword">return</span> x.view((x.size(<span class="number">0</span>),)+<span class="variable language_">self</span>.shape)</span><br></pre></td></tr></table></figure>
+
+<p>然后就可以直接在nn.Sequential中使用Reshape功能了：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">nn.Sequential(</span><br><span class="line">    nn.Linear(<span class="number">10</span>, <span class="number">64</span>*<span class="number">7</span>*<span class="number">7</span>),</span><br><span class="line">    Reshape(<span class="number">64</span>, <span class="number">7</span>, <span class="number">7</span>),</span><br><span class="line">    ...</span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+
+<p>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/d14665/article/details/112218767">https://blog.csdn.net/d14665/article/details/112218767</a></p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_36378508/article/details/125202775">pytorch 模型与tf模型转换_tf.cast如何用pytorch实现_zhurui_xiaozhuzaizai的博客-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/fxtxz2/article/details/125161287">使用Transformers将TF模型转化成PyTorch模型_tf模型转pytorch_亚林瓜子的博客-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/huggingface/transformers/blob/ad7196524695f3bb3e178d57d280bd18fa175ca6/src/transformers/models/bert/convert_bert_pytorch_checkpoint_to_original_tf.py">https://github.com/huggingface/transformers/blob/ad7196524695f3bb3e178d57d280bd18fa175ca6/src/transformers/models/bert/convert_bert_pytorch_checkpoint_to_original_tf.py</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2023/05/04/Sub_Language/DL_Train/Pytorch/libtorch_docs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/05/04/Sub_Language/DL_Train/Pytorch/libtorch_docs/" class="post-title-link" itemprop="url">LibPyTorch Doc</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-05-04 12:00:00" itemprop="dateCreated datePublished" datetime="2023-05-04T12:00:00+00:00">2023-05-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DNN-Platform/" itemprop="url" rel="index"><span itemprop="name">DNN_Platform</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DNN-Platform/PyTorch/" itemprop="url" rel="index"><span itemprop="name">PyTorch</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="Tensor初始化"><a href="#Tensor初始化" class="headerlink" title="Tensor初始化"></a>Tensor初始化</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1 数组 -&gt; Tensor</span></span><br><span class="line"><span class="type">int</span> data[<span class="number">10</span>] = &#123;<span class="number">3</span>,<span class="number">4</span>,<span class="number">6</span>&#125;</span><br><span class="line">torch::Tensor x_data = torch::<span class="built_in">from_blob</span>(data,&#123;<span class="number">3</span>&#125;,torch::kFloat)</span><br><span class="line"></span><br><span class="line"><span class="comment">//2 vector -&gt; Tensor</span></span><br><span class="line">std::vector&lt;<span class="type">float</span>&gt; std_vector = &#123;<span class="number">3</span>，<span class="number">4</span>，<span class="number">6</span>&#125;;</span><br><span class="line">torch::Tensor vector_data = torch::<span class="built_in">from_brob</span>(std_vector.<span class="built_in">data</span>(),&#123;<span class="number">3</span>&#125;,torch::kFloat);</span><br><span class="line"></span><br><span class="line"><span class="comment">//3 Tensor like</span></span><br><span class="line">torch::Tensor x = torch::<span class="built_in">zeros</span>(&#123;<span class="number">3</span>,<span class="number">4</span>&#125;);</span><br><span class="line">torch::Tensor x_zeros = torch::<span class="built_in">zeros_like</span>(x);</span><br><span class="line">torch::Tensor x_ones = torch::<span class="built_in">ones_like</span>(x);</span><br><span class="line">torch::Tensor x_rand = torch::<span class="built_in">rand_like</span>(x);</span><br><span class="line"><span class="comment">//浅拷贝</span></span><br><span class="line">torch::Tensor y = x</span><br><span class="line"><span class="comment">//深拷贝</span></span><br><span class="line">torch::Tensor z = x.<span class="built_in">clone</span>();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//4 new shape Tensor</span></span><br><span class="line">torch::Tensor x_ones = torch::<span class="built_in">ones</span>(&#123;<span class="number">3</span>,<span class="number">4</span>&#125;);</span><br><span class="line">torch::Tensor x_zeros = torch::<span class="built_in">zeros</span>(&#123;<span class="number">3</span>,<span class="number">4</span>&#125;);</span><br><span class="line">torch::Tensor x_eye = torch::<span class="built_in">eye</span>(<span class="number">4</span>);</span><br><span class="line">torch::Tensor x_full = torch::<span class="built_in">full</span>(&#123;<span class="number">3</span>,<span class="number">4</span>&#125;,<span class="number">10</span>);</span><br><span class="line">torch::Tensor x_rand = torch::<span class="built_in">rand</span>(&#123;<span class="number">3</span>,<span class="number">4</span>&#125;);</span><br><span class="line">torch::Tensor x_randn = torch::<span class="built_in">randn</span>(&#123;<span class="number">3</span>,<span class="number">4</span>&#125;);</span><br><span class="line">torch::Tensor x_randint = torch::<span class="built_in">randint</span>(<span class="number">0</span>,<span class="number">4</span>,&#123;<span class="number">3</span>,<span class="number">3</span>&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="Tensor-操作"><a href="#Tensor-操作" class="headerlink" title="Tensor 操作"></a>Tensor 操作</h3><h4 id="index-select"><a href="#index-select" class="headerlink" title="index_select"></a>index_select</h4><p>提取指定元素形成新的张量（关键字index：就代表是提取出来相应的元素组成新的张量）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;b.index_select(<span class="number">0</span>,torch::tensor(&#123;<span class="number">0</span>, <span class="number">3</span>, <span class="number">3</span>&#125;)).sizes();<span class="comment">//选择第0维的0，3，3组成新张量[3,3,28,28]</span></span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;b.index_select(<span class="number">1</span>,torch::tensor(&#123;<span class="number">0</span>,<span class="number">2</span>&#125;)).sizes(); <span class="comment">//选择第1维的第0和第2的组成新张量[10, 2, 28, 28]</span></span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;b.index_select(<span class="number">2</span>,torch::arange(<span class="number">0</span>,<span class="number">8</span>)).sizes(); <span class="comment">//选择十张图片每个通道的前8列的所有像素[10, 3, 8, 28]</span></span><br><span class="line"></span><br><span class="line">Tensor x_data = torch::rand(&#123;<span class="number">3</span>,<span class="number">4</span>&#125;);</span><br><span class="line">Tensor mask = torch::zeros(&#123;<span class="number">3</span>,<span class="number">4</span>&#125;);</span><br><span class="line"></span><br><span class="line">mask[<span class="number">1</span>][<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">mask[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//index()方法输入参量为布尔值组成的数组，输出参量为对应index的值组成新的张量(新的内存空间)</span></span><br><span class="line">Tensor x = x_data.index(&#123; mask.to(kBool) &#125;);    </span><br></pre></td></tr></table></figure>
+
+<h4 id="torch-topk"><a href="#torch-topk" class="headerlink" title="torch::topk"></a>torch::topk</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">torch::Tensor <span class="title">torch::topk</span><span class="params">(<span class="type">const</span> torch::Tensor&amp; input, <span class="type">int</span> k, <span class="type">int</span> dim=<span class="number">-1</span>, <span class="type">bool</span> largest=<span class="literal">true</span>, <span class="type">bool</span> sorted=<span class="literal">false</span>)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="comment">// input：输入张量。</span></span></span><br><span class="line"><span class="function"><span class="comment">// k：最大的 k 个值的数量。</span></span></span><br><span class="line"><span class="function"><span class="comment">// dim：要获取最大值的位置的维度，默认为 -1（最后一位）。</span></span></span><br><span class="line"><span class="function"><span class="comment">// largest：如果为 true，则返回最大的 k 个值；如果为 false，则返回最小的 k 个值。默认为 true。</span></span></span><br><span class="line"><span class="function"><span class="comment">// sorted：如果为 true，则返回的值是排序的；如果为 false，则不保证排序。默认为 false。</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="comment">/// return </span></span></span><br><span class="line"><span class="function"><span class="comment">// 一个张量，包含最大的 k 个值（如果 largest=true）或最小的 k 个值（如果 largest=false）。</span></span></span><br><span class="line"><span class="function"><span class="comment">// 一个张量，包含这些值的索引。</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">torch::Tensor x </span>= torch::<span class="built_in">tensor</span>(&#123;<span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="number">5</span>, <span class="number">9</span>, <span class="number">6</span>&#125;);  </span><br><span class="line"><span class="keyword">auto</span> [values, indices] = torch::<span class="built_in">topk</span>(x, <span class="number">3</span>);  </span><br><span class="line"></span><br><span class="line"><span class="comment">// values: tensor([9, 7, 6])  </span></span><br><span class="line"><span class="comment">// indices: tensor([8, 5, 4])</span></span><br></pre></td></tr></table></figure>
+
+<p>E2:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">torch::Tensor scores = torch::rand(&#123;<span class="number">10</span>&#125;);</span><br><span class="line"><span class="built_in">std</span>::tuple&lt;torch::Tensor,torch::Tensor&gt; sort_ret = torch::sort(scores.unsqueeze(<span class="number">1</span>), <span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">torch::Tensor v = <span class="built_in">std</span>::get&lt;<span class="number">0</span>&gt;(sort_ret).squeeze(<span class="number">1</span>).to(scores.device());</span><br><span class="line">torch::Tensor idx = <span class="built_in">std</span>::get&lt;<span class="number">1</span>&gt;(sort_ret).squeeze(<span class="number">1</span>).to(scores.device());</span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;scores&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;v&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;idx&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++)</span><br><span class="line">&#123;</span><br><span class="line">     <span class="type">int</span> idx_1 = idx[i].item&lt;<span class="type">int</span>&gt;();</span><br><span class="line">     <span class="type">float</span> s = v[i].item&lt;<span class="type">float</span>&gt;();</span><br><span class="line"></span><br><span class="line">      <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt;idx_1&lt;&lt;<span class="string">&quot;  &quot;</span>&lt;&lt;s&lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/yang332233/article/details/106199180">libtorch 常用api函数示例（史上最全、最详细）_无左无右的博客-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43917589/article/details/126335273">Libtorch教程(二)：基于Libtorch分类模型推理_脆皮茄条的博客-CSDN博客_libtorch 推理</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="[TOC] 3D建模目前动画、游戏中使用的静态三维数字人体主要通过3D网格模型（英文一般叫mesh），贴上材质贴图来实现。 三维数字人体目前主要的方法有： 1.多视角几何重建（不同角度拍摄多张照片）； 2.使用数字化人体表示模型预测网格 多视角几何重建生成工具: PhotoScan（商业软件） MeshRoom（开源软件） 模型方法预测或生成3D网格传统的基于骨架的Skinning方法有LBS,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CV—CV_3D_BuildModel">
+<meta property="og:url" content="https://novav.github.io/2020/01/03/CV_3D/CV-3D-BuildModel/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="[TOC] 3D建模目前动画、游戏中使用的静态三维数字人体主要通过3D网格模型（英文一般叫mesh），贴上材质贴图来实现。 三维数字人体目前主要的方法有： 1.多视角几何重建（不同角度拍摄多张照片）； 2.使用数字化人体表示模型预测网格 多视角几何重建生成工具: PhotoScan（商业软件） MeshRoom（开源软件） 模型方法预测或生成3D网格传统的基于骨架的Skinning方法有LBS,">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2020/01/03/CV_3D/CV-3D-BuildModel/v2-adeb01c5732699d3e0c2a26d1649b5fc_ipico.jpg">
+<meta property="og:image" content="https://novav.github.io/2020/01/03/CV_3D/CV-3D-BuildModel/1579226914959.png">
+<meta property="og:image" content="https://novav.github.io/2020/01/03/CV_3D/CV-3D-BuildModel/1579243110376.png">
+<meta property="og:image" content="https://novav.github.io/2020/01/03/CV_3D/CV-3D-BuildModel/1579243115045.png">
+<meta property="og:image" content="https://novav.github.io/2020/01/03/CV_3D/CV-3D-BuildModel/1579228511503.png">
+<meta property="og:image" content="https://novav.github.io/2020/01/03/CV_3D/CV-3D-BuildModel/1579227847960.png">
+<meta property="og:image" content="https://novav.github.io/2020/01/03/CV_3D/CV-3D-BuildModel/1579228149537.png">
+<meta property="og:image" content="file:///C:/Users/admin/AppData/Local/Temp/ksohtml88988/wps1.jpg">
+<meta property="og:image" content="file:///C:/Users/admin/AppData/Local/Temp/ksohtml88988/wps2.jpg">
+<meta property="og:image" content="https://novav.github.io/2020/01/03/CV_3D/CV-3D-BuildModel/1579252060836.png">
+<meta property="article:published_time" content="2020-01-03T11:47:01.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:38.345Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="3D Body">
+<meta property="article:tag" content="SMPL">
+<meta property="article:tag" content="SCAPE">
+<meta property="article:tag" content="LBS">
+<meta property="article:tag" content="DQBS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2020/01/03/CV_3D/CV-3D-BuildModel/v2-adeb01c5732699d3e0c2a26d1649b5fc_ipico.jpg">
+
+<link rel="canonical" href="https://novav.github.io/2020/01/03/CV_3D/CV-3D-BuildModel/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>CV—CV_3D_BuildModel | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2020/01/03/CV_3D/CV-3D-BuildModel/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CV—CV_3D_BuildModel
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-01-03 11:47:01" itemprop="dateCreated datePublished" datetime="2020-01-03T11:47:01+00:00">2020-01-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV-3D/" itemprop="url" rel="index"><span itemprop="name">CV_3D</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV-3D/3D-Body/" itemprop="url" rel="index"><span itemprop="name">3D Body</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>[TOC]</p>
+<h2 id="3D建模"><a href="#3D建模" class="headerlink" title="3D建模"></a>3D建模</h2><p>目前动画、游戏中使用的静态三维数字人体主要通过3D网格模型（英文一般叫mesh），贴上材质贴图来实现。</p>
+<p>三维数字人体目前主要的方法有：</p>
+<p>1.多视角几何重建（不同角度拍摄多张照片）；</p>
+<p>2.使用数字化人体表示模型预测网格</p>
+<h2 id="多视角几何重建"><a href="#多视角几何重建" class="headerlink" title="多视角几何重建"></a>多视角几何重建</h2><p>生成工具:</p>
+<p><a href="https://link.zhihu.com/?target=https://www.agisoft.com/">PhotoScan</a>（商业软件）</p>
+<p><a href="https://link.zhihu.com/?target=https://alicevision.org/">MeshRoom</a>（开源软件）</p>
+<h2 id="模型方法预测或生成3D网格"><a href="#模型方法预测或生成3D网格" class="headerlink" title="模型方法预测或生成3D网格"></a>模型方法预测或生成3D网格</h2><p>传统的基于骨架的Skinning方法有LBS, DQS, Implicit Skinning等，这些方法可以理解为产生了一个从<strong>骨架姿势（Posture of the skeleton）<strong>到 <strong>角色模型网格（Mesh of the character）<strong>的映射，输入是</strong>Posture</strong>，输出是</strong>Mesh</strong>，怎么产生的就是使用特定的方法，大多是几何物理方法等。</p>
+<p>产生骨架姿势，可以用正向动力学（Forward Kinematics）、反向动力学（Inverse Kinematics）。</p>
+<p>产生动画有几种思路，比如用网格（Mesh）内部的骨架（Skeleton）驱动，用Mesh外部的Cage驱动，用一些Handle来控制变形（在面部动画中经常使用，比如blend shape），用一些关键帧（Keyframes）插值得到中间的结果等。</p>
+<h3 id="数字化人体表示模型"><a href="#数字化人体表示模型" class="headerlink" title="数字化人体表示模型"></a><strong>数字化人体表示模型</strong></h3><h3 id="SMPL"><a href="#SMPL" class="headerlink" title="SMPL"></a>SMPL</h3><p>(A Skinned Multi-Person Linear Model)</p>
+<h3 id="SMPL-H"><a href="#SMPL-H" class="headerlink" title="SMPL-H"></a>SMPL-H</h3><h3 id="SMPL-X"><a href="#SMPL-X" class="headerlink" title="SMPL-X"></a>SMPL-X</h3><p>SMPL-X (SMPL expressive)是针对SMPL模型的优化，增加了面部表情、手势姿态、脚的姿态以及人的性别，改进人体重建的3D细节。</p>
+<p>Expressive Body Capture: 3D Hands, Face, and Body from a Single Image</p>
+<p><a href="https://link.zhihu.com/?target=https://smpl-x.is.tue.mpg.de/">https://smpl-x.is.tue.mpg.de/smpl-x.is.tue.mpg.de</a></p>
+<p>有代码，实测可运行：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/vchoutas/smplx">vchoutas&#x2F;smplxgithub.com<img src="/2020/01/03/CV_3D/CV-3D-BuildModel/v2-adeb01c5732699d3e0c2a26d1649b5fc_ipico.jpg" alt="图标"></a></p>
+<h3 id="Frank"><a href="#Frank" class="headerlink" title="Frank"></a>Frank</h3><p>Total Capture 2018 论文</p>
+<h3 id="LBS（Linear-Blend-Skinning）"><a href="#LBS（Linear-Blend-Skinning）" class="headerlink" title="LBS（Linear Blend Skinning）"></a>LBS（Linear Blend Skinning）</h3><p>中文名称：线性混合蒙皮</p>
+<h3 id="DQBS-Dual-Quaternion-Blend-Skinning"><a href="#DQBS-Dual-Quaternion-Blend-Skinning" class="headerlink" title="DQBS(Dual Quaternion Blend Skinning)"></a>DQBS(Dual Quaternion Blend Skinning)</h3><p>中文名称：双四元数蒙皮</p>
+<h3 id="2005-SCAPE-Shape-Completion-and-Animation-of-People"><a href="#2005-SCAPE-Shape-Completion-and-Animation-of-People" class="headerlink" title="[2005] SCAPE(Shape Completion and Animation of People)"></a>[2005] SCAPE(Shape Completion and Animation of People)</h3><p>官网：<a target="_blank" rel="noopener" href="https://ai.stanford.edu/~drago/Projects/scape/scape.html">https://ai.stanford.edu/~drago/Projects/scape/scape.html</a></p>
+<p><img src="/2020/01/03/CV_3D/CV-3D-BuildModel/1579226914959.png" alt="1579226914959"></p>
+<p>我们介绍了一种数据驱动的方法来构建涵盖对象形状和姿势变化的人体形状模型。该方法基于结合了关节变形和非刚性变形的表示。我们学习了一个<em><strong>姿态变形模型</strong></em>，该<em>模型</em>可以根据关节骨骼的姿态导出非刚性表面变形。我们还学习了基于<em>体形</em>的单独的变异模型。当两个模型都没有出现在训练集中时，可以将我们的两个模型结合起来以产生具有不同姿势的逼真的肌肉变形的3D表面模型。我们展示了如何将模型用于<em>完成形状</em>   -在指定目标形状的一组有限标记的情况下，生成完整的表面网格。我们介绍了形状完成在部分视图完成和运动捕捉动画中的应用。尤其是，我们的方法能够仅通过对单个移动物体进行一次静态扫描就可以构造出具有真实肌肉变形的移动物体的高质量动画表面模型。 </p>
+<h3 id="Implicit-Skinning"><a href="#Implicit-Skinning" class="headerlink" title="Implicit Skinning"></a>Implicit Skinning</h3><h2 id="神经网络3D建模"><a href="#神经网络3D建模" class="headerlink" title="神经网络3D建模"></a>神经网络3D建模</h2><p>[TOC]</p>
+<table>
+<thead>
+<tr>
+<th>3D 人体建模</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>HumanMesh Recovery</td>
+<td>CVPR 2018</td>
+<td></td>
+</tr>
+<tr>
+<td>HumanMeshNet</td>
+<td>2019</td>
+<td></td>
+</tr>
+<tr>
+<td>HMR</td>
+<td>ICCV2019</td>
+<td></td>
+</tr>
+<tr>
+<td>Chained Representation Cycling</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>SPIN(SMPL OPtimization IN the loop)</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="Human-Mesh-Recovery-CVPR2018"><a href="#Human-Mesh-Recovery-CVPR2018" class="headerlink" title="Human Mesh Recovery CVPR2018"></a>Human Mesh Recovery CVPR2018</h3><p>End-to-end Recovery of Human Shape and Pose</p>
+<p>Human Mesh Recovery（HMR）, 从单张彩色图片中恢复出3D 人体网格（包括人体形状和关节角度）</p>
+<p><img src="/2020/01/03/CV_3D/CV-3D-BuildModel/1579243110376.png" alt="1579243110376"></p>
+<p><img src="/2020/01/03/CV_3D/CV-3D-BuildModel/1579243115045.png" alt="1579243115045"></p>
+<h3 id="HMR-ICCV2019"><a href="#HMR-ICCV2019" class="headerlink" title="HMR-ICCV2019"></a>HMR-ICCV2019</h3><p><strong>标题：</strong><Human mesh recovery from monocular images via a skeleton-disentangled representation></Human></p>
+<p><strong>下载：</strong> <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1908.07172v2.pdf">https://arxiv.org/pdf/1908.07172v2.pdf</a> </p>
+<p><strong>Code:</strong> <a target="_blank" rel="noopener" href="https://github.com/Arthur151/DSD-SATN">https://github.com/Arthur151/DSD-SATN</a></p>
+<p>**简介：**本文描述了一种从单目图像和单目视频中恢复三维人体网格的端到端方法</p>
+<h3 id="HumanMeshNet"><a href="#HumanMeshNet" class="headerlink" title="HumanMeshNet"></a>HumanMeshNet</h3><p>2019 Aug</p>
+<p>印度 iiit，国际信息技术研究所</p>
+<p>单目图像三维人体建模</p>
+<p><img src="/2020/01/03/CV_3D/CV-3D-BuildModel/1579228511503.png" alt="1579228511503"></p>
+<p><a target="_blank" rel="noopener" href="https://www.semanticscholar.org/paper/HumanMeshNet%3A-Polygonal-Mesh-Recovery-of-Humans-Venkat-Patel/032d3d6a83e8bb7635037814c879c9ec9a6e7ddb">semantic cholar</a></p>
+<p><img src="/2020/01/03/CV_3D/CV-3D-BuildModel/1579227847960.png" alt="1579227847960"></p>
+<h3 id="Chained-Representation-Cycling"><a href="#Chained-Representation-Cycling" class="headerlink" title="Chained Representation Cycling"></a>Chained Representation Cycling</h3><p>苏黎世理工学院</p>
+<p>一种新的图片转换3D模型的方法</p>
+<p>2001.01613 [Chained Representation Cycling]Learning to Estimate 3D Human Pose and Shape by Cycling Between Representations.pdf</p>
+<p><img src="/2020/01/03/CV_3D/CV-3D-BuildModel/1579228149537.png" alt="1579228149537"></p>
+<h3 id="SPIN"><a href="#SPIN" class="headerlink" title="SPIN"></a>SPIN</h3><p>(SMPL OPtimization IN the loop）</p>
+<p><strong>标题：</strong>&lt;Learning to Reconstruct 3D Human Pose and Shape via Model-fitting in the Loop&gt; ICCV2019</p>
+<p><strong>下载地址：<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1909.12828v1.pdf">https://arxiv.org/pdf/1909.12828v1.pdf</a></strong></p>
+<p><strong>Code：<a target="_blank" rel="noopener" href="https://github.com/nkolot/SPIN">https://github.com/nkolot/SPIN</a></strong></p>
+<p>**简介：**把optimization and regression做了一个结合：</p>
+<p><img src="file:///C:\Users\admin\AppData\Local\Temp\ksohtml88988\wps1.jpg" alt="img"> </p>
+<p><strong>技术流程：</strong></p>
+<p><img src="file:///C:\Users\admin\AppData\Local\Temp\ksohtml88988\wps2.jpg" alt="img"> </p>
+<h3 id="Neal-body-fitting"><a href="#Neal-body-fitting" class="headerlink" title="Neal body fitting"></a>Neal body fitting</h3><p>基于SMPL</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/mohomran/neural_body_fitting">https://github.com/mohomran/neural_body_fitting</a></p>
+<p><img src="/2020/01/03/CV_3D/CV-3D-BuildModel/1579252060836.png" alt="1579252060836"></p>
+<h2 id="知名机构"><a href="#知名机构" class="headerlink" title="知名机构"></a>知名机构</h2><p>Alicevision  <a target="_blank" rel="noopener" href="https://alicevision.org/#contributing">https://alicevision.org/#contributing</a></p>
+<p>欧盟Horizon 2020研究与创新计划的资助</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">2010年，[IMAGINE](http://imagine.enpc.fr/)研究团队（[巴黎理工学院](http://www.enpc.fr/en)与[法国](http://www.enpc.fr/en)[科学技术中心](http://international.cstb.fr/)联合研究小组）与Mikros Image围绕Pierre Moulon的论文建立了伙伴关系，由学术方面的Renaud Marlet和Pascal Monasse以及Benoit Maujean负责工业方面。2013年，他们发布了一个名为openMVG（“多视图几何”）的开源SfM管道，为创建[哑光绘画](https://en.wikipedia.org/wiki/Matte_painting)的视觉效果提供了更好的解决方案的基础。</span><br><span class="line"></span><br><span class="line">2009年，CTU的CMP研究团队在Tomas Pajdla的指导下开始了Michal Jancosek的博士学位论文。他们在2012年发布了其MVS管道CMPMVS的Windows二进制文件。</span><br><span class="line"></span><br><span class="line">2009年，INPT，INRIA和Duran Duboi启动了法国ANR项目，以基于自然特征和名为CCTag的新标记设计创建基于模型的相机跟踪解决方案。</span><br><span class="line"></span><br><span class="line">2015年，Simula，INTT和Mikros Image共同参与了欧盟[POPART](http://www.popartproject.eu/)项目，以创建Previz系统。2017年，CTU加入了欧盟项目[LADIO中](http://www.ladioproject.eu/)的团队，创建了一个中央枢纽，可对在[现场](http://www.ladioproject.eu/)生成的所有数据进行结构化访问。</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/3D-Body/" rel="tag"># 3D Body</a>
+              <a href="/tags/SMPL/" rel="tag"># SMPL</a>
+              <a href="/tags/SCAPE/" rel="tag"># SCAPE</a>
+              <a href="/tags/LBS/" rel="tag"># LBS</a>
+              <a href="/tags/DQBS/" rel="tag"># DQBS</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/01/02/Paper/Paper-CV-FPN/" rel="prev" title="Paper_CV_FPN">
+      <i class="fa fa-chevron-left"></i> Paper_CV_FPN
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/01/03/CV/CV-Algorithm-SIFT/" rel="next" title="CV_Algorithm_SIFT">
+      CV_Algorithm_SIFT <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#3D%E5%BB%BA%E6%A8%A1"><span class="nav-number">1.</span> <span class="nav-text">3D建模</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E8%A7%86%E8%A7%92%E5%87%A0%E4%BD%95%E9%87%8D%E5%BB%BA"><span class="nav-number">2.</span> <span class="nav-text">多视角几何重建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E6%96%B9%E6%B3%95%E9%A2%84%E6%B5%8B%E6%88%96%E7%94%9F%E6%88%903D%E7%BD%91%E6%A0%BC"><span class="nav-number">3.</span> <span class="nav-text">模型方法预测或生成3D网格</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E5%AD%97%E5%8C%96%E4%BA%BA%E4%BD%93%E8%A1%A8%E7%A4%BA%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.1.</span> <span class="nav-text">数字化人体表示模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SMPL"><span class="nav-number">3.2.</span> <span class="nav-text">SMPL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SMPL-H"><span class="nav-number">3.3.</span> <span class="nav-text">SMPL-H</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SMPL-X"><span class="nav-number">3.4.</span> <span class="nav-text">SMPL-X</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Frank"><span class="nav-number">3.5.</span> <span class="nav-text">Frank</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LBS%EF%BC%88Linear-Blend-Skinning%EF%BC%89"><span class="nav-number">3.6.</span> <span class="nav-text">LBS（Linear Blend Skinning）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DQBS-Dual-Quaternion-Blend-Skinning"><span class="nav-number">3.7.</span> <span class="nav-text">DQBS(Dual Quaternion Blend Skinning)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2005-SCAPE-Shape-Completion-and-Animation-of-People"><span class="nav-number">3.8.</span> <span class="nav-text">[2005] SCAPE(Shape Completion and Animation of People)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Implicit-Skinning"><span class="nav-number">3.9.</span> <span class="nav-text">Implicit Skinning</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C3D%E5%BB%BA%E6%A8%A1"><span class="nav-number">4.</span> <span class="nav-text">神经网络3D建模</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Human-Mesh-Recovery-CVPR2018"><span class="nav-number">4.1.</span> <span class="nav-text">Human Mesh Recovery CVPR2018</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HMR-ICCV2019"><span class="nav-number">4.2.</span> <span class="nav-text">HMR-ICCV2019</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HumanMeshNet"><span class="nav-number">4.3.</span> <span class="nav-text">HumanMeshNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Chained-Representation-Cycling"><span class="nav-number">4.4.</span> <span class="nav-text">Chained Representation Cycling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SPIN"><span class="nav-number">4.5.</span> <span class="nav-text">SPIN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Neal-body-fitting"><span class="nav-number">4.6.</span> <span class="nav-text">Neal body fitting</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9F%A5%E5%90%8D%E6%9C%BA%E6%9E%84"><span class="nav-number">5.</span> <span class="nav-text">知名机构</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

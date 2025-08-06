@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="[toc] CP-VTON1807.07688 https:&#x2F;&#x2F;github.com&#x2F;sergeywong&#x2F;cp-vton  解决了在真实的虚拟试穿情况下面临的在大空间变形时的服装细节的保留问题。 通过GMM模块整合了全学习的TPS，用来获得更健壮和更强大的对齐图像。 在给定对齐图像的基础上，通过Try-On模块来动态合并渲染结果与变形结果。 CP-VTON网络的性能已经在Han等人收集的数据集上">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Paper-CV+CP-VTON">
+<meta property="og:url" content="https://novav.github.io/2019/11/11/CV/CV_VTON/Paper-CV+CP-VTON/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="[toc] CP-VTON1807.07688 https:&#x2F;&#x2F;github.com&#x2F;sergeywong&#x2F;cp-vton  解决了在真实的虚拟试穿情况下面临的在大空间变形时的服装细节的保留问题。 通过GMM模块整合了全学习的TPS，用来获得更健壮和更强大的对齐图像。 在给定对齐图像的基础上，通过Try-On模块来动态合并渲染结果与变形结果。 CP-VTON网络的性能已经在Han等人收集的数据集上">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2019/11/11/CV/CV_VTON/Paper-CV+CP-VTON/1573474568644.png">
+<meta property="og:image" content="https://novav.github.io/2019/11/11/CV/CV_VTON/Paper-CV+CP-VTON/1573810852348.png">
+<meta property="og:image" content="https://novav.github.io/2019/11/11/CV/CV_VTON/Paper-CV+CP-VTON/1573810017024.png">
+<meta property="og:image" content="https://novav.github.io/2019/11/11/CV/CV_VTON/Paper-CV+CP-VTON/1573784884416.png">
+<meta property="article:published_time" content="2019-11-11T15:40:47.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:38.297Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="VTON">
+<meta property="article:tag" content="CP-VTON">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2019/11/11/CV/CV_VTON/Paper-CV+CP-VTON/1573474568644.png">
+
+<link rel="canonical" href="https://novav.github.io/2019/11/11/CV/CV_VTON/Paper-CV+CP-VTON/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Paper-CV+CP-VTON | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2019/11/11/CV/CV_VTON/Paper-CV+CP-VTON/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Paper-CV+CP-VTON
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-11-11 15:40:47" itemprop="dateCreated datePublished" datetime="2019-11-11T15:40:47+00:00">2019-11-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV-Apply/" itemprop="url" rel="index"><span itemprop="name">CV_Apply</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV-Apply/VTON/" itemprop="url" rel="index"><span itemprop="name">VTON</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>[toc]</p>
+<h2 id="CP-VTON"><a href="#CP-VTON" class="headerlink" title="CP-VTON"></a>CP-VTON</h2><p>1807.07688</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/sergeywong/cp-vton">https://github.com/sergeywong/cp-vton</a></p>
+<ul>
+<li>解决了在真实的虚拟试穿情况下面临的在大空间变形时的服装细节的保留问题。</li>
+<li>通过GMM模块整合了全学习的TPS，用来获得更健壮和更强大的对齐图像。</li>
+<li>在给定对齐图像的基础上，通过Try-On模块来动态合并渲染结果与变形结果。</li>
+<li>CP-VTON网络的性能已经在Han等人收集的数据集上进行了证明。</li>
+</ul>
+<h2 id="Motivation："><a href="#Motivation：" class="headerlink" title="Motivation："></a>Motivation：</h2><p>“在保留目标服装细节的情况下将服装转换为适合目标人物的体型”</p>
+<ul>
+<li><p>几何匹配模块GMM，将目标服装转换为适合目标人物体型的形状</p>
+</li>
+<li><p>Try-On模块将变形后的服装与人物整合并渲染整合后的图像</p>
+</li>
+</ul>
+<h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h2><p>alignment Network 对齐网络</p>
+<p>a single pass generative framework 单通道生成框架</p>
+<p><img src="/2019/11/11/CV/CV_VTON/Paper-CV+CP-VTON/1573474568644.png" alt="1573474568644"></p>
+<h3 id="GMM模型-几何匹配模块"><a href="#GMM模型-几何匹配模块" class="headerlink" title="GMM模型 几何匹配模块"></a>GMM模型 几何匹配模块</h3><p>Geometric Matching Moduel</p>
+<p><strong>extracting network:</strong></p>
+<ul>
+<li><p><input checked disabled type="checkbox"> 
+IN_cloth-agnostic_person [h, w, 22]  (64, 128, 256, 512, 512 )</p>
+</li>
+<li><p><input checked disabled type="checkbox"> 
+IN_in_shop_cloth [h, w, 3]  (64, 128, 256, 512, 512 )</p>
+</li>
+</ul>
+<p><strong>correlation Matching:</strong></p>
+<ul>
+<li><input disabled type="checkbox"> 矩阵变换</li>
+</ul>
+<p><strong>regression network:</strong></p>
+<ul>
+<li><input checked disabled type="checkbox"> CNN (512, 256, 128, 64 )</li>
+</ul>
+<p><strong>TPS transformation:</strong></p>
+<ul>
+<li><input disabled type="checkbox"> TPS 理解</li>
+</ul>
+<p><strong>LOSS</strong></p>
+<ul>
+<li><input checked disabled type="checkbox"> l1_loss</li>
+</ul>
+<p><strong>生成文件</strong></p>
+<ul>
+<li>warped_cloth</li>
+<li>warped_mask</li>
+</ul>
+<p><img src="/2019/11/11/CV/CV_VTON/Paper-CV+CP-VTON/1573810852348.png" alt="1573810852348"></p>
+<h3 id="Tron-ON-Model"><a href="#Tron-ON-Model" class="headerlink" title="Tron-ON Model"></a>Tron-ON Model</h3><p><strong>GAN:</strong></p>
+<ul>
+<li><input checked disabled type="checkbox"> 12-layer UNet（输出Render 和 composite）</li>
+</ul>
+<p><strong>MaskComposition:</strong></p>
+<ul>
+<li><input checked disabled type="checkbox"> Mask Composition 实现：直接使用 cloth * m_composite + p_rendered * (1 - m_composite)</li>
+</ul>
+<p><strong>LOSS</strong></p>
+<ul>
+<li><input checked disabled type="checkbox"> L1loss_tryon_im</li>
+<li><input checked disabled type="checkbox"> Lvgg_tryon_im</li>
+<li><input checked disabled type="checkbox"> L1loss_composition</li>
+</ul>
+<p>训练时的Vision</p>
+<p><img src="/2019/11/11/CV/CV_VTON/Paper-CV+CP-VTON/1573810017024.png" alt="1573810017024"></p>
+<h2 id="数据转换"><a href="#数据转换" class="headerlink" title="数据转换"></a>数据转换</h2><h4 id="原始数据及格式："><a href="#原始数据及格式：" class="headerlink" title="原始数据及格式："></a>原始数据及格式：</h4><p>image</p>
+<p>image_parse</p>
+<p>warped_img 【处理image_parse数据二次处理后得到】</p>
+<p>Pose【通过OpenPose对refer image处理得到 keypoint文件，二次处理】</p>
+<p>Cloth</p>
+<p>Cloth-Mask</p>
+<p><img src="/2019/11/11/CV/CV_VTON/Paper-CV+CP-VTON/1573784884416.png" alt="1573784884416"></p>
+<h4 id="转换后数据格式："><a href="#转换后数据格式：" class="headerlink" title="转换后数据格式："></a>转换后数据格式：</h4><p>cloth-<strong>agnostic</strong>_person（22通道）：</p>
+<ul>
+<li>Pose heatmap: an 18-channel 每个通道对应一个人体姿势关键点（绘制为11×1111×11的白色矩形）。</li>
+<li>Body shape: a 1-channel  一个1通道的 blurred binary mask 特征图，能够粗糙地包括人体的不同部位。</li>
+<li>Reserved regions: an RGB image 一个包括面部和头发的RGB图像，用来维持人物身份（保证生成的是同一个人）。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">shape 	 &lt;- image-parse</span><br><span class="line">im_h 	 &lt;- [Regions Part]</span><br><span class="line">pose_map &lt;- [_keypoints.json]</span><br><span class="line"></span><br><span class="line">agnostic =  [shape,  im_h, pose_map]</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="数据转换-难点理解："><a href="#数据转换-难点理解：" class="headerlink" title="数据转换-难点理解："></a>数据转换-难点理解：</h2><h3 id="0、VITON"><a href="#0、VITON" class="headerlink" title="0、VITON"></a>0、VITON</h3><p>解析VITON数据集合得到的数据有：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#x27;viton_train_pairs.txt&#x27;: imname, cloth_name</span><br><span class="line">women_top/             ===&gt; cloth</span><br><span class="line">women_top/ +double + imfill + medfilt2 ===&gt; cloth-mask</span><br><span class="line">women_top/			   ===&gt; image</span><br><span class="line">/VITON/segment/ + cmap ===&gt; image-parse</span><br><span class="line">/VITON/pose/pkl 		   ===&gt; pose</span><br></pre></td></tr></table></figure>
+
+<p>human_colormap.mat 数据集</p>
+<h3 id="1、keypoints文件生成"><a href="#1、keypoints文件生成" class="headerlink" title="1、keypoints文件生成"></a>1、keypoints文件生成</h3><p>首先原始数据取自VITON</p>
+<p>CP-VTON use the json format for pose info as generated by <a target="_blank" rel="noopener" href="https://github.com/CMU-Perceptual-Computing-Lab/openpose">OpenPose</a>.</p>
+<p>我们使用[OpenPose](<a target="_blank" rel="noopener" href="https://github.com/cmu-computing">https://github.com/cmu-computing</a> - lab&#x2F;openpose)生成json格式的pose信息。</p>
+<h3 id="2、Image-Parse文件生成"><a href="#2、Image-Parse文件生成" class="headerlink" title="2、Image-Parse文件生成"></a>2、Image-Parse文件生成</h3><ul>
+<li>LIP-SSL得到.mat文件， 保存到&#x2F;VITON&#x2F;segment&#x2F;</li>
+<li>转换VITON的<strong>human_colormap.mat</strong>文件得到</li>
+</ul>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">image_parse</span><span class="params">()</span></span></span><br><span class="line">        source_root_dir = <span class="string">&#x27;F:/BaiduNetdiskDownload/viton_resize/train&#x27;</span>;</span><br><span class="line">        iname = <span class="string">&#x27;000003_0.jpg&#x27;</span>;</span><br><span class="line">        cname = <span class="string">&#x27;000003_1.jpg&#x27;</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">% generate parsing result</span></span><br><span class="line">		im = imread([source_root_dir <span class="string">&#x27;/&#x27;</span> <span class="string">&#x27;women_top/&#x27;</span> imname]);</span><br><span class="line">		h = <span class="built_in">size</span>(im,<span class="number">1</span>);</span><br><span class="line">		w = <span class="built_in">size</span>(im,<span class="number">2</span>);</span><br><span class="line">        s_name = strrep(imname,<span class="string">&#x27;.jpg&#x27;</span>,<span class="string">&#x27;.mat&#x27;</span>);</span><br><span class="line">        segment = importdata([source_root_dir <span class="string">&#x27;/&#x27;</span> <span class="string">&#x27;segment/&#x27;</span> s_name]);</span><br><span class="line">		segment = segment&#x27;;</span><br><span class="line">		</span><br><span class="line">		# 图片裁剪</span><br><span class="line">	    <span class="keyword">if</span> h &gt; w</span><br><span class="line">	        segment = segment(:,<span class="number">1</span>:int32(<span class="number">641.0</span>*w/h));</span><br><span class="line">	    <span class="keyword">else</span></span><br><span class="line">	        segment = segment(<span class="number">1</span>:int32(<span class="number">641.8</span>*h/w),:);</span><br><span class="line">	    <span class="keyword">end</span></span><br><span class="line">	    segment = imresize(segment, [h,w], <span class="string">&#x27;nearest&#x27;</span>);</span><br><span class="line">        </span><br><span class="line">        segment = imresize(segment, [fine_height, fine_width], <span class="string">&#x27;nearest&#x27;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">% save parsing result</span></span><br><span class="line">	    segment = uint8(segment);</span><br><span class="line">	    pname = strrep(imname, <span class="string">&#x27;.jpg&#x27;</span>, <span class="string">&#x27;.png&#x27;</span>);</span><br><span class="line">	    imwrite(segment,cmap,[target_root_dir <span class="string">&#x27;/&#x27;</span> mode <span class="string">&#x27;/image-parse/&#x27;</span> pname]);</span><br><span class="line"><span class="keyword">end</span>        </span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3、Cloth-Mask文件生成"><a href="#3、Cloth-Mask文件生成" class="headerlink" title="3、Cloth-Mask文件生成"></a>3、Cloth-Mask文件生成</h3><p>cloth 文件生成</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">conver_data</span><span class="params">()</span></span></span><br><span class="line">    source_root_dir = <span class="string">&#x27;F:/BaiduNetdiskDownload/viton_resize/train&#x27;</span>;</span><br><span class="line">    cname = <span class="string">&#x27;000003_1.jpg&#x27;</span>;</span><br><span class="line">    target_root_dir = <span class="string">&#x27;F:/BaiduNetdiskDownload/viton_resize_qs/train&#x27;</span>;</span><br><span class="line">    im_c = imread([source_root_dir <span class="string">&#x27;/&#x27;</span> <span class="string">&#x27;cloth/&#x27;</span> cname]);</span><br><span class="line">    <span class="comment">% save cloth mask</span></span><br><span class="line">    mask = double((im_c(:,:,<span class="number">1</span>) &lt;= <span class="number">250</span>) &amp; (im_c(:,:,<span class="number">2</span>) &lt;= <span class="number">250</span>) &amp; (im_c(:,:,<span class="number">3</span>) &lt;= <span class="number">250</span>));</span><br><span class="line">    mask = imfill(mask);</span><br><span class="line">    mask = medfilt2(mask);</span><br><span class="line">    imwrite(mask, [target_root_dir <span class="string">&#x27;/cloth-mask/&#x27;</span> cname]);</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4、Body-shape裁剪-训练时转换"><a href="#4、Body-shape裁剪-训练时转换" class="headerlink" title="4、Body shape裁剪 [训练时转换]"></a>4、Body shape裁剪 [训练时转换]</h3><h3 id="5、保留区域的转换-训练时转换"><a href="#5、保留区域的转换-训练时转换" class="headerlink" title="5、保留区域的转换 [训练时转换]"></a>5、保留区域的转换 [训练时转换]</h3><h3 id="6、Pose-heatmap-生成"><a href="#6、Pose-heatmap-生成" class="headerlink" title="6、Pose heatmap 生成"></a>6、Pose heatmap 生成</h3><p>ViTON-  采用OpenPose开源库，直接从源文件img生成。</p>
+<h2 id="Reference："><a href="#Reference：" class="headerlink" title="Reference："></a>Reference：</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/aldy56/p/9956160.html">论文笔记MG-VTON</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/VTON/" rel="tag"># VTON</a>
+              <a href="/tags/CP-VTON/" rel="tag"># CP-VTON</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/11/11/CV/CV_VTON/Paper-CV+VTON/" rel="prev" title="Paper-CV+VTON">
+      <i class="fa fa-chevron-left"></i> Paper-CV+VTON
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/11/11/Paper/Paper-CV-Dataset/" rel="next" title="Paper-CV_Human Parsing Dataset">
+      Paper-CV_Human Parsing Dataset <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CP-VTON"><span class="nav-number">1.</span> <span class="nav-text">CP-VTON</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Motivation%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">Motivation：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84"><span class="nav-number">3.</span> <span class="nav-text">架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GMM%E6%A8%A1%E5%9E%8B-%E5%87%A0%E4%BD%95%E5%8C%B9%E9%85%8D%E6%A8%A1%E5%9D%97"><span class="nav-number">3.1.</span> <span class="nav-text">GMM模型 几何匹配模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tron-ON-Model"><span class="nav-number">3.2.</span> <span class="nav-text">Tron-ON Model</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E8%BD%AC%E6%8D%A2"><span class="nav-number">4.</span> <span class="nav-text">数据转换</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8E%9F%E5%A7%8B%E6%95%B0%E6%8D%AE%E5%8F%8A%E6%A0%BC%E5%BC%8F%EF%BC%9A"><span class="nav-number">4.0.1.</span> <span class="nav-text">原始数据及格式：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BD%AC%E6%8D%A2%E5%90%8E%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%EF%BC%9A"><span class="nav-number">4.0.2.</span> <span class="nav-text">转换后数据格式：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E8%BD%AC%E6%8D%A2-%E9%9A%BE%E7%82%B9%E7%90%86%E8%A7%A3%EF%BC%9A"><span class="nav-number">5.</span> <span class="nav-text">数据转换-难点理解：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0%E3%80%81VITON"><span class="nav-number">5.1.</span> <span class="nav-text">0、VITON</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81keypoints%E6%96%87%E4%BB%B6%E7%94%9F%E6%88%90"><span class="nav-number">5.2.</span> <span class="nav-text">1、keypoints文件生成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81Image-Parse%E6%96%87%E4%BB%B6%E7%94%9F%E6%88%90"><span class="nav-number">5.3.</span> <span class="nav-text">2、Image-Parse文件生成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81Cloth-Mask%E6%96%87%E4%BB%B6%E7%94%9F%E6%88%90"><span class="nav-number">5.4.</span> <span class="nav-text">3、Cloth-Mask文件生成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81Body-shape%E8%A3%81%E5%89%AA-%E8%AE%AD%E7%BB%83%E6%97%B6%E8%BD%AC%E6%8D%A2"><span class="nav-number">5.5.</span> <span class="nav-text">4、Body shape裁剪 [训练时转换]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E3%80%81%E4%BF%9D%E7%95%99%E5%8C%BA%E5%9F%9F%E7%9A%84%E8%BD%AC%E6%8D%A2-%E8%AE%AD%E7%BB%83%E6%97%B6%E8%BD%AC%E6%8D%A2"><span class="nav-number">5.6.</span> <span class="nav-text">5、保留区域的转换 [训练时转换]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6%E3%80%81Pose-heatmap-%E7%94%9F%E6%88%90"><span class="nav-number">5.7.</span> <span class="nav-text">6、Pose heatmap 生成</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference%EF%BC%9A"><span class="nav-number">6.</span> <span class="nav-text">Reference：</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="TVM [TOC] 训练框架从训练框架角度来看，Google的TensorFlow和FaceBook的Pytorch是全球主流的深度学习框架，另外亚马逊的MxNet，百度的Paddle，旷视的MegEngine，华为的Mindspore以及一流科技的OneFlow也逐渐在被更多人接受和使用。这么多训练框架，我们究竟应该选择哪个？如果追求易用性，可能你会选择Pytorch，如果追求项目部署落地，可能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深度学习编译器之TVM">
+<meta property="og:url" content="https://novav.github.io/2022/04/12/Sub_Language/DL_Platform/TVM/TVM/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="TVM [TOC] 训练框架从训练框架角度来看，Google的TensorFlow和FaceBook的Pytorch是全球主流的深度学习框架，另外亚马逊的MxNet，百度的Paddle，旷视的MegEngine，华为的Mindspore以及一流科技的OneFlow也逐渐在被更多人接受和使用。这么多训练框架，我们究竟应该选择哪个？如果追求易用性，可能你会选择Pytorch，如果追求项目部署落地，可能">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2022/04/12/Sub_Language/DL_Platform/TVM/TVM/54fbb2fb43166d22a12b5dc9c69c44fe9152d25c.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/12/Sub_Language/DL_Platform/TVM/TVM/9e3df8dcd100baa115126dbec7aff41bc9fc2ec5.png">
+<meta property="og:image" content="https://novav.github.io/2022/04/12/Sub_Language/DL_Platform/TVM/TVM/7c1ed21b0ef41bd5e9aa1929d165ccc23bdb3dbe.png">
+<meta property="article:published_time" content="2022-04-12T12:09:29.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:40.536Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="TVM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2022/04/12/Sub_Language/DL_Platform/TVM/TVM/54fbb2fb43166d22a12b5dc9c69c44fe9152d25c.png">
+
+<link rel="canonical" href="https://novav.github.io/2022/04/12/Sub_Language/DL_Platform/TVM/TVM/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>深度学习编译器之TVM | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2022/04/12/Sub_Language/DL_Platform/TVM/TVM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          深度学习编译器之TVM
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-04-12 12:09:29" itemprop="dateCreated datePublished" datetime="2022-04-12T12:09:29+00:00">2022-04-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:40" itemprop="dateModified" datetime="2025-08-06T08:16:40+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/deploy/" itemprop="url" rel="index"><span itemprop="name">deploy</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/deploy/TVM/" itemprop="url" rel="index"><span itemprop="name">TVM</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>TVM</p>
+<p>[TOC]</p>
+<h2 id="训练框架"><a href="#训练框架" class="headerlink" title="训练框架"></a>训练框架</h2><p>从训练框架角度来看，Google的TensorFlow和FaceBook的Pytorch是全球主流的深度学习框架，另外亚马逊的MxNet，百度的Paddle，旷视的MegEngine，华为的Mindspore以及一流科技的OneFlow也逐渐在被更多人接受和使用。这么多训练框架，我们究竟应该选择哪个？如果追求易用性，可能你会选择Pytorch，如果追求项目部署落地，可能你会选择TensorFlow，如果追求分布式训练最快可能你会体验OneFlow。</p>
+<p>亚马逊的MxNet，</p>
+<p>百度的Paddle，</p>
+<p>旷视的MegEngine，</p>
+<p>华为的Mindspore</p>
+<p>ModelScope：阿里达摩院联手中国计算机学会（CCF）</p>
+<h2 id="推理框架"><a href="#推理框架" class="headerlink" title="推理框架"></a>推理框架</h2><p>前向推理框架，例如在Intel的CPU&#x2F;GPU上就使用OpenVINO，在Arm的CPU&#x2F;GPU上使用NCNN&#x2F;MNN等，在Nvidia GPU上使用TensorRT。</p>
+<p>科学家为编译器抽象出了编译器前端，编译器中端，编译器后端等概念，并引入IR (Intermediate Representation)的概率。解释如下：</p>
+<ul>
+<li>编译器前端：接收C&#x2F;C++&#x2F;Java等不同语言，进行代码生成，吐出IR</li>
+<li>编译器中端：接收IR，进行不同编译器后端可以共享的优化，如常量替换，死代码消除，循环优化等，吐出优化后的IR</li>
+<li>编译器后端：接收优化后的IR，进行不同硬件的平台相关优化与硬件指令生成，吐出目标文件以LLVM编译器为例子，借用蓝色（知乎ID）大佬的图：</li>
+</ul>
+<p><img src="/2022/04/12/Sub_Language/DL_Platform/TVM/TVM/54fbb2fb43166d22a12b5dc9c69c44fe9152d25c.png" alt="img"></p>
+<p>深度学习的IR其实就是计算图，所以可以直接叫作<strong>Graph IR</strong></p>
+<p><img src="/2022/04/12/Sub_Language/DL_Platform/TVM/TVM/9e3df8dcd100baa115126dbec7aff41bc9fc2ec5.png" alt="img"></p>
+<p>基于上面深度学习编译器的思想，陈天奇领衔的TVM横空出世。TVM就是一个基于编译优化的深度学习推理框架（暂且说是推理吧，训练功能似乎也开始探索和接入了），我们来看一下TVM的架构图。</p>
+<p><img src="/2022/04/12/Sub_Language/DL_Platform/TVM/TVM/7c1ed21b0ef41bd5e9aa1929d165ccc23bdb3dbe.png" alt="img"></p>
+<p>TVM架构图从这个图中我们可以看到，TVM架构的核心部分就是<strong>NNVM编译器</strong>（注意一下最新的TVM已经将NNVM升级为了Realy，所以后面提到的Relay也可以看作是NNVM）。NNVM编译器支持直接接收深度学习框架的模型，如TensorFlow&#x2F;Pytorch&#x2F;Caffe&#x2F;MxNet等，同时也支持一些模型的中间格式如ONNX、CoreML。这些模型被NNVM直接编译成Graph IR，然后这些Graph IR被再次优化，吐出优化后的Graph IR，最后对于不同的后端这些Graph IR都会被编译为特定后端可以识别的机器码完成模型推理。比如对于CPU，NNVM就吐出LLVM可以识别的IR，再通过LLVM编译器编译为机器码到CPU上执行。</p>
+<h4 id="0x04-样例展示"><a href="#0x04-样例展示" class="headerlink" title="0x04. 样例展示"></a>0x04. 样例展示</h4><p>在展示样例前说一下我的环境配置，pytorch1.7.0 &amp;&amp; TVM 0.8.dev0</p>
+<p>这里以Pytorch模型为例，展示一下TVM是如何将Pytorch模型通过Relay（可以理解为NNVM的升级版，）构建TVM中的计算图并进行图优化，最后再通过LLVM编译到Intel CPU上进行执行。最后我们还对比了一下基于TVM优化后的Relay Graph推理速度和直接使用Pytorch模型进行推理的速度。这里是以torchvision中的ResNet18为例子，结果如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Relay top-1 id: 282, classname: tiger cat       Torch top-1 id: 282, classname: tiger cat</span><br><span class="line">Relay time: 1.1846002000000027 seconds            Torch time: 2.4181047000000007 seconds</span><br></pre></td></tr></table></figure>
+
+<p>可以看到在预测结果完全一致的情况下，TVM能带来2倍左右的加速。这里简单介绍一下代码的流程。这个代码可以在这里(<a target="_blank" rel="noopener" href="https://github.com/BBuf/tvm_learn)%E6%89%BE%E5%88%B0%E3%80%82">https://github.com/BBuf/tvm_learn)找到。</a></p>
+<h5 id="0x04-1-导入TVM和Pytorch并加载ResNet18模型"><a href="#0x04-1-导入TVM和Pytorch并加载ResNet18模型" class="headerlink" title="0x04.1 导入TVM和Pytorch并加载ResNet18模型"></a>0x04.1 导入TVM和Pytorch并加载ResNet18模型</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> tvm</span><br><span class="line"><span class="keyword">from</span> tvm <span class="keyword">import</span> relay</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> tvm.contrib.download <span class="keyword">import</span> download_testdata</span><br><span class="line"><span class="comment"># PyTorch imports</span></span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torchvision</span><br><span class="line"><span class="comment">################################ Load a pretrained PyTorch model</span></span><br><span class="line"><span class="comment"># -------------------------------</span></span><br><span class="line">model_name = <span class="string">&quot;resnet18&quot;</span></span><br><span class="line">model = <span class="built_in">getattr</span>(torchvision.models, model_name)(pretrained=<span class="literal">True</span>)</span><br><span class="line">model = model.<span class="built_in">eval</span>()</span><br><span class="line"><span class="comment"># We grab the TorchScripted model via tracing</span></span><br><span class="line">input_shape = [<span class="number">1</span>, <span class="number">3</span>, <span class="number">224</span>, <span class="number">224</span>]</span><br><span class="line">input_data = torch.randn(input_shape)</span><br><span class="line">scripted_model = torch.jit.trace(model, input_data).<span class="built_in">eval</span>() </span><br><span class="line"></span><br><span class="line">需要注意的是Relay在解析Pytorch模型的时候是解析TorchScript格式的模型，所以这里使用torch.jit.trace跑一遍原始的Pytorch模型并导出TorchScript模型。</span><br></pre></td></tr></table></figure>
+
+<h5 id="0x04-2-载入测试图片"><a href="#0x04-2-载入测试图片" class="headerlink" title="0x04.2 载入测试图片"></a>0x04.2 载入测试图片</h5><p>加载一张测试图片，并执行一些后处理过程。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line">img_url = <span class="string">&quot;https://github.com/dmlc/mxnet.js/blob/main/data/cat.png?raw=true&quot;</span></span><br><span class="line">img_path = download_testdata(img_url, <span class="string">&quot;cat.png&quot;</span>, module=<span class="string">&quot;data&quot;</span>)</span><br><span class="line">img = Image.<span class="built_in">open</span>(img_path).resize((<span class="number">224</span>, <span class="number">224</span>))</span><br><span class="line"><span class="comment"># Preprocess the image and convert to tensor</span></span><br><span class="line"><span class="keyword">from</span> torchvision <span class="keyword">import</span> transforms </span><br><span class="line">my_preprocess = transforms.Compose( </span><br><span class="line">        [ transforms.Resize(<span class="number">256</span>), </span><br><span class="line">         transforms.CenterCrop(<span class="number">224</span>), </span><br><span class="line">         transforms.ToTensor(), </span><br><span class="line">         transforms.Normalize(mean=[<span class="number">0.485</span>, <span class="number">0.456</span>, <span class="number">0.406</span>], std=[<span class="number">0.229</span>, <span class="number">0.224</span>, <span class="number">0.225</span>]), ])</span><br><span class="line">img = my_preprocess(img)</span><br><span class="line"><span class="comment"># 新增Batch维度</span></span><br><span class="line">img = np.expand_dims(img, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<h5 id="0x04-3-Relay导入TorchScript模型并编译到LLVM后端"><a href="#0x04-3-Relay导入TorchScript模型并编译到LLVM后端" class="headerlink" title="0x04.3 Relay导入TorchScript模型并编译到LLVM后端"></a>0x04.3 Relay导入TorchScript模型并编译到LLVM后端</h5><p>接下来我们将PyTorch的graph导入到Relay成为Relay Graph，这里输入层的名字可以任意指定。然后将Gpath使用给定的配置编译到LLVM目标硬件上。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://baijiahao.baidu.com/s?id=1714241762167836087&wfr=spider&for=pc">「TVM系列教程一」深度学习编译器及TVM 介绍</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/TVM/" rel="tag"># TVM</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/04/12/AI/OCR/" rel="prev" title="OCR">
+      <i class="fa fa-chevron-left"></i> OCR
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/04/12/Course/AutomaticDrive/AutoDriver_06/" rel="next" title="无人驾驶（6）动态环境感知与跟踪">
+      无人驾驶（6）动态环境感知与跟踪 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%AD%E7%BB%83%E6%A1%86%E6%9E%B6"><span class="nav-number">1.</span> <span class="nav-text">训练框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A8%E7%90%86%E6%A1%86%E6%9E%B6"><span class="nav-number">2.</span> <span class="nav-text">推理框架</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#0x04-%E6%A0%B7%E4%BE%8B%E5%B1%95%E7%A4%BA"><span class="nav-number">2.0.1.</span> <span class="nav-text">0x04. 样例展示</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#0x04-1-%E5%AF%BC%E5%85%A5TVM%E5%92%8CPytorch%E5%B9%B6%E5%8A%A0%E8%BD%BDResNet18%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.0.1.1.</span> <span class="nav-text">0x04.1 导入TVM和Pytorch并加载ResNet18模型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#0x04-2-%E8%BD%BD%E5%85%A5%E6%B5%8B%E8%AF%95%E5%9B%BE%E7%89%87"><span class="nav-number">2.0.1.2.</span> <span class="nav-text">0x04.2 载入测试图片</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#0x04-3-Relay%E5%AF%BC%E5%85%A5TorchScript%E6%A8%A1%E5%9E%8B%E5%B9%B6%E7%BC%96%E8%AF%91%E5%88%B0LLVM%E5%90%8E%E7%AB%AF"><span class="nav-number">2.0.1.3.</span> <span class="nav-text">0x04.3 Relay导入TorchScript模型并编译到LLVM后端</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="[Point Set Matching&#x2F;Registration Benchmark](http:&#x2F;&#x2F;gwang-cv.github.io&#x2F;2019&#x2F;05&#x2F;01&#x2F;Point Set Matching-Registration Benchmark&#x2F;) A list of point set matching&#x2F;registration resources collecte">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Point Set Matching&#x2F;Registration Benchmark">
+<meta property="og:url" content="https://novav.github.io/2020/06/17/Graphices/Graphices-Benchmark/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="[Point Set Matching&#x2F;Registration Benchmark](http:&#x2F;&#x2F;gwang-cv.github.io&#x2F;2019&#x2F;05&#x2F;01&#x2F;Point Set Matching-Registration Benchmark&#x2F;) A list of point set matching&#x2F;registration resources collecte">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-06-17T21:24:30.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:39.952Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="Point Set">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://novav.github.io/2020/06/17/Graphices/Graphices-Benchmark/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Point Set Matching/Registration Benchmark | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2020/06/17/Graphices/Graphices-Benchmark/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Point Set Matching/Registration Benchmark
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-06-17 21:24:30" itemprop="dateCreated datePublished" datetime="2020-06-17T21:24:30+00:00">2020-06-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Graphices/" itemprop="url" rel="index"><span itemprop="name">Graphices</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Graphices/rigistration/" itemprop="url" rel="index"><span itemprop="name">rigistration</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>[Point Set Matching&#x2F;Registration Benchmark](<a target="_blank" rel="noopener" href="http://gwang-cv.github.io/2019/05/01/Point">http://gwang-cv.github.io/2019/05/01/Point</a> Set Matching-Registration Benchmark&#x2F;)</p>
+<p>A list of point set matching&#x2F;registration resources collected by <a target="_blank" rel="noopener" href="https://github.com/gwang-cv">Gang Wang</a>. If you find that important resources are not included, please feel free to contact me.</p>
+<h1 id="Point-Set-Matching-Registration-Material"><a href="#Point-Set-Matching-Registration-Material" class="headerlink" title="Point Set Matching&#x2F;Registration Material"></a>Point Set Matching&#x2F;Registration Material</h1><h3 id="POINT-SET-MATCHING-REGISTRATION-METHODS-WIKI"><a href="#POINT-SET-MATCHING-REGISTRATION-METHODS-WIKI" class="headerlink" title="POINT SET MATCHING&#x2F;REGISTRATION METHODS [WIKI]"></a>POINT SET MATCHING&#x2F;REGISTRATION METHODS [<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Point_set_registration">WIKI]</a></h3><h6 id="Point-Matching-Registration-Methods"><a href="#Point-Matching-Registration-Methods" class="headerlink" title="Point Matching&#x2F;Registration Methods"></a>Point Matching&#x2F;Registration Methods</h6><ul>
+<li>[MCT] A mathematical analysis of the motion coherence theory, IJCV’1989 [<a target="_blank" rel="noopener" href="http://www.cs.jhu.edu/~ayuille/PubsJournal/J16YuilleGrzywacz89.pdf">pdf]</a></li>
+<li>[ICP: point-to-point] Method for Registration of 3-D Shapes, Robotics-DL tentative’1992 [<a target="_blank" rel="noopener" href="http://www.cs.virginia.edu/~mjh7v/bib/Besl92.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="http://staffhome.ecm.uwa.edu.au/~00053650/code/icp.m">code]</a>[<a target="_blank" rel="noopener" href="http://www.open3d.org/docs/tutorial/Basic/icp_registration.html">code]</a> [<a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/matlabcentral/fileexchange/27804-iterative-closest-point">code]</a> [<a target="_blank" rel="noopener" href="http://ais.informatik.uni-freiburg.de/teaching/ss12/robotics/slides/17-icp.pdf">material]</a> [<a target="_blank" rel="noopener" href="http://www.sci.utah.edu/~shireen/pdfs/tutorials/Elhabian_ICP09.pdf">tutorial]</a></li>
+<li>[ICP: point-to-plane] Object modeling by registration of multiple range images, IVC’1992 [<a target="_blank" rel="noopener" href="http://graphics.stanford.edu/courses/cs348a-17-winter/Handouts/chen-medioni-align-rob91.pdf">pdf]</a></li>
+<li>[ICP] Iterative point matching for registration of free-form curves and surfaces, IJCV’1994 [<a target="_blank" rel="noopener" href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.175.770&rep=rep1&type=pdf">pdf]</a></li>
+<li>[RPM&#x2F;Softassign] New algorithms for 2d and 3d point matching: pose estimation and correspondence, PR’1998 [<a target="_blank" rel="noopener" href="http://cmp.felk.cvut.cz/~amavemig/softassign.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://www.cise.ufl.edu/~anand/students/chui/rpm/TPS-RPM.zip">code]</a></li>
+<li>[MultiviewReg] Multiview registration for large data sets, 3DDIM’1999 [<a target="_blank" rel="noopener" href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.50.2416&rep=rep1&type=pdf">pdf]</a></li>
+<li>[SC] Shape matching and object recognition using shape contexts, TPAMI’2002 [<a target="_blank" rel="noopener" href="https://apps.dtic.mil/dtic/tr/fulltext/u2/a640016.pdf">pdf]</a>[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Shape_context">wiki]</a> [<a target="_blank" rel="noopener" href="https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/shape/sc_digits.html">project]</a> [<a target="_blank" rel="noopener" href="https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/code/sc_demo/">code]</a></li>
+<li>[EM-ICP] Multi-scale EM-ICP: A Fast and Robust Approach for Surface Registration, ECCV’2002 [<a href="ftp://ftp-sop.inria.fr/epidaure/Publications/Granger/eccv-2002.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/tttamaki/cuda_emicp_softassign">code]</a></li>
+<li>[LM-ICP] Robust registration of 2D and 3D point sets, IVC’2003 [<a target="_blank" rel="noopener" href="http://luthuli.cs.uiuc.edu/~daf/courses/Opt-2019/Papers/sdarticle.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="http://research.microsoft.com/~awf/lmicp/">code]</a></li>
+<li>[TPS-RPM] A new point matching algorithm for non-rigid registration, CVIU’2003 [<a target="_blank" rel="noopener" href="http://www.cvl.iis.u-tokyo.ac.jp/class2013/2013w/paper/correspondingAndRegistration/05_RPM-TPS.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://www.cise.ufl.edu/~anand/students/chui/tps-rpm.html">project]</a> [<a target="_blank" rel="noopener" href="https://www.cise.ufl.edu/~anand/students/chui/rpm/TPS-RPM.zip">code]</a></li>
+<li>[Survey] Image registration methods: a survey, IVC’2003 [<a target="_blank" rel="noopener" href="https://www.researchgate.net/profile/Jan_Flusser/publication/222648347_Image_Registration_Methods_A_Survey/links/5ba9f31c92851ca9ed238b48/Image-Registration-Methods-A-Survey.pdf">pdf]</a></li>
+<li>[KCReg] A correlation-based approach to robust point set registration, ECCV’2004 [<a target="_blank" rel="noopener" href="http://www.cs.cmu.edu/afs/.cs.cmu.edu/Web/People/ytsin/research/kcreg.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="http://www.cs.cmu.edu/~ytsin/KCReg/">code]</a></li>
+<li>[3DSC] Recognizing objects in range data using regional point descriptors, ECCV’2004 [<a target="_blank" rel="noopener" href="http://www.cs.jhu.edu/~misha/Papers/Frome04.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/PointCloudLibrary/pcl/blob/master/examples/features/example_shape_contexts.cpp">code_pcl]</a></li>
+<li>[RGR] Robust Global Registration, ESGP’2005 [<a target="_blank" rel="noopener" href="http://vecg.cs.ucl.ac.uk/Projects/SmartGeometry/global_registration/paper_docs/global_registration_sgp_05.pdf">pdf]</a></li>
+<li>[RPM-LNS] Robust point matching for nonrigid shapes by preserving local neighborhood structures, TPAMI’2006 [<a target="_blank" rel="noopener" href="https://www.researchgate.net/profile/Yefeng_Zheng/publication/7211798_Robust_point_matching_for_nonrigid_shapes_by_preserving_local_neighborhood_structures/links/0deec527101e1d3269000000/Robust-point-matching-for-nonrigid-shapes-by-preserving-local-neighborhood-structures.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="http://www.umiacs.umd.edu/user.php?path=zhengyf/PointMatching.htm">code]</a></li>
+<li>[IT-FFD] Shape registration in implicit spaces using information theory and free form deformations, TPAMI’2006 [<a target="_blank" rel="noopener" href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.60.2593&rep=rep1&type=pdf">pdf]</a></li>
+<li>[Rigid] Rigid Body Registration, 2007 [<a target="_blank" rel="noopener" href="https://www.fil.ion.ucl.ac.uk/spm/doc/books/hbf2/pdfs/Ch2.pdf">ch02]</a></li>
+<li>[CDC] Simultaneous covariance driven correspondence (cdc) and transformation estimation in the expectation maximization framework, CVPR’2007 [<a target="_blank" rel="noopener" href="http://www.cs.rpi.edu/~sofka/pdfs/sofka-cvpr07.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://msofka.github.io/projects/cdc/">project]</a></li>
+<li>[Nonrigid-ICP] Optimal step nonrigid icp algorithms for surface registration, CVPR’2007 [<a target="_blank" rel="noopener" href="https://gravis.dmi.unibas.ch/publications/2007/CVPR07_Amberg.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/matlabcentral/fileexchange/54077-optimal-step-nonrigid-icp">code]</a> [<a target="_blank" rel="noopener" href="https://github.com/charlienash/nricp">code]</a></li>
+<li>[GNA] Global non-rigid alignment of 3D scans, TOG’2007 [<a target="_blank" rel="noopener" href="http://www.academia.edu/download/30932674/10.1.1.93.609.pdf">pdf]</a></li>
+<li>[PF] Particle filtering for registration of 2D and 3D point sets with stochastic dynamics, CVPR’2008 [<a target="_blank" rel="noopener" href="https://smartech.gatech.edu/bitstream/handle/1853/28587/2008_IEEE_CCVPR.pdf?sequence=1&isAllowed=y">pdf]</a></li>
+<li>[JS] Simultaneous nonrigid registration of multiple point sets and atlas construction, TPAMI’2008 [<a target="_blank" rel="noopener" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2921641/">pdf]</a></li>
+<li>[4PCS] 4-points congruent sets for robust pairwise surface registration, TOG’2008 [<a target="_blank" rel="noopener" href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.140.4881&rep=rep1&type=pdf">pdf]</a> [<a target="_blank" rel="noopener" href="http://graphics.stanford.edu/~niloy/research/fpcs/fpcs_sig_08.html">project]</a></li>
+<li>[GICP] Generalized ICP, RSS’2009 [<a target="_blank" rel="noopener" href="http://www.robots.ox.ac.uk/~avsegal/resources/papers/Generalized_ICP.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/avsegal/gicp">code]</a></li>
+<li>[MP] 2D-3D registration of deformable shapes with manifold projection, ICIP’2009 [<a target="_blank" rel="noopener" href="https://www.researchgate.net/profile/Alessio_Del_Bue/publication/223134711_2D-3D_Registration_Of_Deformable_Shapes_With_Manifold_Projection/links/0912f50d0a439af072000000.pdf">pdf]</a></li>
+<li>[SMM] The mixtures of Student’s t-distributions as a robust framework for rigid registration, IVC’2009 [<a target="_blank" rel="noopener" href="http://www.academia.edu/download/45493807/imavis09.pdf">pdf]</a></li>
+<li>[Algebraic-PSR] An Algebraic Approach to Affine Registration of Point Sets, ICCV’2009 [<a target="_blank" rel="noopener" href="https://www.researchgate.net/profile/Anand_Rangarajan/publication/221111832_An_Algebraic_Approach_to_Affine_Registration_of_Point_Sets/links/0c960520d3ec57741c000000.pdf">pdf]</a></li>
+<li>[SM] Subspace matching: Unique solution to point matching with geometric constraints, ICCV’2009 [<a target="_blank" rel="noopener" href="http://www.isr.ist.utl.pt/~manuel/pubs/iccv09.pdf">pdf]</a></li>
+<li>[FPFH] Fast Point Feature Histograms (FPFH) for 3D Registration, ICRA’2009 [<a target="_blank" rel="noopener" href="http://www.cvl.iis.u-tokyo.ac.jp/class2016/2016w/papers/6.3DdataProcessing/Rusu_FPFH_ICRA2009.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="http://pointclouds.org/documentation/tutorials/fpfh_estimation.php">code]</a></li>
+<li>[GO] Global optimization for alignment of generalized shapes, CVPR’2009 [<a target="_blank" rel="noopener" href="http://projectsweb.cs.washington.edu/research/insects/CVPR2009/optim_learning/glbloptim_alignshape.pdf">pdf]</a></li>
+<li>[ISO] Isometric registration of ambiguous and partial data, CVPR’2009 [<a target="_blank" rel="noopener" href="http://www.tevs.eu/files/cvpr09.pdf">pdf]</a></li>
+<li>[GF] A new method for the registration of three-dimensional point-sets: The Gaussian fields framework, IVC’2010 [<a target="_blank" rel="noopener" href="https://www.researchgate.net/profile/Faysal_Boughorbel/publication/222524708_A_new_method_for_the_registration_of_three-dimensional_point-sets_The_Gaussian_Fields_framework/links/59e8a674a6fdccfe7f8ea302/A-new-method-for-the-registration-of-three-dimensional-point-sets-The-Gaussian-Fields-framework.pdf">pdf]</a></li>
+<li>[RotInv] Rotation invariant non-rigid shape matching in cluttered scenes, ECCV’2010 [<a target="_blank" rel="noopener" href="https://pdfs.semanticscholar.org/6131/9215b7934ca4e7262fd67f7d6a493665d258.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://matlab1.com/shop/matlab-code/rotation-invariant-non-rigid-shape-matching-in-cluttered-scenes/">code]</a></li>
+<li>[CDFHC] Group-wise point-set registration using a novel cdf-based havrda-charvát divergence, IJCV’2010 [<a target="_blank" rel="noopener" href="https://www.cise.ufl.edu/~anand/pdf/CDFHC.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="http://www.cise.ufl.edu/~tichen/cdfHC.zip">code]</a></li>
+<li>[QPCCP] A quadratic programming based cluster correspondence projection algorithm for fast point matching, CVIU’2010 [<a target="_blank" rel="noopener" href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.231.3553&rep=rep1&type=pdf">pdf]</a> [<a target="_blank" rel="noopener" href="http://www.voidcn.com/link?url=http://www4.comp.polyu.edu.hk/~cslzhang/code/QPCCP.zip">code]</a></li>
+<li>[CPD] Point set registration: Coherent point drift, NIPS’2007 [<a target="_blank" rel="noopener" href="http://papers.nips.cc/paper/2962-non-rigid-point-set-registration-coherent-point-drift.pdf">pdf]</a> TPAMI’2010 [<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/0905.2635">pdf]</a> [<a target="_blank" rel="noopener" href="https://sites.google.com/site/myronenko/research/cpd">code]</a></li>
+<li>[PFSD] Point set registration via particle filtering and stochastic dynamics, TPAMI’2010 [<a target="_blank" rel="noopener" href="http://iss.bu.edu/tannenba/publications/papers/sandhu-pami09-pointset.pdf">pdf]</a></li>
+<li>[ECMPR] Rigid and articulated point registration with expectation conditional maximization, TPAMI’2011 [<a target="_blank" rel="noopener" href="https://hal.inria.fr/docs/00/43/57/72/PDF/RR-7114.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://team.inria.fr/perception/research/ecmpr/">project]</a> [<a target="_blank" rel="noopener" href="https://team.inria.fr/perception/files/2015/04/ecmpr_demo.zip">code]</a></li>
+<li>[GMMReg&#x2F;TPS-L2] Robust point set registration using gaussian mixture models, NIPS’2005 TPAMI’2011 [<a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/abstract/document/5674050/">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/bing-jian/gmmreg">code]</a></li>
+<li>[TPRL] Topology preserving relaxation labeling for nonrigid point matching, TPAMI’2011 [<a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/abstract/document/5590251/">pdf]</a></li>
+<li>[OOH] Robust point set registration using EM-ICP with information-theoretically optimal outlier handling, CVPR’2011 [<a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/abstract/document/5995744">pdf]</a></li>
+<li>[SGO] Stochastic global optimization for robust point set registration, CVIU’2011</li>
+<li>[survey] 3D Shape Registration, 3DIAA’2012</li>
+<li>[Multiview LM-ICP] Accurate and automatic alignment of range surfaces, 3DIMPVT’2012 [<a target="_blank" rel="noopener" href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.403.2173&rep=rep1&type=pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/adrelino/mv-lm-icp">code]</a></li>
+<li>[ISC] Intrinsic shape context descriptors for deformable shapes, CVPR’2012 [<a target="_blank" rel="noopener" href="http://www0.cs.ucl.ac.uk/staff/I.Kokkinos/pubs/KokkinosBronstein_ISC_CVPR12.pdf">pdf]</a></li>
+<li>[RPM-Concave] Robust point matching revisited: A concave optimization approach, ECCV’2012 [<a target="_blank" rel="noopener" href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.297.8822&rep=rep1&type=pdf">pdf]</a> [<a target="_blank" rel="noopener" href="http://www.voidcn.com/link?url=http://www4.comp.polyu.edu.hk/~cslzhang/code/RPM_concave.rar">code]</a></li>
+<li>[RINPSM] Rotation Invariant Nonrigid Point Set Matching in Cluttered Scenes, TIP’2012 [<a target="_blank" rel="noopener" href="http://azadproject.ir/wp-content/uploads/2014/07/2011-Rotation-Invariant-Nonrigid-Point-Set-Matching-in-Cluttered-Scenes.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="http://www4.comp.polyu.edu.hk/~cslzhang/code/dynamProg_minSpanTreeTri_shapCont_TIP.rar">code]</a></li>
+<li>[RPM-L2E] Robust estimation of nonrigid transformation for point set registration, CVPR’2013 [<a target="_blank" rel="noopener" href="http://openaccess.thecvf.com/content_cvpr_2013/papers/Ma_Robust_Estimation_of_2013_CVPR_paper.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/jiayi-ma?tab=repositories">code]</a></li>
+<li>[GO-ICP] Go-ICP: Solving 3D Registration Efficiently and Globally Optimally, ICCV’2013 [<a target="_blank" rel="noopener" href="https://www.cv-foundation.org/openaccess/content_iccv_2013/papers/Yang_Go-ICP_Solving_3D_2013_ICCV_paper.pdf">pdf]</a> TPAMI’2016 [<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1605.03344">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/yangjiaolong/Go-ICP">code]</a></li>
+<li>[Survey] Registration of 3D point clouds and meshes: a survey from rigid to nonrigid, TVCG’2013 [[pdf]](<a target="_blank" rel="noopener" href="https://orca.cf.ac.uk/47333/1/ROSIN">https://orca.cf.ac.uk/47333/1/ROSIN</a> registration of 3d point clouds and meshes.pdf)</li>
+<li>[NMM] Diffeomorphic Point Set Registration Using Non-Stationary Mixture Models, ISBI’2013 [<a target="_blank" rel="noopener" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3886289/">pdf]</a></li>
+<li>[Sparse-ICP] Sparse Iterative Closest Point, ESGP’2013 [<a target="_blank" rel="noopener" href="https://dl.acm.org/citation.cfm?id=2600305">pdf]</a> [<a target="_blank" rel="noopener" href="http://jlyang.org/go-icp/">project]</a> [<a target="_blank" rel="noopener" href="https://lgg.epfl.ch/sparseicp">code]</a></li>
+<li>[JRMPC] A Generative Model for the Joint Registration of Multiple Point Sets, ECCV’2014 [<a target="_blank" rel="noopener" href="https://hal.archives-ouvertes.fr/docs/01/01/96/61/PDF/main_cr.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://team.inria.fr/perception/research/jrmpc/">project]</a> [<a target="_blank" rel="noopener" href="https://team.inria.fr/perception/files/2015/05/JRMPC_v0.9.4.zip">code&amp;data]</a></li>
+<li>[RPM-VFC] Robust Point Matching via Vector Field Consensus, TIP’2014 [<a target="_blank" rel="noopener" href="http://or.nsfc.gov.cn/bitstream/00001903-5/99530/1/1000009269450.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/jiayi-ma?tab=repositories">code]</a></li>
+<li>[GLTP] Non-rigid Point Set Registration with Global-Local Topology Preservation, CVPRW’2014 [<a target="_blank" rel="noopener" href="https://www.cv-foundation.org/openaccess/content_cvpr_workshops_2014/W04/papers/Ge_Non-rigid_Point_Set_2014_CVPR_paper.pdf">pdf]</a></li>
+<li>[color-GICP] Color supported generalized-ICP, VISAPP’2014 [<a target="_blank" rel="noopener" href="https://pdfs.semanticscholar.org/1560/394a1d34567e7434b8188df59af8103b233f.pdf">pdf]</a></li>
+<li>[RPM-Concave] Point Matching in the Presence of Outliers in Both Point Sets: A Concave Optimization Approach, CVPR’2014 [<a target="_blank" rel="noopener" href="http://openaccess.thecvf.com/content_cvpr_2014/papers/Lian_Point_Matching_in_2014_CVPR_paper.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="http://www.voidcn.com/link?url=http://www4.comp.polyu.edu.hk/~cslzhang/code/RPM_concave.rar">code]</a></li>
+<li>[super4PCS] Super 4pcs fast global pointcloud registration via smart indexing, CGF’2014 [<a target="_blank" rel="noopener" href="https://hal.archives-ouvertes.fr/hal-01538738/document">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/nmellado/Super4PCS">code]</a> [<a target="_blank" rel="noopener" href="https://github.com/STORM-IRIT/OpenGR">OpenGR]</a></li>
+<li>[SDTM] A Riemannian framework for matching point clouds represented by the Schrodinger distance transform, CVPR’2014 [<a target="_blank" rel="noopener" href="https://www.cv-foundation.org/openaccess/content_cvpr_2014/papers/Deng_A_Riemannian_Framework_2014_CVPR_paper.pdf">pdf]</a></li>
+<li>[GLMD-TPS] A robust global and local mixture distance based non-rigid point set registration, PR’2015 [<a target="_blank" rel="noopener" href="https://www.researchgate.net/profile/Yang_Yang634/publication/266562735_A_robust_global_and_local_mixture_distance_based_non-rigid_point_set_registrationincluding_source_codes-link_data/links/5abda9d60f7e9bfc0457c21d/A-robust-global-and-local-mixture-distance-based-non-rigid-point-set-registrationincluding-source-codes-link-data.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/matlabcentral/fileexchange/47409-glmdtps-registration-method">code]</a></li>
+<li>[CSM] Non-rigid point set registration via coherent spatial mapping, SP’2015 [<a target="_blank" rel="noopener" href="http://matlabtools.com/wp-content/uploads/p410-5.pdf">pdf]</a></li>
+<li>[ADR] An Adaptive Data Representation for Robust Point-Set Registration and Merging, ICCV’2015 [<a target="_blank" rel="noopener" href="http://openaccess.thecvf.com/content_iccv_2015/papers/Campbell_An_Adaptive_Data_ICCV_2015_paper.pdf">pdf]</a></li>
+<li>[MLMD] MLMD: Maximum likelihood mixture decoupling for fast and accurate point cloud registration, 3DV’2015 [<a target="_blank" rel="noopener" href="http://jankautz.com/publications/MLMD_3DV15.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://www.cc.gatech.edu/~kihwan23/">project]</a></li>
+<li>[APSR] Non-rigid Articulated Point Set Registration for Human Pose Estimation, WACV’2015 [<a target="_blank" rel="noopener" href="https://www.researchgate.net/profile/Guoliang_Fan2/publication/274955205_Non-rigid_Articulated_Point_Set_Registration_for_Human_Pose_Estimation/links/552d199a0cf29b22c9c4ad61.pdf">pdf]</a></li>
+<li>[RegGF] Non-rigid visible and infrared face registration via regularized Gaussian fields criterion, PR’2015 [<a target="_blank" rel="noopener" href="https://www.researchgate.net/profile/Jiayi_Ma/publication/268882090_Non-rigid_visible_and_infrared_face_registration_via_regularized_Gaussian_fields_criterion/links/5bb4ba0c45851574f7f7c1b8/Non-rigid-visible-and-infrared-face-registration-via-regularized-Gaussian-fields-criterion.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/jiayi-ma?tab=repositories">code]</a></li>
+<li>[LLT] Robust feature matching for remote sensing image registration via locally linear transforming, TGRS’2015 [<a target="_blank" rel="noopener" href="https://yuan-gao.net/pdf/TGRS2015.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/jiayi-ma?tab=repositories">code]</a></li>
+<li>[RPM-L2E] Robust L2E estimation of transformation for non-rigid registration, TSP’2015 [<a target="_blank" rel="noopener" href="https://www.researchgate.net/profile/Jiayi_Ma/publication/273176803_Robust_L2E_Estimation_of_Transformation_for_Non-Rigid_Registration/links/552142f10cf2f9c130512304.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/jiayi-ma?tab=repositories">code]</a></li>
+<li>[GLR] Robust Nonrigid Point Set Registration Using Graph-Laplacian Regularization, WACV’2015 [<a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/abstract/document/7046010/">pdf]</a></li>
+<li>[FPPSR] Aligning the dissimilar: A probabilistic method for feature-based point set registration, ICPR’2016 [<a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/abstract/document/7899641/">pdf]</a></li>
+<li>[IPDA] Point Clouds Registration with Probabilistic Data Association, IROS’2016 [<a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/abstract/document/7759602/">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/ethz-asl/robust_point_cloud_registration">code]</a></li>
+<li>[CPPSR] A probabilistic framework for color-based point set registration, CVPR’2016 [<a target="_blank" rel="noopener" href="http://openaccess.thecvf.com/content_cvpr_2016/papers/Danelljan_A_Probabilistic_Framework_CVPR_2016_paper.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="http://www.cvl.isy.liu.se/research/cogvis/colored-point-set-registration/index.html">project]</a></li>
+<li>[GOGMA] GOGMA: Globally-optimal gaussian mixture alignment, CVPR’2016 [<a target="_blank" rel="noopener" href="http://openaccess.thecvf.com/content_cvpr_2016/papers/Campbell_GOGMA_Globally-Optimal_Gaussian_CVPR_2016_paper.pdf">pdf]</a></li>
+<li>[GO-APM] An Efficient Globally Optimal Algorithm for Asymmetric Point Matching, TPAMI’2016 [<a target="_blank" rel="noopener" href="http://www4.comp.polyu.edu.hk/~cslzhang/APM_files/data/APM.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="http://www4.comp.polyu.edu.hk/~cslzhang/APM.htm">project]</a> [<a target="_blank" rel="noopener" href="http://www4.comp.polyu.edu.hk/~cslzhang/APM_files/data/RPM_COV_source_code.rar">code]</a></li>
+<li>[PR-GLS] Non-Rigid Point Set Registration by Preserving Global and Local Structures, TIP’2016 [<a target="_blank" rel="noopener" href="https://www.researchgate.net/profile/Jiayi_Ma/publication/281082006_Non-Rigid_Point_Set_Registration_by_Preserving_Global_and_Local_Structures/links/55e6478108aecb1a7ccd6883.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/jiayi-ma?tab=repositories">code]</a></li>
+<li>[conreg] Non-iterative rigid 2D&#x2F;3D point-set registration using semidefinite programming, TIP’2016 [<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1501.00630">pdf]</a></li>
+<li>[PM] Probabilistic Model for Robust Affine and Non-rigid Point Set Matching, TPAMI’2016 [<a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/abstract/document/7439870/">pdf]</a></li>
+<li>[SPSR] A Stochastic Approach to Diffeomorphic Point Set Registration With Landmark Constraints, TPAMI’2016 [<a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/abstract/document/7130637/">pdf]</a></li>
+<li>[FRSSP] Fast Rotation Search with Stereographic Projections for 3D Registration, TPAMI’2016 [<a target="_blank" rel="noopener" href="https://www.cv-foundation.org/openaccess/content_cvpr_2014/papers/Bustos_Fast_Rotation_Search_2014_CVPR_paper.pdf">pdf]</a></li>
+<li>[VBPSM] Probabilistic Model for Robust Affine and Non-rigid Point Set Matching, TPAMI’2016 [<a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/abstract/document/7439870/">pdf]</a> [<a target="_blank" rel="noopener" href="https://www.computer.org/csdl/trans/tp/2016/12/07416224-abs.html">code]</a></li>
+<li>[MFF] Image Correspondences Matching Using Multiple Features Fusion, ECCV’2016 [<a target="_blank" rel="noopener" href="http://icvl.ee.ic.ac.uk/DescrWorkshop/featw-papers/Paper_0005.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="http://press.liacs.nl/researchdownloads">code]</a></li>
+<li>[FGR] Fast Global Registration, ECCV’2016 [<a target="_blank" rel="noopener" href="https://link.springer.com/chapter/10.1007/978-3-319-46475-6_47">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/intel-isl/FastGlobalRegistration">code]</a></li>
+<li>[HMRF ICP] Hidden Markov Random Field Iterative Closest Point, arxiv’2017 [<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1711.05864">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/JStech/ICP">code]</a></li>
+<li>[SSFR] Global Registration of 3D LiDAR Point Clouds Basedon Scene Features: Application toStructured Environments, RS’2017 [<a target="_blank" rel="noopener" href="https://www.mdpi.com/2072-4292/9/10/1014/pdf">pdf]</a></li>
+<li>[color-PCR] Colored point cloud registration revisited, ICCV’2017 [<a target="_blank" rel="noopener" href="http://openaccess.thecvf.com/content_ICCV_2017/papers/Park_Colored_Point_Cloud_ICCV_2017_paper.pdf">pdf]</a></li>
+<li>[dpOptTrans] Efficient Globally Optimal Point Cloud Alignment using Bayesian<br>  Nonparametric Mixtures, CVPR’2017 [<a target="_blank" rel="noopener" href="https://www.researchgate.net/profile/Jonathan_How/publication/301839970_Efficient_Globally_Optimal_Point_Cloud_Alignment_using_Bayesian_Nonparametric_Mixtures/links/5744700508ae9f741b3f0aa0/Efficient-Globally-Optimal-Point-Cloud-Alignment-using-Bayesian-Nonparametric-Mixtures.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/jstraub/dpOptTrans">code]</a></li>
+<li>[GORE] Guaranteed Outlier Removal for Point Cloud Registration with Correspondences, TPAMI’2017 [<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1711.10209">pdf]</a></li>
+<li>[CSGM] A systematic approach for cross-source point cloud registration by preserving macro and micro structures, TIP’2017 [<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1608.05143">pdf]</a></li>
+<li>[FDCP] Fast descriptors and correspondence propagation for robust global point cloud registration, TIP’2017 [<a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/abstract/document/7918612/">pdf]</a></li>
+<li>[RSWD] Multiscale Nonrigid Point Cloud Registration Using Rotation-Invariant Sliced-Wasserstein Distance via Laplace-Beltrami Eigenmap, SIAM JIS’2017 [<a target="_blank" rel="noopener" href="https://epubs.siam.org/doi/abs/10.1137/16M1068827">pdf]</a></li>
+<li>[MR] Non-Rigid Point Set Registration with Robust Transformation Estimation under Manifold Regularization, AAAI’2017 [<a target="_blank" rel="noopener" href="https://www.aaai.org/ocs/index.php/AAAI/AAAI17/paper/download/14188/14303">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/jiayi-ma?tab=repositories">code]</a></li>
+<li>[LPM] Locality Preserving Matching, IJCAI’2017 [<a target="_blank" rel="noopener" href="https://www.ijcai.org/proceedings/2017/0627.pdf">pdf]</a> IJCV’2019 [<a target="_blank" rel="noopener" href="https://link.springer.com/article/10.1007/s11263-018-1117-z">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/jiayi-ma?tab=repositories">code]</a></li>
+<li>[DARE] Density adaptive point set registration, CVPR’2018 [<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1804.01495.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/felja633/DARE">code]</a></li>
+<li>[GC-RANSAC] Graph-Cut RANSAC, CVPR’2018 [<a target="_blank" rel="noopener" href="http://openaccess.thecvf.com/content_cvpr_2018/papers/Barath_Graph-Cut_RANSAC_CVPR_2018_paper.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/danini/graph-cut-ransac">code]</a></li>
+<li>[3D-CODED] 3D-CODED: 3D correspondences by deep deformation, ECCV’2018 [<a target="_blank" rel="noopener" href="http://openaccess.thecvf.com/content_ECCV_2018/papers/Thibault_Groueix_Shape_correspondences_from_ECCV_2018_paper.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="http://imagine.enpc.fr/~groueixt/3D-CODED/">project]</a> [<a target="_blank" rel="noopener" href="https://github.com/ThibaultGROUEIX/3D-CODED">code]</a></li>
+<li>[3DFeat-NET] 3dfeat-net: Weakly supervised local 3d features for point cloud registration, ECCV’2018 [<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1807.09413">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/yewzijian/3DFeatNet">code]</a></li>
+<li>[MVDesc-RMBP] Learning and Matching Multi-View Descriptors for Registration of Point Clouds, ECCV’2018 [<a target="_blank" rel="noopener" href="http://openaccess.thecvf.com/content_ECCV_2018/papers/Lei_Zhou_Learning_and_Matching_ECCV_2018_paper.pdf">pdf]</a></li>
+<li>[SWS] Nonrigid Points Alignment with Soft-weighted Selection, IJCAI’2018 [<a target="_blank" rel="noopener" href="https://www.ijcai.org/proceedings/2018/0111.pdf">pdf]</a></li>
+<li>[DLD] Dependent landmark drift: robust point set registration with aGaussian mixture model and a statistical shape model, arxiv’2018 [<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1711.06588">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/ohirose/dld">code]</a></li>
+<li>[DeepMapping] DeepMapping: Unsupervised Map Estimation From Multiple Point Clouds, arxiv’2018 [<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1811.11397">pdf]</a> [<a target="_blank" rel="noopener" href="https://ai4ce.github.io/DeepMapping/">project]</a></li>
+<li>[APSR] Adversarial point set registration, arxiv’2018 [<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1811.08139">pdf]</a></li>
+<li>[3DIV] Fast and Globally Optimal Rigid Registration of 3D Point Sets by Transformation Decomposition, arxiv’2018 [<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1812.11307">pdf]</a></li>
+<li>[Analysis] Analysis of Robust Functions for Registration Algorithms, arxiv’2018 [<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1810.01474">pdf]</a></li>
+<li>[MVCNN] Learning Local Shape Descriptors from Part Correspondences with Multiview Convolutional Networks, TOG’2018 [<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1706.04496">pdf]</a> [<a target="_blank" rel="noopener" href="https://people.cs.umass.edu/~hbhuang/local_mvcnn/">project]</a></li>
+<li>[CSCIF] Cubature Split Covariance Intersection Filter-Based Point Set Registration, TIP’2018 [<a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/abstract/document/8332952/">pdf]</a></li>
+<li>[FPR] Efficient Registration of High-Resolution Feature Enhanced Point Clouds, TPAMI’2018 [<a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/abstract/document/8352814/">pdf]</a></li>
+<li>[DFMM-GLSP] Non-rigid point set registration using dual-feature finite mixture model and global-local structural preservation, PR’2018 [<a target="_blank" rel="noopener" href="https://www.researchgate.net/profile/Yang_Yang634/publication/323843423_Non-rigid_point_set_registration_using_dual-feature_finite_mixture_model_and_global-local_structural_preservation/links/5abda92545851584fa6fc44a/Non-rigid-point-set-registration-using-dual-feature-finite-mixture-model-and-global-local-structural-preservation.pdf">pdf]</a></li>
+<li>[PR-Net] Non-Rigid Point Set Registration Networks, arxiv’2019 [<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1904.01428">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/Lingjing324/PR-Net">code]</a></li>
+<li>[SDRSAC] SDRSAC: Semidefinite-Based Randomized Approach for Robust Point Cloud Registration without Correspondences, arxiv’2019 [<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1904.03483">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/intellhave/SDRSAC">code]</a></li>
+<li>[3DRegNet] 3DRegNet: A Deep Neural Network for 3D Point Registration, arxiv’2019 [<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1904.01701.pdf">pdf]</a></li>
+<li>[PointNetLK] PointNetLK: Robust &amp; Efficient Point Cloud Registration using PointNet, arxiv’2019 [<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1903.05711">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/hmgoforth/PointNetLK">code]</a></li>
+<li>[RPM-MR] Nonrigid Point Set Registration with Robust Transformation Learning under Manifold Regularization, TNNLS’2019 [<a target="_blank" rel="noopener" href="https://pdfs.semanticscholar.org/e8c9/75165ffc5af6cad6961b25f29ea112ae50dd.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/jiayi-ma?tab=repositories">code]</a></li>
+<li>[FGMM] Feature-guided Gaussian mixture model for image matching, PR’2019 [<a target="_blank" rel="noopener" href="https://www.sciencedirect.com/science/article/pii/S0031320319301414">pdf]</a></li>
+<li>[LSR-CFP] Least-squares registration of point sets over SE (d) using closed-form projections, CVIU’2019 [<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1904.04218">pdf]</a></li>
+<li>[FilterReg] FilterReg: Robust and Efficient Probabilistic Point-Set Registration using Gaussian Filter and Twist Parameterization, CVPR’2019 [<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1811.10136">pdf]</a> [<a target="_blank" rel="noopener" href="https://sites.google.com/view/filterreg/home">project]</a> [<a target="_blank" rel="noopener" href="https://bitbucket.org/gaowei19951004/poser/src/master/">code]</a></li>
+<li>[TEASER] A Polynomial-time Solution for Robust Registration with Extreme Outlier Rates, arxiv’2019 [<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1903.08588">pdf]</a></li>
+</ul>
+<h6 id="Mismatch-Removal-Methods"><a href="#Mismatch-Removal-Methods" class="headerlink" title="Mismatch Removal Methods"></a>Mismatch Removal Methods</h6><ul>
+<li>[RANSAC] Random sample consensus: a paradigm for model fitting with applications to image analysis and automated cartography, 1981 [<a target="_blank" rel="noopener" href="https://apps.dtic.mil/dtic/tr/fulltext/u2/a460585.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Random_sample_consensus">wiki]</a></li>
+<li>[MLESAC] MLESAC: A new robust estimator with application to estimating image geometry, CVIU’2000 [<a target="_blank" rel="noopener" href="http://www.academia.edu/download/3436793/torr_mlesac.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/PointCloudLibrary/pcl/tree/master/sample_consensus/include/pcl/sample_consensus">code_pcl]</a></li>
+<li>[PROSAC] Matching with PROSAC-progressive sample consensus, CVPR’2005 [<a target="_blank" rel="noopener" href="https://dspace.cvut.cz/bitstream/handle/10467/9496/2005-Matching-with-PROSAC-progressive-sample-consensus.pdf?sequence=1">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/PointCloudLibrary/pcl/tree/master/sample_consensus/include/pcl/sample_consensus">code_pcl]</a></li>
+<li>[ICF&#x2F;SVR] Rejecting mismatches by correspondence function, IJCV’2010 [<a target="_blank" rel="noopener" href="http://www.nlpr.ia.ac.cn/2010papers/kz/gk24.pdf">pdf]</a></li>
+<li>[GS] Common visual pattern discovery via spatially coherent correspondences, CVPR’2010 [[pdf]](<a target="_blank" rel="noopener" href="http://www.jdl.ac.cn/project/faceId/paperreading/Paper/Common">http://www.jdl.ac.cn/project/faceId/paperreading/Paper/Common</a> Visual Pattern Discovery via Spatially Coherent Correspondences.pdf) [<a target="_blank" rel="noopener" href="https://sites.google.com/site/lhrbss/home/papers/SimplifiedCode.zip?attredirects=0">code]</a></li>
+<li>[VFC] A robust method for vector field learning with application to mismatch removing, CVPR’2011 [<a target="_blank" rel="noopener" href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.721.5913&rep=rep1&type=pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/jiayi-ma?tab=repositories">code]</a></li>
+<li>[DefRANSAC] In defence of RANSAC for outlier rejection in deformable registration, ECCV’2012 [[pdf]](<a target="_blank" rel="noopener" href="https://media.adelaide.edu.au/acvt/Publications/2012/2012-In">https://media.adelaide.edu.au/acvt/Publications/2012/2012-In</a> Defence of RANSAC for Outlier Rejection in Deformable Registration.pdf) [<a target="_blank" rel="noopener" href="https://cs.adelaide.edu.au/~tjchin/lib/exe/fetch.php?media=code:eccv12code.zip">code]</a></li>
+<li>[CM] Robust Non-parametric Data Fitting for Correspondence Modeling, ICCV’2013 [<a target="_blank" rel="noopener" href="https://mmcheng.net/mftp/Papers/DataFittingICCV13.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://sites.google.com/site/laoszefei81/home/code-1/code-curve-fitting">code]</a></li>
+<li>[AGMM] Asymmetrical Gauss Mixture Models for Point Sets Matching, CVPR’2014 [<a target="_blank" rel="noopener" href="http://openaccess.thecvf.com/content_cvpr_2014/papers/Tao_Asymmetrical_Gauss_Mixture_2014_CVPR_paper.pdf">pdf]</a></li>
+<li>[TC] Epipolar geometry estimation for wide baseline stereo by Clustering Pairing Consensus, PRL’2014 [<a target="_blank" rel="noopener" href="http://or.nsfc.gov.cn/bitstream/00001903-5/96605/1/1000007190373.pdf">pdf]</a></li>
+<li>[BF] Bilateral Functions for Global Motion Modeling, ECCV’2014 [<a target="_blank" rel="noopener" href="http://mftp.mmcheng.net/Papers/CoherentModelingS.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://mmcheng.net/bfun/">project]</a> [<a target="_blank" rel="noopener" href="http://mftp.mmcheng.net/Data/eccv_2014_release.zip">code]</a></li>
+<li>[WxBS] WxBS: Wide Baseline Stereo Generalizations, BMVC’2015 [<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1504.06603">pdf]</a> [<a target="_blank" rel="noopener" href="http://cmp.felk.cvut.cz/wbs/">project]</a></li>
+<li>[RepMatch] RepMatch: Robust Feature Matching and Posefor Reconstructing Modern Cities, ECCV’2016 [<a target="_blank" rel="noopener" href="http://www.kind-of-works.com/papers/eccv_2016_repmatch.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="http://www.kind-of-works.com/RepMatch.html">project]</a> [<a target="_blank" rel="noopener" href="http://www.kind-of-works.com/code/repmatch_code_bf_small.zip">code]</a></li>
+<li>[SIM] The shape interaction matrix-based affine invariant mismatch removal for partial-duplicate image search, TIP’2017 [<a target="_blank" rel="noopener" href="http://www.cis.pku.edu.cn/faculty/vision/zlin/Publications/2017-TIP-SIM.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/lylinyang/demo_SIM">code]</a></li>
+<li>[DSAC] DSAC: differentiable RANSAC for camera localization, CVPR’2017 [<a target="_blank" rel="noopener" href="http://openaccess.thecvf.com/content_cvpr_2017/papers/Brachmann_DSAC_-_Differentiable_CVPR_2017_paper.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/cvlab-dresden/DSAC">code]</a></li>
+<li>[GMS] GMS: Grid-based Motion Statistics for Fast, Ultra-robust Feature Correspondence, CVPR’2017 [<a target="_blank" rel="noopener" href="http://openaccess.thecvf.com/content_cvpr_2017/papers/Bian_GMS_Grid-based_Motion_CVPR_2017_paper.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/JiawangBian/GMS-Feature-Matcher">code]</a></li>
+<li>[LMI] Consensus Maximization with Linear Matrix Inequality Constraints, CVPR’2017 [<a target="_blank" rel="noopener" href="https://www.cvg.ethz.ch/research/conmax/paper/PSpeciale2017CVPR.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://www.cvg.ethz.ch/research/conmax/">project]</a> [<a target="_blank" rel="noopener" href="https://www.cvg.ethz.ch/research/conmax/paper/PSpeciale2017CVPR_code_sample.tar.gz">code]</a></li>
+<li>[LFGC] Learning to Find Good Correspondences, CVPR’2018 [<a target="_blank" rel="noopener" href="http://openaccess.thecvf.com/content_cvpr_2018/CameraReady/1453.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/vcg-uvic/learned-correspondence-release">code]</a></li>
+<li>[GC-RANSAC] Graph-Cut RANSAC, CVPR’2018 [<a target="_blank" rel="noopener" href="http://openaccess.thecvf.com/content_cvpr_2018/papers/Barath_Graph-Cut_RANSAC_CVPR_2018_paper.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/danini/graph-cut-ransac">code]</a></li>
+<li>[SRC] Consensus Maximization for Semantic Region Correspondences, CVPR’2018 [<a target="_blank" rel="noopener" href="https://www.cvg.ethz.ch/research/secon/paper/PSpeciale2018CVPR.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://www.cvg.ethz.ch/research/secon/paper/PSpeciale2018CVPR_code_sample.zip">code]</a></li>
+<li>[CODE] Code: Coherence based decision boundaries for feature correspondence, TPAMI’2018 [<a target="_blank" rel="noopener" href="https://ora.ox.ac.uk/objects/uuid:0e5a62ab-fb69-472f-a1e1-49d49595db62/download_file?safe_filename=matching.pdf&file_format=application/pdf&type_of_work=Journal+article">pdf]</a> [<a target="_blank" rel="noopener" href="http://www.kind-of-works.com/CODE_matching.html">project]</a></li>
+<li>[LPM] Locality preserving matching, IJCV’2019 [<a target="_blank" rel="noopener" href="https://link.springer.com/article/10.1007/s11263-018-1117-z">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/jiayi-ma?tab=repositories">code]</a></li>
+<li>[LMR] LMR: Learning A Two-class Classifier for Mismatch Removal, TIP’2019 [<a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/abstract/document/8672170/">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/StaRainJ/LMR">code]</a></li>
+<li>[PFFM] Progressive Filtering for Feature Matching, ICASSP’2019 [<a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/abstract/document/8682372/">pdf]</a></li>
+<li>[NM-Net] NM-Net: Mining Reliable Neighbors for Robust Feature Correspondences, arXiv’2019 [<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1904.00320">pdf]</a></li>
+</ul>
+<h6 id="Graph-Matching-Methods"><a href="#Graph-Matching-Methods" class="headerlink" title="Graph Matching Methods"></a>Graph Matching Methods</h6><ul>
+<li>[SM] A spectral technique for correspondence problems using pairwise constraints, ICCV’2005 [<a target="_blank" rel="noopener" href="https://kilthub.figshare.com/articles/A_Spectral_Technique_for_Correspondence_Problems_Using_Pairwise_Constraints/6551327/files/12031808.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://sites.google.com/site/graphmatchingmethods/Code_including_Spectral_Matching.zip?attredirects=0">code]</a></li>
+<li>[SM-MAP] Efficient MAP approximation for dense energy functions, ICML’2006 [<a target="_blank" rel="noopener" href="https://kilthub.figshare.com/articles/Efficient_MAP_Approximation_For_Dense_Energy_Functions/6554678/files/12036863.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://sites.google.com/site/graphmatchingmethods/Code_including_IPFP_and_L2QP_for_MAP_Inference.zip?attredirects=0">code]</a></li>
+<li>[SMAC] Balanced Graph Matching, NIPS’2006 [<a target="_blank" rel="noopener" href="http://papers.nips.cc/paper/2960-balanced-graph-matching.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="http://www.timotheecour.com/software/graph_matching/graph_matching.html">code]</a></li>
+<li>[FCGM] Feature correspondence via graph matching: Models and global optimization, ECCV’2008 [<a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/research/wp-content/uploads/2008/10/TR-2008-101.pdf">pdf]</a></li>
+<li>[PM] Probabilistic Graph and Hypergraph Matching, CVPR’2008 [<a target="_blank" rel="noopener" href="https://www.researchgate.net/profile/Amnon_Shashua/publication/221361679_Probabilistic_graph_and_hypergraph_matching/links/55cc5f3008aeca747d6c288d/Probabilistic-graph-and-hypergraph-matching.pdf">pdf]</a></li>
+<li>[IPFP] An Integer Projected Fixed Point Method for Graph Matching and MAP Inference, NIPS’2009 [<a target="_blank" rel="noopener" href="http://papers.nips.cc/paper/3756-an-integer-projected-fixed-point-method-for-graph-matching-and-map-inference.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://sites.google.com/site/graphmatchingmethods/Code_including_IPFP.zip?attredirects=0">code]</a></li>
+<li>[RRWM] Reweighted Random Walks for Graph Matching, ECCV’2010 [<a target="_blank" rel="noopener" href="https://link.springer.com/chapter/10.1007/978-3-642-15555-0_36">pdf]</a></li>
+<li>[FGM] Factorized graph matching, CVPR’2012 [<a target="_blank" rel="noopener" href="https://kilthub.figshare.com/articles/Factorized_Graph_Matching/6554858/files/12037043.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="http://www.f-zhou.com/gm_code.html">code]</a></li>
+<li>[DGM] Deformable Graph Matching, CVPR’2013 [<a target="_blank" rel="noopener" href="https://www.cv-foundation.org/openaccess/content_cvpr_2013/papers/Zhou_Deformable_Graph_Matching_2013_CVPR_paper.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/zhfe99/fgm">code]</a></li>
+<li>[MS] Progressive mode-seeking on graphs for sparse feature matching, ECCV’2014 [<a target="_blank" rel="noopener" href="http://ro.uow.edu.au/cgi/viewcontent.cgi?article=5118&context=eispapers">pdf]</a> [<a target="_blank" rel="noopener" href="https://download.csdn.net/download/family0823/9366365?fps=1&locationNum=1">code]</a></li>
+</ul>
+<h6 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h6><ul>
+<li>[RootSIFT] Three things everyone should know to improve object retrieval, CVPR’2012 [<a target="_blank" rel="noopener" href="http://www.cs.sfu.ca/CourseCentral/820/li/material/source/papers/3things-retrieval-2012.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://www.pyimagesearch.com/2015/04/13/implementing-rootsift-in-python-and-opencv/#">related code]</a></li>
+<li>[DM-CNN] Descriptor Matching with Convolutional Neural Networks: a Comparison to SIFT, arXiv’2014 [<a target="_blank" rel="noopener" href="https://www.researchgate.net/profile/Alexey_Dosovitskiy/publication/262568634_Descriptor_Matching_with_Convolutional_Neural_Networks_a_Comparison_to_SIFT/links/541fe8dc0cf2218008d41617.pdf">pdf]</a></li>
+<li>[DASC] DASC: Robust Dense Descriptor for Multi-modal and Multi-spectral Correspondence Estimation, TPAMI’2017 [<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1604.07944">pdf]</a> [<a target="_blank" rel="noopener" href="http://diml.yonsei.ac.kr/~srkim/DASC/">project]</a></li>
+<li>[MODS] MODS: Fast and Robust Method for Two-View Matching, CVIU’2015 [<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1503.02619">pdf]</a> [<a target="_blank" rel="noopener" href="http://cmp.felk.cvut.cz/wbs/">project]</a> [<a target="_blank" rel="noopener" href="https://github.com/ducha-aiki/mods">code]</a></li>
+<li>[Elastic2D3D] Efficient Globally Optimal 2D-to-3D Deformable Shape Matching, CVPR’2016 [<a target="_blank" rel="noopener" href="http://openaccess.thecvf.com/content_cvpr_2016/papers/Lahner_Efficient_Globally_Optimal_CVPR_2016_paper.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://vision.in.tum.de/~laehner/Elastic2D3D/">project]</a></li>
+<li>[TCDCN] Facial Landmark Detection by Deep Multi-task Learning, ECCV’2014 [<a target="_blank" rel="noopener" href="http://home.ie.cuhk.edu.hk/~ccloy/files/eccv_2014_deepfacealign.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="http://mmlab.ie.cuhk.edu.hk/projects/TCDCN.html">project]</a></li>
+<li>[LAI] Object matching using a locally affine invariant and linear programming techniques, TPAMI’2013 [<a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/abstract/document/6189359/">pdf]</a></li>
+<li>[GeoDesc] GeoDesc: Learning Local Descriptors by Integrating Geometry Constraints, ECCV’2018 [<a target="_blank" rel="noopener" href="http://openaccess.thecvf.com/content_ECCV_2018/papers/Zixin_Luo_Learning_Local_Descriptors_ECCV_2018_paper.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/lzx551402/geodesc">code]</a></li>
+</ul>
+<h6 id="Deep-Features"><a href="#Deep-Features" class="headerlink" title="Deep Features"></a>Deep Features</h6><ul>
+<li>[TFeat] Learning local feature descriptors with triplets and shallow convolutional neural networks, BMVC’2016 [<a target="_blank" rel="noopener" href="https://www.researchgate.net/profile/Krystian_Mikolajczyk/publication/317192886_Learning_local_feature_descriptors_with_triplets_and_shallow_convolutional_neural_networks/links/5a038dad0f7e9beb1770c3c2/Learning-local-feature-descriptors-with-triplets-and-shallow-convolutional-neural-networks.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/vbalnt/tfeat">code]</a></li>
+<li>[L2-Net] L2-Net: Deep Learning of Discriminative Patch Descriptor in Euclidean Space, CVPR’2017 [<a target="_blank" rel="noopener" href="http://openaccess.thecvf.com/content_cvpr_2017/papers/Tian_L2-Net_Deep_Learning_CVPR_2017_paper.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/yuruntian/L2-Net">code]</a></li>
+<li>[HardNet] Working hard to know your neighbor’s margins: Local descriptor learning loss, CVPR’2018 [<a target="_blank" rel="noopener" href="http://papers.nips.cc/paper/7068-working-hard-to-know-your-neighbors-margins-local-descriptor-learning-loss.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/DagnyT/hardnet/tree/master">code]</a></li>
+<li>[AffNet] Repeatability Is Not Enough: Learning Discriminative Affine Regions via Discriminability, ECCV’2018 [<a target="_blank" rel="noopener" href="http://openaccess.thecvf.com/content_ECCV_2018/papers/Dmytro_Mishkin_Repeatability_Is_Not_ECCV_2018_paper.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/ducha-aiki/affnet">code]</a></li>
+</ul>
+<h3 id="APPLICATIONS"><a href="#APPLICATIONS" class="headerlink" title="APPLICATIONS"></a>APPLICATIONS</h3><h6 id="Remote-Sensing-Image-Registration"><a href="#Remote-Sensing-Image-Registration" class="headerlink" title="Remote Sensing Image Registration"></a>Remote Sensing Image Registration</h6><ul>
+<li>[GLPM] Guided Locality Preserving Feature Matching for Remote Sensing Image Registration, TGRS’2018 [<a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/abstract/document/8340808/">pdf]</a></li>
+</ul>
+<h6 id="Retinal-Image-Registration"><a href="#Retinal-Image-Registration" class="headerlink" title="Retinal Image Registration"></a>Retinal Image Registration</h6><ul>
+<li>[DB-ICP] The dual-bootstrap iterative closest point algorithm with application to retinal image registration, TMI’2003 [<a target="_blank" rel="noopener" href="http://www.cs.rpi.edu/~stewart/papers/dual_bootstrap_icp.pdf">pdf]</a></li>
+<li>[GDB-ICP] Registration of Challenging Image Pairs: Initialization, Estimation, and Decision, TPAMI’2007 [<a target="_blank" rel="noopener" href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.226.2782&rep=rep1&type=pdf">pdf]</a> [<a target="_blank" rel="noopener" href="http://www.vision.cs.rpi.edu/gdbicp/">project]</a></li>
+<li>[ED-DB-ICP] The edge-driven dual-bootstrap iterative closest point algorithm for registration of multimodal fluorescein angiogram sequence, TMI’2010 [<a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/abstract/document/5223602/">pdf]</a></li>
+</ul>
+<h6 id="Palmprint-Image-Registration"><a href="#Palmprint-Image-Registration" class="headerlink" title="Palmprint Image Registration"></a>Palmprint Image Registration</h6><ul>
+<li>Robust and efficient ridge-based palmprint matching, TPAMI’2012 [<a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/abstract/document/6112761/">pdf]</a></li>
+<li>Palmprint image registration using convolutional neural networks and Hough transform, arxiv’2019 [<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1904.00579">pdf]</a></li>
+</ul>
+<h6 id="Visual-Homing-Navigation"><a href="#Visual-Homing-Navigation" class="headerlink" title="Visual Homing Navigation"></a>Visual Homing Navigation</h6><ul>
+<li>Visual Homing via Guided Locality Preserving Matching, ICRA’2018 [<a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/abstract/document/8460935/">pdf]</a></li>
+</ul>
+<h6 id="HDR-Imaging"><a href="#HDR-Imaging" class="headerlink" title="HDR Imaging"></a>HDR Imaging</h6><ul>
+<li>Locally non-rigid registration for mobile HDR photography, CVPRW’2015 [<a target="_blank" rel="noopener" href="https://www.cv-foundation.org/openaccess/content_cvpr_workshops_2015/W12/papers/Gallo_Locally_Non-Rigid_Registration_2015_CVPR_paper.pdf">pdf]</a></li>
+</ul>
+<h6 id="Misc-1"><a href="#Misc-1" class="headerlink" title="Misc"></a>Misc</h6><ul>
+<li>Hand Motion from 3D Point Trajectories and a Smooth Surface Model, ECCV’2004 [<a target="_blank" rel="noopener" href="https://hal.inria.fr/inria-00262293/document">pdf]</a> [<a target="_blank" rel="noopener" href="http://www.inrialpes.fr/movi">project]</a></li>
+<li>A robust hybrid method for nonrigid image registration, PR’2011 [<a target="_blank" rel="noopener" href="https://www.sciencedirect.com/science/article/pii/S0031320310004930">pdf]</a></li>
+<li>Aligning Images in the Wild, CVPR’2012 [<a target="_blank" rel="noopener" href="https://www.comp.nus.edu.sg/~lowkl/publications/aligning_images_cvpr2012.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://sites.google.com/site/laoszefei81/home/code-1/code-for-aligning-images-in-the-wild">code]</a></li>
+<li>Robust feature set matching for partial face recognition, CVPR’2013 [<a target="_blank" rel="noopener" href="http://openaccess.thecvf.com/content_iccv_2013/papers/Weng_Robust_Feature_Set_2013_ICCV_paper.pdf">pdf]</a></li>
+<li>Multi-modal and Multi-spectral Registrationfor Natural Images, ECCV’2014 [<a target="_blank" rel="noopener" href="http://www.cse.cuhk.edu.hk/~leojia/projects/multimodal/papers/multispectral_registration.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="http://www.cse.cuhk.edu.hk/~leojia/projects/multimodal/">project]</a></li>
+<li>Articulated and Generalized Gaussian KernelCorrelation for Human Pose Estimation, TIP’2016 [<a target="_blank" rel="noopener" href="https://www.researchgate.net/publication/286510775_Articulated_and_Generalized_Gaussian_Kernel_Correlation_for_Human_Pose_Estimation?enrichId=rgreq-1fc1a14d1ced5b1cefa92e498e22f862-XXX&enrichSource=Y292ZXJQYWdlOzI4NjUxMDc3NTtBUzozMzg0NjEwNTc1MzE5MDRAMTQ1NzcwNjgxMjgwMQ==&el=1_x_3&_esc=publicationCoverPdf">pdf]</a></li>
+<li>Infrared and visible image fusion via gradient transfer and total variation minimization, Information Fusion’2016 [<a target="_blank" rel="noopener" href="https://www.researchgate.net/profile/Chang_Li37/publication/292680729_Infrared_and_visible_image_fusion_via_gradient_transfer_and_total_variation_minimization/links/5a10e6cca6fdccc2d7999da3/Infrared-and-visible-image-fusion-via-gradient-transfer-and-total-variation-minimization.pdf">pdf]</a> [<a target="_blank" rel="noopener" href="https://github.com/jiayi-ma?tab=repositories">code]</a></li>
+</ul>
+<h3 id="DATABASES"><a href="#DATABASES" class="headerlink" title="DATABASES"></a>DATABASES</h3><h6 id="General-databases"><a href="#General-databases" class="headerlink" title="General databases"></a>General databases</h6><ul>
+<li><a target="_blank" rel="noopener" href="https://www.cise.ufl.edu/~anand/students/chui/research.html">2D Synthesized Chui-Rangarajan Dataset (deformation, noise, and outliers)</a></li>
+<li><a target="_blank" rel="noopener" href="http://tosca.cs.technion.ac.il/book/resources_data.html">TOSCA</a></li>
+<li><a target="_blank" rel="noopener" href="http://vision.middlebury.edu/mview/data/">Multi-View Stereo Dataset</a></li>
+<li><a target="_blank" rel="noopener" href="http://grail.cs.washington.edu/projects/mvscpc/">Multi-View Stereo for Community Photo Collections</a></li>
+<li><a target="_blank" rel="noopener" href="https://cvlab.epfl.ch/data/data-strechamvs/">Multi-View Stereo</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.robots.ox.ac.uk/~vgg/data/data-aff.html">VGG Affine Datasets</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.robots.ox.ac.uk/~vgg/data1.html">Multi-view VGG’s Dataset</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.robots.ox.ac.uk/~vgg/data2.html">Oxford Building Reconstruction</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.imm.dtu.dk/~aam/datasets/datasets.html">IMM Datasets</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.imageprocessingplace.com/downloads_V3/root_downloads/image_databases/MPEG7_CE-Shape-1_Part_B.zip">MPEG7 CE Shape-1 Part B</a></li>
+<li>[Leaf Shapes Database](<a target="_blank" rel="noopener" href="http://www.imageprocessingplace.com/downloads_V3/root_downloads/image_databases/leaf">http://www.imageprocessingplace.com/downloads_V3/root_downloads/image_databases/leaf</a> shape database&#x2F;leaf_shapes_downloads.htm)</li>
+<li><a target="_blank" rel="noopener" href="http://vasc.ri.cmu.edu/idb/html/motion/house/index.html">CMU House&#x2F;Hotel Sequence Images</a></li>
+<li><a target="_blank" rel="noopener" href="https://lmb.informatik.uni-freiburg.de/resources/datasets/genmatch.en.html">Generated Matching Dataset</a></li>
+<li><a target="_blank" rel="noopener" href="https://lmb.informatik.uni-freiburg.de/resources/datasets/sequences.en.html">Image Sequences</a></li>
+<li><a target="_blank" rel="noopener" href="http://tosca.cs.technion.ac.il/book/resources_data.html">Mythological creatures 2D</a></li>
+<li><a target="_blank" rel="noopener" href="http://tosca.cs.technion.ac.il/book/resources_data.html">Tools 2D</a></li>
+<li><a target="_blank" rel="noopener" href="http://tosca.cs.technion.ac.il/book/resources_data.html">Human face</a></li>
+<li><a target="_blank" rel="noopener" href="https://drive.google.com/drive/folders/0B7CshFGxfi_5RVoyYzFyMUhuZnM">Cars &amp; Motorbikes</a></li>
+<li><a target="_blank" rel="noopener" href="http://diml.yonsei.ac.kr/~srkim/DASC/DIMLmultimodal/">DIML Multimodal Benchmark</a></li>
+<li><a target="_blank" rel="noopener" href="http://3drepresentation.stanford.edu/">Street View Dataset</a> [<a target="_blank" rel="noopener" href="https://github.com/amir32002/3D_Street_View">github]</a> [<a target="_blank" rel="noopener" href="https://console.cloud.google.com/storage/browser/streetview_image_pose_3d">data]</a></li>
+<li><a target="_blank" rel="noopener" href="http://cmp.felk.cvut.cz/wbs/datasets/EVD.zip">EVD: Extreme View Dataset</a> [<a target="_blank" rel="noopener" href="http://cmp.felk.cvut.cz/wbs/datasets/EVD_tentatives.zip">EVD_tentatives]</a> [<a target="_blank" rel="noopener" href="http://cmp.felk.cvut.cz/wbs/datasets/ExtremeZoomDataset.zip">EZD]</a></li>
+<li><a target="_blank" rel="noopener" href="http://cmp.felk.cvut.cz/wbs/datasets/WxBS-dataset.zip">WxBS: Wide Baseline Dataset</a> [<a target="_blank" rel="noopener" href="http://cmp.felk.cvut.cz/wbs/datasets/W1BS.tar.gz">W1BS]</a></li>
+<li><a target="_blank" rel="noopener" href="http://graphics.stanford.edu/data/3Dscanrep/">Stanford 3D Scanning</a></li>
+<li><a target="_blank" rel="noopener" href="http://faust.is.tue.mpg.de/">MPI FAUST Dataset</a></li>
+<li><a target="_blank" rel="noopener" href="http://lear.inrialpes.fr/people/mikolajczyk/Database/index.html">Mikolajczyk Database</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.ti.uni-bielefeld.de/html/research/avardy/index.html">Panoramic Image Database</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/rmitra/PS-Dataset">PS-Dataset (A Large Dataset for improving Patch Matching, PhotoSynth Dataset for improving local patch Descriptors)</a></li>
+<li><a target="_blank" rel="noopener" href="http://cmp.felk.cvut.cz/data/geometry2view/index.xhtml">Two-view Geometry</a></li>
+<li><a target="_blank" rel="noopener" href="https://projet.liris.cnrs.fr/pcr/">Point clouds data sets for 3D registration</a></li>
+<li><a target="_blank" rel="noopener" href="https://image-matching-workshop.github.io/challenge/">IMW CVPR 2019: Challenge</a></li>
+<li><a target="_blank" rel="noopener" href="http://kos.informatik.uni-osnabrueck.de/3Dscans/">Robotic 3D Scan Repository</a></li>
+<li><a target="_blank" rel="noopener" href="http://staffhome.ecm.uwa.edu.au/~00053650/3Dmodeling.html">Database for 3D surface registration</a></li>
+</ul>
+<h6 id="Other-databases"><a href="#Other-databases" class="headerlink" title="Other databases"></a>Other databases</h6><ul>
+<li><a target="_blank" rel="noopener" href="https://www.ics.forth.gr/cvrl/fire/">FIRE: Fundus Image Registration Dataset</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.isi.uu.nl/Research/Databases/DRIVE/">DRIVE (Retinal Images)</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.ia.uned.es/~ejcarmona/DRIONS-DB.html">DRIONS-DB (Retinal Images)</a></li>
+<li><a target="_blank" rel="noopener" href="http://cecas.clemson.edu/~ahoover/stare/">STARE (Retinal Images)</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.plant-phenotyping.org/datasets-download">Plant Images</a></li>
+<li><a target="_blank" rel="noopener" href="https://bigr-xnat.erasmusmc.nl/">MR Prostate Images</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.cs.cmu.edu/afs/cs/project/cil/www/v-images.html">CV Images</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.vision.ee.ethz.ch/en/datasets/">ETHZ Datasets</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.cvpapers.com/datasets.html">CVPapers</a></li>
+<li><a target="_blank" rel="noopener" href="https://riemenschneider.hayko.at/vision/dataset">YACVID</a></li>
+<li><a target="_blank" rel="noopener" href="http://mplab.sztaki.hu/remotesensing/index.html">Intelligent remote sensing data analyis</a></li>
+</ul>
+<h3 id="TOOLS"><a href="#TOOLS" class="headerlink" title="TOOLS"></a>TOOLS</h3><ul>
+<li><a target="_blank" rel="noopener" href="http://www.vlfeat.org/">VLFeat</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/PointCloudLibrary/pcl">PCL: Point Cloud Library</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ethz-asl/libpointmatcher">Pointmatcher: a modular library implementing the ICP algorithm for aligning point clouds</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.open3d.org/docs/index.html">Open3D: A Modern Library for 3D Data Processing</a></li>
+<li><a target="_blank" rel="noopener" href="http://mvviewer.gforge.inria.fr/">3D keypoints (MeshDOG) and local descriptors (MeshHOG)</a></li>
+<li><a target="_blank" rel="noopener" href="https://colmap.github.io/">COLMAP</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/openMVG/openMVG">OpenMVG: open Multiple View Geometry</a></li>
+<li><a target="_blank" rel="noopener" href="http://ccwu.me/vsfm/">VisualSFM : A Visual Structure from Motion System</a></li>
+<li><a target="_blank" rel="noopener" href="https://sites.google.com/site/myronenko/research/mirt">Medical Image Registration Toolbox</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.timotheecour.com/software/graph_matching/graph_matching.html">Graph Matching Toolbox in MATLAB</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/C4IR/FAIR.m">FAIR: Flexible Algorithms for Image Registration</a> [<a target="_blank" rel="noopener" href="http://www.siam.org/books/fa06/Modersitzki_FAIR_2009_FA06.pdf">pdf]</a></li>
+<li><a target="_blank" rel="noopener" href="http://eia.udg.es/~cmatabos/research.htm">Range Image Registration Toolbox</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Point-Set/" rel="tag"># Point Set</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/06/17/AI/Base/Math/" rel="prev" title="Math -- 数学基础">
+      <i class="fa fa-chevron-left"></i> Math -- 数学基础
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/07/03/Sub_Language/PythonDoc/Language-np/" rel="next" title="tools_np Doc">
+      tools_np Doc <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Point-Set-Matching-Registration-Material"><span class="nav-number">1.</span> <span class="nav-text">Point Set Matching&#x2F;Registration Material</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#POINT-SET-MATCHING-REGISTRATION-METHODS-WIKI"><span class="nav-number">1.0.1.</span> <span class="nav-text">POINT SET MATCHING&#x2F;REGISTRATION METHODS [WIKI]</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#Point-Matching-Registration-Methods"><span class="nav-number">1.0.1.0.0.1.</span> <span class="nav-text">Point Matching&#x2F;Registration Methods</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Mismatch-Removal-Methods"><span class="nav-number">1.0.1.0.0.2.</span> <span class="nav-text">Mismatch Removal Methods</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Graph-Matching-Methods"><span class="nav-number">1.0.1.0.0.3.</span> <span class="nav-text">Graph Matching Methods</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Misc"><span class="nav-number">1.0.1.0.0.4.</span> <span class="nav-text">Misc</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Deep-Features"><span class="nav-number">1.0.1.0.0.5.</span> <span class="nav-text">Deep Features</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#APPLICATIONS"><span class="nav-number">1.0.2.</span> <span class="nav-text">APPLICATIONS</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#Remote-Sensing-Image-Registration"><span class="nav-number">1.0.2.0.0.1.</span> <span class="nav-text">Remote Sensing Image Registration</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Retinal-Image-Registration"><span class="nav-number">1.0.2.0.0.2.</span> <span class="nav-text">Retinal Image Registration</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Palmprint-Image-Registration"><span class="nav-number">1.0.2.0.0.3.</span> <span class="nav-text">Palmprint Image Registration</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Visual-Homing-Navigation"><span class="nav-number">1.0.2.0.0.4.</span> <span class="nav-text">Visual Homing Navigation</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#HDR-Imaging"><span class="nav-number">1.0.2.0.0.5.</span> <span class="nav-text">HDR Imaging</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Misc-1"><span class="nav-number">1.0.2.0.0.6.</span> <span class="nav-text">Misc</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DATABASES"><span class="nav-number">1.0.3.</span> <span class="nav-text">DATABASES</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#General-databases"><span class="nav-number">1.0.3.0.0.1.</span> <span class="nav-text">General databases</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Other-databases"><span class="nav-number">1.0.3.0.0.2.</span> <span class="nav-text">Other databases</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TOOLS"><span class="nav-number">1.0.4.</span> <span class="nav-text">TOOLS</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

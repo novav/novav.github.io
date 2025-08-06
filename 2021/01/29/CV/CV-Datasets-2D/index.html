@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="人脸数据PubFiG这是哥伦比亚大学的公众人物脸部数据集，包含有200个人的58k+人脸图像，主要用于非限制场景下的人脸识别。 Multi-Task Facial Landmark (MTFL) dataset该数据集包含了将近13000张人脸图片，均采自网络。 BioID Face Database - FaceDB这个数据集包含了1521幅分辨率为384x286像素的灰度图像。 每一幅图像来自">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机视觉--视觉2D数据库">
+<meta property="og:url" content="https://novav.github.io/2021/01/29/CV/CV-Datasets-2D/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="人脸数据PubFiG这是哥伦比亚大学的公众人物脸部数据集，包含有200个人的58k+人脸图像，主要用于非限制场景下的人脸识别。 Multi-Task Facial Landmark (MTFL) dataset该数据集包含了将近13000张人脸图片，均采自网络。 BioID Face Database - FaceDB这个数据集包含了1521幅分辨率为384x286像素的灰度图像。 每一幅图像来自">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2021/01/29/CV/CV-Datasets-2D/v2-02a4e6b8ee4b8f85c32424b3d6fde933_hd.jpg">
+<meta property="og:image" content="https://novav.github.io/2021/01/29/CV/CV-Datasets-2D/v2-8499ca4c7e0d2ee2d42be0cf40d363cb_hd.jpg">
+<meta property="og:image" content="https://novav.github.io/2021/01/29/CV/CV-Datasets-2D/v2-70bed021c7dcb17140e9cc85e85cf3d5_hd.jpg">
+<meta property="og:image" content="https://novav.github.io/2021/01/29/CV/CV-Datasets-2D/v2-064d5695a7ccd9f39e6748dca537dfd7_hd.jpg">
+<meta property="og:image" content="https://novav.github.io/2021/01/29/CV/CV-Datasets-2D/v2-e8473e026640d6152841c102a4b91ebb_hd.jpg">
+<meta property="og:image" content="https://novav.github.io/2021/01/29/CV/CV-Datasets-2D/v2-93b16a445805b3368ea5a51048d7e7e9_hd.jpg">
+<meta property="og:image" content="https://novav.github.io/2021/01/29/CV/CV-Datasets-2D/v2-8a9da43b318b684b96f4c027218665d6_hd.jpg">
+<meta property="og:image" content="https://novav.github.io/2021/01/29/CV/CV-Datasets-2D/v2-2d63fade755c5f60918599a2855e018b_hd.jpg">
+<meta property="og:image" content="https://novav.github.io/2021/01/29/CV/CV-Datasets-2D/v2-5855e777e5e7cbf71dafadc07899acf3_hd.jpg">
+<meta property="article:published_time" content="2021-01-29T16:36:57.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:38.233Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="CV">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2021/01/29/CV/CV-Datasets-2D/v2-02a4e6b8ee4b8f85c32424b3d6fde933_hd.jpg">
+
+<link rel="canonical" href="https://novav.github.io/2021/01/29/CV/CV-Datasets-2D/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>计算机视觉--视觉2D数据库 | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2021/01/29/CV/CV-Datasets-2D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          计算机视觉--视觉2D数据库
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-01-29 16:36:57" itemprop="dateCreated datePublished" datetime="2021-01-29T16:36:57+00:00">2021-01-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:38" itemprop="dateModified" datetime="2025-08-06T08:16:38+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/" itemprop="url" rel="index"><span itemprop="name">CV</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/Datasets/" itemprop="url" rel="index"><span itemprop="name">Datasets</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="人脸数据"><a href="#人脸数据" class="headerlink" title="人脸数据"></a>人脸数据</h3><h4 id="PubFiG"><a href="#PubFiG" class="headerlink" title="PubFiG"></a>PubFiG</h4><p>这是哥伦比亚大学的公众人物脸部数据集，包含有200个人的58k+人脸图像，主要用于非限制场景下的人脸识别。</p>
+<h4 id="Multi-Task-Facial-Landmark-MTFL-dataset"><a href="#Multi-Task-Facial-Landmark-MTFL-dataset" class="headerlink" title="Multi-Task Facial Landmark (MTFL) dataset"></a><a href="https://link.zhihu.com/?target=http://mmlab.ie.cuhk.edu.hk/projects/TCDCN.html">Multi-Task Facial Landmark (MTFL) dataset</a></h4><p>该数据集包含了将近13000张人脸图片，均采自网络。</p>
+<h4 id="BioID-Face-Database-FaceDB"><a href="#BioID-Face-Database-FaceDB" class="headerlink" title="BioID Face Database - FaceDB"></a><a href="https://link.zhihu.com/?target=https://www.bioid.com/About/BioID-Face-Database">BioID Face Database - FaceDB</a></h4><p>这个数据集包含了1521幅分辨率为384x286像素的灰度图像。 每一幅图像来自于23个不同的测试人员的正面角度的人脸。为了便于做比较，这个数据集也包含了对人脸图像对应的手工标注的人眼位置文件。 图像以 “BioID_xxxx.pgm”的格式命名，其中xxxx代表当前图像的索引(从0开始)。类似的，形如”BioID_xxxx.eye”的文件包含了对应图像中眼睛的位置。</p>
+<p><img src="/2021/01/29/CV/CV-Datasets-2D/v2-02a4e6b8ee4b8f85c32424b3d6fde933_hd.jpg" alt="img"></p>
+<h4 id="Labeled-Faces-in-the-Wild-Home-LFW"><a href="#Labeled-Faces-in-the-Wild-Home-LFW" class="headerlink" title="Labeled Faces in the Wild Home (LFW)"></a><a href="https://link.zhihu.com/?target=http://vis-www.cs.umass.edu/lfw/">Labeled Faces in the Wild Home (LFW)</a></h4><p><em>More than 13,000 images of faces collected from the web. Each face has been labeled with the name of the person pictured. 1680 of the people pictured have two or more distinct photos in the data set.</em></p>
+<p>LFW数据集是为了研究非限制环境下的人脸识别问题而建立的。这个数据集包含超过13，000张人脸图像，均采集于Internet。</p>
+<p>每个人脸均被标准了一个人名。其中，大约1680个人包含两个以上的人脸。</p>
+<p>这个集合被广泛应用于评价Face Verification算法的性能。</p>
+<p><img src="/2021/01/29/CV/CV-Datasets-2D/v2-8499ca4c7e0d2ee2d42be0cf40d363cb_hd.jpg" alt="img"></p>
+<h4 id="CelebA-HQ"><a href="#CelebA-HQ" class="headerlink" title="CelebA_HQ"></a>CelebA_HQ</h4><p>30000张，512*512人脸图片 下载链接(含百度云等)见<a target="_blank" rel="noopener" href="https://github.com/switchablenorms/CelebAMask-HQ">https://github.com/switchablenorms/CelebAMask-HQ</a></p>
+<h4 id="FFHQ"><a href="#FFHQ" class="headerlink" title="FFHQ"></a>FFHQ</h4><p><a target="_blank" rel="noopener" href="https://github.com/NVlabs/ffhq-dataset">https://github.com/NVlabs/ffhq-dataset</a></p>
+<p>Google: <a target="_blank" rel="noopener" href="https://github.com/NVlabs/ffhq-dataset">https://github.com/NVlabs/ffhq-dataset</a></p>
+<p>百度网盘：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_37867534/article/details/90404660">https://blog.csdn.net/qq_37867534/article/details/90404660</a></p>
+<h4 id="CMU-人脸数据"><a href="#CMU-人脸数据" class="headerlink" title="CMU 人脸数据"></a>CMU 人脸数据</h4><h4 id="CMUVASC-PIE-Face-dataset"><a href="#CMUVASC-PIE-Face-dataset" class="headerlink" title="CMUVASC &amp; PIE Face dataset"></a><a href="https://link.zhihu.com/?target=http://vasc.ri.cmu.edu/idb/html/face/index.html">CMUVASC &amp; PIE Face dataset</a></h4><p><em>The face datasets were provided by the face reserch group at CMU.</em></p>
+<p>CMU PIE人脸库建立于2000年11月，它包括来自68个人的40000张照片，其中包括了每个人的13种姿态条件，43种光照条件和4种表情下的照片，现有的多姿态人脸识别的文献基本上都是在CMU PIE人脸库上测试的。</p>
+<h4 id="YouTube-Faces"><a href="#YouTube-Faces" class="headerlink" title="YouTube Faces"></a><a href="https://link.zhihu.com/?target=http://www.cs.tau.ac.il/~wolf/ytfaces/">YouTube Faces</a></h4><p><em>The data set contains 3,425 videos of 1,595 different people. The shortest clip duration is 48 frames, the longest clip is 6,070 frames, and the average length of a video clip is 181.3 frames.</em></p>
+<p>YouTube Video Faces是用来做人脸验证的。在这个数据集下，算法需要判断两段视频里面是不是同一个人。有不少在照片上有效的方法，在视频上未必有效&#x2F;高效。</p>
+<p><img src="/2021/01/29/CV/CV-Datasets-2D/v2-70bed021c7dcb17140e9cc85e85cf3d5_hd.jpg" alt="img"></p>
+<h4 id="CASIA-FaceV5"><a href="#CASIA-FaceV5" class="headerlink" title="CASIA-FaceV5"></a><a href="https://link.zhihu.com/?target=http://biometrics.idealtest.org/dbDetailForUser.do?id=9">CASIA-FaceV5</a></h4><p><em>CASIA Face Image Database Version 5.0 (or CASIA-FaceV5) contains 2,500 color facial images of 500 subjects.</em></p>
+<p>该数据集包含了来自500个人的2500张亚洲人脸图片.</p>
+<p><img src="/2021/01/29/CV/CV-Datasets-2D/v2-064d5695a7ccd9f39e6748dca537dfd7_hd.jpg" alt="img"></p>
+<h4 id="The-CNBC-Face-Database"><a href="#The-CNBC-Face-Database" class="headerlink" title="The CNBC Face Database"></a><a href="https://link.zhihu.com/?target=http://wiki.cnbc.cmu.edu/Face_Place">The CNBC Face Database</a></h4><p><em>This database includes multiple images for over 200 individuals of many different races with consistent lighting, multiple views, real emotions, and disguises (and some participants returned for a second session several weeks later with a haircut, or a new beard, etc.).</em></p>
+<p>该数据集采集了200个人在不同状态下（不同的神情，装扮，发型等）的人脸照片。</p>
+<p><img src="/2021/01/29/CV/CV-Datasets-2D/v2-e8473e026640d6152841c102a4b91ebb_hd.jpg" alt="img"></p>
+<h4 id="CASIA-3D-FaceV1"><a href="#CASIA-3D-FaceV1" class="headerlink" title="CASIA-3D FaceV1"></a><a href="https://link.zhihu.com/?target=http://biometrics.idealtest.org/dbDetailForUser.do?id=8">CASIA-3D FaceV1</a></h4><p><em>4624 scans of 123 persons using the non-contact 3D digitizer, Minolta Vivid 910, as shown in figure.</em></p>
+<p>该数据集包含了来自123个人的4624张人脸图片，所有图片均由下图的仪器进行拍摄。</p>
+<p><img src="/2021/01/29/CV/CV-Datasets-2D/v2-93b16a445805b3368ea5a51048d7e7e9_hd.jpg" alt="img"></p>
+<h4 id="IMDB-WIKI"><a href="#IMDB-WIKI" class="headerlink" title="IMDB-WIKI"></a><a href="https://link.zhihu.com/?target=https://data.vision.ee.ethz.ch/cvl/rrothe/imdb-wiki/">IMDB-WIKI</a></h4><p><em>In total we obtained 460,723 face images from 20,284 celebrities from IMDb and 62,328 from Wikipedia, thus 523,051 in total.</em></p>
+<p>IMDB-WIKI人脸数据库是有IMDB数据库和Wikipedia数据库组成，其中IMDB人脸数据库包含了460,723张人脸图片，而Wikipedia人脸数据库包含了62,328张人脸数据库，总共523,051张人脸数据库，IMDB-WIKI人脸数据库中的每张图片都被标注了人的年龄和性别，对于年龄识别和性别识别的研究有着重要的意义。</p>
+<p><img src="/2021/01/29/CV/CV-Datasets-2D/v2-8a9da43b318b684b96f4c027218665d6_hd.jpg" alt="img"></p>
+<h4 id="FDDB"><a href="#FDDB" class="headerlink" title="FDDB"></a><a href="https://link.zhihu.com/?target=http://vis-www.cs.umass.edu/fddb/index.html">FDDB</a></h4><p><em>A data set of face regions designed for studying the problem of unconstrained face detection. This data set contains the annotations for 5171 faces in a set of 2845 images taken from the Faces in the Wild data set.</em></p>
+<p>FDDB是UMass的数据集，被用来做人脸检测(Face Detection)。这个数据集比较大，比较有挑战性。而且作者提供了程序用来评估检测结果，所以在这个数据上面比较算法也相对公平。</p>
+<p><img src="/2021/01/29/CV/CV-Datasets-2D/v2-2d63fade755c5f60918599a2855e018b_hd.jpg" alt="img"></p>
+<h4 id="Caltech人脸数据库"><a href="#Caltech人脸数据库" class="headerlink" title="Caltech人脸数据库"></a><a href="https://link.zhihu.com/?target=http://www.vision.caltech.edu/Image_Datasets/Caltech_10K_WebFaces/%23Description">Caltech人脸数据库</a></h4><p><em>The dataset contains images of people collected from the web by typing common given names into Google Image Search. The coordinates of the eyes, the nose and the center of the mouth for each frontal face are provided in a ground truth file. This information can be used to align and crop the human faces or as a ground truth for a face detection algorithm. The dataset has 10,524 human faces of various resolutions and in different settings, e.g. portrait images, groups of people, etc. Profile faces or very low resolution faces are not labeled.</em></p>
+<p>10k+人脸，提供双眼和嘴巴的坐标位置</p>
+<p><img src="/2021/01/29/CV/CV-Datasets-2D/v2-5855e777e5e7cbf71dafadc07899acf3_hd.jpg" alt="img"></p>
+<h4 id="The-Japanese-Female-Facial-Expression-JAFFE-Database"><a href="#The-Japanese-Female-Facial-Expression-JAFFE-Database" class="headerlink" title="The Japanese Female Facial Expression (JAFFE) Database"></a><a href="https://link.zhihu.com/?target=http://www.kasrl.org/jaffe.html">The Japanese Female Facial Expression (JAFFE) Database</a></h4><p><em>The database contains 213 images of 7 facial expressions (6 basic facial expressions + 1 neutral) posed by 10 Japanese female models. Each image has been rated on 6 emotion adjectives by 60 Japanese subjects. The database was planned and assembled by Michael Lyons, Miyuki Kamachi, and Jiro Gyoba. We thank Reiko Kubota for her help as a research assistant. The photos were taken at the Psychology Department in Kyushu University.</em></p>
+<p>该数据库是由10位日本女性在实验环境下根据指示做出各种表情，再由照相机拍摄获取的人脸表情图像。整个数据库一共有213张图像，10个人，全部都是女性，每个人做出7种表情，这7种表情分别是： sad, happy, angry, disgust, surprise, fear, neutral. 每个人为一组，每一组都含有7种表情，每种表情大概有3,4张样图。</p>
+<h4 id="AAF"><a href="#AAF" class="headerlink" title="AAF"></a>AAF</h4><p>全年龄（AAF）数据集包含分布在所有年龄段（2至80岁）的13322人脸图像（大部分为亚洲人）</p>
+<p>Download link (baidu): <a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1WtHQsb73rLa-cZpBLi2dtg">https://pan.baidu.com/s/1WtHQsb73rLa-cZpBLi2dtg</a><br>Download link (dropbox): [<a target="_blank" rel="noopener" href="https://www.dropbox.com/s/a0lj1ddd54ns8qy/All-Age-Faces%20Dataset.zip?dl=0%5D">https://www.dropbox.com/s/a0lj1ddd54ns8qy/All-Age-Faces%20Dataset.zip?dl=0]</a>(<a target="_blank" rel="noopener" href="https://www.dropbox.com/s/a0lj1ddd54ns8qy/All-Age-Faces">https://www.dropbox.com/s/a0lj1ddd54ns8qy/All-Age-Faces</a> Dataset.zip?dl&#x3D;0)</p>
+<h4 id="gender-and-age-classification"><a href="#gender-and-age-classification" class="headerlink" title="gender and age classification"></a>gender and age classification</h4><p><a target="_blank" rel="noopener" href="https://talhassner.github.io/home/projects/Adience/Adience-data.html#agegender">https://talhassner.github.io/home/projects/Adience/Adience-data.html#agegender</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Adience Faces</span><br><span class="line">Thanks for allowing us to keep in touch!</span><br><span class="line"></span><br><span class="line">User: adiencedb</span><br><span class="line">Password: adience</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="全身数据"><a href="#全身数据" class="headerlink" title="全身数据"></a>全身数据</h3><p>ref:</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/ansang/p/8137413.html">人脸识别常用数据集大全（12&#x2F;20更新） </a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CV/" rel="tag"># CV</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/01/19/CV/CV-SR-Impainting/" rel="prev" title="图像修复+高清">
+      <i class="fa fa-chevron-left"></i> 图像修复+高清
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/02/05/Paper/Paper-CV-NET-Mask_RCNN/" rel="next" title="Mask RCNN">
+      Mask RCNN <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%BA%E8%84%B8%E6%95%B0%E6%8D%AE"><span class="nav-number">1.</span> <span class="nav-text">人脸数据</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#PubFiG"><span class="nav-number">1.1.</span> <span class="nav-text">PubFiG</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Multi-Task-Facial-Landmark-MTFL-dataset"><span class="nav-number">1.2.</span> <span class="nav-text">Multi-Task Facial Landmark (MTFL) dataset</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BioID-Face-Database-FaceDB"><span class="nav-number">1.3.</span> <span class="nav-text">BioID Face Database - FaceDB</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Labeled-Faces-in-the-Wild-Home-LFW"><span class="nav-number">1.4.</span> <span class="nav-text">Labeled Faces in the Wild Home (LFW)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CelebA-HQ"><span class="nav-number">1.5.</span> <span class="nav-text">CelebA_HQ</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FFHQ"><span class="nav-number">1.6.</span> <span class="nav-text">FFHQ</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CMU-%E4%BA%BA%E8%84%B8%E6%95%B0%E6%8D%AE"><span class="nav-number">1.7.</span> <span class="nav-text">CMU 人脸数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CMUVASC-PIE-Face-dataset"><span class="nav-number">1.8.</span> <span class="nav-text">CMUVASC &amp; PIE Face dataset</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#YouTube-Faces"><span class="nav-number">1.9.</span> <span class="nav-text">YouTube Faces</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CASIA-FaceV5"><span class="nav-number">1.10.</span> <span class="nav-text">CASIA-FaceV5</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#The-CNBC-Face-Database"><span class="nav-number">1.11.</span> <span class="nav-text">The CNBC Face Database</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CASIA-3D-FaceV1"><span class="nav-number">1.12.</span> <span class="nav-text">CASIA-3D FaceV1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IMDB-WIKI"><span class="nav-number">1.13.</span> <span class="nav-text">IMDB-WIKI</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FDDB"><span class="nav-number">1.14.</span> <span class="nav-text">FDDB</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Caltech%E4%BA%BA%E8%84%B8%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">1.15.</span> <span class="nav-text">Caltech人脸数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#The-Japanese-Female-Facial-Expression-JAFFE-Database"><span class="nav-number">1.16.</span> <span class="nav-text">The Japanese Female Facial Expression (JAFFE) Database</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AAF"><span class="nav-number">1.17.</span> <span class="nav-text">AAF</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gender-and-age-classification"><span class="nav-number">1.18.</span> <span class="nav-text">gender and age classification</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A8%E8%BA%AB%E6%95%B0%E6%8D%AE"><span class="nav-number">2.</span> <span class="nav-text">全身数据</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"novav.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Unsloth DeepSeek R1动态量化部署方案https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1oePLezEZD&#x2F; https:&#x2F;&#x2F;kq4b3vgg5b.feishu.cn&#x2F;wiki&#x2F;UC0Yw4WzTix4fAkboPccaop1nvg Unsloth DeepSeek R1动态量化部署方案课程说明：体验课内容节选自《2025大模型Agent智能体开发实战》完整版付费">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DeepSeek Deploy by Unsloth 量化">
+<meta property="og:url" content="https://novav.github.io/2025/04/02/NLP/deepseek_deploy/index.html">
+<meta property="og:site_name" content="Simon Shi的小站">
+<meta property="og:description" content="Unsloth DeepSeek R1动态量化部署方案https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1oePLezEZD&#x2F; https:&#x2F;&#x2F;kq4b3vgg5b.feishu.cn&#x2F;wiki&#x2F;UC0Yw4WzTix4fAkboPccaop1nvg Unsloth DeepSeek R1动态量化部署方案课程说明：体验课内容节选自《2025大模型Agent智能体开发实战》完整版付费">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://novav.github.io/2025/04/02/NLP/deepseek_deploy/2025-03-27-10-38-27-image.png">
+<meta property="og:image" content="https://novav.github.io/2025/04/02/NLP/deepseek_deploy/2025-03-27-10-39-13-image.png">
+<meta property="og:image" content="https://novav.github.io/2025/04/02/NLP/deepseek_deploy/2025-03-27-10-39-31-image.png">
+<meta property="og:image" content="https://novav.github.io/2025/04/02/NLP/deepseek_deploy/2025-04-02-15-06-21-image.png">
+<meta property="og:image" content="https://novav.github.io/2025/04/02/NLP/deepseek_deploy/2025-04-02-15-06-34-image.png">
+<meta property="og:image" content="https://novav.github.io/2025/04/02/NLP/deepseek_deploy/2025-04-02-15-18-24-image.png">
+<meta property="og:image" content="https://novav.github.io/2025/04/02/NLP/deepseek_deploy/2025-04-02-15-18-38-image.png">
+<meta property="og:image" content="https://novav.github.io/2025/04/02/NLP/deepseek_deploy/2025-04-01-10-00-39-image.png">
+<meta property="og:image" content="https://novav.github.io/2025/04/02/NLP/deepseek_deploy/2025-04-01-10-00-16-image.png">
+<meta property="og:image" content="https://novav.github.io/2025/04/02/NLP/deepseek_deploy/2025-04-01-09-59-35-image.png">
+<meta property="og:image" content="https://novav.github.io/2025/04/02/NLP/deepseek_deploy/2025-04-01-09-59-03-image.png">
+<meta property="og:image" content="https://novav.github.io/2025/04/02/NLP/deepseek_deploy/2025-04-01-09-59-12-image.png">
+<meta property="article:published_time" content="2025-04-02T12:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:16:39.980Z">
+<meta property="article:author" content="Simon Shi">
+<meta property="article:tag" content="Unsloth">
+<meta property="article:tag" content="DeepSeek">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://novav.github.io/2025/04/02/NLP/deepseek_deploy/2025-03-27-10-38-27-image.png">
+
+<link rel="canonical" href="https://novav.github.io/2025/04/02/NLP/deepseek_deploy/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>DeepSeek Deploy by Unsloth 量化 | Simon Shi的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Simon Shi的小站</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">人工智能，机器学习， 强化学习，大模型，自动驾驶</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://novav.github.io/2025/04/02/NLP/deepseek_deploy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simon Shi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simon Shi的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          DeepSeek Deploy by Unsloth 量化
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-04-02 12:00:00" itemprop="dateCreated datePublished" datetime="2025-04-02T12:00:00+00:00">2025-04-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-08-06 08:16:39" itemprop="dateModified" datetime="2025-08-06T08:16:39+00:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dev/" itemprop="url" rel="index"><span itemprop="name">dev</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="Unsloth-DeepSeek-R1动态量化部署方案"><a href="#Unsloth-DeepSeek-R1动态量化部署方案" class="headerlink" title="Unsloth DeepSeek R1动态量化部署方案"></a>Unsloth DeepSeek R1动态量化部署方案</h2><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1oePLezEZD/">https://www.bilibili.com/video/BV1oePLezEZD/</a></p>
+<p><a target="_blank" rel="noopener" href="https://kq4b3vgg5b.feishu.cn/wiki/UC0Yw4WzTix4fAkboPccaop1nvg">https://kq4b3vgg5b.feishu.cn/wiki/UC0Yw4WzTix4fAkboPccaop1nvg</a></p>
+<p>Unsloth DeepSeek R1动态量化部署方案<br>课程说明：<br>体验课内容节选自《2025大模型Agent智能体开发实战》完整版付费课程<br>体验课时间有限，若想深度学习大模型技术，欢迎大家报名由我主讲的《2025大模型Agent智能体开发实战》：</p>
+<p>公开课全套学习资料，已上传至网盘（<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1asgKKl1SZvMZTIYvkaD63w?pwd=af7y%EF%BC%89">https://pan.baidu.com/s/1asgKKl1SZvMZTIYvkaD63w?pwd=af7y）</a></p>
+<p>需要更系统深入学习大模型可扫码⬆️添加助教咨询喔～</p>
+<h2 id="一、DeepSeek-R1部署方案综述"><a href="#一、DeepSeek-R1部署方案综述" class="headerlink" title="一、DeepSeek R1部署方案综述"></a>一、DeepSeek R1部署方案综述</h2><h3 id="1-DeepSeek-R1满血版模型高性能部署方案介绍"><a href="#1-DeepSeek-R1满血版模型高性能部署方案介绍" class="headerlink" title="1.DeepSeek R1满血版模型高性能部署方案介绍"></a>1.DeepSeek R1满血版模型高性能部署方案介绍</h3><p>伴随着DeepSeek R1模型使用需求不断深化，如何才能部署更高性能的满血版DeepSeek R1模型，就成了很多应用场景下的当务之急。</p>
+<p>受限于DeepSeek R1 671B（6710亿参数）的模型规模，通常情况下部署DeepSeek R1满血版模型需要1200G左右显存（考虑百人内并发情况），需要双节点8卡A100服务器才能运行（总成本约在260万-320万左右），而哪怕是INT 4半精度下，也需要至少490G显存，需要单节点8卡A100服务器才能运行。</p>
+<p>DeepSeek R1和DeepSeek V3都是默认BF8精度，是一种低精度的浮点数格式。</p>
+<p>BF8的全称是”Brain Floating Point”，由Google提出，主要用于大规模计算任务。与常见的16位浮点数（FP16）不同，BF8采用了8位尾数和8位指数的结构，能够在保证精度的同时减少计算和内存开销。</p>
+<p>BF8的设计目标是减少计算量并保持数值稳定性，特别是在机器学习模型训练中，能在加速硬件上提供比FP32更好的性能。</p>
+<p>在此情况下，如何以更少的成本获得尽可能好的模型性能——也就是如果进行DeepSeek R1的高性能部署，就成了重中之重。基本来说，目前的解决方案有以下三种：</p>
+<p>1）【牺牲模型训练&amp;微调性能】<br>采用“强推理、弱训练”的硬件配置：如选择国产芯片、英伟达A6000 ada图形显卡、或者采购DeepSeek一体机、甚至是选择MacMini集群等，都是不错的选择。</p>
+<p>这些硬件模型训练性能较弱，但推理能力强悍，对于一些不需要进行模型训练和微调、只需要推理（也就是对话）的场景来说，是个非常不错的选择。</p>
+<p>例如45万左右成本，就能购买能运行DeepSeek R1满血版模型的Mac Mini集群，相比购买英伟达显卡，能够节省很大一部分成本。</p>
+<p>但劣势在于Mac M系列芯片并不适合进行模型训练和微调。</p>
+<p>2）【牺牲模型推理性能】<br>采用DeepSeek R1 Distill蒸馏模型：DeepSeek R蒸馏模型组同样推理性能不俗，且蒸馏模型尺寸在1.5B到70B之间，可以适配于任何硬件环境和各类不同的使用需求。</p>
+<p>3）配置说明<br>其中各蒸馏模型、各量化版本、各不同使用场景（如模型推理、模型高效微调和全量微调）下模型所需最低配置如下：</p>
+<p>4）【牺牲模型推理速度】采用CPU+GPU混合推理模式。<br>由于采用了CPU执行计算任务，GPU的负载会大幅降低，整体硬件成本也会下降。</p>
+<p>但是，毕竟CPU不适合进行深度学习计算，所以模型整体推理速度会很慢，并且无法进行模型训练。</p>
+<p>llama.cpp项目介绍：<a target="_blank" rel="noopener" href="https://github.com/ggml-org/llama.cpp">https://github.com/ggml-org/llama.cpp</a></p>
+<p>早在2023年3月，也就是Llama第一代模型开源不久，有一位C语言大神（Georgi Gerganov），在GitHub上发起了一个名为llama.cpp的项目，该项目非常夸张的用C语言编写了一整套深度学习底层张量计算库，极大程度降低了大模型等深度学习算法的计算门槛，并最终使得大模型可以在消费级CPU上运行。</p>
+<p>llama.cpp现在已经成了大模型量化的标准解决方案，前面谈到的Q2、Q4、Q8等模型量化，都是借助llama.cpp完成的。这个神级项目，现在在GitHub上已经斩获了75k stars。</p>
+<p>借助llama.cpp，可以使用纯CPU模式来运行DeepSeek R1模型，只不过此时需要大量的内存来加载模型权重，并且运行速度非常慢，不过硬件价格倒是很便宜。</p>
+<p>比如网上甚至有500运行DeepSeek R1 Q4_K_M模型的组机方案，只不过采用纯CPU推理模式，每秒只能输出两个字符，而且不支持并发，一个300字的小作文，就得写个2、3分钟。</p>
+<p>根据我们实测，哪怕是再CPU性能较强（志强4代）的情况下，推理速度约在3-4 tokens&#x2F;s，且并发性能较差。</p>
+<h4 id="KTransformers"><a href="#KTransformers" class="headerlink" title="KTransformers"></a>KTransformers</h4><p> 那能不能在CPU推理基础上，再借助一些GPU能力来加速呢？基于这个思路，清华大学团队和Unsloth团队，分别提出了可以同时借助CPU和GPU进行推理的DeepSeek R1部署方案。</p>
+<p>KTransformers方案：<a target="_blank" rel="noopener" href="https://github.com/kvcache-ai/ktransformers">https://github.com/kvcache-ai/ktransformers</a></p>
+<p>清华大学发起的KTransformers（Quick Transformers）项目，可以借助R1模型的MoE架构特性，将专家模型的权重加载到内存上，并分配CPU完成相关计算工作，同时将MLA&#x2F;KV Cache加载到GPU上，进而实现CPU+GPU混合推理。</p>
+<p>经过这一技术创新，再志强4代CPU（或同性能CPU）+DDR5内存情况下，单并发能达到接近14 tokens&#x2F;s。</p>
+<p>此时不同模型内存需求如下：</p>
+<p>《独家KTransformers技术实战》教学视频：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1kyAke9EBA/">https://www.bilibili.com/video/BV1kyAke9EBA/</a></p>
+<p>AutoDL服务器，志强3代CPU+DDR4内存，单并发实测效果，接近4 tokens&#x2F;s：</p>
+<p>B站用户按照相同流程复现，升级硬件后，9654+DDR5实测效果，达到14tokens&#x2F;s：</p>
+<p>不过这套方案最大的问题在于，模型运行速度会大幅受到CPU性能影响，需要4代志强芯片才能达到10个以上token每秒，而且KTransformers对GPU性能挖掘不足，高并发场景下表现乏力，更适合小团队或个人使用。</p>
+<h4 id="Unsloth动态量化方案"><a href="#Unsloth动态量化方案" class="headerlink" title="Unsloth动态量化方案"></a>Unsloth动态量化方案</h4><p><a target="_blank" rel="noopener" href="https://github.com/unslothai/unsloth">https://github.com/unslothai/unsloth</a></p>
+<p>相比之下，Unsloth提出的动态量化方案会更加综合一些，所谓动态量化的技术，指的是可以围绕模型的不同层，进行不同程度的量化，关键层呢，就量化的少一些，非关键层量化的多一些，最终得到了一组比Q2量化程度更深的模型组，分别是1.58-bit、1.73-bit和2.22-bit模型组。尽管量化程度很深，但实际性能其实并不弱。</p>
+<p>此外，Unsloth提供了一套可以把模型权重分别加载到CPU和GPU上的方法，用户可以根据自己实际硬件情况，选择加载若干层模型权重到GPU上，然后剩下的模型权重加载到CPU内存上进行计算。</p>
+<p>在实际部署的过程中，我们可以根据硬件情况，有选择的将一部分模型的层放到GPU上运行，其他层放在CPU上运行，从而降低GPU负载。最低显存+内存&gt;&#x3D;200G，即可运行1.58bit模型。</p>
+<p>单卡4090（24G）时可加载7层权重在GPU上运行，40并发达到3.5tokens&#x2F;s，双卡A100服务器能加载全部0到61层模型权重到GPU上，吞吐量达到140tokens&#x2F;s，100并发时单人能达到14 tokens&#x2F;s：</p>
+<p>Unsloth方案优势：<br>和llama.cpp深度融合，直接通过参数设置即可自由调度CPU和GPU计算资源，灵活高效，且能够直接和ollama、vLLM、Open-WebUI等框架兼容。<br>深度挖掘GPU性能，并发量有保障。<br>相比KTransformers方案，Unsloth方案更适合有一定硬件基础（如4卡4090、双卡A100）的团队使用，能够保障一定的并发量。</p>
+<p><strong>DeepSeek R1硬件选配流程一览表</strong></p>
+<p>本节公开课我们将重点介绍Unsloth方案的部署流程，实现在两套服务器上部署并调用DeepSeek R1满血版模型（最低单卡4090即可进行调用），同时测试1.58 bit模型在纯CPU推理、CPU+GPU混合推理、以及纯GPU推理下性能与响应效率表现。</p>
+<h3 id="2、实验服务器配置说明"><a href="#2、实验服务器配置说明" class="headerlink" title="2、实验服务器配置说明"></a>2、实验服务器配置说明</h3><p>本次公开课尝试使用两套服务器，配置如下：</p>
+<h4 id="2-1-配置一：4卡4090服务器（实际最低一张GPU即可运行）"><a href="#2-1-配置一：4卡4090服务器（实际最低一张GPU即可运行）" class="headerlink" title="2.1 配置一：4卡4090服务器（实际最低一张GPU即可运行）"></a>2.1 配置一：4卡4090服务器（实际最低一张GPU即可运行）</h4><p>深度学习环境：PyTorch 2.5.1、Python 3.12(ubuntu22.04)、Cuda 12.4<br>硬件环境：<br>GPU：RTX 4090(24GB) * 4（实际只使用一张GPU）<br>CPU：64 vCPU Intel® Xeon® Platinum 8352V CPU @ 2.10GHz<br>内存：480G（至少需要382G）<br>硬盘：1.8T（实际使用需要200G左右）<br>可以考虑在AutoDL上租赁4卡4090服务器，480G内存，约14元每小时。</p>
+<h4 id="2-2-配置二：4卡H800服务器（模型纯GPU推理性能）"><a href="#2-2-配置二：4卡H800服务器（模型纯GPU推理性能）" class="headerlink" title="2.2 配置二：4卡H800服务器（模型纯GPU推理性能）"></a>2.2 配置二：4卡H800服务器（模型纯GPU推理性能）</h4><p>深度学习环境：PyTorch 2.5.1、Python 3.12(ubuntu22.04)、Cuda 12.4<br>硬件环境：<br>GPU：H800(80GB) * 4<br>CPU：80 vCPU Intel® Xeon® Platinum 8458P<br>内存：400G（至少需要382G）<br>硬盘：5T<br>其他更多相关参考资料</p>
+<p>《DeepSeek R1本地部署流程》<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV19kFoe6Ef7/">https://www.bilibili.com/video/BV19kFoe6Ef7/</a></p>
+<p>《AutoDL快速入门》：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1bxB7YYEST/">https://www.bilibili.com/video/BV1bxB7YYEST/</a></p>
+<h2 id="二、Unsloth动态量化模型介绍简介"><a href="#二、Unsloth动态量化模型介绍简介" class="headerlink" title="二、Unsloth动态量化模型介绍简介"></a>二、Unsloth动态量化模型介绍简介</h2><h3 id="1、Unsloth动态量化模型简介与下载地址"><a href="#1、Unsloth动态量化模型简介与下载地址" class="headerlink" title="1、Unsloth动态量化模型简介与下载地址"></a>1、Unsloth动态量化模型简介与下载地址</h3><p>为了让更多本地用户能够运行DeepSeek R1模型，Unsloth成功地将 DeepSeek 的 R1 671B 参数模型量化为 131GB大小，相比原始的 720GB减少了 80%，而且仍然保持很高的功能性。通过研究 DeepSeek R1 的架构，Unsloth成功地选择性地将某些层量化到更高的位数（比如 4bit），同时将大多数 MoE 层（如 GPT-4 中使用的层）量化为 1.5bit。简单地对所有层进行量化会完全破坏模型，导致无休止的循环和乱码输出。Unsloth的动态量化技术解决了这个问题。</p>
+<p>Unsloth提供了 4 个动态量化版本。前 3 个版本使用重要性矩阵来校准量化过程（通过 llama.cpp 获取 imatrix），以允许更低位数的表示。最后一个 212GB 的版本是一个通用的 2bit 量化版本，没有进行任何校准。</p>
+<table>
+<thead>
+<tr>
+<th>MoE Bits</th>
+<th>磁盘大小</th>
+<th>类型</th>
+<th>质量</th>
+<th>链接</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Down_proj</td>
+<td>1.58-bit</td>
+<td>131GB</td>
+<td>IQ1_S</td>
+<td>一般</td>
+</tr>
+<tr>
+<td>2.06&#x2F;1.56-bit</td>
+<td>1.73-bit</td>
+<td>158GB</td>
+<td>IQ1_M</td>
+<td>良好</td>
+</tr>
+<tr>
+<td>2.22-bit</td>
+<td>1.83-bit</td>
+<td>183GB</td>
+<td>IQ2_XXS</td>
+<td>更好</td>
+</tr>
+<tr>
+<td>2.51-bit</td>
+<td>2.51-bit</td>
+<td>212GB</td>
+<td>Q2_K_XL</td>
+<td>最佳</td>
+</tr>
+</tbody></table>
+<p>纯GPU推理下，1.58bit 量化版本适合 140GB+ 的 VRAM，用于快速推理（例如2 个 H100 80GB GPU，或者8卡4090服务器，总共192G显存），其吞吐量约为每秒 140 个 token，单用户推理为每秒 14 个 token。</p>
+<p>这组模型可以在huggingface或魔搭社区上下载。</p>
+<p>huggingface地址：<a target="_blank" rel="noopener" href="https://huggingface.co/unsloth/DeepSeek-R1-GGUF/tree/main">https://huggingface.co/unsloth/DeepSeek-R1-GGUF/tree/main</a></p>
+<p>魔搭社区地址：<a target="_blank" rel="noopener" href="https://www.modelscope.cn/models/unsloth/DeepSeek-R1-GGUF/files">https://www.modelscope.cn/models/unsloth/DeepSeek-R1-GGUF/files</a></p>
+<p>此外，如果没有 VRAM（GPU），Unsloth动态量化模型也支持CPU+GPU混合推理，不过速度可能会较慢。此时各模型运行所需RAM+VRAM要求如下：</p>
+<p>DeepSeek-R1-UD-IQ1_M: RAM + VRAM ≥ 200 GB<br>DeepSeek-R1-Q4_K_M: RAM + VRAM ≥ 500 GB</p>
+<p>36:(95+60)</p>
+<p>21:(807+78)</p>
+<h3 id="2-动态量化模型性能测试"><a href="#2-动态量化模型性能测试" class="headerlink" title="2. 动态量化模型性能测试"></a>2. 动态量化模型性能测试</h3><p>为了测试所有量化模型，Unsloth没有依赖一般的基准测试，而是要求 DeepSeek R1 创建一个 Flappy Bird 游戏，并进行 3 次尝试（pass@3）。</p>
+<p>我们根据 10 个标准来打分（比如使用随机颜色、随机形状，是否能在 Python 解释器中运行等）。</p>
+<p>我们使用了种子值 3407、3408 和 3409，以及推荐的温度值 0.6。</p>
+<p>以下是chat.deepseek.com 生成的示例：</p>
+<p>而以下则是1.58bit 版本的结果。能够发现，尽管模型大小减少了 80%，我们的动态 1.58bit 版本仍然能够生成有效的输出：</p>
+<p>类似地，如果不是动态量化，而是将所有层量化为 1.75bits（149GB），无限重复会停止，但结果完全不正确。所有输出都会显示完全黑屏。如果将所有层量化到 2.06bits（175GB），结果甚至比 1.58bit（131GB）动态量化还要差。关于分数总结（满分 10 分）和 Pass@3，Unsloth发现 1.58bit 131GB 版本在 Flappy Bird 基准测试中正确得分 69.2%，而 2bit 183GB 版本得分 91.7%。</p>
+<table>
+<thead>
+<tr>
+<th>模型大小</th>
+<th>动态量化得分</th>
+<th>模型大小    基</th>
+<th>本量化得分</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>131GB</td>
+<td>6.92</td>
+<td>133GB</td>
+<td>0</td>
+</tr>
+<tr>
+<td>158GB</td>
+<td>9.08</td>
+<td>149GB</td>
+<td>1.67</td>
+</tr>
+<tr>
+<td>183GB</td>
+<td>9.17</td>
+<td>175GB</td>
+<td>6.17</td>
+</tr>
+</tbody></table>
+<p>另一方面，非动态量化的模型表现非常差。将所有层量化为 1.58bits 得到 0% 的得分，即使在 175GB 的情况下，也仅能得到 61.7%，比动态量化还低。</p>
+<h3 id="3-动态量化模型量化过程"><a href="#3-动态量化模型量化过程" class="headerlink" title="3 动态量化模型量化过程"></a>3 动态量化模型量化过程</h3><p>以下是Unsloth动态量化流程：</p>
+<p>DeepSeek 的前 3 层是完全密集层，而非 MoE 层。回顾一下，MoE（专家混合）层允许我们增加模型中的参数数量，而不增加所需的 FLOP 数量，因为动态地将大多数条目掩码为 0，从而跳过了对零化条目的矩阵乘法运算。</p>
+<p><img src="/2025/04/02/NLP/deepseek_deploy/2025-03-27-10-38-27-image.png"></p>
+<p>1）前 3 层密集层使用了 0.5% 的所有权重，我们将这些层保持为 4 或 6bit。<br>2）MoE 层使用共享专家，使用了 1.5% 的权重，我们将其量化为 6bit。<br>3）我们可以将所有 MLA 注意力模块保持为 4 或 6bit，使用 &lt;5% 的权重。我们应当量化注意力输出（3%），但最好保持较高精度。<br>4）down_proj 对量化最为敏感，尤其是在前几层。我们通过与 Super Weights 论文、我们的动态量化方法以及 llama.cpp 的 GGUF 量化方法进行对比，验证了这一点。因此，我们将前 3 层至 6 层 MoE down_proj 矩阵保持较高精度。例如，在 Super Weights 论文中，我们看到几乎所有不应量化的权重都在 down_proj 中：</p>
+<p><img src="/2025/04/02/NLP/deepseek_deploy/2025-03-27-10-39-13-image.png"></p>
+<p>关于为什么所有的“超级权重”或最重要的权重都在 down_proj 中的主要见解，是因为 SwiGLU（激活函数）实现了：</p>
+<p><img src="/2025/04/02/NLP/deepseek_deploy/2025-03-27-10-39-31-image.png"></p>
+<p>这意味着上层和门控投影的乘积会形成更大的数字，而 down_proj 需要将其缩小——这意味着量化 down_proj 可能不是一个好主意，尤其是在 Transformer 的早期层中。</p>
+<p>5）我们应该将 embedding 和 lm_head 分别保持为 4bit 和 6bit。MoE 路由器和所有层归一化保持 32bit 精度。<br>6）这样，约 88% 的权重就是 MoE 权重！通过将它们量化为 1.58bit，我们可以大幅度缩小模型！<br>7）我们将我们的动态量化代码作为 fork 提供给 llama.cpp：github.com&#x2F;unslothai&#x2F;llama.cpp。<br>8）我们还利用了 Bartowski 的重要性矩阵来处理较低精度的量化。</p>
+<h2 id="三、Unsloth动态量化模型下载与运行"><a href="#三、Unsloth动态量化模型下载与运行" class="headerlink" title="三、Unsloth动态量化模型下载与运行"></a>三、Unsloth动态量化模型下载与运行</h2><p>由于Unsloth动态量化模型和llama.cpp深度兼容，且提供了完整GGUF模型权重，因此可以使用各种主流方法进行调用，如使用llama.cpp命令进行调用、使用ollama、vLLM进行调用，并且也获得了如Open-WebUI等框架的支持，因此实际上R1动态量化模型可以有很多种运行方法，且各运行方法都支持从最小1.58 bit量化模型到Q8量化模型。</p>
+<h3 id="1、模型权重下载"><a href="#1、模型权重下载" class="headerlink" title="1、模型权重下载"></a>1、模型权重下载</h3><p>公开课以1.58 bit模型、也就是UD-IQ1_S模型为例进行演示，其他模型只需要更换模型名称即可下载和运行。以下是各组模型运行所需最低内存+显存配置：</p>
+<ul>
+<li><p>DeepSeek-R1-UD-IQ1_M: RAM + VRAM ≥ 200 GB</p>
+</li>
+<li><p>DeepSeek-R1-Q4_K_M: RAM + VRAM ≥ 500 GB</p>
+</li>
+<li><p>魔搭社区下载地址：<a target="_blank" rel="noopener" href="https://www.modelscope.cn/models/unsloth/DeepSeek-R1-GGUF">https://www.modelscope.cn/models/unsloth/DeepSeek-R1-GGUF</a></p>
+</li>
+<li><p>HuggingFace下载地址：<a target="_blank" rel="noopener" href="https://huggingface.co/unsloth/DeepSeek-R1-GGUF">https://huggingface.co/unsloth/DeepSeek-R1-GGUF</a></p>
+</li>
+</ul>
+<p>模型权重较大，总共约130G左右。若使用AutoDL，最快下载方法是开启学术加速并从Huggingface上进行下载。</p>
+<p>AutoDL学术加速方法介绍：<a target="_blank" rel="noopener" href="https://www.autodl.com/docs/network_turbo/">https://www.autodl.com/docs/network_turbo/</a></p>
+<p>这里默认以AutoDL为基础实验环境进行介绍，默认已安装好CUDA、Miniconda等基础库。</p>
+<p>下载流程如下：</p>
+<p>安装huggingface_hub：<br>在命令行中输</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install huggingface_hub</span><br></pre></td></tr></table></figure>
+
+<p>【可选】借助screen持久化会话</p>
+<p>由于实际下载时间可能持续2-4个小时，因此最好使用screen开启持久化会话，避免因为关闭会话导致下载中断。</p>
+<p>screen -S kt<br>1<br>创建一个名为kt的会话。之后哪怕关闭了当前会话，也可以使用如下命令</p>
+<p>screen -r kt<br>1<br>若未安装screen，可以使用sudo apt install screen命令进行安装。<br>【可选】修改huggingface默认下载路径<br>在默认情况下，Huggingface会将下载文件保存在&#x2F;root&#x2F;.cache文件夹中，若想更换默认下载文件夹，则可以按照如下方式修改环境变量，或者在下载代码中设置下载路径。<br>首先在&#x2F;root&#x2F;autodl-tmp下创建名为HF_download文件夹作为huggingface下载文件保存文件夹（具体文件夹名称和地址可以自选）：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /root/autodl-tmp mkdir HF_download</span><br></pre></td></tr></table></figure>
+
+<p>然后找到root文件夹下的.bashrc文件</p>
+<p>在结尾处加上 <code>export HF_HOME=&quot;/root/autodl-tmp/HF_download&quot;</code></p>
+<p>保存退出，输入</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<p>使环境变量生效。<br>下载模型权重<br>启动Jupyter</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter lab --allow-root</span><br></pre></td></tr></table></figure>
+
+<p>然后在开启的Jupyter页面中输入如下Python代码：</p>
+<h4 id="开启学术加速"><a href="#开启学术加速" class="headerlink" title="开启学术加速"></a>开启学术加速</h4><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">result = subprocess.run(<span class="string">&#x27;bash -c &quot;source /etc/network_turbo &amp;&amp; env | grep proxy&quot;&#x27;</span>, shell=<span class="literal">True</span>, capture_output=<span class="literal">True</span>, text=<span class="literal">True</span>)</span><br><span class="line">output = result.stdout</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> output.splitlines():</span><br><span class="line"> <span class="keyword">if</span> <span class="string">&#x27;=&#x27;</span> <span class="keyword">in</span> line:</span><br><span class="line"> var, value = line.split(<span class="string">&#x27;=&#x27;</span>, <span class="number">1</span>)</span><br><span class="line"> os.environ[var] = value</span><br></pre></td></tr></table></figure>
+
+<h4 id="下载模型权重，只下载Q4-K-M部分权重"><a href="#下载模型权重，只下载Q4-K-M部分权重" class="headerlink" title="下载模型权重，只下载Q4_K_M部分权重"></a>下载模型权重，只下载Q4_K_M部分权重</h4><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> huggingface_hub <span class="keyword">import</span> snapshot_download</span><br><span class="line">snapshot_download(</span><br><span class="line"> repo_id = <span class="string">&quot;unsloth/DeepSeek-R1-GGUF&quot;</span>,</span><br><span class="line"> local_dir = <span class="string">&quot;DeepSeek-R1-GGUF&quot;</span>,  </span><br><span class="line"> allow_patterns = [<span class="string">&quot;*Q4_K_M*&quot;</span>],)</span><br></pre></td></tr></table></figure>
+
+<p>完成下载数个小时，下载过程需要持续启动Jupyter服务，其中如果出现下载中断，重新运行下载代码即可继续下载。</p>
+<p>然后即可在&#x2F;root&#x2F;autodl-tmp&#x2F;DeepSeek-R1-GGUF&#x2F;DeepSeek-R1-Q4_K_M中看到下载的GGUF格式模型权重：</p>
+<p>【其他方案】使用魔搭社区进行下载<br>若是使用modelscope进行权重下载，则需要先安装魔搭社区</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip install modelscope</span><br><span class="line">然后输入如下命令进行下载</span><br><span class="line">modelscope download --model unsloth/DeepSeek-R1-GGUF --include &#x27;**UD-IQ1_S**&#x27; --local_dir /root/autodl-tmp/DeepSeek-R1-GGUF</span><br></pre></td></tr></table></figure>
+
+<h3 id="2、借助Llama-cpp进行运行"><a href="#2、借助Llama-cpp进行运行" class="headerlink" title="2、借助Llama.cpp进行运行"></a>2、借助Llama.cpp进行运行</h3><p>由于Unsloth和llama.cpp深度融合，因此当我们下载完模型权重后，接下来即可直接使用llama.cpp调用模型权重进行推理和对话了。</p>
+<h4 id="2-1-llama-cpp下载与编译"><a href="#2-1-llama-cpp下载与编译" class="headerlink" title="2.1 llama.cpp下载与编译"></a>2.1 llama.cpp下载与编译</h4><p>llama.cpp项目主页：<a target="_blank" rel="noopener" href="https://github.com/ggml-org/llama.cpp">https://github.com/ggml-org/llama.cpp</a><br>由于llama.cpp是个C语言项目，因此实际调用过程需要先构建项目，然后设置参数进行编译，然后最终创建可执行文件（类似于脚本），再运行本地大模型。借助llama.cpp和Unsloth的模型权重，可以实现纯CPU推理、纯GPU推理和CPU+GPU混合推理。这里我们分别尝试三种运行模式。</p>
+<p>目前市面上很多纯CPU推理的DeepSeek服务器，几乎都是使用上面的实现流程。</p>
+<p>依赖下载<br>为了能够顺利的完成C语言项目的项目创建和代码编译，首先需要先进行相关依赖的下载：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt-get update</span><br><span class="line">apt-get install build-essential cmake curl libcurl4-openssl-dev -y</span><br></pre></td></tr></table></figure>
+
+<p>这条命令安装了一些常用的构建和开发工具，具体的每个部分的含义如下：<br>build-essential：安装一组构建必需的工具和库，包括：</p>
+<ul>
+<li><p>编译器（如 GCC）</p>
+</li>
+<li><p>make 工具</p>
+</li>
+<li><p>其他一些常见的构建工具，确保你的系统能进行编译。</p>
+<ul>
+<li><p>cmake：安装 CMake 工具，它是一个跨平台的构建系统，允许你管理项目的编译过程。</p>
+</li>
+<li><p>curl：安装 cURL 工具，它是一个命令行工具，用于通过 URL 发送和接收数据。它在很多开发场景中都很有用，尤其是与网络交互时。</p>
+</li>
+<li><p>libcurl4-openssl-dev：安装 libcurl 库的开发版本。它是 cURL 的一个库文件，允许你在编程中通过 cURL 发送 HTTP 请求。libcurl4-openssl-dev 是与 OpenSSL 配合使用的版本，提供了 SSL&#x2F;TLS 加密支持，用于安全的 HTTP 请求。</p>
+</li>
+<li><p>llama.cpp源码下载<br>若是AutoDL服务器，可以先开启学术加速：</p>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/network_turbo</span><br></pre></td></tr></table></figure>
+
+<p>然后再进行下载：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/ggerganov/llama.cpp</span><br></pre></td></tr></table></figure>
+
+<p>准备好后，即可在服务器中看到llama.cpp项目文件夹<br><strong>项目构建与编译</strong><br>接下来需要使用cmake来构建项目文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cmake llama.cpp -B llama.cpp/build \</span><br><span class="line">   -DBUILD_SHARED_LIBS=OFF -DGGML_CUDA=ON -DLLAMA_CURL=ON</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>cmake：运行 CMake 工具，用于配置和生成构建文件。</p>
+</li>
+<li><p>llama.cpp：指定项目的源代码所在的目录。在这个例子中，llama.cpp 是项目的根目录。</p>
+</li>
+<li><p>-B llama.cpp&#x2F;build：指定生成构建文件的目录。-B 参数表示构建目录，</p>
+</li>
+<li><p>llama.cpp&#x2F;build 是生成的构建目录。这是 CMake 将生成的文件存放的地方（例如 Makefile 或 Ninja 构建文件）。</p>
+</li>
+<li><p>同时还指定了一些编译选项：<br>禁用共享库（-DBUILD_SHARED_LIBS&#x3D;OFF），生成 静态库。<br>启用 CUDA 支持（-DGGML_CUDA&#x3D;ON），以便在有 GPU 的情况下使用 GPU 加速。<br>启用 CURL 库支持（-DLLAMA_CURL&#x3D;ON），以便支持网络请求。</p>
+</li>
+</ul>
+<p>然后需要进一步进行编译：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cmake --build llama.cpp/build --config Release -j \</span><br><span class="line">  --clean-first --<span class="keyword">target</span> llama-quantize llama-cli llama-gguf-split</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>–build llama.cpp&#x2F;build：告诉 CMake 使用 llama.cpp&#x2F;build 目录中的构建文件来执行构建过程。这个目录是在之前运行 cmake llama.cpp -B llama.cpp&#x2F;build 命令时生成的，包含了所有构建所需的文件（例如 Makefile 或 Ninja 构建文件）。</p>
+</li>
+<li><p>–config Release：指定构建的配置为 Release 配置。<br>Release 配置通常意味着启用更多的 优化，生成的程序运行速度较快，适合发布。<br>在 CMake 中，通常有两种常见的构建配置：</p>
+</li>
+<li><p>Debug：用于调试版本，包含调试信息且没有做过多优化。</p>
+</li>
+<li><p>Release：优化后的发布版本，去除调试信息，运行时性能更高。</p>
+</li>
+<li><p>-j：表示并行构建，允许 CMake 使用多个 CPU 核心来加速构建过程。<br>如果没有指定数字，CMake 会使用默认的并行级别，通常是可用的所有 CPU 核心。你也可以指定并行的作业数，例如 -j 8 表示使用 8 个并行作业进行编译。</p>
+</li>
+<li><p>–clean-first：表示在构建之前先清理掉之前的构建结果。这可以确保每次构建时都是从一个干净的状态开始，避免由于缓存或中间文件引起的编译错误。<br>如果你之前运行过构建并且有问题，或者希望重新构建而不使用任何缓存文件，这个选项非常有用。</p>
+</li>
+<li><p>–target：指定构建的目标（target）。通常，一个项目会定义多个目标（比如库、可执行文件等），通过这个参数可以告诉 CMake 只编译特定的目标。<br>llama-quantize：模型量化相关的目标。量化（quantization）是将模型的精度从浮点数降低到整数，从而减少内存占用和提高推理速度。<br>llama-cli：用于运行模型或与用户交互。<br>llama-gguf-split：文件合并merge the weights together</p>
+</li>
+<li><pre><code>llama-batched                  llama-export-lora     llama-imatrix                  llama-lookup-stats    llama-qwen2vl-cli      llama-speculative-simple  test-c                       test-log                test-tokenizer-1-spm
+llama-batched-bench            llama-gbnf-validator  llama-infill                   llama-minicpmv-cli    llama-retrieval        llama-tokenize            test-chat                    test-model-load-cancel
+llama-bench                    llama-gemma3-cli      llama-llava-cli                llama-parallel        llama-run              llama-tts                 test-chat-template           test-quantize-fns
+llama-cli                      llama-gen-docs        llama-llava-clip-quantize-cli  llama-passkey         llama-save-load-state  llama-vdot                test-gguf                    test-quantize-perf
+llama-convert-llama2c-to-ggml  llama-gguf            llama-lookahead                llama-perplexity      llama-server           test-arg-parser           test-grammar-integration     test-rope
+llama-cvector-generator        llama-gguf-hash       llama-lookup                   llama-q8dot           llama-simple           test-autorelease          test-grammar-parser          test-sampling
+llama-embedding                llama-gguf-split      llama-lookup-create            llama-quantize        llama-simple-chat      test-backend-ops          test-json-schema-to-grammar  test-tokenizer-0
+llama-eval-callback            llama-gritlm          llama-lookup-merge             llama-quantize-stats  llama-speculative      test-barrier              test-llama-grammar           test-tokenizer-1-bpe
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- </span><br><span class="line"></span><br><span class="line">复制可执行文件</span><br><span class="line"></span><br><span class="line">```shell</span><br><span class="line">cp llama.cpp/build/bin/llama-* llama.cpp</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ul>
+<p>将 所有生成的可执行文件 从构建目录 llama.cpp&#x2F;build&#x2F;bin&#x2F; 复制到项目的根目录 llama.cpp 下。这样可以更方便地在项目根目录下执行这些可执行文件，而无需每次都进入构建目录。<br>在准备完成后，接下来即可进行调用和推理测试了。</p>
+<h4 id="2-2-纯CPU推理流程"><a href="#2-2-纯CPU推理流程" class="headerlink" title="2.2 纯CPU推理流程"></a>2.2 纯CPU推理流程</h4><p>首先是纯CPU推理测试。此时系统只调用内存+CPU进行计算。我们这里使用服务器配置一，也就是480G内存+4卡4090服务器进行CPU推理测试。此时不会用到GPU，多并发情况下内存最多使用180G左右。实现流程如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">cd ./llama.cpp</span><br><span class="line"></span><br><span class="line">./llama-cli \</span><br><span class="line"> --model DeepSeek-R1-UD-IQ1_S/DeepSeek-R1-UD-IQ1_S-00001-of-00003.gguf \</span><br><span class="line"> --cache-type-k q4_0 \</span><br><span class="line"> --threads 64 \</span><br><span class="line"> --prio 2 \</span><br><span class="line"> --temp 0.6 \</span><br><span class="line"> --ctx-size 512 \</span><br><span class="line"> --seed 3407 \</span><br><span class="line"> --n-gpu-layers 0 \</span><br><span class="line"> -no-cnv \</span><br><span class="line"> --prompt &quot;&lt;｜User｜&gt;你好，好久不见，请介绍下你自己。&lt;｜Assistant｜&gt;&quot;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>–threads：CPU 核心数;</p>
+</li>
+<li><p>–ctx-size：输出的上下文长度；</p>
+</li>
+<li><p>–n-gpu-layers ：需要卸载到 GPU 的层数，设置为0时代表完全使用CPU进行推理；</p>
+</li>
+<li><p>–temp：模型温度参数；</p>
+</li>
+<li><p>-no-cnv：不进行多轮对话；</p>
+</li>
+<li><p>–cache-type-k：K 缓存量化为 4bit；</p>
+</li>
+<li><p>–seed：随机数种子；</p>
+<p>实际运行效果如下所示：</p>
+</li>
+</ul>
+<p><img src="/2025/04/02/NLP/deepseek_deploy/2025-04-02-15-06-21-image.png"></p>
+<p>最终对话效果如下所示：</p>
+<p><img src="/2025/04/02/NLP/deepseek_deploy/2025-04-02-15-06-34-image.png"></p>
+<p>对于Unsloth这组模型权重来说，只要内存够，哪怕是满血版DeepSeek R1模型也是可以运行的（需要1T内存）。只需要下载模型的时候选择BF16类型即可：<a target="_blank" rel="noopener" href="https://huggingface.co/unsloth/DeepSeek-R1-GGUF/tree/main/DeepSeek-R1-BF16%E3%80%82%E5%85%B6%E4%BB%96%E6%B5%81%E7%A8%8B%E5%AE%8C%E5%85%A8%E4%B8%80%E6%A0%B7%E3%80%82">https://huggingface.co/unsloth/DeepSeek-R1-GGUF/tree/main/DeepSeek-R1-BF16。其他流程完全一样。</a></p>
+<p>此外，也可以使用如下命令<strong>直接进行对话</strong>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">./llama-cli \</span><br><span class="line"> --model /root/autodl-tmp/DeepSeek-R1-GGUF/DeepSeek-R1-UD-IQ1_S/DeepSeek-R1-UD-IQ1_S-00001-of-00003.gguf \</span><br><span class="line"> --cache-type-k q4_0 \</span><br><span class="line"> --threads 64 \</span><br><span class="line"> --ctx-size 512 \</span><br><span class="line"> --prio 2 \</span><br><span class="line"> --temp 0.6 \</span><br><span class="line"> --seed 3407 \</span><br><span class="line"> --n-gpu-layers 0</span><br></pre></td></tr></table></figure>
+
+<p>run</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">./llama-cli \</span><br><span class="line"> --model /DeepSeek-R1-UD-IQ1_S/DeepSeek-R1-UD-IQ1_S-00001-of-00003.gguf \</span><br><span class="line"> --ctx-size 512 \</span><br><span class="line"> --n-gpu-layers 35</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-3-CPU-GPU混合推理流程（单卡4090）"><a href="#2-3-CPU-GPU混合推理流程（单卡4090）" class="headerlink" title="2.3 CPU+GPU混合推理流程（单卡4090）"></a>2.3 CPU+GPU混合推理流程（单卡4090）</h4><p>GPU显存分配流程<br>接下来进一步尝试CPU+GPU混合推理，我们只需要合理的设置–n-gpu-layers参数，即可灵活的将模型的部分层加载到GPU上进行运行。并且无需手动设置，llama.cpp会自动识别当前GPU数量以及可以分配的显存，自动将模型权重加载到各个不同的GPU上。</p>
+<p>GPU加载模型权重层数计算<br>而某个设备到底能加载多少层模型权重，可以通过如下公式进行计算。</p>
+<p>例如现在我是24G显存，且1.58bit模型权重大小为131GB，DeepSeek R1总共是0到61层，那么现在可以加载到我当前显卡的层数为：(24&#x2F;131)*61-4&#x3D;7.17，也就是最多设置–n-gpu-layers&#x3D;7。</p>
+<p>参考表：</p>
+<table>
+<thead>
+<tr>
+<th>Quant</th>
+<th>文件大小</th>
+<th>24GB GPU</th>
+<th>80GB GPU</th>
+<th>2x80GB GPU</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1.58bit</td>
+<td>131GB</td>
+<td>7</td>
+<td>33</td>
+<td>所有61 层</td>
+</tr>
+<tr>
+<td>1.73bit</td>
+<td>158GB</td>
+<td>5</td>
+<td>26</td>
+<td>57</td>
+</tr>
+<tr>
+<td>2.22bit</td>
+<td>183GB</td>
+<td>4</td>
+<td>22</td>
+<td>49</td>
+</tr>
+<tr>
+<td>2.51bit</td>
+<td>212GB</td>
+<td>2</td>
+<td>19</td>
+<td>32</td>
+</tr>
+</tbody></table>
+<p>混合推理流程<br>接下来尝试运行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">./llama-cli \</span><br><span class="line"> --model /root/autodl-tmp/DeepSeek-R1-GGUF/DeepSeek-R1-UD-IQ1_S/DeepSeek-R1-UD-IQ1_S-00001-of-00003.gguf \</span><br><span class="line"> --cache-type-k q4_0 \</span><br><span class="line"> --threads 64 \</span><br><span class="line"> --prio 2 \</span><br><span class="line"> --temp 0.6 \</span><br><span class="line"> --ctx-size 512 \</span><br><span class="line"> --seed 3407 \</span><br><span class="line"> --n-gpu-layers 7 \</span><br><span class="line"> -no-cnv \</span><br><span class="line"> --prompt &quot;&lt;｜User｜&gt;你好，好久不见，请介绍下你自己。&lt;｜Assistant｜&gt;&quot;</span><br></pre></td></tr></table></figure>
+
+<p>此时对话效果如图所示：</p>
+<p>总共占用23G显存：</p>
+<p>能够看到推理速度略有提升。伴随着GPU上加载的权重越多，模型推理速度提升越大。不过这里需要注意的是，尽管单人推理时，24G显存只带来了不到1tokens&#x2F;s的提升，但实际上此时模型吞吐量是大幅提升的， 模型的并行性能提升幅度较大。<br>需要注意的是，只要是带有CPU进行推理，那么<strong>CPU性能</strong>和<strong>内存读取速度</strong>就是最大的瓶颈。相同服务器，在运行KTransformers的时候约3.8 tokens每秒。但经过了CPU和内存优化后，在不改变执行流程时候，KTransformers和Unsloth动态量化，推理速度都能够达到14 tokens&#x2F;s左右。</p>
+<p><img src="/2025/04/02/NLP/deepseek_deploy/2025-04-02-15-18-24-image.png"></p>
+<h4 id="2-4-CPU-GPU混合推理流程（4卡4090）"><a href="#2-4-CPU-GPU混合推理流程（4卡4090）" class="headerlink" title="2.4 CPU+GPU混合推理流程（4卡4090）"></a>2.4 CPU+GPU混合推理流程（4卡4090）</h4><p>接下来继续尝试把更多的模型权重放在GPU上进行推理。这里以4卡4090为例，此时总显存为96，根据公式，此时可以在GPU上放总共约39层。</p>
+<img src="/2025/04/02/NLP/deepseek_deploy/2025-04-02-15-18-38-image.png" title alt width="286">
+
+<p>这里我们设置为35层进行实验：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">./llama-cli \</span><br><span class="line"> --model DeepSeek-R1-UD-IQ1_S/DeepSeek-R1-UD-IQ1_S-00001-of-00003.gguf \</span><br><span class="line"> --cache-type-k q4_0 \</span><br><span class="line"> --threads 64 \</span><br><span class="line"> --prio 2 \</span><br><span class="line"> --temp 0.6 \</span><br><span class="line"> --ctx-size 512 \</span><br><span class="line"> --seed 3407 \</span><br><span class="line"> --n-gpu-layers 35 \</span><br><span class="line"> -no-cnv \</span><br><span class="line"> --prompt &quot;&lt;｜User｜&gt;你好，好久不见，请介绍下你自己。&lt;｜Assistant｜&gt;&quot;</span><br></pre></td></tr></table></figure>
+
+<p>相比单卡24G显存，此时运行速度达到了5.78tokens&#x2F;s，此时占用显存约92G</p>
+<p>其他实验结果：</p>
+<h4 id="2-5-纯GPU推理流程"><a href="#2-5-纯GPU推理流程" class="headerlink" title="2.5 纯GPU推理流程"></a>2.5 纯GPU推理流程</h4><p>最后，我们更进一步，尝试把全部的模型权重都放在GPU上进行推理。这里我们启用第二套服务器配置，4卡H800服务器，总显存达到320G（实际上只用到140G）。根据官方说明，此时模型吞吐量将达到140tokens&#x2F;s，单人能够达到14tokens&#x2F;s。</p>
+<p>以下是实际测试流程：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">./llama-cli \</span><br><span class="line"> --model /DeepSeek-R1-UD-IQ1_S/DeepSeek-R1-UD-IQ1_S-00001-of-00003.gguf \</span><br><span class="line"> --cache-type-k q4_0 \</span><br><span class="line"> --threads 80 \</span><br><span class="line"> --prio 2 \</span><br><span class="line"> --temp 0.6 \</span><br><span class="line"> --ctx-size 512 \</span><br><span class="line"> --seed 3407 \</span><br><span class="line"> --n-gpu-layers 62 \</span><br><span class="line"> -no-cnv \</span><br><span class="line"> --prompt &quot;&lt;｜User｜&gt;你好，好久不见，请介绍下你自己。&lt;｜Assistant｜&gt;&quot;</span><br></pre></td></tr></table></figure>
+
+<p>此时推理速度约20 tokens&#x2F;s。</p>
+<h3 id="3、服务化部署"><a href="#3、服务化部署" class="headerlink" title="3、服务化部署"></a>3、服务化部署</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">./llama_server \</span><br><span class="line"> -m *.gguf \</span><br><span class="line"> -ngl 28 \</span><br><span class="line"> --cache-type-k q4_0 </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">会启动一个类似web服务器的进程，默认端口号为8080，</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">这样就启动了一个 API 服务，可以使用 curl 命令进行测试。</span></span><br></pre></td></tr></table></figure>
+
+<p>curl call api</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">curl --request POST \</span><br><span class="line">    --url http://localhost:8080/completion \</span><br><span class="line">    --header <span class="string">&quot;Content-Type: application/json&quot;</span> \</span><br><span class="line">    --data <span class="string">&#x27;&#123;&quot;prompt&quot;: &quot;What color is the sun?&quot;,&quot;n_predict&quot;: 512&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line">&#123;<span class="string">&quot;content&quot;</span>:<span class="string">&quot;.....&quot;</span>,<span class="string">&quot;generation_settings&quot;</span>: </span><br><span class="line"> &#123;<span class="string">&quot;frequency_penalty&quot;</span>:0.0,<span class="string">&quot;grammar&quot;</span>:<span class="string">&quot;&quot;</span>,<span class="string">&quot;ignore_eos&quot;</span>:<span class="literal">false</span>,</span><br><span class="line"> <span class="string">&quot;logit_bias&quot;</span>:[],<span class="string">&quot;mirostat&quot;</span>:0,<span class="string">&quot;mirostat_eta&quot;</span>:0.10000000149011612,</span><br><span class="line"> <span class="string">&quot;mirostat_tau&quot;</span>:5.0,......&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、Unsloth动态量化-Ollama运行"><a href="#四、Unsloth动态量化-Ollama运行" class="headerlink" title="四、Unsloth动态量化+Ollama运行"></a>四、Unsloth动态量化+Ollama运行</h2><h3 id="1、ollama安装部署"><a href="#1、ollama安装部署" class="headerlink" title="1、ollama安装部署"></a>1、ollama安装部署</h3><p>原生支持使用Ollama调用本地模型进行推理，Ollama是一款大模型下载、管理、推理、优化集一体的强大工具，可以快速调用各类离线部署的大模型。Ollama官网：<a target="_blank" rel="noopener" href="https://ollama.com/">https://ollama.com/</a></p>
+<p>1.1 【方案一】Ollama在线安装<br>在Linux系统中，可以使用如下命令快速安装Ollama</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL https://ollama.com/install.sh | sh</span><br></pre></td></tr></table></figure>
+
+<p>该下载流程会受限于国内网络环境，下载过程并不稳定。</p>
+<p>1.2 【方案二】Ollama离线安装<br>因此，在更为一般的情况下，推荐使用Ollama离线部署。我们可以在Ollama Github主页查看目前Ollama支持的各操作系统安装包：<a target="_blank" rel="noopener" href="https://github.com/ollama/ollama/releases">https://github.com/ollama/ollama/releases</a></p>
+<p>若是Ubuntu操作系统，选择其中 ollama-linux-amd64.tgz下载和安装即可。</p>
+<p>然后使用如下命令进行解压缩</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir ./ollama tar -zxvf ollama-linux-amd64.tgz -C ./ollama</span><br></pre></td></tr></table></figure>
+
+<p>解压缩后项目文件如图所示：</p>
+<p>而在bin中，可以找到ollama命令的可执行文件。</p>
+<p>此时，我们可以使用如下方式使用ollama：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd ./bin ./ollama help</span><br></pre></td></tr></table></figure>
+
+<p>此处若显示没有可执行权限，可以使用如下命令为当前脚本添加可执行权限：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod +x ollama</span><br></pre></td></tr></table></figure>
+
+<p>而为了使用命令方便，我们也可以将脚本文件写入环境变量中。我们可以在主目录（root）下找到.bashrc文件：</p>
+<p>然后在.bashrc 文件结尾写入 ollama&#x2F;bin 文件路径：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PATH=$PATH:/root/autodl-tmp/ollama/bin</span><br></pre></td></tr></table></figure>
+
+<p>保存并退出后，输入如下命令来使环境变量生效：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<p>然后在任意路径下输入如下命令，测试ollama环境变量是否生效</p>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ollama help</span><br></pre></td></tr></table></figure>
+
+<p><strong>【可选】更换Ollama默认模型权重下载地址</strong><br>接下来我们需要使用ollama来下载模型，但默认情况下，ollama会将模型下载到&#x2F;root&#x2F;.ollama文件夹中，会占用系统盘空间，因此，若有需要，可以按照如下方法更换模型权重下载地址。<br>此外无论是在线还是离线安装的ollama，都可以按照如下方法更换模型权重下载地址。还是需要打开&#x2F;root&#x2F;.bashrc文件，写入如下代码：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export OLLAMA_MODELS=/root/autodl-tmp/models</span><br></pre></td></tr></table></figure>
+
+<p>这里的路径需要改写为自己的文件地址</p>
+<p>保存并退出后，输入如下命令来使环境变量生效：</p>
+<p><code>source ~/.bashrc</code><br>测试环境变量是否生效</p>
+<p><code>echo $OLLAMA_MODELS</code></p>
+<p>启动ollama</p>
+<p>接下来即可启动ollama，为后续下载模型做准备：</p>
+<p><code>ollama start</code></p>
+<p>注意，在整个应用使用期间，需要持续开启Ollama。</p>
+<h3 id="2、模型权重合并"><a href="#2、模型权重合并" class="headerlink" title="2、模型权重合并"></a>2、模型权重合并</h3><p>由于ollama只支持读取单个GGUF格式权重，因此我们需要借助llama.cpp对3个模型权重进行合并：</p>
+<p>然后使用如下命令进行权重合并</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd /root/autodl-tmp</span><br><span class="line">mkdir DeepSeek-R1-UD-IQ1_S-merge </span><br><span class="line">cd ./llama.cpp </span><br><span class="line">./llama-gguf-split --merge /root/autodl-tmp/DeepSeek-R1-GGUF/    \</span><br><span class="line">   DeepSeek-R1-UD-IQ1_S/DeepSeek-R1-UD-IQ1_S-00001-of-00003.gguf \</span><br><span class="line">   merged_file.gguf</span><br></pre></td></tr></table></figure>
+
+<p>合并完成后：</p>
+<p><img src="/2025/04/02/NLP/deepseek_deploy/2025-04-01-10-00-39-image.png"></p>
+<h3 id="3、借助Ollama调用-Unsloth动态量化模型"><a href="#3、借助Ollama调用-Unsloth动态量化模型" class="headerlink" title="3、借助Ollama调用 Unsloth动态量化模型"></a>3、借助Ollama调用 Unsloth动态量化模型</h3><p>然后即可借助Ollama调用Unsloth动态量化模型了。这里我们首先需要将模型注册到ollama中，首先需要在合并文件夹内创建一个名为DeepSeekQ1_Modelfile的文件：</p>
+<p><img src="/2025/04/02/NLP/deepseek_deploy/2025-04-01-10-00-16-image.png"></p>
+<p>然后写入如下内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">FROM ./merged_file.gguf</span><br><span class="line"> PARAMETER num_gpu 7</span><br><span class="line"> PARAMETER num_ctx 2048</span><br><span class="line"> PARAMETER temperature 0.6</span><br><span class="line"> TEMPLATE &quot;&lt;｜User｜&gt;&#123;&#123; .System &#125;&#125; &#123;&#123; .Prompt &#125;&#125;&lt;｜Assistant｜&gt;&quot;</span><br></pre></td></tr></table></figure>
+
+<p>各参数解释如下：</p>
+<p>num_gpu：加载到GPU上的层数；<br>num_ctx：新生成最多多少个token；<br>temperature：模型温度参数；<br>template：模型提示词模板；<br>然后保存并退出，然后运行如下命令创建模型：</p>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ollama <span class="keyword">create</span> DeepSeek-R1-UD-IQ1_M -f DeepSeekQ1_Modelfile</span><br></pre></td></tr></table></figure>
+
+<p>然后即可查看模型是否成功注册：</p>
+<p><code>ollama list</code></p>
+<p><img src="/2025/04/02/NLP/deepseek_deploy/2025-04-01-09-59-35-image.png"></p>
+<p>确认无误后即可运行模型</p>
+<p><code> ollama run DeepSeek-R1-UD-IQ1_M --verbose</code></p>
+<p>运行效果如下所示：</p>
+<p><img src="/2025/04/02/NLP/deepseek_deploy/2025-04-01-09-59-03-image.png"></p>
+<p>单卡4090时，基于ollama的加速，推理速度达到了6 tokens&#x2F;s。而如果是双卡A100服务器，纯GPU推理能达到20tokens&#x2F;s</p>
+<p><img src="/2025/04/02/NLP/deepseek_deploy/2025-04-01-09-59-12-image.png"></p>
+<h2 id="五、Unsloth动态量化-Open-WebUI运行-最后，来介绍如何借助Open-WebUI来调用Unsloth动态量化模型。"><a href="#五、Unsloth动态量化-Open-WebUI运行-最后，来介绍如何借助Open-WebUI来调用Unsloth动态量化模型。" class="headerlink" title="五、Unsloth动态量化+Open-WebUI运行 最后，来介绍如何借助Open-WebUI来调用Unsloth动态量化模型。"></a>五、Unsloth动态量化+Open-WebUI运行 最后，来介绍如何借助Open-WebUI来调用Unsloth动态量化模型。</h2><p>首先需要安装Open-WebUI，官网地址如下：<a target="_blank" rel="noopener" href="https://github.com/open-webui/open-webui%E3%80%82">https://github.com/open-webui/open-webui。</a></p>
+<p>可以直接使用在GitHub项目主页上直接下载完整代码包，并上传至服务器解压缩运行：</p>
+<p>在准备好了Open-WebUI和一系列模型权重后，接下来我们尝试启动Open-WebUI，并借助本地模型进行问答。</p>
+<p>首先需要设置离线环境，避免Open-WebUI启动时自动进行模型下载：</p>
+<p>export HF_HUB_OFFLINE&#x3D;1<br>1<br>然后启动Open-WebUI</p>
+<p>open-webui serve<br>1<br>需要注意的是，如果启动的时候仍然报错显示无法下载模型，是Open-WebUI试图从huggingface上下载embedding模型，之后我们会手动将其切换为本地运行的Embedding模型。</p>
+<p>然后在本地浏览器输入地址:8080端口即可访问：</p>
+<p>若使用AutoDL，则需要使用SSH隧道工具进行地址代理</p>
+<p>更多AutoDL相关操作详见公开课：《AutoDL快速入门与GPU租赁使用指南》|<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1bxB7YYEST/">https://www.bilibili.com/video/BV1bxB7YYEST/</a></p>
+<p>然后首次使用前，需要创建管理员账号：</p>
+<p>然后点击登录即可。需要注意的是，此时Open-WebUI会自动检测后台是否启动了ollama服务，并列举当前可用的模型。稍等片刻，即可进入到如下页面：</p>
+<p>然后即可开始进行对话：</p>
+<p>更多关于大模型技术学习，欢迎报名由我主讲的《2025大模型Agent智能体开发实战》（2月DeepSeek强化班）<a target="_blank" rel="noopener" href="https://whakv.xetslk.com/s/1tKbjV">https://whakv.xetslk.com/s/1tKbjV</a> 进行更深度系统的学习哦~</p>
+<p>《2025大模型Agent智能体开发实战》2025年2月班DeepSeek强化班特惠进行时，详细信息扫码添加助教，回复“大模型”，即可领取课程大纲&amp;查看课程详情<br>————————————————</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Unsloth/" rel="tag"># Unsloth</a>
+              <a href="/tags/DeepSeek/" rel="tag"># DeepSeek</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/04/01/CV/LORA_FT/" rel="prev" title="LORA微调大模型全攻略：从入门到精通，轻松掌握">
+      <i class="fa fa-chevron-left"></i> LORA微调大模型全攻略：从入门到精通，轻松掌握
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/04/08/Sub_Language/API_Web/FlaskRESTful/" rel="next" title="API开发--Flask-RESTFul">
+      API开发--Flask-RESTFul <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Unsloth-DeepSeek-R1%E5%8A%A8%E6%80%81%E9%87%8F%E5%8C%96%E9%83%A8%E7%BD%B2%E6%96%B9%E6%A1%88"><span class="nav-number">1.</span> <span class="nav-text">Unsloth DeepSeek R1动态量化部署方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81DeepSeek-R1%E9%83%A8%E7%BD%B2%E6%96%B9%E6%A1%88%E7%BB%BC%E8%BF%B0"><span class="nav-number">2.</span> <span class="nav-text">一、DeepSeek R1部署方案综述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-DeepSeek-R1%E6%BB%A1%E8%A1%80%E7%89%88%E6%A8%A1%E5%9E%8B%E9%AB%98%E6%80%A7%E8%83%BD%E9%83%A8%E7%BD%B2%E6%96%B9%E6%A1%88%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.1.</span> <span class="nav-text">1.DeepSeek R1满血版模型高性能部署方案介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#KTransformers"><span class="nav-number">2.1.1.</span> <span class="nav-text">KTransformers</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Unsloth%E5%8A%A8%E6%80%81%E9%87%8F%E5%8C%96%E6%96%B9%E6%A1%88"><span class="nav-number">2.1.2.</span> <span class="nav-text">Unsloth动态量化方案</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E5%AE%9E%E9%AA%8C%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE%E8%AF%B4%E6%98%8E"><span class="nav-number">2.2.</span> <span class="nav-text">2、实验服务器配置说明</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-%E9%85%8D%E7%BD%AE%E4%B8%80%EF%BC%9A4%E5%8D%A14090%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%88%E5%AE%9E%E9%99%85%E6%9C%80%E4%BD%8E%E4%B8%80%E5%BC%A0GPU%E5%8D%B3%E5%8F%AF%E8%BF%90%E8%A1%8C%EF%BC%89"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.1 配置一：4卡4090服务器（实际最低一张GPU即可运行）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-%E9%85%8D%E7%BD%AE%E4%BA%8C%EF%BC%9A4%E5%8D%A1H800%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%88%E6%A8%A1%E5%9E%8B%E7%BA%AFGPU%E6%8E%A8%E7%90%86%E6%80%A7%E8%83%BD%EF%BC%89"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2 配置二：4卡H800服务器（模型纯GPU推理性能）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81Unsloth%E5%8A%A8%E6%80%81%E9%87%8F%E5%8C%96%E6%A8%A1%E5%9E%8B%E4%BB%8B%E7%BB%8D%E7%AE%80%E4%BB%8B"><span class="nav-number">3.</span> <span class="nav-text">二、Unsloth动态量化模型介绍简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81Unsloth%E5%8A%A8%E6%80%81%E9%87%8F%E5%8C%96%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B%E4%B8%8E%E4%B8%8B%E8%BD%BD%E5%9C%B0%E5%9D%80"><span class="nav-number">3.1.</span> <span class="nav-text">1、Unsloth动态量化模型简介与下载地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%8A%A8%E6%80%81%E9%87%8F%E5%8C%96%E6%A8%A1%E5%9E%8B%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95"><span class="nav-number">3.2.</span> <span class="nav-text">2. 动态量化模型性能测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%8A%A8%E6%80%81%E9%87%8F%E5%8C%96%E6%A8%A1%E5%9E%8B%E9%87%8F%E5%8C%96%E8%BF%87%E7%A8%8B"><span class="nav-number">3.3.</span> <span class="nav-text">3 动态量化模型量化过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81Unsloth%E5%8A%A8%E6%80%81%E9%87%8F%E5%8C%96%E6%A8%A1%E5%9E%8B%E4%B8%8B%E8%BD%BD%E4%B8%8E%E8%BF%90%E8%A1%8C"><span class="nav-number">4.</span> <span class="nav-text">三、Unsloth动态量化模型下载与运行</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E6%A8%A1%E5%9E%8B%E6%9D%83%E9%87%8D%E4%B8%8B%E8%BD%BD"><span class="nav-number">4.1.</span> <span class="nav-text">1、模型权重下载</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%80%E5%90%AF%E5%AD%A6%E6%9C%AF%E5%8A%A0%E9%80%9F"><span class="nav-number">4.1.1.</span> <span class="nav-text">开启学术加速</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E6%A8%A1%E5%9E%8B%E6%9D%83%E9%87%8D%EF%BC%8C%E5%8F%AA%E4%B8%8B%E8%BD%BDQ4-K-M%E9%83%A8%E5%88%86%E6%9D%83%E9%87%8D"><span class="nav-number">4.1.2.</span> <span class="nav-text">下载模型权重，只下载Q4_K_M部分权重</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E5%80%9F%E5%8A%A9Llama-cpp%E8%BF%9B%E8%A1%8C%E8%BF%90%E8%A1%8C"><span class="nav-number">4.2.</span> <span class="nav-text">2、借助Llama.cpp进行运行</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-llama-cpp%E4%B8%8B%E8%BD%BD%E4%B8%8E%E7%BC%96%E8%AF%91"><span class="nav-number">4.2.1.</span> <span class="nav-text">2.1 llama.cpp下载与编译</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-%E7%BA%AFCPU%E6%8E%A8%E7%90%86%E6%B5%81%E7%A8%8B"><span class="nav-number">4.2.2.</span> <span class="nav-text">2.2 纯CPU推理流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-CPU-GPU%E6%B7%B7%E5%90%88%E6%8E%A8%E7%90%86%E6%B5%81%E7%A8%8B%EF%BC%88%E5%8D%95%E5%8D%A14090%EF%BC%89"><span class="nav-number">4.2.3.</span> <span class="nav-text">2.3 CPU+GPU混合推理流程（单卡4090）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-CPU-GPU%E6%B7%B7%E5%90%88%E6%8E%A8%E7%90%86%E6%B5%81%E7%A8%8B%EF%BC%884%E5%8D%A14090%EF%BC%89"><span class="nav-number">4.2.4.</span> <span class="nav-text">2.4 CPU+GPU混合推理流程（4卡4090）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-%E7%BA%AFGPU%E6%8E%A8%E7%90%86%E6%B5%81%E7%A8%8B"><span class="nav-number">4.2.5.</span> <span class="nav-text">2.5 纯GPU推理流程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E6%9C%8D%E5%8A%A1%E5%8C%96%E9%83%A8%E7%BD%B2"><span class="nav-number">4.3.</span> <span class="nav-text">3、服务化部署</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81Unsloth%E5%8A%A8%E6%80%81%E9%87%8F%E5%8C%96-Ollama%E8%BF%90%E8%A1%8C"><span class="nav-number">5.</span> <span class="nav-text">四、Unsloth动态量化+Ollama运行</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81ollama%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2"><span class="nav-number">5.1.</span> <span class="nav-text">1、ollama安装部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E6%A8%A1%E5%9E%8B%E6%9D%83%E9%87%8D%E5%90%88%E5%B9%B6"><span class="nav-number">5.2.</span> <span class="nav-text">2、模型权重合并</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E5%80%9F%E5%8A%A9Ollama%E8%B0%83%E7%94%A8-Unsloth%E5%8A%A8%E6%80%81%E9%87%8F%E5%8C%96%E6%A8%A1%E5%9E%8B"><span class="nav-number">5.3.</span> <span class="nav-text">3、借助Ollama调用 Unsloth动态量化模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81Unsloth%E5%8A%A8%E6%80%81%E9%87%8F%E5%8C%96-Open-WebUI%E8%BF%90%E8%A1%8C-%E6%9C%80%E5%90%8E%EF%BC%8C%E6%9D%A5%E4%BB%8B%E7%BB%8D%E5%A6%82%E4%BD%95%E5%80%9F%E5%8A%A9Open-WebUI%E6%9D%A5%E8%B0%83%E7%94%A8Unsloth%E5%8A%A8%E6%80%81%E9%87%8F%E5%8C%96%E6%A8%A1%E5%9E%8B%E3%80%82"><span class="nav-number">6.</span> <span class="nav-text">五、Unsloth动态量化+Open-WebUI运行 最后，来介绍如何借助Open-WebUI来调用Unsloth动态量化模型。</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Simon Shi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">322</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">142</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">269</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:yourname@gmail.com" title="E-Mail → mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simon Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
